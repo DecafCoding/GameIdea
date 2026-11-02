@@ -353,12 +353,13 @@ Genre                     (21 values. Meanings are in the Genres table.
   <li>Copy the TheForge code into this repository.</li>
   <li>Rename the app, the database and the page title to GameIdea. Set ports 5174, 4174 and 4444.</li>
   <li>Remove the story pools and story card types.</li>
-  <li>Pass bar: the copied tests pass, and the app runs at port 4174.</li>
+  <li>Pass bar: the copied tests pass, and the app runs at port 4174. A search of <code>src/</code> finds no TheForge story type names (character, motivation, description) and no Setting kind names.</li>
 </ul>
 
 <h3>M2: Hook test</h3>
 <ul>
   <li>Convert the user's libraries for the 5 core decks and the Modifier from <code>docs/libraries/</code> into JSON pool files. A library that is not finished can ship with the cues it has, at least 20 cues.</li>
+  <li>First: an 11-card stack test. An 11-card stack under a Hook Card drags at the canvas speed target.</li>
   <li>The new card types, the Hook Card with its sentence, Copy, Redraw All, the lock and the connector badges.</li>
   <li>Pass bar: the user draws 20 stacks. In each deck, at least 16 of 20 cards have a usable cue. At least 12 of the 20 hooks are ideas the user would build.</li>
 </ul>
@@ -434,6 +435,7 @@ Genre                     (21 values. Meanings are in the Genres table.
 <p class="meta">2026-11-01: First version. Written from the <code>/dev-initial-interview</code> run, with <code>docs/competitive-scan.html</code> as prior art and <code>concept.md</code> as the concept source.</p>
 <p class="meta">2026-11-01: The user writes the deck libraries as Markdown files in <code>docs/libraries/</code>. A one-time conversion makes the JSON pool files, and the JSON is then the source. Only Mechanic, Resource, Progression and Constraint carry genre tags. The other 7 decks ignore genre, and the Genres panel lists only the 4 tagged decks. Claude no longer drafts cues. Pool sizes come from the libraries. Changed Scope, Data model, Interfaces, Architecture, M2 to M4, Cue rules, Done criteria and Risks. Changed by the user's request after the interview.</p>
 <p class="meta">2026-11-01: The genre list changed from 7 genres to the user's 21 genres, with a Genres table of meanings. A hidden <code>generic</code> tag marks cues that fit every genre and feeds the fill rule. Per-genre cue minimums are now guidance only, because the user will tune counts after the app works. Changed Scope, Data model, M3, M4, Done criteria and Assumptions. Changed by the user's request.</p>
+<p class="meta">2026-11-01: Added 2 checks. M1 adds a search for TheForge story names in <code>src/</code>. M2 starts with an 11-card stack test. Changed M1 and M2. Changed by <code>/dev-architecture</code> (risks branch), with the user's agreement.</p>
 
 </body>
 </html>
