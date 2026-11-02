@@ -1,6 +1,6 @@
 # Deck: Modifier (General)
 
-349 cards.
+344 cards.
 
 | # | Card | Count | Games |
 |---:|---|---:|---|
@@ -294,62 +294,57 @@
 | 288 | wild | 1 | Balatro |
 | 289 | accused | 1 | Magical Girl Witch Trials |
 | 290 | anti-gravity | 1 | Redout |
-| 291 | ash-born | 1 | DARK SOULS III |
-| 292 | aspiring | 1 | Content Warning |
-| 293 | bouncing | 1 | Geometry Dash |
-| 294 | brawling | 1 | Rivals of Aether |
-| 295 | burned-out | 1 | Stardew Valley |
-| 296 | celebrity | 1 | Saints Row: The Third |
-| 297 | devil-cursed | 1 | Tekken 8 |
-| 298 | evicted | 1 | Wobbly Life |
-| 299 | failed | 1 | ATRI -My Dear Moments- |
-| 300 | fairy-tale | 1 | The Wolf Among Us |
-| 301 | fallen | 1 | Halo: The Master Chief Collection |
-| 302 | former | 1 | METAL GEAR RISING: REVENGEANCE |
-| 303 | freed | 1 | The Elder Scrolls IV: Oblivion Game of the Year Edition |
-| 304 | game-trapped | 1 | MiSide |
-| 305 | historical | 1 | Age of Empires II: Definitive Edition |
-| 306 | invited | 1 | The Room |
-| 307 | left-for-dead | 1 | Fallout: New Vegas |
-| 308 | lonely | 1 | Everlasting Summer |
-| 309 | loyal | 1 | Sekiro: Shadows Die Twice |
-| 310 | master | 1 | Batman: Arkham Asylum Game of the Year Edition |
-| 311 | music-powered | 1 | Hi-Fi RUSH |
-| 312 | mysterious | 1 | Devil May Cry 5 |
-| 313 | old | 1 | Shelldiver |
-| 314 | one-legged | 1 | ATRI -My Dear Moments- |
-| 315 | pacifist | 1 | Dishonored |
-| 316 | parasite-infected | 1 | Phasmophobia |
-| 317 | probationary | 1 | Persona 5 Royal |
-| 318 | quiet | 1 | DELTARUNE |
-| 319 | recalled | 1 | ELDEN RING |
-| 320 | resurrected | 1 | Cult of the Lamb |
-| 321 | rising | 1 | Grim Dawn |
-| 322 | robot-armed | 1 | Devil May Cry 5 |
-| 323 | rock-and-roll | 1 | Guilty Gear -Strive- |
-| 324 | shadow | 1 | Ghost of Tsushima DIRECTOR'S CUT |
-| 325 | shut-in | 1 | OMORI |
-| 326 | shy | 1 | Life is Strange - Episode 1 |
-| 327 | six-armed | 1 | Brotato |
-| 328 | space | 1 | Deep Rock Galactic |
-| 329 | stressed | 1 | Pizza Tower |
-| 330 | home-alone | 1 | My Summer Car |
-| 331 | time-rewinding | 1 | Life is Strange - Episode 1 |
-| 332 | timid | 1 | Resident Evil Requiem |
-| 333 | transforming | 1 | Sonic & All-Stars Racing Transformed |
-| 334 | unseen | 1 | OneShot |
-| 335 | vacationing | 1 | A Short Hike |
-| 336 | virtual | 1 | HoloCure - Save the Fans! |
-| 337 | voiceless | 1 | GRIS |
-| 338 | wandering | 1 | Street Fighter 6 |
-| 339 | wannabe | 1 | Hi-Fi RUSH |
-| 340 | web-slinging | 1 | Marvel's Spider-Man Remastered |
-| 341 | widowed | 1 | Volcano Princess |
-| 342 | wish-seeking | 1 | Skullgirls |
-| 343 | wordless | 1 | Chants of Sennaar |
-| 344 | would-be | 1 | Mount & Blade: Warband |
-| 345 | spirit | 1 | Spiritfarer: Farewell Edition |
-| 346 | dungeon | 1 | Enter the Gungeon |
-| 347 | mob | 1 | Crime Scene Cleaner |
-| 348 | convict | 1 | Ace Combat 7: Skies Unknown |
-| 349 | unique | 0 |  |
+| 291 | aspiring | 1 | Content Warning |
+| 292 | bouncing | 1 | Geometry Dash |
+| 293 | brawling | 1 | Rivals of Aether |
+| 294 | burned-out | 1 | Stardew Valley |
+| 295 | celebrity | 1 | Saints Row: The Third |
+| 296 | evicted | 1 | Wobbly Life |
+| 297 | failed | 1 | ATRI -My Dear Moments- |
+| 298 | fairy-tale | 1 | The Wolf Among Us |
+| 299 | fallen | 1 | Halo: The Master Chief Collection |
+| 300 | former | 1 | METAL GEAR RISING: REVENGEANCE |
+| 301 | freed | 1 | The Elder Scrolls IV: Oblivion Game of the Year Edition |
+| 302 | game-trapped | 1 | MiSide |
+| 303 | historical | 1 | Age of Empires II: Definitive Edition |
+| 304 | invited | 1 | The Room |
+| 305 | lonely | 1 | Everlasting Summer |
+| 306 | loyal | 1 | Sekiro: Shadows Die Twice |
+| 307 | master | 1 | Batman: Arkham Asylum Game of the Year Edition |
+| 308 | mysterious | 1 | Devil May Cry 5 |
+| 309 | old | 1 | Shelldiver |
+| 310 | one-legged | 1 | ATRI -My Dear Moments- |
+| 311 | pacifist | 1 | Dishonored |
+| 312 | parasite-infected | 1 | Phasmophobia |
+| 313 | probationary | 1 | Persona 5 Royal |
+| 314 | quiet | 1 | DELTARUNE |
+| 315 | recalled | 1 | ELDEN RING |
+| 316 | resurrected | 1 | Cult of the Lamb |
+| 317 | rising | 1 | Grim Dawn |
+| 318 | robot-armed | 1 | Devil May Cry 5 |
+| 319 | rock-and-roll | 1 | Guilty Gear -Strive- |
+| 320 | shadow | 1 | Ghost of Tsushima DIRECTOR'S CUT |
+| 321 | shut-in | 1 | OMORI |
+| 322 | shy | 1 | Life is Strange - Episode 1 |
+| 323 | six-armed | 1 | Brotato |
+| 324 | space | 1 | Deep Rock Galactic |
+| 325 | stressed | 1 | Pizza Tower |
+| 326 | home-alone | 1 | My Summer Car |
+| 327 | time-rewinding | 1 | Life is Strange - Episode 1 |
+| 328 | timid | 1 | Resident Evil Requiem |
+| 329 | transforming | 1 | Sonic & All-Stars Racing Transformed |
+| 330 | unseen | 1 | OneShot |
+| 331 | vacationing | 1 | A Short Hike |
+| 332 | virtual | 1 | HoloCure - Save the Fans! |
+| 333 | voiceless | 1 | GRIS |
+| 334 | wandering | 1 | Street Fighter 6 |
+| 335 | wannabe | 1 | Hi-Fi RUSH |
+| 336 | widowed | 1 | Volcano Princess |
+| 337 | wish-seeking | 1 | Skullgirls |
+| 338 | wordless | 1 | Chants of Sennaar |
+| 339 | would-be | 1 | Mount & Blade: Warband |
+| 340 | spirit | 1 | Spiritfarer: Farewell Edition |
+| 341 | dungeon | 1 | Enter the Gungeon |
+| 342 | mob | 1 | Crime Scene Cleaner |
+| 343 | convict | 1 | Ace Combat 7: Skies Unknown |
+| 344 | unique | 0 |  |

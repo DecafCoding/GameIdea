@@ -269,6 +269,14 @@
       ]
     },
     {
+      "card": "god",
+      "games": [
+        "WorldBox - God Simulator",
+        "Black & White",
+        "God of War"
+      ]
+    },
+    {
       "card": "mage",
       "games": [
         "Hogwarts Legacy",
@@ -364,13 +372,6 @@
       "games": [
         "Phasmophobia",
         "Baldur's Gate 3"
-      ]
-    },
-    {
-      "card": "god",
-      "games": [
-        "WorldBox - God Simulator",
-        "Black & White"
       ]
     },
     {
@@ -740,12 +741,6 @@
       ]
     },
     {
-      "card": "border inspector",
-      "games": [
-        "Papers, Please"
-      ]
-    },
-    {
       "card": "cube",
       "games": [
         "Geometry Dash"
@@ -848,12 +843,6 @@
       ]
     },
     {
-      "card": "cookie tycoon",
-      "games": [
-        "Cookie Clicker"
-      ]
-    },
-    {
       "card": "pioneer",
       "games": [
         "Satisfactory"
@@ -935,12 +924,6 @@
       "card": "demon hunter",
       "games": [
         "Devil May Cry 5"
-      ]
-    },
-    {
-      "card": "desktop cat",
-      "games": [
-        "Bongo Cat"
       ]
     },
     {
@@ -1358,12 +1341,6 @@
       ]
     },
     {
-      "card": "memory doctor",
-      "games": [
-        "To the Moon"
-      ]
-    },
-    {
       "card": "metro ranger",
       "games": [
         "METRO 2033 Redux"
@@ -1604,12 +1581,6 @@
       ]
     },
     {
-      "card": "war god",
-      "games": [
-        "God of War"
-      ]
-    },
-    {
       "card": "war veteran",
       "games": [
         "SANABI"
@@ -1742,12 +1713,6 @@
       ]
     },
     {
-      "card": "slime rancher",
-      "games": [
-        "Slime Rancher"
-      ]
-    },
-    {
       "card": "dealer",
       "games": [
         "Schedule I"
@@ -1853,12 +1818,6 @@
       "card": "supermarket clerk",
       "games": [
         "Supermarket Together"
-      ]
-    },
-    {
-      "card": "sushi bar diver",
-      "games": [
-        "DAVE THE DIVER"
       ]
     },
     {
@@ -2111,6 +2070,42 @@
       "card": "blacksmith",
       "games": [
         "Kingdom Come: Deliverance II"
+      ]
+    },
+    {
+      "card": "customs officer",
+      "games": [
+        "Papers, Please"
+      ]
+    },
+    {
+      "card": "bakery tycoon",
+      "games": [
+        "Cookie Clicker"
+      ]
+    },
+    {
+      "card": "desktop pet",
+      "games": [
+        "Bongo Cat"
+      ]
+    },
+    {
+      "card": "dream therapist",
+      "games": [
+        "To the Moon"
+      ]
+    },
+    {
+      "card": "creature rancher",
+      "games": [
+        "Slime Rancher"
+      ]
+    },
+    {
+      "card": "diver",
+      "games": [
+        "DAVE THE DIVER"
       ]
     },
     {
@@ -17340,12 +17335,6 @@
       ]
     },
     {
-      "card": "ash-born",
-      "games": [
-        "DARK SOULS III"
-      ]
-    },
-    {
       "card": "aspiring",
       "games": [
         "Content Warning"
@@ -17373,12 +17362,6 @@
       "card": "celebrity",
       "games": [
         "Saints Row: The Third"
-      ]
-    },
-    {
-      "card": "devil-cursed",
-      "games": [
-        "Tekken 8"
       ]
     },
     {
@@ -17436,12 +17419,6 @@
       ]
     },
     {
-      "card": "left-for-dead",
-      "games": [
-        "Fallout: New Vegas"
-      ]
-    },
-    {
       "card": "lonely",
       "games": [
         "Everlasting Summer"
@@ -17457,12 +17434,6 @@
       "card": "master",
       "games": [
         "Batman: Arkham Asylum Game of the Year Edition"
-      ]
-    },
-    {
-      "card": "music-powered",
-      "games": [
-        "Hi-Fi RUSH"
       ]
     },
     {
@@ -17631,12 +17602,6 @@
       "card": "wannabe",
       "games": [
         "Hi-Fi RUSH"
-      ]
-    },
-    {
-      "card": "web-slinging",
-      "games": [
-        "Marvel's Spider-Man Remastered"
       ]
     },
     {

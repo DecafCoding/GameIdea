@@ -1,6 +1,6 @@
 # Deck: Player Role (General)
 
-332 cards. Read each card after "You are…".
+331 cards. Read each card after "You are…".
 
 | # | Card | Count | Games |
 |---:|---|---:|---|
@@ -34,21 +34,21 @@
 | 28 | detective | 3 | Detroit: Become Human, Batman: Arkham Asylum Game of the Year Edition, Danganronpa: Trigger Happy Havoc |
 | 29 | scientist | 3 | Marvel's Spider-Man Remastered, SCP: Secret Laboratory, Abiotic Factor |
 | 30 | heir | 3 | Black Myth: Wukong, Tekken 8, What Remains of Edith Finch |
-| 31 | mage | 2 | Hogwarts Legacy, Fields of Mistria |
-| 32 | arena fighter | 2 | Clone Drone in the Danger Zone, Tekken 8 |
-| 33 | colony overseer | 2 | RimWorld, Oxygen Not Included |
-| 34 | man | 2 | The Walking Dead: The Telltale Definitive Series, The Walking Dead |
-| 35 | crash survivor | 2 | Brotato, Subnautica |
-| 36 | engineer | 2 | Factorio, Scrap Mechanic |
-| 37 | cult leader | 2 | Cult of the Lamb, Cultist Simulator |
-| 38 | demon slayer | 2 | DOOM, DOOM Eternal |
-| 39 | factory engineer | 2 | Factorio, Satisfactory |
-| 40 | field medic | 2 | Barotrauma, Killing Floor |
-| 41 | forest spirit | 2 | Ori and the Blind Forest: Definitive Edition, Ori and the Will of the Wisps |
-| 42 | city leader | 2 | Frostpunk, Wildfrost |
-| 43 | gentleman scientist | 2 | Don't Starve Together, Don't Starve |
-| 44 | ghost hunter | 2 | Phasmophobia, Baldur's Gate 3 |
-| 45 | god | 2 | WorldBox - God Simulator, Black & White |
+| 31 | god | 3 | WorldBox - God Simulator, Black & White, God of War |
+| 32 | mage | 2 | Hogwarts Legacy, Fields of Mistria |
+| 33 | arena fighter | 2 | Clone Drone in the Danger Zone, Tekken 8 |
+| 34 | colony overseer | 2 | RimWorld, Oxygen Not Included |
+| 35 | man | 2 | The Walking Dead: The Telltale Definitive Series, The Walking Dead |
+| 36 | crash survivor | 2 | Brotato, Subnautica |
+| 37 | engineer | 2 | Factorio, Scrap Mechanic |
+| 38 | cult leader | 2 | Cult of the Lamb, Cultist Simulator |
+| 39 | demon slayer | 2 | DOOM, DOOM Eternal |
+| 40 | factory engineer | 2 | Factorio, Satisfactory |
+| 41 | field medic | 2 | Barotrauma, Killing Floor |
+| 42 | forest spirit | 2 | Ori and the Blind Forest: Definitive Edition, Ori and the Will of the Wisps |
+| 43 | city leader | 2 | Frostpunk, Wildfrost |
+| 44 | gentleman scientist | 2 | Don't Starve Together, Don't Starve |
+| 45 | ghost hunter | 2 | Phasmophobia, Baldur's Gate 3 |
 | 46 | lab worker | 2 | Half-Life, Black Mesa |
 | 47 | humanity's last hope | 2 | Stellar Blade, FTL: Faster Than Light |
 | 48 | long-haul trucker | 2 | American Truck Simulator, Euro Truck Simulator 2 |
@@ -104,235 +104,234 @@
 | 98 | axe berserker | 1 | Killing Floor |
 | 99 | bartender | 1 | VA-11 Hall-A: Cyberpunk Bartender Action |
 | 100 | big brother | 1 | Ori and the Will of the Wisps |
-| 101 | border inspector | 1 | Papers, Please |
-| 102 | cube | 1 | Geometry Dash |
-| 103 | otter | 1 | Rivals of Aether |
-| 104 | office worker | 1 | Stardew Valley |
-| 105 | bush pilot | 1 | Microsoft Flight Simulator |
-| 106 | boyfriend | 1 | MiSide |
-| 107 | performer | 1 | BattleBlock Theater |
-| 108 | car collector | 1 | Forza Horizon 5 |
-| 109 | card collector | 1 | TCG Card Shop Simulator |
-| 110 | card shop owner | 1 | TCG Card Shop Simulator |
-| 111 | cat burglar | 1 | Batman: Arkham City - Game of the Year Edition |
-| 112 | gang boss | 1 | Saints Row: The Third |
-| 113 | circuit tinkerer | 1 | Minecraft |
-| 114 | city boy | 1 | Senren*Banka |
-| 115 | city mayor | 1 | Cities: Skylines |
-| 116 | clan champion | 1 | Monster Train |
-| 117 | sorcerer | 1 | Divinity: Original Sin 2 - Definitive Edition |
-| 118 | college student | 1 | Resident Evil 2 |
-| 119 | cookie tycoon | 1 | Cookie Clicker |
-| 120 | pioneer | 1 | Satisfactory |
-| 121 | tinkerer | 1 | Universe Sandbox |
-| 122 | crash junkie | 1 | Burnout Paradise Remastered |
-| 123 | crash tester | 1 | BeamNG.drive |
-| 124 | crime lord | 1 | STAR WARS Empire at War - Gold Pack |
-| 125 | estate heir | 1 | Darkest Dungeon |
-| 126 | undead | 1 | DARK SOULS: REMASTERED |
-| 127 | ninja | 1 | METAL GEAR RISING: REVENGEANCE |
-| 128 | relative | 1 | What Remains of Edith Finch |
-| 129 | Viking warrior | 1 | Valheim |
-| 130 | deep-sea explorer | 1 | Subnautica |
-| 131 | demolition derby driver | 1 | Wreckfest |
-| 132 | demolition thief | 1 | Teardown |
-| 133 | demon hunter | 1 | Devil May Cry 5 |
-| 134 | desktop cat | 1 | Bongo Cat |
-| 135 | gambler | 1 | Buckshot Roulette |
-| 136 | parent | 1 | It Takes Two |
-| 137 | expedition member | 1 | Clair Obscur: Expedition 33 |
-| 138 | drift racer | 1 | CarX Drift Racing Online |
-| 139 | drifter | 1 | Days Gone |
-| 140 | biker | 1 | Days Gone |
-| 141 | noble heir | 1 | Griftlands |
-| 142 | old man | 1 | To the Moon |
-| 143 | beast warrior | 1 | Rivals of Aether |
-| 144 | monster | 1 | SCP: Secret Laboratory |
-| 145 | young adult | 1 | Wobbly Life |
-| 146 | employee | 1 | Lethal Company |
-| 147 | facility guard | 1 | SCP: Secret Laboratory |
-| 148 | prodigy | 1 | ATRI -My Dear Moments- |
-| 149 | sheriff | 1 | The Wolf Among Us |
-| 150 | fantasy writer | 1 | Split Fiction |
-| 151 | farm animal | 1 | Ultimate Chicken Horse |
-| 152 | farm tycoon | 1 | Farming Simulator 19 |
-| 153 | fencer | 1 | Nidhogg |
-| 154 | food stall owner | 1 | Touhou Mystia's Izakaya |
-| 155 | foot soldier | 1 | Ravenfield |
-| 156 | lore seeker | 1 | Cultist Simulator |
-| 157 | child soldier | 1 | METAL GEAR RISING: REVENGEANCE |
-| 158 | game maker | 1 | Dreams |
-| 159 | game master | 1 | Arma 3 |
-| 160 | player | 1 | MiSide |
-| 161 | gang enforcer | 1 | Red Dead Redemption 2 |
-| 162 | gang soldier | 1 | Sleeping Dogs: Definitive Edition |
-| 163 | garden defender | 1 | Plants vs. Zombies |
-| 164 | gentleman thief | 1 | Persona 5 Royal |
-| 165 | wizard | 1 | Hogwarts Legacy |
-| 166 | widower | 1 | SILENT HILL 2 |
-| 167 | handyman | 1 | House Flipper |
-| 168 | gunslinger | 1 | Enter the Gungeon |
-| 169 | heist crew member | 1 | PAYDAY 2 |
-| 170 | heist planner | 1 | Teardown |
-| 171 | train conductor | 1 | Monster Train |
-| 172 | hero dispatcher | 1 | Dispatch |
-| 173 | hero guild master | 1 | Darkest Dungeon |
-| 174 | war hero | 1 | Age of Empires II: Definitive Edition |
-| 175 | space traveler | 1 | Starbound |
-| 176 | horde slayer | 1 | Megabonk |
-| 177 | hospital intern | 1 | Rhythm Doctor |
-| 178 | house flipper | 1 | House Flipper |
-| 179 | housekeeper | 1 | Detroit: Become Human |
-| 180 | ex-soldier | 1 | BioShock Infinite |
-| 181 | insurance investigator | 1 | Return of the Obra Dinn |
-| 182 | investigative reporter | 1 | Outlast |
-| 183 | puzzle solver | 1 | The Room |
-| 184 | jellyfish seller | 1 | Shelldiver |
-| 185 | junkyard inventor | 1 | Scrap Mechanic |
-| 186 | kart racer | 1 | Sonic & All-Stars Racing Transformed |
-| 187 | lab nerd | 1 | Abiotic Factor |
-| 188 | courier | 1 | Fallout: New Vegas |
-| 189 | level designer | 1 | Super Mario Maker 2 |
-| 190 | toy | 1 | Sheepy: A Short Adventure |
-| 191 | block builder | 1 | Minecraft |
-| 192 | fisherman | 1 | DREDGE |
-| 193 | young man | 1 | Everlasting Summer |
-| 194 | camper | 1 | Everlasting Summer |
-| 195 | scout | 1 | PEAK |
-| 196 | machine programmer | 1 | Stormworks: Build and Rescue |
-| 197 | magical girl | 1 | Magical Girl Witch Trials |
-| 198 | assassin | 1 | Dishonored |
-| 199 | bank robber | 1 | PAYDAY 2 |
-| 200 | mech engineer | 1 | Dyson Sphere Program |
-| 201 | mech pilot | 1 | Titanfall 2 |
-| 202 | medium's assistant | 1 | Phoenix Wright: Ace Attorney Trilogy |
-| 203 | megastructure engineer | 1 | Dyson Sphere Program |
-| 204 | memory doctor | 1 | To the Moon |
-| 205 | metro ranger | 1 | METRO 2033 Redux |
-| 206 | metro survivor | 1 | METRO 2033 Redux |
-| 207 | mobster's son | 1 | Hotline Miami 2: Wrong Number |
-| 208 | monster hunter | 1 | The Witcher 3: Wild Hunt |
-| 209 | monster tamer | 1 | Palworld |
-| 210 | cyborg | 1 | Hi-Fi RUSH |
-| 211 | zombie | 1 | Left 4 Dead |
-| 212 | poet | 1 | Devil May Cry 5 |
-| 213 | nation leader | 1 | Sid Meier's Civilization V |
-| 214 | boat captain | 1 | DREDGE |
-| 215 | newcomer | 1 | Stardew Valley |
-| 216 | night guard | 1 | Ultimate Custom Night |
-| 217 | noble's bodyguard | 1 | Kingdom Come: Deliverance II |
-| 218 | off-road trucker | 1 | SnowRunner |
-| 219 | turtle | 1 | Shelldiver |
-| 220 | shinobi | 1 | Sekiro: Shadows Die Twice |
-| 221 | one-man army | 1 | Broforce |
-| 222 | orphan | 1 | Ori and the Blind Forest: Definitive Edition |
-| 223 | orphan's guardian | 1 | The Walking Dead |
-| 224 | baller | 1 | Lethal League Blaze |
-| 225 | gunman | 1 | Red Dead Redemption 2 |
-| 226 | parkour runner | 1 | Dying Light |
-| 227 | party leader | 1 | Baldur's Gate 3 |
-| 228 | plane crash survivor | 1 | The Forest |
-| 229 | planet thrower | 1 | Universe Sandbox |
-| 230 | poacher | 1 | How to Fish |
-| 231 | presidential bodyguard | 1 | Resident Evil 4 (2005) |
-| 232 | pressure washer | 1 | PowerWash Simulator |
-| 233 | student | 1 | Persona 5 Royal |
-| 234 | quarantine survivor | 1 | Project Zomboid |
-| 235 | racing team owner | 1 | DiRT Rally 2.0 |
-| 236 | raft castaway | 1 | Raft |
-| 237 | rally driver | 1 | DiRT Rally 2.0 |
-| 238 | realm's champion | 1 | Mortal Kombat 11 |
-| 239 | rebel leader | 1 | STAR WARS Empire at War - Gold Pack |
-| 240 | exile | 1 | ELDEN RING |
-| 241 | rescue captain | 1 | Stormworks: Build and Rescue |
-| 242 | rescue driver | 1 | SnowRunner |
-| 243 | rescue vehicle builder | 1 | Stormworks: Build and Rescue |
-| 244 | superhero | 1 | Dispatch |
-| 245 | war god | 1 | God of War |
-| 246 | war veteran | 1 | SANABI |
-| 247 | rhythm fighter | 1 | Beat Saber |
-| 248 | demigod | 1 | Grim Dawn |
-| 249 | rocket engineer | 1 | Kerbal Space Program |
-| 250 | defense lawyer | 1 | Phoenix Wright: Ace Attorney Trilogy |
-| 251 | street fighter | 1 | Street Fighter 6 |
-| 252 | salvage robot | 1 | R.E.P.O. |
-| 253 | samurai lord | 1 | Ghost of Tsushima DIRECTOR'S CUT |
-| 254 | scavenger | 1 | This War of Mine |
-| 255 | sci-fi writer | 1 | Split Fiction |
-| 256 | android | 1 | SIGNALIS |
-| 257 | husband | 1 | Resident Evil 7 Biohazard |
-| 258 | impostor | 1 | Among Us |
-| 259 | samurai | 1 | Ghost of Tsushima DIRECTOR'S CUT |
-| 260 | sharpshooter | 1 | Killing Floor |
-| 261 | ship engineer | 1 | Barotrauma |
-| 262 | shipwreck survivor | 1 | Tomb Raider |
-| 263 | photo student | 1 | Life is Strange - Episode 1 |
-| 264 | siege engineer | 1 | Besiege |
-| 265 | hunter | 1 | Slay the Spire |
-| 266 | single cell | 1 | Spore |
-| 267 | slave | 1 | Kenshi |
-| 268 | slime rancher | 1 | Slime Rancher |
-| 269 | dealer | 1 | Schedule I |
-| 270 | space commando | 1 | Stellar Blade |
-| 271 | dwarf | 1 | Deep Rock Galactic |
-| 272 | space exile | 1 | Starbound |
-| 273 | space explorer | 1 | Outer Wilds |
-| 274 | space program boss | 1 | Kerbal Space Program |
-| 275 | spaceship crewmate | 1 | Among Us |
-| 276 | spellsword | 1 | Blade and Sorcery |
-| 277 | crook | 1 | The Henry Stickmin Collection |
-| 278 | cat | 1 | Stray |
-| 279 | street car tuner | 1 | CarX Drift Racing Online |
-| 280 | street racer | 1 | Burnout Paradise Remastered |
-| 281 | pizza chef | 1 | Pizza Tower |
-| 282 | submarine captain | 1 | Barotrauma |
-| 283 | submarine crew member | 1 | Barotrauma |
-| 284 | super soldier | 1 | Halo: The Master Chief Collection |
-| 285 | superhero commander | 1 | Marvel Snap |
-| 286 | supermarket clerk | 1 | Supermarket Together |
-| 287 | sushi bar diver | 1 | DAVE THE DIVER |
-| 288 | sword bearer | 1 | Senren*Banka |
-| 289 | tank driver | 1 | Ravenfield |
-| 290 | terraforming convict | 1 | The Planet Crafter |
-| 291 | time trial racer | 1 | TrackMania Nations Forever |
-| 292 | FBI analyst | 1 | Resident Evil Requiem |
-| 293 | square | 1 | Just Shapes & Beats |
-| 294 | town painter | 1 | Townscaper |
-| 295 | track builder | 1 | TrackMania Nations Forever |
-| 296 | traitor | 1 | Barotrauma |
-| 297 | car | 1 | Sonic & All-Stars Racing Transformed |
-| 298 | tribe chief | 1 | Spore |
-| 299 | true-crime writer | 1 | Hotline Miami 2: Wrong Number |
-| 300 | guide | 1 | OneShot |
-| 301 | uploaded mind | 1 | Clone Drone in the Danger Zone |
-| 302 | bird | 1 | A Short Hike |
-| 303 | vampire hunter | 1 | Vampire Survivors |
-| 304 | village dressmaker | 1 | Dressmaker |
-| 305 | idol | 1 | HoloCure - Save the Fans! |
-| 306 | virtual pet keeper | 1 | VPet-Simulator |
-| 307 | walking disaster | 1 | POSTAL 2 |
-| 308 | wand crafter | 1 | Noita |
-| 309 | martial artist | 1 | Street Fighter 6 |
-| 310 | rock star | 1 | Hi-Fi RUSH |
-| 311 | war civilian | 1 | This War of Mine |
-| 312 | war robot | 1 | ULTRAKILL |
-| 313 | warrior princess | 1 | Hollow Knight: Silksong |
-| 314 | wasteland drifter | 1 | Fallout: New Vegas |
-| 315 | willing sacrifice | 1 | Nidhogg |
-| 316 | dreamer | 1 | Human Fall Flat |
-| 317 | traveler | 1 | Chants of Sennaar |
-| 318 | king | 1 | Mount & Blade: Warband |
-| 319 | yokai cook | 1 | Touhou Mystia's Izakaya |
-| 320 | resistance fighter | 1 | Half-Life: Alyx |
-| 321 | yourself | 1 | OneShot |
-| 322 | ferry captain | 1 | Spiritfarer: Farewell Edition |
-| 323 | spirit | 1 | Spiritfarer: Farewell Edition |
-| 324 | match fixer | 1 | There Is No Game: Wrong Dimension |
-| 325 | crime scene cleaner | 1 | Crime Scene Cleaner |
-| 326 | convict | 1 | Ace Combat 7: Skies Unknown |
-| 327 | pilot | 1 | Ace Combat 7: Skies Unknown |
-| 328 | village craftsman | 1 | Kingdom Come: Deliverance II |
-| 329 | blacksmith | 1 | Kingdom Come: Deliverance II |
-| 330 | animal | 0 |  |
-| 331 | vegetable | 0 |  |
-| 332 | fruit | 0 |  |
+| 101 | cube | 1 | Geometry Dash |
+| 102 | otter | 1 | Rivals of Aether |
+| 103 | office worker | 1 | Stardew Valley |
+| 104 | bush pilot | 1 | Microsoft Flight Simulator |
+| 105 | boyfriend | 1 | MiSide |
+| 106 | performer | 1 | BattleBlock Theater |
+| 107 | car collector | 1 | Forza Horizon 5 |
+| 108 | card collector | 1 | TCG Card Shop Simulator |
+| 109 | card shop owner | 1 | TCG Card Shop Simulator |
+| 110 | cat burglar | 1 | Batman: Arkham City - Game of the Year Edition |
+| 111 | gang boss | 1 | Saints Row: The Third |
+| 112 | circuit tinkerer | 1 | Minecraft |
+| 113 | city boy | 1 | Senren*Banka |
+| 114 | city mayor | 1 | Cities: Skylines |
+| 115 | clan champion | 1 | Monster Train |
+| 116 | sorcerer | 1 | Divinity: Original Sin 2 - Definitive Edition |
+| 117 | college student | 1 | Resident Evil 2 |
+| 118 | pioneer | 1 | Satisfactory |
+| 119 | tinkerer | 1 | Universe Sandbox |
+| 120 | crash junkie | 1 | Burnout Paradise Remastered |
+| 121 | crash tester | 1 | BeamNG.drive |
+| 122 | crime lord | 1 | STAR WARS Empire at War - Gold Pack |
+| 123 | estate heir | 1 | Darkest Dungeon |
+| 124 | undead | 1 | DARK SOULS: REMASTERED |
+| 125 | ninja | 1 | METAL GEAR RISING: REVENGEANCE |
+| 126 | relative | 1 | What Remains of Edith Finch |
+| 127 | Viking warrior | 1 | Valheim |
+| 128 | deep-sea explorer | 1 | Subnautica |
+| 129 | demolition derby driver | 1 | Wreckfest |
+| 130 | demolition thief | 1 | Teardown |
+| 131 | demon hunter | 1 | Devil May Cry 5 |
+| 132 | gambler | 1 | Buckshot Roulette |
+| 133 | parent | 1 | It Takes Two |
+| 134 | expedition member | 1 | Clair Obscur: Expedition 33 |
+| 135 | drift racer | 1 | CarX Drift Racing Online |
+| 136 | drifter | 1 | Days Gone |
+| 137 | biker | 1 | Days Gone |
+| 138 | noble heir | 1 | Griftlands |
+| 139 | old man | 1 | To the Moon |
+| 140 | beast warrior | 1 | Rivals of Aether |
+| 141 | monster | 1 | SCP: Secret Laboratory |
+| 142 | young adult | 1 | Wobbly Life |
+| 143 | employee | 1 | Lethal Company |
+| 144 | facility guard | 1 | SCP: Secret Laboratory |
+| 145 | prodigy | 1 | ATRI -My Dear Moments- |
+| 146 | sheriff | 1 | The Wolf Among Us |
+| 147 | fantasy writer | 1 | Split Fiction |
+| 148 | farm animal | 1 | Ultimate Chicken Horse |
+| 149 | farm tycoon | 1 | Farming Simulator 19 |
+| 150 | fencer | 1 | Nidhogg |
+| 151 | food stall owner | 1 | Touhou Mystia's Izakaya |
+| 152 | foot soldier | 1 | Ravenfield |
+| 153 | lore seeker | 1 | Cultist Simulator |
+| 154 | child soldier | 1 | METAL GEAR RISING: REVENGEANCE |
+| 155 | game maker | 1 | Dreams |
+| 156 | game master | 1 | Arma 3 |
+| 157 | player | 1 | MiSide |
+| 158 | gang enforcer | 1 | Red Dead Redemption 2 |
+| 159 | gang soldier | 1 | Sleeping Dogs: Definitive Edition |
+| 160 | garden defender | 1 | Plants vs. Zombies |
+| 161 | gentleman thief | 1 | Persona 5 Royal |
+| 162 | wizard | 1 | Hogwarts Legacy |
+| 163 | widower | 1 | SILENT HILL 2 |
+| 164 | handyman | 1 | House Flipper |
+| 165 | gunslinger | 1 | Enter the Gungeon |
+| 166 | heist crew member | 1 | PAYDAY 2 |
+| 167 | heist planner | 1 | Teardown |
+| 168 | train conductor | 1 | Monster Train |
+| 169 | hero dispatcher | 1 | Dispatch |
+| 170 | hero guild master | 1 | Darkest Dungeon |
+| 171 | war hero | 1 | Age of Empires II: Definitive Edition |
+| 172 | space traveler | 1 | Starbound |
+| 173 | horde slayer | 1 | Megabonk |
+| 174 | hospital intern | 1 | Rhythm Doctor |
+| 175 | house flipper | 1 | House Flipper |
+| 176 | housekeeper | 1 | Detroit: Become Human |
+| 177 | ex-soldier | 1 | BioShock Infinite |
+| 178 | insurance investigator | 1 | Return of the Obra Dinn |
+| 179 | investigative reporter | 1 | Outlast |
+| 180 | puzzle solver | 1 | The Room |
+| 181 | jellyfish seller | 1 | Shelldiver |
+| 182 | junkyard inventor | 1 | Scrap Mechanic |
+| 183 | kart racer | 1 | Sonic & All-Stars Racing Transformed |
+| 184 | lab nerd | 1 | Abiotic Factor |
+| 185 | courier | 1 | Fallout: New Vegas |
+| 186 | level designer | 1 | Super Mario Maker 2 |
+| 187 | toy | 1 | Sheepy: A Short Adventure |
+| 188 | block builder | 1 | Minecraft |
+| 189 | fisherman | 1 | DREDGE |
+| 190 | young man | 1 | Everlasting Summer |
+| 191 | camper | 1 | Everlasting Summer |
+| 192 | scout | 1 | PEAK |
+| 193 | machine programmer | 1 | Stormworks: Build and Rescue |
+| 194 | magical girl | 1 | Magical Girl Witch Trials |
+| 195 | assassin | 1 | Dishonored |
+| 196 | bank robber | 1 | PAYDAY 2 |
+| 197 | mech engineer | 1 | Dyson Sphere Program |
+| 198 | mech pilot | 1 | Titanfall 2 |
+| 199 | medium's assistant | 1 | Phoenix Wright: Ace Attorney Trilogy |
+| 200 | megastructure engineer | 1 | Dyson Sphere Program |
+| 201 | metro ranger | 1 | METRO 2033 Redux |
+| 202 | metro survivor | 1 | METRO 2033 Redux |
+| 203 | mobster's son | 1 | Hotline Miami 2: Wrong Number |
+| 204 | monster hunter | 1 | The Witcher 3: Wild Hunt |
+| 205 | monster tamer | 1 | Palworld |
+| 206 | cyborg | 1 | Hi-Fi RUSH |
+| 207 | zombie | 1 | Left 4 Dead |
+| 208 | poet | 1 | Devil May Cry 5 |
+| 209 | nation leader | 1 | Sid Meier's Civilization V |
+| 210 | boat captain | 1 | DREDGE |
+| 211 | newcomer | 1 | Stardew Valley |
+| 212 | night guard | 1 | Ultimate Custom Night |
+| 213 | noble's bodyguard | 1 | Kingdom Come: Deliverance II |
+| 214 | off-road trucker | 1 | SnowRunner |
+| 215 | turtle | 1 | Shelldiver |
+| 216 | shinobi | 1 | Sekiro: Shadows Die Twice |
+| 217 | one-man army | 1 | Broforce |
+| 218 | orphan | 1 | Ori and the Blind Forest: Definitive Edition |
+| 219 | orphan's guardian | 1 | The Walking Dead |
+| 220 | baller | 1 | Lethal League Blaze |
+| 221 | gunman | 1 | Red Dead Redemption 2 |
+| 222 | parkour runner | 1 | Dying Light |
+| 223 | party leader | 1 | Baldur's Gate 3 |
+| 224 | plane crash survivor | 1 | The Forest |
+| 225 | planet thrower | 1 | Universe Sandbox |
+| 226 | poacher | 1 | How to Fish |
+| 227 | presidential bodyguard | 1 | Resident Evil 4 (2005) |
+| 228 | pressure washer | 1 | PowerWash Simulator |
+| 229 | student | 1 | Persona 5 Royal |
+| 230 | quarantine survivor | 1 | Project Zomboid |
+| 231 | racing team owner | 1 | DiRT Rally 2.0 |
+| 232 | raft castaway | 1 | Raft |
+| 233 | rally driver | 1 | DiRT Rally 2.0 |
+| 234 | realm's champion | 1 | Mortal Kombat 11 |
+| 235 | rebel leader | 1 | STAR WARS Empire at War - Gold Pack |
+| 236 | exile | 1 | ELDEN RING |
+| 237 | rescue captain | 1 | Stormworks: Build and Rescue |
+| 238 | rescue driver | 1 | SnowRunner |
+| 239 | rescue vehicle builder | 1 | Stormworks: Build and Rescue |
+| 240 | superhero | 1 | Dispatch |
+| 241 | war veteran | 1 | SANABI |
+| 242 | rhythm fighter | 1 | Beat Saber |
+| 243 | demigod | 1 | Grim Dawn |
+| 244 | rocket engineer | 1 | Kerbal Space Program |
+| 245 | defense lawyer | 1 | Phoenix Wright: Ace Attorney Trilogy |
+| 246 | street fighter | 1 | Street Fighter 6 |
+| 247 | salvage robot | 1 | R.E.P.O. |
+| 248 | samurai lord | 1 | Ghost of Tsushima DIRECTOR'S CUT |
+| 249 | scavenger | 1 | This War of Mine |
+| 250 | sci-fi writer | 1 | Split Fiction |
+| 251 | android | 1 | SIGNALIS |
+| 252 | husband | 1 | Resident Evil 7 Biohazard |
+| 253 | impostor | 1 | Among Us |
+| 254 | samurai | 1 | Ghost of Tsushima DIRECTOR'S CUT |
+| 255 | sharpshooter | 1 | Killing Floor |
+| 256 | ship engineer | 1 | Barotrauma |
+| 257 | shipwreck survivor | 1 | Tomb Raider |
+| 258 | photo student | 1 | Life is Strange - Episode 1 |
+| 259 | siege engineer | 1 | Besiege |
+| 260 | hunter | 1 | Slay the Spire |
+| 261 | single cell | 1 | Spore |
+| 262 | slave | 1 | Kenshi |
+| 263 | dealer | 1 | Schedule I |
+| 264 | space commando | 1 | Stellar Blade |
+| 265 | dwarf | 1 | Deep Rock Galactic |
+| 266 | space exile | 1 | Starbound |
+| 267 | space explorer | 1 | Outer Wilds |
+| 268 | space program boss | 1 | Kerbal Space Program |
+| 269 | spaceship crewmate | 1 | Among Us |
+| 270 | spellsword | 1 | Blade and Sorcery |
+| 271 | crook | 1 | The Henry Stickmin Collection |
+| 272 | cat | 1 | Stray |
+| 273 | street car tuner | 1 | CarX Drift Racing Online |
+| 274 | street racer | 1 | Burnout Paradise Remastered |
+| 275 | pizza chef | 1 | Pizza Tower |
+| 276 | submarine captain | 1 | Barotrauma |
+| 277 | submarine crew member | 1 | Barotrauma |
+| 278 | super soldier | 1 | Halo: The Master Chief Collection |
+| 279 | superhero commander | 1 | Marvel Snap |
+| 280 | supermarket clerk | 1 | Supermarket Together |
+| 281 | sword bearer | 1 | Senren*Banka |
+| 282 | tank driver | 1 | Ravenfield |
+| 283 | terraforming convict | 1 | The Planet Crafter |
+| 284 | time trial racer | 1 | TrackMania Nations Forever |
+| 285 | FBI analyst | 1 | Resident Evil Requiem |
+| 286 | square | 1 | Just Shapes & Beats |
+| 287 | town painter | 1 | Townscaper |
+| 288 | track builder | 1 | TrackMania Nations Forever |
+| 289 | traitor | 1 | Barotrauma |
+| 290 | car | 1 | Sonic & All-Stars Racing Transformed |
+| 291 | tribe chief | 1 | Spore |
+| 292 | true-crime writer | 1 | Hotline Miami 2: Wrong Number |
+| 293 | guide | 1 | OneShot |
+| 294 | uploaded mind | 1 | Clone Drone in the Danger Zone |
+| 295 | bird | 1 | A Short Hike |
+| 296 | vampire hunter | 1 | Vampire Survivors |
+| 297 | village dressmaker | 1 | Dressmaker |
+| 298 | idol | 1 | HoloCure - Save the Fans! |
+| 299 | virtual pet keeper | 1 | VPet-Simulator |
+| 300 | walking disaster | 1 | POSTAL 2 |
+| 301 | wand crafter | 1 | Noita |
+| 302 | martial artist | 1 | Street Fighter 6 |
+| 303 | rock star | 1 | Hi-Fi RUSH |
+| 304 | war civilian | 1 | This War of Mine |
+| 305 | war robot | 1 | ULTRAKILL |
+| 306 | warrior princess | 1 | Hollow Knight: Silksong |
+| 307 | wasteland drifter | 1 | Fallout: New Vegas |
+| 308 | willing sacrifice | 1 | Nidhogg |
+| 309 | dreamer | 1 | Human Fall Flat |
+| 310 | traveler | 1 | Chants of Sennaar |
+| 311 | king | 1 | Mount & Blade: Warband |
+| 312 | yokai cook | 1 | Touhou Mystia's Izakaya |
+| 313 | resistance fighter | 1 | Half-Life: Alyx |
+| 314 | yourself | 1 | OneShot |
+| 315 | ferry captain | 1 | Spiritfarer: Farewell Edition |
+| 316 | spirit | 1 | Spiritfarer: Farewell Edition |
+| 317 | match fixer | 1 | There Is No Game: Wrong Dimension |
+| 318 | crime scene cleaner | 1 | Crime Scene Cleaner |
+| 319 | convict | 1 | Ace Combat 7: Skies Unknown |
+| 320 | pilot | 1 | Ace Combat 7: Skies Unknown |
+| 321 | village craftsman | 1 | Kingdom Come: Deliverance II |
+| 322 | blacksmith | 1 | Kingdom Come: Deliverance II |
+| 323 | customs officer | 1 | Papers, Please |
+| 324 | bakery tycoon | 1 | Cookie Clicker |
+| 325 | desktop pet | 1 | Bongo Cat |
+| 326 | dream therapist | 1 | To the Moon |
+| 327 | creature rancher | 1 | Slime Rancher |
+| 328 | diver | 1 | DAVE THE DIVER |
+| 329 | animal | 0 |  |
+| 330 | vegetable | 0 |  |
+| 331 | fruit | 0 |  |
