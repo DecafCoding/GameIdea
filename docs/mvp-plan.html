@@ -389,7 +389,7 @@ Genre                     (21 values. Meanings are in the Genres table.
 <h3>Cue rules</h3>
 <p>The user writes the libraries. These rules are guidance for the user, and the conversion step reports cues that break them. Pool sizes come from the libraries. The earlier targets of about 150 cues for each core deck and about 80 for each optional deck are guidance only.</p>
 <ul>
-  <li>Use general phrases. Do not use proper names or game titles.</li>
+  <li>Use general phrases. Do not use game titles, or made-up proper names from a game or story, for example "Middle Earth". Real places and eras, for example "feudal japan", "mars" or "mythic greece", are fine, because no one owns them.</li>
   <li>Keep each cue inside its deck's cue form in the Decks table.</li>
   <li>A Player Role cue names the character only. A multi-word character is fine when every word is part of what the character is, for example "bounty hunter" or "lighthouse keeper". A word that describes the character, for example "amnesiac" or "one-armed", goes in the Modifier deck instead.</li>
   <li>Cues are bare. They carry no joining words, because the badges supply them.</li>
@@ -439,6 +439,7 @@ Genre                     (21 values. Meanings are in the Genres table.
 <p class="meta">2026-11-02: Review fixes. The pools come from a split of <code>docs/libraries/decks.json</code>, not from the Markdown files, and the Library format risk is removed. Two split rules fix badge grammar: the Constraint lead word ("No", "Only") is lowercased, and a leading "the", "a" or "an" is dropped from Setting cues, so "in the" never reads "in the the". The Constraint badge choice "using only" became "and". Stale "7 genres" text now says 21. The Required-rows done criterion names the Partial row. Changed Scope, Deferred, Data model, Interfaces, Architecture, M3, M4, Done criteria and Risks. Changed by the user's request after a review.</p>
 <p class="meta">2026-11-02: The hidden <code>generic</code> tag and the Generic fill are removed. The genre tags in the 4 genre-tagged decks were reviewed: 428 of 998 cues were retagged, mostly with genres they fit but did not list. No old generic cue fit every genre, so each got a genre list. 3 Constraint cues that fit every genre list all 21. A floor of 10 cues for each genre in each tagged deck replaces the fill. The split and a unit test check it. After the retag, the smallest pools are Progression Fighting (19) and Resource Metroidvania (20). Changed Data model, Rules, State and failure, M3 and Done criteria. Changed by the user's request after a review.</p>
 <p class="meta">2026-11-02: Player Role cues name the character only. Descriptions moved to the Modifier deck: 404 Player Role cues became 329 (splits, merged duplicates and 23 drops), and the Modifier deck grew from 266 to 344. Changed Cue rules. Changed by the user's request after a review.</p>
+<p class="meta">2026-11-02: Setting cues name the place only, like Player Role. Descriptions moved to the Modifier deck, except where the place is a whole world, for example "flooded world". 273 Setting cues became 218. The proper-name cue rule now says it means made-up names, and that real places and eras are fine. Changed Cue rules. Changed by the user's request after a review.</p>
 
 </body>
 </html>

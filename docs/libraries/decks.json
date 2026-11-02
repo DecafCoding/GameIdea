@@ -12784,7 +12784,60 @@
   ],
   "Setting": [
     {
-      "card": "zombie-filled town",
+      "card": "city",
+      "games": [
+        "Resident Evil 2",
+        "Killing Floor",
+        "Resident Evil Requiem",
+        "Dying Light",
+        "Saints Row: The Third",
+        "Sleeping Dogs: Definitive Edition",
+        "Schedule I",
+        "Lethal League Blaze",
+        "Detroit: Become Human",
+        "Hotline Miami",
+        "Hotline Miami 2: Wrong Number",
+        "Half-Life: Alyx",
+        "Half-Life 2",
+        "Cultist Simulator",
+        "The Wolf Among Us",
+        "SANABI",
+        "This War of Mine",
+        "Devil May Cry 5",
+        "BioShock Infinite",
+        "Rise of the Tomb Raider",
+        "Katana ZERO",
+        "Burnout Paradise Remastered",
+        "Batman: Arkham City - Game of the Year Edition",
+        "Persona 3 Reload",
+        "Stellar Blade",
+        "Dishonored"
+      ]
+    },
+    {
+      "card": "kingdom",
+      "games": [
+        "Kingdom Come: Deliverance II",
+        "Mount & Blade: Warband",
+        "Besiege",
+        "Age of Empires II: Definitive Edition",
+        "Age of Empires II (Retired)",
+        "ELDEN RING",
+        "DARK SOULS: REMASTERED",
+        "DARK SOULS III",
+        "Castle Crashers",
+        "Super Mario Maker 2",
+        "Baldur's Gate 3",
+        "Undertale",
+        "Gwent: The Witcher Card Game",
+        "The Witcher 3: Wild Hunt",
+        "Skullgirls",
+        "Hollow Knight",
+        "Hollow Knight: Silksong"
+      ]
+    },
+    {
+      "card": "town",
       "games": [
         "Left 4 Dead 2",
         "The Walking Dead: The Telltale Definitive Series",
@@ -12792,7 +12845,21 @@
         "Project Zomboid",
         "The Walking Dead",
         "Unturned",
-        "Left 4 Dead"
+        "Left 4 Dead",
+        "Teardown",
+        "A Hat in Time"
+      ]
+    },
+    {
+      "card": "islands",
+      "games": [
+        "DREDGE",
+        "Valheim",
+        "How to Fish",
+        "Black & White",
+        "Arma 3",
+        "Crab Champions",
+        "The Witcher 3: Wild Hunt"
       ]
     },
     {
@@ -12807,17 +12874,18 @@
       ]
     },
     {
-      "card": "medieval kingdom",
+      "card": "alien planet",
       "games": [
-        "Kingdom Come: Deliverance II",
-        "Mount & Blade: Warband",
-        "Besiege",
-        "Age of Empires II: Definitive Edition",
-        "Age of Empires II (Retired)"
+        "Factorio",
+        "Spore",
+        "Risk of Rain 2",
+        "Satisfactory",
+        "The Planet Crafter",
+        "Dragon Ball FighterZ"
       ]
     },
     {
-      "card": "quiet country town",
+      "card": "country town",
       "games": [
         "Persona 4 Golden",
         "OMORI",
@@ -12827,30 +12895,12 @@
       ]
     },
     {
-      "card": "hostile alien planet",
-      "games": [
-        "Factorio",
-        "Spore",
-        "Risk of Rain 2",
-        "Satisfactory"
-      ]
-    },
-    {
       "card": "outer space",
       "games": [
         "Spore",
         "Universe Sandbox",
         "Wobbly Life",
         "STAR WARS Empire at War - Gold Pack"
-      ]
-    },
-    {
-      "card": "quarantined city",
-      "games": [
-        "Resident Evil 2",
-        "Killing Floor",
-        "Resident Evil Requiem",
-        "Dying Light"
       ]
     },
     {
@@ -12872,27 +12922,65 @@
       ]
     },
     {
-      "card": "ancient tombs",
+      "card": "caves",
+      "games": [
+        "Minecraft",
+        "The Binding of Isaac",
+        "The Forest",
+        "Deep Rock Galactic"
+      ]
+    },
+    {
+      "card": "village",
+      "games": [
+        "Resident Evil 4",
+        "Resident Evil 4 (2005)",
+        "Fields of Mistria",
+        "Resident Evil Village"
+      ]
+    },
+    {
+      "card": "wilderness",
+      "games": [
+        "Don't Starve",
+        "Don't Starve Together",
+        "Days Gone",
+        "The Walking Dead: Season Two"
+      ]
+    },
+    {
+      "card": "forest",
+      "games": [
+        "Ori and the Will of the Wisps",
+        "Ori and the Blind Forest: Definitive Edition",
+        "A Hat in Time",
+        "Vampire Survivors"
+      ]
+    },
+    {
+      "card": "galaxy",
+      "games": [
+        "FTL: Faster Than Light",
+        "STAR WARS Empire at War - Gold Pack",
+        "Starbound",
+        "Dyson Sphere Program"
+      ]
+    },
+    {
+      "card": "island",
+      "games": [
+        "Mortal Kombat 11",
+        "Rust",
+        "Tomb Raider",
+        "Muck"
+      ]
+    },
+    {
+      "card": "tombs",
       "games": [
         "Gunfire Reborn",
         "Tomb Raider",
         "Rise of the Tomb Raider"
-      ]
-    },
-    {
-      "card": "crime-ridden city",
-      "games": [
-        "Saints Row: The Third",
-        "Sleeping Dogs: Definitive Edition",
-        "Schedule I"
-      ]
-    },
-    {
-      "card": "deep caves",
-      "games": [
-        "Minecraft",
-        "The Binding of Isaac",
-        "The Forest"
       ]
     },
     {
@@ -12904,15 +12992,7 @@
       ]
     },
     {
-      "card": "dying kingdom",
-      "games": [
-        "ELDEN RING",
-        "DARK SOULS: REMASTERED",
-        "DARK SOULS III"
-      ]
-    },
-    {
-      "card": "frozen wilds",
+      "card": "wilds",
       "games": [
         "Wildfrost",
         "Gunfire Reborn",
@@ -12920,7 +13000,7 @@
       ]
     },
     {
-      "card": "gothic castle",
+      "card": "castle",
       "games": [
         "Resident Evil 4",
         "Resident Evil 4 (2005)",
@@ -12944,7 +13024,7 @@
       ]
     },
     {
-      "card": "small starship",
+      "card": "starship",
       "games": [
         "FTL: Faster Than Light",
         "Among Us",
@@ -12968,6 +13048,30 @@
       ]
     },
     {
+      "card": "arena",
+      "games": [
+        "Duck Game",
+        "Stick Fight: The Game",
+        "Brotato"
+      ]
+    },
+    {
+      "card": "planet",
+      "games": [
+        "RimWorld",
+        "Titanfall 2",
+        "Griftlands"
+      ]
+    },
+    {
+      "card": "highway",
+      "games": [
+        "BeamNG.drive",
+        "American Truck Simulator",
+        "Euro Truck Simulator 2"
+      ]
+    },
+    {
       "card": "a bank",
       "games": [
         "The Henry Stickmin Collection",
@@ -12975,7 +13079,7 @@
       ]
     },
     {
-      "card": "abandoned science lab",
+      "card": "science lab",
       "games": [
         "Portal 2",
         "Portal"
@@ -12989,7 +13093,7 @@
       ]
     },
     {
-      "card": "alien border world",
+      "card": "borderland",
       "games": [
         "Half-Life",
         "Black Mesa"
@@ -13010,21 +13114,14 @@
       ]
     },
     {
-      "card": "basement below home",
+      "card": "basement",
       "games": [
         "The Binding of Isaac: Rebirth",
         "The Binding of Isaac"
       ]
     },
     {
-      "card": "cartoon kingdom",
-      "games": [
-        "Castle Crashers",
-        "Super Mario Maker 2"
-      ]
-    },
-    {
-      "card": "creepy apartment block",
+      "card": "apartment block",
       "games": [
         "Sally Face - Episode One",
         "SILENT HILL 2"
@@ -13038,35 +13135,14 @@
       ]
     },
     {
-      "card": "cult-run village",
-      "games": [
-        "Resident Evil 4",
-        "Resident Evil 4 (2005)"
-      ]
-    },
-    {
-      "card": "dark wilderness",
-      "games": [
-        "Don't Starve",
-        "Don't Starve Together"
-      ]
-    },
-    {
-      "card": "deathtrap arena",
-      "games": [
-        "Duck Game",
-        "Stick Fight: The Game"
-      ]
-    },
-    {
-      "card": "deep mines",
+      "card": "mines",
       "games": [
         "Stardew Valley",
         "Noita"
       ]
     },
     {
-      "card": "deep sea trench",
+      "card": "trench",
       "games": [
         "DAVE THE DIVER",
         "Subnautica"
@@ -13080,13 +13156,6 @@
       ]
     },
     {
-      "card": "dying forest",
-      "games": [
-        "Ori and the Will of the Wisps",
-        "Ori and the Blind Forest: Definitive Edition"
-      ]
-    },
-    {
       "card": "dying man's memories",
       "games": [
         "To the Moon",
@@ -13094,35 +13163,21 @@
       ]
     },
     {
-      "card": "frozen nordic land",
+      "card": "nordic land",
       "games": [
         "The Elder Scrolls V: Skyrim Special Edition",
         "The Elder Scrolls V: Skyrim"
       ]
     },
     {
-      "card": "future earth",
+      "card": "Earth",
       "games": [
         "Redout",
         "Halo: The Master Chief Collection"
       ]
     },
     {
-      "card": "galaxy at war",
-      "games": [
-        "FTL: Faster Than Light",
-        "STAR WARS Empire at War - Gold Pack"
-      ]
-    },
-    {
-      "card": "haunted forest",
-      "games": [
-        "A Hat in Time",
-        "Vampire Survivors"
-      ]
-    },
-    {
-      "card": "haunted house",
+      "card": "house",
       "games": [
         "Phasmophobia",
         "R.E.P.O."
@@ -13150,38 +13205,10 @@
       ]
     },
     {
-      "card": "misty islands",
-      "games": [
-        "DREDGE",
-        "Valheim"
-      ]
-    },
-    {
-      "card": "modern megacity",
+      "card": "megacity",
       "games": [
         "Persona 5 Royal",
         "Marvel's Spider-Man Remastered"
-      ]
-    },
-    {
-      "card": "near-future city",
-      "games": [
-        "Lethal League Blaze",
-        "Detroit: Become Human"
-      ]
-    },
-    {
-      "card": "neon 1980s city",
-      "games": [
-        "Hotline Miami",
-        "Hotline Miami 2: Wrong Number"
-      ]
-    },
-    {
-      "card": "occupied city",
-      "games": [
-        "Half-Life: Alyx",
-        "Half-Life 2"
       ]
     },
     {
@@ -13189,13 +13216,6 @@
       "games": [
         "BeamNG.drive",
         "SnowRunner"
-      ]
-    },
-    {
-      "card": "open highway",
-      "games": [
-        "BeamNG.drive",
-        "American Truck Simulator"
       ]
     },
     {
@@ -13213,13 +13233,6 @@
       ]
     },
     {
-      "card": "post-plague wilderness",
-      "games": [
-        "Days Gone",
-        "The Walking Dead: Season Two"
-      ]
-    },
-    {
       "card": "prison",
       "games": [
         "Phasmophobia",
@@ -13234,52 +13247,38 @@
       ]
     },
     {
-      "card": "random galaxy",
-      "games": [
-        "Starbound",
-        "Dyson Sphere Program"
-      ]
-    },
-    {
-      "card": "school book club",
+      "card": "school clubroom",
       "games": [
         "Doki Doki Literature Club!",
         "Doki Doki Literature Club Plus!"
       ]
     },
     {
-      "card": "secret desert lab",
+      "card": "desert lab",
       "games": [
         "Half-Life",
         "Black Mesa"
       ]
     },
     {
-      "card": "shifting spire",
+      "card": "spire",
       "games": [
         "Slay the Spire",
         "Persona 3 Reload"
       ]
     },
     {
-      "card": "smoky card table",
+      "card": "card table",
       "games": [
         "Hand of Fate",
         "Balatro"
       ]
     },
     {
-      "card": "sterile test chamber",
+      "card": "test chamber",
       "games": [
         "People Playground",
         "Portal"
-      ]
-    },
-    {
-      "card": "strange islands",
-      "games": [
-        "How to Fish",
-        "Black & White"
       ]
     },
     {
@@ -13290,7 +13289,7 @@
       ]
     },
     {
-      "card": "tiny solar system",
+      "card": "solar system",
       "games": [
         "Outer Wilds",
         "Kerbal Space Program"
@@ -13304,17 +13303,10 @@
       ]
     },
     {
-      "card": "underground anomaly lab",
+      "card": "anomaly lab",
       "games": [
         "Abiotic Factor",
         "SCP: Secret Laboratory"
-      ]
-    },
-    {
-      "card": "underground monster kingdom",
-      "games": [
-        "Baldur's Gate 3",
-        "Undertale"
       ]
     },
     {
@@ -13325,23 +13317,45 @@
       ]
     },
     {
-      "card": "war-torn feudal japan",
+      "card": "feudal japan",
       "games": [
         "Ghost of Tsushima DIRECTOR'S CUT",
         "Sekiro: Shadows Die Twice"
       ]
     },
     {
-      "card": "war-torn kingdom",
+      "card": "hospital",
       "games": [
-        "Gwent: The Witcher Card Game",
-        "The Witcher 3: Wild Hunt"
+        "SILENT HILL 2",
+        "Rhythm Doctor"
       ]
     },
     {
-      "card": "1920s occult city",
+      "card": "sea",
       "games": [
-        "Cultist Simulator"
+        "Townscaper",
+        "How to Fish"
+      ]
+    },
+    {
+      "card": "dungeon",
+      "games": [
+        "Enter the Gungeon",
+        "Blade and Sorcery"
+      ]
+    },
+    {
+      "card": "research base",
+      "games": [
+        "DOOM",
+        "SOMA"
+      ]
+    },
+    {
+      "card": "war zone",
+      "games": [
+        "METAL GEAR RISING: REVENGEANCE",
+        "Hotline Miami 2: Wrong Number"
       ]
     },
     {
@@ -13351,13 +13365,7 @@
       ]
     },
     {
-      "card": "1980s fairy-tale city",
-      "games": [
-        "The Wolf Among Us"
-      ]
-    },
-    {
-      "card": "1990s countryside",
+      "card": "countryside",
       "games": [
         "My Summer Car"
       ]
@@ -13375,61 +13383,37 @@
       ]
     },
     {
-      "card": "abandoned hospital",
-      "games": [
-        "SILENT HILL 2"
-      ]
-    },
-    {
-      "card": "abandoned moons",
+      "card": "moons",
       "games": [
         "Lethal Company"
       ]
     },
     {
-      "card": "abandoned school",
+      "card": "school",
       "games": [
         "Phasmophobia"
       ]
     },
     {
-      "card": "ai-run neon city",
-      "games": [
-        "SANABI"
-      ]
-    },
-    {
-      "card": "alien arena",
-      "games": [
-        "Brotato"
-      ]
-    },
-    {
-      "card": "alien caves",
-      "games": [
-        "Deep Rock Galactic"
-      ]
-    },
-    {
-      "card": "alien hive",
+      "card": "hive",
       "games": [
         "Broforce"
       ]
     },
     {
-      "card": "alien ocean planet",
+      "card": "ocean planet",
       "games": [
         "Subnautica"
       ]
     },
     {
-      "card": "alien ranch",
+      "card": "ranch",
       "games": [
         "Slime Rancher"
       ]
     },
     {
-      "card": "alien warship",
+      "card": "warship",
       "games": [
         "Halo: The Master Chief Collection"
       ]
@@ -13441,19 +13425,7 @@
       ]
     },
     {
-      "card": "art-deco 1940s kingdom",
-      "games": [
-        "Skullgirls"
-      ]
-    },
-    {
-      "card": "barren alien planet",
-      "games": [
-        "The Planet Crafter"
-      ]
-    },
-    {
-      "card": "bird film studio",
+      "card": "film studio",
       "games": [
         "A Hat in Time"
       ]
@@ -13471,19 +13443,13 @@
       ]
     },
     {
-      "card": "busy airports",
+      "card": "airports",
       "games": [
         "Microsoft Flight Simulator"
       ]
     },
     {
-      "card": "busy hospital",
-      "games": [
-        "Rhythm Doctor"
-      ]
-    },
-    {
-      "card": "candy-bright tech campus",
+      "card": "tech campus",
       "games": [
         "Hi-Fi RUSH"
       ]
@@ -13501,21 +13467,15 @@
       ]
     },
     {
-      "card": "cartoon battlefield",
+      "card": "battlefield",
       "games": [
         "Ravenfield"
       ]
     },
     {
-      "card": "cat-run theater",
+      "card": "theater",
       "games": [
         "BattleBlock Theater"
-      ]
-    },
-    {
-      "card": "city under siege",
-      "games": [
-        "This War of Mine"
       ]
     },
     {
@@ -13525,13 +13485,13 @@
       ]
     },
     {
-      "card": "corporate salvage ship",
+      "card": "salvage ship",
       "games": [
         "Lethal Company"
       ]
     },
     {
-      "card": "cosmic bakery",
+      "card": "bakery",
       "games": [
         "Cookie Clicker"
       ]
@@ -13543,7 +13503,7 @@
       ]
     },
     {
-      "card": "cramped rooms",
+      "card": "rooms",
       "games": [
         "Fights in Tight Spaces"
       ]
@@ -13561,45 +13521,39 @@
       ]
     },
     {
-      "card": "cursed island castle",
+      "card": "island castle",
       "games": [
         "Dead Cells"
       ]
     },
     {
-      "card": "cursed manor",
+      "card": "manor",
       "games": [
         "Darkest Dungeon"
       ]
     },
     {
-      "card": "cyberpunk dive bar",
+      "card": "dive bar",
       "games": [
         "VA-11 Hall-A: Cyberpunk Bartender Action"
       ]
     },
     {
-      "card": "dark cabin",
+      "card": "cabin",
       "games": [
         "Inscryption"
       ]
     },
     {
-      "card": "dark factory",
+      "card": "factory",
       "games": [
         "Lethal Company"
       ]
     },
     {
-      "card": "dark study",
+      "card": "study",
       "games": [
         "The Room"
-      ]
-    },
-    {
-      "card": "demon tree city",
-      "games": [
-        "Devil May Cry 5"
       ]
     },
     {
@@ -13609,19 +13563,13 @@
       ]
     },
     {
-      "card": "desert casino strip",
+      "card": "casino strip",
       "games": [
         "Fallout: New Vegas"
       ]
     },
     {
-      "card": "destructible town",
-      "games": [
-        "Teardown"
-      ]
-    },
-    {
-      "card": "dying wild west",
+      "card": "wild west",
       "games": [
         "Red Dead Redemption 2"
       ]
@@ -13645,25 +13593,13 @@
       ]
     },
     {
-      "card": "endless calm sea",
-      "games": [
-        "Townscaper"
-      ]
-    },
-    {
-      "card": "european highways",
-      "games": [
-        "Euro Truck Simulator 2"
-      ]
-    },
-    {
       "card": "fighting tournament",
       "games": [
         "Tekken 8"
       ]
     },
     {
-      "card": "filthy small town",
+      "card": "small town",
       "games": [
         "PowerWash Simulator"
       ]
@@ -13681,19 +13617,13 @@
       ]
     },
     {
-      "card": "flying city",
-      "games": [
-        "BioShock Infinite"
-      ]
-    },
-    {
-      "card": "foggy lake town",
+      "card": "lake town",
       "games": [
         "SILENT HILL 2"
       ]
     },
     {
-      "card": "food tower",
+      "card": "tower",
       "games": [
         "Pizza Tower"
       ]
@@ -13711,31 +13641,19 @@
       ]
     },
     {
-      "card": "frontier planet",
-      "games": [
-        "RimWorld"
-      ]
-    },
-    {
-      "card": "frontier war planet",
-      "games": [
-        "Titanfall 2"
-      ]
-    },
-    {
-      "card": "frozen crater city",
+      "card": "crater city",
       "games": [
         "Frostpunk"
       ]
     },
     {
-      "card": "frozen hell train",
+      "card": "train",
       "games": [
         "Monster Train"
       ]
     },
     {
-      "card": "frozen mining prison",
+      "card": "mining prison",
       "games": [
         "SIGNALIS"
       ]
@@ -13747,31 +13665,19 @@
       ]
     },
     {
-      "card": "green alien planet",
-      "games": [
-        "Dragon Ball FighterZ"
-      ]
-    },
-    {
-      "card": "grim factory farm",
+      "card": "factory farm",
       "games": [
         "INSIDE"
       ]
     },
     {
-      "card": "gritty city streets",
+      "card": "city streets",
       "games": [
         "Street Fighter 6"
       ]
     },
     {
-      "card": "gun dungeon",
-      "games": [
-        "Enter the Gungeon"
-      ]
-    },
-    {
-      "card": "haunted mountain",
+      "card": "mountain",
       "games": [
         "Celeste"
       ]
@@ -13795,13 +13701,13 @@
       ]
     },
     {
-      "card": "hero dispatch office",
+      "card": "dispatch office",
       "games": [
         "Dispatch"
       ]
     },
     {
-      "card": "hollow asteroid",
+      "card": "asteroid",
       "games": [
         "Oxygen Not Included"
       ]
@@ -13837,21 +13743,9 @@
       ]
     },
     {
-      "card": "inside the tv",
-      "games": [
-        "Persona 4 Golden"
-      ]
-    },
-    {
       "card": "island hiking park",
       "games": [
         "A Short Hike"
-      ]
-    },
-    {
-      "card": "island outside time",
-      "games": [
-        "Mortal Kombat 11"
       ]
     },
     {
@@ -13861,7 +13755,7 @@
       ]
     },
     {
-      "card": "jungle terror camp",
+      "card": "jungle camp",
       "games": [
         "Broforce"
       ]
@@ -13873,21 +13767,9 @@
       ]
     },
     {
-      "card": "lost city",
-      "games": [
-        "Rise of the Tomb Raider"
-      ]
-    },
-    {
-      "card": "lost spaceship",
+      "card": "spaceship",
       "games": [
         "SIGNALIS"
-      ]
-    },
-    {
-      "card": "mafia town",
-      "games": [
-        "A Hat in Time"
       ]
     },
     {
@@ -13897,25 +13779,7 @@
       ]
     },
     {
-      "card": "mars research base",
-      "games": [
-        "DOOM"
-      ]
-    },
-    {
-      "card": "medieval dungeon",
-      "games": [
-        "Blade and Sorcery"
-      ]
-    },
-    {
-      "card": "mediterranean islands",
-      "games": [
-        "Arma 3"
-      ]
-    },
-    {
-      "card": "misty highlands",
+      "card": "highlands",
       "games": [
         "Hogwarts Legacy"
       ]
@@ -13963,33 +13827,21 @@
       ]
     },
     {
-      "card": "mythic ancient china",
+      "card": "china",
       "games": [
         "Black Myth: Wukong"
       ]
     },
     {
-      "card": "mythic greece",
+      "card": "greece",
       "games": [
         "Hades II"
       ]
     },
     {
-      "card": "near-future war zone",
-      "games": [
-        "METAL GEAR RISING: REVENGEANCE"
-      ]
-    },
-    {
-      "card": "neon music tunnel",
+      "card": "tunnel",
       "games": [
         "Beat Saber"
-      ]
-    },
-    {
-      "card": "neon noir city",
-      "games": [
-        "Katana ZERO"
       ]
     },
     {
@@ -14011,13 +13863,13 @@
       ]
     },
     {
-      "card": "ocean under ice",
+      "card": "ocean",
       "games": [
         "Barotrauma"
       ]
     },
     {
-      "card": "odd family home",
+      "card": "family home",
       "games": [
         "What Remains of Edith Finch"
       ]
@@ -14029,37 +13881,25 @@
       ]
     },
     {
-      "card": "open sea",
-      "games": [
-        "How to Fish"
-      ]
-    },
-    {
-      "card": "open-world city",
-      "games": [
-        "Burnout Paradise Remastered"
-      ]
-    },
-    {
       "card": "outback island",
       "games": [
         "Big Walk"
       ]
     },
     {
-      "card": "overgrown farm",
+      "card": "farm",
       "games": [
         "Stardew Valley"
       ]
     },
     {
-      "card": "overrun police station",
+      "card": "police station",
       "games": [
         "Resident Evil 2"
       ]
     },
     {
-      "card": "pizzeria at night",
+      "card": "pizzeria",
       "games": [
         "Ultimate Custom Night"
       ]
@@ -14071,27 +13911,15 @@
       ]
     },
     {
-      "card": "post-nuclear desert",
+      "card": "desert",
       "games": [
         "Fallout: New Vegas"
       ]
     },
     {
-      "card": "post-nuclear metro",
+      "card": "metro",
       "games": [
         "METRO 2033 Redux"
-      ]
-    },
-    {
-      "card": "prison city",
-      "games": [
-        "Batman: Arkham City - Game of the Year Edition"
-      ]
-    },
-    {
-      "card": "quake-struck village",
-      "games": [
-        "Fields of Mistria"
       ]
     },
     {
@@ -14101,25 +13929,25 @@
       ]
     },
     {
-      "card": "remote mountain village",
+      "card": "mountain village",
       "games": [
         "Firework"
       ]
     },
     {
-      "card": "ring world",
+      "card": "orbital ring",
       "games": [
         "Halo: The Master Chief Collection"
       ]
     },
     {
-      "card": "rival company bases",
+      "card": "company bases",
       "games": [
         "Team Fortress 2"
       ]
     },
     {
-      "card": "roadside food cart",
+      "card": "food cart",
       "games": [
         "Touhou Mystia's Izakaya"
       ]
@@ -14131,37 +13959,25 @@
       ]
     },
     {
-      "card": "robot-run farm planet",
+      "card": "farm planet",
       "games": [
         "Scrap Mechanic"
       ]
     },
     {
-      "card": "rotting swamp farmhouse",
+      "card": "swamp farmhouse",
       "games": [
         "Resident Evil 7 Biohazard"
       ]
     },
     {
-      "card": "ruin-strewn island",
-      "games": [
-        "Rust"
-      ]
-    },
-    {
-      "card": "ruined bug kingdom",
-      "games": [
-        "Hollow Knight"
-      ]
-    },
-    {
-      "card": "ruined coast highway",
+      "card": "coast highway",
       "games": [
         "Half-Life 2"
       ]
     },
     {
-      "card": "ruined hamlet",
+      "card": "hamlet",
       "games": [
         "Darkest Dungeon"
       ]
@@ -14173,19 +13989,19 @@
       ]
     },
     {
-      "card": "run-down harbor district",
+      "card": "harbor district",
       "games": [
         "Disco Elysium - The Final Cut"
       ]
     },
     {
-      "card": "run-down suburbs",
+      "card": "suburbs",
       "games": [
         "House Flipper"
       ]
     },
     {
-      "card": "rural farmland",
+      "card": "farmland",
       "games": [
         "Farming Simulator 19"
       ]
@@ -14197,27 +14013,21 @@
       ]
     },
     {
-      "card": "sealed high school",
+      "card": "high school",
       "games": [
         "Danganronpa: Trigger Happy Havoc"
       ]
     },
     {
-      "card": "seaside lighthouse",
+      "card": "lighthouse",
       "games": [
         "To the Moon"
       ]
     },
     {
-      "card": "seaside sushi bar",
+      "card": "sushi bar",
       "games": [
         "DAVE THE DIVER"
-      ]
-    },
-    {
-      "card": "secret midnight city",
-      "games": [
-        "Persona 3 Reload"
       ]
     },
     {
@@ -14227,49 +14037,37 @@
       ]
     },
     {
-      "card": "silk-woven kingdom",
-      "games": [
-        "Hollow Knight: Silksong"
-      ]
-    },
-    {
-      "card": "sinking seaside town",
+      "card": "seaside town",
       "games": [
         "ATRI -My Dear Moments-"
       ]
     },
     {
-      "card": "small coastal town",
+      "card": "coastal town",
       "games": [
         "Life is Strange - Episode 1"
       ]
     },
     {
-      "card": "small island village",
+      "card": "island village",
       "games": [
         "Stacklands"
       ]
     },
     {
-      "card": "small-town supermarket",
+      "card": "supermarket",
       "games": [
         "Supermarket Together"
       ]
     },
     {
-      "card": "snowy camp",
+      "card": "camp",
       "games": [
         "The Walking Dead: Season Two"
       ]
     },
     {
-      "card": "snowy village",
-      "games": [
-        "Resident Evil Village"
-      ]
-    },
-    {
-      "card": "soviet summer camp",
+      "card": "summer camp",
       "games": [
         "Everlasting Summer"
       ]
@@ -14287,37 +14085,19 @@
       ]
     },
     {
-      "card": "space tile path",
-      "games": [
-        "A Dance of Fire and Ice"
-      ]
-    },
-    {
-      "card": "spreading corruption",
-      "games": [
-        "Terraria"
-      ]
-    },
-    {
-      "card": "stone cellar",
+      "card": "cellar",
       "games": [
         "Slay the Princess — The Pristine Cut"
       ]
     },
     {
-      "card": "storm-wrecked island",
-      "games": [
-        "Tomb Raider"
-      ]
-    },
-    {
-      "card": "stormy island seas",
+      "card": "island seas",
       "games": [
         "Super Smash Bros. Ultimate"
       ]
     },
     {
-      "card": "strange casino",
+      "card": "casino",
       "games": [
         "Balatro"
       ]
@@ -14329,7 +14109,7 @@
       ]
     },
     {
-      "card": "suburban backyard",
+      "card": "backyard",
       "games": [
         "Plants vs. Zombies"
       ]
@@ -14341,7 +14121,7 @@
       ]
     },
     {
-      "card": "sunny open country",
+      "card": "open country",
       "games": [
         "Forza Horizon 5"
       ]
@@ -14350,18 +14130,6 @@
       "card": "swamp city",
       "games": [
         "Left 4 Dead 2"
-      ]
-    },
-    {
-      "card": "swampy frontier planet",
-      "games": [
-        "Griftlands"
-      ]
-    },
-    {
-      "card": "the last city",
-      "games": [
-        "Stellar Blade"
       ]
     },
     {
@@ -14389,51 +14157,15 @@
       ]
     },
     {
-      "card": "tropical islands",
-      "games": [
-        "Crab Champions"
-      ]
-    },
-    {
-      "card": "tropical war zone",
-      "games": [
-        "Hotline Miami 2: Wrong Number"
-      ]
-    },
-    {
-      "card": "turtle village",
-      "games": [
-        "Shelldiver"
-      ]
-    },
-    {
-      "card": "uncharted island",
-      "games": [
-        "Muck"
-      ]
-    },
-    {
-      "card": "underground card ring",
+      "card": "card den",
       "games": [
         "Ring of Pain"
       ]
     },
     {
-      "card": "underground club backroom",
+      "card": "club backroom",
       "games": [
         "Buckshot Roulette"
-      ]
-    },
-    {
-      "card": "undersea feast ship",
-      "games": [
-        "Little Nightmares"
-      ]
-    },
-    {
-      "card": "undersea research base",
-      "games": [
-        "SOMA"
       ]
     },
     {
@@ -14443,19 +14175,13 @@
       ]
     },
     {
-      "card": "viking islands",
-      "games": [
-        "The Witcher 3: Wild Hunt"
-      ]
-    },
-    {
-      "card": "viking purgatory",
+      "card": "purgatory",
       "games": [
         "Valheim"
       ]
     },
     {
-      "card": "void at world's end",
+      "card": "the void",
       "games": [
         "Minecraft"
       ]
@@ -14467,13 +14193,13 @@
       ]
     },
     {
-      "card": "walled robot city",
+      "card": "robot city",
       "games": [
         "Stray"
       ]
     },
     {
-      "card": "war-torn skies",
+      "card": "skies",
       "games": [
         "Ace Combat 7: Skies Unknown"
       ]
@@ -14485,19 +14211,13 @@
       ]
     },
     {
-      "card": "warring realms",
+      "card": "realms",
       "games": [
         "Mortal Kombat 11"
       ]
     },
     {
-      "card": "whale-oil plague city",
-      "games": [
-        "Dishonored"
-      ]
-    },
-    {
-      "card": "wizard school castle",
+      "card": "wizard school",
       "games": [
         "Hogwarts Legacy"
       ]
@@ -14521,7 +14241,7 @@
       ]
     },
     {
-      "card": "world-spanning tracks",
+      "card": "tracks",
       "games": [
         "Redout"
       ]
@@ -15548,7 +15268,8 @@
         "Tekken 8",
         "Skullgirls",
         "Darkest Dungeon",
-        "DARK SOULS: REMASTERED"
+        "DARK SOULS: REMASTERED",
+        "Dead Cells"
       ]
     },
     {
@@ -15584,7 +15305,9 @@
         "Just Shapes & Beats",
         "Stacklands",
         "Townscaper",
-        "It Takes Two"
+        "It Takes Two",
+        "Outer Wilds",
+        "Kerbal Space Program"
       ]
     },
     {
@@ -15615,7 +15338,27 @@
         "Hollow Knight: Silksong",
         "Ultimate Custom Night",
         "Ring of Pain",
-        "Enter the Gungeon"
+        "Enter the Gungeon",
+        "A Hat in Time",
+        "Vampire Survivors",
+        "Celeste"
+      ]
+    },
+    {
+      "card": "alien",
+      "games": [
+        "Subnautica",
+        "Satisfactory",
+        "Factorio",
+        "Slime Rancher",
+        "Half-Life: Alyx",
+        "Spore",
+        "Half-Life",
+        "Black Mesa",
+        "Brotato",
+        "Deep Rock Galactic",
+        "Broforce",
+        "Halo: The Master Chief Collection"
       ]
     },
     {
@@ -15641,7 +15384,9 @@
         "Wildfrost",
         "Universe Sandbox",
         "The Elder Scrolls V: Skyrim Special Edition",
-        "Rise of the Tomb Raider"
+        "Rise of the Tomb Raider",
+        "Gunfire Reborn",
+        "SIGNALIS"
       ]
     },
     {
@@ -15657,14 +15402,75 @@
       ]
     },
     {
-      "card": "alien",
+      "card": "ruined",
       "games": [
-        "Subnautica",
-        "Satisfactory",
-        "Factorio",
-        "Slime Rancher",
-        "Half-Life: Alyx",
-        "Spore"
+        "Hollow Knight",
+        "Grim Dawn",
+        "BeamNG.drive",
+        "Wreckfest",
+        "ELDEN RING",
+        "Half-Life 2",
+        "Darkest Dungeon"
+      ]
+    },
+    {
+      "card": "secret",
+      "games": [
+        "Fights in Tight Spaces",
+        "Crime Scene Cleaner",
+        "Persona 4 Golden",
+        "Persona 3 Reload",
+        "Among Us",
+        "Half-Life",
+        "Black Mesa"
+      ]
+    },
+    {
+      "card": "dying",
+      "games": [
+        "Red Dead Redemption 2",
+        "To the Moon",
+        "Ori and the Blind Forest: Definitive Edition",
+        "ELDEN RING",
+        "DARK SOULS: REMASTERED",
+        "DARK SOULS III",
+        "Ori and the Will of the Wisps"
+      ]
+    },
+    {
+      "card": "underground",
+      "games": [
+        "Undertale",
+        "METRO 2033 Redux",
+        "Abiotic Factor",
+        "SCP: Secret Laboratory",
+        "Baldur's Gate 3",
+        "Ring of Pain",
+        "Buckshot Roulette"
+      ]
+    },
+    {
+      "card": "war-torn",
+      "games": [
+        "The Witcher 3: Wild Hunt",
+        "FTL: Faster Than Light",
+        "STAR WARS Empire at War - Gold Pack",
+        "Ghost of Tsushima DIRECTOR'S CUT",
+        "Sekiro: Shadows Die Twice",
+        "Gwent: The Witcher Card Game",
+        "Ace Combat 7: Skies Unknown"
+      ]
+    },
+    {
+      "card": "zombie-filled",
+      "games": [
+        "Left 4 Dead 2",
+        "The Walking Dead: The Telltale Definitive Series",
+        "Half-Life 2",
+        "Project Zomboid",
+        "The Walking Dead",
+        "Unturned",
+        "Left 4 Dead"
       ]
     },
     {
@@ -15795,7 +15601,41 @@
         "Lethal Company",
         "Portal",
         "Phasmophobia",
-        "DARK SOULS: REMASTERED"
+        "DARK SOULS: REMASTERED",
+        "SILENT HILL 2"
+      ]
+    },
+    {
+      "card": "ancient",
+      "games": [
+        "Sid Meier's Civilization V",
+        "Outer Wilds",
+        "Gunfire Reborn",
+        "Shelldiver",
+        "Tomb Raider",
+        "Rise of the Tomb Raider"
+      ]
+    },
+    {
+      "card": "lost",
+      "games": [
+        "Undertale",
+        "Big Walk",
+        "Everlasting Summer",
+        "PEAK",
+        "Rise of the Tomb Raider",
+        "SIGNALIS"
+      ]
+    },
+    {
+      "card": "medieval",
+      "games": [
+        "Age of Empires II (Retired)",
+        "Besiege",
+        "Age of Empires II: Definitive Edition",
+        "Kingdom Come: Deliverance II",
+        "Mount & Blade: Warband",
+        "Blade and Sorcery"
       ]
     },
     {
@@ -15826,16 +15666,6 @@
         "Mirror",
         "Magical Girl Witch Trials",
         "Blade and Sorcery"
-      ]
-    },
-    {
-      "card": "ruined",
-      "games": [
-        "Hollow Knight",
-        "Grim Dawn",
-        "BeamNG.drive",
-        "Wreckfest",
-        "ELDEN RING"
       ]
     },
     {
@@ -15889,22 +15719,83 @@
       ]
     },
     {
-      "card": "secret",
+      "card": "shifting",
       "games": [
-        "Fights in Tight Spaces",
-        "Crime Scene Cleaner",
-        "Persona 4 Golden",
-        "Persona 3 Reload",
-        "Among Us"
+        "Slay the Spire",
+        "DAVE THE DIVER",
+        "Slay the Princess — The Pristine Cut",
+        "Sonic & All-Stars Racing Transformed",
+        "Persona 3 Reload"
       ]
     },
     {
-      "card": "ancient",
+      "card": "random",
       "games": [
-        "Sid Meier's Civilization V",
-        "Outer Wilds",
-        "Gunfire Reborn",
-        "Shelldiver"
+        "Terraria",
+        "The Binding of Isaac: Rebirth",
+        "Muck",
+        "Starbound",
+        "Dyson Sphere Program"
+      ]
+    },
+    {
+      "card": "quarantined",
+      "games": [
+        "Dying Light",
+        "Project Zomboid",
+        "Resident Evil 2",
+        "Killing Floor",
+        "Resident Evil Requiem"
+      ]
+    },
+    {
+      "card": "hostile",
+      "games": [
+        "Deep Rock Galactic",
+        "Factorio",
+        "Spore",
+        "Risk of Rain 2",
+        "Satisfactory"
+      ]
+    },
+    {
+      "card": "quiet",
+      "games": [
+        "DELTARUNE",
+        "Persona 4 Golden",
+        "OMORI",
+        "Stardew Valley",
+        "South Park: The Stick of Truth"
+      ]
+    },
+    {
+      "card": "deep",
+      "games": [
+        "Minecraft",
+        "The Binding of Isaac",
+        "The Forest",
+        "Stardew Valley",
+        "Noita"
+      ]
+    },
+    {
+      "card": "small",
+      "games": [
+        "FTL: Faster Than Light",
+        "Among Us",
+        "Starbound",
+        "Life is Strange - Episode 1",
+        "Stacklands"
+      ]
+    },
+    {
+      "card": "dark",
+      "games": [
+        "Don't Starve",
+        "Don't Starve Together",
+        "Inscryption",
+        "Lethal Company",
+        "The Room"
       ]
     },
     {
@@ -15962,15 +15853,6 @@
       ]
     },
     {
-      "card": "shifting",
-      "games": [
-        "Slay the Spire",
-        "DAVE THE DIVER",
-        "Slay the Princess — The Pristine Cut",
-        "Sonic & All-Stars Racing Transformed"
-      ]
-    },
-    {
       "card": "starving",
       "games": [
         "Don't Starve",
@@ -15980,21 +15862,48 @@
       ]
     },
     {
-      "card": "lost",
-      "games": [
-        "Undertale",
-        "Big Walk",
-        "Everlasting Summer",
-        "PEAK"
-      ]
-    },
-    {
       "card": "retired",
       "games": [
         "Shelldiver",
         "Dispatch",
         "God of War",
         "SANABI"
+      ]
+    },
+    {
+      "card": "hollow",
+      "games": [
+        "DARK SOULS III",
+        "DARK SOULS: REMASTERED",
+        "Ring of Pain",
+        "Oxygen Not Included"
+      ]
+    },
+    {
+      "card": "last",
+      "games": [
+        "Halo: The Master Chief Collection",
+        "Frostpunk",
+        "What Remains of Edith Finch",
+        "Stellar Blade"
+      ]
+    },
+    {
+      "card": "gothic",
+      "games": [
+        "Vampire Survivors",
+        "Don't Starve",
+        "Resident Evil 4",
+        "Resident Evil 4 (2005)"
+      ]
+    },
+    {
+      "card": "strange",
+      "games": [
+        "Don't Starve Together",
+        "How to Fish",
+        "Black & White",
+        "Balatro"
       ]
     },
     {
@@ -16027,14 +15936,6 @@
         "Deep Rock Galactic",
         "Teardown",
         "Brick Rigs"
-      ]
-    },
-    {
-      "card": "dying",
-      "games": [
-        "Red Dead Redemption 2",
-        "To the Moon",
-        "Ori and the Blind Forest: Definitive Edition"
       ]
     },
     {
@@ -16078,14 +15979,6 @@
       ]
     },
     {
-      "card": "hollow",
-      "games": [
-        "DARK SOULS III",
-        "DARK SOULS: REMASTERED",
-        "Ring of Pain"
-      ]
-    },
-    {
       "card": "hunted",
       "games": [
         "INSIDE",
@@ -16099,14 +15992,6 @@
         "Outer Wilds",
         "Slay the Princess — The Pristine Cut",
         "TrackMania Nations Forever"
-      ]
-    },
-    {
-      "card": "medieval",
-      "games": [
-        "Age of Empires II (Retired)",
-        "Besiege",
-        "Age of Empires II: Definitive Edition"
       ]
     },
     {
@@ -16134,14 +16019,6 @@
       ]
     },
     {
-      "card": "random",
-      "games": [
-        "Terraria",
-        "The Binding of Isaac: Rebirth",
-        "Muck"
-      ]
-    },
-    {
       "card": "self-aware",
       "games": [
         "Doki Doki Literature Club!",
@@ -16163,14 +16040,6 @@
         "My Summer Car",
         "Disco Elysium - The Final Cut",
         "Griftlands"
-      ]
-    },
-    {
-      "card": "last",
-      "games": [
-        "Halo: The Master Chief Collection",
-        "Frostpunk",
-        "What Remains of Edith Finch"
       ]
     },
     {
@@ -16219,6 +16088,70 @@
         "MiSide",
         "BattleBlock Theater",
         "Hollow Knight: Silksong"
+      ]
+    },
+    {
+      "card": "cosmic",
+      "games": [
+        "Marvel Snap",
+        "Universe Sandbox",
+        "Cookie Clicker"
+      ]
+    },
+    {
+      "card": "busy",
+      "games": [
+        "Supermarket Together",
+        "Microsoft Flight Simulator",
+        "Rhythm Doctor"
+      ]
+    },
+    {
+      "card": "walled",
+      "games": [
+        "Age of Empires II (Retired)",
+        "Batman: Arkham City - Game of the Year Edition",
+        "Stray"
+      ]
+    },
+    {
+      "card": "crime-ridden",
+      "games": [
+        "Saints Row: The Third",
+        "Sleeping Dogs: Definitive Edition",
+        "Schedule I"
+      ]
+    },
+    {
+      "card": "cartoon",
+      "games": [
+        "Castle Crashers",
+        "Super Mario Maker 2",
+        "Ravenfield"
+      ]
+    },
+    {
+      "card": "misty",
+      "games": [
+        "DREDGE",
+        "Valheim",
+        "Hogwarts Legacy"
+      ]
+    },
+    {
+      "card": "near-future",
+      "games": [
+        "Lethal League Blaze",
+        "Detroit: Become Human",
+        "METAL GEAR RISING: REVENGEANCE"
+      ]
+    },
+    {
+      "card": "open",
+      "games": [
+        "BeamNG.drive",
+        "American Truck Simulator",
+        "How to Fish"
       ]
     },
     {
@@ -16369,13 +16302,6 @@
       ]
     },
     {
-      "card": "gothic",
-      "games": [
-        "Vampire Survivors",
-        "Don't Starve"
-      ]
-    },
-    {
       "card": "growing",
       "games": [
         "Volcano Princess",
@@ -16502,13 +16428,6 @@
       ]
     },
     {
-      "card": "quarantined",
-      "games": [
-        "Dying Light",
-        "Project Zomboid"
-      ]
-    },
-    {
       "card": "reformed",
       "games": [
         "Dispatch",
@@ -16544,13 +16463,6 @@
       ]
     },
     {
-      "card": "underground",
-      "games": [
-        "Undertale",
-        "METRO 2033 Redux"
-      ]
-    },
-    {
       "card": "vengeful",
       "games": [
         "SANABI",
@@ -16562,13 +16474,6 @@
       "games": [
         "VA-11 Hall-A: Cyberpunk Bartender Action",
         "Marvel's Spider-Man Remastered"
-      ]
-    },
-    {
-      "card": "cosmic",
-      "games": [
-        "Marvel Snap",
-        "Universe Sandbox"
       ]
     },
     {
@@ -16733,6 +16638,125 @@
       ]
     },
     {
+      "card": "corporate",
+      "games": [
+        "Satisfactory",
+        "Lethal Company"
+      ]
+    },
+    {
+      "card": "frontier",
+      "games": [
+        "RimWorld",
+        "Titanfall 2"
+      ]
+    },
+    {
+      "card": "mythic",
+      "games": [
+        "Black Myth: Wukong",
+        "Hades II"
+      ]
+    },
+    {
+      "card": "run-down",
+      "games": [
+        "House Flipper",
+        "Disco Elysium - The Final Cut"
+      ]
+    },
+    {
+      "card": "sterile",
+      "games": [
+        "Portal",
+        "People Playground"
+      ]
+    },
+    {
+      "card": "creepy",
+      "games": [
+        "Sally Face - Episode One",
+        "SILENT HILL 2"
+      ]
+    },
+    {
+      "card": "cult-run",
+      "games": [
+        "Resident Evil 4",
+        "Resident Evil 4 (2005)"
+      ]
+    },
+    {
+      "card": "deathtrap",
+      "games": [
+        "Duck Game",
+        "Stick Fight: The Game"
+      ]
+    },
+    {
+      "card": "future",
+      "games": [
+        "Redout",
+        "Halo: The Master Chief Collection"
+      ]
+    },
+    {
+      "card": "modern",
+      "games": [
+        "Persona 5 Royal",
+        "Marvel's Spider-Man Remastered"
+      ]
+    },
+    {
+      "card": "1980s",
+      "games": [
+        "Hotline Miami",
+        "Hotline Miami 2: Wrong Number"
+      ]
+    },
+    {
+      "card": "post-plague",
+      "games": [
+        "Days Gone",
+        "The Walking Dead: Season Two"
+      ]
+    },
+    {
+      "card": "smoky",
+      "games": [
+        "Hand of Fate",
+        "Balatro"
+      ]
+    },
+    {
+      "card": "post-nuclear",
+      "games": [
+        "Fallout: New Vegas",
+        "METRO 2033 Redux"
+      ]
+    },
+    {
+      "card": "seaside",
+      "games": [
+        "To the Moon",
+        "DAVE THE DIVER"
+      ]
+    },
+    {
+      "card": "snowy",
+      "games": [
+        "The Walking Dead: Season Two",
+        "Resident Evil Village"
+      ]
+    },
+    {
+      "card": "tropical",
+      "games": [
+        "Crab Champions",
+        "Hotline Miami 2: Wrong Number"
+      ]
+    },
+    {
       "card": "all-star",
       "games": [
         "Sonic & All-Stars Racing Transformed"
@@ -16817,12 +16841,6 @@
       ]
     },
     {
-      "card": "busy",
-      "games": [
-        "Supermarket Together"
-      ]
-    },
-    {
       "card": "camouflaged",
       "games": [
         "Bloons TD 6"
@@ -16880,12 +16898,6 @@
       "card": "cornered",
       "games": [
         "Fights in Tight Spaces"
-      ]
-    },
-    {
-      "card": "corporate",
-      "games": [
-        "Satisfactory"
       ]
     },
     {
@@ -17039,12 +17051,6 @@
       ]
     },
     {
-      "card": "frontier",
-      "games": [
-        "RimWorld"
-      ]
-    },
-    {
       "card": "furious",
       "games": [
         "DOOM"
@@ -17141,12 +17147,6 @@
       ]
     },
     {
-      "card": "hostile",
-      "games": [
-        "Deep Rock Galactic"
-      ]
-    },
-    {
       "card": "immune",
       "games": [
         "Left 4 Dead"
@@ -17216,12 +17216,6 @@
       "card": "molten",
       "games": [
         "The Powder Toy"
-      ]
-    },
-    {
-      "card": "mythic",
-      "games": [
-        "Black Myth: Wukong"
       ]
     },
     {
@@ -17393,12 +17387,6 @@
       ]
     },
     {
-      "card": "run-down",
-      "games": [
-        "House Flipper"
-      ]
-    },
-    {
       "card": "sacred",
       "games": [
         "Senren*Banka"
@@ -17444,18 +17432,6 @@
       "card": "spotless",
       "games": [
         "PowerWash Simulator"
-      ]
-    },
-    {
-      "card": "sterile",
-      "games": [
-        "Portal"
-      ]
-    },
-    {
-      "card": "strange",
-      "games": [
-        "Don't Starve Together"
       ]
     },
     {
@@ -17582,18 +17558,6 @@
       "card": "unstoppable",
       "games": [
         "DOOM Eternal"
-      ]
-    },
-    {
-      "card": "walled",
-      "games": [
-        "Age of Empires II (Retired)"
-      ]
-    },
-    {
-      "card": "war-torn",
-      "games": [
-        "The Witcher 3: Wild Hunt"
       ]
     },
     {
@@ -17750,12 +17714,6 @@
       "card": "probationary",
       "games": [
         "Persona 5 Royal"
-      ]
-    },
-    {
-      "card": "quiet",
-      "games": [
-        "DELTARUNE"
       ]
     },
     {
@@ -17930,6 +17888,270 @@
       "card": "convict",
       "games": [
         "Ace Combat 7: Skies Unknown"
+      ]
+    },
+    {
+      "card": "1920s",
+      "games": [
+        "Cultist Simulator"
+      ]
+    },
+    {
+      "card": "1990s",
+      "games": [
+        "My Summer Car"
+      ]
+    },
+    {
+      "card": "ai-run",
+      "games": [
+        "SANABI"
+      ]
+    },
+    {
+      "card": "art-deco",
+      "games": [
+        "Skullgirls"
+      ]
+    },
+    {
+      "card": "candy-bright",
+      "games": [
+        "Hi-Fi RUSH"
+      ]
+    },
+    {
+      "card": "cramped",
+      "games": [
+        "Fights in Tight Spaces"
+      ]
+    },
+    {
+      "card": "cyberpunk",
+      "games": [
+        "VA-11 Hall-A: Cyberpunk Bartender Action"
+      ]
+    },
+    {
+      "card": "demon-infested",
+      "games": [
+        "Devil May Cry 5"
+      ]
+    },
+    {
+      "card": "calm",
+      "games": [
+        "Townscaper"
+      ]
+    },
+    {
+      "card": "european",
+      "games": [
+        "Euro Truck Simulator 2"
+      ]
+    },
+    {
+      "card": "flying",
+      "games": [
+        "BioShock Infinite"
+      ]
+    },
+    {
+      "card": "foggy",
+      "games": [
+        "SILENT HILL 2"
+      ]
+    },
+    {
+      "card": "green",
+      "games": [
+        "Dragon Ball FighterZ"
+      ]
+    },
+    {
+      "card": "grim",
+      "games": [
+        "INSIDE"
+      ]
+    },
+    {
+      "card": "gritty",
+      "games": [
+        "Street Fighter 6"
+      ]
+    },
+    {
+      "card": "timeless",
+      "games": [
+        "Mortal Kombat 11"
+      ]
+    },
+    {
+      "card": "mob-run",
+      "games": [
+        "A Hat in Time"
+      ]
+    },
+    {
+      "card": "mediterranean",
+      "games": [
+        "Arma 3"
+      ]
+    },
+    {
+      "card": "noir",
+      "games": [
+        "Katana ZERO"
+      ]
+    },
+    {
+      "card": "ice-covered",
+      "games": [
+        "Barotrauma"
+      ]
+    },
+    {
+      "card": "odd",
+      "games": [
+        "What Remains of Edith Finch"
+      ]
+    },
+    {
+      "card": "open-world",
+      "games": [
+        "Burnout Paradise Remastered"
+      ]
+    },
+    {
+      "card": "overrun",
+      "games": [
+        "Resident Evil 2"
+      ]
+    },
+    {
+      "card": "remote",
+      "games": [
+        "Firework"
+      ]
+    },
+    {
+      "card": "rival",
+      "games": [
+        "Team Fortress 2"
+      ]
+    },
+    {
+      "card": "roadside",
+      "games": [
+        "Touhou Mystia's Izakaya"
+      ]
+    },
+    {
+      "card": "robot-run",
+      "games": [
+        "Scrap Mechanic"
+      ]
+    },
+    {
+      "card": "ruin-strewn",
+      "games": [
+        "Rust"
+      ]
+    },
+    {
+      "card": "rural",
+      "games": [
+        "Farming Simulator 19"
+      ]
+    },
+    {
+      "card": "sealed",
+      "games": [
+        "Danganronpa: Trigger Happy Havoc"
+      ]
+    },
+    {
+      "card": "silk-woven",
+      "games": [
+        "Hollow Knight: Silksong"
+      ]
+    },
+    {
+      "card": "sinking",
+      "games": [
+        "ATRI -My Dear Moments-"
+      ]
+    },
+    {
+      "card": "small-town",
+      "games": [
+        "Supermarket Together"
+      ]
+    },
+    {
+      "card": "soviet",
+      "games": [
+        "Everlasting Summer"
+      ]
+    },
+    {
+      "card": "stone",
+      "games": [
+        "Slay the Princess — The Pristine Cut"
+      ]
+    },
+    {
+      "card": "storm-wrecked",
+      "games": [
+        "Tomb Raider"
+      ]
+    },
+    {
+      "card": "stormy",
+      "games": [
+        "Super Smash Bros. Ultimate"
+      ]
+    },
+    {
+      "card": "sunny",
+      "games": [
+        "Forza Horizon 5"
+      ]
+    },
+    {
+      "card": "swampy",
+      "games": [
+        "Griftlands"
+      ]
+    },
+    {
+      "card": "uncharted",
+      "games": [
+        "Muck"
+      ]
+    },
+    {
+      "card": "undersea",
+      "games": [
+        "SOMA"
+      ]
+    },
+    {
+      "card": "viking",
+      "games": [
+        "The Witcher 3: Wild Hunt"
+      ]
+    },
+    {
+      "card": "warring",
+      "games": [
+        "Mortal Kombat 11"
+      ]
+    },
+    {
+      "card": "world-spanning",
+      "games": [
+        "Redout"
       ]
     },
     {
