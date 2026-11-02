@@ -108,7 +108,7 @@
 | 102 | Only puzzles | Horror, Narrative, Platformer, Metroidvania, Open World, Stealth & Immersive Sim | 2 | Sally Face - Episode One, Firework |
 | 103 | Only small teams | Shooter, Party & Multiplayer, Strategy, Fighting, RPG | 2 | Counter-Strike 2, Skullgirls |
 | 104 | Only the cards on the table | Deckbuilder & Cards | 2 | Stacklands, Hand of Fate |
-| 105 | Only a set number of portals at once | Puzzle, Platformer, Shooter | 2 | Portal 2, Portal |
+| 105 | Only a certain number of anything | Roguelike, Metroidvania, Platformer, Puzzle, Shooter, Melee Action, Fighting, RPG, Open World, Survival Craft, Horror, Builder & Management, Life Sim, Vehicle Sim & Racing, Strategy, Deckbuilder & Cards, Narrative, Stealth & Immersive Sim, Sandbox, Party & Multiplayer, Rhythm & Arcade | 2 | Portal 2, Portal |
 | 106 | Only VR | Shooter, Sandbox, Horror, Puzzle, Rhythm & Arcade, Vehicle Sim & Racing, Melee Action, Narrative, Stealth & Immersive Sim | 2 | Half-Life: Alyx, Blade and Sorcery |
 | 107 | No aiming | Rhythm & Arcade, Shooter, Roguelike, Melee Action | 1 | Brotato |
 | 108 | No camera cuts | Melee Action, Narrative, Horror, Shooter, Stealth & Immersive Sim, RPG, Open World | 1 | God of War |

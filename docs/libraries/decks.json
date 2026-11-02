@@ -24843,15 +24843,33 @@
       ]
     },
     {
-      "card": "Only a set number of portals at once",
+      "card": "Only a certain number of anything",
       "games": [
         "Portal 2",
         "Portal"
       ],
       "genres": [
-        "Puzzle",
+        "Roguelike",
+        "Metroidvania",
         "Platformer",
-        "Shooter"
+        "Puzzle",
+        "Shooter",
+        "Melee Action",
+        "Fighting",
+        "RPG",
+        "Open World",
+        "Survival Craft",
+        "Horror",
+        "Builder & Management",
+        "Life Sim",
+        "Vehicle Sim & Racing",
+        "Strategy",
+        "Deckbuilder & Cards",
+        "Narrative",
+        "Stealth & Immersive Sim",
+        "Sandbox",
+        "Party & Multiplayer",
+        "Rhythm & Arcade"
       ]
     },
     {
