@@ -119,7 +119,7 @@ Pool file
 <p>A one-time split makes these files from <code>docs/libraries/decks.json</code>. The split:</p>
 <ul>
   <li>maps each deck name in <code>decks.json</code> to its pool file,</li>
-  <li>copies <code>card</code> into <code>text</code> without change,</li>
+  <li>copies <code>card</code> into <code>text</code> without change, except for 2 grammar rules: it lowercases the first word of each Constraint cue ("No combat" becomes "no combat"), and it drops a leading "the", "a" or "an" from each Setting cue, because the Setting badge already ends in "the",</li>
   <li>maps the genre names in <code>genres.json</code> to their kebab-case values, and maps <code>any</code> to <code>generic</code>,</li>
   <li>drops the <code>games</code> lists, because they hold game titles, which the plan bans in cues,</li>
   <li>gives each cue a stable <code>id</code>.</li>
@@ -320,6 +320,7 @@ tests/e2e/          Playwright browser tests</code></pre>
 
 <h2>Amendments</h2>
 <p class="meta">2026-11-01: First version. Written from the <code>/dev-architecture</code> run against docs/mvp-plan.html, following the TheForge architecture at the user's request. The run added 2 checks to the plan's milestones: a story-name search in M1 and an 11-card stack test in M2. The plan records them in its own Amendments section.</p>
+<p class="meta">2026-11-02: The split gains 2 grammar rules for Constraint and Setting cues, to match the connector badges. Changed Cue pools. Changed by the user's request after a review, with docs/mvp-plan.html amended the same day.</p>
 
 </body>
 </html>

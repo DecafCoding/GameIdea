@@ -66,4 +66,4 @@ An optional fifth part is a comparison, such as "Stardew Valley meets Dark Souls
 
 The Genre filter needs a genre tag on every card. A card such as "rewind" fits many genres, so it needs many tags. This adds work when you build the pools.
 
-- [ ] Decide: tag each card with the genres it fits, or have the AI pick cards from a genre on each draw.
+- [x] Decided: tag each card with the genres it fits, on 4 decks only (Mechanic, Resource, Progression, Constraint). The other decks ignore genre. There is no AI pick. See `docs/mvp-plan.html`.
