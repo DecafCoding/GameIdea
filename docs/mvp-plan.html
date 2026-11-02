@@ -98,7 +98,7 @@
   <li data-checked="true">Autosave after each change, a warning when a save fails, and a warning when one board is open in 2 tabs</li>
   <li data-checked="true">Undo and redo for the open session</li>
   <li data-checked="true">Export to a text file, which holds each hook, and to a board file. Import of a board file.</li>
-  <li data-checked="true">Cue pools from the user's deck libraries in <code>docs/libraries/</code>, one Markdown file for each deck. A one-time conversion makes one JSON pool file for each deck. After that, the JSON files are the source, and the user edits them directly. In the 4 genre-tagged decks, each cue lists every genre it fits.</li>
+  <li data-checked="true">Cue pools from the user's deck libraries in <code>docs/libraries/</code>. A one-time split of <code>docs/libraries/decks.json</code> makes one JSON pool file for each deck. The split lowercases the first word of each Constraint cue and drops a leading "the", "a" or "an" from each Setting cue. Apart from those 2 rules, it does not change any cue text. After that, the JSON files are the source, and the user edits them directly. In the 4 genre-tagged decks, each cue lists every genre it fits.</li>
   <li data-checked="true">Desktop browsers only, with mouse and keyboard</li>
   <li data-checked="true">Local run at fixed ports, and HTTPS on the local network</li>
   <li data-checked="true">The TheForge visual design: tokens, fonts, dark canvas, shell and card look. <code>/dev-ui-update</code> adds the 11 deck colors and icons and the Hook Card design.</li>
@@ -111,7 +111,7 @@
   <li data-checked="false">An editable sentence or an "angle" line stored on the Hook Card</li>
   <li data-checked="false">Comparable shipped games for a hook, for example "X meets Y"</li>
   <li data-checked="false">AI help to expand a hook</li>
-  <li data-checked="false">Genres beyond the 7 in this plan</li>
+  <li data-checked="false">Genres beyond the 21 in this plan</li>
   <li data-checked="false">A Modifier on Mechanic or Mood cards</li>
   <li data-checked="false">Shared code between TheForge and GameIdea in a common package</li>
   <li data-checked="false">Server code and a database for the pools and the boards</li>
@@ -134,7 +134,7 @@
   view: { panX, panY, zoom }
   genres: { [deck]: Genre[] }   only for the 4 genre-tagged decks: mechanic,
                                 resource, progression, constraint. 1 or more each.
-                                All 7 on a new board. Changeable at any time.
+                                All 21 on a new board. Changeable at any time.
   cards: Card[]
   notes: Note[]
 
@@ -172,9 +172,9 @@ Pool                      (ships with the app. One JSON file for each deck.
                                   progression and constraint. Absent in the other 7.
 
 Genre                     (21 values. Meanings are in the Genres table.
-                           Plus generic: a cue tag that means "fits every genre".
-                           generic does not show in the Genres panel.)
-  generic | roguelike | metroidvania | platformer | puzzle | shooter | melee-action
+                           There is no "generic" or "any" value. A cue that
+                           fits every genre lists all 21.)
+  roguelike | metroidvania | platformer | puzzle | shooter | melee-action
   | fighting | rpg | open-world | survival-craft | horror
   | builder-management | life-sim | vehicle-sim-racing | strategy
   | deckbuilder-cards | narrative | stealth-immersive-sim | sandbox
@@ -209,11 +209,11 @@ Genre                     (21 values. Meanings are in the Genres table.
 <h3>Rules</h3>
 <ul>
   <li>A draw picks distinct cues from the deck's pool. One card never shows the same cue two times.</li>
-  <li>In the 4 genre-tagged decks, a draw uses only cues that share at least one genre with the deck's current genres. If too few cues match, the draw fills the card with Generic cues and shows a short notice.</li>
+  <li>In the 4 genre-tagged decks, a draw uses only cues that share at least one genre with the deck's current genres. Each of these decks always has at least 1 genre on, so a draw always has at least 10 cues to pick from.</li>
   <li>In the other 7 decks, a draw uses the full pool. Genre settings do not apply.</li>
   <li>A card stores a copy of its cues. A pool change or a genre change does not change cards on the board.</li>
-  <li>A cue lists every genre it fits. One cue counts toward each of its genres. A cue that fits every genre carries only the <code>generic</code> tag.</li>
-  <li>A <code>generic</code> cue matches any genre setting. The Genres panel does not show <code>generic</code>, and the user cannot turn it off.</li>
+  <li>A cue lists every genre it fits. One cue counts toward each of its genres. A cue that fits every genre lists all 21. There is no <code>generic</code> tag.</li>
+  <li>Each of the 21 genres has at least 10 cues in each of the 4 genre-tagged decks. The split checks this, and a unit test checks the pool files on each pull request, so a pool edit cannot break it.</li>
   <li>A 4-cue ring turns in steps of 90 degrees. A 2-cue ring turns in steps of 180 degrees.</li>
   <li>A tucked card moves with the card that it is tucked under.</li>
   <li>The first combine moves the Modifier's ring into rings[1] and deletes the Modifier card. A swap gives the old adjectives to the second Modifier, which appears beside the card. On Top places a second adjective before the first. Split moves rings[1] back into a new Modifier card beside the card. Each ring keeps its own active cue.</li>
@@ -279,7 +279,7 @@ Genre                     (21 values. Meanings are in the Genres table.
   <tr><td>Mood</td><td>It feels</td><td>The tone is</td></tr>
   <tr><td>Twist</td><td>Except</td><td>The catch:</td></tr>
   <tr><td>Progression</td><td>As you play,</td><td>Over time,</td></tr>
-  <tr><td>Constraint</td><td>with</td><td>using only</td></tr>
+  <tr><td>Constraint</td><td>with</td><td>and</td></tr>
 </table>
 
 <h3>Hints and drop zones</h3>
@@ -311,7 +311,7 @@ Genre                     (21 values. Meanings are in the Genres table.
   <li>Pattern: feature folders. Each feature has one folder with its screen parts, state actions, logic and tests.</li>
   <li>Screens use hash addresses: the board list at <code>#/</code>, a board at <code>#/board/{id}</code>.</li>
   <li>The boards save to IndexedDB, one record for each board. The app asks for persistent storage at start-up.</li>
-  <li>The cue pools ship inside the app files, one JSON file for each deck. A one-time conversion makes them from the Markdown libraries in <code>docs/libraries/</code>. After that, the JSON files are the source, and no build step reads the Markdown.</li>
+  <li>The cue pools ship inside the app files, one JSON file for each deck. A one-time split makes them from <code>docs/libraries/decks.json</code>. After that, the JSON files are the source, and no build step reads <code>decks.json</code> or the Markdown libraries.</li>
   <li>Ports, fixed: 5174 for development, 4174 for the built app, 4444 for HTTPS on the local network. The browser stores boards for each address and port, so the ports must not change. They differ from the TheForge ports, so both apps can run at the same time.</li>
   <li>There are no external services: no sign-in, no usage data and no AI.</li>
   <li>The start point is a copy of the TheForge code. The copy is renamed, and the story pools are removed.</li>
@@ -326,7 +326,7 @@ Genre                     (21 values. Meanings are in the Genres table.
   <tr><td>An import file is bad</td><td>The app rejects the file, shows a message and keeps the current boards.</td></tr>
   <tr><td>The user discards a card by mistake</td><td>Undo brings the card back.</td></tr>
   <tr><td>The browser data is cleared</td><td>The boards are lost. The board file export is the only backup.</td></tr>
-  <tr><td>The deck's genres give fewer cues than the card needs</td><td>The draw fills the card with Generic cues. A short notice names the deck.</td></tr>
+  <tr><td>A pool has a genre with fewer than 10 cues</td><td>This cannot reach the user. The split stops with an error, and the pool unit test fails the pull request. The user adds or retags cues.</td></tr>
   <tr><td>A Hook Card stack has 2 cards tucked under one card</td><td>The sentence reads them in order of their place on the canvas, top first.</td></tr>
   <tr><td>The top card under a Hook Card is not a Player Role</td><td>The sentence starts with that card's badge word.</td></tr>
   <tr><td>The user tries to tuck a Hook Card under a card</td><td>The app does not allow it.</td></tr>
@@ -368,15 +368,15 @@ Genre                     (21 values. Meanings are in the Genres table.
 <ul>
   <li>The finished core and Modifier libraries, converted to JSON. The Mechanic and Resource pools carry genre tags.</li>
   <li>The Genres panel and the genre mark on deck buttons.</li>
-  <li>The user writes the cues. Claude converts them and does not change their text.</li>
-  <li>Pass bar: every converted pool matches its library cue for cue. Genre filtering and the Generic fill work. Cue counts per genre are guidance only, about 30 in Mechanic and Resource.</li>
+  <li>The user writes the cues. Claude converts them and does not change their text, except for the 2 split rules in Scope (Constraint lead word lowercased, Setting leading article dropped).</li>
+  <li>Pass bar: every converted pool matches its library cue for cue, after the 2 split rules. Genre filtering works, and every genre has at least 10 cues in Mechanic and Resource. Cue counts per genre are guidance only, about 30 in Mechanic and Resource.</li>
 </ul>
 
 <h3>M4: Optional decks</h3>
 <ul>
   <li>The libraries for Setting, Mood, Twist, Progression and Constraint, converted to JSON. The Progression and Constraint pools carry genre tags.</li>
   <li>The grouped left rail.</li>
-  <li>Pass bar: every converted pool matches its library cue for cue. Cue counts per genre are guidance only, about 15 in Progression and Constraint.</li>
+  <li>Pass bar: every converted pool matches its library cue for cue, after the 2 split rules. Cue counts per genre are guidance only, about 15 in Progression and Constraint.</li>
 </ul>
 
 <h3>M5: Export and finish</h3>
@@ -389,8 +389,9 @@ Genre                     (21 values. Meanings are in the Genres table.
 <h3>Cue rules</h3>
 <p>The user writes the libraries. These rules are guidance for the user, and the conversion step reports cues that break them. Pool sizes come from the libraries. The earlier targets of about 150 cues for each core deck and about 80 for each optional deck are guidance only.</p>
 <ul>
-  <li>Use general phrases. Do not use proper names or game titles.</li>
+  <li>Use general phrases. Do not use game titles, or made-up proper names from a game or story, for example "Middle Earth". Real places and eras, for example "feudal japan", "mars" or "mythic greece", are fine, because no one owns them.</li>
   <li>Keep each cue inside its deck's cue form in the Decks table.</li>
+  <li>A Player Role cue names the character only. A multi-word character is fine when every word is part of what the character is, for example "bounty hunter" or "lighthouse keeper". A word that describes the character, for example "amnesiac" or "one-armed", goes in the Modifier deck instead.</li>
   <li>Cues are bare. They carry no joining words, because the badges supply them.</li>
   <li>Keep Genre and art style apart. A cue never names an art style as a genre.</li>
   <li>Do not copy cue lists from other idea generators or card decks.</li>
@@ -399,11 +400,11 @@ Genre                     (21 values. Meanings are in the Genres table.
 <h2>Done criteria</h2>
 <ul>
   <li>The M2 pass bars pass: at least 16 of 20 cards in each core deck and in the Modifier deck have a usable cue, and at least 12 of 20 hooks are ideas the user would build.</li>
-  <li>All 11 libraries are converted to JSON pool files that match them cue for cue. Per-genre cue counts are not a done criterion. The user tunes them after the app works.</li>
+  <li>All 11 libraries are converted to JSON pool files that match them cue for cue, after the 2 split rules. Per-genre cue counts above the 10-cue floor are not a done criterion. The user tunes them after the app works.</li>
   <li>The Hook Card shows the correct sentence for a full stack and for each failure case in State and failure. Copy puts that sentence on the clipboard as plain text.</li>
   <li>A genre change affects only the next draw. Cards already on the board do not change.</li>
   <li>Redraw All replaces every unlocked card in the stack and leaves locked cards as they are.</li>
-  <li>All 8 Required rows of the scan work in Chrome, Edge, Firefox and Safari on desktop.</li>
+  <li>All 8 Required rows of the scan work in Chrome, Edge, Firefox and Safari on desktop: the 7 In rows in full, and the Partial row (a draw fills a fixed set of concept slots) at the scope the scan states.</li>
   <li>Every carried-over feature in the Scope section works.</li>
   <li>The speed and first-load targets pass.</li>
   <li>An exported board file imports again with no data lost, and the text file holds each hook.</li>
@@ -416,7 +417,6 @@ Genre                     (21 values. Meanings are in the Genres table.
 <ul>
   <li>Draw quality. Random stacks can read as nonsense. M2 tests this first with a fixed pass bar. The scan ranks coherence control as the top differentiator. The MVP answers it only with curated pools, genre settings, rotation and lock.</li>
   <li>Pool work. The user writes 11 libraries, 4 of them with genre tags. This is the largest job in the MVP, and M2 waits for the core and Modifier libraries.</li>
-  <li>Library format. The Markdown format of <code>docs/libraries/</code> is not known yet. The conversion rules follow the first library file.</li>
   <li>Sentence grammar. Some cue and badge pairs can read badly, for example a Mechanic verb after "who must". The cue forms and badge choices reduce this. M2 shows how often it happens.</li>
   <li>Two codebases. A fix in TheForge does not reach GameIdea by itself. A shared package is deferred.</li>
   <li>Lost browser data. If the user clears the browser data, the boards are lost. Export is the only backup. Safari can delete site data after a period with no use.</li>
@@ -429,6 +429,7 @@ Genre                     (21 values. Meanings are in the Genres table.
   <li>A new board starts with all 21 genres on for every genre-tagged deck. The user did not pick this default. It was the recommended default and stands until the user changes it.</li>
   <li>Redraw All follows the single Redraw rule, so a combined card keeps its adjective ring.</li>
   <li>The badge choices other than the defaults were proposed in the interview and can change during M2.</li>
+  <li>Each Modifier cue lists the card types it fits (Player Role, Resource, Setting). How the app uses this list is not decided yet. The user decides before the Modifier combine work in M2.</li>
 </ul>
 
 <h2>Amendments</h2>
@@ -436,6 +437,11 @@ Genre                     (21 values. Meanings are in the Genres table.
 <p class="meta">2026-11-01: The user writes the deck libraries as Markdown files in <code>docs/libraries/</code>. A one-time conversion makes the JSON pool files, and the JSON is then the source. Only Mechanic, Resource, Progression and Constraint carry genre tags. The other 7 decks ignore genre, and the Genres panel lists only the 4 tagged decks. Claude no longer drafts cues. Pool sizes come from the libraries. Changed Scope, Data model, Interfaces, Architecture, M2 to M4, Cue rules, Done criteria and Risks. Changed by the user's request after the interview.</p>
 <p class="meta">2026-11-01: The genre list changed from 7 genres to the user's 21 genres, with a Genres table of meanings. A hidden <code>generic</code> tag marks cues that fit every genre and feeds the fill rule. Per-genre cue minimums are now guidance only, because the user will tune counts after the app works. Changed Scope, Data model, M3, M4, Done criteria and Assumptions. Changed by the user's request.</p>
 <p class="meta">2026-11-01: Added 2 checks. M1 adds a search for TheForge story names in <code>src/</code>. M2 starts with an 11-card stack test. Changed M1 and M2. Changed by <code>/dev-architecture</code> (risks branch), with the user's agreement.</p>
+<p class="meta">2026-11-02: Review fixes. The pools come from a split of <code>docs/libraries/decks.json</code>, not from the Markdown files, and the Library format risk is removed. Two split rules fix badge grammar: the Constraint lead word ("No", "Only") is lowercased, and a leading "the", "a" or "an" is dropped from Setting cues, so "in the" never reads "in the the". The Constraint badge choice "using only" became "and". Stale "7 genres" text now says 21. The Required-rows done criterion names the Partial row. Changed Scope, Deferred, Data model, Interfaces, Architecture, M3, M4, Done criteria and Risks. Changed by the user's request after a review.</p>
+<p class="meta">2026-11-02: The hidden <code>generic</code> tag and the Generic fill are removed. The genre tags in the 4 genre-tagged decks were reviewed: 428 of 998 cues were retagged, mostly with genres they fit but did not list. No old generic cue fit every genre, so each got a genre list. 3 Constraint cues that fit every genre list all 21. A floor of 10 cues for each genre in each tagged deck replaces the fill. The split and a unit test check it. After the retag, the smallest pools are Progression Fighting (19) and Resource Metroidvania (20). Changed Data model, Rules, State and failure, M3 and Done criteria. Changed by the user's request after a review.</p>
+<p class="meta">2026-11-02: Player Role cues name the character only. Descriptions moved to the Modifier deck: 404 Player Role cues became 329 (splits, merged duplicates and 23 drops), and the Modifier deck grew from 266 to 344. Changed Cue rules. Changed by the user's request after a review.</p>
+<p class="meta">2026-11-02: Setting cues name the place only, like Player Role. Descriptions moved to the Modifier deck, for example "flooded world" became "flooded" + "world". "world of clones" stays whole. 273 Setting cues became 208. The proper-name cue rule now says it means made-up names, and that real places and eras are fine. Changed Cue rules. Changed by the user's request after a review.</p>
+<p class="meta">2026-11-02: The Modifier deck was reviewed: 3 game-linked words renamed and 23 near-duplicates merged, for 391 modifiers. Each modifier now lists the card types it fits. Its use in the app is open. Changed Assumptions. Changed by the user's request after a review.</p>
 
 </body>
 </html>

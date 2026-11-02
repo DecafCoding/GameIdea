@@ -37,7 +37,7 @@
   <li>The cost is $0 for each month.</li>
   <li>The boards save to browser storage. The board file export is the only backup.</li>
   <li>The cue pools are JSON data files, one for each deck. They come from one split of <code>docs/libraries/decks.json</code>, and the JSON is then the source.</li>
-  <li>Only Mechanic, Resource, Progression and Constraint carry genre tags. There are 21 genres and a hidden <code>generic</code> tag.</li>
+  <li>Only Mechanic, Resource, Progression and Constraint carry genre tags. There are 21 genres and no <code>generic</code> tag. Each genre has at least 10 cues in each tagged deck.</li>
   <li>The app runs on the current Chrome, Edge, Firefox and Safari on desktop.</li>
   <li>A draw, a rotate or a Hook Card update takes less than 100 ms. The canvas moves smoothly with 200 cards. The first load takes less than 2 seconds.</li>
   <li>There are no external services: no sign-in, no usage data and no AI.</li>
@@ -115,13 +115,15 @@ Pool file
   type
   cues: { id, text, genres? }[]
     genres: present in mechanic, resource, progression and constraint only.
-            One or more of the 21 genres, or ["generic"].</code></pre>
+            One or more of the 21 genres. A cue that fits every genre lists all 21.</code></pre>
 <p>A one-time split makes these files from <code>docs/libraries/decks.json</code>. The split:</p>
 <ul>
   <li>maps each deck name in <code>decks.json</code> to its pool file,</li>
-  <li>copies <code>card</code> into <code>text</code> without change,</li>
-  <li>maps the genre names in <code>genres.json</code> to their kebab-case values, and maps <code>any</code> to <code>generic</code>,</li>
+  <li>copies <code>card</code> into <code>text</code> without change, except for 2 grammar rules: it lowercases the first word of each Constraint cue ("No combat" becomes "no combat"), and it drops a leading "the", "a" or "an" from each Setting cue, because the Setting badge already ends in "the",</li>
+  <li>maps the genre names in <code>genres.json</code> to their kebab-case values, and stops with an error if it finds <code>any</code> or an unknown genre name,</li>
+  <li>stops with an error if any of the 21 genres has fewer than 10 cues in Mechanic, Resource, Progression or Constraint,</li>
   <li>drops the <code>games</code> lists, because they hold game titles, which the plan bans in cues,</li>
+  <li>copies <code>targets</code> on Modifier cues (the card types a modifier fits: Player Role, Resource, Setting) into the modifier pool,</li>
   <li>gives each cue a stable <code>id</code>.</li>
 </ul>
 <p>After the split, the pool files are the source, and the user edits them directly. <code>decks.json</code> and the Markdown libraries stay in <code>docs/libraries/</code> as a record. No build step reads them. The app loads the pools by web address. A later server can serve the same addresses.</p>
@@ -141,7 +143,7 @@ Pool file
   app/              app shell, the 2 screens, start-up
   features/
     draw/           deck buttons, grouped rail, draw logic (distinct cues),
-                    genre filter, Generic fill and its notice
+                    genre filter
     card/           card view, rings, rotate, cue text, lock control, type icons
     canvas/         React Flow setup, pan, zoom, drag, tuck, tuck hints,
                     connector badges and their word rules for the 12 card types
@@ -254,6 +256,7 @@ tests/e2e/          Playwright browser tests</code></pre>
   <tr><td>App size</td><td>JavaScript is 250 KB or less after compression</td><td>A size check in the build</td></tr>
   <tr><td>Pools</td><td>100 KB or less after compression, for all 11 files</td><td>A size check in the build</td></tr>
   <tr><td>Save</td><td>Less than 50 ms for a 200-card board</td><td>A unit test</td></tr>
+  <tr><td>Genre floor</td><td>Each of the 21 genres has at least 10 cues in each of the 4 genre-tagged pools</td><td>A unit test that reads <code>public/pools/</code></td></tr>
   <tr><td>Browsers</td><td>The current Chrome, Edge, Firefox and Safari on desktop</td><td>Playwright in Chromium, Firefox and WebKit</td></tr>
   <tr><td>Cost</td><td>$0 for each month</td><td>Local run and the free GitHub Actions minutes</td></tr>
   <tr><td>Privacy</td><td>No requests to any address other than the app's own address</td><td>A Playwright test that watches network requests</td></tr>
@@ -316,10 +319,14 @@ tests/e2e/          Playwright browser tests</code></pre>
   <tr><td>Does an 11-card stack drag smoothly in React Flow?</td><td>The long-stack test at the start of M2. If it fails, amend canvas-library.</td><td>Before the rest of M2 starts</td></tr>
   <tr><td>Colors and icons for the 11 decks, and the look of the Hook Card, the lock and the Genres panel</td><td><code>/dev-ui-update</code> writes docs/design-system.html. Icons ship in <code>public/icons/</code> either way.</td><td>Before M2 starts</td></tr>
   <tr><td>Final badge word choices other than the defaults</td><td>The user tries them during the M2 hook test. They live in the connector rules in <code>features/canvas/</code>, so a change is cheap.</td><td>End of M2</td></tr>
+  <tr><td>How the app uses Modifier <code>targets</code>: filter the Modifier draw, hint which cards a Modifier fits, or nothing yet</td><td>The user decides after the deck review, before the Modifier combine work in M2.</td><td>Before M2</td></tr>
 </table>
 
 <h2>Amendments</h2>
 <p class="meta">2026-11-01: First version. Written from the <code>/dev-architecture</code> run against docs/mvp-plan.html, following the TheForge architecture at the user's request. The run added 2 checks to the plan's milestones: a story-name search in M1 and an 11-card stack test in M2. The plan records them in its own Amendments section.</p>
+<p class="meta">2026-11-02: The split gains 2 grammar rules for Constraint and Setting cues, to match the connector badges. Changed Cue pools. Changed by the user's request after a review, with docs/mvp-plan.html amended the same day.</p>
+<p class="meta">2026-11-02: The <code>generic</code> tag and the Generic fill are removed. The split rejects <code>any</code> and checks a floor of 10 cues for each genre in each tagged deck. A unit test checks the same floor on the pool files. Changed Inherited constraints, Cue pools, Module layout and Targets and checks. Changed by the user's request after a review, with docs/mvp-plan.html amended the same day.</p>
+<p class="meta">2026-11-02: Modifier cues carry <code>targets</code>, the card types each one fits. The split copies them into the modifier pool. How the app uses them is an open question. Changed Cue pools and Open questions. Changed by the user's request after a review.</p>
 
 </body>
 </html>
