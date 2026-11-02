@@ -10,7 +10,7 @@ The "Games" column shows which games the card came from: the Steam Top 250, plus
 | [Mechanic](mechanic.md) | 818 | 316 | 21 |
 | [Goal](goal.md) | 301 | 244 | 36 |
 | [Conflict](conflict.md) | 338 | 285 | 10 |
-| [Resource](resource.md) | 528 | 202 | 45 |
+| [Resource](resource.md) | 528 | 201 | 45 |
 | [Setting](setting.md) | 424 | 208 | 35 |
 | [Mood](mood.md) | 166 | 73 | 19 |
 | [Modifier](modifier.md) | 397 | 414 | 46 |

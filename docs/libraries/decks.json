@@ -11633,17 +11633,6 @@
       ]
     },
     {
-      "card": "portals",
-      "games": [
-        "Portal 2",
-        "Portal"
-      ],
-      "genres": [
-        "Puzzle",
-        "Platformer"
-      ]
-    },
-    {
       "card": "quota",
       "games": [
         "R.E.P.O.",
@@ -11924,7 +11913,7 @@
       ]
     },
     {
-      "card": "bottle caps",
+      "card": "barter goods",
       "games": [
         "Fallout: New Vegas"
       ],
@@ -12052,7 +12041,7 @@
       ]
     },
     {
-      "card": "emergency meetings",
+      "card": "group votes",
       "games": [
         "Among Us"
       ],

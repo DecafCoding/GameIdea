@@ -8,8 +8,8 @@ Each card lists every genre it fits. A card that fits every genre lists all 21. 
 |---|---|---|---:|---:|---:|---:|
 | Roguelike | Short runs with random levels; death resets the run. | Action Roguelike, Roguelite, Roguelike, Bullet Heaven, Roguelike Deckbuilder | 45 | 60 | 71 | 69 |
 | Metroidvania | One large connected map that opens as you gain abilities. | Metroidvania | 23 | 20 | 29 | 38 |
-| Platformer | Jumping and movement through levels is the core. | 2D Platformer, 3D Platformer, Precision Platformer, Puzzle Platformer, Side Scroller, Collectathon | 33 | 28 | 37 | 59 |
-| Puzzle | Solving set problems with logic is the core. | Puzzle Platformer, Sokoban, Point & Click, Education, Typing | 61 | 28 | 30 | 72 |
+| Platformer | Jumping and movement through levels is the core. | 2D Platformer, 3D Platformer, Precision Platformer, Puzzle Platformer, Side Scroller, Collectathon | 33 | 27 | 37 | 59 |
+| Puzzle | Solving set problems with logic is the core. | Puzzle Platformer, Sokoban, Point & Click, Education, Typing | 61 | 27 | 30 | 72 |
 | Shooter | Aiming and shooting guns is the core. | FPS, Third-Person Shooter, Top-Down Shooter, Hero Shooter, Looter Shooter | 46 | 38 | 45 | 85 |
 | Melee Action | Close-up combat: swords, fists, dodges, parries. | Souls-like, Hack and Slash, Beat 'em up, Action RPG | 42 | 35 | 39 | 59 |
 | Fighting | One-on-one or small-arena duels with combos. | 2D Fighter, 3D Fighter | 36 | 21 | 19 | 35 |

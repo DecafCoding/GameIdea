@@ -1,6 +1,6 @@
 # Deck: Resource (General)
 
-202 cards.
+201 cards.
 
 | # | Card | Genres | Count | Games |
 |---:|---|---|---:|---|
@@ -101,108 +101,107 @@
 | 95 | limbs | Fighting, Sandbox, Horror, Stealth & Immersive Sim | 2 | Clone Drone in the Danger Zone, Kenshi |
 | 96 | loot | RPG, Shooter, Melee Action, Roguelike, Open World, Survival Craft | 2 | Grim Dawn, R.E.P.O. |
 | 97 | missiles | Shooter, Roguelike, Vehicle Sim & Racing, Rhythm & Arcade, Metroidvania | 2 | FTL: Faster Than Light, Ace Combat 7: Skies Unknown |
-| 98 | portals | Puzzle, Platformer | 2 | Portal 2, Portal |
-| 99 | quota | Horror, Builder & Management, Party & Multiplayer | 2 | R.E.P.O., Lethal Company |
-| 100 | rage | Melee Action, Fighting, RPG | 2 | God of War, Tekken 8 |
-| 101 | reinforcements | Strategy, Shooter, Party & Multiplayer | 2 | Ravenfield, STAR WARS Empire at War - Gold Pack |
-| 102 | relationships | Narrative, Life Sim, RPG, Deckbuilder & Cards | 2 | Griftlands, Life is Strange - Episode 1 |
-| 103 | rest | RPG, Survival Craft, Roguelike | 2 | Valheim, Baldur's Gate 3 |
-| 104 | revives | Party & Multiplayer, Shooter, RPG, Melee Action | 2 | It Takes Two, Sekiro: Shadows Die Twice |
-| 105 | save files | Horror, Melee Action, Platformer | 2 | Doki Doki Literature Club!, Doki Doki Literature Club Plus! |
-| 106 | saves | Horror, Melee Action, Platformer | 2 | Resident Evil 7 Biohazard, Resident Evil 2 |
-| 107 | seeds | Life Sim, Survival Craft, Builder & Management | 2 | Stardew Valley, Farming Simulator 19 |
-| 108 | shelf space | Builder & Management, Life Sim | 2 | Supermarket Together, TCG Card Shop Simulator |
-| 109 | stone | Builder & Management, Strategy, Survival Craft, Sandbox | 2 | Age of Empires II: Definitive Edition, Age of Empires II (Retired) |
-| 110 | sunlight | Strategy, Life Sim, Builder & Management, Horror | 2 | Plants vs. Zombies, OneShot |
-| 111 | super move | Fighting, Party & Multiplayer, Vehicle Sim & Racing | 2 | Super Smash Bros. Ultimate, Sonic & All-Stars Racing Transformed |
-| 112 | vocabulary | Narrative, Puzzle | 2 | Rise of the Tomb Raider, Chants of Sennaar |
-| 113 | air jumps | Platformer, Fighting, Metroidvania | 1 | Your Only Move Is HUSTLE |
-| 114 | approval | Narrative, RPG, Life Sim | 1 | Baldur's Gate 3 |
-| 115 | balance | Fighting, Melee Action, Platformer, Sandbox | 1 | Sekiro: Shadows Die Twice |
-| 116 | base health | Strategy, Deckbuilder & Cards, Roguelike | 1 | Monster Train |
-| 117 | bladder | Survival Craft, Life Sim | 1 | Abiotic Factor |
-| 118 | blinks | Horror, Narrative | 1 | Before Your Eyes |
-| 119 | body bags | Strategy, Shooter, Builder & Management | 1 | PAYDAY 2 |
-| 120 | bond | RPG, Life Sim, Narrative, Open World | 1 | Red Dead Redemption 2 |
-| 121 | bones | Deckbuilder & Cards, Horror, Roguelike | 1 | Inscryption |
-| 122 | boredom | Life Sim, Builder & Management, Survival Craft | 1 | Project Zomboid |
-| 123 | bottle caps | Open World, RPG, Survival Craft | 1 | Fallout: New Vegas |
-| 124 | candles | Horror, Deckbuilder & Cards, Roguelike | 1 | Inscryption |
-| 125 | card slots | Deckbuilder & Cards | 1 | Stacklands |
-| 126 | cargo condition | Vehicle Sim & Racing, Stealth & Immersive Sim | 1 | American Truck Simulator |
-| 127 | cloth | Survival Craft, Life Sim, Builder & Management | 1 | Dressmaker |
-| 128 | coal | Builder & Management, Survival Craft, Strategy | 1 | Frostpunk |
-| 129 | colors | Puzzle, Sandbox | 1 | Townscaper |
-| 130 | credibility | Narrative, Stealth & Immersive Sim | 1 | Danganronpa: Trigger Happy Havoc |
-| 131 | darkness | Horror, Roguelike | 1 | Hades |
-| 132 | dashes | Platformer, Metroidvania, Melee Action, Roguelike | 1 | Celeste |
-| 133 | dirty money | Builder & Management, Stealth & Immersive Sim, Narrative, Open World | 1 | Schedule I |
-| 134 | distance | Vehicle Sim & Racing, Fighting, Rhythm & Arcade | 1 | Nidhogg |
-| 135 | emergency meetings | Party & Multiplayer | 1 | Among Us |
-| 136 | emotions | Narrative, Life Sim | 1 | OMORI |
-| 137 | fertilizer | Life Sim, Builder & Management | 1 | Farming Simulator 19 |
-| 138 | film | Horror, Narrative | 1 | Content Warning |
-| 139 | filters | Survival Craft, Horror | 1 | METRO 2033 Redux |
-| 140 | flares | Horror, Survival Craft, Vehicle Sim & Racing | 1 | SIGNALIS |
-| 141 | followers | Strategy, Roguelike, Builder & Management, Narrative | 1 | Cult of the Lamb |
-| 142 | free time | Life Sim, Narrative | 1 | Persona 3 Reload |
-| 143 | friends | Life Sim, Narrative, RPG | 1 | South Park: The Stick of Truth |
-| 144 | gifts | Life Sim, Narrative | 1 | Hades |
-| 145 | grip | Platformer, Survival Craft, Puzzle | 1 | Human Fall Flat |
-| 146 | gunpowder | Survival Craft, Shooter, Strategy | 1 | Rust |
-| 147 | hand size | Deckbuilder & Cards | 1 | Gwent: The Witcher Card Game |
-| 148 | heirlooms | Narrative, RPG, Roguelike | 1 | Darkest Dungeon |
-| 149 | honor | RPG, Open World, Narrative, Strategy | 1 | Red Dead Redemption 2 |
-| 150 | hostages | Shooter, Stealth & Immersive Sim, Strategy | 1 | PAYDAY 2 |
-| 151 | humanity | RPG, Narrative, Melee Action, Horror | 1 | DARK SOULS: REMASTERED |
-| 152 | hygiene | Life Sim, Survival Craft | 1 | Kingdom Come: Deliverance II |
-| 153 | immunity | Survival Craft, Horror, Open World | 1 | Unturned |
-| 154 | karma | RPG, Narrative, Stealth & Immersive Sim | 1 | Dishonored |
-| 155 | knowledge | Narrative, Puzzle, RPG, Open World | 1 | Outer Wilds |
-| 156 | lifespan | Life Sim, Roguelike, Strategy | 1 | ATRI -My Dear Moments- |
-| 157 | loyalty | Strategy, Builder & Management, RPG, Narrative | 1 | Schedule I |
-| 158 | luck | Roguelike, Deckbuilder & Cards, Rhythm & Arcade, RPG | 1 | Brotato |
-| 159 | memories | Narrative | 1 | To the Moon |
-| 160 | mercy | Rhythm & Arcade, Narrative, Melee Action | 1 | Undertale |
-| 161 | metal | Builder & Management, Survival Craft, Strategy, Sandbox | 1 | Team Fortress 2 |
-| 162 | moves | Puzzle, Strategy | 1 | Helltaker |
-| 163 | notoriety | Stealth & Immersive Sim, Open World, Shooter | 1 | Saints Row: The Third |
-| 164 | oil | Builder & Management, Strategy | 1 | Sid Meier's Civilization V |
-| 165 | passion | Narrative, Life Sim, Deckbuilder & Cards | 1 | Cultist Simulator |
-| 166 | patient health | Builder & Management, Rhythm & Arcade, Narrative | 1 | Rhythm Doctor |
-| 167 | pet health | Life Sim, RPG | 1 | Palworld |
-| 168 | pressure | Sandbox, Survival Craft, Horror | 1 | The Powder Toy |
-| 169 | production | Builder & Management, Strategy | 1 | Sid Meier's Civilization V |
-| 170 | public opinion | Narrative, Builder & Management, Strategy | 1 | Detroit: Become Human |
-| 171 | radiation | Open World, Survival Craft, Horror | 1 | Fallout: New Vegas |
-| 172 | rank points | Party & Multiplayer, Fighting, Deckbuilder & Cards | 1 | Marvel Snap |
-| 173 | reagents | RPG, Roguelike, Deckbuilder & Cards | 1 | Hades II |
-| 174 | reason | Narrative, Horror, Deckbuilder & Cards | 1 | Cultist Simulator |
-| 175 | rent | Life Sim, Builder & Management | 1 | VA-11 Hall-A: Cyberpunk Bartender Action |
-| 176 | repair time | Vehicle Sim & Racing | 1 | DiRT Rally 2.0 |
-| 177 | rewinds | Puzzle, Narrative, Platformer, Vehicle Sim & Racing | 1 | Life is Strange - Episode 1 |
-| 178 | risk | Stealth & Immersive Sim, Strategy, Deckbuilder & Cards, Fighting | 1 | Guilty Gear -Strive- |
-| 179 | room to move | Strategy, Deckbuilder & Cards, Puzzle, Sandbox | 1 | Townscaper |
-| 180 | rope | Survival Craft, Platformer, Roguelike, Metroidvania | 1 | PEAK |
-| 181 | rounds won | Fighting, Party & Multiplayer, Deckbuilder & Cards | 1 | Gwent: The Witcher Card Game |
-| 182 | slow motion | Shooter, Platformer, Melee Action, Rhythm & Arcade | 1 | Katana ZERO |
-| 183 | soap | Life Sim, Stealth & Immersive Sim | 1 | PowerWash Simulator |
-| 184 | spare bodies | Platformer, Fighting, Puzzle, Roguelike | 1 | Clone Drone in the Danger Zone |
-| 185 | spell slots | RPG, Deckbuilder & Cards | 1 | Baldur's Gate 3 |
-| 186 | spice | Strategy, Builder & Management, Sandbox | 1 | Spore |
-| 187 | storage | Builder & Management, Survival Craft, Life Sim | 1 | Farming Simulator 19 |
-| 188 | strikes | Narrative, Puzzle, Rhythm & Arcade | 1 | Papers, Please |
-| 189 | style | Rhythm & Arcade, Melee Action, Shooter, Vehicle Sim & Racing | 1 | ULTRAKILL |
-| 190 | temper | Narrative, Life Sim | 1 | The Wolf Among Us |
-| 191 | temperature | Sandbox, Survival Craft | 1 | The Powder Toy |
-| 192 | tension | Narrative, Fighting | 1 | Skullgirls |
-| 193 | territory | Strategy, Party & Multiplayer | 1 | STAR WARS Empire at War - Gold Pack |
-| 194 | throughput | Builder & Management | 1 | Satisfactory |
-| 195 | toxicity | Open World, Survival Craft | 1 | The Witcher 3: Wild Hunt |
-| 196 | traffic | Builder & Management | 1 | Cities: Skylines |
-| 197 | unrest | Builder & Management, Strategy | 1 | Frostpunk |
-| 198 | upkeep | Survival Craft, Builder & Management, Strategy | 1 | Rust |
-| 199 | vehicles | Strategy, Shooter, Open World, Vehicle Sim & Racing | 1 | Arma 3 |
-| 200 | views | Life Sim, Narrative, Roguelike | 1 | Content Warning |
-| 201 | weapon slots | Shooter, Roguelike, RPG | 1 | Halo: The Master Chief Collection |
-| 202 | your weapon | Fighting, Melee Action | 1 | Nidhogg |
+| 98 | quota | Horror, Builder & Management, Party & Multiplayer | 2 | R.E.P.O., Lethal Company |
+| 99 | rage | Melee Action, Fighting, RPG | 2 | God of War, Tekken 8 |
+| 100 | reinforcements | Strategy, Shooter, Party & Multiplayer | 2 | Ravenfield, STAR WARS Empire at War - Gold Pack |
+| 101 | relationships | Narrative, Life Sim, RPG, Deckbuilder & Cards | 2 | Griftlands, Life is Strange - Episode 1 |
+| 102 | rest | RPG, Survival Craft, Roguelike | 2 | Valheim, Baldur's Gate 3 |
+| 103 | revives | Party & Multiplayer, Shooter, RPG, Melee Action | 2 | It Takes Two, Sekiro: Shadows Die Twice |
+| 104 | save files | Horror, Melee Action, Platformer | 2 | Doki Doki Literature Club!, Doki Doki Literature Club Plus! |
+| 105 | saves | Horror, Melee Action, Platformer | 2 | Resident Evil 7 Biohazard, Resident Evil 2 |
+| 106 | seeds | Life Sim, Survival Craft, Builder & Management | 2 | Stardew Valley, Farming Simulator 19 |
+| 107 | shelf space | Builder & Management, Life Sim | 2 | Supermarket Together, TCG Card Shop Simulator |
+| 108 | stone | Builder & Management, Strategy, Survival Craft, Sandbox | 2 | Age of Empires II: Definitive Edition, Age of Empires II (Retired) |
+| 109 | sunlight | Strategy, Life Sim, Builder & Management, Horror | 2 | Plants vs. Zombies, OneShot |
+| 110 | super move | Fighting, Party & Multiplayer, Vehicle Sim & Racing | 2 | Super Smash Bros. Ultimate, Sonic & All-Stars Racing Transformed |
+| 111 | vocabulary | Narrative, Puzzle | 2 | Rise of the Tomb Raider, Chants of Sennaar |
+| 112 | air jumps | Platformer, Fighting, Metroidvania | 1 | Your Only Move Is HUSTLE |
+| 113 | approval | Narrative, RPG, Life Sim | 1 | Baldur's Gate 3 |
+| 114 | balance | Fighting, Melee Action, Platformer, Sandbox | 1 | Sekiro: Shadows Die Twice |
+| 115 | base health | Strategy, Deckbuilder & Cards, Roguelike | 1 | Monster Train |
+| 116 | bladder | Survival Craft, Life Sim | 1 | Abiotic Factor |
+| 117 | blinks | Horror, Narrative | 1 | Before Your Eyes |
+| 118 | body bags | Strategy, Shooter, Builder & Management | 1 | PAYDAY 2 |
+| 119 | bond | RPG, Life Sim, Narrative, Open World | 1 | Red Dead Redemption 2 |
+| 120 | bones | Deckbuilder & Cards, Horror, Roguelike | 1 | Inscryption |
+| 121 | boredom | Life Sim, Builder & Management, Survival Craft | 1 | Project Zomboid |
+| 122 | barter goods | Open World, RPG, Survival Craft | 1 | Fallout: New Vegas |
+| 123 | candles | Horror, Deckbuilder & Cards, Roguelike | 1 | Inscryption |
+| 124 | card slots | Deckbuilder & Cards | 1 | Stacklands |
+| 125 | cargo condition | Vehicle Sim & Racing, Stealth & Immersive Sim | 1 | American Truck Simulator |
+| 126 | cloth | Survival Craft, Life Sim, Builder & Management | 1 | Dressmaker |
+| 127 | coal | Builder & Management, Survival Craft, Strategy | 1 | Frostpunk |
+| 128 | colors | Puzzle, Sandbox | 1 | Townscaper |
+| 129 | credibility | Narrative, Stealth & Immersive Sim | 1 | Danganronpa: Trigger Happy Havoc |
+| 130 | darkness | Horror, Roguelike | 1 | Hades |
+| 131 | dashes | Platformer, Metroidvania, Melee Action, Roguelike | 1 | Celeste |
+| 132 | dirty money | Builder & Management, Stealth & Immersive Sim, Narrative, Open World | 1 | Schedule I |
+| 133 | distance | Vehicle Sim & Racing, Fighting, Rhythm & Arcade | 1 | Nidhogg |
+| 134 | group votes | Party & Multiplayer | 1 | Among Us |
+| 135 | emotions | Narrative, Life Sim | 1 | OMORI |
+| 136 | fertilizer | Life Sim, Builder & Management | 1 | Farming Simulator 19 |
+| 137 | film | Horror, Narrative | 1 | Content Warning |
+| 138 | filters | Survival Craft, Horror | 1 | METRO 2033 Redux |
+| 139 | flares | Horror, Survival Craft, Vehicle Sim & Racing | 1 | SIGNALIS |
+| 140 | followers | Strategy, Roguelike, Builder & Management, Narrative | 1 | Cult of the Lamb |
+| 141 | free time | Life Sim, Narrative | 1 | Persona 3 Reload |
+| 142 | friends | Life Sim, Narrative, RPG | 1 | South Park: The Stick of Truth |
+| 143 | gifts | Life Sim, Narrative | 1 | Hades |
+| 144 | grip | Platformer, Survival Craft, Puzzle | 1 | Human Fall Flat |
+| 145 | gunpowder | Survival Craft, Shooter, Strategy | 1 | Rust |
+| 146 | hand size | Deckbuilder & Cards | 1 | Gwent: The Witcher Card Game |
+| 147 | heirlooms | Narrative, RPG, Roguelike | 1 | Darkest Dungeon |
+| 148 | honor | RPG, Open World, Narrative, Strategy | 1 | Red Dead Redemption 2 |
+| 149 | hostages | Shooter, Stealth & Immersive Sim, Strategy | 1 | PAYDAY 2 |
+| 150 | humanity | RPG, Narrative, Melee Action, Horror | 1 | DARK SOULS: REMASTERED |
+| 151 | hygiene | Life Sim, Survival Craft | 1 | Kingdom Come: Deliverance II |
+| 152 | immunity | Survival Craft, Horror, Open World | 1 | Unturned |
+| 153 | karma | RPG, Narrative, Stealth & Immersive Sim | 1 | Dishonored |
+| 154 | knowledge | Narrative, Puzzle, RPG, Open World | 1 | Outer Wilds |
+| 155 | lifespan | Life Sim, Roguelike, Strategy | 1 | ATRI -My Dear Moments- |
+| 156 | loyalty | Strategy, Builder & Management, RPG, Narrative | 1 | Schedule I |
+| 157 | luck | Roguelike, Deckbuilder & Cards, Rhythm & Arcade, RPG | 1 | Brotato |
+| 158 | memories | Narrative | 1 | To the Moon |
+| 159 | mercy | Rhythm & Arcade, Narrative, Melee Action | 1 | Undertale |
+| 160 | metal | Builder & Management, Survival Craft, Strategy, Sandbox | 1 | Team Fortress 2 |
+| 161 | moves | Puzzle, Strategy | 1 | Helltaker |
+| 162 | notoriety | Stealth & Immersive Sim, Open World, Shooter | 1 | Saints Row: The Third |
+| 163 | oil | Builder & Management, Strategy | 1 | Sid Meier's Civilization V |
+| 164 | passion | Narrative, Life Sim, Deckbuilder & Cards | 1 | Cultist Simulator |
+| 165 | patient health | Builder & Management, Rhythm & Arcade, Narrative | 1 | Rhythm Doctor |
+| 166 | pet health | Life Sim, RPG | 1 | Palworld |
+| 167 | pressure | Sandbox, Survival Craft, Horror | 1 | The Powder Toy |
+| 168 | production | Builder & Management, Strategy | 1 | Sid Meier's Civilization V |
+| 169 | public opinion | Narrative, Builder & Management, Strategy | 1 | Detroit: Become Human |
+| 170 | radiation | Open World, Survival Craft, Horror | 1 | Fallout: New Vegas |
+| 171 | rank points | Party & Multiplayer, Fighting, Deckbuilder & Cards | 1 | Marvel Snap |
+| 172 | reagents | RPG, Roguelike, Deckbuilder & Cards | 1 | Hades II |
+| 173 | reason | Narrative, Horror, Deckbuilder & Cards | 1 | Cultist Simulator |
+| 174 | rent | Life Sim, Builder & Management | 1 | VA-11 Hall-A: Cyberpunk Bartender Action |
+| 175 | repair time | Vehicle Sim & Racing | 1 | DiRT Rally 2.0 |
+| 176 | rewinds | Puzzle, Narrative, Platformer, Vehicle Sim & Racing | 1 | Life is Strange - Episode 1 |
+| 177 | risk | Stealth & Immersive Sim, Strategy, Deckbuilder & Cards, Fighting | 1 | Guilty Gear -Strive- |
+| 178 | room to move | Strategy, Deckbuilder & Cards, Puzzle, Sandbox | 1 | Townscaper |
+| 179 | rope | Survival Craft, Platformer, Roguelike, Metroidvania | 1 | PEAK |
+| 180 | rounds won | Fighting, Party & Multiplayer, Deckbuilder & Cards | 1 | Gwent: The Witcher Card Game |
+| 181 | slow motion | Shooter, Platformer, Melee Action, Rhythm & Arcade | 1 | Katana ZERO |
+| 182 | soap | Life Sim, Stealth & Immersive Sim | 1 | PowerWash Simulator |
+| 183 | spare bodies | Platformer, Fighting, Puzzle, Roguelike | 1 | Clone Drone in the Danger Zone |
+| 184 | spell slots | RPG, Deckbuilder & Cards | 1 | Baldur's Gate 3 |
+| 185 | spice | Strategy, Builder & Management, Sandbox | 1 | Spore |
+| 186 | storage | Builder & Management, Survival Craft, Life Sim | 1 | Farming Simulator 19 |
+| 187 | strikes | Narrative, Puzzle, Rhythm & Arcade | 1 | Papers, Please |
+| 188 | style | Rhythm & Arcade, Melee Action, Shooter, Vehicle Sim & Racing | 1 | ULTRAKILL |
+| 189 | temper | Narrative, Life Sim | 1 | The Wolf Among Us |
+| 190 | temperature | Sandbox, Survival Craft | 1 | The Powder Toy |
+| 191 | tension | Narrative, Fighting | 1 | Skullgirls |
+| 192 | territory | Strategy, Party & Multiplayer | 1 | STAR WARS Empire at War - Gold Pack |
+| 193 | throughput | Builder & Management | 1 | Satisfactory |
+| 194 | toxicity | Open World, Survival Craft | 1 | The Witcher 3: Wild Hunt |
+| 195 | traffic | Builder & Management | 1 | Cities: Skylines |
+| 196 | unrest | Builder & Management, Strategy | 1 | Frostpunk |
+| 197 | upkeep | Survival Craft, Builder & Management, Strategy | 1 | Rust |
+| 198 | vehicles | Strategy, Shooter, Open World, Vehicle Sim & Racing | 1 | Arma 3 |
+| 199 | views | Life Sim, Narrative, Roguelike | 1 | Content Warning |
+| 200 | weapon slots | Shooter, Roguelike, RPG | 1 | Halo: The Master Chief Collection |
+| 201 | your weapon | Fighting, Melee Action | 1 | Nidhogg |
