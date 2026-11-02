@@ -1,7 +1,76 @@
 {
   "Player Role": [
     {
-      "card": "silent physicist",
+      "card": "survivor",
+      "games": [
+        "Muck",
+        "How to Fish",
+        "Risk of Rain 2",
+        "Don't Starve Together",
+        "Don't Starve",
+        "Super Smash Bros. Ultimate",
+        "Vampire Survivors",
+        "Left 4 Dead",
+        "Rust"
+      ]
+    },
+    {
+      "card": "hero",
+      "games": [
+        "The Elder Scrolls V: Skyrim",
+        "The Elder Scrolls V: Skyrim Special Edition",
+        "DELTARUNE",
+        "The Elder Scrolls IV: Oblivion Game of the Year Edition",
+        "Gunfire Reborn",
+        "The Henry Stickmin Collection",
+        "Marvel's Spider-Man Remastered"
+      ]
+    },
+    {
+      "card": "girl",
+      "games": [
+        "The Walking Dead: The Telltale Definitive Series",
+        "The Walking Dead: Season Two",
+        "Life is Strange - Episode 1",
+        "A Hat in Time",
+        "Little Nightmares",
+        "GRIS",
+        "Skullgirls"
+      ]
+    },
+    {
+      "card": "father",
+      "games": [
+        "Crime Scene Cleaner",
+        "Resident Evil Village",
+        "The Forest",
+        "God of War",
+        "SANABI",
+        "Volcano Princess"
+      ]
+    },
+    {
+      "card": "cop",
+      "games": [
+        "Hotline Miami 2: Wrong Number",
+        "Resident Evil 2",
+        "Firework",
+        "Disco Elysium - The Final Cut",
+        "Sleeping Dogs: Definitive Edition"
+      ]
+    },
+    {
+      "card": "soldier",
+      "games": [
+        "Killing Floor",
+        "Hotline Miami 2: Wrong Number",
+        "Arma 3",
+        "SIGNALIS",
+        "Totally Accurate Battle Simulator"
+      ]
+    },
+    {
+      "card": "physicist",
       "games": [
         "Half-Life 2",
         "Half-Life",
@@ -16,6 +85,51 @@
         "Doki Doki Literature Club Plus!",
         "Persona 4 Golden",
         "Persona 3 Reload"
+      ]
+    },
+    {
+      "card": "prisoner",
+      "games": [
+        "The Elder Scrolls V: Skyrim",
+        "The Elder Scrolls V: Skyrim Special Edition",
+        "SCP: Secret Laboratory",
+        "The Elder Scrolls IV: Oblivion Game of the Year Edition"
+      ]
+    },
+    {
+      "card": "child",
+      "games": [
+        "The Binding of Isaac",
+        "The Binding of Isaac: Rebirth",
+        "Undertale",
+        "Clair Obscur: Expedition 33"
+      ]
+    },
+    {
+      "card": "fighter",
+      "games": [
+        "Stick Fight: The Game",
+        "Your Only Move Is HUSTLE",
+        "Guilty Gear -Strive-",
+        "Mortal Kombat 11"
+      ]
+    },
+    {
+      "card": "warrior",
+      "games": [
+        "Slay the Spire",
+        "DARK SOULS III",
+        "Hollow Knight: Silksong",
+        "Dead Cells"
+      ]
+    },
+    {
+      "card": "boy",
+      "games": [
+        "INSIDE",
+        "Sally Face - Episode One",
+        "ATRI -My Dear Moments-",
+        "OMORI"
       ]
     },
     {
@@ -51,14 +165,6 @@
       ]
     },
     {
-      "card": "desperate father",
-      "games": [
-        "Crime Scene Cleaner",
-        "Resident Evil Village",
-        "The Forest"
-      ]
-    },
-    {
       "card": "fighter pilot",
       "games": [
         "Ravenfield",
@@ -83,27 +189,11 @@
       ]
     },
     {
-      "card": "rookie cop",
-      "games": [
-        "Hotline Miami 2: Wrong Number",
-        "Resident Evil 2",
-        "Firework"
-      ]
-    },
-    {
       "card": "secret agent",
       "games": [
         "Resident Evil 4",
         "Resident Evil 4 (2005)",
         "Fights in Tight Spaces"
-      ]
-    },
-    {
-      "card": "soldier",
-      "games": [
-        "Killing Floor",
-        "Hotline Miami 2: Wrong Number",
-        "Arma 3"
       ]
     },
     {
@@ -115,14 +205,6 @@
       ]
     },
     {
-      "card": "stranded survivor",
-      "games": [
-        "Muck",
-        "How to Fish",
-        "Risk of Rain 2"
-      ]
-    },
-    {
       "card": "stunt driver",
       "games": [
         "BeamNG.drive",
@@ -131,14 +213,63 @@
       ]
     },
     {
-      "card": "amnesiac",
+      "card": "hitman",
       "games": [
-        "Slay the Princess — The Pristine Cut",
-        "Disco Elysium - The Final Cut"
+        "Hotline Miami",
+        "Hotline Miami 2: Wrong Number",
+        "Katana ZERO"
       ]
     },
     {
-      "card": "apprentice mage",
+      "card": "ruler",
+      "games": [
+        "Age of Empires II: Definitive Edition",
+        "Age of Empires II (Retired)",
+        "Sid Meier's Civilization V"
+      ]
+    },
+    {
+      "card": "farmer",
+      "games": [
+        "Stardew Valley",
+        "Fields of Mistria",
+        "Farming Simulator 19"
+      ]
+    },
+    {
+      "card": "agent",
+      "games": [
+        "Griftlands",
+        "Resident Evil Requiem",
+        "Dying Light"
+      ]
+    },
+    {
+      "card": "detective",
+      "games": [
+        "Detroit: Become Human",
+        "Batman: Arkham Asylum Game of the Year Edition",
+        "Danganronpa: Trigger Happy Havoc"
+      ]
+    },
+    {
+      "card": "scientist",
+      "games": [
+        "Marvel's Spider-Man Remastered",
+        "SCP: Secret Laboratory",
+        "Abiotic Factor"
+      ]
+    },
+    {
+      "card": "heir",
+      "games": [
+        "Black Myth: Wukong",
+        "Tekken 8",
+        "What Remains of Edith Finch"
+      ]
+    },
+    {
+      "card": "mage",
       "games": [
         "Hogwarts Legacy",
         "Fields of Mistria"
@@ -159,14 +290,7 @@
       ]
     },
     {
-      "card": "condemned prisoner",
-      "games": [
-        "The Elder Scrolls V: Skyrim",
-        "The Elder Scrolls V: Skyrim Special Edition"
-      ]
-    },
-    {
-      "card": "convicted man",
+      "card": "man",
       "games": [
         "The Walking Dead: The Telltale Definitive Series",
         "The Walking Dead"
@@ -180,7 +304,7 @@
       ]
     },
     {
-      "card": "crashed engineer",
+      "card": "engineer",
       "games": [
         "Factorio",
         "Scrap Mechanic"
@@ -198,20 +322,6 @@
       "games": [
         "DOOM",
         "DOOM Eternal"
-      ]
-    },
-    {
-      "card": "dragon-blooded hero",
-      "games": [
-        "The Elder Scrolls V: Skyrim",
-        "The Elder Scrolls V: Skyrim Special Edition"
-      ]
-    },
-    {
-      "card": "eccentric survivor",
-      "games": [
-        "Don't Starve Together",
-        "Don't Starve"
       ]
     },
     {
@@ -236,7 +346,7 @@
       ]
     },
     {
-      "card": "frozen city leader",
+      "card": "city leader",
       "games": [
         "Frostpunk",
         "Wildfrost"
@@ -264,24 +374,10 @@
       ]
     },
     {
-      "card": "grieving father",
-      "games": [
-        "God of War",
-        "SANABI"
-      ]
-    },
-    {
-      "card": "hazmat lab worker",
+      "card": "lab worker",
       "games": [
         "Half-Life",
         "Black Mesa"
-      ]
-    },
-    {
-      "card": "hero trio",
-      "games": [
-        "Dragon Ball FighterZ",
-        "Skullgirls"
       ]
     },
     {
@@ -289,13 +385,6 @@
       "games": [
         "Stellar Blade",
         "FTL: Faster Than Light"
-      ]
-    },
-    {
-      "card": "lone survivor",
-      "games": [
-        "Super Smash Bros. Ultimate",
-        "Vampire Survivors"
       ]
     },
     {
@@ -313,24 +402,10 @@
       ]
     },
     {
-      "card": "masked hitman",
-      "games": [
-        "Hotline Miami",
-        "Hotline Miami 2: Wrong Number"
-      ]
-    },
-    {
-      "card": "masked vigilante",
+      "card": "vigilante",
       "games": [
         "Batman: Arkham Asylum Game of the Year Edition",
         "Batman: Arkham City - Game of the Year Edition"
-      ]
-    },
-    {
-      "card": "medieval ruler",
-      "games": [
-        "Age of Empires II: Definitive Edition",
-        "Age of Empires II (Retired)"
       ]
     },
     {
@@ -348,17 +423,10 @@
       ]
     },
     {
-      "card": "nameless wanderer",
+      "card": "wanderer",
       "games": [
         "Ring of Pain",
         "Kenshi"
-      ]
-    },
-    {
-      "card": "new farmer",
-      "games": [
-        "Stardew Valley",
-        "Fields of Mistria"
       ]
     },
     {
@@ -369,24 +437,10 @@
       ]
     },
     {
-      "card": "orphaned girl",
-      "games": [
-        "The Walking Dead: The Telltale Definitive Series",
-        "The Walking Dead: Season Two"
-      ]
-    },
-    {
       "card": "physics tinkerer",
       "games": [
         "Garry's Mod",
         "The Powder Toy"
-      ]
-    },
-    {
-      "card": "prophesied hero",
-      "games": [
-        "DELTARUNE",
-        "The Elder Scrolls IV: Oblivion Game of the Year Edition"
       ]
     },
     {
@@ -411,13 +465,6 @@
       ]
     },
     {
-      "card": "runaway child",
-      "games": [
-        "The Binding of Isaac",
-        "The Binding of Isaac: Rebirth"
-      ]
-    },
-    {
       "card": "school club member",
       "games": [
         "Doki Doki Literature Club!",
@@ -432,7 +479,7 @@
       ]
     },
     {
-      "card": "secret club leader",
+      "card": "club leader",
       "games": [
         "Persona 4 Golden",
         "Persona 3 Reload"
@@ -460,13 +507,6 @@
       ]
     },
     {
-      "card": "stick figure fighter",
-      "games": [
-        "Stick Fight: The Game",
-        "Your Only Move Is HUSTLE"
-      ]
-    },
-    {
       "card": "test subject",
       "games": [
         "Portal 2",
@@ -488,13 +528,6 @@
       ]
     },
     {
-      "card": "veteran agent",
-      "games": [
-        "Griftlands",
-        "Resident Evil Requiem"
-      ]
-    },
-    {
       "card": "warlord",
       "games": [
         "Age of Empires II (Retired)",
@@ -502,7 +535,7 @@
       ]
     },
     {
-      "card": "young archaeologist",
+      "card": "archaeologist",
       "games": [
         "Tomb Raider",
         "Rise of the Tomb Raider"
@@ -516,9 +549,80 @@
       ]
     },
     {
-      "card": "accused witch",
+      "card": "witch",
       "games": [
-        "Magical Girl Witch Trials"
+        "Magical Girl Witch Trials",
+        "Noita"
+      ]
+    },
+    {
+      "card": "soul",
+      "games": [
+        "Before Your Eyes",
+        "Ultimate Custom Night"
+      ]
+    },
+    {
+      "card": "commander",
+      "games": [
+        "Halo: The Master Chief Collection",
+        "STAR WARS Empire at War - Gold Pack"
+      ]
+    },
+    {
+      "card": "bodyguard",
+      "games": [
+        "Dishonored",
+        "Sekiro: Shadows Die Twice"
+      ]
+    },
+    {
+      "card": "mercenary",
+      "games": [
+        "Team Fortress 2",
+        "Mount & Blade: Warband"
+      ]
+    },
+    {
+      "card": "rescuer",
+      "games": [
+        "BioShock Infinite",
+        "Resident Evil 4"
+      ]
+    },
+    {
+      "card": "knight",
+      "games": [
+        "Castle Crashers",
+        "Hollow Knight"
+      ]
+    },
+    {
+      "card": "miner",
+      "games": [
+        "Minecraft",
+        "Deep Rock Galactic"
+      ]
+    },
+    {
+      "card": "adventurer",
+      "games": [
+        "Terraria",
+        "Phasmophobia"
+      ]
+    },
+    {
+      "card": "teen",
+      "games": [
+        "DELTARUNE",
+        "My Summer Car"
+      ]
+    },
+    {
+      "card": "astronaut",
+      "games": [
+        "Outer Wilds",
+        "PRAGMATA"
       ]
     },
     {
@@ -534,51 +638,39 @@
       ]
     },
     {
-      "card": "amateur film crew",
+      "card": "film crew",
       "games": [
         "Content Warning"
       ]
     },
     {
-      "card": "amateur mechanic",
+      "card": "mechanic",
       "games": [
         "My Summer Car"
       ]
     },
     {
-      "card": "amnesiac cop",
-      "games": [
-        "Disco Elysium - The Final Cut"
-      ]
-    },
-    {
-      "card": "amnesiac veteran",
+      "card": "veteran",
       "games": [
         "Katana ZERO"
       ]
     },
     {
-      "card": "android detective",
-      "games": [
-        "Detroit: Become Human"
-      ]
-    },
-    {
-      "card": "android girl's guardian",
+      "card": "android's guardian",
       "games": [
         "PRAGMATA"
       ]
     },
     {
-      "card": "android rebel",
+      "card": "guardian",
       "games": [
-        "Detroit: Become Human"
+        "PRAGMATA"
       ]
     },
     {
-      "card": "android soldier",
+      "card": "rebel",
       "games": [
-        "SIGNALIS"
+        "Detroit: Become Human"
       ]
     },
     {
@@ -588,25 +680,19 @@
       ]
     },
     {
-      "card": "animal angler",
+      "card": "angler",
       "games": [
         "WEBFISHING"
       ]
     },
     {
-      "card": "animal hero",
-      "games": [
-        "Gunfire Reborn"
-      ]
-    },
-    {
-      "card": "anti-gravity racer",
+      "card": "racer",
       "games": [
         "Redout"
       ]
     },
     {
-      "card": "anxious climber",
+      "card": "climber",
       "games": [
         "Celeste"
       ]
@@ -618,31 +704,19 @@
       ]
     },
     {
-      "card": "armed crab",
+      "card": "crab",
       "games": [
         "Crab Champions"
       ]
     },
     {
-      "card": "armed duck",
+      "card": "duck",
       "games": [
         "Duck Game"
       ]
     },
     {
-      "card": "armored warrior",
-      "games": [
-        "Slay the Spire"
-      ]
-    },
-    {
-      "card": "ash-born warrior",
-      "games": [
-        "DARK SOULS III"
-      ]
-    },
-    {
-      "card": "aspiring streamer",
+      "card": "streamer",
       "games": [
         "Content Warning"
       ]
@@ -657,12 +731,6 @@
       "card": "bartender",
       "games": [
         "VA-11 Hall-A: Cyberpunk Bartender Action"
-      ]
-    },
-    {
-      "card": "beaver colony leader",
-      "games": [
-        "Timberborn"
       ]
     },
     {
@@ -684,25 +752,19 @@
       ]
     },
     {
-      "card": "bouncing cube",
+      "card": "cube",
       "games": [
         "Geometry Dash"
       ]
     },
     {
-      "card": "brawling otter",
+      "card": "otter",
       "games": [
         "Rivals of Aether"
       ]
     },
     {
-      "card": "broke young scientist",
-      "games": [
-        "Marvel's Spider-Man Remastered"
-      ]
-    },
-    {
-      "card": "burned-out office worker",
+      "card": "office worker",
       "games": [
         "Stardew Valley"
       ]
@@ -714,21 +776,15 @@
       ]
     },
     {
-      "card": "captive boyfriend",
+      "card": "boyfriend",
       "games": [
         "MiSide"
       ]
     },
     {
-      "card": "captive performer",
+      "card": "performer",
       "games": [
         "BattleBlock Theater"
-      ]
-    },
-    {
-      "card": "captive warrior",
-      "games": [
-        "Hollow Knight: Silksong"
       ]
     },
     {
@@ -744,12 +800,6 @@
       ]
     },
     {
-      "card": "card game captive",
-      "games": [
-        "Inscryption"
-      ]
-    },
-    {
       "card": "card shop owner",
       "games": [
         "TCG Card Shop Simulator"
@@ -762,15 +812,9 @@
       ]
     },
     {
-      "card": "celebrity gang boss",
+      "card": "gang boss",
       "games": [
         "Saints Row: The Third"
-      ]
-    },
-    {
-      "card": "chosen heir",
-      "games": [
-        "Black Myth: Wukong"
       ]
     },
     {
@@ -798,7 +842,7 @@
       ]
     },
     {
-      "card": "collared sorcerer",
+      "card": "sorcerer",
       "games": [
         "Divinity: Original Sin 2 - Definitive Edition"
       ]
@@ -816,13 +860,13 @@
       ]
     },
     {
-      "card": "corporate pioneer",
+      "card": "pioneer",
       "games": [
         "Satisfactory"
       ]
     },
     {
-      "card": "cosmic tinkerer",
+      "card": "tinkerer",
       "games": [
         "Universe Sandbox"
       ]
@@ -846,37 +890,31 @@
       ]
     },
     {
-      "card": "cursed estate heir",
+      "card": "estate heir",
       "games": [
         "Darkest Dungeon"
       ]
     },
     {
-      "card": "cursed undead",
+      "card": "undead",
       "games": [
         "DARK SOULS: REMASTERED"
       ]
     },
     {
-      "card": "cyborg ninja",
+      "card": "ninja",
       "games": [
         "METAL GEAR RISING: REVENGEANCE"
       ]
     },
     {
-      "card": "dead man's copy",
-      "games": [
-        "SOMA"
-      ]
-    },
-    {
-      "card": "dead relative",
+      "card": "relative",
       "games": [
         "What Remains of Edith Finch"
       ]
     },
     {
-      "card": "dead Viking warrior",
+      "card": "Viking warrior",
       "games": [
         "Valheim"
       ]
@@ -906,57 +944,27 @@
       ]
     },
     {
-      "card": "demon suitor",
-      "games": [
-        "Helltaker"
-      ]
-    },
-    {
-      "card": "departed soul",
-      "games": [
-        "Before Your Eyes"
-      ]
-    },
-    {
       "card": "desktop cat",
       "games": [
         "Bongo Cat"
       ]
     },
     {
-      "card": "desperate gambler",
+      "card": "gambler",
       "games": [
         "Buckshot Roulette"
       ]
     },
     {
-      "card": "devil-cursed heir",
-      "games": [
-        "Tekken 8"
-      ]
-    },
-    {
-      "card": "devil's debtor",
-      "games": [
-        "Cuphead"
-      ]
-    },
-    {
-      "card": "divorcing parent",
+      "card": "parent",
       "games": [
         "It Takes Two"
       ]
     },
     {
-      "card": "doomed expedition member",
+      "card": "expedition member",
       "games": [
         "Clair Obscur: Expedition 33"
-      ]
-    },
-    {
-      "card": "dream self",
-      "games": [
-        "OMORI"
       ]
     },
     {
@@ -966,19 +974,19 @@
       ]
     },
     {
-      "card": "drifter biker",
+      "card": "drifter",
       "games": [
         "Days Gone"
       ]
     },
     {
-      "card": "drugged samurai hitman",
+      "card": "biker",
       "games": [
-        "Katana ZERO"
+        "Days Gone"
       ]
     },
     {
-      "card": "drunk noble heir",
+      "card": "noble heir",
       "games": [
         "Griftlands"
       ]
@@ -990,39 +998,33 @@
       ]
     },
     {
-      "card": "dying old man",
+      "card": "old man",
       "games": [
         "To the Moon"
       ]
     },
     {
-      "card": "elemental beast warrior",
+      "card": "beast warrior",
       "games": [
         "Rivals of Aether"
       ]
     },
     {
-      "card": "escaped monster",
+      "card": "monster",
       "games": [
         "SCP: Secret Laboratory"
       ]
     },
     {
-      "card": "evicted young adult",
+      "card": "young adult",
       "games": [
         "Wobbly Life"
       ]
     },
     {
-      "card": "expendable employee",
+      "card": "employee",
       "games": [
         "Lethal Company"
-      ]
-    },
-    {
-      "card": "expendable prisoner",
-      "games": [
-        "SCP: Secret Laboratory"
       ]
     },
     {
@@ -1032,21 +1034,15 @@
       ]
     },
     {
-      "card": "failed prodigy",
+      "card": "prodigy",
       "games": [
         "ATRI -My Dear Moments-"
       ]
     },
     {
-      "card": "fairy-tale sheriff",
+      "card": "sheriff",
       "games": [
         "The Wolf Among Us"
-      ]
-    },
-    {
-      "card": "fallen alien commander",
-      "games": [
-        "Halo: The Master Chief Collection"
       ]
     },
     {
@@ -1068,33 +1064,9 @@
       ]
     },
     {
-      "card": "farmer",
-      "games": [
-        "Farming Simulator 19"
-      ]
-    },
-    {
       "card": "fencer",
       "games": [
         "Nidhogg"
-      ]
-    },
-    {
-      "card": "fighter's soul",
-      "games": [
-        "Dragon Ball FighterZ"
-      ]
-    },
-    {
-      "card": "fire lion",
-      "games": [
-        "Rivals of Aether"
-      ]
-    },
-    {
-      "card": "fleeing boy",
-      "games": [
-        "INSIDE"
       ]
     },
     {
@@ -1110,33 +1082,15 @@
       ]
     },
     {
-      "card": "forbidden lore seeker",
+      "card": "lore seeker",
       "games": [
         "Cultist Simulator"
       ]
     },
     {
-      "card": "former child soldier",
+      "card": "child soldier",
       "games": [
         "METAL GEAR RISING: REVENGEANCE"
-      ]
-    },
-    {
-      "card": "framed royal bodyguard",
-      "games": [
-        "Dishonored"
-      ]
-    },
-    {
-      "card": "freed alien host",
-      "games": [
-        "Grim Dawn"
-      ]
-    },
-    {
-      "card": "freed prisoner",
-      "games": [
-        "The Elder Scrolls IV: Oblivion Game of the Year Edition"
       ]
     },
     {
@@ -1158,7 +1112,7 @@
       ]
     },
     {
-      "card": "game-trapped player",
+      "card": "player",
       "games": [
         "MiSide"
       ]
@@ -1188,19 +1142,13 @@
       ]
     },
     {
-      "card": "giant floating hand",
-      "games": [
-        "Black & White"
-      ]
-    },
-    {
-      "card": "gifted wizard",
+      "card": "wizard",
       "games": [
         "Hogwarts Legacy"
       ]
     },
     {
-      "card": "grieving widower",
+      "card": "widower",
       "games": [
         "SILENT HILL 2"
       ]
@@ -1212,15 +1160,9 @@
       ]
     },
     {
-      "card": "haunted gunslinger",
+      "card": "gunslinger",
       "games": [
         "Enter the Gungeon"
-      ]
-    },
-    {
-      "card": "headless warrior",
-      "games": [
-        "Dead Cells"
       ]
     },
     {
@@ -1236,7 +1178,7 @@
       ]
     },
     {
-      "card": "hell's train conductor",
+      "card": "train conductor",
       "games": [
         "Monster Train"
       ]
@@ -1254,31 +1196,13 @@
       ]
     },
     {
-      "card": "hired mercenary",
-      "games": [
-        "Team Fortress 2"
-      ]
-    },
-    {
-      "card": "hired rescuer",
-      "games": [
-        "BioShock Infinite"
-      ]
-    },
-    {
-      "card": "historical war hero",
+      "card": "war hero",
       "games": [
         "Age of Empires II: Definitive Edition"
       ]
     },
     {
-      "card": "hollow vessel",
-      "games": [
-        "Hollow Knight"
-      ]
-    },
-    {
-      "card": "homeless space traveler",
+      "card": "space traveler",
       "games": [
         "Starbound"
       ]
@@ -1302,31 +1226,13 @@
       ]
     },
     {
-      "card": "housekeeper android",
+      "card": "housekeeper",
       "games": [
         "Detroit: Become Human"
       ]
     },
     {
-      "card": "immortal ruler",
-      "games": [
-        "Sid Meier's Civilization V"
-      ]
-    },
-    {
-      "card": "immune survivor",
-      "games": [
-        "Left 4 Dead"
-      ]
-    },
-    {
-      "card": "imperial commander",
-      "games": [
-        "STAR WARS Empire at War - Gold Pack"
-      ]
-    },
-    {
-      "card": "indebted ex-soldier",
+      "card": "ex-soldier",
       "games": [
         "BioShock Infinite"
       ]
@@ -1344,7 +1250,7 @@
       ]
     },
     {
-      "card": "invited puzzle solver",
+      "card": "puzzle solver",
       "games": [
         "The Room"
       ]
@@ -1368,25 +1274,13 @@
       ]
     },
     {
-      "card": "knight",
-      "games": [
-        "Castle Crashers"
-      ]
-    },
-    {
       "card": "lab nerd",
       "games": [
         "Abiotic Factor"
       ]
     },
     {
-      "card": "last surviving heir",
-      "games": [
-        "What Remains of Edith Finch"
-      ]
-    },
-    {
-      "card": "left-for-dead courier",
+      "card": "courier",
       "games": [
         "Fallout: New Vegas"
       ]
@@ -1398,69 +1292,39 @@
       ]
     },
     {
-      "card": "little walker",
-      "games": [
-        "Big Walk"
-      ]
-    },
-    {
-      "card": "living toy",
+      "card": "toy",
       "games": [
         "Sheepy: A Short Adventure"
       ]
     },
     {
-      "card": "lone block builder",
+      "card": "block builder",
       "games": [
         "Minecraft"
       ]
     },
     {
-      "card": "lone fisherman",
+      "card": "fisherman",
       "games": [
         "DREDGE"
       ]
     },
     {
-      "card": "lone rescuer",
-      "games": [
-        "Resident Evil 4"
-      ]
-    },
-    {
-      "card": "lone witch",
-      "games": [
-        "Noita"
-      ]
-    },
-    {
-      "card": "lonely young man",
+      "card": "young man",
       "games": [
         "Everlasting Summer"
       ]
     },
     {
-      "card": "lost camper",
+      "card": "camper",
       "games": [
         "Everlasting Summer"
       ]
     },
     {
-      "card": "lost human child",
-      "games": [
-        "Undertale"
-      ]
-    },
-    {
-      "card": "lost scout",
+      "card": "scout",
       "games": [
         "PEAK"
-      ]
-    },
-    {
-      "card": "loyal bodyguard",
-      "games": [
-        "Sekiro: Shadows Die Twice"
       ]
     },
     {
@@ -1476,27 +1340,15 @@
       ]
     },
     {
-      "card": "masked assassin",
+      "card": "assassin",
       "games": [
         "Dishonored"
       ]
     },
     {
-      "card": "masked bank robber",
+      "card": "bank robber",
       "games": [
         "PAYDAY 2"
-      ]
-    },
-    {
-      "card": "masked boy",
-      "games": [
-        "Sally Face - Episode One"
-      ]
-    },
-    {
-      "card": "master detective",
-      "games": [
-        "Batman: Arkham Asylum Game of the Year Edition"
       ]
     },
     {
@@ -1542,12 +1394,6 @@
       ]
     },
     {
-      "card": "miner",
-      "games": [
-        "Minecraft"
-      ]
-    },
-    {
       "card": "mob janitor",
       "games": [
         "Crime Scene Cleaner"
@@ -1557,18 +1403,6 @@
       "card": "mobster's son",
       "games": [
         "Hotline Miami 2: Wrong Number"
-      ]
-    },
-    {
-      "card": "monkey commander",
-      "games": [
-        "Bloons TD 6"
-      ]
-    },
-    {
-      "card": "monkey warrior",
-      "games": [
-        "Black Myth: Wukong"
       ]
     },
     {
@@ -1584,39 +1418,21 @@
       ]
     },
     {
-      "card": "music-powered cyborg",
+      "card": "cyborg",
       "games": [
         "Hi-Fi RUSH"
       ]
     },
     {
-      "card": "mutant zombie",
+      "card": "zombie",
       "games": [
         "Left 4 Dead"
       ]
     },
     {
-      "card": "mysterious poet",
+      "card": "poet",
       "games": [
         "Devil May Cry 5"
-      ]
-    },
-    {
-      "card": "naked survivor",
-      "games": [
-        "Rust"
-      ]
-    },
-    {
-      "card": "nameless adventurer",
-      "games": [
-        "Terraria"
-      ]
-    },
-    {
-      "card": "nameless mercenary",
-      "games": [
-        "Mount & Blade: Warband"
       ]
     },
     {
@@ -1626,7 +1442,7 @@
       ]
     },
     {
-      "card": "new boat captain",
+      "card": "boat captain",
       "games": [
         "DREDGE"
       ]
@@ -1656,21 +1472,15 @@
       ]
     },
     {
-      "card": "old turtle",
+      "card": "turtle",
       "games": [
         "Shelldiver"
       ]
     },
     {
-      "card": "one-armed shinobi",
+      "card": "shinobi",
       "games": [
         "Sekiro: Shadows Die Twice"
-      ]
-    },
-    {
-      "card": "one-legged boy",
-      "games": [
-        "ATRI -My Dear Moments-"
       ]
     },
     {
@@ -1692,33 +1502,15 @@
       ]
     },
     {
-      "card": "outlaw baller",
+      "card": "baller",
       "games": [
         "Lethal League Blaze"
       ]
     },
     {
-      "card": "outlaw gunman",
+      "card": "gunman",
       "games": [
         "Red Dead Redemption 2"
-      ]
-    },
-    {
-      "card": "pacifist assassin",
-      "games": [
-        "Dishonored"
-      ]
-    },
-    {
-      "card": "painted child",
-      "games": [
-        "Clair Obscur: Expedition 33"
-      ]
-    },
-    {
-      "card": "parasite-infected adventurer",
-      "games": [
-        "Phasmophobia"
       ]
     },
     {
@@ -1764,19 +1556,13 @@
       ]
     },
     {
-      "card": "princess slayer",
-      "games": [
-        "Slay the Princess — The Pristine Cut"
-      ]
-    },
-    {
       "card": "prisoner pilot",
       "games": [
         "Ace Combat 7: Skies Unknown"
       ]
     },
     {
-      "card": "probation student",
+      "card": "student",
       "games": [
         "Persona 5 Royal"
       ]
@@ -1785,12 +1571,6 @@
       "card": "quarantine survivor",
       "games": [
         "Project Zomboid"
-      ]
-    },
-    {
-      "card": "quiet teen",
-      "games": [
-        "DELTARUNE"
       ]
     },
     {
@@ -1824,21 +1604,9 @@
       ]
     },
     {
-      "card": "recalled exile",
+      "card": "exile",
       "games": [
         "ELDEN RING"
-      ]
-    },
-    {
-      "card": "reluctant detective",
-      "games": [
-        "Danganronpa: Trigger Happy Havoc"
-      ]
-    },
-    {
-      "card": "reluctant hero",
-      "games": [
-        "The Henry Stickmin Collection"
       ]
     },
     {
@@ -1860,25 +1628,25 @@
       ]
     },
     {
-      "card": "resurrected lamb",
+      "card": "lamb",
       "games": [
         "Cult of the Lamb"
       ]
     },
     {
-      "card": "retired superhero",
+      "card": "superhero",
       "games": [
         "Dispatch"
       ]
     },
     {
-      "card": "retired war god",
+      "card": "war god",
       "games": [
         "God of War"
       ]
     },
     {
-      "card": "retired war veteran",
+      "card": "war veteran",
       "games": [
         "SANABI"
       ]
@@ -1890,21 +1658,9 @@
       ]
     },
     {
-      "card": "rising demigod",
+      "card": "demigod",
       "games": [
         "Grim Dawn"
-      ]
-    },
-    {
-      "card": "robot-armed demon hunter",
-      "games": [
-        "Devil May Cry 5"
-      ]
-    },
-    {
-      "card": "rock-and-roll fighter",
-      "games": [
-        "Guilty Gear -Strive-"
       ]
     },
     {
@@ -1914,27 +1670,15 @@
       ]
     },
     {
-      "card": "rookie astronaut",
-      "games": [
-        "Outer Wilds"
-      ]
-    },
-    {
-      "card": "rookie defense lawyer",
+      "card": "defense lawyer",
       "games": [
         "Phoenix Wright: Ace Attorney Trilogy"
       ]
     },
     {
-      "card": "rookie street fighter",
+      "card": "street fighter",
       "games": [
         "Street Fighter 6"
-      ]
-    },
-    {
-      "card": "rule rewriter",
-      "games": [
-        "Baba Is You"
       ]
     },
     {
@@ -1962,31 +1706,25 @@
       ]
     },
     {
-      "card": "scientist",
-      "games": [
-        "SCP: Secret Laboratory"
-      ]
-    },
-    {
-      "card": "searching android",
+      "card": "android",
       "games": [
         "SIGNALIS"
       ]
     },
     {
-      "card": "searching husband",
+      "card": "husband",
       "games": [
         "Resident Evil 7 Biohazard"
       ]
     },
     {
-      "card": "secret impostor",
+      "card": "impostor",
       "games": [
         "Among Us"
       ]
     },
     {
-      "card": "shadow samurai",
+      "card": "samurai",
       "games": [
         "Ghost of Tsushima DIRECTOR'S CUT"
       ]
@@ -1995,12 +1733,6 @@
       "card": "sharpshooter",
       "games": [
         "Killing Floor"
-      ]
-    },
-    {
-      "card": "shifting shape",
-      "games": [
-        "Geometry Dash"
       ]
     },
     {
@@ -2016,19 +1748,7 @@
       ]
     },
     {
-      "card": "shrunken couple",
-      "games": [
-        "It Takes Two"
-      ]
-    },
-    {
-      "card": "shut-in boy",
-      "games": [
-        "OMORI"
-      ]
-    },
-    {
-      "card": "shy photo student",
+      "card": "photo student",
       "games": [
         "Life is Strange - Episode 1"
       ]
@@ -2040,7 +1760,7 @@
       ]
     },
     {
-      "card": "silent hunter",
+      "card": "hunter",
       "games": [
         "Slay the Spire"
       ]
@@ -2052,7 +1772,7 @@
       ]
     },
     {
-      "card": "six-armed potato",
+      "card": "potato",
       "games": [
         "Brotato"
       ]
@@ -2070,7 +1790,7 @@
       ]
     },
     {
-      "card": "small-time dealer",
+      "card": "dealer",
       "games": [
         "Schedule I"
       ]
@@ -2082,7 +1802,7 @@
       ]
     },
     {
-      "card": "space dwarf miner",
+      "card": "dwarf",
       "games": [
         "Deep Rock Galactic"
       ]
@@ -2124,25 +1844,13 @@
       ]
     },
     {
-      "card": "stick-figure crook",
+      "card": "crook",
       "games": [
         "The Henry Stickmin Collection"
       ]
     },
     {
-      "card": "stranded astronaut",
-      "games": [
-        "PRAGMATA"
-      ]
-    },
-    {
-      "card": "stranded scientist",
-      "games": [
-        "Abiotic Factor"
-      ]
-    },
-    {
-      "card": "stray cat",
+      "card": "cat",
       "games": [
         "Stray"
       ]
@@ -2160,7 +1868,7 @@
       ]
     },
     {
-      "card": "stressed pizza chef",
+      "card": "pizza chef",
       "games": [
         "Pizza Tower"
       ]
@@ -2214,12 +1922,6 @@
       ]
     },
     {
-      "card": "teen home alone",
-      "games": [
-        "My Summer Car"
-      ]
-    },
-    {
       "card": "terraforming convict",
       "games": [
         "The Planet Crafter"
@@ -2232,43 +1934,13 @@
       ]
     },
     {
-      "card": "time-displaced fighter",
-      "games": [
-        "Mortal Kombat 11"
-      ]
-    },
-    {
-      "card": "time-rewinding girl",
-      "games": [
-        "Life is Strange - Episode 1"
-      ]
-    },
-    {
-      "card": "timid FBI analyst",
+      "card": "FBI analyst",
       "games": [
         "Resident Evil Requiem"
       ]
     },
     {
-      "card": "tiny alien girl",
-      "games": [
-        "A Hat in Time"
-      ]
-    },
-    {
-      "card": "tiny raincoat girl",
-      "games": [
-        "Little Nightmares"
-      ]
-    },
-    {
-      "card": "tiny silent knight",
-      "games": [
-        "Hollow Knight"
-      ]
-    },
-    {
-      "card": "tiny square",
+      "card": "square",
       "games": [
         "Just Shapes & Beats"
       ]
@@ -2292,15 +1964,9 @@
       ]
     },
     {
-      "card": "transforming car",
+      "card": "car",
       "games": [
         "Sonic & All-Stars Racing Transformed"
-      ]
-    },
-    {
-      "card": "trapped soul",
-      "games": [
-        "Ultimate Custom Night"
       ]
     },
     {
@@ -2316,43 +1982,7 @@
       ]
     },
     {
-      "card": "twin planets",
-      "games": [
-        "A Dance of Fire and Ice"
-      ]
-    },
-    {
-      "card": "two-faced being",
-      "games": [
-        "ENA: Dream BBQ"
-      ]
-    },
-    {
-      "card": "undercover agent",
-      "games": [
-        "Dying Light"
-      ]
-    },
-    {
-      "card": "undercover cop",
-      "games": [
-        "Sleeping Dogs: Definitive Edition"
-      ]
-    },
-    {
-      "card": "underworld prince",
-      "games": [
-        "Hades"
-      ]
-    },
-    {
-      "card": "underworld princess",
-      "games": [
-        "Hades II"
-      ]
-    },
-    {
-      "card": "unseen guide",
+      "card": "guide",
       "games": [
         "OneShot"
       ]
@@ -2364,7 +1994,7 @@
       ]
     },
     {
-      "card": "vacationing bird",
+      "card": "bird",
       "games": [
         "A Short Hike"
       ]
@@ -2382,7 +2012,7 @@
       ]
     },
     {
-      "card": "virtual idol",
+      "card": "idol",
       "games": [
         "HoloCure - Save the Fans!"
       ]
@@ -2391,12 +2021,6 @@
       "card": "virtual pet keeper",
       "games": [
         "VPet-Simulator"
-      ]
-    },
-    {
-      "card": "voiceless girl",
-      "games": [
-        "GRIS"
       ]
     },
     {
@@ -2412,13 +2036,13 @@
       ]
     },
     {
-      "card": "wandering martial artist",
+      "card": "martial artist",
       "games": [
         "Street Fighter 6"
       ]
     },
     {
-      "card": "wannabe rock star",
+      "card": "rock star",
       "games": [
         "Hi-Fi RUSH"
       ]
@@ -2448,49 +2072,25 @@
       ]
     },
     {
-      "card": "web-slinging hero",
-      "games": [
-        "Marvel's Spider-Man Remastered"
-      ]
-    },
-    {
-      "card": "widowed father",
-      "games": [
-        "Volcano Princess"
-      ]
-    },
-    {
       "card": "willing sacrifice",
       "games": [
         "Nidhogg"
       ]
     },
     {
-      "card": "wish-seeking girl",
-      "games": [
-        "Skullgirls"
-      ]
-    },
-    {
-      "card": "wobbly dreamer",
+      "card": "dreamer",
       "games": [
         "Human Fall Flat"
       ]
     },
     {
-      "card": "wobbly soldier",
-      "games": [
-        "Totally Accurate Battle Simulator"
-      ]
-    },
-    {
-      "card": "wordless traveler",
+      "card": "traveler",
       "games": [
         "Chants of Sennaar"
       ]
     },
     {
-      "card": "would-be king",
+      "card": "king",
       "games": [
         "Mount & Blade: Warband"
       ]
@@ -2502,7 +2102,7 @@
       ]
     },
     {
-      "card": "young resistance fighter",
+      "card": "resistance fighter",
       "games": [
         "Half-Life: Alyx"
       ]
@@ -15660,7 +15260,8 @@
         "Hand of Fate",
         "Tekken 8",
         "Skullgirls",
-        "Darkest Dungeon"
+        "Darkest Dungeon",
+        "DARK SOULS: REMASTERED"
       ]
     },
     {
@@ -15710,7 +15311,10 @@
         "Starbound",
         "Return of the Obra Dinn",
         "Tomb Raider",
-        "SnowRunner"
+        "SnowRunner",
+        "How to Fish",
+        "PRAGMATA",
+        "Abiotic Factor"
       ]
     },
     {
@@ -15723,7 +15327,22 @@
         "Firework",
         "Hollow Knight: Silksong",
         "Ultimate Custom Night",
-        "Ring of Pain"
+        "Ring of Pain",
+        "Enter the Gungeon"
+      ]
+    },
+    {
+      "card": "masked",
+      "games": [
+        "Hotline Miami",
+        "Persona 5 Royal",
+        "Dishonored",
+        "PAYDAY 2",
+        "Hotline Miami 2: Wrong Number",
+        "Sally Face - Episode One",
+        "Hand of Fate",
+        "Batman: Arkham Asylum Game of the Year Edition",
+        "Batman: Arkham City - Game of the Year Edition"
       ]
     },
     {
@@ -15739,15 +15358,15 @@
       ]
     },
     {
-      "card": "masked",
+      "card": "silent",
       "games": [
-        "Hotline Miami",
-        "Persona 5 Royal",
-        "Dishonored",
-        "PAYDAY 2",
-        "Hotline Miami 2: Wrong Number",
-        "Sally Face - Episode One",
-        "Hand of Fate"
+        "Half-Life",
+        "Black Mesa",
+        "Half-Life 2: Episode Two",
+        "GRIS",
+        "Chants of Sennaar",
+        "Half-Life 2",
+        "Slay the Spire"
       ]
     },
     {
@@ -15828,6 +15447,61 @@
       ]
     },
     {
+      "card": "armored",
+      "games": [
+        "Bloons TD 6",
+        "Half-Life",
+        "DOOM",
+        "Halo: The Master Chief Collection",
+        "DOOM Eternal",
+        "Slay the Spire"
+      ]
+    },
+    {
+      "card": "trapped",
+      "games": [
+        "MiSide",
+        "Split Fiction",
+        "Batman: Arkham Asylum Game of the Year Edition",
+        "BattleBlock Theater",
+        "Magical Girl Witch Trials",
+        "Ultimate Custom Night"
+      ]
+    },
+    {
+      "card": "nameless",
+      "games": [
+        "Kenshi",
+        "Buckshot Roulette",
+        "The Elder Scrolls IV: Oblivion Game of the Year Edition",
+        "Ring of Pain",
+        "Terraria",
+        "Mount & Blade: Warband"
+      ]
+    },
+    {
+      "card": "rookie",
+      "games": [
+        "Hotline Miami 2: Wrong Number",
+        "Resident Evil 2",
+        "Firework",
+        "Outer Wilds",
+        "Phoenix Wright: Ace Attorney Trilogy",
+        "Street Fighter 6"
+      ]
+    },
+    {
+      "card": "lone",
+      "games": [
+        "Super Smash Bros. Ultimate",
+        "Vampire Survivors",
+        "Minecraft",
+        "DREDGE",
+        "Resident Evil 4",
+        "Noita"
+      ]
+    },
+    {
       "card": "abandoned",
       "games": [
         "Portal 2",
@@ -15835,16 +15509,6 @@
         "Portal",
         "Phasmophobia",
         "DARK SOULS: REMASTERED"
-      ]
-    },
-    {
-      "card": "armored",
-      "games": [
-        "Bloons TD 6",
-        "Half-Life",
-        "DOOM",
-        "Halo: The Master Chief Collection",
-        "DOOM Eternal"
       ]
     },
     {
@@ -15888,26 +15552,6 @@
       ]
     },
     {
-      "card": "silent",
-      "games": [
-        "Half-Life",
-        "Black Mesa",
-        "Half-Life 2: Episode Two",
-        "GRIS",
-        "Chants of Sennaar"
-      ]
-    },
-    {
-      "card": "trapped",
-      "games": [
-        "MiSide",
-        "Split Fiction",
-        "Batman: Arkham Asylum Game of the Year Edition",
-        "BattleBlock Theater",
-        "Magical Girl Witch Trials"
-      ]
-    },
-    {
       "card": "undead",
       "games": [
         "Plants vs. Zombies",
@@ -15925,6 +15569,46 @@
         "Stick Fight: The Game",
         "Human Fall Flat",
         "Wobbly Life"
+      ]
+    },
+    {
+      "card": "mutant",
+      "games": [
+        "Brotato",
+        "Killing Floor",
+        "DREDGE",
+        "The Witcher 3: Wild Hunt",
+        "Left 4 Dead"
+      ]
+    },
+    {
+      "card": "grieving",
+      "games": [
+        "God of War",
+        "Resident Evil Village",
+        "The Binding of Isaac",
+        "SANABI",
+        "SILENT HILL 2"
+      ]
+    },
+    {
+      "card": "desperate",
+      "games": [
+        "Danganronpa: Trigger Happy Havoc",
+        "Buckshot Roulette",
+        "Crime Scene Cleaner",
+        "Resident Evil Village",
+        "The Forest"
+      ]
+    },
+    {
+      "card": "secret",
+      "games": [
+        "Fights in Tight Spaces",
+        "Crime Scene Cleaner",
+        "Persona 4 Golden",
+        "Persona 3 Reload",
+        "Among Us"
       ]
     },
     {
@@ -15982,15 +15666,6 @@
       ]
     },
     {
-      "card": "mutant",
-      "games": [
-        "Brotato",
-        "Killing Floor",
-        "DREDGE",
-        "The Witcher 3: Wild Hunt"
-      ]
-    },
-    {
       "card": "rusty",
       "games": [
         "My Summer Car",
@@ -16015,6 +15690,24 @@
         "Little Nightmares",
         "This War of Mine",
         "Stacklands"
+      ]
+    },
+    {
+      "card": "lost",
+      "games": [
+        "Undertale",
+        "Big Walk",
+        "Everlasting Summer",
+        "PEAK"
+      ]
+    },
+    {
+      "card": "retired",
+      "games": [
+        "Shelldiver",
+        "Dispatch",
+        "God of War",
+        "SANABI"
       ]
     },
     {
@@ -16098,14 +15791,6 @@
       ]
     },
     {
-      "card": "grieving",
-      "games": [
-        "God of War",
-        "Resident Evil Village",
-        "The Binding of Isaac"
-      ]
-    },
-    {
       "card": "hollow",
       "games": [
         "DARK SOULS III",
@@ -16135,14 +15820,6 @@
         "Age of Empires II (Retired)",
         "Besiege",
         "Age of Empires II: Definitive Edition"
-      ]
-    },
-    {
-      "card": "nameless",
-      "games": [
-        "Kenshi",
-        "Buckshot Roulette",
-        "The Elder Scrolls IV: Oblivion Game of the Year Edition"
       ]
     },
     {
@@ -16183,6 +15860,78 @@
         "Doki Doki Literature Club!",
         "Doki Doki Literature Club Plus!",
         "There Is No Game: Wrong Dimension"
+      ]
+    },
+    {
+      "card": "chosen",
+      "games": [
+        "Valheim",
+        "Divinity: Original Sin 2 - Definitive Edition",
+        "Black Myth: Wukong"
+      ]
+    },
+    {
+      "card": "drunk",
+      "games": [
+        "My Summer Car",
+        "Disco Elysium - The Final Cut",
+        "Griftlands"
+      ]
+    },
+    {
+      "card": "last",
+      "games": [
+        "Halo: The Master Chief Collection",
+        "Frostpunk",
+        "What Remains of Edith Finch"
+      ]
+    },
+    {
+      "card": "condemned",
+      "games": [
+        "Ace Combat 7: Skies Unknown",
+        "The Elder Scrolls V: Skyrim",
+        "The Elder Scrolls V: Skyrim Special Edition"
+      ]
+    },
+    {
+      "card": "crashed",
+      "games": [
+        "RimWorld",
+        "Factorio",
+        "Scrap Mechanic"
+      ]
+    },
+    {
+      "card": "new",
+      "games": [
+        "Stardew Valley",
+        "Fields of Mistria",
+        "DREDGE"
+      ]
+    },
+    {
+      "card": "stick-figure",
+      "games": [
+        "Stick Fight: The Game",
+        "Your Only Move Is HUSTLE",
+        "The Henry Stickmin Collection"
+      ]
+    },
+    {
+      "card": "young",
+      "games": [
+        "Tomb Raider",
+        "Rise of the Tomb Raider",
+        "Half-Life: Alyx"
+      ]
+    },
+    {
+      "card": "captive",
+      "games": [
+        "MiSide",
+        "BattleBlock Theater",
+        "Hollow Knight: Silksong"
       ]
     },
     {
@@ -16235,13 +15984,6 @@
       ]
     },
     {
-      "card": "chosen",
-      "games": [
-        "Valheim",
-        "Divinity: Original Sin 2 - Definitive Edition"
-      ]
-    },
-    {
       "card": "departed",
       "games": [
         "Before Your Eyes",
@@ -16253,13 +15995,6 @@
       "games": [
         "Outlast",
         "POSTAL 2"
-      ]
-    },
-    {
-      "card": "desperate",
-      "games": [
-        "Danganronpa: Trigger Happy Havoc",
-        "Buckshot Roulette"
       ]
     },
     {
@@ -16288,13 +16023,6 @@
       "games": [
         "SOMA",
         "ATRI -My Dear Moments-"
-      ]
-    },
-    {
-      "card": "drunk",
-      "games": [
-        "My Summer Car",
-        "Disco Elysium - The Final Cut"
       ]
     },
     {
@@ -16396,13 +16124,6 @@
       ]
     },
     {
-      "card": "last",
-      "games": [
-        "Halo: The Master Chief Collection",
-        "Frostpunk"
-      ]
-    },
-    {
       "card": "limbless",
       "games": [
         "Clone Drone in the Danger Zone",
@@ -16421,13 +16142,6 @@
       "games": [
         "Euro Truck Simulator 2",
         "American Truck Simulator"
-      ]
-    },
-    {
-      "card": "lost",
-      "games": [
-        "Undertale",
-        "Big Walk"
       ]
     },
     {
@@ -16515,13 +16229,6 @@
       ]
     },
     {
-      "card": "secret",
-      "games": [
-        "Fights in Tight Spaces",
-        "Crime Scene Cleaner"
-      ]
-    },
-    {
       "card": "shadowy",
       "games": [
         "DELTARUNE",
@@ -16561,6 +16268,181 @@
       "games": [
         "SANABI",
         "Ghost of Tsushima DIRECTOR'S CUT"
+      ]
+    },
+    {
+      "card": "broke",
+      "games": [
+        "VA-11 Hall-A: Cyberpunk Bartender Action",
+        "Marvel's Spider-Man Remastered"
+      ]
+    },
+    {
+      "card": "cosmic",
+      "games": [
+        "Marvel Snap",
+        "Universe Sandbox"
+      ]
+    },
+    {
+      "card": "escaped",
+      "games": [
+        "The Elder Scrolls IV: Oblivion Game of the Year Edition",
+        "SCP: Secret Laboratory"
+      ]
+    },
+    {
+      "card": "fleeing",
+      "games": [
+        "FTL: Faster Than Light",
+        "INSIDE"
+      ]
+    },
+    {
+      "card": "immortal",
+      "games": [
+        "Sekiro: Shadows Die Twice",
+        "Sid Meier's Civilization V"
+      ]
+    },
+    {
+      "card": "indebted",
+      "games": [
+        "Cuphead",
+        "BioShock Infinite"
+      ]
+    },
+    {
+      "card": "living",
+      "games": [
+        "The Planet Crafter",
+        "Sheepy: A Short Adventure"
+      ]
+    },
+    {
+      "card": "outlaw",
+      "games": [
+        "Red Dead Redemption 2",
+        "Lethal League Blaze"
+      ]
+    },
+    {
+      "card": "undercover",
+      "games": [
+        "Sleeping Dogs: Definitive Edition",
+        "Dying Light"
+      ]
+    },
+    {
+      "card": "apprentice",
+      "games": [
+        "Hogwarts Legacy",
+        "Fields of Mistria"
+      ]
+    },
+    {
+      "card": "convicted",
+      "games": [
+        "The Walking Dead: The Telltale Definitive Series",
+        "The Walking Dead"
+      ]
+    },
+    {
+      "card": "eccentric",
+      "games": [
+        "Don't Starve Together",
+        "Don't Starve"
+      ]
+    },
+    {
+      "card": "hazmat",
+      "games": [
+        "Half-Life",
+        "Black Mesa"
+      ]
+    },
+    {
+      "card": "prophesied",
+      "games": [
+        "DELTARUNE",
+        "The Elder Scrolls IV: Oblivion Game of the Year Edition"
+      ]
+    },
+    {
+      "card": "runaway",
+      "games": [
+        "The Binding of Isaac",
+        "The Binding of Isaac: Rebirth"
+      ]
+    },
+    {
+      "card": "veteran",
+      "games": [
+        "Griftlands",
+        "Resident Evil Requiem"
+      ]
+    },
+    {
+      "card": "amateur",
+      "games": [
+        "Content Warning",
+        "My Summer Car"
+      ]
+    },
+    {
+      "card": "amnesiac",
+      "games": [
+        "Disco Elysium - The Final Cut",
+        "Katana ZERO"
+      ]
+    },
+    {
+      "card": "android",
+      "games": [
+        "Detroit: Become Human",
+        "SIGNALIS"
+      ]
+    },
+    {
+      "card": "animal",
+      "games": [
+        "WEBFISHING",
+        "Gunfire Reborn"
+      ]
+    },
+    {
+      "card": "dead",
+      "games": [
+        "What Remains of Edith Finch",
+        "Valheim"
+      ]
+    },
+    {
+      "card": "expendable",
+      "games": [
+        "Lethal Company",
+        "SCP: Secret Laboratory"
+      ]
+    },
+    {
+      "card": "hired",
+      "games": [
+        "Team Fortress 2",
+        "BioShock Infinite"
+      ]
+    },
+    {
+      "card": "reluctant",
+      "games": [
+        "Danganronpa: Trigger Happy Havoc",
+        "The Henry Stickmin Collection"
+      ]
+    },
+    {
+      "card": "searching",
+      "games": [
+        "SIGNALIS",
+        "Resident Evil 7 Biohazard"
       ]
     },
     {
@@ -16642,12 +16524,6 @@
       ]
     },
     {
-      "card": "broke",
-      "games": [
-        "VA-11 Hall-A: Cyberpunk Bartender Action"
-      ]
-    },
-    {
       "card": "bureaucratic",
       "games": [
         "Papers, Please"
@@ -16708,12 +16584,6 @@
       ]
     },
     {
-      "card": "condemned",
-      "games": [
-        "Ace Combat 7: Skies Unknown"
-      ]
-    },
-    {
       "card": "contained",
       "games": [
         "SCP: Secret Laboratory"
@@ -16732,21 +16602,9 @@
       ]
     },
     {
-      "card": "cosmic",
-      "games": [
-        "Marvel Snap"
-      ]
-    },
-    {
       "card": "cozy",
       "games": [
         "WEBFISHING"
-      ]
-    },
-    {
-      "card": "crashed",
-      "games": [
-        "RimWorld"
       ]
     },
     {
@@ -16840,12 +16698,6 @@
       ]
     },
     {
-      "card": "escaped",
-      "games": [
-        "The Elder Scrolls IV: Oblivion Game of the Year Edition"
-      ]
-    },
-    {
       "card": "evolving",
       "games": [
         "Spore"
@@ -16873,12 +16725,6 @@
       "card": "festival",
       "games": [
         "Forza Horizon 5"
-      ]
-    },
-    {
-      "card": "fleeing",
-      "games": [
-        "FTL: Faster Than Light"
       ]
     },
     {
@@ -17014,21 +16860,9 @@
       ]
     },
     {
-      "card": "immortal",
-      "games": [
-        "Sekiro: Shadows Die Twice"
-      ]
-    },
-    {
       "card": "immune",
       "games": [
         "Left 4 Dead"
-      ]
-    },
-    {
-      "card": "indebted",
-      "games": [
-        "Cuphead"
       ]
     },
     {
@@ -17047,12 +16881,6 @@
       "card": "kind",
       "games": [
         "Spiritfarer: Farewell Edition"
-      ]
-    },
-    {
-      "card": "living",
-      "games": [
-        "The Planet Crafter"
       ]
     },
     {
@@ -17146,12 +16974,6 @@
       ]
     },
     {
-      "card": "outlaw",
-      "games": [
-        "Red Dead Redemption 2"
-      ]
-    },
-    {
       "card": "overheated",
       "games": [
         "Oxygen Not Included"
@@ -17233,12 +17055,6 @@
       "card": "reopened",
       "games": [
         "Firework"
-      ]
-    },
-    {
-      "card": "retired",
-      "games": [
-        "Shelldiver"
       ]
     },
     {
@@ -17458,12 +17274,6 @@
       ]
     },
     {
-      "card": "undercover",
-      "games": [
-        "Sleeping Dogs: Definitive Edition"
-      ]
-    },
-    {
       "card": "underfunded",
       "games": [
         "Abiotic Factor"
@@ -17503,6 +17313,342 @@
       "card": "wild",
       "games": [
         "Balatro"
+      ]
+    },
+    {
+      "card": "accused",
+      "games": [
+        "Magical Girl Witch Trials"
+      ]
+    },
+    {
+      "card": "anti-gravity",
+      "games": [
+        "Redout"
+      ]
+    },
+    {
+      "card": "ash-born",
+      "games": [
+        "DARK SOULS III"
+      ]
+    },
+    {
+      "card": "aspiring",
+      "games": [
+        "Content Warning"
+      ]
+    },
+    {
+      "card": "bouncing",
+      "games": [
+        "Geometry Dash"
+      ]
+    },
+    {
+      "card": "brawling",
+      "games": [
+        "Rivals of Aether"
+      ]
+    },
+    {
+      "card": "burned-out",
+      "games": [
+        "Stardew Valley"
+      ]
+    },
+    {
+      "card": "celebrity",
+      "games": [
+        "Saints Row: The Third"
+      ]
+    },
+    {
+      "card": "devil-cursed",
+      "games": [
+        "Tekken 8"
+      ]
+    },
+    {
+      "card": "evicted",
+      "games": [
+        "Wobbly Life"
+      ]
+    },
+    {
+      "card": "failed",
+      "games": [
+        "ATRI -My Dear Moments-"
+      ]
+    },
+    {
+      "card": "fairy-tale",
+      "games": [
+        "The Wolf Among Us"
+      ]
+    },
+    {
+      "card": "fallen",
+      "games": [
+        "Halo: The Master Chief Collection"
+      ]
+    },
+    {
+      "card": "former",
+      "games": [
+        "METAL GEAR RISING: REVENGEANCE"
+      ]
+    },
+    {
+      "card": "freed",
+      "games": [
+        "The Elder Scrolls IV: Oblivion Game of the Year Edition"
+      ]
+    },
+    {
+      "card": "game-trapped",
+      "games": [
+        "MiSide"
+      ]
+    },
+    {
+      "card": "historical",
+      "games": [
+        "Age of Empires II: Definitive Edition"
+      ]
+    },
+    {
+      "card": "invited",
+      "games": [
+        "The Room"
+      ]
+    },
+    {
+      "card": "left-for-dead",
+      "games": [
+        "Fallout: New Vegas"
+      ]
+    },
+    {
+      "card": "lonely",
+      "games": [
+        "Everlasting Summer"
+      ]
+    },
+    {
+      "card": "loyal",
+      "games": [
+        "Sekiro: Shadows Die Twice"
+      ]
+    },
+    {
+      "card": "master",
+      "games": [
+        "Batman: Arkham Asylum Game of the Year Edition"
+      ]
+    },
+    {
+      "card": "music-powered",
+      "games": [
+        "Hi-Fi RUSH"
+      ]
+    },
+    {
+      "card": "mysterious",
+      "games": [
+        "Devil May Cry 5"
+      ]
+    },
+    {
+      "card": "old",
+      "games": [
+        "Shelldiver"
+      ]
+    },
+    {
+      "card": "one-legged",
+      "games": [
+        "ATRI -My Dear Moments-"
+      ]
+    },
+    {
+      "card": "pacifist",
+      "games": [
+        "Dishonored"
+      ]
+    },
+    {
+      "card": "parasite-infected",
+      "games": [
+        "Phasmophobia"
+      ]
+    },
+    {
+      "card": "probationary",
+      "games": [
+        "Persona 5 Royal"
+      ]
+    },
+    {
+      "card": "quiet",
+      "games": [
+        "DELTARUNE"
+      ]
+    },
+    {
+      "card": "recalled",
+      "games": [
+        "ELDEN RING"
+      ]
+    },
+    {
+      "card": "resurrected",
+      "games": [
+        "Cult of the Lamb"
+      ]
+    },
+    {
+      "card": "rising",
+      "games": [
+        "Grim Dawn"
+      ]
+    },
+    {
+      "card": "robot-armed",
+      "games": [
+        "Devil May Cry 5"
+      ]
+    },
+    {
+      "card": "rock-and-roll",
+      "games": [
+        "Guilty Gear -Strive-"
+      ]
+    },
+    {
+      "card": "shadow",
+      "games": [
+        "Ghost of Tsushima DIRECTOR'S CUT"
+      ]
+    },
+    {
+      "card": "shut-in",
+      "games": [
+        "OMORI"
+      ]
+    },
+    {
+      "card": "shy",
+      "games": [
+        "Life is Strange - Episode 1"
+      ]
+    },
+    {
+      "card": "six-armed",
+      "games": [
+        "Brotato"
+      ]
+    },
+    {
+      "card": "space",
+      "games": [
+        "Deep Rock Galactic"
+      ]
+    },
+    {
+      "card": "stressed",
+      "games": [
+        "Pizza Tower"
+      ]
+    },
+    {
+      "card": "home-alone",
+      "games": [
+        "My Summer Car"
+      ]
+    },
+    {
+      "card": "time-rewinding",
+      "games": [
+        "Life is Strange - Episode 1"
+      ]
+    },
+    {
+      "card": "timid",
+      "games": [
+        "Resident Evil Requiem"
+      ]
+    },
+    {
+      "card": "transforming",
+      "games": [
+        "Sonic & All-Stars Racing Transformed"
+      ]
+    },
+    {
+      "card": "unseen",
+      "games": [
+        "OneShot"
+      ]
+    },
+    {
+      "card": "vacationing",
+      "games": [
+        "A Short Hike"
+      ]
+    },
+    {
+      "card": "virtual",
+      "games": [
+        "HoloCure - Save the Fans!"
+      ]
+    },
+    {
+      "card": "voiceless",
+      "games": [
+        "GRIS"
+      ]
+    },
+    {
+      "card": "wandering",
+      "games": [
+        "Street Fighter 6"
+      ]
+    },
+    {
+      "card": "wannabe",
+      "games": [
+        "Hi-Fi RUSH"
+      ]
+    },
+    {
+      "card": "web-slinging",
+      "games": [
+        "Marvel's Spider-Man Remastered"
+      ]
+    },
+    {
+      "card": "widowed",
+      "games": [
+        "Volcano Princess"
+      ]
+    },
+    {
+      "card": "wish-seeking",
+      "games": [
+        "Skullgirls"
+      ]
+    },
+    {
+      "card": "wordless",
+      "games": [
+        "Chants of Sennaar"
+      ]
+    },
+    {
+      "card": "would-be",
+      "games": [
+        "Mount & Blade: Warband"
       ]
     }
   ],
