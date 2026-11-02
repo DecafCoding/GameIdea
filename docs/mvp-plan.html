@@ -54,7 +54,7 @@
   <tr><td>Core</td><td>Goal</td><td>The end state that means the player wins</td><td>2</td><td>Up to 8 words, for example "keep the light on"</td></tr>
   <tr><td>Core</td><td>Conflict</td><td>The force that stops the player</td><td>2</td><td>Up to 8 words, for example "the tide rises every night"</td></tr>
   <tr><td>Core</td><td>Resource</td><td>The thing the player manages and can run out of</td><td>4</td><td>1 or 2 words, for example "memories"</td></tr>
-  <tr><td>Modifier</td><td>Modifier</td><td>An adjective that stacks on a Player Role, Resource or Setting</td><td>4</td><td>1 word, for example "stolen"</td></tr>
+  <tr><td>Modifier</td><td>Modifier (Role, Resource, Setting)</td><td>An adjective that stacks on a Player Role, Resource or Setting. It draws as 3 decks from one pool, filtered by <code>targets</code>. See <a href="feature-modifier-decks.html">feature-modifier-decks.html</a>.</td><td>4</td><td>1 word, for example "stolen"</td></tr>
   <tr><td>Optional</td><td>Setting</td><td>Where and when the game takes place</td><td>4</td><td>1 to 3 words, for example "frozen prairie"</td></tr>
   <tr><td>Optional</td><td>Mood</td><td>The feeling the game gives the player</td><td>4</td><td>1 word, for example "lonely"</td></tr>
   <tr><td>Optional</td><td>Twist</td><td>One fact or rule that turns an expectation around</td><td>2</td><td>Up to 8 words, for example "the villain is right"</td></tr>
@@ -68,7 +68,7 @@
   <li>The user clicks a deck button in the left rail. The app draws one card of that deck onto the canvas.</li>
   <li>The card shows random cues from the deck's pool, on a ring around a round center icon. A 4-cue card has one cue on each edge. A 2-cue card has one cue on the top half and one on the bottom half.</li>
   <li>The user points at the card, and its rings show. A click on the left or right half of a ring turns its cues one step. R turns the outer ring, or the only ring. Shift+R turns the inner ring. The card body and the center icon stay still. The cue at the bottom edge, right side up, is the active cue.</li>
-  <li>The user can drop a Modifier on a Player Role, Resource or Setting card. Its adjectives become a second ring, and each edge shows an adjective and noun pair.</li>
+  <li>The user draws a Modifier from the Role, Resource or Setting Modifier deck, and drops it on a Player Role, Resource or Setting card. A modifier from any of the 3 decks fits any of the 3 cards. Its adjectives become a second ring, and each edge shows an adjective and noun pair. A second Modifier can sit on top of that card as its own card.</li>
   <li>The user draws a Hook Card from the top of the rail. The user tucks a Player Role under it, then tucks the other cards below. Tuck means one card sits partly under another card, and the two cards are joined.</li>
   <li>Connector badges on each seam join the stack into a sentence. The Hook Card shows the sentence and updates it after each change.</li>
   <li>The user turns rings, locks cards they like, and uses Redraw or Redraw All until the hook is good.</li>
@@ -84,7 +84,7 @@
   <li data-checked="true">The Hook Card: the head of a stack. It shows the stack as a sentence, with Copy (plain text to the clipboard) and Redraw All. The sentence is computed each time and never stored.</li>
   <li data-checked="true">Connector badges with the default words and choices in the Interfaces section. Click a badge to choose another word. A card keeps the chosen word while it fits the pair. "a" or "an" follows the next word.</li>
   <li data-checked="true">The ring control: rings show on pointer-over, a click on a ring half turns one step, R and Shift+R. The card body and center icon stay still.</li>
-  <li data-checked="true">The Modifier combine on Player Role, Resource and Setting: combine, swap, On Top and Split</li>
+  <li data-checked="true">The Modifier combine on Player Role, Resource and Setting: combine, swap, On Top and Split. 3 Modifier decks (Role, Resource, Setting) filter one pool by <code>targets</code>. A base card holds 1 merged ring and 1 on-top Modifier card. See <a href="feature-modifier-decks.html">feature-modifier-decks.html</a>.</li>
   <li data-checked="true">A lock on each card. Redraw All skips locked cards.</li>
   <li data-checked="true">Card strip on a selected card: Split, Redraw, Discard and Lock</li>
   <li data-checked="true">Redraw: a new card of the same deck in the same place. It keeps its tucks, its lock state and, on a combined card, its adjective ring.</li>
@@ -93,7 +93,7 @@
   <li data-checked="true">Infinite canvas with pan, zoom, place and move</li>
   <li data-checked="true">Free-text notes with an editable title</li>
   <li data-checked="true">Genre settings: the 21 genres in the Genres table, on the 4 genre-tagged decks only (Mechanic, Resource, Progression, Constraint). The Genres panel sets the genres of those 4 decks together and one by one. The user can change them at any time. A change affects the next draw only. The other 7 decks ignore genre.</li>
-  <li data-checked="true">A left rail in labeled groups: Hook Card, Core, Modifier, Optional, and Genres at the bottom</li>
+  <li data-checked="true">A left rail in labeled groups: Hook Card, Core, Modifiers (3 icon buttons), Optional, and Genres at the bottom</li>
   <li data-checked="true">Board list with multiple boards: make, open, rename and delete. The New Board dialog asks only for a name.</li>
   <li data-checked="true">Autosave after each change, a warning when a save fails, and a warning when one board is open in 2 tabs</li>
   <li data-checked="true">Undo and redo for the open session</li>
@@ -142,21 +142,25 @@ Card                      (stored inside its Board record)
   id
   type: hook | role | mechanic | goal | conflict | resource | modifier
         | setting | mood | twist | progression | constraint
+  modDeck?: role | resource | setting      required on a modifier card. The deck that drew it.
   rings: Ring[]
     hook:                                   no rings
     role, resource, setting:                rings[0] = 4 cues.
                                             rings[1] = 4 adjectives, only after a combine.
+                                            There is never a rings[2].
     mechanic, mood, modifier:               rings[0] = 4 cues
     goal, conflict, twist, progression,
     constraint:                             rings[0] = 2 cues
   x, y, z                 (z is the stack order)
   tuckedUnder: Card.id | null
+  onTopOf: Card.id | null (a modifier card on top of a merged base card)
   locked: boolean
   connector?: string      (the word chosen on the badge above this card)
 
 Ring
   cues: Cue[]
   activeIndex             (the cue at the bottom edge. It sets the ring's rotation.)
+  modDeck?: role | resource | setting   (only on a merged adjective ring)
 
 Cue                       (a copy, stored on the Card)
   text
@@ -170,6 +174,8 @@ Pool                      (ships with the app. One JSON file for each deck.
   type
   cues: { id, text, genres? }[]   genres: required in mechanic, resource,
                                   progression and constraint. Absent in the other 7.
+        targets?                  1 or more of role | resource | setting.
+                                  Required in modifier.json. Absent in the other 10.
 
 Genre                     (21 values. Meanings are in the Genres table.
                            There is no "generic" or "any" value. A cue that
@@ -211,12 +217,13 @@ Genre                     (21 values. Meanings are in the Genres table.
   <li>A draw picks distinct cues from the deck's pool. One card never shows the same cue two times.</li>
   <li>In the 4 genre-tagged decks, a draw uses only cues that share at least one genre with the deck's current genres. Each of these decks always has at least 1 genre on, so a draw always has at least 10 cues to pick from.</li>
   <li>In the other 7 decks, a draw uses the full pool. Genre settings do not apply.</li>
+  <li>A Modifier draw uses only cues whose <code>targets</code> include the deck of the button: Role, Resource or Setting. The card stores that deck in <code>modDeck</code>. Each of the 3 Modifier decks has at least 20 cues. The split and a unit test check this.</li>
   <li>A card stores a copy of its cues. A pool change or a genre change does not change cards on the board.</li>
   <li>A cue lists every genre it fits. One cue counts toward each of its genres. A cue that fits every genre lists all 21. There is no <code>generic</code> tag.</li>
   <li>Each of the 21 genres has at least 10 cues in each of the 4 genre-tagged decks. The split checks this, and a unit test checks the pool files on each pull request, so a pool edit cannot break it.</li>
   <li>A 4-cue ring turns in steps of 90 degrees. A 2-cue ring turns in steps of 180 degrees.</li>
   <li>A tucked card moves with the card that it is tucked under.</li>
-  <li>The first combine moves the Modifier's ring into rings[1] and deletes the Modifier card. A swap gives the old adjectives to the second Modifier, which appears beside the card. On Top places a second adjective before the first. Split moves rings[1] back into a new Modifier card beside the card. Each ring keeps its own active cue.</li>
+  <li>The first combine moves the Modifier's ring into rings[1], copies its <code>modDeck</code> to the ring and deletes the Modifier card. A base card holds only 1 merged ring. A swap gives the old adjectives to a new Modifier card beside the card, with the ring's <code>modDeck</code>. On Top sets the second Modifier's <code>onTopOf</code> to the base card. That Modifier stays a card and moves with the base card. A base card takes 1 on-top Modifier. Split moves rings[1] back into a new Modifier card beside the card, with its <code>modDeck</code>. An on-top card stays on top. Each ring keeps its own active cue.</li>
   <li>Redraw replaces a card with a new card of the same deck. It takes the old card's place, tucks and lock state. A combined card keeps its adjective ring.</li>
   <li>Redraw All on a Hook Card applies Redraw to every unlocked card in its stack.</li>
   <li>A Hook Card is always the head of its stack. It cannot tuck under a card.</li>
@@ -227,7 +234,7 @@ Genre                     (21 values. Meanings are in the Genres table.
 <h3>Hook sentence rules</h3>
 <ul>
   <li>The sentence reads the stack from top to bottom. When 2 cards tuck under one card, they read in order of their place on the canvas, top first.</li>
-  <li>Each card adds its badge word, then its active cue. On a combined card, the active pair is the adjective, then the noun.</li>
+  <li>Each card adds its badge word, then its active cue. On a combined card, the active text is the on-top adjective, then the merged adjective, then the noun, for example "tall frozen pilot". A missing part is left out.</li>
   <li>A deck that the stack does not have is left out. The sentence never shows a blank slot.</li>
   <li>If the top card is not a Player Role, the sentence starts with that card's badge word.</li>
   <li>Mood, Twist and Progression start a new sentence.</li>
@@ -256,7 +263,7 @@ Genre                     (21 values. Meanings are in the Genres table.
 <ol>
   <li>Hook Card</li>
   <li>Core: Player Role, Mechanic, Goal, Conflict, Resource</li>
-  <li>Modifier</li>
+  <li>Modifiers: 3 icon buttons, Role, Resource and Setting, each with a hover label</li>
   <li>Optional: Setting, Mood, Twist, Progression, Constraint</li>
   <li>Genres, which opens the Genres panel</li>
 </ol>
@@ -285,7 +292,7 @@ Genre                     (21 values. Meanings are in the Genres table.
 <h3>Hints and drop zones</h3>
 <ul>
   <li>Normal places: a Player Role under a Hook Card, then Mechanic, Goal, Conflict and Resource in that order. A Modifier on a Player Role, Resource or Setting. The user can still tuck any card under any card.</li>
-  <li>A Modifier over a card with no adjectives combines anywhere on the card. Over a combined card, it shows 2 zones: center to swap, top to add on top.</li>
+  <li>A Modifier over a card with no adjectives combines anywhere on the card. Over a combined card, it shows 2 zones: center to swap, top to add on top. Over a combined card that already has an on-top Modifier, it shows the swap zone only.</li>
 </ul>
 
 <h3>Visual design</h3>
@@ -361,7 +368,8 @@ Genre                     (21 values. Meanings are in the Genres table.
   <li>Convert the user's libraries for the 5 core decks and the Modifier from <code>docs/libraries/</code> into JSON pool files. A library that is not finished can ship with the cues it has, at least 20 cues.</li>
   <li>First: an 11-card stack test. An 11-card stack under a Hook Card drags at the canvas speed target.</li>
   <li>The new card types, the Hook Card with its sentence, Copy, Redraw All, the lock and the connector badges.</li>
-  <li>Pass bar: the user draws 20 stacks. In each deck, at least 16 of 20 cards have a usable cue. At least 12 of the 20 hooks are ideas the user would build.</li>
+  <li>The 3 Modifier decks, the deck icons through <code>modDeck</code>, and On Top as a separate card. See <a href="feature-modifier-decks.html">feature-modifier-decks.html</a>.</li>
+  <li>Pass bar: the user draws 20 stacks. In each deck, at least 16 of 20 cards have a usable cue. In each of the 3 Modifier decks, at least 20 of 25 cards have a usable cue. At least 12 of the 20 hooks are ideas the user would build.</li>
 </ul>
 
 <h3>M3: Full core pools and genres</h3>
@@ -399,7 +407,7 @@ Genre                     (21 values. Meanings are in the Genres table.
 
 <h2>Done criteria</h2>
 <ul>
-  <li>The M2 pass bars pass: at least 16 of 20 cards in each core deck and in the Modifier deck have a usable cue, and at least 12 of 20 hooks are ideas the user would build.</li>
+  <li>The M2 pass bars pass: at least 16 of 20 cards in each core deck and 20 of 25 in each of the 3 Modifier decks have a usable cue, and at least 12 of 20 hooks are ideas the user would build.</li>
   <li>All 11 libraries are converted to JSON pool files that match them cue for cue, after the 2 split rules. Per-genre cue counts above the 10-cue floor are not a done criterion. The user tunes them after the app works.</li>
   <li>The Hook Card shows the correct sentence for a full stack and for each failure case in State and failure. Copy puts that sentence on the clipboard as plain text.</li>
   <li>A genre change affects only the next draw. Cards already on the board do not change.</li>
@@ -429,7 +437,7 @@ Genre                     (21 values. Meanings are in the Genres table.
   <li>A new board starts with all 21 genres on for every genre-tagged deck. The user did not pick this default. It was the recommended default and stands until the user changes it.</li>
   <li>Redraw All follows the single Redraw rule, so a combined card keeps its adjective ring.</li>
   <li>The badge choices other than the defaults were proposed in the interview and can change during M2.</li>
-  <li>Each Modifier cue lists the card types it fits (Player Role, Resource, Setting). How the app uses this list is not decided yet. The user decides before the Modifier combine work in M2.</li>
+  <li>Each Modifier cue lists the card types it fits (Player Role, Resource, Setting). The list sets which of the 3 Modifier decks the cue is in. It does not limit the merge: any modifier fits any Player Role, Resource or Setting card. See <a href="feature-modifier-decks.html">feature-modifier-decks.html</a>.</li>
 </ul>
 
 <h2>Amendments</h2>
@@ -443,5 +451,6 @@ Genre                     (21 values. Meanings are in the Genres table.
 <p class="meta">2026-11-02: Setting cues name the place only, like Player Role. Descriptions moved to the Modifier deck, for example "flooded world" became "flooded" + "world". "world of clones" stays whole. 273 Setting cues became 208. The proper-name cue rule now says it means made-up names, and that real places and eras are fine. Changed Cue rules. Changed by the user's request after a review.</p>
 <p class="meta">2026-11-02: The Modifier deck was reviewed: 3 game-linked words renamed and 23 near-duplicates merged, for 391 modifiers. Each modifier now lists the card types it fits. Its use in the app is open. Changed Assumptions. Changed by the user's request after a review.</p>
 
+<p class="meta">2026-11-02: The Modifier deck draws as 3 decks: Role, Resource and Setting. Each filters <code>modifier.json</code> by <code>targets</code>, so a modifier can be in 1, 2 or 3 decks. Any modifier still merges with any Player Role, Resource or Setting card. A base card holds 1 merged ring. On Top now places a second Modifier on the card as its own card, through <code>onTopOf</code>. Card and Ring gain <code>modDeck</code>. The rail Modifier group has 3 icon buttons. The M2 bar is 20 of 25 for each Modifier deck. Changed Decks, Core loop, Scope, Data model, Rules, Hook sentence rules, Left rail, Hints and drop zones, M2, Done criteria and Assumptions. Changed by <code>/dev-add-feature</code>. See <a href="feature-modifier-decks.html">feature-modifier-decks.html</a>.</p>
 </body>
 </html>

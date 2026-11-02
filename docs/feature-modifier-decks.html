@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Feature — Three Modifier decks</title>
+  <style>
+    :root { --fg:#1a1a1a; --muted:#666; --accent:#2563eb; --done:#16a34a; --rule:#e5e7eb; }
+    body { font:16px/1.6 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; color:var(--fg); max-width:60rem; margin:2rem auto; padding:0 1.25rem; }
+    h1 { font-size:2rem; border-bottom:2px solid var(--rule); padding-bottom:.3rem; }
+    h2 { font-size:1.5rem; margin-top:2.5rem; border-bottom:1px solid var(--rule); padding-bottom:.2rem; }
+    h3 { font-size:1.2rem; margin-top:1.75rem; }
+    code, pre { font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+    pre { background:#f6f8fa; padding:1rem; border-radius:6px; overflow:auto; }
+    table { border-collapse:collapse; width:100%; margin:1rem 0; }
+    th, td { border:1px solid var(--rule); padding:.5rem .75rem; text-align:left; vertical-align:top; }
+    th { background:#f6f8fa; }
+    ul.checklist { list-style:none; padding-left:0; }
+    ul.checklist > li::before { content:"☐ "; color:var(--muted); }
+    ul.checklist > li[data-checked="true"]::before { content:"☑ "; color:var(--done); }
+    .meta { color:var(--muted); font-size:.9rem; }
+  </style>
+</head>
+<body>
+
+<h1>Feature — Three Modifier decks</h1>
+<p class="meta">2026-11-02 · Extends GameIdea (working name), as planned in <a href="mvp-plan.html">mvp-plan.html</a>. Written from the <code>/dev-add-feature</code> run.</p>
+
+<h2>Summary and motivation</h2>
+<p>The one Modifier deck becomes 3 Modifier decks: Role, Resource and Setting. Each deck draws only modifiers whose <code>targets</code> list includes that deck. A modifier that fits more than one target is in more than one deck. For example, "cursed" is in all 3 decks.</p>
+<p>The user gets an adjective that suits the card they want to change. Today one deck mixes 391 modifiers. Of these, 300 fit a Player Role, 245 fit a Setting and only 74 fit a Resource. A random Modifier draw for a Resource card often gives words that do not fit.</p>
+<p>The decks guide the draw only. For creative reasons, a modifier from any of the 3 decks can merge with any Player Role, Resource or Setting card.</p>
+<p>The feature also fixes the On Top rule. A base card holds at most 1 merged adjective ring. A second Modifier sits on top as its own card.</p>
+
+<h2>Fit with the existing application</h2>
+<p>This feature changes one part of the core loop: step 4 in <a href="mvp-plan.html">mvp-plan.html</a>, the Modifier combine. It also answers 2 open questions about Modifier <code>targets</code>. One is in the Assumptions of <a href="mvp-plan.html">mvp-plan.html</a>. The other is in the Open questions of <a href="architecture.html">architecture.html</a>.</p>
+<p>No app code exists yet. The feature lands in M2, with the Modifier combine work. Related docs: <a href="mvp-plan.html">mvp-plan.html</a>, <a href="architecture.html">architecture.html</a>, <a href="competitive-scan.html">competitive-scan.html</a>. The deck library is <code>docs/libraries/modifier.md</code> and the <code>Modifier</code> key in <code>docs/libraries/decks.json</code>.</p>
+
+<h2>Scope</h2>
+
+<h3>In this feature</h3>
+<ul class="checklist">
+  <li data-checked="true">3 Modifier decks: Role, Resource and Setting. Each draws from <code>modifier.json</code>, filtered by <code>targets</code>.</li>
+  <li data-checked="true">A modifier is in every deck that its <code>targets</code> list. It can be in 1, 2 or 3 decks.</li>
+  <li data-checked="true">A modifier from any of the 3 decks can merge with any Player Role, Resource or Setting card.</li>
+  <li data-checked="true">A Modifier card shows the icon of its deck. A merged ring and a card made by Split or swap keep that icon.</li>
+  <li data-checked="true">A base card holds at most 1 merged adjective ring.</li>
+  <li data-checked="true">On Top: a second Modifier sits on top of a merged base card as its own card. It moves with the base card and reads in the hook. A base card takes 1 on-top Modifier.</li>
+  <li data-checked="true">The left rail has one "Modifiers" group with 3 icon buttons and a hover label on each.</li>
+  <li data-checked="true">The M2 pass bar counts each Modifier deck: 20 usable of 25 draws.</li>
+</ul>
+
+<h3>Deferred</h3>
+<ul class="checklist">
+  <li data-checked="false">A Modifier on Mechanic or Mood cards. This stays deferred, as in the MVP plan.</li>
+  <li data-checked="false">More than 1 on-top Modifier on a base card</li>
+  <li data-checked="false">Genre tags on Modifier cues. The 3 Modifier decks ignore the Genres panel.</li>
+</ul>
+
+<h3>Never</h3>
+<ul class="checklist">
+  <li data-checked="false">A rule that a modifier can merge only with the card type of its deck. The user wants any modifier to fit any of the 3 base cards.</li>
+  <li data-checked="false">More than 1 merged adjective ring on a base card (no <code>rings[2]</code>)</li>
+</ul>
+
+<h2>Blast radius</h2>
+<table>
+  <tr><th>Part</th><th>Change</th></tr>
+  <tr><td>Data model: Card</td><td>New <code>modDeck</code> on Modifier cards. New <code>onTopOf</code> on all cards.</td></tr>
+  <tr><td>Data model: Ring</td><td>New <code>modDeck?</code> on a merged adjective ring</td></tr>
+  <tr><td>Data model: Pool</td><td><code>targets</code> is required on each cue in <code>modifier.json</code></td></tr>
+  <tr><td>The split of <code>decks.json</code></td><td>Maps the targets "Player Role", "Resource" and "Setting" to <code>role</code>, <code>resource</code> and <code>setting</code>. Stops with an error on an unknown target, an empty target list, or a Modifier deck with fewer than 20 cues.</td></tr>
+  <tr><td><code>features/draw/</code></td><td>3 Modifier buttons in the rail. The draw filters <code>modifier.json</code> by the button's target and sets <code>modDeck</code>.</td></tr>
+  <tr><td><code>features/card/</code></td><td>The icon for a Modifier card comes from <code>modDeck</code>. The icon for a merged ring comes from the ring's <code>modDeck</code>.</td></tr>
+  <tr><td><code>features/canvas/</code></td><td>The on-top drop zone sets <code>onTopOf</code>. An on-top card moves with its base card. A third Modifier on a base card shows the swap zone only.</td></tr>
+  <tr><td>Combine, swap, Split</td><td>Copy <code>modDeck</code> between the card and the ring. Split leaves an on-top card in place.</td></tr>
+  <tr><td>Redraw</td><td>Redraw of a Modifier card draws from the same <code>modDeck</code>. Redraw of a base card keeps its on-top card.</td></tr>
+  <tr><td><code>features/hook/</code></td><td>The sentence builder reads the on-top adjective first, then the merged adjective, then the noun.</td></tr>
+  <tr><td>Board file and Zod import check</td><td>The new fields go into the first board format version. No migration.</td></tr>
+  <tr><td>Icons and design</td><td>3 Modifier icons in <code>public/icons/</code>. The mockup sets them, and <code>/dev-ui-update</code> records them.</td></tr>
+  <tr><td>Unit tests</td><td>The pool test checks each Modifier deck has at least 20 cues and each cue has valid targets.</td></tr>
+</table>
+<p>If this is wrong, the main harm is a weak draw: a Modifier deck shows words that do not fit its card type. The M2 pass bar catches this.</p>
+
+<h2>Data model changes</h2>
+<pre><code>Card
+  type: ... | modifier | ...       (unchanged: one Modifier type)
+  modDeck?: role | resource | setting
+                                   required on a modifier card. The deck that drew it.
+  rings: Ring[]
+    role, resource, setting:       rings[0] = 4 cues.
+                                   rings[1] = 4 adjectives, only after a combine.
+                                   There is never a rings[2].
+  onTopOf: Card.id | null          a modifier card on top of a merged base card.
+                                   null on every other card.
+
+Ring
+  cues: Cue[]
+  activeIndex
+  modDeck?: role | resource | setting
+                                   set only on a merged adjective ring.
+
+Pool (modifier.json)
+  type: modifier
+  cues: { id, text, targets }[]    targets: 1 or more of role | resource | setting.
+                                   Required in modifier.json. Absent in the other pools.</code></pre>
+
+<h3>Rules</h3>
+<ul>
+  <li>A Modifier draw uses only cues whose <code>targets</code> include the button's deck. The card stores that deck in <code>modDeck</code>.</li>
+  <li>A card stores a copy of its cues. It does not store <code>targets</code>.</li>
+  <li>The first combine moves the Modifier's ring into <code>rings[1]</code>, copies its <code>modDeck</code> to the ring, and deletes the Modifier card.</li>
+  <li>Swap gives the old ring to a new Modifier card beside the base card, with the ring's <code>modDeck</code>. The new Modifier's ring takes <code>rings[1]</code>.</li>
+  <li>On Top sets the second Modifier's <code>onTopOf</code> to the base card. The Modifier stays a card. It moves with the base card.</li>
+  <li>Split moves <code>rings[1]</code> into a new Modifier card beside the base card, with the ring's <code>modDeck</code>. An on-top card stays on top.</li>
+  <li>A drop on a base card that has no merged ring always merges. This is true when an on-top card is already there.</li>
+  <li>Discard of a base card treats its on-top card the same as its tucked cards.</li>
+</ul>
+
+<h3>Hook sentence</h3>
+<p>On a base card, the active text is the on-top adjective, then the merged adjective, then the noun. A missing part is left out.</p>
+<table>
+  <tr><th>Board state</th><th>Hook text for the card</th></tr>
+  <tr><td>"frozen" merged on "pilot"</td><td>frozen pilot</td></tr>
+  <tr><td>"tall" on top of "frozen pilot"</td><td>tall frozen pilot</td></tr>
+  <tr><td>"frozen" split off, "tall" still on top</td><td>tall pilot</td></tr>
+</table>
+
+<h3>Migration and rollback</h3>
+<p>No app code and no saved boards exist. The new fields go into the first board format version, so there is no migration. The pool change is a change to the split before it runs. Rollback means a change to the plan only.</p>
+
+<h2>Interfaces and contracts</h2>
+
+<h3>Left rail</h3>
+<p>The Modifier group becomes "Modifiers", with 3 icon buttons in this order: Role, Resource, Setting. All 3 use the Modifier color. The icon tells them apart. Each button has a hover label with its deck name. The rail order stays Hook Card, Core, Modifiers, Optional, Genres.</p>
+
+<h3>Drop zones</h3>
+<table>
+  <tr><th>Drop a Modifier on</th><th>Zones</th><th>Result</th></tr>
+  <tr><td>A base card with no merged ring</td><td>Anywhere on the card</td><td>Merge</td></tr>
+  <tr><td>A merged base card with no on-top card</td><td>Center: swap. Top: add on top.</td><td>Swap, or On Top</td></tr>
+  <tr><td>A merged base card with an on-top card</td><td>Center: swap</td><td>Swap</td></tr>
+</table>
+
+<h3>Example</h3>
+<ol>
+  <li>The user draws "pilot" and 2 Modifiers, "tall" and "frozen".</li>
+  <li>The user drops "frozen" on "pilot". The card reads "frozen pilot", and an adjective ring is added.</li>
+  <li>The user moves "tall" over the card. A dotted circle shows the swap zone, and a dotted section at the top shows the add-on-top zone.</li>
+  <li>The user drops "tall" on the top zone. The hook reads "tall frozen pilot".</li>
+</ol>
+
+<h3>Pool contract</h3>
+<p>The split writes <code>targets</code> on each Modifier cue as kebab-case values: <code>role</code>, <code>resource</code>, <code>setting</code>. Each value has at least 20 cues. Today the counts are Role 300, Setting 245 and Resource 74.</p>
+
+<h2>Architecture fit</h2>
+<p><b>Outcome 1: it fits.</b> The feature uses the existing pattern, layout, storage and boundaries.</p>
+<ul>
+  <li><code>pool-files</code>: still 11 JSON files, one for each deck. The split already copies <code>targets</code> into the modifier pool. The 3 decks filter one file, the same as the genre filter in the 4 genre-tagged decks.</li>
+  <li><code>schema-shape</code>: the new fields are optional fields on Card and Ring inside the Board record. No new table.</li>
+  <li><code>board-file-format</code>: the new fields go into the first format version.</li>
+  <li><code>module-layout</code>: the changes stay in <code>features/draw/</code>, <code>features/card/</code>, <code>features/canvas/</code> and <code>features/hook/</code>.</li>
+  <li><code>hook-sentence</code>: the sentence builder stays a pure function. It gets the on-top adjective as data.</li>
+  <li><code>undo-history</code>: combine, swap, On Top and Split are state changes. Undo covers them.</li>
+</ul>
+<p>Reasoning kept: the user asked why <code>targets</code> should differ from genre tags. No reason was found, so one file with a filter replaced 3 files. This removes duplicate cues and a sync test.</p>
+<p><code>architecture.html</code> still lists "How the app uses Modifier targets" as an open question. This brief answers it. <code>/dev-architecture</code> owns that file and can close the question.</p>
+
+<h2>Compatibility and rollout</h2>
+<p>No code, no users and no saved boards exist. There is no backward compatibility to keep and no feature flag. The feature ships in M2 with the rest of the Modifier work.</p>
+
+<h2>Testing and regression plan</h2>
+<table>
+  <tr><th>Test</th><th>Kind</th><th>Proves</th></tr>
+  <tr><td>Each Modifier button draws only cues whose targets include its deck</td><td>Unit</td><td>The filter</td></tr>
+  <tr><td>Each Modifier deck has at least 20 cues. Each cue has 1 or more valid targets.</td><td>Unit, on the pool files, on each pull request</td><td>A pool edit cannot break a deck</td></tr>
+  <tr><td>Combine, swap and Split copy <code>modDeck</code> correctly</td><td>Unit</td><td>The icon survives each step</td></tr>
+  <tr><td>A base card refuses a second merged ring. A third Modifier shows the swap zone only.</td><td>Unit and Playwright</td><td>The 1-ring and 1-on-top limits</td></tr>
+  <tr><td>The 3 hook strings in the Hook sentence table</td><td>Unit, on the sentence builder</td><td>The reading order</td></tr>
+  <tr><td>An on-top card moves with its base card and survives Redraw, save, reload, export and import</td><td>Playwright</td><td>The <code>onTopOf</code> link</td></tr>
+  <tr><td>The existing combine, tuck and hook tests</td><td>Regression</td><td>Old behavior still works</td></tr>
+  <tr><td>The M2 pass bar</td><td>Manual, by the user</td><td>Draw quality in each Modifier deck</td></tr>
+</table>
+
+<h2>Build plan</h2>
+<p>All tasks land in M2: Hook test.</p>
+<ol>
+  <li>Split: copy <code>targets</code> as kebab-case values. Add the 20-cue check for each Modifier deck. This proves first that the small Resource deck has enough cues.</li>
+  <li>Data model: <code>modDeck</code> and <code>onTopOf</code> on Card, <code>modDeck?</code> on Ring, and the Zod import check.</li>
+  <li>Draw: the 3 rail buttons and the target filter.</li>
+  <li>Card: the deck icon from <code>modDeck</code>, for the card and the merged ring.</li>
+  <li>Combine, swap and Split with <code>modDeck</code>.</li>
+  <li>On Top: the drop zones, the <code>onTopOf</code> link, the move with the base card, and the 1-on-top limit.</li>
+  <li>Hook: the reading order for the on-top adjective.</li>
+  <li>The M2 pass bar run.</li>
+</ol>
+
+<h2>Done criteria</h2>
+<ul>
+  <li>Each of the 3 Modifier buttons draws only cues whose <code>targets</code> include its deck. A unit test checks this on <code>modifier.json</code>.</li>
+  <li>Each Modifier deck has at least 20 cues. The split and a unit test check this.</li>
+  <li>Each Modifier card shows its deck icon. A merged ring and a Split card keep that icon through <code>modDeck</code>.</li>
+  <li>The example works: "frozen" merges into "frozen pilot". "Tall" on the top zone gives "tall frozen pilot". "Tall" on the center zone swaps, and "frozen" appears beside the card.</li>
+  <li>A base card takes 1 merged ring and 1 on-top Modifier. A third Modifier shows the swap zone only.</li>
+  <li>Split with a card on top leaves "tall" on top, and the hook reads "tall pilot".</li>
+  <li>The on-top Modifier moves with its base card. It survives Redraw, save, reload, and board export and import.</li>
+  <li>The M2 pass bar passes: 20 of 25 usable in each Modifier deck, and 12 of 20 hooks the user would build.</li>
+</ul>
+
+<h2>Open risks and assumptions</h2>
+<h3>Risks</h3>
+<ul>
+  <li>The Resource Modifier deck is small: 74 cues, and only 3 fit Resource alone. Its draws may repeat often. The M2 pass bar tests it.</li>
+  <li>Hooks get longer. A full hook now takes 7 to 10 cards. The hook bar stays at 12 of 20 hooks the user would build.</li>
+</ul>
+<h3>Assumptions</h3>
+<ul>
+  <li>The mockup sets the 3 icons and the Modifier color. <code>/dev-ui-update</code> records them in <code>docs/design-system.html</code>.</li>
+  <li>Discard of a base card treats its on-top card the same as its tucked cards. The user did not pick this. It follows the existing tuck rule.</li>
+  <li>The plan still counts 11 decks and 11 pool files. The Modifier deck draws as 3 decks from one pool file.</li>
+</ul>
+
+</body>
+</html>
