@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Architecture — GameIdea (working name)</title>
+  <style>
+    :root { --fg:#1a1a1a; --muted:#666; --accent:#2563eb; --done:#16a34a; --rule:#e5e7eb; }
+    body { font:16px/1.6 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; color:var(--fg); max-width:60rem; margin:2rem auto; padding:0 1.25rem; }
+    h1 { font-size:2rem; border-bottom:2px solid var(--rule); padding-bottom:.3rem; }
+    h2 { font-size:1.5rem; margin-top:2.5rem; border-bottom:1px solid var(--rule); padding-bottom:.2rem; }
+    h3 { font-size:1.2rem; margin-top:1.75rem; }
+    code, pre { font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+    pre { background:#f6f8fa; padding:1rem; border-radius:6px; overflow:auto; }
+    table { border-collapse:collapse; width:100%; margin:1rem 0; }
+    th, td { border:1px solid var(--rule); padding:.5rem .75rem; text-align:left; vertical-align:top; }
+    th { background:#f6f8fa; }
+    ul.checklist { list-style:none; padding-left:0; }
+    ul.checklist > li::before { content:"☐ "; color:var(--muted); }
+    ul.checklist > li[data-checked="true"]::before { content:"☑ "; color:var(--done); }
+    .meta { color:var(--muted); font-size:.9rem; }
+  </style>
+</head>
+<body>
+
+<h1>Architecture — GameIdea (working name)</h1>
+<p class="meta">Written 2026-11-01 from the <code>/dev-architecture</code> run. It serves <a href="mvp-plan.html">docs/mvp-plan.html</a>.</p>
+<p class="meta">The user asked to follow the TheForge architecture unless there is an issue. TheForge is the user's story-card app, and GameIdea starts from a copy of its code. This document states every decision in full, so it does not depend on the TheForge documents.</p>
+
+<h2>Context</h2>
+<p>This design serves the MVP in <a href="mvp-plan.html">docs/mvp-plan.html</a>. The MVP is a canvas web app for solo and hobby game developers. The user draws game concept cards from 11 decks, rotates each card to choose a cue, tucks cards under a Hook Card, and copies the hook sentence.</p>
+
+<h3>Inherited constraints</h3>
+<ul>
+  <li>The app runs in the browser only. There is no server code and no database server.</li>
+  <li>The app runs locally at fixed ports: 5174, 4174 and 4444. A public site is deferred.</li>
+  <li>The cost is $0 for each month.</li>
+  <li>The boards save to browser storage. The board file export is the only backup.</li>
+  <li>The cue pools are JSON data files, one for each deck. They come from one split of <code>docs/libraries/decks.json</code>, and the JSON is then the source.</li>
+  <li>Only Mechanic, Resource, Progression and Constraint carry genre tags. There are 21 genres and a hidden <code>generic</code> tag.</li>
+  <li>The app runs on the current Chrome, Edge, Firefox and Safari on desktop.</li>
+  <li>A draw, a rotate or a Hook Card update takes less than 100 ms. The canvas moves smoothly with 200 cards. The first load takes less than 2 seconds.</li>
+  <li>There are no external services: no sign-in, no usage data and no AI.</li>
+  <li>Undo lasts for the open session only.</li>
+  <li>The library versions match TheForge exactly.</li>
+</ul>
+<p>The market-wide signal in <a href="competitive-scan.html">docs/competitive-scan.html</a> about saving behind an account is answered by these constraints: local storage, no account, no cost.</p>
+
+<h2>Stack</h2>
+
+<h3 class="decision" data-decision="stack-language" data-status="settled" data-reversible="expensive">Language and build: TypeScript with Vite</h3>
+<p>TypeScript 6.0.3 in strict mode. Vite 8.3.5 builds the app into static files, with <code>@vitejs/plugin-react</code>. Node.js 24 LTS runs the build tools only. npm installs the libraries. All versions are pinned exactly in <code>package.json</code>.</p>
+<p><b>Override of the house default.</b> The house default is C# with .NET. In a browser-only app, that means Blazor WebAssembly. The browser must first download the .NET runtime, which is several megabytes. That puts the 2-second first-load target at risk. The MVP plan also starts GameIdea from a copy of the TheForge TypeScript code. The user chose this stack in this run.</p>
+
+<h3 class="decision" data-decision="ui-framework" data-status="settled" data-reversible="expensive">UI framework: React 19</h3>
+<p>React 19.3.1 and React DOM 19.3.1. The copied TheForge code uses React.</p>
+
+<h3 class="decision" data-decision="canvas-library" data-status="settled" data-reversible="moderate">Canvas: React Flow 12</h3>
+<p><code>@xyflow/react</code> 12.12.0 gives pan, zoom, drag and selection. A child node can belong to a parent node and move with it, which matches tuck. Cards are normal HTML. Only <code>features/canvas/</code> imports it.</p>
+
+<h3 class="decision" data-decision="state-store" data-status="settled" data-reversible="moderate">App state and undo: Zustand 5 with zundo</h3>
+<p>Zustand 5.0.16 holds the state of the open board. zundo 2.3.0 adds undo and redo. The storage module watches the store for autosave.</p>
+
+<h3 class="decision" data-decision="test-tools" data-status="settled" data-reversible="cheap">Test and code tools</h3>
+<ul>
+  <li>Vitest 5.0.5 runs unit tests.</li>
+  <li>Playwright 1.64.1 runs browser tests in Chromium (Chrome and Edge), Firefox and WebKit (Safari).</li>
+  <li>ESLint finds code errors. Prettier keeps one code format. Their versions match TheForge.</li>
+</ul>
+
+<h3 class="decision" data-decision="import-checks" data-status="settled" data-reversible="cheap">Import checks: Zod 4</h3>
+<p>Zod 4.6.7 checks an imported board file against a schema. Only <code>features/export/</code> uses it.</p>
+
+<h3 class="decision" data-decision="fonts" data-status="settled" data-reversible="cheap">Fonts: bundled</h3>
+<p><code>@fontsource/inter</code> 5.3.0 and <code>@fontsource/space-grotesk</code> 5.3.0. The fonts ship in the app files. The app loads no remote font.</p>
+
+<h3 class="decision" data-decision="routing" data-status="settled" data-reversible="cheap">Screens: address hash, no router library</h3>
+<p>The app has 2 screens. The board list is at <code>#/</code>. A board is at <code>#/board/{id}</code>.</p>
+
+<h2>Storage</h2>
+
+<h3 class="decision" data-decision="storage-engine" data-status="settled" data-reversible="moderate">Storage engine: IndexedDB with Dexie 4</h3>
+<p>IndexedDB is the browser's built-in database. Dexie 4.4.7 makes it easy to use and gives schema versions. The database name is <code>gameidea</code>, which keeps it apart from TheForge.</p>
+
+<h3 class="decision" data-decision="persistent-storage" data-status="settled" data-reversible="cheap">Persistent storage request</h3>
+<p>At start-up, the app asks the browser for persistent storage. This lowers the risk that the browser deletes the data. If the browser says no, the app works as normal.</p>
+
+<h3 class="decision" data-decision="schema-shape" data-status="settled" data-reversible="moderate">Schema: one record for each board</h3>
+<pre><code>Dexie database "gameidea"
+  boards      key: id      one record for each board (BoardRecord)
+  boardIndex  key: id      index: updatedAt   (id, name, createdAt, updatedAt)
+
+BoardRecord
+  formatVersion            starts at 1
+  id, name, createdAt, updatedAt
+  view:   { panX, panY, zoom }
+  genres: { mechanic, resource, progression, constraint: Genre[] }
+  cards:  Card[]           (see docs/mvp-plan.html, Data model)
+  notes:  Note[]</code></pre>
+<p>Each save writes one board record and its index row.</p>
+
+<h3 class="decision" data-decision="board-file-format" data-status="settled" data-reversible="expensive">Board file format: the BoardRecord as JSON</h3>
+<p>The board file is the BoardRecord as JSON, with its <code>formatVersion</code>. The file name is <code>&lt;board-name&gt;.gameidea.json</code>.</p>
+<p>The format starts at version 1. The copied TheForge upgrade steps (versions 1 to 5) are removed, because they upgrade story boards. The upgrade mechanism stays: a later format change adds one step that changes one version into the next. Saved files must always load.</p>
+
+<h3 class="decision" data-decision="pool-files" data-status="settled" data-reversible="cheap">Cue pools: 11 JSON files from one split</h3>
+<pre><code>public/pools/role.json          public/pools/setting.json
+public/pools/mechanic.json      public/pools/mood.json
+public/pools/goal.json          public/pools/twist.json
+public/pools/conflict.json      public/pools/progression.json
+public/pools/resource.json      public/pools/constraint.json
+public/pools/modifier.json
+
+Pool file
+  type
+  cues: { id, text, genres? }[]
+    genres: present in mechanic, resource, progression and constraint only.
+            One or more of the 21 genres, or ["generic"].</code></pre>
+<p>A one-time split makes these files from <code>docs/libraries/decks.json</code>. The split:</p>
+<ul>
+  <li>maps each deck name in <code>decks.json</code> to its pool file,</li>
+  <li>copies <code>card</code> into <code>text</code> without change,</li>
+  <li>maps the genre names in <code>genres.json</code> to their kebab-case values, and maps <code>any</code> to <code>generic</code>,</li>
+  <li>drops the <code>games</code> lists, because they hold game titles, which the plan bans in cues,</li>
+  <li>gives each cue a stable <code>id</code>.</li>
+</ul>
+<p>After the split, the pool files are the source, and the user edits them directly. <code>decks.json</code> and the Markdown libraries stay in <code>docs/libraries/</code> as a record. No build step reads them. The app loads the pools by web address. A later server can serve the same addresses.</p>
+
+<h3 class="decision" data-decision="test-data" data-status="settled" data-reversible="cheap">Test data: fixture boards</h3>
+<p>Tests use small fixture boards, plus one 200-card fixture board for the speed checks and one 11-card stack fixture for the long-stack test. A fixture is fixed test data.</p>
+
+<h2>Architecture pattern</h2>
+
+<h3 class="decision" data-decision="architecture-pattern" data-status="settled" data-reversible="moderate">Pattern: feature folders (Vertical Slice)</h3>
+<p>This is the house default, in its usual React form. Each feature has one folder. The folder holds the feature's screen parts, state actions, logic and tests. Shared code goes to <code>shared/</code> only for genuine cross-cutting needs. The house default is kept, so it needs no override note.</p>
+
+<h2>Module layout</h2>
+
+<h3 class="decision" data-decision="module-layout" data-status="settled" data-reversible="moderate">Folder layout</h3>
+<pre><code>src/
+  app/              app shell, the 2 screens, start-up
+  features/
+    draw/           deck buttons, grouped rail, draw logic (distinct cues),
+                    genre filter, Generic fill and its notice
+    card/           card view, rings, rotate, cue text, lock control, type icons
+    canvas/         React Flow setup, pan, zoom, drag, tuck, tuck hints,
+                    connector badges and their word rules for the 12 card types
+    hook/           Hook Card: sentence builder, Copy and its fallback dialog,
+                    Redraw All
+    genres/         Genres panel, genre mark on deck buttons
+    notes/          free-text notes with editable titles
+    boards/         board list: make, open, rename, delete
+    export/         text file (with hooks), board file, import and its checks
+  shared/
+    model/          types: Board, Card, Cue, Note, Pool, Genre, board format version
+    store/          the Zustand store with zundo
+    storage/        the one storage module: Dexie, persistent storage, 2-tab warning
+    pools/          loads the 11 pool JSON files by web address
+    ui/             general parts, for example buttons and dialogs
+public/
+  pools/            the 11 pool JSON files
+  icons/            the 11 deck icons and the Hook Card icon
+tests/e2e/          Playwright browser tests</code></pre>
+<p>Unit tests sit beside the code that they test, as <code>*.test.ts</code> or <code>*.test.tsx</code>.</p>
+<p>Changes from the copied TheForge code: <code>hook/</code> and <code>genres/</code> are new. <code>card/</code> gains the lock and loses the Setting kinds (place, object, event) and their icons. <code>canvas/</code> replaces the story connector rules, including the rules based on Setting kind. <code>draw/</code> gains the grouped rail and the genre filter for 4 decks.</p>
+
+<h3 class="decision" data-decision="import-rules" data-status="settled" data-reversible="moderate">Import rules</h3>
+<ul>
+  <li><code>app/</code> can import <code>features/</code> and <code>shared/</code>.</li>
+  <li>A feature can import <code>shared/</code>. It uses another feature only through that feature's <code>index.ts</code> file.</li>
+  <li><code>shared/</code> never imports <code>features/</code> or <code>app/</code>.</li>
+  <li>Only <code>shared/storage/</code> touches IndexedDB or Dexie.</li>
+  <li>Only <code>features/canvas/</code> imports React Flow.</li>
+  <li>Only <code>features/export/</code> imports Zod.</li>
+  <li>Only <code>features/hook/</code> calls the Clipboard API.</li>
+</ul>
+
+<h3 class="decision" data-decision="hook-sentence" data-status="settled" data-reversible="cheap">Hook sentence builder: a pure function</h3>
+<p>The sentence builder in <code>features/hook/</code> is a pure function. A pure function gives the same output for the same input and changes nothing else. It takes the stack as data (the cards in reading order, with their active cues and connector words) and returns the text. It does not import React Flow, so it can be unit-tested alone. The canvas gives it the stack in reading order. The rules are in docs/mvp-plan.html, Hook sentence rules.</p>
+
+<h2>Boundaries</h2>
+
+<h3 class="decision" data-decision="storage-seam" data-status="settled" data-reversible="moderate">Storage seam: 5 actions</h3>
+<pre><code>shared/storage
+  listBoards()                       → board index rows
+  loadBoard(id)                      → BoardRecord
+  saveBoard(record)                  → done or error
+  deleteBoard(id)                    → done or error
+  onBoardChangedElsewhere(handler)   called with a board id</code></pre>
+<p>The rest of the app uses only these 5 actions. A later server replaces only the inside of this module.</p>
+
+<h3 class="decision" data-decision="outside-code" data-status="settled" data-reversible="cheap">Outside code and what happens when it fails</h3>
+<table>
+  <tr><th>Boundary</th><th>Wrapped by</th><th>If it is not available</th></tr>
+  <tr><td>IndexedDB through Dexie</td><td><code>shared/storage/</code></td><td>The app shows a warning and offers an export.</td></tr>
+  <tr><td>Persistent storage request</td><td><code>shared/storage/</code></td><td>The app works as normal. The data is less safe.</td></tr>
+  <tr><td>Tab messages (BroadcastChannel)</td><td><code>shared/storage/</code></td><td>There is no 2-tab warning. Saves still work.</td></tr>
+  <tr><td>Clipboard API</td><td><code>features/hook/</code></td><td>See clipboard.</td></tr>
+  <tr><td>React Flow</td><td><code>features/canvas/</code></td><td>It is part of the app files, so it is always present.</td></tr>
+  <tr><td>Zod</td><td><code>features/export/</code></td><td>It is part of the app files, so it is always present.</td></tr>
+  <tr><td>Pool JSON files</td><td><code>shared/pools/</code></td><td>See pool-load-failure.</td></tr>
+</table>
+<p>BroadcastChannel is a browser feature that lets tabs of one site send messages to each other.</p>
+
+<h3 class="decision" data-decision="clipboard" data-status="settled" data-reversible="cheap">Clipboard: write, with a dialog fallback</h3>
+<p>Copy on the Hook Card writes the sentence as plain text with the Clipboard API. The browser allows this only on a secure page and after a user action. Ports 4174 and 5174 on localhost and port 4444 over HTTPS are secure pages. If the write fails, the app shows the sentence selected in a small dialog, so the user can press Ctrl+C.</p>
+
+<h3 class="decision" data-decision="pool-load-failure" data-status="settled" data-reversible="cheap">Pool load failure: error with a Retry button</h3>
+<p>If the pool files do not load, the app shows an error with a Retry button. Boards still open, and saved cards still show, because each card keeps a copy of its cues. Only the deck buttons stop. The pools come from the same place as the app, so they almost always load.</p>
+
+<h2>State and failure</h2>
+
+<h3 class="decision" data-decision="save-transaction" data-status="settled" data-reversible="cheap">Save: one transaction after each finished change</h3>
+<ul>
+  <li>A save runs after each finished change. A drag saves once, when the card is dropped.</li>
+  <li>Each save writes the board record and its index row in one Dexie transaction. A transaction is a group of writes that all succeed or all fail.</li>
+  <li>A failed save leaves the last good version in place. The app shows a warning and offers an export.</li>
+  <li>A small mark shows when a save is waiting or has failed.</li>
+  <li>A genre setting change saves like any other change.</li>
+</ul>
+
+<h3 class="decision" data-decision="tab-sync" data-status="settled" data-reversible="cheap">2 tabs: message, reload and warning</h3>
+<p>After a save, the tab sends a BroadcastChannel message with the board ID. Another tab that shows that board reloads it. It shows "This board changed in another tab" and clears its undo history. That tab loses changes made before the reload.</p>
+
+<h3 class="decision" data-decision="undo-history" data-status="settled" data-reversible="cheap">Undo: up to 100 steps for each board, for the session</h3>
+<ul>
+  <li>Each board has its own undo history of up to 100 steps. The history clears when the user changes boards or reloads the page.</li>
+  <li>Discard deletes a card, and undo brings it back.</li>
+  <li>Redraw All is one undo step. Undo brings back every card it replaced.</li>
+  <li>Lock and unlock are each one undo step.</li>
+  <li>A genre setting change is kept out of the undo history. It is a setting for the next draw, and an undo step the user cannot see on the canvas is confusing.</li>
+</ul>
+
+<h3 class="decision" data-decision="schema-versions" data-status="settled" data-reversible="cheap">Format upgrades</h3>
+<p>IndexedDB uses Dexie schema versions. A board file with an old <code>formatVersion</code> goes through the upgrade steps on import. GameIdea starts at version 1 with no upgrade steps.</p>
+
+<h3 class="decision" data-decision="import-policy" data-status="settled" data-reversible="cheap">Import: always a new board</h3>
+<ul>
+  <li>A good import always makes a new board with a new ID. It never writes over a board that exists.</li>
+  <li>If the name is already used, the app adds "(imported)" to the new name.</li>
+  <li>A bad file fails the Zod check. The app shows a message, and nothing changes.</li>
+</ul>
+<p>There is no concurrency between users, because there is only one user and no server.</p>
+
+<h2>Non-functional requirements</h2>
+
+<h3 class="decision" data-decision="nfr-targets" data-status="settled" data-reversible="cheap">Targets and checks</h3>
+<table>
+  <tr><th>Area</th><th>Target</th><th>How we check it</th></tr>
+  <tr><td>Draw, rotate and Hook Card update</td><td>Less than 100 ms</td><td>A Playwright timing test</td></tr>
+  <tr><td>Canvas</td><td>At least 50 frames per second during pan and drag, with 200 cards, on a normal laptop</td><td>A browser performance trace on the 200-card fixture board</td></tr>
+  <tr><td>Long stack</td><td>An 11-card stack drags at the canvas target</td><td>A browser performance trace on the 11-card stack fixture, at the start of M2</td></tr>
+  <tr><td>First load</td><td>Less than 2 seconds on a 25 Mbps connection</td><td>A Lighthouse run. Lighthouse is a browser tool that measures page speed.</td></tr>
+  <tr><td>App size</td><td>JavaScript is 250 KB or less after compression</td><td>A size check in the build</td></tr>
+  <tr><td>Pools</td><td>100 KB or less after compression, for all 11 files</td><td>A size check in the build</td></tr>
+  <tr><td>Save</td><td>Less than 50 ms for a 200-card board</td><td>A unit test</td></tr>
+  <tr><td>Browsers</td><td>The current Chrome, Edge, Firefox and Safari on desktop</td><td>Playwright in Chromium, Firefox and WebKit</td></tr>
+  <tr><td>Cost</td><td>$0 for each month</td><td>Local run and the free GitHub Actions minutes</td></tr>
+  <tr><td>Privacy</td><td>No requests to any address other than the app's own address</td><td>A Playwright test that watches network requests</td></tr>
+  <tr><td>Security</td><td>No third-party scripts. Fonts and icons are in the app files.</td><td>The same network test</td></tr>
+</table>
+<p>The libraries hold about 2,650 cues. Without the <code>games</code> lists, the 11 pool files are about 120 KB without compression and about 30 KB after compression.</p>
+
+<h2>Deployment</h2>
+
+<h3 class="decision" data-decision="local-run" data-status="settled" data-reversible="cheap">Run target: local, fixed ports</h3>
+<table>
+  <tr><th>Command</th><th>Address</th><th>Use</th></tr>
+  <tr><td><code>npm start</code></td><td><code>http://localhost:4174</code></td><td>Builds the app and serves it. This is the user's real work.</td></tr>
+  <tr><td><code>npm run dev</code></td><td><code>http://localhost:5174</code></td><td>Development, with live reload.</td></tr>
+  <tr><td><code>npm run start:lan</code></td><td><code>https://&lt;LAN address&gt;:4444</code></td><td>The same build over HTTPS for other devices on the local network. Each device keeps its own boards.</td></tr>
+</table>
+<ul>
+  <li>All 3 ports are locked. If a port is in use, the command stops with an error. It does not move to another port.</li>
+  <li>The ports differ from the TheForge ports (5173, 4173, 4443), so both apps can run at the same time.</li>
+  <li>Port 4444 uses a certificate from mkcert, kept in <code>.certs/</code> and ignored by git. mkcert is a tool that makes a certificate the local computer trusts. GameIdea has its own copy of the certificate files. HTTPS makes the page a secure context, so persistent storage and the Clipboard API work.</li>
+  <li>Port 4174 stays plain HTTP on localhost, because <code>https://localhost:4174</code> would be a different site and would hide the user's boards.</li>
+  <li>The browser stores boards for each address and port. The boards on port 4174 are separate from the boards on port 5174, so development does not touch the user's real work.</li>
+  <li>The app has no configuration and no secrets.</li>
+  <li>A public static site is deferred. The same build output can go to a free host later.</li>
+</ul>
+
+<h3 class="decision" data-decision="source-control" data-status="settled" data-reversible="cheap">Source control: git and GitHub</h3>
+<p>The repository is <code>~/repos/gameidea</code>, pushed to the GitHub repository <code>DecafCoding/GameIdea</code>. The build pipeline needs it, because <code>/dev-execute</code> opens and merges pull requests.</p>
+
+<h3 class="decision" data-decision="ci" data-status="settled" data-reversible="cheap">CI: GitHub Actions on each pull request</h3>
+<p>CI means continuous integration, which runs the checks automatically. On each pull request, GitHub Actions runs lint, type checks, unit tests, Playwright tests and the size checks. A failed check blocks the merge. The CI needs no secrets, because nothing deploys.</p>
+
+<h2>Risks and reversibility</h2>
+<table>
+  <tr><th>Decision</th><th>Cost to undo</th><th>Why</th></tr>
+  <tr><td>stack-language</td><td>Expensive</td><td>All code is in TypeScript.</td></tr>
+  <tr><td>ui-framework</td><td>Expensive</td><td>All screen code uses React.</td></tr>
+  <tr><td>board-file-format</td><td>Expensive</td><td>Saved files must always load. The version number and the upgrade steps make changes possible. It stays cheap until the user keeps real boards.</td></tr>
+  <tr><td>canvas-library</td><td>Moderate</td><td>Only <code>features/canvas/</code> uses React Flow.</td></tr>
+  <tr><td>state-store</td><td>Moderate</td><td>All features read the store.</td></tr>
+  <tr><td>storage-engine</td><td>Moderate</td><td>Only <code>shared/storage/</code> uses Dexie.</td></tr>
+  <tr><td>schema-shape</td><td>Moderate</td><td>A change needs a data upgrade step.</td></tr>
+  <tr><td>architecture-pattern, module-layout, import-rules</td><td>Moderate</td><td>A change moves many files.</td></tr>
+  <tr><td>storage-seam</td><td>Moderate</td><td>A later server depends on these 5 actions.</td></tr>
+  <tr><td>pool-files</td><td>Cheap</td><td>Data files at fixed addresses. The user's edits live in the JSON, so a new split of <code>decks.json</code> would overwrite them.</td></tr>
+  <tr><td>All other decisions</td><td>Cheap</td><td>Each one is small and stays in one place.</td></tr>
+</table>
+
+<h3>The biggest risks</h3>
+<ul>
+  <li><b>Story code left in the copy.</b> TheForge code names 5 story types, Setting kinds and kind-based connector rules in many places. Code left behind causes odd bugs in later phases. Check: the M1 pass bar adds a search of <code>src/</code> that finds no TheForge story type names (character, motivation, description) and no Setting kind names.</li>
+  <li><b>Long stacks.</b> A full hook stack is 6 to 11 cards in one parent chain. TheForge tested tuck with short stacks. Check: M2 starts with the 11-card stack test in nfr-targets. If it fails, <code>features/canvas/</code> lays out the stack itself, which is an amendment to canvas-library.</li>
+  <li><b>Lost browser data.</b> The persistent storage request and the export lower this risk. They do not remove it.</li>
+</ul>
+
+<h2>Open questions</h2>
+<table>
+  <tr><th>Question</th><th>What settles it</th><th>Settle by</th></tr>
+  <tr><td><code>/dev-claud-md</code> must read this file</td><td>This design leaves the house default stack (C# with .NET). Run <code>/dev-claud-md</code> against docs/architecture.html for this project. Its default .NET profile is wrong here.</td><td>When <code>/dev-claud-md</code> runs</td></tr>
+  <tr><td>Does an 11-card stack drag smoothly in React Flow?</td><td>The long-stack test at the start of M2. If it fails, amend canvas-library.</td><td>Before the rest of M2 starts</td></tr>
+  <tr><td>Colors and icons for the 11 decks, and the look of the Hook Card, the lock and the Genres panel</td><td><code>/dev-ui-update</code> writes docs/design-system.html. Icons ship in <code>public/icons/</code> either way.</td><td>Before M2 starts</td></tr>
+  <tr><td>Final badge word choices other than the defaults</td><td>The user tries them during the M2 hook test. They live in the connector rules in <code>features/canvas/</code>, so a change is cheap.</td><td>End of M2</td></tr>
+</table>
+
+<h2>Amendments</h2>
+<p class="meta">2026-11-01: First version. Written from the <code>/dev-architecture</code> run against docs/mvp-plan.html, following the TheForge architecture at the user's request. The run added 2 checks to the plan's milestones: a story-name search in M1 and an 11-card stack test in M2. The plan records them in its own Amendments section.</p>
+
+</body>
+</html>
