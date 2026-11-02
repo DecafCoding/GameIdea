@@ -12837,6 +12837,22 @@
       ]
     },
     {
+      "card": "world",
+      "games": [
+        "Brick Rigs",
+        "It Takes Two",
+        "Cuphead",
+        "Rivals of Aether",
+        "Sheepy: A Short Adventure",
+        "Minecraft",
+        "Raft",
+        "Guilty Gear -Strive-",
+        "Just Shapes & Beats",
+        "Grim Dawn",
+        "OneShot"
+      ]
+    },
+    {
       "card": "town",
       "games": [
         "Left 4 Dead 2",
@@ -13296,13 +13312,6 @@
       ]
     },
     {
-      "card": "toy-sized world",
-      "games": [
-        "Brick Rigs",
-        "It Takes Two"
-      ]
-    },
-    {
       "card": "anomaly lab",
       "games": [
         "Abiotic Factor",
@@ -13359,9 +13368,10 @@
       ]
     },
     {
-      "card": "1930s cartoon world",
+      "card": "realms",
       "games": [
-        "Cuphead"
+        "Mortal Kombat 11",
+        "God of War"
       ]
     },
     {
@@ -13575,24 +13585,6 @@
       ]
     },
     {
-      "card": "elemental world",
-      "games": [
-        "Rivals of Aether"
-      ]
-    },
-    {
-      "card": "empty broken world",
-      "games": [
-        "Sheepy: A Short Adventure"
-      ]
-    },
-    {
-      "card": "endless block world",
-      "games": [
-        "Minecraft"
-      ]
-    },
-    {
       "card": "fighting tournament",
       "games": [
         "Tekken 8"
@@ -13608,12 +13600,6 @@
       "card": "fishing island",
       "games": [
         "WEBFISHING"
-      ]
-    },
-    {
-      "card": "flooded world",
-      "games": [
-        "Raft"
       ]
     },
     {
@@ -13686,12 +13672,6 @@
       "card": "heaven",
       "games": [
         "DOOM Eternal"
-      ]
-    },
-    {
-      "card": "heavy-metal fantasy world",
-      "games": [
-        "Guilty Gear -Strive-"
       ]
     },
     {
@@ -13821,12 +13801,6 @@
       ]
     },
     {
-      "card": "musical shape world",
-      "games": [
-        "Just Shapes & Beats"
-      ]
-    },
-    {
       "card": "china",
       "games": [
         "Black Myth: Wukong"
@@ -13848,12 +13822,6 @@
       "card": "night guard office",
       "games": [
         "Ultimate Custom Night"
-      ]
-    },
-    {
-      "card": "norse realms",
-      "games": [
-        "God of War"
       ]
     },
     {
@@ -13983,12 +13951,6 @@
       ]
     },
     {
-      "card": "ruined victorian world",
-      "games": [
-        "Grim Dawn"
-      ]
-    },
-    {
       "card": "harbor district",
       "games": [
         "Disco Elysium - The Final Cut"
@@ -14115,12 +14077,6 @@
       ]
     },
     {
-      "card": "sunless world",
-      "games": [
-        "OneShot"
-      ]
-    },
-    {
       "card": "open country",
       "games": [
         "Forza Horizon 5"
@@ -14208,12 +14164,6 @@
       "card": "warehouse",
       "games": [
         "Counter-Strike"
-      ]
-    },
-    {
-      "card": "realms",
-      "games": [
-        "Mortal Kombat 11"
       ]
     },
     {
@@ -16155,6 +16105,14 @@
       ]
     },
     {
+      "card": "broken",
+      "games": [
+        "RimWorld",
+        "Disco Elysium - The Final Cut",
+        "Sheepy: A Short Adventure"
+      ]
+    },
+    {
       "card": "artificial",
       "games": [
         "Stellar Blade",
@@ -16187,13 +16145,6 @@
       "games": [
         "Titanfall 2",
         "Dragon Ball FighterZ"
-      ]
-    },
-    {
-      "card": "broken",
-      "games": [
-        "RimWorld",
-        "Disco Elysium - The Final Cut"
       ]
     },
     {
@@ -16754,6 +16705,13 @@
       "games": [
         "Crab Champions",
         "Hotline Miami 2: Wrong Number"
+      ]
+    },
+    {
+      "card": "toy-sized",
+      "games": [
+        "Brick Rigs",
+        "It Takes Two"
       ]
     },
     {
@@ -18152,6 +18110,30 @@
       "card": "world-spanning",
       "games": [
         "Redout"
+      ]
+    },
+    {
+      "card": "1930s",
+      "games": [
+        "Cuphead"
+      ]
+    },
+    {
+      "card": "musical",
+      "games": [
+        "Just Shapes & Beats"
+      ]
+    },
+    {
+      "card": "victorian",
+      "games": [
+        "Grim Dawn"
+      ]
+    },
+    {
+      "card": "norse",
+      "games": [
+        "God of War"
       ]
     },
     {

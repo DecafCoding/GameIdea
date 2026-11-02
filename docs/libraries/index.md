@@ -11,9 +11,9 @@ The "Games" column shows which games the card came from: the Steam Top 250, plus
 | [Goal](goal.md) | 301 | 244 | 36 |
 | [Conflict](conflict.md) | 338 | 285 | 10 |
 | [Resource](resource.md) | 528 | 202 | 45 |
-| [Setting](setting.md) | 424 | 218 | 35 |
+| [Setting](setting.md) | 424 | 208 | 35 |
 | [Mood](mood.md) | 166 | 73 | 19 |
-| [Modifier](modifier.md) | 397 | 409 | 46 |
+| [Modifier](modifier.md) | 397 | 414 | 46 |
 | [Twist](twist.md) | 290 | 157 | 34 |
 | [Progression](progression.md) | 720 | 294 | 42 |
 | [Constraint](constraint.md) | 536 | 186 | 130 |
