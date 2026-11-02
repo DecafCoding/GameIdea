@@ -2574,7 +2574,11 @@
         "Rhythm & Arcade",
         "Party & Multiplayer",
         "Stealth & Immersive Sim",
-        "Horror"
+        "Horror",
+        "Metroidvania",
+        "Platformer",
+        "Open World",
+        "Vehicle Sim & Racing"
       ]
     },
     {
@@ -2620,7 +2624,20 @@
         "Persona 4 Golden"
       ],
       "genres": [
-        "any"
+        "Roguelike",
+        "Metroidvania",
+        "Platformer",
+        "Puzzle",
+        "Melee Action",
+        "RPG",
+        "Open World",
+        "Survival Craft",
+        "Horror",
+        "Life Sim",
+        "Strategy",
+        "Narrative",
+        "Stealth & Immersive Sim",
+        "Sandbox"
       ]
     },
     {
@@ -2665,7 +2682,11 @@
         "Metroidvania",
         "Roguelike",
         "Fighting",
-        "Deckbuilder & Cards"
+        "Deckbuilder & Cards",
+        "Shooter",
+        "Survival Craft",
+        "Horror",
+        "Party & Multiplayer"
       ]
     },
     {
@@ -2701,7 +2722,10 @@
         "Narrative",
         "Horror",
         "Platformer",
-        "Stealth & Immersive Sim"
+        "Stealth & Immersive Sim",
+        "Metroidvania",
+        "Open World",
+        "Party & Multiplayer"
       ]
     },
     {
@@ -2738,7 +2762,9 @@
         "Fighting",
         "Metroidvania",
         "Shooter",
-        "Vehicle Sim & Racing"
+        "Vehicle Sim & Racing",
+        "Platformer",
+        "Party & Multiplayer"
       ]
     },
     {
@@ -2769,7 +2795,8 @@
         "RPG",
         "Life Sim",
         "Open World",
-        "Sandbox"
+        "Sandbox",
+        "Builder & Management"
       ]
     },
     {
@@ -2798,7 +2825,8 @@
       "genres": [
         "Platformer",
         "Metroidvania",
-        "Party & Multiplayer"
+        "Party & Multiplayer",
+        "Rhythm & Arcade"
       ]
     },
     {
@@ -2829,7 +2857,10 @@
         "RPG",
         "Life Sim",
         "Stealth & Immersive Sim",
-        "Horror"
+        "Horror",
+        "Roguelike",
+        "Strategy",
+        "Deckbuilder & Cards"
       ]
     },
     {
@@ -2853,7 +2884,8 @@
       "genres": [
         "Survival Craft",
         "Builder & Management",
-        "Strategy"
+        "Strategy",
+        "Sandbox"
       ]
     },
     {
@@ -2876,7 +2908,9 @@
       "genres": [
         "Vehicle Sim & Racing",
         "Open World",
-        "Sandbox"
+        "Sandbox",
+        "Party & Multiplayer",
+        "Rhythm & Arcade"
       ]
     },
     {
@@ -2902,7 +2936,8 @@
         "Deckbuilder & Cards",
         "Open World",
         "Strategy",
-        "Sandbox"
+        "Sandbox",
+        "Metroidvania"
       ]
     },
     {
@@ -2925,7 +2960,9 @@
         "Fighting",
         "Melee Action",
         "Rhythm & Arcade",
-        "Deckbuilder & Cards"
+        "Deckbuilder & Cards",
+        "Roguelike",
+        "Puzzle"
       ]
     },
     {
@@ -2971,7 +3008,10 @@
         "Narrative",
         "RPG",
         "Life Sim",
-        "Stealth & Immersive Sim"
+        "Stealth & Immersive Sim",
+        "Open World",
+        "Horror",
+        "Party & Multiplayer"
       ]
     },
     {
@@ -2992,7 +3032,9 @@
       "genres": [
         "Melee Action",
         "Fighting",
-        "Rhythm & Arcade"
+        "Rhythm & Arcade",
+        "Roguelike",
+        "Metroidvania"
       ]
     },
     {
@@ -3013,7 +3055,8 @@
         "Builder & Management",
         "Survival Craft",
         "Sandbox",
-        "Strategy"
+        "Strategy",
+        "Puzzle"
       ]
     },
     {
@@ -3036,7 +3079,8 @@
         "Metroidvania",
         "Melee Action",
         "Rhythm & Arcade",
-        "Fighting"
+        "Fighting",
+        "Shooter"
       ]
     },
     {
@@ -3057,7 +3101,9 @@
         "Survival Craft",
         "Builder & Management",
         "Life Sim",
-        "Strategy"
+        "Strategy",
+        "Open World",
+        "Sandbox"
       ]
     },
     {
@@ -3118,7 +3164,9 @@
         "Roguelike",
         "Shooter",
         "Survival Craft",
-        "Open World"
+        "Open World",
+        "Melee Action",
+        "Horror"
       ]
     },
     {
@@ -3135,7 +3183,11 @@
         "Tabletop Simulator"
       ],
       "genres": [
-        "Deckbuilder & Cards"
+        "Deckbuilder & Cards",
+        "Roguelike",
+        "Puzzle",
+        "Strategy",
+        "Party & Multiplayer"
       ]
     },
     {
@@ -3153,7 +3205,8 @@
       "genres": [
         "Shooter",
         "Roguelike",
-        "RPG"
+        "RPG",
+        "Melee Action"
       ]
     },
     {
@@ -3171,7 +3224,8 @@
       "genres": [
         "Life Sim",
         "Open World",
-        "Narrative"
+        "Narrative",
+        "RPG"
       ]
     },
     {
@@ -3188,7 +3242,8 @@
       ],
       "genres": [
         "Horror",
-        "Stealth & Immersive Sim"
+        "Stealth & Immersive Sim",
+        "Party & Multiplayer"
       ]
     },
     {
@@ -3207,7 +3262,8 @@
         "Survival Craft",
         "Builder & Management",
         "Life Sim",
-        "Sandbox"
+        "Sandbox",
+        "Roguelike"
       ]
     },
     {
@@ -3243,7 +3299,9 @@
         "Survival Craft",
         "Horror",
         "Shooter",
-        "Roguelike"
+        "Roguelike",
+        "Open World",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -3298,7 +3356,9 @@
         "Fighting",
         "Melee Action",
         "Open World",
-        "Party & Multiplayer"
+        "Party & Multiplayer",
+        "Roguelike",
+        "Rhythm & Arcade"
       ]
     },
     {
@@ -3316,7 +3376,10 @@
         "Platformer",
         "Open World",
         "Life Sim",
-        "Metroidvania"
+        "Metroidvania",
+        "RPG",
+        "Deckbuilder & Cards",
+        "Rhythm & Arcade"
       ]
     },
     {
@@ -3335,7 +3398,9 @@
         "Survival Craft",
         "RPG",
         "Life Sim",
-        "Deckbuilder & Cards"
+        "Deckbuilder & Cards",
+        "Builder & Management",
+        "Sandbox"
       ]
     },
     {
@@ -3368,7 +3433,11 @@
         "Geometry Dash"
       ],
       "genres": [
-        "Rhythm & Arcade"
+        "Rhythm & Arcade",
+        "Roguelike",
+        "Shooter",
+        "Melee Action",
+        "Party & Multiplayer"
       ]
     },
     {
@@ -3386,7 +3455,7 @@
         "Platformer",
         "Rhythm & Arcade",
         "Horror",
-        "Fighting"
+        "Party & Multiplayer"
       ]
     },
     {
@@ -3455,7 +3524,8 @@
       "genres": [
         "Life Sim",
         "Open World",
-        "Survival Craft"
+        "Survival Craft",
+        "Rhythm & Arcade"
       ]
     },
     {
@@ -3488,7 +3558,9 @@
         "Open World",
         "Survival Craft",
         "Shooter",
-        "RPG"
+        "RPG",
+        "Melee Action",
+        "Horror"
       ]
     },
     {
@@ -3519,7 +3591,9 @@
         "Redout"
       ],
       "genres": [
-        "Vehicle Sim & Racing"
+        "Vehicle Sim & Racing",
+        "Party & Multiplayer",
+        "Rhythm & Arcade"
       ]
     },
     {
@@ -3536,7 +3610,8 @@
         "Party & Multiplayer",
         "Fighting",
         "Platformer",
-        "Deckbuilder & Cards"
+        "Deckbuilder & Cards",
+        "Strategy"
       ]
     },
     {
@@ -3569,7 +3644,8 @@
         "Strategy",
         "Builder & Management",
         "RPG",
-        "Life Sim"
+        "Life Sim",
+        "Open World"
       ]
     },
     {
@@ -3584,7 +3660,8 @@
       "genres": [
         "Roguelike",
         "Shooter",
-        "Melee Action"
+        "Melee Action",
+        "RPG"
       ]
     },
     {
@@ -3612,7 +3689,11 @@
       "genres": [
         "Survival Craft",
         "Sandbox",
-        "Life Sim"
+        "Life Sim",
+        "Roguelike",
+        "Metroidvania",
+        "Puzzle",
+        "Rhythm & Arcade"
       ]
     },
     {
@@ -3626,7 +3707,8 @@
       ],
       "genres": [
         "Survival Craft",
-        "Open World"
+        "Open World",
+        "Horror"
       ]
     },
     {
@@ -3641,7 +3723,9 @@
       "genres": [
         "Fighting",
         "Melee Action",
-        "Party & Multiplayer"
+        "Party & Multiplayer",
+        "Shooter",
+        "Deckbuilder & Cards"
       ]
     },
     {
@@ -3658,7 +3742,9 @@
         "RPG",
         "Rhythm & Arcade",
         "Roguelike",
-        "Metroidvania"
+        "Metroidvania",
+        "Platformer",
+        "Shooter"
       ]
     },
     {
@@ -3691,7 +3777,8 @@
         "Metroidvania",
         "Melee Action",
         "RPG",
-        "Vehicle Sim & Racing"
+        "Vehicle Sim & Racing",
+        "Puzzle"
       ]
     },
     {
@@ -3721,7 +3808,9 @@
         "Roguelike",
         "Shooter",
         "Deckbuilder & Cards",
-        "Vehicle Sim & Racing"
+        "Vehicle Sim & Racing",
+        "Melee Action",
+        "Survival Craft"
       ]
     },
     {
@@ -3789,7 +3878,9 @@
         "Shooter",
         "Roguelike",
         "Deckbuilder & Cards",
-        "Fighting"
+        "Fighting",
+        "Melee Action",
+        "Strategy"
       ]
     },
     {
@@ -3831,7 +3922,8 @@
       "genres": [
         "Life Sim",
         "Survival Craft",
-        "Builder & Management"
+        "Builder & Management",
+        "Party & Multiplayer"
       ]
     },
     {
@@ -3845,7 +3937,9 @@
       "genres": [
         "Survival Craft",
         "RPG",
-        "Melee Action"
+        "Melee Action",
+        "Roguelike",
+        "Open World"
       ]
     },
     {
@@ -3858,7 +3952,8 @@
       ],
       "genres": [
         "Life Sim",
-        "Narrative"
+        "Narrative",
+        "RPG"
       ]
     },
     {
@@ -3872,7 +3967,9 @@
       "genres": [
         "Strategy",
         "Builder & Management",
-        "Survival Craft"
+        "Survival Craft",
+        "Roguelike",
+        "Shooter"
       ]
     },
     {
@@ -3887,7 +3984,8 @@
         "Horror",
         "Stealth & Immersive Sim",
         "Puzzle",
-        "Roguelike"
+        "Roguelike",
+        "Party & Multiplayer"
       ]
     },
     {
@@ -3901,7 +3999,8 @@
       "genres": [
         "Stealth & Immersive Sim",
         "Shooter",
-        "Puzzle"
+        "Puzzle",
+        "RPG"
       ]
     },
     {
@@ -3915,8 +4014,7 @@
       "genres": [
         "Life Sim",
         "Narrative",
-        "RPG",
-        "Deckbuilder & Cards"
+        "RPG"
       ]
     },
     {
@@ -3930,7 +4028,10 @@
       "genres": [
         "Horror",
         "Survival Craft",
-        "RPG"
+        "RPG",
+        "Roguelike",
+        "Puzzle",
+        "Shooter"
       ]
     },
     {
@@ -3958,7 +4059,9 @@
       ],
       "genres": [
         "Life Sim",
-        "Sandbox"
+        "Sandbox",
+        "Puzzle",
+        "Party & Multiplayer"
       ]
     },
     {
@@ -3973,7 +4076,8 @@
         "Narrative",
         "RPG",
         "Stealth & Immersive Sim",
-        "Deckbuilder & Cards"
+        "Deckbuilder & Cards",
+        "Strategy"
       ]
     },
     {
@@ -3987,7 +4091,8 @@
       "genres": [
         "Fighting",
         "Party & Multiplayer",
-        "Shooter"
+        "Shooter",
+        "Melee Action"
       ]
     },
     {
@@ -3999,7 +4104,8 @@
         "Crab Champions"
       ],
       "genres": [
-        "Roguelike"
+        "Roguelike",
+        "Deckbuilder & Cards"
       ]
     },
     {
@@ -4025,8 +4131,10 @@
       ],
       "genres": [
         "Rhythm & Arcade",
-        "Narrative",
-        "Party & Multiplayer"
+        "Party & Multiplayer",
+        "Melee Action",
+        "Fighting",
+        "Vehicle Sim & Racing"
       ]
     },
     {
@@ -4040,7 +4148,8 @@
       "genres": [
         "Builder & Management",
         "Life Sim",
-        "Party & Multiplayer"
+        "Party & Multiplayer",
+        "Rhythm & Arcade"
       ]
     },
     {
@@ -4065,7 +4174,8 @@
         "People Playground"
       ],
       "genres": [
-        "Sandbox"
+        "Sandbox",
+        "Puzzle"
       ]
     },
     {
@@ -4092,7 +4202,8 @@
       ],
       "genres": [
         "Shooter",
-        "Melee Action"
+        "Melee Action",
+        "Roguelike"
       ]
     },
     {
@@ -4107,7 +4218,8 @@
         "Stealth & Immersive Sim",
         "Puzzle",
         "Platformer",
-        "Fighting"
+        "Fighting",
+        "Metroidvania"
       ]
     },
     {
@@ -4135,7 +4247,8 @@
       "genres": [
         "Stealth & Immersive Sim",
         "Shooter",
-        "Metroidvania"
+        "Metroidvania",
+        "Puzzle"
       ]
     },
     {
@@ -4159,7 +4272,8 @@
       ],
       "genres": [
         "Survival Craft",
-        "Horror"
+        "Horror",
+        "Shooter"
       ]
     },
     {
@@ -4171,7 +4285,9 @@
       ],
       "genres": [
         "Sandbox",
-        "Vehicle Sim & Racing"
+        "Vehicle Sim & Racing",
+        "Party & Multiplayer",
+        "Rhythm & Arcade"
       ]
     },
     {
@@ -4182,7 +4298,8 @@
         "Phoenix Wright: Ace Attorney Trilogy"
       ],
       "genres": [
-        "Narrative"
+        "Narrative",
+        "Party & Multiplayer"
       ]
     },
     {
@@ -4208,7 +4325,8 @@
       "genres": [
         "Open World",
         "Vehicle Sim & Racing",
-        "Horror"
+        "Horror",
+        "Party & Multiplayer"
       ]
     },
     {
@@ -4220,7 +4338,8 @@
       ],
       "genres": [
         "Roguelike",
-        "Deckbuilder & Cards"
+        "Deckbuilder & Cards",
+        "Narrative"
       ]
     },
     {
@@ -4231,7 +4350,8 @@
         "Dyson Sphere Program"
       ],
       "genres": [
-        "Builder & Management"
+        "Builder & Management",
+        "Puzzle"
       ]
     },
     {
@@ -4243,7 +4363,8 @@
       ],
       "genres": [
         "Vehicle Sim & Racing",
-        "Sandbox"
+        "Sandbox",
+        "Party & Multiplayer"
       ]
     },
     {
@@ -4266,7 +4387,8 @@
         "SnowRunner"
       ],
       "genres": [
-        "Vehicle Sim & Racing"
+        "Vehicle Sim & Racing",
+        "Open World"
       ]
     },
     {
@@ -4290,7 +4412,8 @@
         "Sonic & All-Stars Racing Transformed"
       ],
       "genres": [
-        "Vehicle Sim & Racing"
+        "Vehicle Sim & Racing",
+        "Rhythm & Arcade"
       ]
     },
     {
@@ -4303,7 +4426,8 @@
       "genres": [
         "Roguelike",
         "Melee Action",
-        "Shooter"
+        "Shooter",
+        "Horror"
       ]
     },
     {
@@ -4327,7 +4451,8 @@
       ],
       "genres": [
         "Deckbuilder & Cards",
-        "Roguelike"
+        "Roguelike",
+        "Party & Multiplayer"
       ]
     },
     {
@@ -4411,7 +4536,8 @@
       ],
       "genres": [
         "Shooter",
-        "Party & Multiplayer"
+        "Party & Multiplayer",
+        "Puzzle"
       ]
     },
     {
@@ -4423,7 +4549,8 @@
       ],
       "genres": [
         "Party & Multiplayer",
-        "Life Sim"
+        "Life Sim",
+        "Rhythm & Arcade"
       ]
     },
     {
@@ -4435,7 +4562,7 @@
       ],
       "genres": [
         "Shooter",
-        "Deckbuilder & Cards"
+        "Strategy"
       ]
     },
     {
@@ -4448,7 +4575,8 @@
       "genres": [
         "RPG",
         "Strategy",
-        "Deckbuilder & Cards"
+        "Deckbuilder & Cards",
+        "Builder & Management"
       ]
     },
     {
@@ -4481,7 +4609,8 @@
         "Broforce"
       ],
       "genres": [
-        "Shooter"
+        "Shooter",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -4494,7 +4623,8 @@
       "genres": [
         "Platformer",
         "Rhythm & Arcade",
-        "Vehicle Sim & Racing"
+        "Vehicle Sim & Racing",
+        "Puzzle"
       ]
     },
     {
@@ -4542,7 +4672,11 @@
         "Castle Crashers"
       ],
       "genres": [
-        "Melee Action"
+        "Melee Action",
+        "Roguelike",
+        "Metroidvania",
+        "Fighting",
+        "Rhythm & Arcade"
       ]
     },
     {
@@ -4591,7 +4725,10 @@
       "genres": [
         "RPG",
         "Melee Action",
-        "Fighting"
+        "Fighting",
+        "Roguelike",
+        "Shooter",
+        "Strategy"
       ]
     },
     {
@@ -4602,7 +4739,8 @@
         "POSTAL 2"
       ],
       "genres": [
-        "Narrative"
+        "Narrative",
+        "Horror"
       ]
     },
     {
@@ -4615,7 +4753,8 @@
       "genres": [
         "Strategy",
         "Deckbuilder & Cards",
-        "Sandbox"
+        "Sandbox",
+        "Builder & Management"
       ]
     },
     {
@@ -4625,7 +4764,9 @@
         "Helltaker"
       ],
       "genres": [
-        "Narrative"
+        "Narrative",
+        "Puzzle",
+        "Party & Multiplayer"
       ]
     },
     {
@@ -4635,7 +4776,9 @@
         "Factorio"
       ],
       "genres": [
-        "Builder & Management"
+        "Builder & Management",
+        "Puzzle",
+        "Sandbox"
       ]
     },
     {
@@ -4700,7 +4843,8 @@
         "Dyson Sphere Program"
       ],
       "genres": [
-        "Builder & Management"
+        "Builder & Management",
+        "Sandbox"
       ]
     },
     {
@@ -4723,7 +4867,8 @@
       ],
       "genres": [
         "Builder & Management",
-        "Life Sim"
+        "Life Sim",
+        "Party & Multiplayer"
       ]
     },
     {
@@ -4798,7 +4943,8 @@
       ],
       "genres": [
         "Melee Action",
-        "Fighting"
+        "Fighting",
+        "Horror"
       ]
     },
     {
@@ -4809,7 +4955,8 @@
       ],
       "genres": [
         "Life Sim",
-        "Builder & Management"
+        "Builder & Management",
+        "Sandbox"
       ]
     },
     {
@@ -4831,7 +4978,8 @@
       "genres": [
         "Metroidvania",
         "Platformer",
-        "Puzzle"
+        "Puzzle",
+        "Open World"
       ]
     },
     {
@@ -4852,7 +5000,8 @@
         "Crime Scene Cleaner"
       ],
       "genres": [
-        "Life Sim"
+        "Life Sim",
+        "Builder & Management"
       ]
     },
     {
@@ -4873,7 +5022,8 @@
       ],
       "genres": [
         "Life Sim",
-        "Survival Craft"
+        "Survival Craft",
+        "Open World"
       ]
     },
     {
@@ -4906,7 +5056,8 @@
       ],
       "genres": [
         "Shooter",
-        "Rhythm & Arcade"
+        "Rhythm & Arcade",
+        "Melee Action"
       ]
     },
     {
@@ -4969,7 +5120,9 @@
       ],
       "genres": [
         "RPG",
-        "Deckbuilder & Cards"
+        "Deckbuilder & Cards",
+        "Roguelike",
+        "Strategy"
       ]
     },
     {
@@ -5003,7 +5156,8 @@
       ],
       "genres": [
         "Vehicle Sim & Racing",
-        "Strategy"
+        "Strategy",
+        "Puzzle"
       ]
     },
     {
@@ -5014,7 +5168,8 @@
       ],
       "genres": [
         "Strategy",
-        "Deckbuilder & Cards"
+        "Deckbuilder & Cards",
+        "Puzzle"
       ]
     },
     {
@@ -5144,7 +5299,8 @@
         "Baba Is You"
       ],
       "genres": [
-        "Puzzle"
+        "Puzzle",
+        "Platformer"
       ]
     },
     {
@@ -5155,7 +5311,10 @@
       ],
       "genres": [
         "RPG",
-        "Strategy"
+        "Strategy",
+        "Roguelike",
+        "Deckbuilder & Cards",
+        "Party & Multiplayer"
       ]
     },
     {
@@ -5230,7 +5389,8 @@
         "Risk of Rain 2"
       ],
       "genres": [
-        "Puzzle"
+        "Puzzle",
+        "Rhythm & Arcade"
       ]
     },
     {
@@ -5252,7 +5412,8 @@
       ],
       "genres": [
         "Survival Craft",
-        "Horror"
+        "Horror",
+        "Roguelike"
       ]
     },
     {
@@ -5314,7 +5475,8 @@
         "Split Fiction"
       ],
       "genres": [
-        "RPG"
+        "RPG",
+        "Roguelike"
       ]
     },
     {
@@ -5432,7 +5594,8 @@
         "Hotline Miami 2: Wrong Number"
       ],
       "genres": [
-        "Shooter"
+        "Shooter",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -5534,7 +5697,8 @@
         "POSTAL 2"
       ],
       "genres": [
-        "Sandbox"
+        "Sandbox",
+        "Party & Multiplayer"
       ]
     },
     {
@@ -5652,8 +5816,7 @@
       "genres": [
         "Survival Craft",
         "Life Sim",
-        "Horror",
-        "Sandbox"
+        "Horror"
       ]
     },
     {
@@ -5714,7 +5877,8 @@
         "STAR WARS Empire at War - Gold Pack"
       ],
       "genres": [
-        "Strategy"
+        "Strategy",
+        "Vehicle Sim & Racing"
       ]
     },
     {
@@ -5848,7 +6012,8 @@
         "Stardew Valley"
       ],
       "genres": [
-        "Life Sim"
+        "Life Sim",
+        "Survival Craft"
       ]
     },
     {
@@ -5991,7 +6156,8 @@
         "VA-11 Hall-A: Cyberpunk Bartender Action"
       ],
       "genres": [
-        "Narrative"
+        "Narrative",
+        "Horror"
       ]
     },
     {
@@ -6277,7 +6443,8 @@
         "Inscryption"
       ],
       "genres": [
-        "Open World"
+        "Open World",
+        "Vehicle Sim & Racing"
       ]
     },
     {
@@ -6333,7 +6500,8 @@
         "ULTRAKILL"
       ],
       "genres": [
-        "Shooter"
+        "Shooter",
+        "Platformer"
       ]
     },
     {
@@ -6400,7 +6568,9 @@
         "ELDEN RING"
       ],
       "genres": [
-        "RPG"
+        "RPG",
+        "Strategy",
+        "Deckbuilder & Cards"
       ]
     },
     {
@@ -6409,7 +6579,8 @@
         "Marvel's Spider-Man Remastered"
       ],
       "genres": [
-        "Open World"
+        "Open World",
+        "Platformer"
       ]
     },
     {
@@ -9656,7 +9827,23 @@
         "Black Myth: Wukong"
       ],
       "genres": [
-        "any"
+        "Roguelike",
+        "Metroidvania",
+        "Platformer",
+        "Shooter",
+        "Melee Action",
+        "RPG",
+        "Open World",
+        "Survival Craft",
+        "Horror",
+        "Builder & Management",
+        "Life Sim",
+        "Vehicle Sim & Racing",
+        "Strategy",
+        "Deckbuilder & Cards",
+        "Narrative",
+        "Stealth & Immersive Sim",
+        "Party & Multiplayer"
       ]
     },
     {
@@ -9761,7 +9948,24 @@
         "Dragon Ball FighterZ"
       ],
       "genres": [
-        "any"
+        "Roguelike",
+        "Metroidvania",
+        "Platformer",
+        "Shooter",
+        "Melee Action",
+        "Fighting",
+        "RPG",
+        "Open World",
+        "Survival Craft",
+        "Horror",
+        "Life Sim",
+        "Vehicle Sim & Racing",
+        "Strategy",
+        "Deckbuilder & Cards",
+        "Stealth & Immersive Sim",
+        "Sandbox",
+        "Party & Multiplayer",
+        "Rhythm & Arcade"
       ]
     },
     {
@@ -9823,7 +10027,10 @@
         "Open World",
         "Stealth & Immersive Sim",
         "Strategy",
-        "Vehicle Sim & Racing"
+        "Vehicle Sim & Racing",
+        "Roguelike",
+        "Metroidvania",
+        "Party & Multiplayer"
       ]
     },
     {
@@ -9876,7 +10083,8 @@
         "Roguelike",
         "Open World",
         "Deckbuilder & Cards",
-        "Sandbox"
+        "Sandbox",
+        "RPG"
       ]
     },
     {
@@ -9922,7 +10130,25 @@
         "Dreams"
       ],
       "genres": [
-        "any"
+        "Roguelike",
+        "Metroidvania",
+        "Platformer",
+        "Puzzle",
+        "Shooter",
+        "Melee Action",
+        "RPG",
+        "Open World",
+        "Survival Craft",
+        "Horror",
+        "Builder & Management",
+        "Life Sim",
+        "Vehicle Sim & Racing",
+        "Strategy",
+        "Deckbuilder & Cards",
+        "Narrative",
+        "Stealth & Immersive Sim",
+        "Party & Multiplayer",
+        "Rhythm & Arcade"
       ]
     },
     {
@@ -9986,7 +10212,8 @@
         "Survival Craft",
         "Open World",
         "Horror",
-        "Life Sim"
+        "Life Sim",
+        "Platformer"
       ]
     },
     {
@@ -10018,7 +10245,8 @@
         "Horror",
         "Builder & Management",
         "Strategy",
-        "Sandbox"
+        "Sandbox",
+        "Roguelike"
       ]
     },
     {
@@ -10044,7 +10272,8 @@
         "Melee Action",
         "Shooter",
         "Rhythm & Arcade",
-        "Party & Multiplayer"
+        "Party & Multiplayer",
+        "RPG"
       ]
     },
     {
@@ -10096,7 +10325,8 @@
         "Party & Multiplayer",
         "Stealth & Immersive Sim",
         "RPG",
-        "Strategy"
+        "Strategy",
+        "Life Sim"
       ]
     },
     {
@@ -10147,7 +10377,9 @@
         "Metroidvania",
         "Roguelike",
         "Vehicle Sim & Racing",
-        "Sandbox"
+        "Sandbox",
+        "Shooter",
+        "Strategy"
       ]
     },
     {
@@ -10171,7 +10403,10 @@
         "RPG",
         "Survival Craft",
         "Melee Action",
-        "Roguelike"
+        "Roguelike",
+        "Metroidvania",
+        "Open World",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -10196,7 +10431,7 @@
         "Roguelike",
         "Puzzle",
         "Fighting",
-        "Sandbox"
+        "Party & Multiplayer"
       ]
     },
     {
@@ -10220,7 +10455,8 @@
         "Strategy",
         "RPG",
         "Sandbox",
-        "Open World"
+        "Open World",
+        "Life Sim"
       ]
     },
     {
@@ -10241,7 +10477,8 @@
         "RPG",
         "Roguelike",
         "Open World",
-        "Stealth & Immersive Sim"
+        "Stealth & Immersive Sim",
+        "Shooter"
       ]
     },
     {
@@ -10282,7 +10519,8 @@
         "Builder & Management",
         "Platformer",
         "Roguelike",
-        "Open World"
+        "Open World",
+        "Sandbox"
       ]
     },
     {
@@ -10303,7 +10541,8 @@
         "Life Sim",
         "Stealth & Immersive Sim",
         "Narrative",
-        "Builder & Management"
+        "Builder & Management",
+        "Strategy"
       ]
     },
     {
@@ -10345,8 +10584,9 @@
         "Stealth & Immersive Sim",
         "Roguelike",
         "Shooter",
-        "Sandbox",
-        "Vehicle Sim & Racing"
+        "Vehicle Sim & Racing",
+        "Open World",
+        "Strategy"
       ]
     },
     {
@@ -10368,7 +10608,9 @@
         "Vehicle Sim & Racing",
         "Narrative",
         "Deckbuilder & Cards",
-        "Sandbox"
+        "Strategy",
+        "Stealth & Immersive Sim",
+        "Party & Multiplayer"
       ]
     },
     {
@@ -10388,8 +10630,8 @@
         "Life Sim",
         "Narrative",
         "Strategy",
-        "Vehicle Sim & Racing",
-        "Sandbox"
+        "Sandbox",
+        "Open World"
       ]
     },
     {
@@ -10407,7 +10649,9 @@
         "RPG",
         "Melee Action",
         "Strategy",
-        "Roguelike"
+        "Roguelike",
+        "Open World",
+        "Survival Craft"
       ]
     },
     {
@@ -10425,7 +10669,9 @@
         "Open World",
         "Horror",
         "Vehicle Sim & Racing",
-        "Melee Action"
+        "Melee Action",
+        "Roguelike",
+        "RPG"
       ]
     },
     {
@@ -10443,7 +10689,7 @@
         "RPG",
         "Metroidvania",
         "Roguelike",
-        "Fighting"
+        "Open World"
       ]
     },
     {
@@ -10461,7 +10707,9 @@
         "Horror",
         "Metroidvania",
         "Puzzle",
-        "Platformer"
+        "Platformer",
+        "RPG",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -10478,7 +10726,8 @@
         "Builder & Management",
         "Survival Craft",
         "Strategy",
-        "Sandbox"
+        "Sandbox",
+        "Life Sim"
       ]
     },
     {
@@ -10512,7 +10761,8 @@
       "genres": [
         "Vehicle Sim & Racing",
         "Survival Craft",
-        "Sandbox"
+        "Sandbox",
+        "Open World"
       ]
     },
     {
@@ -10530,7 +10780,8 @@
         "Rhythm & Arcade",
         "Shooter",
         "Metroidvania",
-        "Puzzle"
+        "Puzzle",
+        "Party & Multiplayer"
       ]
     },
     {
@@ -10564,7 +10815,9 @@
         "Narrative",
         "Horror",
         "Puzzle",
-        "Stealth & Immersive Sim"
+        "Stealth & Immersive Sim",
+        "RPG",
+        "Party & Multiplayer"
       ]
     },
     {
@@ -10632,7 +10885,8 @@
         "Roguelike",
         "Open World",
         "Melee Action",
-        "Deckbuilder & Cards"
+        "Deckbuilder & Cards",
+        "Metroidvania"
       ]
     },
     {
@@ -10666,7 +10920,9 @@
         "Melee Action",
         "Roguelike",
         "Fighting",
-        "Strategy"
+        "Strategy",
+        "RPG",
+        "Vehicle Sim & Racing"
       ]
     },
     {
@@ -10681,8 +10937,7 @@
       "genres": [
         "Survival Craft",
         "Life Sim",
-        "Horror",
-        "Stealth & Immersive Sim"
+        "Horror"
       ]
     },
     {
@@ -10700,7 +10955,8 @@
         "Narrative",
         "RPG",
         "Strategy",
-        "Roguelike"
+        "Roguelike",
+        "Builder & Management"
       ]
     },
     {
@@ -10714,7 +10970,8 @@
       "genres": [
         "Life Sim",
         "Narrative",
-        "Horror"
+        "Horror",
+        "RPG"
       ]
     },
     {
@@ -10729,7 +10986,8 @@
         "Sandbox",
         "Deckbuilder & Cards",
         "Strategy",
-        "Builder & Management"
+        "Builder & Management",
+        "Puzzle"
       ]
     },
     {
@@ -10745,7 +11003,8 @@
         "Strategy",
         "Sandbox",
         "Life Sim",
-        "Deckbuilder & Cards"
+        "Deckbuilder & Cards",
+        "Survival Craft"
       ]
     },
     {
@@ -10761,7 +11020,8 @@
         "Melee Action",
         "Rhythm & Arcade",
         "Platformer",
-        "Deckbuilder & Cards"
+        "Deckbuilder & Cards",
+        "Puzzle"
       ]
     },
     {
@@ -10777,7 +11037,8 @@
         "Roguelike",
         "Builder & Management",
         "Survival Craft",
-        "Narrative"
+        "Narrative",
+        "Horror"
       ]
     },
     {
@@ -10793,7 +11054,9 @@
         "Metroidvania",
         "Roguelike",
         "Deckbuilder & Cards",
-        "Stealth & Immersive Sim"
+        "Stealth & Immersive Sim",
+        "Shooter",
+        "Melee Action"
       ]
     },
     {
@@ -10809,7 +11072,9 @@
         "Roguelike",
         "Shooter",
         "Melee Action",
-        "Open World"
+        "Open World",
+        "Metroidvania",
+        "Strategy"
       ]
     },
     {
@@ -10840,7 +11105,8 @@
         "Vehicle Sim & Racing",
         "Roguelike",
         "Horror",
-        "Strategy"
+        "Strategy",
+        "Survival Craft"
       ]
     },
     {
@@ -10856,7 +11122,8 @@
         "Builder & Management",
         "Horror",
         "Narrative",
-        "Shooter"
+        "Shooter",
+        "RPG"
       ]
     },
     {
@@ -10918,7 +11185,8 @@
         "Shooter",
         "Survival Craft",
         "Horror",
-        "Stealth & Immersive Sim"
+        "Stealth & Immersive Sim",
+        "Metroidvania"
       ]
     },
     {
@@ -10934,7 +11202,9 @@
         "Builder & Management",
         "Strategy",
         "Shooter",
-        "Horror"
+        "Horror",
+        "Roguelike",
+        "Survival Craft"
       ]
     },
     {
@@ -10961,7 +11231,7 @@
         "Survival Craft",
         "Builder & Management",
         "Horror",
-        "Fighting"
+        "Open World"
       ]
     },
     {
@@ -10975,7 +11245,8 @@
         "Horror",
         "Deckbuilder & Cards",
         "RPG",
-        "Melee Action"
+        "Melee Action",
+        "Roguelike"
       ]
     },
     {
@@ -10990,7 +11261,8 @@
         "Strategy",
         "Shooter",
         "RPG",
-        "Party & Multiplayer"
+        "Party & Multiplayer",
+        "Roguelike"
       ]
     },
     {
@@ -11032,7 +11304,8 @@
         "Platformer",
         "Rhythm & Arcade",
         "Roguelike",
-        "Shooter"
+        "Shooter",
+        "Puzzle"
       ]
     },
     {
@@ -11099,7 +11372,8 @@
       "genres": [
         "Narrative",
         "Life Sim",
-        "RPG"
+        "RPG",
+        "Builder & Management"
       ]
     },
     {
@@ -11113,7 +11387,8 @@
         "Survival Craft",
         "Roguelike",
         "Builder & Management",
-        "Shooter"
+        "Shooter",
+        "Open World"
       ]
     },
     {
@@ -11140,7 +11415,8 @@
         "Horror",
         "RPG",
         "Narrative",
-        "Life Sim"
+        "Life Sim",
+        "Roguelike"
       ]
     },
     {
@@ -11183,7 +11459,9 @@
       "genres": [
         "Builder & Management",
         "Strategy",
-        "Survival Craft"
+        "Survival Craft",
+        "Life Sim",
+        "Sandbox"
       ]
     },
     {
@@ -11257,7 +11535,8 @@
       ],
       "genres": [
         "Vehicle Sim & Racing",
-        "Rhythm & Arcade"
+        "Rhythm & Arcade",
+        "Party & Multiplayer"
       ]
     },
     {
@@ -11270,7 +11549,8 @@
         "Vehicle Sim & Racing",
         "Builder & Management",
         "Survival Craft",
-        "Roguelike"
+        "Roguelike",
+        "Open World"
       ]
     },
     {
@@ -11341,7 +11621,8 @@
         "RPG",
         "Deckbuilder & Cards",
         "Roguelike",
-        "Sandbox"
+        "Sandbox",
+        "Builder & Management"
       ]
     },
     {
@@ -11368,7 +11649,8 @@
         "Open World",
         "RPG",
         "Shooter",
-        "Horror"
+        "Horror",
+        "Melee Action"
       ]
     },
     {
@@ -11380,8 +11662,7 @@
       "genres": [
         "Horror",
         "Party & Multiplayer",
-        "Stealth & Immersive Sim",
-        "Narrative"
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -11418,7 +11699,8 @@
         "Survival Craft",
         "RPG",
         "Roguelike",
-        "Builder & Management"
+        "Builder & Management",
+        "Party & Multiplayer"
       ]
     },
     {
@@ -11445,7 +11727,8 @@
         "Shooter",
         "Melee Action",
         "Roguelike",
-        "Open World"
+        "Open World",
+        "Survival Craft"
       ]
     },
     {
@@ -11458,7 +11741,8 @@
         "Shooter",
         "Roguelike",
         "Vehicle Sim & Racing",
-        "Rhythm & Arcade"
+        "Rhythm & Arcade",
+        "Metroidvania"
       ]
     },
     {
@@ -11602,7 +11886,8 @@
       "genres": [
         "Builder & Management",
         "Strategy",
-        "Survival Craft"
+        "Survival Craft",
+        "Sandbox"
       ]
     },
     {
@@ -11864,7 +12149,8 @@
       "genres": [
         "Builder & Management",
         "Stealth & Immersive Sim",
-        "Narrative"
+        "Narrative",
+        "Open World"
       ]
     },
     {
@@ -12166,7 +12452,7 @@
         "Builder & Management",
         "Survival Craft",
         "Strategy",
-        "Party & Multiplayer"
+        "Sandbox"
       ]
     },
     {
@@ -18300,7 +18586,18 @@
         "Resident Evil 2"
       ],
       "genres": [
-        "any"
+        "Metroidvania",
+        "Platformer",
+        "Puzzle",
+        "Shooter",
+        "Melee Action",
+        "Fighting",
+        "RPG",
+        "Open World",
+        "Horror",
+        "Strategy",
+        "Narrative",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -18343,7 +18640,10 @@
         "RPG",
         "Roguelike",
         "Survival Craft",
-        "Horror"
+        "Horror",
+        "Metroidvania",
+        "Open World",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -18378,7 +18678,9 @@
         "Open World",
         "Shooter",
         "Stealth & Immersive Sim",
-        "Metroidvania"
+        "Metroidvania",
+        "Roguelike",
+        "Survival Craft"
       ]
     },
     {
@@ -18409,7 +18711,9 @@
         "RPG",
         "Platformer",
         "Horror",
-        "Survival Craft"
+        "Survival Craft",
+        "Melee Action",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -18517,7 +18821,9 @@
         "Fighting",
         "Strategy",
         "Deckbuilder & Cards",
-        "Rhythm & Arcade"
+        "Rhythm & Arcade",
+        "Shooter",
+        "RPG"
       ]
     },
     {
@@ -18542,7 +18848,10 @@
         "Melee Action",
         "Open World",
         "Life Sim",
-        "Vehicle Sim & Racing"
+        "Vehicle Sim & Racing",
+        "Roguelike",
+        "Metroidvania",
+        "Survival Craft"
       ]
     },
     {
@@ -18566,7 +18875,10 @@
         "Fighting",
         "Platformer",
         "Sandbox",
-        "Deckbuilder & Cards"
+        "Deckbuilder & Cards",
+        "Life Sim",
+        "Vehicle Sim & Racing",
+        "Rhythm & Arcade"
       ]
     },
     {
@@ -18653,8 +18965,7 @@
         "Roguelike",
         "Puzzle",
         "Narrative",
-        "Horror",
-        "Fighting"
+        "Horror"
       ]
     },
     {
@@ -18677,7 +18988,8 @@
         "Fighting",
         "Deckbuilder & Cards",
         "Strategy",
-        "Sandbox"
+        "Vehicle Sim & Racing",
+        "Rhythm & Arcade"
       ]
     },
     {
@@ -18698,7 +19010,9 @@
         "Rhythm & Arcade",
         "Deckbuilder & Cards",
         "Melee Action",
-        "Strategy"
+        "Strategy",
+        "Shooter",
+        "Fighting"
       ]
     },
     {
@@ -18719,7 +19033,9 @@
         "Puzzle",
         "Rhythm & Arcade",
         "Shooter",
-        "Strategy"
+        "Strategy",
+        "Melee Action",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -18740,8 +19056,7 @@
         "Open World",
         "Survival Craft",
         "Life Sim",
-        "Stealth & Immersive Sim",
-        "Deckbuilder & Cards"
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -18761,7 +19076,8 @@
         "RPG",
         "Life Sim",
         "Survival Craft",
-        "Deckbuilder & Cards"
+        "Deckbuilder & Cards",
+        "Horror"
       ]
     },
     {
@@ -18854,7 +19170,9 @@
         "Metroidvania",
         "Open World",
         "Puzzle",
-        "Vehicle Sim & Racing"
+        "Vehicle Sim & Racing",
+        "Horror",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -18889,7 +19207,7 @@
         "Stealth & Immersive Sim",
         "Metroidvania",
         "RPG",
-        "Deckbuilder & Cards"
+        "Roguelike"
       ]
     },
     {
@@ -18904,8 +19222,7 @@
       ],
       "genres": [
         "Deckbuilder & Cards",
-        "Roguelike",
-        "Fighting"
+        "Roguelike"
       ]
     },
     {
@@ -18922,7 +19239,8 @@
         "RPG",
         "Metroidvania",
         "Melee Action",
-        "Roguelike"
+        "Roguelike",
+        "Platformer"
       ]
     },
     {
@@ -18956,7 +19274,8 @@
         "Horror",
         "RPG",
         "Life Sim",
-        "Stealth & Immersive Sim"
+        "Stealth & Immersive Sim",
+        "Puzzle"
       ]
     },
     {
@@ -18988,7 +19307,8 @@
         "Builder & Management",
         "Life Sim",
         "RPG",
-        "Strategy"
+        "Strategy",
+        "Survival Craft"
       ]
     },
     {
@@ -19004,7 +19324,9 @@
         "Party & Multiplayer",
         "Fighting",
         "Shooter",
-        "Sandbox"
+        "Sandbox",
+        "Vehicle Sim & Racing",
+        "Deckbuilder & Cards"
       ]
     },
     {
@@ -19021,7 +19343,7 @@
         "Life Sim",
         "Builder & Management",
         "RPG",
-        "Deckbuilder & Cards"
+        "Open World"
       ]
     },
     {
@@ -19036,8 +19358,7 @@
       "genres": [
         "Platformer",
         "Puzzle",
-        "Rhythm & Arcade",
-        "Sandbox"
+        "Rhythm & Arcade"
       ]
     },
     {
@@ -19054,7 +19375,9 @@
         "RPG",
         "Open World",
         "Roguelike",
-        "Sandbox"
+        "Survival Craft",
+        "Stealth & Immersive Sim",
+        "Party & Multiplayer"
       ]
     },
     {
@@ -19131,7 +19454,8 @@
       "genres": [
         "Narrative",
         "RPG",
-        "Stealth & Immersive Sim"
+        "Stealth & Immersive Sim",
+        "Horror"
       ]
     },
     {
@@ -19174,7 +19498,8 @@
       ],
       "genres": [
         "Metroidvania",
-        "Platformer"
+        "Platformer",
+        "Open World"
       ]
     },
     {
@@ -19202,7 +19527,8 @@
         "Life Sim",
         "Platformer",
         "Party & Multiplayer",
-        "Open World"
+        "Open World",
+        "Fighting"
       ]
     },
     {
@@ -19217,7 +19543,9 @@
         "RPG",
         "Melee Action",
         "Open World",
-        "Roguelike"
+        "Roguelike",
+        "Metroidvania",
+        "Strategy"
       ]
     },
     {
@@ -19233,7 +19561,7 @@
         "RPG",
         "Stealth & Immersive Sim",
         "Open World",
-        "Deckbuilder & Cards"
+        "Life Sim"
       ]
     },
     {
@@ -19248,8 +19576,9 @@
         "Life Sim",
         "Survival Craft",
         "Builder & Management",
-        "Deckbuilder & Cards",
-        "Vehicle Sim & Racing"
+        "Vehicle Sim & Racing",
+        "Open World",
+        "Strategy"
       ]
     },
     {
@@ -19322,7 +19651,8 @@
         "Metroidvania",
         "RPG",
         "Vehicle Sim & Racing",
-        "Sandbox"
+        "Platformer",
+        "Strategy"
       ]
     },
     {
@@ -19349,7 +19679,9 @@
       "genres": [
         "Strategy",
         "Shooter",
-        "Fighting"
+        "Roguelike",
+        "RPG",
+        "Deckbuilder & Cards"
       ]
     },
     {
@@ -19374,7 +19706,8 @@
       "genres": [
         "Narrative",
         "RPG",
-        "Horror"
+        "Horror",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -19413,7 +19746,9 @@
         "Horror",
         "Metroidvania",
         "Puzzle",
-        "Narrative"
+        "Narrative",
+        "Platformer",
+        "Melee Action"
       ]
     },
     {
@@ -19428,7 +19763,8 @@
         "Platformer",
         "Shooter",
         "Puzzle",
-        "Melee Action"
+        "Melee Action",
+        "Vehicle Sim & Racing"
       ]
     },
     {
@@ -19442,7 +19778,9 @@
         "Puzzle",
         "Platformer",
         "Rhythm & Arcade",
-        "Roguelike"
+        "Roguelike",
+        "Shooter",
+        "Strategy"
       ]
     },
     {
@@ -19469,7 +19807,9 @@
       "genres": [
         "Horror",
         "Survival Craft",
-        "RPG"
+        "RPG",
+        "Open World",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -19481,7 +19821,6 @@
       ],
       "genres": [
         "Strategy",
-        "Sandbox",
         "Deckbuilder & Cards"
       ]
     },
@@ -19562,7 +19901,8 @@
         "Roguelike",
         "Shooter",
         "Horror",
-        "Party & Multiplayer"
+        "Party & Multiplayer",
+        "Rhythm & Arcade"
       ]
     },
     {
@@ -19589,7 +19929,8 @@
         "Platformer",
         "Party & Multiplayer",
         "Vehicle Sim & Racing",
-        "Fighting"
+        "Puzzle",
+        "Rhythm & Arcade"
       ]
     },
     {
@@ -19603,7 +19944,8 @@
         "Life Sim",
         "RPG",
         "Open World",
-        "Builder & Management"
+        "Builder & Management",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -19629,7 +19971,8 @@
       "genres": [
         "Open World",
         "RPG",
-        "Sandbox"
+        "Melee Action",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -19655,7 +19998,9 @@
       "genres": [
         "Shooter",
         "Stealth & Immersive Sim",
-        "Metroidvania"
+        "Metroidvania",
+        "Survival Craft",
+        "Horror"
       ]
     },
     {
@@ -19667,7 +20012,7 @@
       ],
       "genres": [
         "Builder & Management",
-        "Deckbuilder & Cards"
+        "Strategy"
       ]
     },
     {
@@ -19702,7 +20047,8 @@
       "genres": [
         "Builder & Management",
         "Strategy",
-        "Survival Craft"
+        "Survival Craft",
+        "Sandbox"
       ]
     },
     {
@@ -19761,7 +20107,10 @@
         "Rhythm & Arcade",
         "Horror",
         "Platformer",
-        "Fighting"
+        "Fighting",
+        "Shooter",
+        "Melee Action",
+        "Vehicle Sim & Racing"
       ]
     },
     {
@@ -19773,7 +20122,9 @@
       "genres": [
         "Narrative",
         "RPG",
-        "Open World"
+        "Open World",
+        "Strategy",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -19841,7 +20192,10 @@
         "Fighting",
         "Roguelike",
         "Rhythm & Arcade",
-        "Vehicle Sim & Racing"
+        "Vehicle Sim & Racing",
+        "Shooter",
+        "Melee Action",
+        "Strategy"
       ]
     },
     {
@@ -19853,7 +20207,8 @@
       "genres": [
         "RPG",
         "Open World",
-        "Strategy"
+        "Strategy",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -19876,7 +20231,8 @@
       ],
       "genres": [
         "Rhythm & Arcade",
-        "Platformer"
+        "Platformer",
+        "Puzzle"
       ]
     },
     {
@@ -19888,7 +20244,8 @@
       "genres": [
         "RPG",
         "Strategy",
-        "Deckbuilder & Cards"
+        "Deckbuilder & Cards",
+        "Roguelike"
       ]
     },
     {
@@ -19899,7 +20256,9 @@
       ],
       "genres": [
         "Narrative",
-        "Horror"
+        "Horror",
+        "RPG",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -19946,8 +20305,7 @@
       "genres": [
         "Vehicle Sim & Racing",
         "Life Sim",
-        "Fighting",
-        "Sandbox"
+        "Fighting"
       ]
     },
     {
@@ -19960,7 +20318,8 @@
         "Shooter",
         "Melee Action",
         "Rhythm & Arcade",
-        "Vehicle Sim & Racing"
+        "Vehicle Sim & Racing",
+        "Fighting"
       ]
     },
     {
@@ -19970,7 +20329,8 @@
         "Before Your Eyes"
       ],
       "genres": [
-        "Narrative"
+        "Narrative",
+        "Horror"
       ]
     },
     {
@@ -19993,7 +20353,8 @@
       ],
       "genres": [
         "Survival Craft",
-        "Builder & Management"
+        "Builder & Management",
+        "Sandbox"
       ]
     },
     {
@@ -20039,7 +20400,8 @@
       "genres": [
         "Roguelike",
         "Horror",
-        "Metroidvania"
+        "Metroidvania",
+        "RPG"
       ]
     },
     {
@@ -20050,7 +20412,10 @@
       ],
       "genres": [
         "RPG",
-        "Melee Action"
+        "Melee Action",
+        "Metroidvania",
+        "Shooter",
+        "Horror"
       ]
     },
     {
@@ -20060,8 +20425,7 @@
         "American Truck Simulator"
       ],
       "genres": [
-        "Vehicle Sim & Racing",
-        "Stealth & Immersive Sim"
+        "Vehicle Sim & Racing"
       ]
     },
     {
@@ -20074,7 +20438,8 @@
         "Party & Multiplayer",
         "Horror",
         "Shooter",
-        "Vehicle Sim & Racing"
+        "Vehicle Sim & Racing",
+        "Strategy"
       ]
     },
     {
@@ -20117,8 +20482,7 @@
         "CarX Drift Racing Online"
       ],
       "genres": [
-        "Vehicle Sim & Racing",
-        "Sandbox"
+        "Vehicle Sim & Racing"
       ]
     },
     {
@@ -20130,7 +20494,7 @@
       "genres": [
         "Horror",
         "Narrative",
-        "Deckbuilder & Cards"
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -20153,7 +20517,7 @@
       ],
       "genres": [
         "RPG",
-        "Fighting"
+        "Narrative"
       ]
     },
     {
@@ -20165,7 +20529,8 @@
       "genres": [
         "RPG",
         "Life Sim",
-        "Open World"
+        "Open World",
+        "Survival Craft"
       ]
     },
     {
@@ -20179,7 +20544,8 @@
         "Platformer",
         "Rhythm & Arcade",
         "Vehicle Sim & Racing",
-        "Sandbox"
+        "Shooter",
+        "Melee Action"
       ]
     },
     {
@@ -20228,7 +20594,8 @@
       ],
       "genres": [
         "Narrative",
-        "RPG"
+        "RPG",
+        "Open World"
       ]
     },
     {
@@ -20249,7 +20616,9 @@
       ],
       "genres": [
         "Narrative",
-        "RPG"
+        "RPG",
+        "Horror",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -20261,7 +20630,7 @@
       "genres": [
         "Shooter",
         "Party & Multiplayer",
-        "Deckbuilder & Cards"
+        "Strategy"
       ]
     },
     {
@@ -20284,7 +20653,7 @@
       "genres": [
         "Builder & Management",
         "Life Sim",
-        "Sandbox"
+        "Survival Craft"
       ]
     },
     {
@@ -20304,7 +20673,8 @@
         "DOOM Eternal"
       ],
       "genres": [
-        "Shooter"
+        "Shooter",
+        "Horror"
       ]
     },
     {
@@ -20326,7 +20696,8 @@
       ],
       "genres": [
         "Sandbox",
-        "Builder & Management"
+        "Builder & Management",
+        "Survival Craft"
       ]
     },
     {
@@ -20338,7 +20709,8 @@
       "genres": [
         "Narrative",
         "RPG",
-        "Roguelike"
+        "Roguelike",
+        "Horror"
       ]
     },
     {
@@ -20398,7 +20770,8 @@
       ],
       "genres": [
         "Puzzle",
-        "Narrative"
+        "Narrative",
+        "Metroidvania"
       ]
     },
     {
@@ -20428,7 +20801,9 @@
         "Among Us"
       ],
       "genres": [
-        "Party & Multiplayer"
+        "Party & Multiplayer",
+        "Shooter",
+        "Fighting"
       ]
     },
     {
@@ -20449,7 +20824,8 @@
         "Timberborn"
       ],
       "genres": [
-        "Builder & Management"
+        "Builder & Management",
+        "Survival Craft"
       ]
     },
     {
@@ -20512,7 +20888,8 @@
       "genres": [
         "Metroidvania",
         "Platformer",
-        "Melee Action"
+        "Melee Action",
+        "RPG"
       ]
     },
     {
@@ -20581,7 +20958,8 @@
         "Cities: Skylines"
       ],
       "genres": [
-        "Builder & Management"
+        "Builder & Management",
+        "Strategy"
       ]
     },
     {
@@ -20610,7 +20988,8 @@
         "A Hat in Time"
       ],
       "genres": [
-        "Platformer"
+        "Platformer",
+        "Puzzle"
       ]
     },
     {
@@ -20660,7 +21039,8 @@
       "genres": [
         "Survival Craft",
         "RPG",
-        "Melee Action"
+        "Melee Action",
+        "Open World"
       ]
     },
     {
@@ -20669,7 +21049,8 @@
         "Palworld"
       ],
       "genres": [
-        "RPG"
+        "RPG",
+        "Life Sim"
       ]
     },
     {
@@ -20690,7 +21071,8 @@
       ],
       "genres": [
         "Rhythm & Arcade",
-        "Roguelike"
+        "Roguelike",
+        "Horror"
       ]
     },
     {
@@ -20824,7 +21206,8 @@
       ],
       "genres": [
         "RPG",
-        "Melee Action"
+        "Melee Action",
+        "Shooter"
       ]
     },
     {
@@ -20962,7 +21345,8 @@
       ],
       "genres": [
         "Narrative",
-        "RPG"
+        "RPG",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -20980,7 +21364,8 @@
         "Cities: Skylines"
       ],
       "genres": [
-        "Builder & Management"
+        "Builder & Management",
+        "Strategy"
       ]
     },
     {
@@ -21021,7 +21406,8 @@
       ],
       "genres": [
         "Narrative",
-        "Life Sim"
+        "Life Sim",
+        "RPG"
       ]
     },
     {
@@ -21034,7 +21420,9 @@
         "Metroidvania",
         "Melee Action",
         "Platformer",
-        "Shooter"
+        "Shooter",
+        "Open World",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -21055,7 +21443,9 @@
       ],
       "genres": [
         "Sandbox",
-        "Vehicle Sim & Racing"
+        "Vehicle Sim & Racing",
+        "Survival Craft",
+        "Builder & Management"
       ]
     },
     {
@@ -21084,7 +21474,10 @@
         "Persona 5 Royal"
       ],
       "genres": [
-        "RPG"
+        "RPG",
+        "Roguelike",
+        "Melee Action",
+        "Open World"
       ]
     },
     {
@@ -21124,7 +21517,8 @@
       ],
       "genres": [
         "Platformer",
-        "Metroidvania"
+        "Metroidvania",
+        "Open World"
       ]
     },
     {
@@ -21143,7 +21537,8 @@
         "Starbound"
       ],
       "genres": [
-        "Survival Craft"
+        "Survival Craft",
+        "Open World"
       ]
     },
     {
@@ -21153,7 +21548,8 @@
       ],
       "genres": [
         "Strategy",
-        "Life Sim"
+        "Life Sim",
+        "Survival Craft"
       ]
     },
     {
@@ -21172,7 +21568,8 @@
         "Ghost of Tsushima DIRECTOR'S CUT"
       ],
       "genres": [
-        "Melee Action"
+        "Melee Action",
+        "Fighting"
       ]
     },
     {
@@ -21201,7 +21598,8 @@
       ],
       "genres": [
         "Open World",
-        "Shooter"
+        "Shooter",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -21262,7 +21660,8 @@
       "genres": [
         "Roguelike",
         "Deckbuilder & Cards",
-        "Shooter"
+        "Shooter",
+        "Strategy"
       ]
     },
     {
@@ -21292,7 +21691,8 @@
       ],
       "genres": [
         "Shooter",
-        "Party & Multiplayer"
+        "Party & Multiplayer",
+        "Strategy"
       ]
     },
     {
@@ -21347,7 +21747,8 @@
         "WEBFISHING"
       ],
       "genres": [
-        "RPG"
+        "RPG",
+        "Open World"
       ]
     },
     {
@@ -21356,7 +21757,8 @@
         "Oxygen Not Included"
       ],
       "genres": [
-        "Builder & Management"
+        "Builder & Management",
+        "Strategy"
       ]
     },
     {
@@ -21365,7 +21767,8 @@
         "Project Zomboid"
       ],
       "genres": [
-        "Survival Craft"
+        "Survival Craft",
+        "RPG"
       ]
     },
     {
@@ -21384,7 +21787,9 @@
         "Fields of Mistria"
       ],
       "genres": [
-        "Life Sim"
+        "Life Sim",
+        "RPG",
+        "Builder & Management"
       ]
     },
     {
@@ -21393,7 +21798,8 @@
         "VA-11 Hall-A: Cyberpunk Bartender Action"
       ],
       "genres": [
-        "Life Sim"
+        "Life Sim",
+        "Narrative"
       ]
     },
     {
@@ -21450,7 +21856,8 @@
       ],
       "genres": [
         "Builder & Management",
-        "Strategy"
+        "Strategy",
+        "Roguelike"
       ]
     },
     {
@@ -21805,7 +22212,6 @@
         "Clone Drone in the Danger Zone"
       ],
       "genres": [
-        "Fighting",
         "Roguelike",
         "Party & Multiplayer"
       ]
@@ -21828,7 +22234,8 @@
       "genres": [
         "Shooter",
         "Strategy",
-        "Rhythm & Arcade"
+        "Rhythm & Arcade",
+        "Roguelike"
       ]
     },
     {
@@ -21936,7 +22343,13 @@
         "Open World",
         "Life Sim",
         "Stealth & Immersive Sim",
-        "Vehicle Sim & Racing"
+        "Vehicle Sim & Racing",
+        "Roguelike",
+        "Metroidvania",
+        "Platformer",
+        "RPG",
+        "Survival Craft",
+        "Strategy"
       ]
     },
     {
@@ -21964,7 +22377,14 @@
         "Rhythm & Arcade",
         "Horror",
         "Platformer",
-        "Deckbuilder & Cards"
+        "Deckbuilder & Cards",
+        "Metroidvania",
+        "Melee Action",
+        "RPG",
+        "Open World",
+        "Vehicle Sim & Racing",
+        "Stealth & Immersive Sim",
+        "Party & Multiplayer"
       ]
     },
     {
@@ -21987,7 +22407,21 @@
         "Roguelike",
         "Party & Multiplayer",
         "Vehicle Sim & Racing",
-        "Fighting"
+        "Fighting",
+        "Metroidvania",
+        "Shooter",
+        "Melee Action",
+        "RPG",
+        "Open World",
+        "Survival Craft",
+        "Horror",
+        "Builder & Management",
+        "Life Sim",
+        "Strategy",
+        "Deckbuilder & Cards",
+        "Narrative",
+        "Stealth & Immersive Sim",
+        "Sandbox"
       ]
     },
     {
@@ -22008,7 +22442,12 @@
         "Survival Craft",
         "Roguelike",
         "RPG",
-        "Stealth & Immersive Sim"
+        "Stealth & Immersive Sim",
+        "Puzzle",
+        "Shooter",
+        "Open World",
+        "Life Sim",
+        "Narrative"
       ]
     },
     {
@@ -22027,7 +22466,10 @@
         "Life Sim",
         "Puzzle",
         "Sandbox",
-        "Platformer"
+        "Platformer",
+        "Horror",
+        "Builder & Management",
+        "Rhythm & Arcade"
       ]
     },
     {
@@ -22046,7 +22488,9 @@
         "Survival Craft",
         "Melee Action",
         "Shooter",
-        "RPG"
+        "RPG",
+        "Metroidvania",
+        "Horror"
       ]
     },
     {
@@ -22066,7 +22510,12 @@
         "Stealth & Immersive Sim",
         "Vehicle Sim & Racing",
         "Puzzle",
-        "Narrative"
+        "Narrative",
+        "Platformer",
+        "Melee Action",
+        "RPG",
+        "Open World",
+        "Survival Craft"
       ]
     },
     {
@@ -22086,7 +22535,10 @@
         "Shooter",
         "Roguelike",
         "Fighting",
-        "Stealth & Immersive Sim"
+        "Stealth & Immersive Sim",
+        "Metroidvania",
+        "Melee Action",
+        "Horror"
       ]
     },
     {
@@ -22103,7 +22555,10 @@
         "Builder & Management",
         "Strategy",
         "Sandbox",
-        "Narrative"
+        "Narrative",
+        "Puzzle",
+        "RPG",
+        "Life Sim"
       ]
     },
     {
@@ -22120,7 +22575,11 @@
         "Narrative",
         "Horror",
         "Platformer",
-        "Melee Action"
+        "Melee Action",
+        "Metroidvania",
+        "RPG",
+        "Open World",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -22137,7 +22596,8 @@
         "Open World",
         "Life Sim",
         "Builder & Management",
-        "Narrative"
+        "Narrative",
+        "Survival Craft"
       ]
     },
     {
@@ -22154,7 +22614,8 @@
         "Survival Craft",
         "Party & Multiplayer",
         "Strategy",
-        "Roguelike"
+        "Roguelike",
+        "Horror"
       ]
     },
     {
@@ -22190,7 +22651,11 @@
         "Survival Craft",
         "Melee Action",
         "Fighting",
-        "Builder & Management"
+        "Builder & Management",
+        "Roguelike",
+        "Puzzle",
+        "Shooter",
+        "Horror"
       ]
     },
     {
@@ -22207,7 +22672,9 @@
         "Horror",
         "Platformer",
         "Shooter",
-        "Rhythm & Arcade"
+        "Rhythm & Arcade",
+        "Melee Action",
+        "RPG"
       ]
     },
     {
@@ -22225,7 +22692,10 @@
         "Roguelike",
         "Metroidvania",
         "Horror",
-        "RPG"
+        "RPG",
+        "Open World",
+        "Survival Craft",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -22242,7 +22712,8 @@
         "Shooter",
         "Puzzle",
         "Sandbox",
-        "Platformer"
+        "Platformer",
+        "Builder & Management"
       ]
     },
     {
@@ -22258,7 +22729,9 @@
         "Rhythm & Arcade",
         "Platformer",
         "Puzzle",
-        "Stealth & Immersive Sim"
+        "Stealth & Immersive Sim",
+        "Metroidvania",
+        "Horror"
       ]
     },
     {
@@ -22289,7 +22762,10 @@
         "Narrative",
         "Strategy",
         "Horror",
-        "Rhythm & Arcade"
+        "Rhythm & Arcade",
+        "Roguelike",
+        "Shooter",
+        "RPG"
       ]
     },
     {
@@ -22307,7 +22783,9 @@
         "Open World",
         "Horror",
         "Platformer",
-        "Deckbuilder & Cards"
+        "Deckbuilder & Cards",
+        "Shooter",
+        "RPG"
       ]
     },
     {
@@ -22342,7 +22820,11 @@
         "Survival Craft",
         "Vehicle Sim & Racing",
         "Platformer",
-        "Sandbox"
+        "Sandbox",
+        "Metroidvania",
+        "Melee Action",
+        "RPG",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -22360,7 +22842,11 @@
         "Melee Action",
         "Puzzle",
         "RPG",
-        "Deckbuilder & Cards"
+        "Deckbuilder & Cards",
+        "Roguelike",
+        "Builder & Management",
+        "Life Sim",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -22376,7 +22862,14 @@
         "Shooter",
         "Survival Craft",
         "Horror",
-        "Fighting"
+        "Fighting",
+        "Platformer",
+        "Puzzle",
+        "RPG",
+        "Vehicle Sim & Racing",
+        "Strategy",
+        "Deckbuilder & Cards",
+        "Narrative"
       ]
     },
     {
@@ -22392,7 +22885,8 @@
         "RPG",
         "Melee Action",
         "Stealth & Immersive Sim",
-        "Metroidvania"
+        "Metroidvania",
+        "Survival Craft"
       ]
     },
     {
@@ -22409,7 +22903,8 @@
         "Strategy",
         "Builder & Management",
         "Narrative",
-        "Roguelike"
+        "Roguelike",
+        "Survival Craft"
       ]
     },
     {
@@ -22426,7 +22921,10 @@
         "RPG",
         "Horror",
         "Survival Craft",
-        "Roguelike"
+        "Roguelike",
+        "Open World",
+        "Builder & Management",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -22443,7 +22941,10 @@
         "Builder & Management",
         "Survival Craft",
         "Strategy",
-        "Platformer"
+        "Platformer",
+        "Shooter",
+        "Deckbuilder & Cards",
+        "Narrative"
       ]
     },
     {
@@ -22460,7 +22961,10 @@
         "Strategy",
         "RPG",
         "Puzzle",
-        "Fighting"
+        "Fighting",
+        "Horror",
+        "Builder & Management",
+        "Narrative"
       ]
     },
     {
@@ -22477,7 +22981,9 @@
         "Rhythm & Arcade",
         "Shooter",
         "Vehicle Sim & Racing",
-        "Narrative"
+        "Narrative",
+        "Melee Action",
+        "Horror"
       ]
     },
     {
@@ -22492,7 +22998,10 @@
         "Rhythm & Arcade",
         "Platformer",
         "Party & Multiplayer",
-        "Puzzle"
+        "Puzzle",
+        "Shooter",
+        "Fighting",
+        "Vehicle Sim & Racing"
       ]
     },
     {
@@ -22508,7 +23017,10 @@
         "Melee Action",
         "Metroidvania",
         "RPG",
-        "Survival Craft"
+        "Survival Craft",
+        "Shooter",
+        "Open World",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -22525,7 +23037,8 @@
         "RPG",
         "Strategy",
         "Deckbuilder & Cards",
-        "Party & Multiplayer"
+        "Party & Multiplayer",
+        "Horror"
       ]
     },
     {
@@ -22542,7 +23055,8 @@
         "Sandbox",
         "Builder & Management",
         "Strategy",
-        "Open World"
+        "Open World",
+        "Puzzle"
       ]
     },
     {
@@ -22558,7 +23072,9 @@
         "Roguelike",
         "Party & Multiplayer",
         "RPG",
-        "Deckbuilder & Cards"
+        "Deckbuilder & Cards",
+        "Melee Action",
+        "Vehicle Sim & Racing"
       ]
     },
     {
@@ -22572,7 +23088,9 @@
         "RPG",
         "Open World",
         "Melee Action",
-        "Shooter"
+        "Shooter",
+        "Roguelike",
+        "Party & Multiplayer"
       ]
     },
     {
@@ -22588,7 +23106,12 @@
         "RPG",
         "Melee Action",
         "Shooter",
-        "Roguelike"
+        "Roguelike",
+        "Metroidvania",
+        "Open World",
+        "Strategy",
+        "Deckbuilder & Cards",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -22605,7 +23128,15 @@
         "Open World",
         "RPG",
         "Shooter",
-        "Deckbuilder & Cards"
+        "Deckbuilder & Cards",
+        "Roguelike",
+        "Platformer",
+        "Melee Action",
+        "Horror",
+        "Builder & Management",
+        "Strategy",
+        "Narrative",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -22621,7 +23152,10 @@
         "Horror",
         "Shooter",
         "Melee Action",
-        "Party & Multiplayer"
+        "Party & Multiplayer",
+        "Metroidvania",
+        "RPG",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -22636,7 +23170,8 @@
         "Melee Action",
         "Open World",
         "Shooter",
-        "RPG"
+        "RPG",
+        "Horror"
       ]
     },
     {
@@ -22651,7 +23186,10 @@
         "Puzzle",
         "Narrative",
         "Vehicle Sim & Racing",
-        "Stealth & Immersive Sim"
+        "Stealth & Immersive Sim",
+        "Shooter",
+        "Builder & Management",
+        "Strategy"
       ]
     },
     {
@@ -22667,7 +23205,22 @@
         "Narrative",
         "Metroidvania",
         "Party & Multiplayer",
-        "Rhythm & Arcade"
+        "Rhythm & Arcade",
+        "Roguelike",
+        "Shooter",
+        "Melee Action",
+        "Fighting",
+        "RPG",
+        "Open World",
+        "Survival Craft",
+        "Horror",
+        "Builder & Management",
+        "Life Sim",
+        "Vehicle Sim & Racing",
+        "Strategy",
+        "Deckbuilder & Cards",
+        "Stealth & Immersive Sim",
+        "Sandbox"
       ]
     },
     {
@@ -22678,13 +23231,19 @@
         "Age of Empires II: Definitive Edition"
       ],
       "genres": [
-        "Narrative",
         "Open World",
         "Builder & Management",
         "Shooter",
         "Platformer",
         "Roguelike",
-        "Vehicle Sim & Racing"
+        "Vehicle Sim & Racing",
+        "Melee Action",
+        "RPG",
+        "Survival Craft",
+        "Horror",
+        "Strategy",
+        "Deckbuilder & Cards",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -22700,7 +23259,9 @@
         "RPG",
         "Open World",
         "Horror",
-        "Platformer"
+        "Platformer",
+        "Melee Action",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -22715,8 +23276,8 @@
         "Survival Craft",
         "Stealth & Immersive Sim",
         "Platformer",
-        "Puzzle",
-        "Open World"
+        "Open World",
+        "Metroidvania"
       ]
     },
     {
@@ -22746,7 +23307,8 @@
         "Platformer",
         "Survival Craft",
         "Puzzle",
-        "Strategy"
+        "Strategy",
+        "Roguelike"
       ]
     },
     {
@@ -22761,7 +23323,8 @@
         "RPG",
         "Open World",
         "Survival Craft",
-        "Metroidvania"
+        "Metroidvania",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -22777,7 +23340,9 @@
         "Narrative",
         "Stealth & Immersive Sim",
         "Survival Craft",
-        "Puzzle"
+        "Puzzle",
+        "Shooter",
+        "Life Sim"
       ]
     },
     {
@@ -22793,7 +23358,10 @@
         "Narrative",
         "Strategy",
         "Builder & Management",
-        "Sandbox"
+        "Sandbox",
+        "Roguelike",
+        "Shooter",
+        "Life Sim"
       ]
     },
     {
@@ -22807,7 +23375,8 @@
         "Vehicle Sim & Racing",
         "Open World",
         "Survival Craft",
-        "Stealth & Immersive Sim"
+        "Stealth & Immersive Sim",
+        "Roguelike"
       ]
     },
     {
@@ -22823,7 +23392,11 @@
         "Melee Action",
         "Horror",
         "RPG",
-        "Survival Craft"
+        "Survival Craft",
+        "Roguelike",
+        "Open World",
+        "Deckbuilder & Cards",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -22836,10 +23409,12 @@
       "genres": [
         "Rhythm & Arcade",
         "Platformer",
-        "Sandbox",
         "Melee Action",
         "Vehicle Sim & Racing",
-        "Party & Multiplayer"
+        "Party & Multiplayer",
+        "Roguelike",
+        "Puzzle",
+        "Shooter"
       ]
     },
     {
@@ -22854,7 +23429,8 @@
         "Open World",
         "Survival Craft",
         "Stealth & Immersive Sim",
-        "Melee Action"
+        "Melee Action",
+        "Life Sim"
       ]
     },
     {
@@ -22869,7 +23445,9 @@
         "RPG",
         "Narrative",
         "Builder & Management",
-        "Horror"
+        "Horror",
+        "Open World",
+        "Survival Craft"
       ]
     },
     {
@@ -22885,7 +23463,9 @@
         "Deckbuilder & Cards",
         "Puzzle",
         "Roguelike",
-        "Shooter"
+        "Shooter",
+        "Fighting",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -22900,7 +23480,14 @@
         "Fighting",
         "Platformer",
         "Puzzle",
-        "Horror"
+        "Horror",
+        "Shooter",
+        "Melee Action",
+        "Survival Craft",
+        "Vehicle Sim & Racing",
+        "Strategy",
+        "Deckbuilder & Cards",
+        "Narrative"
       ]
     },
     {
@@ -22914,7 +23501,12 @@
         "Shooter",
         "Metroidvania",
         "Melee Action",
-        "Roguelike"
+        "Roguelike",
+        "RPG",
+        "Open World",
+        "Survival Craft",
+        "Horror",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -22930,7 +23522,9 @@
         "Shooter",
         "Horror",
         "Open World",
-        "Stealth & Immersive Sim"
+        "Stealth & Immersive Sim",
+        "Metroidvania",
+        "RPG"
       ]
     },
     {
@@ -22954,7 +23548,7 @@
         "Sandbox",
         "Party & Multiplayer",
         "Strategy",
-        "Shooter"
+        "Deckbuilder & Cards"
       ]
     },
     {
@@ -22968,7 +23562,11 @@
         "Metroidvania",
         "Roguelike",
         "Rhythm & Arcade",
-        "Horror"
+        "Horror",
+        "Shooter",
+        "Melee Action",
+        "Vehicle Sim & Racing",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -22979,7 +23577,8 @@
       ],
       "genres": [
         "Shooter",
-        "Strategy"
+        "Strategy",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -23007,7 +23606,10 @@
         "Metroidvania",
         "Sandbox",
         "Narrative",
-        "Vehicle Sim & Racing"
+        "Vehicle Sim & Racing",
+        "Puzzle",
+        "RPG",
+        "Survival Craft"
       ]
     },
     {
@@ -23020,7 +23622,10 @@
         "Puzzle",
         "Narrative",
         "Survival Craft",
-        "Metroidvania"
+        "Metroidvania",
+        "Open World",
+        "Horror",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -23035,7 +23640,11 @@
         "Horror",
         "Survival Craft",
         "Strategy",
-        "Puzzle"
+        "Puzzle",
+        "Roguelike",
+        "Melee Action",
+        "Narrative",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -23050,7 +23659,10 @@
         "Horror",
         "RPG",
         "Melee Action",
-        "Survival Craft"
+        "Survival Craft",
+        "Roguelike",
+        "Vehicle Sim & Racing",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -23062,7 +23674,9 @@
       "genres": [
         "Horror",
         "Shooter",
-        "Strategy"
+        "Strategy",
+        "Roguelike",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -23077,7 +23691,11 @@
         "Shooter",
         "Rhythm & Arcade",
         "Melee Action",
-        "Platformer"
+        "Platformer",
+        "Roguelike",
+        "Metroidvania",
+        "Open World",
+        "Horror"
       ]
     },
     {
@@ -23090,8 +23708,9 @@
         "Stealth & Immersive Sim",
         "RPG",
         "Shooter",
-        "Open World",
-        "Vehicle Sim & Racing"
+        "Vehicle Sim & Racing",
+        "Melee Action",
+        "Survival Craft"
       ]
     },
     {
@@ -23101,13 +23720,15 @@
         "Balatro"
       ],
       "genres": [
-        "Puzzle",
         "Deckbuilder & Cards",
-        "Sandbox",
         "Builder & Management",
-        "Life Sim",
         "Roguelike",
-        "Vehicle Sim & Racing"
+        "Vehicle Sim & Racing",
+        "Metroidvania",
+        "Platformer",
+        "Open World",
+        "Survival Craft",
+        "Strategy"
       ]
     },
     {
@@ -23122,7 +23743,11 @@
         "RPG",
         "Melee Action",
         "Open World",
-        "Shooter"
+        "Shooter",
+        "Horror",
+        "Vehicle Sim & Racing",
+        "Strategy",
+        "Deckbuilder & Cards"
       ]
     },
     {
@@ -23132,7 +23757,9 @@
         "DOOM Eternal"
       ],
       "genres": [
-        "Shooter"
+        "Shooter",
+        "Horror",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -23145,7 +23772,10 @@
         "Party & Multiplayer",
         "Shooter",
         "Platformer",
-        "Strategy"
+        "Strategy",
+        "Melee Action",
+        "Survival Craft",
+        "Horror"
       ]
     },
     {
@@ -23159,7 +23789,10 @@
         "Horror",
         "Deckbuilder & Cards",
         "Rhythm & Arcade",
-        "Survival Craft"
+        "Survival Craft",
+        "Platformer",
+        "Shooter",
+        "Narrative"
       ]
     },
     {
@@ -23174,7 +23807,9 @@
         "Strategy",
         "Horror",
         "RPG",
-        "Builder & Management"
+        "Builder & Management",
+        "Survival Craft",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -23188,7 +23823,9 @@
         "Rhythm & Arcade",
         "Platformer",
         "Melee Action",
-        "Roguelike"
+        "Roguelike",
+        "Horror",
+        "Vehicle Sim & Racing"
       ]
     },
     {
@@ -23200,10 +23837,20 @@
       "genres": [
         "Shooter",
         "Rhythm & Arcade",
-        "Sandbox",
         "Platformer",
         "Roguelike",
-        "Party & Multiplayer"
+        "Metroidvania",
+        "Puzzle",
+        "Melee Action",
+        "Fighting",
+        "RPG",
+        "Open World",
+        "Survival Craft",
+        "Horror",
+        "Builder & Management",
+        "Vehicle Sim & Racing",
+        "Strategy",
+        "Deckbuilder & Cards"
       ]
     },
     {
@@ -23217,7 +23864,10 @@
         "Fighting",
         "Shooter",
         "Narrative",
-        "Party & Multiplayer"
+        "Party & Multiplayer",
+        "Horror",
+        "Life Sim",
+        "Strategy"
       ]
     },
     {
@@ -23230,7 +23880,10 @@
         "Shooter",
         "Party & Multiplayer",
         "RPG",
-        "Roguelike"
+        "Roguelike",
+        "Melee Action",
+        "Strategy",
+        "Deckbuilder & Cards"
       ]
     },
     {
@@ -23245,7 +23898,11 @@
         "Puzzle",
         "Horror",
         "Shooter",
-        "Stealth & Immersive Sim"
+        "Stealth & Immersive Sim",
+        "Metroidvania",
+        "Melee Action",
+        "RPG",
+        "Open World"
       ]
     },
     {
@@ -23259,7 +23916,8 @@
         "Strategy",
         "Narrative",
         "Life Sim",
-        "Deckbuilder & Cards"
+        "Deckbuilder & Cards",
+        "Roguelike"
       ]
     },
     {
@@ -23272,7 +23930,8 @@
         "RPG",
         "Strategy",
         "Deckbuilder & Cards",
-        "Roguelike"
+        "Roguelike",
+        "Horror"
       ]
     },
     {
@@ -23286,7 +23945,9 @@
         "Puzzle",
         "Life Sim",
         "Party & Multiplayer",
-        "Rhythm & Arcade"
+        "Rhythm & Arcade",
+        "RPG",
+        "Sandbox"
       ]
     },
     {
@@ -23298,7 +23959,8 @@
       "genres": [
         "Sandbox",
         "Builder & Management",
-        "Puzzle"
+        "Puzzle",
+        "Platformer"
       ]
     },
     {
@@ -23312,7 +23974,9 @@
         "Life Sim",
         "RPG",
         "Strategy",
-        "Horror"
+        "Horror",
+        "Builder & Management",
+        "Deckbuilder & Cards"
       ]
     },
     {
@@ -23326,7 +23990,8 @@
         "Stealth & Immersive Sim",
         "Horror",
         "Puzzle",
-        "Builder & Management"
+        "Builder & Management",
+        "Sandbox"
       ]
     },
     {
@@ -23340,7 +24005,9 @@
         "Strategy",
         "Deckbuilder & Cards",
         "Roguelike",
-        "Narrative"
+        "Narrative",
+        "Puzzle",
+        "Party & Multiplayer"
       ]
     },
     {
@@ -23351,7 +24018,9 @@
       ],
       "genres": [
         "Horror",
-        "Stealth & Immersive Sim"
+        "Stealth & Immersive Sim",
+        "Survival Craft",
+        "Party & Multiplayer"
       ]
     },
     {
@@ -23366,7 +24035,8 @@
         "Roguelike",
         "Open World",
         "Metroidvania",
-        "Stealth & Immersive Sim"
+        "Stealth & Immersive Sim",
+        "Horror"
       ]
     },
     {
@@ -23380,8 +24050,12 @@
         "Horror",
         "Open World",
         "RPG",
-        "Shooter",
-        "Fighting"
+        "Fighting",
+        "Roguelike",
+        "Metroidvania",
+        "Survival Craft",
+        "Stealth & Immersive Sim",
+        "Party & Multiplayer"
       ]
     },
     {
@@ -23396,7 +24070,8 @@
         "Roguelike",
         "Platformer",
         "Fighting",
-        "Shooter"
+        "Shooter",
+        "Puzzle"
       ]
     },
     {
@@ -23410,7 +24085,8 @@
         "Puzzle",
         "Horror",
         "Survival Craft",
-        "Vehicle Sim & Racing"
+        "Vehicle Sim & Racing",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -23423,7 +24099,7 @@
         "Puzzle",
         "Narrative",
         "Sandbox",
-        "Fighting"
+        "Platformer"
       ]
     },
     {
@@ -23437,7 +24113,10 @@
         "Fighting",
         "Platformer",
         "Melee Action",
-        "Rhythm & Arcade"
+        "Rhythm & Arcade",
+        "Puzzle",
+        "Shooter",
+        "Vehicle Sim & Racing"
       ]
     },
     {
@@ -23452,7 +24131,10 @@
         "Narrative",
         "Open World",
         "Survival Craft",
-        "Sandbox"
+        "Sandbox",
+        "Metroidvania",
+        "Horror",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -23465,7 +24147,9 @@
         "Life Sim",
         "RPG",
         "Narrative",
-        "Builder & Management"
+        "Builder & Management",
+        "Survival Craft",
+        "Strategy"
       ]
     },
     {
@@ -23479,7 +24163,9 @@
         "Puzzle",
         "Horror",
         "Platformer",
-        "Vehicle Sim & Racing"
+        "Vehicle Sim & Racing",
+        "Fighting",
+        "Party & Multiplayer"
       ]
     },
     {
@@ -23492,7 +24178,8 @@
         "Party & Multiplayer",
         "Horror",
         "Stealth & Immersive Sim",
-        "Survival Craft"
+        "Survival Craft",
+        "Shooter"
       ]
     },
     {
@@ -23502,10 +24189,12 @@
         "Firework"
       ],
       "genres": [
-        "Puzzle",
         "Horror",
         "Narrative",
-        "Platformer"
+        "Platformer",
+        "Metroidvania",
+        "Open World",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -23518,7 +24207,8 @@
         "Shooter",
         "Party & Multiplayer",
         "Strategy",
-        "Fighting"
+        "Fighting",
+        "RPG"
       ]
     },
     {
@@ -23555,7 +24245,10 @@
         "Horror",
         "Puzzle",
         "Rhythm & Arcade",
-        "Vehicle Sim & Racing"
+        "Vehicle Sim & Racing",
+        "Melee Action",
+        "Narrative",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -23580,7 +24273,9 @@
         "Narrative",
         "Horror",
         "Shooter",
-        "Stealth & Immersive Sim"
+        "Stealth & Immersive Sim",
+        "RPG",
+        "Open World"
       ]
     },
     {
@@ -23590,7 +24285,8 @@
       ],
       "genres": [
         "Narrative",
-        "Fighting"
+        "Fighting",
+        "RPG"
       ]
     },
     {
@@ -23610,7 +24306,10 @@
       "genres": [
         "Narrative",
         "Life Sim",
-        "RPG"
+        "RPG",
+        "Open World",
+        "Horror",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -23622,7 +24321,9 @@
         "Deckbuilder & Cards",
         "Strategy",
         "Party & Multiplayer",
-        "Fighting"
+        "Fighting",
+        "RPG",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -23636,7 +24337,9 @@
         "Life Sim",
         "Survival Craft",
         "Roguelike",
-        "Rhythm & Arcade"
+        "Rhythm & Arcade",
+        "Open World",
+        "Strategy"
       ]
     },
     {
@@ -23645,7 +24348,8 @@
         "Wildfrost"
       ],
       "genres": [
-        "Deckbuilder & Cards"
+        "Deckbuilder & Cards",
+        "RPG"
       ]
     },
     {
@@ -23678,7 +24382,10 @@
       ],
       "genres": [
         "Vehicle Sim & Racing",
-        "Survival Craft"
+        "Survival Craft",
+        "Roguelike",
+        "Builder & Management",
+        "Strategy"
       ]
     },
     {
@@ -23698,7 +24405,9 @@
       "genres": [
         "Strategy",
         "Deckbuilder & Cards",
-        "Puzzle"
+        "Puzzle",
+        "Roguelike",
+        "RPG"
       ]
     },
     {
@@ -23709,7 +24418,9 @@
       "genres": [
         "Fighting",
         "Party & Multiplayer",
-        "Vehicle Sim & Racing"
+        "Vehicle Sim & Racing",
+        "Shooter",
+        "Melee Action"
       ]
     },
     {
@@ -23728,7 +24439,9 @@
         "The Powder Toy"
       ],
       "genres": [
-        "Sandbox"
+        "Sandbox",
+        "Platformer",
+        "RPG"
       ]
     },
     {
@@ -23740,7 +24453,11 @@
         "Open World",
         "RPG",
         "Melee Action",
-        "Survival Craft"
+        "Survival Craft",
+        "Horror",
+        "Strategy",
+        "Deckbuilder & Cards",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -23764,8 +24481,10 @@
       "genres": [
         "Shooter",
         "Strategy",
-        "Melee Action",
-        "Roguelike"
+        "Roguelike",
+        "RPG",
+        "Horror",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -23777,7 +24496,8 @@
         "Rhythm & Arcade",
         "Platformer",
         "Puzzle",
-        "Stealth & Immersive Sim"
+        "Stealth & Immersive Sim",
+        "Vehicle Sim & Racing"
       ]
     },
     {
@@ -23796,8 +24516,8 @@
       ],
       "genres": [
         "RPG",
-        "Rhythm & Arcade",
-        "Open World"
+        "Open World",
+        "Horror"
       ]
     },
     {
@@ -23811,7 +24531,9 @@
         "Deckbuilder & Cards",
         "Fighting",
         "RPG",
-        "Narrative"
+        "Roguelike",
+        "Platformer",
+        "Shooter"
       ]
     },
     {
@@ -23823,7 +24545,10 @@
         "Puzzle",
         "Stealth & Immersive Sim",
         "Sandbox",
-        "Platformer"
+        "Platformer",
+        "RPG",
+        "Strategy",
+        "Narrative"
       ]
     },
     {
@@ -23835,7 +24560,8 @@
         "Narrative",
         "Puzzle",
         "RPG",
-        "Open World"
+        "Open World",
+        "Horror"
       ]
     },
     {
@@ -23846,7 +24572,11 @@
       "genres": [
         "Party & Multiplayer",
         "Rhythm & Arcade",
-        "Sandbox"
+        "Platformer",
+        "Puzzle",
+        "Shooter",
+        "Melee Action",
+        "Vehicle Sim & Racing"
       ]
     },
     {
@@ -23859,7 +24589,8 @@
         "Puzzle",
         "Narrative",
         "Horror",
-        "Stealth & Immersive Sim"
+        "Stealth & Immersive Sim",
+        "Open World"
       ]
     },
     {
@@ -23872,7 +24603,8 @@
         "Deckbuilder & Cards",
         "RPG",
         "Life Sim",
-        "Puzzle"
+        "Puzzle",
+        "Roguelike"
       ]
     },
     {
@@ -23895,7 +24627,9 @@
         "Shooter",
         "Open World",
         "Survival Craft",
-        "Horror"
+        "Horror",
+        "Roguelike",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -23917,7 +24651,8 @@
       ],
       "genres": [
         "Deckbuilder & Cards",
-        "Strategy"
+        "Strategy",
+        "Puzzle"
       ]
     },
     {
@@ -23928,7 +24663,9 @@
       "genres": [
         "Deckbuilder & Cards",
         "Strategy",
-        "Fighting"
+        "Fighting",
+        "RPG",
+        "Builder & Management"
       ]
     },
     {
@@ -23951,7 +24688,8 @@
         "Platformer",
         "Stealth & Immersive Sim",
         "Survival Craft",
-        "Puzzle"
+        "Puzzle",
+        "Sandbox"
       ]
     },
     {
@@ -23963,7 +24701,10 @@
         "Horror",
         "Shooter",
         "Melee Action",
-        "Open World"
+        "Open World",
+        "RPG",
+        "Survival Craft",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -23973,7 +24714,8 @@
       ],
       "genres": [
         "Vehicle Sim & Racing",
-        "Rhythm & Arcade"
+        "Rhythm & Arcade",
+        "Platformer"
       ]
     },
     {
@@ -23985,7 +24727,8 @@
         "Builder & Management",
         "Strategy",
         "Sandbox",
-        "Puzzle"
+        "Puzzle",
+        "Roguelike"
       ]
     },
     {
@@ -23998,7 +24741,11 @@
         "Rhythm & Arcade",
         "Fighting",
         "Roguelike",
-        "Shooter"
+        "Shooter",
+        "Metroidvania",
+        "Platformer",
+        "RPG",
+        "Deckbuilder & Cards"
       ]
     },
     {
@@ -24010,7 +24757,9 @@
         "Shooter",
         "Party & Multiplayer",
         "Strategy",
-        "Fighting"
+        "Fighting",
+        "Vehicle Sim & Racing",
+        "Deckbuilder & Cards"
       ]
     },
     {
@@ -24021,8 +24770,8 @@
       "genres": [
         "Life Sim",
         "Horror",
-        "Shooter",
-        "Narrative"
+        "Narrative",
+        "Builder & Management"
       ]
     },
     {
@@ -24035,7 +24784,8 @@
         "Strategy",
         "Roguelike",
         "RPG",
-        "Rhythm & Arcade"
+        "Rhythm & Arcade",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -24046,7 +24796,13 @@
       "genres": [
         "Party & Multiplayer",
         "Fighting",
-        "Shooter"
+        "Shooter",
+        "Platformer",
+        "Puzzle",
+        "Vehicle Sim & Racing",
+        "Strategy",
+        "Deckbuilder & Cards",
+        "Rhythm & Arcade"
       ]
     },
     {
@@ -24057,7 +24813,8 @@
       "genres": [
         "Sandbox",
         "Puzzle",
-        "Rhythm & Arcade"
+        "Rhythm & Arcade",
+        "Platformer"
       ]
     },
     {
@@ -24067,7 +24824,10 @@
       ],
       "genres": [
         "Strategy",
-        "Deckbuilder & Cards"
+        "Deckbuilder & Cards",
+        "Shooter",
+        "Survival Craft",
+        "Builder & Management"
       ]
     },
     {
@@ -24076,7 +24836,9 @@
         "Tekken 8"
       ],
       "genres": [
-        "Fighting"
+        "Fighting",
+        "Sandbox",
+        "Party & Multiplayer"
       ]
     },
     {
@@ -24109,7 +24871,8 @@
         "Open World",
         "RPG",
         "Narrative",
-        "Strategy"
+        "Strategy",
+        "Deckbuilder & Cards"
       ]
     },
     {
@@ -24119,8 +24882,9 @@
       ],
       "genres": [
         "Narrative",
-        "Rhythm & Arcade",
-        "RPG"
+        "RPG",
+        "Horror",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -24143,7 +24907,9 @@
         "Open World",
         "Builder & Management",
         "Life Sim",
-        "Party & Multiplayer"
+        "Party & Multiplayer",
+        "Strategy",
+        "Sandbox"
       ]
     },
     {
@@ -24154,7 +24920,8 @@
       "genres": [
         "Strategy",
         "Party & Multiplayer",
-        "Vehicle Sim & Racing"
+        "Vehicle Sim & Racing",
+        "Shooter"
       ]
     },
     {
@@ -24177,7 +24944,8 @@
       "genres": [
         "Puzzle",
         "Platformer",
-        "Shooter"
+        "Shooter",
+        "Rhythm & Arcade"
       ]
     },
     {
@@ -24188,7 +24956,8 @@
       "genres": [
         "Strategy",
         "RPG",
-        "Puzzle"
+        "Puzzle",
+        "Roguelike"
       ]
     },
     {
@@ -24208,7 +24977,9 @@
       ],
       "genres": [
         "Fighting",
-        "Melee Action"
+        "Melee Action",
+        "Shooter",
+        "Deckbuilder & Cards"
       ]
     },
     {
@@ -24218,7 +24989,10 @@
       ],
       "genres": [
         "Sandbox",
-        "Builder & Management"
+        "Builder & Management",
+        "Puzzle",
+        "Survival Craft",
+        "Vehicle Sim & Racing"
       ]
     },
     {
@@ -24231,7 +25005,9 @@
         "Fighting",
         "RPG",
         "Deckbuilder & Cards",
-        "Puzzle"
+        "Puzzle",
+        "Roguelike",
+        "Shooter"
       ]
     },
     {
@@ -24243,7 +25019,8 @@
         "Sandbox",
         "Party & Multiplayer",
         "Open World",
-        "Platformer"
+        "Platformer",
+        "Fighting"
       ]
     },
     {
@@ -24256,7 +25033,10 @@
         "Narrative",
         "Open World",
         "Builder & Management",
-        "RPG"
+        "RPG",
+        "Shooter",
+        "Melee Action",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -24267,7 +25047,9 @@
       "genres": [
         "Horror",
         "Shooter",
-        "Survival Craft"
+        "Survival Craft",
+        "Roguelike",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -24279,7 +25061,8 @@
         "Puzzle",
         "Narrative",
         "Platformer",
-        "Rhythm & Arcade"
+        "Rhythm & Arcade",
+        "Vehicle Sim & Racing"
       ]
     },
     {
@@ -24289,7 +25072,10 @@
       ],
       "genres": [
         "Fighting",
-        "Party & Multiplayer"
+        "Party & Multiplayer",
+        "Shooter",
+        "Strategy",
+        "Deckbuilder & Cards"
       ]
     },
     {
@@ -24301,7 +25087,9 @@
         "Rhythm & Arcade",
         "Strategy",
         "Roguelike",
-        "Shooter"
+        "Shooter",
+        "Melee Action",
+        "Survival Craft"
       ]
     },
     {
@@ -24322,7 +25110,9 @@
         "Strategy",
         "Puzzle",
         "Roguelike",
-        "Deckbuilder & Cards"
+        "Deckbuilder & Cards",
+        "Horror",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -24355,7 +25145,11 @@
         "Narrative",
         "Strategy",
         "Builder & Management",
-        "Horror"
+        "Horror",
+        "Life Sim",
+        "Deckbuilder & Cards",
+        "Sandbox",
+        "Rhythm & Arcade"
       ]
     },
     {
@@ -24376,7 +25170,8 @@
       "genres": [
         "Roguelike",
         "Deckbuilder & Cards",
-        "Narrative"
+        "Narrative",
+        "RPG"
       ]
     },
     {
@@ -24389,7 +25184,23 @@
         "Platformer",
         "Rhythm & Arcade",
         "Narrative",
-        "Horror"
+        "Horror",
+        "Roguelike",
+        "Metroidvania",
+        "Shooter",
+        "Melee Action",
+        "Fighting",
+        "RPG",
+        "Open World",
+        "Survival Craft",
+        "Builder & Management",
+        "Life Sim",
+        "Vehicle Sim & Racing",
+        "Strategy",
+        "Deckbuilder & Cards",
+        "Stealth & Immersive Sim",
+        "Sandbox",
+        "Party & Multiplayer"
       ]
     },
     {
@@ -24410,7 +25221,9 @@
         "Puzzle",
         "Platformer",
         "Sandbox",
-        "Horror"
+        "Horror",
+        "Survival Craft",
+        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -24419,7 +25232,8 @@
         "Wreckfest"
       ],
       "genres": [
-        "Vehicle Sim & Racing"
+        "Vehicle Sim & Racing",
+        "Sandbox"
       ]
     },
     {
@@ -24430,7 +25244,8 @@
       "genres": [
         "Narrative",
         "Horror",
-        "Open World"
+        "Open World",
+        "Life Sim"
       ]
     },
     {
@@ -24443,7 +25258,10 @@
         "Stealth & Immersive Sim",
         "Strategy",
         "Puzzle",
-        "Open World"
+        "Open World",
+        "Roguelike",
+        "Shooter",
+        "Survival Craft"
       ]
     },
     {
