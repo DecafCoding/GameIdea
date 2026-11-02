@@ -95,7 +95,7 @@
 | 89 | the game decides what you build | 1 | Townscaper |
 | 90 | the game judges you for playing | 1 | Hotline Miami |
 | 91 | the hero starts over in old age | 1 | Shelldiver |
-| 92 | the hero you control is not on your side | 1 | DELTARUNE |
+| 92 | the hero you play is against you | 1 | DELTARUNE |
 | 93 | the prize comes with strings attached | 1 | Senren*Banka |
 | 94 | the high-tech helper is useless | 1 | ATRI -My Dear Moments- |
 | 95 | the hunter cannot be killed | 1 | Resident Evil 2 |
