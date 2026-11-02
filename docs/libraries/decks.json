@@ -6327,7 +6327,16 @@
       ]
     },
     {
-      "card": "complete the objective or wipe out the other team",
+      "card": "complete the objective",
+      "games": [
+        "Counter-Strike",
+        "Counter-Strike: Source",
+        "Ravenfield",
+        "Team Fortress 2"
+      ]
+    },
+    {
+      "card": "wipe out the other team",
       "games": [
         "Counter-Strike",
         "Counter-Strike: Source",
@@ -6369,7 +6378,15 @@
       ]
     },
     {
-      "card": "keep the child alive and teach her to survive",
+      "card": "keep the child alive",
+      "games": [
+        "The Walking Dead",
+        "The Walking Dead: The Telltale Definitive Series",
+        "The Walking Dead: Season Two"
+      ]
+    },
+    {
+      "card": "teach a child to survive",
       "games": [
         "The Walking Dead",
         "The Walking Dead: The Telltale Definitive Series",
@@ -6425,14 +6442,21 @@
       ]
     },
     {
-      "card": "beat your captor at his own game and walk free",
+      "card": "beat your captor at their own game",
       "games": [
         "Inscryption",
         "Buckshot Roulette"
       ]
     },
     {
-      "card": "bring back the light and heal the forest",
+      "card": "bring back the light",
+      "games": [
+        "Ori and the Blind Forest: Definitive Edition",
+        "Ori and the Will of the Wisps"
+      ]
+    },
+    {
+      "card": "heal the forest",
       "games": [
         "Ori and the Blind Forest: Definitive Edition",
         "Ori and the Will of the Wisps"
@@ -6509,7 +6533,14 @@
       ]
     },
     {
-      "card": "prove the accused innocent and find the real killer",
+      "card": "prove the accused innocent",
+      "games": [
+        "Magical Girl Witch Trials",
+        "Phoenix Wright: Ace Attorney Trilogy"
+      ]
+    },
+    {
+      "card": "find the real killer",
       "games": [
         "Magical Girl Witch Trials",
         "Phoenix Wright: Ace Attorney Trilogy"
@@ -6579,6 +6610,20 @@
       ]
     },
     {
+      "card": "overthrow the usurper",
+      "games": [
+        "Kingdom Come: Deliverance II",
+        "Dishonored"
+      ]
+    },
+    {
+      "card": "get the lost child home",
+      "games": [
+        "OneShot",
+        "PRAGMATA"
+      ]
+    },
+    {
       "card": "be the first to reach the target score",
       "games": [
         "Ultimate Chicken Horse"
@@ -6591,7 +6636,13 @@
       ]
     },
     {
-      "card": "beat the frost guardian and bring back the sun",
+      "card": "defeat the frost guardian",
+      "games": [
+        "Wildfrost"
+      ]
+    },
+    {
+      "card": "bring back the sun",
       "games": [
         "Wildfrost"
       ]
@@ -6651,7 +6702,13 @@
       ]
     },
     {
-      "card": "build a great monument with a happy colony",
+      "card": "build a great monument",
+      "games": [
+        "Oxygen Not Included"
+      ]
+    },
+    {
+      "card": "keep the colony happy",
       "games": [
         "Oxygen Not Included"
       ]
@@ -6681,7 +6738,7 @@
       ]
     },
     {
-      "card": "carry the last flame to the bottom of hell",
+      "card": "carry the last flame into hell",
       "games": [
         "Monster Train"
       ]
@@ -6699,7 +6756,7 @@
       ]
     },
     {
-      "card": "catch the killer who hides in another world",
+      "card": "catch the killer no one can reach",
       "games": [
         "Persona 4 Golden"
       ]
@@ -6735,13 +6792,25 @@
       ]
     },
     {
-      "card": "climb the tower and stop the end of the world",
+      "card": "climb the tower",
       "games": [
         "Persona 3 Reload"
       ]
     },
     {
-      "card": "climb to the citadel and face its queen",
+      "card": "stop the end of the world",
+      "games": [
+        "Persona 3 Reload"
+      ]
+    },
+    {
+      "card": "climb to the citadel",
+      "games": [
+        "Hollow Knight: Silksong"
+      ]
+    },
+    {
+      "card": "face the queen",
       "games": [
         "Hollow Knight: Silksong"
       ]
@@ -6819,7 +6888,13 @@
       ]
     },
     {
-      "card": "destroy the monsters' nest and save the last city",
+      "card": "destroy the monsters' nest",
+      "games": [
+        "METRO 2033 Redux"
+      ]
+    },
+    {
+      "card": "save the last city",
       "games": [
         "METRO 2033 Redux"
       ]
@@ -6873,7 +6948,7 @@
       ]
     },
     {
-      "card": "escape the house of horrors with your wife",
+      "card": "escape the house of horrors",
       "games": [
         "Resident Evil 7 Biohazard"
       ]
@@ -6885,7 +6960,7 @@
       ]
     },
     {
-      "card": "escape the shadow king's world",
+      "card": "escape the tyrant's world",
       "games": [
         "Don't Starve"
       ]
@@ -6909,7 +6984,13 @@
       ]
     },
     {
-      "card": "face the truth about what you did and make peace with your friends",
+      "card": "face what you did",
+      "games": [
+        "OMORI"
+      ]
+    },
+    {
+      "card": "make peace with your friends",
       "games": [
         "OMORI"
       ]
@@ -6921,7 +7002,7 @@
       ]
     },
     {
-      "card": "find and destroy the thing that killed your daughter",
+      "card": "destroy what killed your daughter",
       "games": [
         "SANABI"
       ]
@@ -6939,7 +7020,7 @@
       ]
     },
     {
-      "card": "find out how you got here and how to leave",
+      "card": "learn how you got here and leave",
       "games": [
         "Everlasting Summer"
       ]
@@ -6969,7 +7050,13 @@
       ]
     },
     {
-      "card": "find the missing girl and save your old best friend",
+      "card": "find the missing girl",
+      "games": [
+        "Life is Strange - Episode 1"
+      ]
+    },
+    {
+      "card": "save your old best friend",
       "games": [
         "Life is Strange - Episode 1"
       ]
@@ -6981,7 +7068,13 @@
       ]
     },
     {
-      "card": "find what causes the earthquakes and save the sea people",
+      "card": "find the cause of the earthquakes",
+      "games": [
+        "DAVE THE DIVER"
+      ]
+    },
+    {
+      "card": "save the people beneath the sea",
       "games": [
         "DAVE THE DIVER"
       ]
@@ -7047,13 +7140,19 @@
       ]
     },
     {
-      "card": "fix the ship, take the guardians' gems, and kill the dragon",
+      "card": "fix the ship",
       "games": [
         "Muck"
       ]
     },
     {
-      "card": "follow the radio signals to the last safe haven",
+      "card": "kill the dragon",
+      "games": [
+        "Muck"
+      ]
+    },
+    {
+      "card": "follow the signal to the last safe haven",
       "games": [
         "Raft"
       ]
@@ -7065,7 +7164,7 @@
       ]
     },
     {
-      "card": "free the kingdom from the usurper and avenge your parents",
+      "card": "avenge your parents",
       "games": [
         "Kingdom Come: Deliverance II"
       ]
@@ -7101,7 +7200,13 @@
       ]
     },
     {
-      "card": "get back the stolen relic and save the town",
+      "card": "recover the stolen relic",
+      "games": [
+        "South Park: The Stick of Truth"
+      ]
+    },
+    {
+      "card": "save the town",
       "games": [
         "South Park: The Stick of Truth"
       ]
@@ -7125,12 +7230,6 @@
       ]
     },
     {
-      "card": "get the lost child home",
-      "games": [
-        "OneShot"
-      ]
-    },
-    {
       "card": "fix your relationship",
       "games": [
         "It Takes Two"
@@ -7143,7 +7242,7 @@
       ]
     },
     {
-      "card": "go down through hell and find the source of blood",
+      "card": "descend to the bottom of hell",
       "games": [
         "ULTRAKILL"
       ]
@@ -7173,13 +7272,13 @@
       ]
     },
     {
-      "card": "help each spirit let go and pass on",
+      "card": "help the dead pass on",
       "games": [
         "Spiritfarer: Farewell Edition"
       ]
     },
     {
-      "card": "help the peoples of the tower understand each other",
+      "card": "help divided peoples understand each other",
       "games": [
         "Chants of Sennaar"
       ]
@@ -7191,13 +7290,13 @@
       ]
     },
     {
-      "card": "keep the city alive through the great storm",
+      "card": "keep the city alive through the storm",
       "games": [
         "Frostpunk"
       ]
     },
     {
-      "card": "keep the gang alive as the law closes in",
+      "card": "keep your crew alive",
       "games": [
         "Red Dead Redemption 2"
       ]
@@ -7209,13 +7308,13 @@
       ]
     },
     {
-      "card": "kill the crew before they find you out",
+      "card": "kill the crew before they unmask you",
       "games": [
         "Among Us"
       ]
     },
     {
-      "card": "kill the demon king at the top of the tree",
+      "card": "kill the demon king",
       "games": [
         "Devil May Cry 5"
       ]
@@ -7227,7 +7326,13 @@
       ]
     },
     {
-      "card": "kill the giant beast on the volcano island and sail home",
+      "card": "kill the giant beast",
+      "games": [
+        "How to Fish"
+      ]
+    },
+    {
+      "card": "sail home",
       "games": [
         "How to Fish"
       ]
@@ -7251,7 +7356,13 @@
       ]
     },
     {
-      "card": "launch the ark and save what is left of humanity",
+      "card": "launch the ark",
+      "games": [
+        "SOMA"
+      ]
+    },
+    {
+      "card": "save what is left of humanity",
       "games": [
         "SOMA"
       ]
@@ -7269,13 +7380,19 @@
       ]
     },
     {
-      "card": "learn who killed your mother and stop the mad scientist",
+      "card": "learn who killed your mother",
       "games": [
         "Resident Evil Requiem"
       ]
     },
     {
-      "card": "learn why the sun dies",
+      "card": "stop the mad scientist",
+      "games": [
+        "Resident Evil Requiem"
+      ]
+    },
+    {
+      "card": "learn why the world keeps ending",
       "games": [
         "Outer Wilds"
       ]
@@ -7311,13 +7428,19 @@
       ]
     },
     {
-      "card": "name the ghost and get out alive",
+      "card": "identify the ghost",
       "games": [
         "Phasmophobia"
       ]
     },
     {
-      "card": "open the box and learn what its maker found",
+      "card": "get out alive",
+      "games": [
+        "Phasmophobia"
+      ]
+    },
+    {
+      "card": "open the puzzle box and learn its secret",
       "games": [
         "The Room"
       ]
@@ -7359,13 +7482,19 @@
       ]
     },
     {
-      "card": "prove you are worthy of the warriors' hall",
+      "card": "prove yourself worthy of the afterlife",
       "games": [
         "Valheim"
       ]
     },
     {
-      "card": "raise the flag on every level and kill the devil",
+      "card": "raise your flag on every level",
+      "games": [
+        "Broforce"
+      ]
+    },
+    {
+      "card": "kill the devil",
       "games": [
         "Broforce"
       ]
@@ -7401,7 +7530,13 @@
       ]
     },
     {
-      "card": "reach the enemy nest and decide the planet's fate",
+      "card": "reach the enemy nest",
+      "games": [
+        "Stellar Blade"
+      ]
+    },
+    {
+      "card": "decide the planet's fate",
       "games": [
         "Stellar Blade"
       ]
@@ -7419,7 +7554,13 @@
       ]
     },
     {
-      "card": "reach the moon and beat its guardian",
+      "card": "reach the moon",
+      "games": [
+        "Risk of Rain 2"
+      ]
+    },
+    {
+      "card": "beat the final guardian",
       "games": [
         "Risk of Rain 2"
       ]
@@ -7455,13 +7596,13 @@
       ]
     },
     {
-      "card": "rise from nothing to the top of the drug trade",
+      "card": "rise to the top of the drug trade",
       "games": [
         "Schedule I"
       ]
     },
     {
-      "card": "rise to godhood, or escape to a normal life",
+      "card": "rise to godhood, or escape to normal life",
       "games": [
         "Cultist Simulator"
       ]
@@ -7473,7 +7614,7 @@
       ]
     },
     {
-      "card": "save the heir and topple the men who took the throne",
+      "card": "save the rightful heir",
       "games": [
         "Dishonored"
       ]
@@ -7509,7 +7650,7 @@
       ]
     },
     {
-      "card": "shut down the rogue AI and get the girl home",
+      "card": "shut down the rogue AI",
       "games": [
         "PRAGMATA"
       ]
@@ -7527,19 +7668,31 @@
       ]
     },
     {
-      "card": "stop the alien empire and the parasite plague",
+      "card": "stop the alien empire",
       "games": [
         "Halo: The Master Chief Collection"
       ]
     },
     {
-      "card": "stop the glitch and put the game back together",
+      "card": "stop the plague",
+      "games": [
+        "Halo: The Master Chief Collection"
+      ]
+    },
+    {
+      "card": "stop the glitch",
       "games": [
         "There Is No Game: Wrong Dimension"
       ]
     },
     {
-      "card": "stop the keeper of time from rewriting history",
+      "card": "put the game back together",
+      "games": [
+        "There Is No Game: Wrong Dimension"
+      ]
+    },
+    {
+      "card": "stop someone rewriting history",
       "games": [
         "Mortal Kombat 11"
       ]
@@ -7551,7 +7704,7 @@
       ]
     },
     {
-      "card": "stop the private army and the senator who pays it",
+      "card": "stop the private army and its backer",
       "games": [
         "METAL GEAR RISING: REVENGEANCE"
       ]
@@ -7581,7 +7734,7 @@
       ]
     },
     {
-      "card": "stop your father's bid to rule the world",
+      "card": "stop your father's grab for power",
       "games": [
         "Tekken 8"
       ]
@@ -7593,7 +7746,13 @@
       ]
     },
     {
-      "card": "survive the month and keep your family fed",
+      "card": "survive the month",
+      "games": [
+        "Papers, Please"
+      ]
+    },
+    {
+      "card": "keep your family fed",
       "games": [
         "Papers, Please"
       ]
@@ -7605,19 +7764,25 @@
       ]
     },
     {
-      "card": "take down the corporate bosses and stop their mind-control plan",
+      "card": "take down the corporate bosses",
       "games": [
         "Hi-Fi RUSH"
       ]
     },
     {
-      "card": "take down the crime ring one boss at a time",
+      "card": "stop the mind-control plan",
+      "games": [
+        "Hi-Fi RUSH"
+      ]
+    },
+    {
+      "card": "take down the crime ring",
       "games": [
         "Fights in Tight Spaces"
       ]
     },
     {
-      "card": "take the city from the gang that runs it",
+      "card": "take the city from the gang",
       "games": [
         "Saints Row: The Third"
       ]
@@ -7635,7 +7800,7 @@
       ]
     },
     {
-      "card": "turn a team of ex-villains into real heroes",
+      "card": "turn villains into heroes",
       "games": [
         "Dispatch"
       ]
