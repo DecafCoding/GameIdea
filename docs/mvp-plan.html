@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MVP Plan — GameIdea (working name)</title>
+  <style>
+    :root { --fg:#1a1a1a; --muted:#666; --accent:#2563eb; --done:#16a34a; --rule:#e5e7eb; }
+    body { font:16px/1.6 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; color:var(--fg); max-width:60rem; margin:2rem auto; padding:0 1.25rem; }
+    h1 { font-size:2rem; border-bottom:2px solid var(--rule); padding-bottom:.3rem; }
+    h2 { font-size:1.5rem; margin-top:2.5rem; border-bottom:1px solid var(--rule); padding-bottom:.2rem; }
+    h3 { font-size:1.2rem; margin-top:1.75rem; }
+    code, pre { font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+    pre { background:#f6f8fa; padding:1rem; border-radius:6px; overflow:auto; }
+    table { border-collapse:collapse; width:100%; margin:1rem 0; }
+    th, td { border:1px solid var(--rule); padding:.5rem .75rem; text-align:left; vertical-align:top; }
+    th { background:#f6f8fa; }
+    ul.checklist { list-style:none; padding-left:0; }
+    ul.checklist > li::before { content:"☐ "; color:var(--muted); }
+    ul.checklist > li[data-checked="true"]::before { content:"☑ "; color:var(--done); }
+    .meta { color:var(--muted); font-size:.9rem; }
+  </style>
+</head>
+<body>
+
+<h1>MVP Plan — GameIdea (working name)</h1>
+<p class="meta">A web canvas where a game developer draws game concept cards. Each card shows random cues, and the developer rotates the card to choose one cue. A Hook Card reads a stack of cards as a one-sentence game hook.</p>
+<p class="meta">Plan written 2026-11-01 from the <code>/dev-initial-interview</code> run. Prior art: <code>docs/competitive-scan.html</code>, prepared 2026-11-01. The scan is current. Concept source: <code>concept.md</code>.</p>
+<p class="meta">GameIdea is a separate app in its own repository. It starts from a copy of the TheForge code and structure (the user's story-card app, at <code>~/repos/theforge</code>). This plan states every carried-over behavior in full, so it does not depend on the TheForge documents.</p>
+
+<h2>Problem and users</h2>
+
+<h3>Main user</h3>
+<p>The main user is a solo or hobby game developer, or a game jam entrant. This user needs a game idea that is small enough to build. The app does not target studio designers or tabletop designers.</p>
+
+<h3>Problem</h3>
+<p>The scan in <code>docs/competitive-scan.html</code> shows these problems with current game idea tools:</p>
+<ul>
+  <li>Random word-list tools give nonsense combinations. AI tools give generic, familiar ideas.</li>
+  <li>Most tools give a list of words and stop. The user must still turn the words into an idea.</li>
+  <li>Saving a result needs an account or paid credits. The free tools save nothing.</li>
+  <li>The user cannot aim the draw. One comparable cannot filter by genre at all. Category lists mix genre and art style.</li>
+</ul>
+
+<h3>What "solved" means</h3>
+<p>One session gives the user a hook. A hook is one or two sentences that make a person want to play the game. The user draws cards, tucks them under a Hook Card, and the stack reads as the hook. The user copies the hook with one click, or edits it in a note on a saved board.</p>
+
+<h3>Decks</h3>
+<p>The MVP has 11 decks and the Hook Card. The deck list comes from <code>concept.md</code>.</p>
+<table>
+  <tr><th>Group</th><th>Deck</th><th>Meaning</th><th>Cues on each card</th><th>Cue form</th></tr>
+  <tr><td>Core</td><td>Player Role</td><td>Who the player is</td><td>4</td><td>1 to 3 words, for example "lighthouse keeper"</td></tr>
+  <tr><td>Core</td><td>Mechanic</td><td>The action the player does again and again</td><td>4</td><td>A verb, or a verb and an object, for example "trade"</td></tr>
+  <tr><td>Core</td><td>Goal</td><td>The end state that means the player wins</td><td>2</td><td>Up to 8 words, for example "keep the light on"</td></tr>
+  <tr><td>Core</td><td>Conflict</td><td>The force that stops the player</td><td>2</td><td>Up to 8 words, for example "the tide rises every night"</td></tr>
+  <tr><td>Core</td><td>Resource</td><td>The thing the player manages and can run out of</td><td>4</td><td>1 or 2 words, for example "memories"</td></tr>
+  <tr><td>Modifier</td><td>Modifier</td><td>An adjective that stacks on a Player Role, Resource or Setting</td><td>4</td><td>1 word, for example "stolen"</td></tr>
+  <tr><td>Optional</td><td>Setting</td><td>Where and when the game takes place</td><td>4</td><td>1 to 3 words, for example "frozen prairie"</td></tr>
+  <tr><td>Optional</td><td>Mood</td><td>The feeling the game gives the player</td><td>4</td><td>1 word, for example "lonely"</td></tr>
+  <tr><td>Optional</td><td>Twist</td><td>One fact or rule that turns an expectation around</td><td>2</td><td>Up to 8 words, for example "the villain is right"</td></tr>
+  <tr><td>Optional</td><td>Progression</td><td>How the player or the world changes over time</td><td>2</td><td>Up to 8 words, for example "the crew grows"</td></tr>
+  <tr><td>Optional</td><td>Constraint</td><td>A design limit on the whole game</td><td>2</td><td>Up to 8 words, for example "no combat"</td></tr>
+</table>
+<p>"Optional" names a deck group from <code>concept.md</code>. All 11 decks are in the MVP. Cues are bare words. The joining words come from connector badges.</p>
+
+<h2>Core loop</h2>
+<ol>
+  <li>The user clicks a deck button in the left rail. The app draws one card of that deck onto the canvas.</li>
+  <li>The card shows random cues from the deck's pool, on a ring around a round center icon. A 4-cue card has one cue on each edge. A 2-cue card has one cue on the top half and one on the bottom half.</li>
+  <li>The user points at the card, and its rings show. A click on the left or right half of a ring turns its cues one step. R turns the outer ring, or the only ring. Shift+R turns the inner ring. The card body and the center icon stay still. The cue at the bottom edge, right side up, is the active cue.</li>
+  <li>The user can drop a Modifier on a Player Role, Resource or Setting card. Its adjectives become a second ring, and each edge shows an adjective and noun pair.</li>
+  <li>The user draws a Hook Card from the top of the rail. The user tucks a Player Role under it, then tucks the other cards below. Tuck means one card sits partly under another card, and the two cards are joined.</li>
+  <li>Connector badges on each seam join the stack into a sentence. The Hook Card shows the sentence and updates it after each change.</li>
+  <li>The user turns rings, locks cards they like, and uses Redraw or Redraw All until the hook is good.</li>
+  <li>The user clicks Copy on the Hook Card, or writes a final version in a note.</li>
+</ol>
+<p>Example hook from one stack: "You are a reanimated lighthouse keeper who must trade to keep the light on, but the tide rises every night, using stolen memories."</p>
+
+<h2>Scope</h2>
+
+<h3>In the MVP</h3>
+<ul class="checklist">
+  <li data-checked="true">The 11 decks in the Decks table, with 4-cue and 2-cue cards as listed</li>
+  <li data-checked="true">The Hook Card: the head of a stack. It shows the stack as a sentence, with Copy (plain text to the clipboard) and Redraw All. The sentence is computed each time and never stored.</li>
+  <li data-checked="true">Connector badges with the default words and choices in the Interfaces section. Click a badge to choose another word. A card keeps the chosen word while it fits the pair. "a" or "an" follows the next word.</li>
+  <li data-checked="true">The ring control: rings show on pointer-over, a click on a ring half turns one step, R and Shift+R. The card body and center icon stay still.</li>
+  <li data-checked="true">The Modifier combine on Player Role, Resource and Setting: combine, swap, On Top and Split</li>
+  <li data-checked="true">A lock on each card. Redraw All skips locked cards.</li>
+  <li data-checked="true">Card strip on a selected card: Split, Redraw, Discard and Lock</li>
+  <li data-checked="true">Redraw: a new card of the same deck in the same place. It keeps its tucks, its lock state and, on a combined card, its adjective ring.</li>
+  <li data-checked="true">Discard: the card is deleted. Undo brings it back.</li>
+  <li data-checked="true">Free tuck: any card can tuck under any card, except that a Hook Card cannot tuck under a card. The app shows a hint for the normal place of each deck.</li>
+  <li data-checked="true">Infinite canvas with pan, zoom, place and move</li>
+  <li data-checked="true">Free-text notes with an editable title</li>
+  <li data-checked="true">Genre settings: the 21 genres in the Genres table, on the 4 genre-tagged decks only (Mechanic, Resource, Progression, Constraint). The Genres panel sets the genres of those 4 decks together and one by one. The user can change them at any time. A change affects the next draw only. The other 7 decks ignore genre.</li>
+  <li data-checked="true">A left rail in labeled groups: Hook Card, Core, Modifier, Optional, and Genres at the bottom</li>
+  <li data-checked="true">Board list with multiple boards: make, open, rename and delete. The New Board dialog asks only for a name.</li>
+  <li data-checked="true">Autosave after each change, a warning when a save fails, and a warning when one board is open in 2 tabs</li>
+  <li data-checked="true">Undo and redo for the open session</li>
+  <li data-checked="true">Export to a text file, which holds each hook, and to a board file. Import of a board file.</li>
+  <li data-checked="true">Cue pools from the user's deck libraries in <code>docs/libraries/</code>, one Markdown file for each deck. A one-time conversion makes one JSON pool file for each deck. After that, the JSON files are the source, and the user edits them directly. In the 4 genre-tagged decks, each cue lists every genre it fits.</li>
+  <li data-checked="true">Desktop browsers only, with mouse and keyboard</li>
+  <li data-checked="true">Local run at fixed ports, and HTTPS on the local network</li>
+  <li data-checked="true">The TheForge visual design: tokens, fonts, dark canvas, shell and card look. <code>/dev-ui-update</code> adds the 11 deck colors and icons and the Hook Card design.</li>
+</ul>
+
+<h3>Deferred</h3>
+<ul class="checklist">
+  <li data-checked="false">All Top 10 and Other rows in the scan that this plan does not mark as In or Partial</li>
+  <li data-checked="false">A Hook Card that sits apart from its stack and points at it with a line</li>
+  <li data-checked="false">An editable sentence or an "angle" line stored on the Hook Card</li>
+  <li data-checked="false">Comparable shipped games for a hook, for example "X meets Y"</li>
+  <li data-checked="false">AI help to expand a hook</li>
+  <li data-checked="false">Genres beyond the 7 in this plan</li>
+  <li data-checked="false">A Modifier on Mechanic or Mood cards</li>
+  <li data-checked="false">Shared code between TheForge and GameIdea in a common package</li>
+  <li data-checked="false">Server code and a database for the pools and the boards</li>
+  <li data-checked="false">Tablet and touch input</li>
+  <li data-checked="false">A public website on a free host</li>
+  <li data-checked="false">Usage data</li>
+</ul>
+
+<h3>Never, not this product</h3>
+<ul class="checklist">
+  <li data-checked="false">A Format filter, deck or tag (platform, player count, session length). Reason: indie developers already know their format, so it does not narrow a draw.</li>
+  <li data-checked="false">A Style filter, deck or tag (art style and view). Reason: indie developers already know their style, and style changes few cues.</li>
+  <li data-checked="false">Copying cue text from other idea generators or card decks</li>
+</ul>
+
+<h2>Data model</h2>
+<p>All data belongs to the user and stays in the user's browser. There are no users or accounts.</p>
+<pre><code>Board                     (one record for each board)
+  id, name, createdAt, updatedAt
+  view: { panX, panY, zoom }
+  genres: { [deck]: Genre[] }   only for the 4 genre-tagged decks: mechanic,
+                                resource, progression, constraint. 1 or more each.
+                                All 7 on a new board. Changeable at any time.
+  cards: Card[]
+  notes: Note[]
+
+Card                      (stored inside its Board record)
+  id
+  type: hook | role | mechanic | goal | conflict | resource | modifier
+        | setting | mood | twist | progression | constraint
+  rings: Ring[]
+    hook:                                   no rings
+    role, resource, setting:                rings[0] = 4 cues.
+                                            rings[1] = 4 adjectives, only after a combine.
+    mechanic, mood, modifier:               rings[0] = 4 cues
+    goal, conflict, twist, progression,
+    constraint:                             rings[0] = 2 cues
+  x, y, z                 (z is the stack order)
+  tuckedUnder: Card.id | null
+  locked: boolean
+  connector?: string      (the word chosen on the badge above this card)
+
+Ring
+  cues: Cue[]
+  activeIndex             (the cue at the bottom edge. It sets the ring's rotation.)
+
+Cue                       (a copy, stored on the Card)
+  text
+  genres?: Genre[]        (genre-tagged decks only)
+
+Note                      (stored inside its Board record)
+  id, title, text, x, y, width, height
+
+Pool                      (ships with the app. One JSON file for each deck.
+                           Made once from docs/libraries/. The JSON is then the source.)
+  type
+  cues: { id, text, genres? }[]   genres: required in mechanic, resource,
+                                  progression and constraint. Absent in the other 7.
+
+Genre                     (21 values. Meanings are in the Genres table.
+                           Plus generic: a cue tag that means "fits every genre".
+                           generic does not show in the Genres panel.)
+  generic | roguelike | metroidvania | platformer | puzzle | shooter | melee-action
+  | fighting | rpg | open-world | survival-craft | horror
+  | builder-management | life-sim | vehicle-sim-racing | strategy
+  | deckbuilder-cards | narrative | stealth-immersive-sim | sandbox
+  | party-multiplayer | rhythm-arcade</code></pre>
+
+<h3>Genres</h3>
+<table>
+  <tr><th>Genre</th><th>What it means</th></tr>
+  <tr><td>Roguelike</td><td>Short runs with random levels. Death starts the run again.</td></tr>
+  <tr><td>Metroidvania</td><td>One large map that opens as you get new abilities.</td></tr>
+  <tr><td>Platformer</td><td>The main action is to jump and move through levels.</td></tr>
+  <tr><td>Puzzle</td><td>The main action is to solve problems with logic.</td></tr>
+  <tr><td>Shooter</td><td>The main action is to aim and shoot guns.</td></tr>
+  <tr><td>Melee Action</td><td>Close fights with swords and fists. You dodge and block attacks.</td></tr>
+  <tr><td>Fighting</td><td>One player against one player, or small fights in an arena, with combos.</td></tr>
+  <tr><td>RPG</td><td>Character stats, levels, a team, and quests.</td></tr>
+  <tr><td>Open World</td><td>A large world you can go anywhere in, with side tasks.</td></tr>
+  <tr><td>Survival Craft</td><td>You collect, make, and build things to stay alive.</td></tr>
+  <tr><td>Horror</td><td>The main feeling is fear.</td></tr>
+  <tr><td>Builder &amp; Management</td><td>You build and run a base, city, colony, factory, or business.</td></tr>
+  <tr><td>Life Sim</td><td>Daily life: farm, work, make friends, decorate.</td></tr>
+  <tr><td>Vehicle Sim &amp; Racing</td><td>You drive, fly, or race vehicles.</td></tr>
+  <tr><td>Strategy</td><td>You give orders to units or plan moves. Includes real-time, turn-based, and tower defense games.</td></tr>
+  <tr><td>Deckbuilder &amp; Cards</td><td>You build a deck of cards and play it.</td></tr>
+  <tr><td>Narrative</td><td>The main parts are story and choices. Includes visual novels, detective games, and adventure games.</td></tr>
+  <tr><td>Stealth &amp; Immersive Sim</td><td>You hide, use the game's systems, and solve problems in many ways.</td></tr>
+  <tr><td>Sandbox</td><td>Free play with tools and physics, with few goals.</td></tr>
+  <tr><td>Party &amp; Multiplayer</td><td>Made to play with other people or against them.</td></tr>
+  <tr><td>Rhythm &amp; Arcade</td><td>Timing, patterns, and high scores.</td></tr>
+</table>
+
+<h3>Rules</h3>
+<ul>
+  <li>A draw picks distinct cues from the deck's pool. One card never shows the same cue two times.</li>
+  <li>In the 4 genre-tagged decks, a draw uses only cues that share at least one genre with the deck's current genres. If too few cues match, the draw fills the card with Generic cues and shows a short notice.</li>
+  <li>In the other 7 decks, a draw uses the full pool. Genre settings do not apply.</li>
+  <li>A card stores a copy of its cues. A pool change or a genre change does not change cards on the board.</li>
+  <li>A cue lists every genre it fits. One cue counts toward each of its genres. A cue that fits every genre carries only the <code>generic</code> tag.</li>
+  <li>A <code>generic</code> cue matches any genre setting. The Genres panel does not show <code>generic</code>, and the user cannot turn it off.</li>
+  <li>A 4-cue ring turns in steps of 90 degrees. A 2-cue ring turns in steps of 180 degrees.</li>
+  <li>A tucked card moves with the card that it is tucked under.</li>
+  <li>The first combine moves the Modifier's ring into rings[1] and deletes the Modifier card. A swap gives the old adjectives to the second Modifier, which appears beside the card. On Top places a second adjective before the first. Split moves rings[1] back into a new Modifier card beside the card. Each ring keeps its own active cue.</li>
+  <li>Redraw replaces a card with a new card of the same deck. It takes the old card's place, tucks and lock state. A combined card keeps its adjective ring.</li>
+  <li>Redraw All on a Hook Card applies Redraw to every unlocked card in its stack.</li>
+  <li>A Hook Card is always the head of its stack. It cannot tuck under a card.</li>
+  <li>The Hook Card sentence is computed from the stack on each change. It is never stored.</li>
+  <li>Each pool is a separate data file. The pools are not written into the app code.</li>
+</ul>
+
+<h3>Hook sentence rules</h3>
+<ul>
+  <li>The sentence reads the stack from top to bottom. When 2 cards tuck under one card, they read in order of their place on the canvas, top first.</li>
+  <li>Each card adds its badge word, then its active cue. On a combined card, the active pair is the adjective, then the noun.</li>
+  <li>A deck that the stack does not have is left out. The sentence never shows a blank slot.</li>
+  <li>If the top card is not a Player Role, the sentence starts with that card's badge word.</li>
+  <li>Mood, Twist and Progression start a new sentence.</li>
+</ul>
+
+<h3>Lifecycle</h3>
+<ul>
+  <li>A board exists until the user deletes it.</li>
+  <li>A card exists until the user discards or redraws it, or deletes its board. A Modifier card also ends when a first combine absorbs it.</li>
+  <li>A note exists until the user deletes it, or deletes its board.</li>
+</ul>
+
+<h2>Interfaces</h2>
+
+<h3>Surface</h3>
+<p>One web app for desktop browsers. The user uses a mouse and a keyboard.</p>
+
+<h3>Screens</h3>
+<ul>
+  <li>Board list. Make, open, rename and delete boards. Import a board file.</li>
+  <li>Board. The top bar, the left rail, the canvas, cards, notes, undo, redo and export.</li>
+</ul>
+
+<h3>Left rail</h3>
+<p>One rail in labeled groups, top to bottom:</p>
+<ol>
+  <li>Hook Card</li>
+  <li>Core: Player Role, Mechanic, Goal, Conflict, Resource</li>
+  <li>Modifier</li>
+  <li>Optional: Setting, Mood, Twist, Progression, Constraint</li>
+  <li>Genres, which opens the Genres panel</li>
+</ol>
+<p>A small mark on a genre-tagged deck button shows that the deck's genres differ from the board row.</p>
+
+<h3>Genres panel</h3>
+<p>One row sets the genres of the 4 genre-tagged decks together. Below it, Mechanic, Resource, Progression and Constraint each have their own row. The other 7 decks do not appear, because genre does not change their draws. Every listed deck keeps at least 1 genre. A change applies to the next draw only.</p>
+
+<h3>Connector badges</h3>
+<p>A badge sits on the seam above a tucked card, in that card's type color. The word depends on the card's deck. The user clicks a badge to choose another word.</p>
+<table>
+  <tr><th>Badge above</th><th>Default</th><th>Other choices</th></tr>
+  <tr><td>Player Role (under the Hook Card)</td><td>You are a / an</td><td>You play a / an</td></tr>
+  <tr><td>Player Role (under another Player Role)</td><td>and a / an</td><td>with a / an</td></tr>
+  <tr><td>Mechanic</td><td>who must</td><td>who can only, who learns to</td></tr>
+  <tr><td>Goal</td><td>to</td><td>until, so you can</td></tr>
+  <tr><td>Conflict</td><td>but</td><td>while, even though</td></tr>
+  <tr><td>Resource</td><td>using</td><td>while managing, spending</td></tr>
+  <tr><td>Setting</td><td>in the</td><td>aboard the, inside the</td></tr>
+  <tr><td>Mood</td><td>It feels</td><td>The tone is</td></tr>
+  <tr><td>Twist</td><td>Except</td><td>The catch:</td></tr>
+  <tr><td>Progression</td><td>As you play,</td><td>Over time,</td></tr>
+  <tr><td>Constraint</td><td>with</td><td>using only</td></tr>
+</table>
+
+<h3>Hints and drop zones</h3>
+<ul>
+  <li>Normal places: a Player Role under a Hook Card, then Mechanic, Goal, Conflict and Resource in that order. A Modifier on a Player Role, Resource or Setting. The user can still tuck any card under any card.</li>
+  <li>A Modifier over a card with no adjectives combines anywhere on the card. Over a combined card, it shows 2 zones: center to swap, top to add on top.</li>
+</ul>
+
+<h3>Visual design</h3>
+<p>The look carries over from TheForge: the design tokens, the 2 fonts, the dark canvas, the top bar and side rail, the card, the ring control, tuck, combine and notes. <code>/dev-ui-update</code> writes <code>docs/design-system.html</code> for GameIdea and adds the 11 deck colors and icons, the Hook Card, the lock and the Genres panel.</p>
+
+<h3>Outputs</h3>
+<ul>
+  <li>Copy on a Hook Card: the sentence as plain text on the clipboard.</li>
+  <li>Text file: the cards, hooks and notes of one board, in plain words.</li>
+  <li>Board file: all data of one board, with a format version. The app can import it again.</li>
+</ul>
+
+<h3>Inputs</h3>
+<p>Mouse, keyboard and a board file import. There is no other input.</p>
+
+<h2>Architecture</h2>
+<p>This section holds the outline. <code>/dev-architecture</code> confirms the details and records them in <code>docs/architecture.html</code>.</p>
+<ul>
+  <li>The whole app runs in the browser. There is no server code and no database server.</li>
+  <li>Language and build: TypeScript 6.0.3 in strict mode, built by Vite 8.3.5. Node.js 24 LTS runs the build tools. npm installs the libraries.</li>
+  <li>Libraries, pinned exactly as in TheForge: React 19.3.1, React Flow (<code>@xyflow/react</code>) 12.12.0 for the canvas, Zustand 5.0.16 with zundo 2.3.0 for state and undo, Dexie 4.4.7 on IndexedDB for storage, Zod 4.6.7 to check imported files.</li>
+  <li>Test and code tools: Vitest 5.0.5, Playwright 1.64.1, ESLint and Prettier.</li>
+  <li>Pattern: feature folders. Each feature has one folder with its screen parts, state actions, logic and tests.</li>
+  <li>Screens use hash addresses: the board list at <code>#/</code>, a board at <code>#/board/{id}</code>.</li>
+  <li>The boards save to IndexedDB, one record for each board. The app asks for persistent storage at start-up.</li>
+  <li>The cue pools ship inside the app files, one JSON file for each deck. A one-time conversion makes them from the Markdown libraries in <code>docs/libraries/</code>. After that, the JSON files are the source, and no build step reads the Markdown.</li>
+  <li>Ports, fixed: 5174 for development, 4174 for the built app, 4444 for HTTPS on the local network. The browser stores boards for each address and port, so the ports must not change. They differ from the TheForge ports, so both apps can run at the same time.</li>
+  <li>There are no external services: no sign-in, no usage data and no AI.</li>
+  <li>The start point is a copy of the TheForge code. The copy is renamed, and the story pools are removed.</li>
+</ul>
+
+<h2>State and failure</h2>
+<table>
+  <tr><th>Case</th><th>What the app does</th></tr>
+  <tr><td>Normal use</td><td>The app saves after each change. There is no Save button.</td></tr>
+  <tr><td>A save fails, for example because the storage is full</td><td>The app shows a warning and offers an export.</td></tr>
+  <tr><td>The same board is open in 2 tabs</td><td>When one tab saves, the other tab shows "This board changed in another tab" and reloads the board. That tab loses changes made before the reload.</td></tr>
+  <tr><td>An import file is bad</td><td>The app rejects the file, shows a message and keeps the current boards.</td></tr>
+  <tr><td>The user discards a card by mistake</td><td>Undo brings the card back.</td></tr>
+  <tr><td>The browser data is cleared</td><td>The boards are lost. The board file export is the only backup.</td></tr>
+  <tr><td>The deck's genres give fewer cues than the card needs</td><td>The draw fills the card with Generic cues. A short notice names the deck.</td></tr>
+  <tr><td>A Hook Card stack has 2 cards tucked under one card</td><td>The sentence reads them in order of their place on the canvas, top first.</td></tr>
+  <tr><td>The top card under a Hook Card is not a Player Role</td><td>The sentence starts with that card's badge word.</td></tr>
+  <tr><td>The user tries to tuck a Hook Card under a card</td><td>The app does not allow it.</td></tr>
+  <tr><td>The pool files do not load</td><td>The app shows an error with a Retry button. Boards still open, and saved cards still show. Only the deck buttons stop.</td></tr>
+</table>
+<p>There is no concurrency between users, because there is only one user and no server.</p>
+
+<h2>Non-functional requirements</h2>
+<table>
+  <tr><th>Area</th><th>Target</th></tr>
+  <tr><td>Speed</td><td>A draw, a rotate or a Hook Card update shows in less than 100 ms. The canvas moves smoothly with 200 cards on one board.</td></tr>
+  <tr><td>First load</td><td>Less than 2 seconds on a normal home connection.</td></tr>
+  <tr><td>Browsers</td><td>The current versions of Chrome, Edge, Firefox and Safari on desktop.</td></tr>
+  <tr><td>Cost</td><td>$0 for each month.</td></tr>
+  <tr><td>Security</td><td>No accounts. No data goes to a server.</td></tr>
+  <tr><td>Privacy</td><td>No usage data. All data stays on the user's computer.</td></tr>
+</table>
+
+<h2>Milestones</h2>
+<p>The biggest risk is that random stacks make weak or nonsense hooks. The scan ranks this as the top complaint in the category. M2 tests it after a short copy step.</p>
+
+<h3>M1: Copy and rename</h3>
+<ul>
+  <li>Copy the TheForge code into this repository.</li>
+  <li>Rename the app, the database and the page title to GameIdea. Set ports 5174, 4174 and 4444.</li>
+  <li>Remove the story pools and story card types.</li>
+  <li>Pass bar: the copied tests pass, and the app runs at port 4174.</li>
+</ul>
+
+<h3>M2: Hook test</h3>
+<ul>
+  <li>Convert the user's libraries for the 5 core decks and the Modifier from <code>docs/libraries/</code> into JSON pool files. A library that is not finished can ship with the cues it has, at least 20 cues.</li>
+  <li>The new card types, the Hook Card with its sentence, Copy, Redraw All, the lock and the connector badges.</li>
+  <li>Pass bar: the user draws 20 stacks. In each deck, at least 16 of 20 cards have a usable cue. At least 12 of the 20 hooks are ideas the user would build.</li>
+</ul>
+
+<h3>M3: Full core pools and genres</h3>
+<ul>
+  <li>The finished core and Modifier libraries, converted to JSON. The Mechanic and Resource pools carry genre tags.</li>
+  <li>The Genres panel and the genre mark on deck buttons.</li>
+  <li>The user writes the cues. Claude converts them and does not change their text.</li>
+  <li>Pass bar: every converted pool matches its library cue for cue. Genre filtering and the Generic fill work. Cue counts per genre are guidance only, about 30 in Mechanic and Resource.</li>
+</ul>
+
+<h3>M4: Optional decks</h3>
+<ul>
+  <li>The libraries for Setting, Mood, Twist, Progression and Constraint, converted to JSON. The Progression and Constraint pools carry genre tags.</li>
+  <li>The grouped left rail.</li>
+  <li>Pass bar: every converted pool matches its library cue for cue. Cue counts per genre are guidance only, about 15 in Progression and Constraint.</li>
+</ul>
+
+<h3>M5: Export and finish</h3>
+<ul>
+  <li>The text export holds each hook.</li>
+  <li>A full check of the carried-over features, and HTTPS on the local network.</li>
+  <li>Pass bar: all done criteria pass.</li>
+</ul>
+
+<h3>Cue rules</h3>
+<p>The user writes the libraries. These rules are guidance for the user, and the conversion step reports cues that break them. Pool sizes come from the libraries. The earlier targets of about 150 cues for each core deck and about 80 for each optional deck are guidance only.</p>
+<ul>
+  <li>Use general phrases. Do not use proper names or game titles.</li>
+  <li>Keep each cue inside its deck's cue form in the Decks table.</li>
+  <li>Cues are bare. They carry no joining words, because the badges supply them.</li>
+  <li>Keep Genre and art style apart. A cue never names an art style as a genre.</li>
+  <li>Do not copy cue lists from other idea generators or card decks.</li>
+</ul>
+
+<h2>Done criteria</h2>
+<ul>
+  <li>The M2 pass bars pass: at least 16 of 20 cards in each core deck and in the Modifier deck have a usable cue, and at least 12 of 20 hooks are ideas the user would build.</li>
+  <li>All 11 libraries are converted to JSON pool files that match them cue for cue. Per-genre cue counts are not a done criterion. The user tunes them after the app works.</li>
+  <li>The Hook Card shows the correct sentence for a full stack and for each failure case in State and failure. Copy puts that sentence on the clipboard as plain text.</li>
+  <li>A genre change affects only the next draw. Cards already on the board do not change.</li>
+  <li>Redraw All replaces every unlocked card in the stack and leaves locked cards as they are.</li>
+  <li>All 8 Required rows of the scan work in Chrome, Edge, Firefox and Safari on desktop.</li>
+  <li>Every carried-over feature in the Scope section works.</li>
+  <li>The speed and first-load targets pass.</li>
+  <li>An exported board file imports again with no data lost, and the text file holds each hook.</li>
+  <li>One command runs the app at port 4174. Another command serves HTTPS on the local network at port 4444.</li>
+</ul>
+
+<h2>Open risks and assumptions</h2>
+
+<h3>Risks</h3>
+<ul>
+  <li>Draw quality. Random stacks can read as nonsense. M2 tests this first with a fixed pass bar. The scan ranks coherence control as the top differentiator. The MVP answers it only with curated pools, genre settings, rotation and lock.</li>
+  <li>Pool work. The user writes 11 libraries, 4 of them with genre tags. This is the largest job in the MVP, and M2 waits for the core and Modifier libraries.</li>
+  <li>Library format. The Markdown format of <code>docs/libraries/</code> is not known yet. The conversion rules follow the first library file.</li>
+  <li>Sentence grammar. Some cue and badge pairs can read badly, for example a Mechanic verb after "who must". The cue forms and badge choices reduce this. M2 shows how often it happens.</li>
+  <li>Two codebases. A fix in TheForge does not reach GameIdea by itself. A shared package is deferred.</li>
+  <li>Lost browser data. If the user clears the browser data, the boards are lost. Export is the only backup. Safari can delete site data after a period with no use.</li>
+  <li>App name. "GameIdea" is a working name. Check it before any public launch.</li>
+</ul>
+
+<h3>Assumptions</h3>
+<ul>
+  <li>The undo history lasts for the open session only. It is not saved with the board.</li>
+  <li>A new board starts with all 21 genres on for every genre-tagged deck. The user did not pick this default. It was the recommended default and stands until the user changes it.</li>
+  <li>Redraw All follows the single Redraw rule, so a combined card keeps its adjective ring.</li>
+  <li>The badge choices other than the defaults were proposed in the interview and can change during M2.</li>
+</ul>
+
+<h2>Amendments</h2>
+<p class="meta">2026-11-01: First version. Written from the <code>/dev-initial-interview</code> run, with <code>docs/competitive-scan.html</code> as prior art and <code>concept.md</code> as the concept source.</p>
+<p class="meta">2026-11-01: The user writes the deck libraries as Markdown files in <code>docs/libraries/</code>. A one-time conversion makes the JSON pool files, and the JSON is then the source. Only Mechanic, Resource, Progression and Constraint carry genre tags. The other 7 decks ignore genre, and the Genres panel lists only the 4 tagged decks. Claude no longer drafts cues. Pool sizes come from the libraries. Changed Scope, Data model, Interfaces, Architecture, M2 to M4, Cue rules, Done criteria and Risks. Changed by the user's request after the interview.</p>
+<p class="meta">2026-11-01: The genre list changed from 7 genres to the user's 21 genres, with a Genres table of meanings. A hidden <code>generic</code> tag marks cues that fit every genre and feeds the fill rule. Per-genre cue minimums are now guidance only, because the user will tune counts after the app works. Changed Scope, Data model, M3, M4, Done criteria and Assumptions. Changed by the user's request.</p>
+
+</body>
+</html>
