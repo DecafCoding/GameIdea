@@ -7924,7 +7924,7 @@
       ]
     },
     {
-      "card": "a cult controls the village with parasites",
+      "card": "a cult controls the village",
       "games": [
         "Resident Evil 4 (2005)",
         "Resident Evil 4"
@@ -7952,7 +7952,14 @@
       ]
     },
     {
-      "card": "aliens pour in and soldiers silence all witnesses",
+      "card": "aliens pour in",
+      "games": [
+        "Half-Life",
+        "Black Mesa"
+      ]
+    },
+    {
+      "card": "soldiers silence all witnesses",
       "games": [
         "Half-Life",
         "Black Mesa"
@@ -7966,7 +7973,14 @@
       ]
     },
     {
-      "card": "dragons return and civil war tears the land",
+      "card": "dragons return",
+      "games": [
+        "The Elder Scrolls V: Skyrim Special Edition",
+        "The Elder Scrolls V: Skyrim"
+      ]
+    },
+    {
+      "card": "civil war tears the land",
       "games": [
         "The Elder Scrolls V: Skyrim Special Edition",
         "The Elder Scrolls V: Skyrim"
@@ -8057,7 +8071,14 @@
       ]
     },
     {
-      "card": "the dead roam and people turn on you",
+      "card": "the dead roam",
+      "games": [
+        "The Walking Dead: The Telltale Definitive Series",
+        "The Walking Dead"
+      ]
+    },
+    {
+      "card": "people turn on you",
       "games": [
         "The Walking Dead: The Telltale Definitive Series",
         "The Walking Dead"
@@ -8106,7 +8127,7 @@
       ]
     },
     {
-      "card": "your mother believes God wants you dead",
+      "card": "your own family wants you dead",
       "games": [
         "The Binding of Isaac: Rebirth",
         "The Binding of Isaac"
@@ -8200,7 +8221,7 @@
       ]
     },
     {
-      "card": "a giant owl hunts you",
+      "card": "a giant beast hunts you",
       "games": [
         "Ori and the Blind Forest: Definitive Edition"
       ]
@@ -8212,31 +8233,31 @@
       ]
     },
     {
-      "card": "a god of light turns heroes into puppets",
+      "card": "a god turns heroes into puppets",
       "games": [
         "Super Smash Bros. Ultimate"
       ]
     },
     {
-      "card": "a god of time holds the underworld",
+      "card": "a tyrant rules the underworld",
       "games": [
         "Hades II"
       ]
     },
     {
-      "card": "a god who cannot feel pain hunts you",
+      "card": "an unkillable pursuer hunts you",
       "games": [
         "God of War"
       ]
     },
     {
-      "card": "a jealous girl blocks every escape",
+      "card": "an obsessed captor blocks every exit",
       "games": [
         "MiSide"
       ]
     },
     {
-      "card": "a lovesick book will not let you go",
+      "card": "an obsessed admirer will not let you go",
       "games": [
         "It Takes Two"
       ]
@@ -8278,37 +8299,43 @@
       ]
     },
     {
-      "card": "a prophet's city will not let her go",
+      "card": "a fanatic city will not let you leave",
       "games": [
         "BioShock Infinite"
       ]
     },
     {
-      "card": "a publisher wants to steal your ideas",
+      "card": "someone wants to steal your ideas",
       "games": [
         "Split Fiction"
       ]
     },
     {
-      "card": "a queen's silk binds every soul to her",
+      "card": "a queen binds every soul to her will",
       "games": [
         "Hollow Knight: Silksong"
       ]
     },
     {
-      "card": "a rival wants the relics to rule time",
+      "card": "a rival wants the same relics",
       "games": [
         "A Hat in Time"
       ]
     },
     {
-      "card": "a scientist opened hell, and demons flood in",
+      "card": "a scientist opened a door to hell",
       "games": [
         "DOOM"
       ]
     },
     {
-      "card": "a shark keeps biting your raft apart",
+      "card": "demons flood in",
+      "games": [
+        "DOOM"
+      ]
+    },
+    {
+      "card": "a predator keeps tearing your raft apart",
       "games": [
         "Raft"
       ]
@@ -8320,7 +8347,7 @@
       ]
     },
     {
-      "card": "a sickness keeps you stranded on the planet",
+      "card": "a sickness keeps you stranded",
       "games": [
         "Subnautica"
       ]
@@ -8332,19 +8359,25 @@
       ]
     },
     {
-      "card": "a time keeper rewrites history and revives old foes",
+      "card": "someone rewrites history",
       "games": [
         "Mortal Kombat 11"
       ]
     },
     {
-      "card": "a titan attacks the home of the gods",
+      "card": "old foes come back to life",
+      "games": [
+        "Mortal Kombat 11"
+      ]
+    },
+    {
+      "card": "a titan attacks the gods",
       "games": [
         "Hades II"
       ]
     },
     {
-      "card": "a tyrant stalks you through the station",
+      "card": "an unstoppable pursuer stalks you",
       "games": [
         "Resident Evil 2"
       ]
@@ -8362,7 +8395,7 @@
       ]
     },
     {
-      "card": "a warlord steals children's brains for cyborgs",
+      "card": "a warlord turns children into weapons",
       "games": [
         "METAL GEAR RISING: REVENGEANCE"
       ]
@@ -8464,7 +8497,7 @@
       ]
     },
     {
-      "card": "demigods fight over the broken crown",
+      "card": "heirs fight over a shattered throne",
       "games": [
         "ELDEN RING"
       ]
@@ -8488,7 +8521,7 @@
       ]
     },
     {
-      "card": "each blink skips a moment forever",
+      "card": "every blink costs you time",
       "games": [
         "Before Your Eyes"
       ]
@@ -8500,7 +8533,7 @@
       ]
     },
     {
-      "card": "each day ends at 2 a.m.",
+      "card": "each day ends too soon",
       "games": [
         "Stardew Valley"
       ]
@@ -8518,13 +8551,13 @@
       ]
     },
     {
-      "card": "each year a younger age group vanishes",
+      "card": "each year more people vanish",
       "games": [
         "Clair Obscur: Expedition 33"
       ]
     },
     {
-      "card": "eight fighters crowd one tiny stage",
+      "card": "too many fighters on one small stage",
       "games": [
         "Super Smash Bros. Ultimate"
       ]
@@ -8590,7 +8623,7 @@
       ]
     },
     {
-      "card": "every rescue races the fog",
+      "card": "every rescue has a deadline",
       "games": [
         "Persona 4 Golden"
       ]
@@ -8626,13 +8659,13 @@
       ]
     },
     {
-      "card": "followers starve, sicken, doubt, and grow old",
+      "card": "your followers need constant care",
       "games": [
         "Cult of the Lamb"
       ]
     },
     {
-      "card": "four lords and their monsters rule the village",
+      "card": "monstrous lords rule the village",
       "games": [
         "Resident Evil Village"
       ]
@@ -8644,27 +8677,21 @@
       ]
     },
     {
-      "card": "giant grown-ups want to eat you",
+      "card": "giants want to eat you",
       "games": [
         "Little Nightmares"
       ]
     },
     {
-      "card": "guards and walls of light hold the city",
+      "card": "guards and barriers hold the city",
       "games": [
         "Dishonored"
       ]
     },
     {
-      "card": "guards make you perform deadly shows",
+      "card": "your captors force you to perform",
       "games": [
         "BattleBlock Theater"
-      ]
-    },
-    {
-      "card": "he does not know why he wants it",
-      "games": [
-        "To the Moon"
       ]
     },
     {
@@ -8674,7 +8701,7 @@
       ]
     },
     {
-      "card": "heaven's armies climb your train floor by floor",
+      "card": "enemies climb toward you floor by floor",
       "games": [
         "Monster Train"
       ]
@@ -8686,13 +8713,13 @@
       ]
     },
     {
-      "card": "hell gates open across the land",
+      "card": "portals to hell open across the land",
       "games": [
         "The Elder Scrolls IV: Oblivion Game of the Year Edition"
       ]
     },
     {
-      "card": "hell's armies have taken Earth",
+      "card": "an invading army has taken the world",
       "games": [
         "DOOM Eternal"
       ]
@@ -8758,7 +8785,7 @@
       ]
     },
     {
-      "card": "living bullets fill every room",
+      "card": "every room is full of enemies",
       "games": [
         "Enter the Gungeon"
       ]
@@ -8770,7 +8797,13 @@
       ]
     },
     {
-      "card": "mad patients and a giant brute hunt you",
+      "card": "mad patients hunt you",
+      "games": [
+        "Outlast"
+      ]
+    },
+    {
+      "card": "a giant brute hunts you",
       "games": [
         "Outlast"
       ]
@@ -8782,7 +8815,13 @@
       ]
     },
     {
-      "card": "money is tight and the city is crumbling",
+      "card": "money is tight",
+      "games": [
+        "VA-11 Hall-A: Cyberpunk Bartender Action"
+      ]
+    },
+    {
+      "card": "the city is crumbling",
       "games": [
         "VA-11 Hall-A: Cyberpunk Bartender Action"
       ]
@@ -8836,7 +8875,7 @@
       ]
     },
     {
-      "card": "mutants threaten the last stations",
+      "card": "mutants threaten the last shelters",
       "games": [
         "METRO 2033 Redux"
       ]
@@ -8962,7 +9001,13 @@
       ]
     },
     {
-      "card": "rivals throw items and the track keeps changing",
+      "card": "rivals throw items",
+      "games": [
+        "Sonic & All-Stars Racing Transformed"
+      ]
+    },
+    {
+      "card": "the track keeps changing",
       "games": [
         "Sonic & All-Stars Racing Transformed"
       ]
@@ -9010,7 +9055,7 @@
       ]
     },
     {
-      "card": "special infected pin you down",
+      "card": "special monsters pin you down",
       "games": [
         "Left 4 Dead 2"
       ]
@@ -9034,7 +9079,7 @@
       ]
     },
     {
-      "card": "the animatronics each attack in their own way",
+      "card": "each enemy attacks in its own way",
       "games": [
         "Ultimate Custom Night"
       ]
@@ -9076,13 +9121,25 @@
       ]
     },
     {
-      "card": "the dead outnumber you and one bite kills",
+      "card": "the dead outnumber you",
       "games": [
         "Project Zomboid"
       ]
     },
     {
-      "card": "the deadline is close and the cargo fragile",
+      "card": "one bite kills",
+      "games": [
+        "Project Zomboid"
+      ]
+    },
+    {
+      "card": "the deadline is close",
+      "games": [
+        "American Truck Simulator"
+      ]
+    },
+    {
+      "card": "the cargo is fragile",
       "games": [
         "American Truck Simulator"
       ]
@@ -9100,7 +9157,7 @@
       ]
     },
     {
-      "card": "the demon king took your arm",
+      "card": "a demon took your arm",
       "games": [
         "Devil May Cry 5"
       ]
@@ -9142,7 +9199,7 @@
       ]
     },
     {
-      "card": "the king needs one more human soul",
+      "card": "the ruler needs one more soul",
       "games": [
         "Undertale"
       ]
@@ -9154,13 +9211,19 @@
       ]
     },
     {
-      "card": "the law and the modern age close in",
+      "card": "the law closes in",
       "games": [
         "Red Dead Redemption 2"
       ]
     },
     {
-      "card": "the lords refuse to return",
+      "card": "the modern age leaves you behind",
+      "games": [
+        "Red Dead Redemption 2"
+      ]
+    },
+    {
+      "card": "the old rulers refuse their duty",
       "games": [
         "DARK SOULS III"
       ]
@@ -9172,13 +9235,13 @@
       ]
     },
     {
-      "card": "the monsters that get views also kill you",
+      "card": "the best footage is the deadliest",
       "games": [
         "Content Warning"
       ]
     },
     {
-      "card": "the narrator says she will end the world",
+      "card": "the narrator lies to you",
       "games": [
         "Slay the Princess — The Pristine Cut"
       ]
@@ -9202,13 +9265,19 @@
       ]
     },
     {
-      "card": "the peak is high and you start weak",
+      "card": "the peak is high",
       "games": [
         "A Short Hike"
       ]
     },
     {
-      "card": "the prosecutor and the witnesses bend the truth",
+      "card": "you start weak",
+      "games": [
+        "A Short Hike"
+      ]
+    },
+    {
+      "card": "the witnesses bend the truth",
       "games": [
         "Phoenix Wright: Ace Attorney Trilogy"
       ]
@@ -9232,7 +9301,13 @@
       ]
     },
     {
-      "card": "the sea keeps rising and the town dies",
+      "card": "the sea keeps rising",
+      "games": [
+        "ATRI -My Dear Moments-"
+      ]
+    },
+    {
+      "card": "the town is dying",
       "games": [
         "ATRI -My Dear Moments-"
       ]
@@ -9244,7 +9319,7 @@
       ]
     },
     {
-      "card": "the sun explodes every 22 minutes",
+      "card": "the world ends on a timer",
       "games": [
         "Outer Wilds"
       ]
@@ -9256,7 +9331,7 @@
       ]
     },
     {
-      "card": "the town makes monsters out of your guilt",
+      "card": "the place makes monsters out of your guilt",
       "games": [
         "SILENT HILL 2"
       ]
@@ -9292,7 +9367,7 @@
       ]
     },
     {
-      "card": "three factions all want the dam",
+      "card": "three factions want the same prize",
       "games": [
         "Fallout: New Vegas"
       ]
@@ -9352,19 +9427,19 @@
       ]
     },
     {
-      "card": "you forgot your name, badge, and gun",
+      "card": "you forgot who you are",
       "games": [
         "Disco Elysium - The Final Cut"
       ]
     },
     {
-      "card": "you only see the instant of death",
+      "card": "you only see the moment of death",
       "games": [
         "Return of the Obra Dinn"
       ]
     },
     {
-      "card": "your best friend moves away in three days",
+      "card": "your best friend leaves in three days",
       "games": [
         "OMORI"
       ]
@@ -9394,7 +9469,7 @@
       ]
     },
     {
-      "card": "your demon father wants to rule the world",
+      "card": "your own father wants to rule the world",
       "games": [
         "Tekken 8"
       ]
@@ -9406,7 +9481,7 @@
       ]
     },
     {
-      "card": "your father sends the underworld to stop you",
+      "card": "your own family tries to stop you",
       "games": [
         "Hades"
       ]
@@ -9436,7 +9511,7 @@
       ]
     },
     {
-      "card": "your memory, doctor, and drugs lie to you",
+      "card": "your own mind lies to you",
       "games": [
         "Katana ZERO"
       ]
@@ -9460,7 +9535,7 @@
       ]
     },
     {
-      "card": "your pollution makes the natives attack",
+      "card": "your growth provokes the locals",
       "games": [
         "Factorio"
       ]
@@ -9496,7 +9571,7 @@
       ]
     },
     {
-      "card": "your teacher says kill to graduate",
+      "card": "the only way out is to kill",
       "games": [
         "Danganronpa: Trigger Happy Havoc"
       ]
