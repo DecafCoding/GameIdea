@@ -142,7 +142,7 @@
 | 136 | build vehicles | Sandbox, Vehicle Sim & Racing, Survival Craft | 2 | Scrap Mechanic, Stormworks: Build and Rescue |
 | 137 | buy property | Builder & Management, Life Sim, Party & Multiplayer | 2 | House Flipper, Cookie Clicker |
 | 138 | capture points | Shooter, Party & Multiplayer, Strategy | 2 | Team Fortress 2, Ravenfield |
-| 139 | carve enemies for ammo | Shooter | 2 | DOOM, DOOM Eternal |
+| 139 | scavenge ammo from foes | Shooter | 2 | DOOM, DOOM Eternal |
 | 140 | choose blessings | Roguelike | 2 | Hades, Hades II |
 | 141 | chop trees | Survival Craft, Life Sim | 2 | The Forest, Farming Simulator 19 |
 | 142 | conquer | Strategy | 2 | Ghost of Tsushima DIRECTOR'S CUT, Saints Row: The Third |
@@ -158,14 +158,14 @@
 | 152 | glide | Open World, Platformer | 2 | Batman: Arkham City - Game of the Year Edition, A Short Hike |
 | 153 | jump between stars | Roguelike, Sandbox | 2 | Spore, FTL: Faster Than Light |
 | 154 | kill fast | Shooter, Rhythm & Arcade, Melee Action | 2 | Hotline Miami, Hotline Miami 2: Wrong Number |
-| 155 | knock foes off the stage | Fighting, Party & Multiplayer | 2 | Super Smash Bros. Ultimate, Rivals of Aether |
+| 155 | knock foes out of the arena | Fighting, Party & Multiplayer | 2 | Super Smash Bros. Ultimate, Rivals of Aether |
 | 156 | land | Vehicle Sim & Racing | 2 | Kerbal Space Program, Microsoft Flight Simulator |
 | 157 | open packs | Deckbuilder & Cards | 2 | Stacklands, TCG Card Shop Simulator |
 | 158 | pack items | Puzzle | 2 | DREDGE, Resident Evil 4 (2005) |
 | 159 | pass skill checks | RPG, Narrative | 2 | Fallout: New Vegas, Disco Elysium - The Final Cut |
 | 160 | pick your fights | RPG, Deckbuilder & Cards, Roguelike, Strategy | 2 | Ring of Pain, Ultimate Custom Night |
 | 161 | place blocks | Sandbox, Survival Craft, Puzzle, Builder & Management | 2 | Townscaper, Minecraft |
-| 162 | place portals | Puzzle | 2 | Portal 2, Portal |
+| 162 | open portals | Puzzle | 2 | Portal 2, Portal |
 | 163 | plan a route | Vehicle Sim & Racing, Strategy, Puzzle | 2 | Hotline Miami, Teardown |
 | 164 | plan ahead | Strategy, Deckbuilder & Cards, Puzzle | 2 | Your Only Move Is HUSTLE, Wildfrost |
 | 165 | play others' levels | Sandbox, Platformer, Party & Multiplayer | 2 | Super Mario Maker 2, Dreams |
@@ -186,7 +186,7 @@
 | 180 | send out heroes | Builder & Management, RPG | 2 | DREDGE, Volcano Princess |
 | 181 | sew | Life Sim | 2 | Dressmaker, Assetto Corsa |
 | 182 | solve puzzles together | Party & Multiplayer, Puzzle | 2 | Split Fiction, It Takes Two |
-| 183 | spare enemies | RPG, Narrative | 2 | Undertale, DELTARUNE |
+| 183 | show mercy | RPG, Narrative | 2 | Undertale, DELTARUNE |
 | 184 | stack | Puzzle, Rhythm & Arcade | 2 | The Binding of Isaac: Rebirth, Risk of Rain 2 |
 | 185 | stock shelves | Life Sim, Builder & Management | 2 | Supermarket Together, TCG Card Shop Simulator |
 | 186 | survive | Survival Craft, Horror, Roguelike | 2 | This War of Mine, Don't Starve Together |
@@ -230,7 +230,7 @@
 | 224 | drink | Life Sim | 1 | My Summer Car |
 | 225 | drive off-road | Vehicle Sim & Racing, Open World | 1 | SnowRunner |
 | 226 | eat | Survival Craft, Life Sim, Horror | 1 | Spore |
-| 227 | escort the cart | Party & Multiplayer, Shooter | 1 | Team Fortress 2 |
+| 227 | escort a convoy | Party & Multiplayer, Shooter | 1 | Team Fortress 2 |
 | 228 | evolve | Sandbox, Strategy, Roguelike | 1 | Spore |
 | 229 | face fears | Horror | 1 | OMORI |
 | 230 | fail for laughs | Party & Multiplayer, Sandbox | 1 | The Henry Stickmin Collection |
@@ -288,7 +288,7 @@
 | 282 | reload by hand | Shooter | 1 | Portal 2 |
 | 283 | rescue people | Vehicle Sim & Racing, Sandbox, Open World | 1 | Stormworks: Build and Rescue |
 | 284 | retreat | Strategy, Deckbuilder & Cards | 1 | Marvel Snap |
-| 285 | rewrite rules | Puzzle | 1 | Baba Is You |
+| 285 | change the rules | Puzzle | 1 | Baba Is You |
 | 286 | ride rails | Rhythm & Arcade | 1 | ELDEN RING |
 | 287 | run trade routes | Builder & Management | 1 | WorldBox - God Simulator |
 | 288 | rush in | Fighting, Melee Action | 1 | Street Fighter 6 |

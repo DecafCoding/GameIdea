@@ -1,6 +1,6 @@
 # Deck: Progression (General)
 
-294 cards.
+292 cards.
 
 | # | Card | Genres | Count | Games |
 |---:|---|---|---:|---|
@@ -145,7 +145,7 @@
 | 139 | a countdown to disaster | Horror, Narrative, Survival Craft | 1 | SCP: Secret Laboratory |
 | 140 | a flowchart shows paths you missed | Narrative | 1 | Detroit: Become Human |
 | 141 | a hunger that grows | Horror, Survival Craft, Platformer | 1 | Little Nightmares |
-| 142 | a magic room grows | Open World, Life Sim | 1 | Hogwarts Legacy |
+| 142 | a room grows | Open World, Life Sim | 1 | Hogwarts Legacy |
 | 143 | a mentor helps from beyond death | Narrative | 1 | Phoenix Wright: Ace Attorney Trilogy |
 | 144 | a new lens reveals hidden things | Puzzle, Narrative, Metroidvania | 1 | The Room |
 | 145 | a puzzle box opens layer by layer | Puzzle | 1 | The Room |
@@ -166,135 +166,133 @@
 | 160 | buy new powers | Stealth & Immersive Sim, RPG | 1 | Dishonored |
 | 161 | camp grows into a town | Builder & Management, Survival Craft | 1 | Kenshi |
 | 162 | city grows | Builder & Management, Strategy | 1 | Cities: Skylines |
-| 163 | city grows in rings | Builder & Management | 1 | Frostpunk |
-| 164 | clues fill a logbook | Narrative, Open World, Puzzle | 1 | Outer Wilds |
-| 165 | collect keys to open chapters | Platformer, Puzzle | 1 | A Hat in Time |
-| 166 | colony grows | Builder & Management, Survival Craft | 1 | RimWorld |
-| 167 | colony grows tall | Builder & Management | 1 | Timberborn |
-| 168 | color returns to the world | Narrative, Platformer, Puzzle | 1 | GRIS |
-| 169 | conquer new planets | Strategy | 1 | STAR WARS Empire at War - Gold Pack |
-| 170 | craft better gear | Survival Craft, RPG, Melee Action, Open World | 1 | Black Myth: Wukong |
-| 171 | creature breeding | RPG, Life Sim | 1 | Palworld |
-| 172 | curses pile up | Roguelike, Deckbuilder & Cards, Horror | 1 | Hand of Fate |
-| 173 | danger rises | Rhythm & Arcade, Roguelike, Horror | 1 | Brotato |
-| 174 | double or nothing | Deckbuilder & Cards, Roguelike, Horror | 1 | Buckshot Roulette |
-| 175 | each act changes the rules | Deckbuilder & Cards, Roguelike | 1 | Inscryption |
-| 176 | each round adds more | Rhythm & Arcade, Party & Multiplayer, Horror | 1 | Buckshot Roulette |
-| 177 | each world adds new rules | Puzzle, Platformer, Rhythm & Arcade | 1 | A Dance of Fire and Ice |
-| 178 | earn licenses | Vehicle Sim & Racing | 1 | Burnout Paradise Remastered |
-| 179 | enemies evolve | Roguelike, Open World, Strategy | 1 | Days Gone |
-| 180 | enemies level with you | Open World, RPG | 1 | The Elder Scrolls IV: Oblivion Game of the Year Edition |
-| 181 | factory grows | Builder & Management | 1 | Factorio |
-| 182 | fleet grows | Strategy, Builder & Management | 1 | Euro Truck Simulator 2 |
-| 183 | friends and favors | Life Sim, RPG, Open World | 1 | Kingdom Come: Deliverance II |
-| 184 | gain land and titles | Open World, RPG, Strategy | 1 | Mount & Blade: Warband |
-| 185 | gear changes your moves | Metroidvania, Melee Action | 1 | Hollow Knight: Silksong |
-| 186 | gear sets | RPG, Melee Action, Shooter | 1 | The Witcher 3: Wild Hunt |
-| 187 | grow from cell to civilization | Sandbox, Strategy | 1 | Spore |
-| 188 | guild ranks | RPG, Open World | 1 | The Elder Scrolls IV: Oblivion Game of the Year Edition |
-| 189 | heroes gain quirks | RPG, Roguelike, Strategy | 1 | Darkest Dungeon |
-| 190 | honor shifts | Open World, RPG | 1 | Red Dead Redemption 2 |
-| 191 | hub grows | Roguelike | 1 | Hades II |
-| 192 | ideas change your mind | Narrative, RPG | 1 | Disco Elysium - The Final Cut |
-| 193 | items carry over between runs | Roguelike | 1 | The Binding of Isaac: Rebirth |
-| 194 | kingdoms rise and fall | Strategy, Builder & Management | 1 | WorldBox - God Simulator |
-| 195 | life stages | Life Sim, Narrative | 1 | Before Your Eyes |
-| 196 | maker rank | Sandbox | 1 | Super Mario Maker 2 |
-| 197 | map opens as you fix towers | Open World | 1 | Marvel's Spider-Man Remastered |
-| 198 | masks with powers | Platformer, Shooter | 1 | Hotline Miami |
-| 199 | meals raise your health | Survival Craft, Horror, RPG | 1 | Resident Evil Village |
-| 200 | mercy or kill routes | Narrative, RPG, Stealth & Immersive Sim | 1 | Undertale |
-| 201 | merge weapons | Roguelike | 1 | HoloCure - Save the Fans! |
-| 202 | milestones unlock buildings | Builder & Management, Strategy | 1 | Cities: Skylines |
-| 203 | mix two classes | RPG, Melee Action | 1 | Grim Dawn |
-| 204 | money builds round to round | Shooter, Party & Multiplayer, Roguelike | 1 | Counter-Strike |
-| 205 | more escape routes | Horror, Stealth & Immersive Sim | 1 | R.E.P.O. |
-| 206 | more friends, more perks | Narrative, Life Sim, RPG | 1 | South Park: The Stick of Truth |
-| 207 | new abilities | RPG, Metroidvania, Melee Action, Platformer, Shooter, Open World, Stealth & Immersive Sim | 1 | South Park: The Stick of Truth |
-| 208 | new body parts | Sandbox, Roguelike, RPG | 1 | Spore |
-| 209 | new building parts | Sandbox, Vehicle Sim & Racing, Survival Craft, Builder & Management | 1 | Besiege |
-| 210 | new crew types | Roguelike, Strategy | 1 | FTL: Faster Than Light |
-| 211 | new dream levels | Platformer, Puzzle | 1 | Human Fall Flat |
-| 212 | new dungeons | RPG, Roguelike, Melee Action, Open World | 1 | Persona 5 Royal |
-| 213 | new hacks | Stealth & Immersive Sim, Shooter | 1 | PRAGMATA |
-| 214 | new land tiles | Builder & Management, Strategy | 1 | Cities: Skylines |
-| 215 | new loadouts | Shooter, Party & Multiplayer | 1 | Titanfall 2 |
-| 216 | new movement powers | Platformer, Metroidvania, Open World | 1 | Sheepy: A Short Adventure |
-| 217 | new partners | Melee Action, Narrative | 1 | Hi-Fi RUSH |
-| 218 | new planets | Survival Craft, Open World | 1 | Starbound |
-| 219 | new plants | Strategy, Life Sim, Survival Craft | 1 | Plants vs. Zombies |
-| 220 | new rooms open | Horror, Metroidvania | 1 | Sally Face - Episode One |
-| 221 | new stances | Melee Action, Fighting | 1 | Ghost of Tsushima DIRECTOR'S CUT |
-| 222 | new units | Strategy | 1 | Totally Accurate Battle Simulator |
-| 223 | new voices in your head | Horror, Narrative | 1 | Slay the Princess — The Pristine Cut |
-| 224 | notoriety rises and resets | Open World, Shooter, Stealth & Immersive Sim | 1 | PAYDAY 2 |
-| 225 | numbers grow without end | Builder & Management | 1 | Cookie Clicker |
-| 226 | old friends return | Narrative, RPG | 1 | OMORI |
-| 227 | old rivals return | Narrative, RPG, Fighting | 1 | Phoenix Wright: Ace Attorney Trilogy |
-| 228 | one school year | Life Sim, Narrative | 1 | Persona 3 Reload |
-| 229 | one week, day by day | Narrative, Life Sim | 1 | POSTAL 2 |
-| 230 | optional rules make it harder | Roguelike, Deckbuilder & Cards, Shooter, Strategy | 1 | Halo: The Master Chief Collection |
-| 231 | perks at each rest stop | Roguelike, RPG | 1 | Noita |
-| 232 | permanent upgrade tree | Roguelike, Strategy | 1 | Bloons TD 6 |
-| 233 | promotions | Shooter, Party & Multiplayer, Strategy | 1 | Deep Rock Galactic |
-| 234 | quests unlock heroes | Roguelike | 1 | Megabonk |
-| 235 | raft grows into a town | Survival Craft | 1 | Raft |
-| 236 | random floors | Roguelike | 1 | Enter the Gungeon |
-| 237 | random role each round | Party & Multiplayer, Horror | 1 | SCP: Secret Laboratory |
-| 238 | random unlocks | Roguelike | 1 | HoloCure - Save the Fans! |
-| 239 | rank and titles rise | RPG, Open World | 1 | WEBFISHING |
-| 240 | reach space | Builder & Management, Strategy | 1 | Oxygen Not Included |
-| 241 | read books to learn skills | Survival Craft, RPG | 1 | Project Zomboid |
-| 242 | real days pass | Life Sim, Horror | 1 | OMORI |
-| 243 | rebuild the town | Life Sim, RPG, Builder & Management | 1 | Fields of Mistria |
-| 244 | regulars' stories unfold | Life Sim, Narrative | 1 | VA-11 Hall-A: Cyberpunk Bartender Action |
-| 245 | rescued prisoners join you | Platformer | 1 | Broforce |
-| 246 | reset for prestige | Builder & Management | 1 | Cookie Clicker |
-| 247 | revivals stop near the end | Horror | 1 | Buckshot Roulette |
-| 248 | romance leads to family | Life Sim | 1 | Fields of Mistria |
-| 249 | runes | RPG, Shooter, Melee Action | 1 | DOOM |
-| 250 | scars and lost limbs stay | Builder & Management, Strategy, Roguelike | 1 | RimWorld |
-| 251 | science and magic machines | Survival Craft, Builder & Management | 1 | Don't Starve |
-| 252 | secret societies | Puzzle, Narrative | 1 | Papers, Please |
-| 253 | secret spells | RPG | 1 | Noita |
-| 254 | shortcuts open the world | Melee Action, RPG, Metroidvania | 1 | DARK SOULS: REMASTERED |
-| 255 | spells change the world | Roguelike, Sandbox | 1 | Hades II |
-| 256 | spirits leave one by one | Builder & Management, Narrative | 1 | Spiritfarer: Farewell Edition |
-| 257 | spread across the stars | Builder & Management, Strategy | 1 | Dyson Sphere Program |
-| 258 | stamina grows | Open World, Narrative | 1 | A Short Hike |
-| 259 | story unlocks after each death | Roguelike, Narrative | 1 | Hades |
-| 260 | study items to learn recipes | Survival Craft | 1 | Abiotic Factor |
-| 261 | tenants move in | Survival Craft, Builder & Management | 1 | Starbound |
-| 262 | the city darkens as chaos rises | Stealth & Immersive Sim, Open World | 1 | Dishonored |
-| 263 | the crew shrinks | Party & Multiplayer, Horror | 1 | Among Us |
-| 264 | the dead return in the next wave | Horror, Shooter | 1 | SCP: Secret Laboratory |
-| 265 | the game itself changes | Horror, Puzzle, Narrative | 1 | Doki Doki Literature Club! |
-| 266 | the hero learns to hope again | Narrative, Life Sim | 1 | ATRI -My Dear Moments- |
-| 267 | the past comes out piece by piece | Horror, Narrative | 1 | Firework |
-| 268 | the planet becomes livable | Survival Craft, Builder & Management | 1 | The Planet Crafter |
-| 269 | the sky heals | Survival Craft, Narrative | 1 | The Planet Crafter |
-| 270 | the town falls apart | Shooter, Horror, Narrative | 1 | POSTAL 2 |
-| 271 | the truth about you | Narrative, Horror | 1 | SOMA |
-| 272 | the world decays | Survival Craft, Horror | 1 | Project Zomboid |
-| 273 | the world reflects good or evil | RPG, Narrative, Open World, Sandbox | 1 | Black & White |
-| 274 | the world remembers your last run | Roguelike, Horror, Narrative | 1 | OneShot |
-| 275 | the world shifts into dreams | Horror, Narrative | 1 | SIGNALIS |
-| 276 | the world wipes and resets | Survival Craft, Party & Multiplayer | 1 | Rust |
-| 277 | thin your deck | Deckbuilder & Cards, Roguelike | 1 | Fights in Tight Spaces |
-| 278 | time loops | Puzzle, Narrative, Horror, Roguelike | 1 | Slay the Princess — The Pristine Cut |
-| 279 | timed reward chests | Party & Multiplayer, Puzzle | 1 | Bongo Cat |
-| 280 | tower upgrade paths | Strategy | 1 | Bloons TD 6 |
-| 281 | townspeople move in | Life Sim, Builder & Management, Survival Craft | 1 | Terraria |
-| 282 | trade up to rarer items | Life Sim, RPG | 1 | Bongo Cat |
-| 283 | trust levels | RPG, Narrative | 1 | Days Gone |
-| 284 | two rival skill trees | RPG, Open World | 1 | Sleeping Dogs: Definitive Edition |
-| 285 | upgrades after each round | Roguelike, Party & Multiplayer | 1 | Clone Drone in the Danger Zone |
-| 286 | vehicle built part by part | Vehicle Sim & Racing, Sandbox | 1 | My Summer Car |
-| 287 | waves get harder | Shooter, Strategy, Rhythm & Arcade, Roguelike | 1 | Killing Floor |
-| 288 | weapon evolutions | Roguelike | 1 | Vampire Survivors |
-| 289 | weapon forms | Roguelike, Melee Action | 1 | Hades II |
-| 290 | weapons and curses | Roguelike | 1 | Cult of the Lamb |
-| 291 | your death shapes your next run | Roguelike, Deckbuilder & Cards | 1 | Inscryption |
-| 292 | your deck gets stronger | Deckbuilder & Cards, Roguelike | 1 | Hand of Fate |
-| 293 | your politics form from your choices | Narrative, RPG | 1 | Disco Elysium - The Final Cut |
-| 294 | your tool gets supercharged | Shooter, Sandbox | 1 | Half-Life 2 |
+| 163 | clues fill a logbook | Narrative, Open World, Puzzle | 1 | Outer Wilds |
+| 164 | collect keys to open chapters | Platformer, Puzzle | 1 | A Hat in Time |
+| 165 | colony grows | Builder & Management, Survival Craft | 1 | RimWorld |
+| 166 | colony grows tall | Builder & Management | 1 | Timberborn |
+| 167 | color returns to the world | Narrative, Platformer, Puzzle | 1 | GRIS |
+| 168 | conquer new planets | Strategy | 1 | STAR WARS Empire at War - Gold Pack |
+| 169 | craft better gear | Survival Craft, RPG, Melee Action, Open World | 1 | Black Myth: Wukong |
+| 170 | creature breeding | RPG, Life Sim | 1 | Palworld |
+| 171 | curses pile up | Roguelike, Deckbuilder & Cards, Horror | 1 | Hand of Fate |
+| 172 | danger rises | Rhythm & Arcade, Roguelike, Horror | 1 | Brotato |
+| 173 | double or nothing | Deckbuilder & Cards, Roguelike, Horror | 1 | Buckshot Roulette |
+| 174 | each act changes the rules | Deckbuilder & Cards, Roguelike | 1 | Inscryption |
+| 175 | each round adds more | Rhythm & Arcade, Party & Multiplayer, Horror | 1 | Buckshot Roulette |
+| 176 | each world adds new rules | Puzzle, Platformer, Rhythm & Arcade | 1 | A Dance of Fire and Ice |
+| 177 | earn licenses | Vehicle Sim & Racing | 1 | Burnout Paradise Remastered |
+| 178 | enemies evolve | Roguelike, Open World, Strategy | 1 | Days Gone |
+| 179 | enemies level with you | Open World, RPG | 1 | The Elder Scrolls IV: Oblivion Game of the Year Edition |
+| 180 | factory grows | Builder & Management | 1 | Factorio |
+| 181 | fleet grows | Strategy, Builder & Management | 1 | Euro Truck Simulator 2 |
+| 182 | friends and favors | Life Sim, RPG, Open World | 1 | Kingdom Come: Deliverance II |
+| 183 | gain land and titles | Open World, RPG, Strategy | 1 | Mount & Blade: Warband |
+| 184 | gear changes your moves | Metroidvania, Melee Action | 1 | Hollow Knight: Silksong |
+| 185 | gear sets | RPG, Melee Action, Shooter | 1 | The Witcher 3: Wild Hunt |
+| 186 | evolve through stages | Sandbox, Strategy | 1 | Spore |
+| 187 | guild ranks | RPG, Open World | 1 | The Elder Scrolls IV: Oblivion Game of the Year Edition |
+| 188 | heroes gain quirks | RPG, Roguelike, Strategy | 1 | Darkest Dungeon |
+| 189 | honor shifts | Open World, RPG | 1 | Red Dead Redemption 2 |
+| 190 | hub grows | Roguelike | 1 | Hades II |
+| 191 | ideas change your mind | Narrative, RPG | 1 | Disco Elysium - The Final Cut |
+| 192 | items carry over between runs | Roguelike | 1 | The Binding of Isaac: Rebirth |
+| 193 | kingdoms rise and fall | Strategy, Builder & Management | 1 | WorldBox - God Simulator |
+| 194 | life stages | Life Sim, Narrative | 1 | Before Your Eyes |
+| 195 | creator rank | Sandbox | 1 | Super Mario Maker 2 |
+| 196 | map opens as you fix towers | Open World | 1 | Marvel's Spider-Man Remastered |
+| 197 | masks with powers | Platformer, Shooter | 1 | Hotline Miami |
+| 198 | meals raise your health | Survival Craft, Horror, RPG | 1 | Resident Evil Village |
+| 199 | merge weapons | Roguelike | 1 | HoloCure - Save the Fans! |
+| 200 | milestones unlock buildings | Builder & Management, Strategy | 1 | Cities: Skylines |
+| 201 | mix two classes | RPG, Melee Action | 1 | Grim Dawn |
+| 202 | money builds round to round | Shooter, Party & Multiplayer, Roguelike | 1 | Counter-Strike |
+| 203 | more escape routes | Horror, Stealth & Immersive Sim | 1 | R.E.P.O. |
+| 204 | more friends, more perks | Narrative, Life Sim, RPG | 1 | South Park: The Stick of Truth |
+| 205 | new abilities | RPG, Metroidvania, Melee Action, Platformer, Shooter, Open World, Stealth & Immersive Sim | 1 | South Park: The Stick of Truth |
+| 206 | new body parts | Sandbox, Roguelike, RPG | 1 | Spore |
+| 207 | new building parts | Sandbox, Vehicle Sim & Racing, Survival Craft, Builder & Management | 1 | Besiege |
+| 208 | new crew types | Roguelike, Strategy | 1 | FTL: Faster Than Light |
+| 209 | new dream levels | Platformer, Puzzle | 1 | Human Fall Flat |
+| 210 | new dungeons | RPG, Roguelike, Melee Action, Open World | 1 | Persona 5 Royal |
+| 211 | new hacks | Stealth & Immersive Sim, Shooter | 1 | PRAGMATA |
+| 212 | new land tiles | Builder & Management, Strategy | 1 | Cities: Skylines |
+| 213 | new loadouts | Shooter, Party & Multiplayer | 1 | Titanfall 2 |
+| 214 | new movement powers | Platformer, Metroidvania, Open World | 1 | Sheepy: A Short Adventure |
+| 215 | new partners | Melee Action, Narrative | 1 | Hi-Fi RUSH |
+| 216 | new planets | Survival Craft, Open World | 1 | Starbound |
+| 217 | new plants | Strategy, Life Sim, Survival Craft | 1 | Plants vs. Zombies |
+| 218 | new rooms open | Horror, Metroidvania | 1 | Sally Face - Episode One |
+| 219 | new stances | Melee Action, Fighting | 1 | Ghost of Tsushima DIRECTOR'S CUT |
+| 220 | new units | Strategy | 1 | Totally Accurate Battle Simulator |
+| 221 | new voices in your head | Horror, Narrative | 1 | Slay the Princess — The Pristine Cut |
+| 222 | notoriety rises and resets | Open World, Shooter, Stealth & Immersive Sim | 1 | PAYDAY 2 |
+| 223 | numbers grow without end | Builder & Management | 1 | Cookie Clicker |
+| 224 | old friends return | Narrative, RPG | 1 | OMORI |
+| 225 | old rivals return | Narrative, RPG, Fighting | 1 | Phoenix Wright: Ace Attorney Trilogy |
+| 226 | one school year | Life Sim, Narrative | 1 | Persona 3 Reload |
+| 227 | one week, day by day | Narrative, Life Sim | 1 | POSTAL 2 |
+| 228 | optional rules make it harder | Roguelike, Deckbuilder & Cards, Shooter, Strategy | 1 | Halo: The Master Chief Collection |
+| 229 | perks at each rest stop | Roguelike, RPG | 1 | Noita |
+| 230 | permanent upgrade tree | Roguelike, Strategy | 1 | Bloons TD 6 |
+| 231 | promotions | Shooter, Party & Multiplayer, Strategy | 1 | Deep Rock Galactic |
+| 232 | quests unlock heroes | Roguelike | 1 | Megabonk |
+| 233 | your boat grows into a town | Survival Craft | 1 | Raft |
+| 234 | random floors | Roguelike | 1 | Enter the Gungeon |
+| 235 | random role each round | Party & Multiplayer, Horror | 1 | SCP: Secret Laboratory |
+| 236 | random unlocks | Roguelike | 1 | HoloCure - Save the Fans! |
+| 237 | rank and titles rise | RPG, Open World | 1 | WEBFISHING |
+| 238 | reach space | Builder & Management, Strategy | 1 | Oxygen Not Included |
+| 239 | read books to learn skills | Survival Craft, RPG | 1 | Project Zomboid |
+| 240 | real days pass | Life Sim, Horror | 1 | OMORI |
+| 241 | rebuild the town | Life Sim, RPG, Builder & Management | 1 | Fields of Mistria |
+| 242 | regulars' stories unfold | Life Sim, Narrative | 1 | VA-11 Hall-A: Cyberpunk Bartender Action |
+| 243 | rescued prisoners join you | Platformer | 1 | Broforce |
+| 244 | reset for prestige | Builder & Management | 1 | Cookie Clicker |
+| 245 | revivals stop near the end | Horror | 1 | Buckshot Roulette |
+| 246 | romance leads to family | Life Sim | 1 | Fields of Mistria |
+| 247 | runes | RPG, Shooter, Melee Action | 1 | DOOM |
+| 248 | scars and lost limbs stay | Builder & Management, Strategy, Roguelike | 1 | RimWorld |
+| 249 | science and magic machines | Survival Craft, Builder & Management | 1 | Don't Starve |
+| 250 | secret societies | Puzzle, Narrative | 1 | Papers, Please |
+| 251 | secret spells | RPG | 1 | Noita |
+| 252 | shortcuts open the world | Melee Action, RPG, Metroidvania | 1 | DARK SOULS: REMASTERED |
+| 253 | spells change the world | Roguelike, Sandbox | 1 | Hades II |
+| 254 | companions leave one at a time | Builder & Management, Narrative | 1 | Spiritfarer: Farewell Edition |
+| 255 | spread across the stars | Builder & Management, Strategy | 1 | Dyson Sphere Program |
+| 256 | stamina grows | Open World, Narrative | 1 | A Short Hike |
+| 257 | story unlocks after each death | Roguelike, Narrative | 1 | Hades |
+| 258 | study items to learn recipes | Survival Craft | 1 | Abiotic Factor |
+| 259 | tenants move in | Survival Craft, Builder & Management | 1 | Starbound |
+| 260 | the world darkens as you kill | Stealth & Immersive Sim, Open World | 1 | Dishonored |
+| 261 | the crew shrinks | Party & Multiplayer, Horror | 1 | Among Us |
+| 262 | the dead return in the next wave | Horror, Shooter | 1 | SCP: Secret Laboratory |
+| 263 | the game itself changes | Horror, Puzzle, Narrative | 1 | Doki Doki Literature Club! |
+| 264 | the hero learns to hope again | Narrative, Life Sim | 1 | ATRI -My Dear Moments- |
+| 265 | the past comes out piece by piece | Horror, Narrative | 1 | Firework |
+| 266 | the planet becomes livable | Survival Craft, Builder & Management | 1 | The Planet Crafter |
+| 267 | the sky heals | Survival Craft, Narrative | 1 | The Planet Crafter |
+| 268 | the town falls apart | Shooter, Horror, Narrative | 1 | POSTAL 2 |
+| 269 | the truth about you | Narrative, Horror | 1 | SOMA |
+| 270 | the world decays | Survival Craft, Horror | 1 | Project Zomboid |
+| 271 | the world reflects good or evil | RPG, Narrative, Open World, Sandbox | 1 | Black & White |
+| 272 | the world remembers your last run | Roguelike, Horror, Narrative | 1 | OneShot |
+| 273 | the world shifts into dreams | Horror, Narrative | 1 | SIGNALIS |
+| 274 | the world wipes and resets | Survival Craft, Party & Multiplayer | 1 | Rust |
+| 275 | thin your deck | Deckbuilder & Cards, Roguelike | 1 | Fights in Tight Spaces |
+| 276 | time loops | Puzzle, Narrative, Horror, Roguelike | 1 | Slay the Princess — The Pristine Cut |
+| 277 | timed reward chests | Party & Multiplayer, Puzzle | 1 | Bongo Cat |
+| 278 | tower upgrade paths | Strategy | 1 | Bloons TD 6 |
+| 279 | townspeople move in | Life Sim, Builder & Management, Survival Craft | 1 | Terraria |
+| 280 | trade up to rarer items | Life Sim, RPG | 1 | Bongo Cat |
+| 281 | trust levels | RPG, Narrative | 1 | Days Gone |
+| 282 | two rival skill trees | RPG, Open World | 1 | Sleeping Dogs: Definitive Edition |
+| 283 | upgrades after each round | Roguelike, Party & Multiplayer | 1 | Clone Drone in the Danger Zone |
+| 284 | vehicle built part by part | Vehicle Sim & Racing, Sandbox | 1 | My Summer Car |
+| 285 | waves get harder | Shooter, Strategy, Rhythm & Arcade, Roguelike | 1 | Killing Floor |
+| 286 | weapon evolutions | Roguelike | 1 | Vampire Survivors |
+| 287 | weapon forms | Roguelike, Melee Action | 1 | Hades II |
+| 288 | weapons and curses | Roguelike | 1 | Cult of the Lamb |
+| 289 | your death shapes your next run | Roguelike, Deckbuilder & Cards | 1 | Inscryption |
+| 290 | your deck gets stronger | Deckbuilder & Cards, Roguelike | 1 | Hand of Fate |
+| 291 | your politics form from your choices | Narrative, RPG | 1 | Disco Elysium - The Final Cut |
+| 292 | your tool gets supercharged | Shooter, Sandbox | 1 | Half-Life 2 |

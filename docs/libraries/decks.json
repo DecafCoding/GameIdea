@@ -4486,7 +4486,7 @@
       ]
     },
     {
-      "card": "carve enemies for ammo",
+      "card": "scavenge ammo from foes",
       "games": [
         "DOOM",
         "DOOM Eternal"
@@ -4663,7 +4663,7 @@
       ]
     },
     {
-      "card": "knock foes off the stage",
+      "card": "knock foes out of the arena",
       "games": [
         "Super Smash Bros. Ultimate",
         "Rivals of Aether"
@@ -4741,7 +4741,7 @@
       ]
     },
     {
-      "card": "place portals",
+      "card": "open portals",
       "games": [
         "Portal 2",
         "Portal"
@@ -4974,7 +4974,7 @@
       ]
     },
     {
-      "card": "spare enemies",
+      "card": "show mercy",
       "games": [
         "Undertale",
         "DELTARUNE"
@@ -5422,7 +5422,7 @@
       ]
     },
     {
-      "card": "escort the cart",
+      "card": "escort a convoy",
       "games": [
         "Team Fortress 2"
       ],
@@ -5985,7 +5985,7 @@
       ]
     },
     {
-      "card": "rewrite rules",
+      "card": "change the rules",
       "games": [
         "Baba Is You"
       ],
@@ -18219,7 +18219,7 @@
       ]
     },
     {
-      "card": "the stronger you get, the harder the world gets",
+      "card": "the world gets harder as you get stronger",
       "games": [
         "Crab Champions",
         "Terraria",
@@ -18295,7 +18295,7 @@
       ]
     },
     {
-      "card": "to save your people you must break your code",
+      "card": "saving your people means breaking your code",
       "games": [
         "Big Walk",
         "Ghost of Tsushima DIRECTOR'S CUT",
@@ -18734,7 +18734,7 @@
       ]
     },
     {
-      "card": "the disasters are chosen to make a good story",
+      "card": "an unseen storyteller picks the disasters",
       "games": [
         "RimWorld"
       ]
@@ -18794,7 +18794,7 @@
       ]
     },
     {
-      "card": "the hero's sword comes with a bride",
+      "card": "the prize comes with strings attached",
       "games": [
         "Senren*Banka"
       ]
@@ -18860,7 +18860,13 @@
       ]
     },
     {
-      "card": "the robots are kind and the humans are gone",
+      "card": "the robots are kind",
+      "games": [
+        "Stray"
+      ]
+    },
+    {
+      "card": "the humans are gone",
       "games": [
         "Stray"
       ]
@@ -18926,7 +18932,7 @@
       ]
     },
     {
-      "card": "the winner gets eaten",
+      "card": "winning is the worst outcome",
       "games": [
         "Nidhogg"
       ]
@@ -19010,7 +19016,7 @@
       ]
     },
     {
-      "card": "you can race a sofa",
+      "card": "you can race furniture",
       "games": [
         "Wreckfest"
       ]
@@ -19022,7 +19028,7 @@
       ]
     },
     {
-      "card": "you defend hell from the angels",
+      "card": "you defend the villains from the heroes",
       "games": [
         "Monster Train"
       ]
@@ -19058,7 +19064,7 @@
       ]
     },
     {
-      "card": "you must kill your child's favorite toy",
+      "card": "you must destroy what a loved one cherishes",
       "games": [
         "It Takes Two"
       ]
@@ -19172,7 +19178,7 @@
       ]
     },
     {
-      "card": "your pet copies what you do, not what you want",
+      "card": "your pet copies your actions, not your orders",
       "games": [
         "Black & White"
       ]
@@ -21380,7 +21386,7 @@
       ]
     },
     {
-      "card": "a magic room grows",
+      "card": "a room grows",
       "games": [
         "Hogwarts Legacy"
       ],
@@ -21595,15 +21601,6 @@
       "genres": [
         "Builder & Management",
         "Strategy"
-      ]
-    },
-    {
-      "card": "city grows in rings",
-      "games": [
-        "Frostpunk"
-      ],
-      "genres": [
-        "Builder & Management"
       ]
     },
     {
@@ -21846,7 +21843,7 @@
       ]
     },
     {
-      "card": "grow from cell to civilization",
+      "card": "evolve through stages",
       "games": [
         "Spore"
       ],
@@ -21935,7 +21932,7 @@
       ]
     },
     {
-      "card": "maker rank",
+      "card": "creator rank",
       "games": [
         "Super Mario Maker 2"
       ],
@@ -21971,17 +21968,6 @@
         "Survival Craft",
         "Horror",
         "RPG"
-      ]
-    },
-    {
-      "card": "mercy or kill routes",
-      "games": [
-        "Undertale"
-      ],
-      "genres": [
-        "Narrative",
-        "RPG",
-        "Stealth & Immersive Sim"
       ]
     },
     {
@@ -22340,7 +22326,7 @@
       ]
     },
     {
-      "card": "raft grows into a town",
+      "card": "your boat grows into a town",
       "games": [
         "Raft"
       ],
@@ -22546,7 +22532,7 @@
       ]
     },
     {
-      "card": "spirits leave one by one",
+      "card": "companions leave one at a time",
       "games": [
         "Spiritfarer: Farewell Edition"
       ],
@@ -22605,7 +22591,7 @@
       ]
     },
     {
-      "card": "the city darkens as chaos rises",
+      "card": "the world darkens as you kill",
       "games": [
         "Dishonored"
       ],
@@ -24857,7 +24843,7 @@
       ]
     },
     {
-      "card": "Only two portals at once",
+      "card": "Only a set number of portals at once",
       "games": [
         "Portal 2",
         "Portal"
@@ -25751,7 +25737,7 @@
       ]
     },
     {
-      "card": "Only talk in meetings",
+      "card": "Only talk at set times",
       "games": [
         "Among Us"
       ],
@@ -25785,16 +25771,6 @@
         "Deckbuilder & Cards",
         "Sandbox",
         "Rhythm & Arcade"
-      ]
-    },
-    {
-      "card": "Only three floors to defend",
-      "games": [
-        "Monster Train"
-      ],
-      "genres": [
-        "Strategy",
-        "Deckbuilder & Cards"
       ]
     },
     {
@@ -25897,17 +25873,6 @@
         "Roguelike",
         "Shooter",
         "Survival Craft"
-      ]
-    },
-    {
-      "card": "Only your blinks",
-      "games": [
-        "Before Your Eyes"
-      ],
-      "genres": [
-        "Narrative",
-        "Horror",
-        "Puzzle"
       ]
     }
   ]

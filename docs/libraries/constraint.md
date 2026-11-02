@@ -1,6 +1,6 @@
 # Deck: Constraint (General)
 
-186 cards.
+184 cards.
 
 | # | Card | Genres | Count | Games |
 |---:|---|---|---:|---|
@@ -108,7 +108,7 @@
 | 102 | Only puzzles | Horror, Narrative, Platformer, Metroidvania, Open World, Stealth & Immersive Sim | 2 | Sally Face - Episode One, Firework |
 | 103 | Only small teams | Shooter, Party & Multiplayer, Strategy, Fighting, RPG | 2 | Counter-Strike 2, Skullgirls |
 | 104 | Only the cards on the table | Deckbuilder & Cards | 2 | Stacklands, Hand of Fate |
-| 105 | Only two portals at once | Puzzle, Platformer, Shooter | 2 | Portal 2, Portal |
+| 105 | Only a set number of portals at once | Puzzle, Platformer, Shooter | 2 | Portal 2, Portal |
 | 106 | Only VR | Shooter, Sandbox, Horror, Puzzle, Rhythm & Arcade, Vehicle Sim & Racing, Melee Action, Narrative, Stealth & Immersive Sim | 2 | Half-Life: Alyx, Blade and Sorcery |
 | 107 | No aiming | Rhythm & Arcade, Shooter, Roguelike, Melee Action | 1 | Brotato |
 | 108 | No camera cuts | Melee Action, Narrative, Horror, Shooter, Stealth & Immersive Sim, RPG, Open World | 1 | God of War |
@@ -178,15 +178,13 @@
 | 172 | Only short waves | Rhythm & Arcade, Strategy, Roguelike, Shooter, Melee Action, Survival Craft | 1 | Brotato |
 | 173 | Only slow, heavy vehicles | Vehicle Sim & Racing | 1 | SnowRunner |
 | 174 | Only small rooms | Strategy, Puzzle, Roguelike, Deckbuilder & Cards, Horror, Stealth & Immersive Sim | 1 | Fights in Tight Spaces |
-| 175 | Only talk in meetings | Party & Multiplayer | 1 | Among Us |
+| 175 | Only talk at set times | Party & Multiplayer | 1 | Among Us |
 | 176 | Only text chat | Party & Multiplayer, RPG, Narrative | 1 | WEBFISHING |
 | 177 | Only the mouse | Puzzle, Narrative, Strategy, Builder & Management, Horror, Life Sim, Deckbuilder & Cards, Sandbox, Rhythm & Arcade | 1 | There Is No Game: Wrong Dimension |
-| 178 | Only three floors to defend | Strategy, Deckbuilder & Cards | 1 | Monster Train |
-| 179 | Only two choices each step | Roguelike, Deckbuilder & Cards, Narrative, RPG | 1 | Ring of Pain |
-| 180 | Only two colors | Puzzle, Platformer, Rhythm & Arcade, Narrative, Horror, Roguelike, Metroidvania, Shooter, Melee Action, Fighting, RPG, Open World, Survival Craft, Builder & Management, Life Sim, Vehicle Sim & Racing, Strategy, Deckbuilder & Cards, Stealth & Immersive Sim, Sandbox, Party & Multiplayer | 1 | Return of the Obra Dinn |
-| 181 | Only two decks | Deckbuilder & Cards | 1 | Griftlands |
-| 182 | Only two hands | Puzzle, Platformer, Sandbox, Horror, Survival Craft, Stealth & Immersive Sim | 1 | Human Fall Flat |
-| 183 | Only vehicles that break apart | Vehicle Sim & Racing, Sandbox | 1 | Wreckfest |
-| 184 | Only walking and talking | Narrative, Horror, Open World, Life Sim | 1 | To the Moon |
-| 185 | Only what you can see | Horror, Stealth & Immersive Sim, Strategy, Puzzle, Open World, Roguelike, Shooter, Survival Craft | 1 | Barotrauma |
-| 186 | Only your blinks | Narrative, Horror, Puzzle | 1 | Before Your Eyes |
+| 178 | Only two choices each step | Roguelike, Deckbuilder & Cards, Narrative, RPG | 1 | Ring of Pain |
+| 179 | Only two colors | Puzzle, Platformer, Rhythm & Arcade, Narrative, Horror, Roguelike, Metroidvania, Shooter, Melee Action, Fighting, RPG, Open World, Survival Craft, Builder & Management, Life Sim, Vehicle Sim & Racing, Strategy, Deckbuilder & Cards, Stealth & Immersive Sim, Sandbox, Party & Multiplayer | 1 | Return of the Obra Dinn |
+| 180 | Only two decks | Deckbuilder & Cards | 1 | Griftlands |
+| 181 | Only two hands | Puzzle, Platformer, Sandbox, Horror, Survival Craft, Stealth & Immersive Sim | 1 | Human Fall Flat |
+| 182 | Only vehicles that break apart | Vehicle Sim & Racing, Sandbox | 1 | Wreckfest |
+| 183 | Only walking and talking | Narrative, Horror, Open World, Life Sim | 1 | To the Moon |
+| 184 | Only what you can see | Horror, Stealth & Immersive Sim, Strategy, Puzzle, Open World, Roguelike, Shooter, Survival Craft | 1 | Barotrauma |

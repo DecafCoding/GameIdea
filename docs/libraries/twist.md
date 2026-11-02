@@ -1,6 +1,6 @@
 # Deck: Twist (General)
 
-157 cards. Read each card after "Except…".
+158 cards. Read each card after "Except…".
 
 | # | Card | Count | Games |
 |---:|---|---:|---|
@@ -11,7 +11,7 @@
 | 5 | your teammates are the biggest threat | 5 | SCP: Secret Laboratory, R.E.P.O., Supermarket Together, Castle Crashers, Barotrauma |
 | 6 | failing is the fun | 4 | BeamNG.drive, Wobbly Life, The Henry Stickmin Collection, My Summer Car |
 | 7 | the cute game is secretly a horror game | 4 | DREDGE, Palworld, Doki Doki Literature Club!, Cookie Clicker |
-| 8 | the stronger you get, the harder the world gets | 4 | Crab Champions, Terraria, Risk of Rain 2, Factorio |
+| 8 | the world gets harder as you get stronger | 4 | Crab Champions, Terraria, Risk of Rain 2, Factorio |
 | 9 | you are already dead | 4 | Resident Evil Village, Spiritfarer: Farewell Edition, Valheim, Grim Dawn |
 | 10 | you heal by attacking | 4 | Tekken 8, DOOM, METAL GEAR RISING: REVENGEANCE, ULTRAKILL |
 | 11 | your own weapon is your worst enemy | 4 | Duck Game, Besiege, Timberborn, Noita |
@@ -20,7 +20,7 @@
 | 14 | the monsters are the victims | 3 | Resident Evil 7 Biohazard, The Witcher 3: Wild Hunt, Resident Evil Requiem |
 | 15 | the world is deadlier than the monsters | 3 | Oxygen Not Included, Stick Fight: The Game, SnowRunner |
 | 16 | the world is not real | 3 | The Binding of Isaac: Rebirth, Doki Doki Literature Club Plus!, Clair Obscur: Expedition 33 |
-| 17 | to save your people you must break your code | 3 | Big Walk, Ghost of Tsushima DIRECTOR'S CUT, This War of Mine |
+| 17 | saving your people means breaking your code | 3 | Big Walk, Ghost of Tsushima DIRECTOR'S CUT, This War of Mine |
 | 18 | you are the monster | 3 | Left 4 Dead, Left 4 Dead 2, Little Nightmares |
 | 19 | you can ignore the main quest | 3 | A Short Hike, The Elder Scrolls V: Skyrim, Mount & Blade: Warband |
 | 20 | you can join the villain | 3 | Cuphead, Stardew Valley, STAR WARS Empire at War - Gold Pack |
@@ -86,7 +86,7 @@
 | 80 | the curse is a gift | 1 | Baldur's Gate 3 |
 | 81 | the dead are still in charge | 1 | Tomb Raider |
 | 82 | the dead can still help | 1 | Among Us |
-| 83 | the disasters are chosen to make a good story | 1 | RimWorld |
+| 83 | an unseen storyteller picks the disasters | 1 | RimWorld |
 | 84 | the dungeon comes to you | 1 | Ring of Pain |
 | 85 | the enemy becomes what you believe | 1 | Slay the Princess — The Pristine Cut |
 | 86 | the enemy wanted peace | 1 | METRO 2033 Redux |
@@ -96,7 +96,7 @@
 | 90 | the game judges you for playing | 1 | Hotline Miami |
 | 91 | the hero starts over in old age | 1 | Shelldiver |
 | 92 | the hero you control is not on your side | 1 | DELTARUNE |
-| 93 | the hero's sword comes with a bride | 1 | Senren*Banka |
+| 93 | the prize comes with strings attached | 1 | Senren*Banka |
 | 94 | the high-tech helper is useless | 1 | ATRI -My Dear Moments- |
 | 95 | the hunter cannot be killed | 1 | Resident Evil 2 |
 | 96 | the life you remember never happened | 1 | Before Your Eyes |
@@ -107,57 +107,58 @@
 | 101 | the pretend game becomes real | 1 | South Park: The Stick of Truth |
 | 102 | the puzzle is describing what you see | 1 | Frostpunk |
 | 103 | the real work happens before the clock starts | 1 | Teardown |
-| 104 | the robots are kind and the humans are gone | 1 | Stray |
-| 105 | the screen fights you | 1 | Rhythm Doctor |
-| 106 | the stories you wrote fight back | 1 | Split Fiction |
-| 107 | the storm hides you and hurts you | 1 | Ace Combat 7: Skies Unknown |
-| 108 | the test dummies feel pain | 1 | People Playground |
-| 109 | the toy can build a working computer | 1 | The Powder Toy |
-| 110 | the villain is the law | 1 | The Wolf Among Us |
-| 111 | the weakest ally is your best weapon | 1 | PRAGMATA |
-| 112 | the weapon is a person | 1 | Half-Life: Alyx |
-| 113 | the weather is today's real weather | 1 | Microsoft Flight Simulator |
-| 114 | the whole world moves to the beat | 1 | Hi-Fi RUSH |
-| 115 | the winner gets eaten | 1 | Nidhogg |
-| 116 | the world ends in the first minute | 1 | Starbound |
-| 117 | there is no monster, only people | 1 | Firework |
-| 118 | there is no right ending | 1 | Volcano Princess |
-| 119 | undoing choices does not make them right | 1 | Life is Strange - Episode 1 |
-| 120 | winning by too much loses | 1 | Gwent: The Witcher Card Game |
-| 121 | winning costs all your powers | 1 | Sheepy: A Short Adventure |
-| 122 | you are a god who cannot control anyone | 1 | WorldBox - God Simulator |
-| 123 | you are a soul inside the hero | 1 | Dragon Ball FighterZ |
-| 124 | you can change the rules | 1 | Baba Is You |
-| 125 | you can delete the sun | 1 | Universe Sandbox |
-| 126 | you can kill anyone and still win | 1 | Fallout: New Vegas |
-| 127 | you can never defend | 1 | Rivals of Aether |
-| 128 | you can never touch your rivals | 1 | TrackMania Nations Forever |
-| 129 | you can race a sofa | 1 | Wreckfest |
-| 130 | you choose your own enemies | 1 | Ultimate Custom Night |
-| 131 | you defend hell from the angels | 1 | Monster Train |
-| 132 | you design your own evolution | 1 | Spore |
-| 133 | you fight your younger self | 1 | Mortal Kombat 11 |
-| 134 | you forgot what matters most | 1 | To the Moon |
-| 135 | you grow by eating your enemies | 1 | The Elder Scrolls V: Skyrim Special Edition |
-| 136 | you must build the rescue boat first | 1 | Stormworks: Build and Rescue |
-| 137 | you must kill your child's favorite toy | 1 | It Takes Two |
-| 138 | you never hit your rival directly | 1 | Lethal League Blaze |
-| 139 | you never see your rivals | 1 | DiRT Rally 2.0 |
-| 140 | you save the world and still lose | 1 | Half-Life 2: Episode Two |
-| 141 | you save them by beating them up | 1 | HoloCure - Save the Fans! |
-| 142 | you see the enemy's next move | 1 | Slay the Spire |
-| 143 | you were made to be sacrificed | 1 | Hollow Knight |
-| 144 | you work for the criminals | 1 | Crime Scene Cleaner |
-| 145 | your car becomes a boat or plane | 1 | Sonic & All-Stars Racing Transformed |
-| 146 | your client is guilty until proven innocent | 1 | Phoenix Wright: Ace Attorney Trilogy |
-| 147 | your death is promised from the start | 1 | Project Zomboid |
-| 148 | your deaths are only plans in your head | 1 | Katana ZERO |
-| 149 | your deck is your village | 1 | Stacklands |
-| 150 | your enemy becomes your friend | 1 | There Is No Game: Wrong Dimension |
-| 151 | your friends' deaths earn the most | 1 | Content Warning |
-| 152 | your heroes are disposable | 1 | Darkest Dungeon |
-| 153 | your home is always moving | 1 | Raft |
-| 154 | your lost love works for the enemy | 1 | Days Gone |
-| 155 | your own mind lies to you | 1 | Disco Elysium - The Final Cut |
-| 156 | your pet copies what you do, not what you want | 1 | Black & White |
-| 157 | your power is turning you into a monster | 1 | The Binding of Isaac |
+| 104 | the robots are kind | 1 | Stray |
+| 105 | the humans are gone | 1 | Stray |
+| 106 | the screen fights you | 1 | Rhythm Doctor |
+| 107 | the stories you wrote fight back | 1 | Split Fiction |
+| 108 | the storm hides you and hurts you | 1 | Ace Combat 7: Skies Unknown |
+| 109 | the test dummies feel pain | 1 | People Playground |
+| 110 | the toy can build a working computer | 1 | The Powder Toy |
+| 111 | the villain is the law | 1 | The Wolf Among Us |
+| 112 | the weakest ally is your best weapon | 1 | PRAGMATA |
+| 113 | the weapon is a person | 1 | Half-Life: Alyx |
+| 114 | the weather is today's real weather | 1 | Microsoft Flight Simulator |
+| 115 | the whole world moves to the beat | 1 | Hi-Fi RUSH |
+| 116 | winning is the worst outcome | 1 | Nidhogg |
+| 117 | the world ends in the first minute | 1 | Starbound |
+| 118 | there is no monster, only people | 1 | Firework |
+| 119 | there is no right ending | 1 | Volcano Princess |
+| 120 | undoing choices does not make them right | 1 | Life is Strange - Episode 1 |
+| 121 | winning by too much loses | 1 | Gwent: The Witcher Card Game |
+| 122 | winning costs all your powers | 1 | Sheepy: A Short Adventure |
+| 123 | you are a god who cannot control anyone | 1 | WorldBox - God Simulator |
+| 124 | you are a soul inside the hero | 1 | Dragon Ball FighterZ |
+| 125 | you can change the rules | 1 | Baba Is You |
+| 126 | you can delete the sun | 1 | Universe Sandbox |
+| 127 | you can kill anyone and still win | 1 | Fallout: New Vegas |
+| 128 | you can never defend | 1 | Rivals of Aether |
+| 129 | you can never touch your rivals | 1 | TrackMania Nations Forever |
+| 130 | you can race furniture | 1 | Wreckfest |
+| 131 | you choose your own enemies | 1 | Ultimate Custom Night |
+| 132 | you defend the villains from the heroes | 1 | Monster Train |
+| 133 | you design your own evolution | 1 | Spore |
+| 134 | you fight your younger self | 1 | Mortal Kombat 11 |
+| 135 | you forgot what matters most | 1 | To the Moon |
+| 136 | you grow by eating your enemies | 1 | The Elder Scrolls V: Skyrim Special Edition |
+| 137 | you must build the rescue boat first | 1 | Stormworks: Build and Rescue |
+| 138 | you must destroy what a loved one cherishes | 1 | It Takes Two |
+| 139 | you never hit your rival directly | 1 | Lethal League Blaze |
+| 140 | you never see your rivals | 1 | DiRT Rally 2.0 |
+| 141 | you save the world and still lose | 1 | Half-Life 2: Episode Two |
+| 142 | you save them by beating them up | 1 | HoloCure - Save the Fans! |
+| 143 | you see the enemy's next move | 1 | Slay the Spire |
+| 144 | you were made to be sacrificed | 1 | Hollow Knight |
+| 145 | you work for the criminals | 1 | Crime Scene Cleaner |
+| 146 | your car becomes a boat or plane | 1 | Sonic & All-Stars Racing Transformed |
+| 147 | your client is guilty until proven innocent | 1 | Phoenix Wright: Ace Attorney Trilogy |
+| 148 | your death is promised from the start | 1 | Project Zomboid |
+| 149 | your deaths are only plans in your head | 1 | Katana ZERO |
+| 150 | your deck is your village | 1 | Stacklands |
+| 151 | your enemy becomes your friend | 1 | There Is No Game: Wrong Dimension |
+| 152 | your friends' deaths earn the most | 1 | Content Warning |
+| 153 | your heroes are disposable | 1 | Darkest Dungeon |
+| 154 | your home is always moving | 1 | Raft |
+| 155 | your lost love works for the enemy | 1 | Days Gone |
+| 156 | your own mind lies to you | 1 | Disco Elysium - The Final Cut |
+| 157 | your pet copies your actions, not your orders | 1 | Black & White |
+| 158 | your power is turning you into a monster | 1 | The Binding of Isaac |

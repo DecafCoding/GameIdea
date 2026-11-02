@@ -14,8 +14,8 @@ The "Games" column shows which games the card came from: the Steam Top 250, plus
 | [Setting](setting.md) | 424 | 208 | 35 |
 | [Mood](mood.md) | 166 | 73 | 19 |
 | [Modifier](modifier.md) | 397 | 414 | 46 |
-| [Twist](twist.md) | 290 | 157 | 34 |
-| [Progression](progression.md) | 720 | 294 | 42 |
-| [Constraint](constraint.md) | 536 | 186 | 130 |
+| [Twist](twist.md) | 290 | 158 | 34 |
+| [Progression](progression.md) | 720 | 292 | 42 |
+| [Constraint](constraint.md) | 536 | 184 | 130 |
 
 Genre tags: see [genres.md](genres.md).
