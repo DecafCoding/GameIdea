@@ -103,7 +103,7 @@ BoardRecord
 <p>The board file is the BoardRecord as JSON, with its <code>formatVersion</code>. The file name is <code>&lt;board-name&gt;.gameidea.json</code>.</p>
 <p>The format starts at version 1. The copied TheForge upgrade steps (versions 1 to 5) are removed, because they upgrade story boards. The upgrade mechanism stays: a later format change adds one step that changes one version into the next. Saved files must always load.</p>
 
-<h3 class="decision" data-decision="pool-files" data-status="settled" data-reversible="cheap">Cue pools: 11 JSON files from one split</h3>
+<h3 class="decision" data-decision="pool-files" data-status="amended" data-reversible="cheap">Cue pools: 11 JSON files from one split</h3>
 <pre><code>public/pools/role.json          public/pools/setting.json
 public/pools/mechanic.json      public/pools/mood.json
 public/pools/goal.json          public/pools/twist.json
@@ -115,7 +115,9 @@ Pool file
   type
   cues: { id, text, genres? }[]
     genres: present in mechanic, resource, progression and constraint only.
-            One or more of the 21 genres. A cue that fits every genre lists all 21.</code></pre>
+            One or more of the 21 genres. A cue that fits every genre lists all 21.
+    targets: present in modifier only, and required there.
+             One or more of role | resource | setting.</code></pre>
 <p>A one-time split makes these files from <code>docs/libraries/decks.json</code>. The split:</p>
 <ul>
   <li>maps each deck name in <code>decks.json</code> to its pool file,</li>
@@ -126,6 +128,12 @@ Pool file
   <li>copies <code>targets</code> on Modifier cues (the card types a modifier fits: Player Role, Resource, Setting) into the modifier pool,</li>
   <li>gives each cue a stable <code>id</code>.</li>
 </ul>
+<p><b>Amended 2026-11-02.</b> The Modifier deck draws as 3 decks: Role, Resource and Setting. All 3 read <code>modifier.json</code>. A draw uses only cues whose <code>targets</code> include the button's deck, the same way the genre filter works in the 4 genre-tagged decks. A modifier with more than 1 target is in more than 1 deck and is stored once. The file count stays at 11. The split now also:</p>
+<ul>
+  <li>maps the target names "Player Role", "Resource" and "Setting" to <code>role</code>, <code>resource</code> and <code>setting</code>, and stops with an error on an unknown target or an empty target list,</li>
+  <li>stops with an error if any of the 3 Modifier decks has fewer than 20 cues. A unit test checks the same floor on the pool files.</li>
+</ul>
+<p>Targets guide the draw only. Any modifier can merge with any Player Role, Resource or Setting card. The reason for one file: the user asked why <code>targets</code> should work differently from genre tags, and no reason was found. 3 separate files would store a modifier up to 3 times and need a sync test. See <a href="feature-modifier-decks.html">feature-modifier-decks.html</a>.</p>
 <p>After the split, the pool files are the source, and the user edits them directly. <code>decks.json</code> and the Markdown libraries stay in <code>docs/libraries/</code> as a record. No build step reads them. The app loads the pools by web address. A later server can serve the same addresses.</p>
 
 <h3 class="decision" data-decision="test-data" data-status="settled" data-reversible="cheap">Test data: fixture boards</h3>
@@ -317,9 +325,9 @@ tests/e2e/          Playwright browser tests</code></pre>
   <tr><th>Question</th><th>What settles it</th><th>Settle by</th></tr>
   <tr><td><code>/dev-claud-md</code> must read this file</td><td>This design leaves the house default stack (C# with .NET). Run <code>/dev-claud-md</code> against docs/architecture.html for this project. Its default .NET profile is wrong here.</td><td>When <code>/dev-claud-md</code> runs</td></tr>
   <tr><td>Does an 11-card stack drag smoothly in React Flow?</td><td>The long-stack test at the start of M2. If it fails, amend canvas-library.</td><td>Before the rest of M2 starts</td></tr>
-  <tr><td>Colors and icons for the 11 decks, and the look of the Hook Card, the lock and the Genres panel</td><td><code>/dev-ui-update</code> writes docs/design-system.html. Icons ship in <code>public/icons/</code> either way.</td><td>Before M2 starts</td></tr>
+  <tr><td>Colors and icons for the 11 decks, the 3 Modifier deck icons, and the look of the Hook Card, the lock and the Genres panel</td><td><code>/dev-ui-update</code> writes docs/design-system.html. Icons ship in <code>public/icons/</code> either way.</td><td>Before M2 starts</td></tr>
   <tr><td>Final badge word choices other than the defaults</td><td>The user tries them during the M2 hook test. They live in the connector rules in <code>features/canvas/</code>, so a change is cheap.</td><td>End of M2</td></tr>
-  <tr><td>How the app uses Modifier <code>targets</code>: filter the Modifier draw, hint which cards a Modifier fits, or nothing yet</td><td>The user decides after the deck review, before the Modifier combine work in M2.</td><td>Before M2</td></tr>
+  <tr><td>How the app uses Modifier <code>targets</code>: filter the Modifier draw, hint which cards a Modifier fits, or nothing yet</td><td>Closed 2026-11-02. <code>targets</code> filters the draw of 3 Modifier decks (Role, Resource, Setting). It does not limit the merge. See pool-files and <a href="feature-modifier-decks.html">feature-modifier-decks.html</a>.</td><td>Closed</td></tr>
 </table>
 
 <h2>Amendments</h2>
@@ -327,6 +335,7 @@ tests/e2e/          Playwright browser tests</code></pre>
 <p class="meta">2026-11-02: The split gains 2 grammar rules for Constraint and Setting cues, to match the connector badges. Changed Cue pools. Changed by the user's request after a review, with docs/mvp-plan.html amended the same day.</p>
 <p class="meta">2026-11-02: The <code>generic</code> tag and the Generic fill are removed. The split rejects <code>any</code> and checks a floor of 10 cues for each genre in each tagged deck. A unit test checks the same floor on the pool files. Changed Inherited constraints, Cue pools, Module layout and Targets and checks. Changed by the user's request after a review, with docs/mvp-plan.html amended the same day.</p>
 <p class="meta">2026-11-02: Modifier cues carry <code>targets</code>, the card types each one fits. The split copies them into the modifier pool. How the app uses them is an open question. Changed Cue pools and Open questions. Changed by the user's request after a review.</p>
+<p class="meta">2026-11-02: Amended pool-files. The Modifier deck draws as 3 decks (Role, Resource, Setting) from one <code>modifier.json</code>, filtered by <code>targets</code>. Targets are required on Modifier cues as <code>role</code>, <code>resource</code> and <code>setting</code>. The split and a unit test check a floor of 20 cues for each Modifier deck. Closed the open question on how the app uses <code>targets</code>, and added the 3 Modifier icons to the icons question. Caused by the <code>/dev-add-feature</code> run in <a href="feature-modifier-decks.html">feature-modifier-decks.html</a>. Changed by the user's direct request.</p>
 
 </body>
 </html>
