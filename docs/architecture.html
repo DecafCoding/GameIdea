@@ -123,6 +123,7 @@ Pool file
   <li>maps the genre names in <code>genres.json</code> to their kebab-case values, and stops with an error if it finds <code>any</code> or an unknown genre name,</li>
   <li>stops with an error if any of the 21 genres has fewer than 10 cues in Mechanic, Resource, Progression or Constraint,</li>
   <li>drops the <code>games</code> lists, because they hold game titles, which the plan bans in cues,</li>
+  <li>copies <code>targets</code> on Modifier cues (the card types a modifier fits: Player Role, Resource, Setting) into the modifier pool,</li>
   <li>gives each cue a stable <code>id</code>.</li>
 </ul>
 <p>After the split, the pool files are the source, and the user edits them directly. <code>decks.json</code> and the Markdown libraries stay in <code>docs/libraries/</code> as a record. No build step reads them. The app loads the pools by web address. A later server can serve the same addresses.</p>
@@ -318,12 +319,14 @@ tests/e2e/          Playwright browser tests</code></pre>
   <tr><td>Does an 11-card stack drag smoothly in React Flow?</td><td>The long-stack test at the start of M2. If it fails, amend canvas-library.</td><td>Before the rest of M2 starts</td></tr>
   <tr><td>Colors and icons for the 11 decks, and the look of the Hook Card, the lock and the Genres panel</td><td><code>/dev-ui-update</code> writes docs/design-system.html. Icons ship in <code>public/icons/</code> either way.</td><td>Before M2 starts</td></tr>
   <tr><td>Final badge word choices other than the defaults</td><td>The user tries them during the M2 hook test. They live in the connector rules in <code>features/canvas/</code>, so a change is cheap.</td><td>End of M2</td></tr>
+  <tr><td>How the app uses Modifier <code>targets</code>: filter the Modifier draw, hint which cards a Modifier fits, or nothing yet</td><td>The user decides after the deck review, before the Modifier combine work in M2.</td><td>Before M2</td></tr>
 </table>
 
 <h2>Amendments</h2>
 <p class="meta">2026-11-01: First version. Written from the <code>/dev-architecture</code> run against docs/mvp-plan.html, following the TheForge architecture at the user's request. The run added 2 checks to the plan's milestones: a story-name search in M1 and an 11-card stack test in M2. The plan records them in its own Amendments section.</p>
 <p class="meta">2026-11-02: The split gains 2 grammar rules for Constraint and Setting cues, to match the connector badges. Changed Cue pools. Changed by the user's request after a review, with docs/mvp-plan.html amended the same day.</p>
 <p class="meta">2026-11-02: The <code>generic</code> tag and the Generic fill are removed. The split rejects <code>any</code> and checks a floor of 10 cues for each genre in each tagged deck. A unit test checks the same floor on the pool files. Changed Inherited constraints, Cue pools, Module layout and Targets and checks. Changed by the user's request after a review, with docs/mvp-plan.html amended the same day.</p>
+<p class="meta">2026-11-02: Modifier cues carry <code>targets</code>, the card types each one fits. The split copies them into the modifier pool. How the app uses them is an open question. Changed Cue pools and Open questions. Changed by the user's request after a review.</p>
 
 </body>
 </html>

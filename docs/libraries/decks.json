@@ -15191,6 +15191,34 @@
   ],
   "Modifier": [
     {
+      "card": "tiny",
+      "games": [
+        "Hollow Knight",
+        "Stray",
+        "Ori and the Will of the Wisps",
+        "Castle Crashers",
+        "VPet-Simulator",
+        "A Hat in Time",
+        "Little Nightmares",
+        "WorldBox - God Simulator",
+        "Just Shapes & Beats",
+        "Stacklands",
+        "Townscaper",
+        "It Takes Two",
+        "Outer Wilds",
+        "Kerbal Space Program",
+        "FTL: Faster Than Light",
+        "Among Us",
+        "Starbound",
+        "Life is Strange - Episode 1"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource",
+        "Setting"
+      ]
+    },
+    {
       "card": "cursed",
       "games": [
         "Black Myth: Wukong",
@@ -15209,6 +15237,11 @@
         "Darkest Dungeon",
         "DARK SOULS: REMASTERED",
         "Dead Cells"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource",
+        "Setting"
       ]
     },
     {
@@ -15227,26 +15260,13 @@
         "Resident Evil 4 (2005)",
         "Days Gone",
         "The Walking Dead: The Telltale Definitive Series",
-        "Content Warning"
-      ]
-    },
-    {
-      "card": "tiny",
-      "games": [
-        "Hollow Knight",
-        "Stray",
-        "Ori and the Will of the Wisps",
-        "Castle Crashers",
-        "VPet-Simulator",
-        "A Hat in Time",
-        "Little Nightmares",
-        "WorldBox - God Simulator",
-        "Just Shapes & Beats",
-        "Stacklands",
-        "Townscaper",
-        "It Takes Two",
-        "Outer Wilds",
-        "Kerbal Space Program"
+        "Content Warning",
+        "Phasmophobia"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource",
+        "Setting"
       ]
     },
     {
@@ -15264,6 +15284,10 @@
         "How to Fish",
         "PRAGMATA",
         "Abiotic Factor"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -15281,6 +15305,11 @@
         "A Hat in Time",
         "Vampire Survivors",
         "Celeste"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource",
+        "Setting"
       ]
     },
     {
@@ -15298,6 +15327,31 @@
         "Deep Rock Galactic",
         "Broforce",
         "Halo: The Master Chief Collection"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource",
+        "Setting"
+      ]
+    },
+    {
+      "card": "frozen",
+      "games": [
+        "The Elder Scrolls V: Skyrim",
+        "Frostpunk",
+        "Monster Train",
+        "Wildfrost",
+        "Universe Sandbox",
+        "The Elder Scrolls V: Skyrim Special Edition",
+        "Rise of the Tomb Raider",
+        "Gunfire Reborn",
+        "SIGNALIS",
+        "Barotrauma"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource",
+        "Setting"
       ]
     },
     {
@@ -15312,20 +15366,27 @@
         "Hand of Fate",
         "Batman: Arkham Asylum Game of the Year Edition",
         "Batman: Arkham City - Game of the Year Edition"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
-      "card": "frozen",
+      "card": "ruined",
       "games": [
-        "The Elder Scrolls V: Skyrim",
-        "Frostpunk",
-        "Monster Train",
-        "Wildfrost",
-        "Universe Sandbox",
-        "The Elder Scrolls V: Skyrim Special Edition",
-        "Rise of the Tomb Raider",
-        "Gunfire Reborn",
-        "SIGNALIS"
+        "Hollow Knight",
+        "Grim Dawn",
+        "BeamNG.drive",
+        "Wreckfest",
+        "ELDEN RING",
+        "Half-Life 2",
+        "Darkest Dungeon",
+        "Rust"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource",
+        "Setting"
       ]
     },
     {
@@ -15338,18 +15399,10 @@
         "Chants of Sennaar",
         "Half-Life 2",
         "Slay the Spire"
-      ]
-    },
-    {
-      "card": "ruined",
-      "games": [
-        "Hollow Knight",
-        "Grim Dawn",
-        "BeamNG.drive",
-        "Wreckfest",
-        "ELDEN RING",
-        "Half-Life 2",
-        "Darkest Dungeon"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -15362,6 +15415,11 @@
         "Among Us",
         "Half-Life",
         "Black Mesa"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource",
+        "Setting"
       ]
     },
     {
@@ -15374,6 +15432,11 @@
         "DARK SOULS: REMASTERED",
         "DARK SOULS III",
         "Ori and the Will of the Wisps"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource",
+        "Setting"
       ]
     },
     {
@@ -15386,6 +15449,10 @@
         "Baldur's Gate 3",
         "Ring of Pain",
         "Buckshot Roulette"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -15398,6 +15465,9 @@
         "Sekiro: Shadows Die Twice",
         "Gwent: The Witcher Card Game",
         "Ace Combat 7: Skies Unknown"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
@@ -15410,6 +15480,9 @@
         "The Walking Dead",
         "Unturned",
         "Left 4 Dead"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
@@ -15421,6 +15494,10 @@
         "How to Fish",
         "Crab Champions",
         "Duck Game"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -15432,6 +15509,10 @@
         "Teardown",
         "Clone Drone in the Danger Zone",
         "Brick Rigs"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -15443,6 +15524,10 @@
         "What Remains of Edith Finch",
         "Persona 3 Reload",
         "Pineapple on pizza"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -15454,6 +15539,10 @@
         "Dressmaker",
         "Dreams",
         "Garry's Mod"
+      ],
+      "targets": [
+        "Resource",
+        "Setting"
       ]
     },
     {
@@ -15465,6 +15554,10 @@
         "Beat Saber",
         "VA-11 Hall-A: Cyberpunk Bartender Action",
         "Hotline Miami 2: Wrong Number"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -15476,6 +15569,9 @@
         "Stardew Valley",
         "Street Fighter 6",
         "Darkest Dungeon"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -15487,6 +15583,10 @@
         "Halo: The Master Chief Collection",
         "DOOM Eternal",
         "Slay the Spire"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -15498,6 +15598,10 @@
         "BattleBlock Theater",
         "Magical Girl Witch Trials",
         "Ultimate Custom Night"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -15509,6 +15613,10 @@
         "Ring of Pain",
         "Terraria",
         "Mount & Blade: Warband"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -15520,6 +15628,9 @@
         "Outer Wilds",
         "Phoenix Wright: Ace Attorney Trilogy",
         "Street Fighter 6"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -15531,6 +15642,10 @@
         "DREDGE",
         "Resident Evil 4",
         "Noita"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -15542,6 +15657,10 @@
         "Phasmophobia",
         "DARK SOULS: REMASTERED",
         "SILENT HILL 2"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -15553,6 +15672,11 @@
         "Shelldiver",
         "Tomb Raider",
         "Rise of the Tomb Raider"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource",
+        "Setting"
       ]
     },
     {
@@ -15564,6 +15688,11 @@
         "PEAK",
         "Rise of the Tomb Raider",
         "SIGNALIS"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource",
+        "Setting"
       ]
     },
     {
@@ -15575,6 +15704,10 @@
         "Kingdom Come: Deliverance II",
         "Mount & Blade: Warband",
         "Blade and Sorcery"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -15585,6 +15718,11 @@
         "Doki Doki Literature Club Plus!",
         "SIGNALIS",
         "Just Shapes & Beats"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource",
+        "Setting"
       ]
     },
     {
@@ -15595,6 +15733,11 @@
         "Devil May Cry 5",
         "Tekken 8",
         "ULTRAKILL"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource",
+        "Setting"
       ]
     },
     {
@@ -15605,6 +15748,11 @@
         "Mirror",
         "Magical Girl Witch Trials",
         "Blade and Sorcery"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource",
+        "Setting"
       ]
     },
     {
@@ -15615,6 +15763,10 @@
         "DARK SOULS: REMASTERED",
         "Mortal Kombat 11",
         "Valheim"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -15625,6 +15777,10 @@
         "Stick Fight: The Game",
         "Human Fall Flat",
         "Wobbly Life"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -15635,6 +15791,10 @@
         "DREDGE",
         "The Witcher 3: Wild Hunt",
         "Left 4 Dead"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -15645,6 +15805,9 @@
         "The Binding of Isaac",
         "SANABI",
         "SILENT HILL 2"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -15655,6 +15818,9 @@
         "Crime Scene Cleaner",
         "Resident Evil Village",
         "The Forest"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -15665,6 +15831,10 @@
         "Slay the Princess — The Pristine Cut",
         "Sonic & All-Stars Racing Transformed",
         "Persona 3 Reload"
+      ],
+      "targets": [
+        "Resource",
+        "Setting"
       ]
     },
     {
@@ -15675,6 +15845,10 @@
         "Muck",
         "Starbound",
         "Dyson Sphere Program"
+      ],
+      "targets": [
+        "Resource",
+        "Setting"
       ]
     },
     {
@@ -15685,6 +15859,10 @@
         "Resident Evil 2",
         "Killing Floor",
         "Resident Evil Requiem"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -15695,6 +15873,10 @@
         "Spore",
         "Risk of Rain 2",
         "Satisfactory"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -15705,6 +15887,10 @@
         "OMORI",
         "Stardew Valley",
         "South Park: The Stick of Truth"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -15715,16 +15901,10 @@
         "The Forest",
         "Stardew Valley",
         "Noita"
-      ]
-    },
-    {
-      "card": "small",
-      "games": [
-        "FTL: Faster Than Light",
-        "Among Us",
-        "Starbound",
-        "Life is Strange - Episode 1",
-        "Stacklands"
+      ],
+      "targets": [
+        "Resource",
+        "Setting"
       ]
     },
     {
@@ -15735,6 +15915,40 @@
         "Inscryption",
         "Lethal Company",
         "The Room"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource",
+        "Setting"
+      ]
+    },
+    {
+      "card": "strange",
+      "games": [
+        "Don't Starve Together",
+        "How to Fish",
+        "Black & White",
+        "Balatro",
+        "What Remains of Edith Finch"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource",
+        "Setting"
+      ]
+    },
+    {
+      "card": "foggy",
+      "games": [
+        "DREDGE",
+        "SILENT HILL 2",
+        "Persona 4 Golden",
+        "Valheim",
+        "Hogwarts Legacy"
+      ],
+      "targets": [
+        "Resource",
+        "Setting"
       ]
     },
     {
@@ -15744,6 +15958,9 @@
         "Killing Floor",
         "Dragon Ball FighterZ",
         "SOMA"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -15753,6 +15970,11 @@
         "House Flipper",
         "Pizza Tower",
         "TCG Card Shop Simulator"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource",
+        "Setting"
       ]
     },
     {
@@ -15762,6 +15984,10 @@
         "Black & White",
         "Hades",
         "God of War"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource"
       ]
     },
     {
@@ -15771,6 +15997,11 @@
         "Black Mesa",
         "METRO 2033 Redux",
         "The Powder Toy"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource",
+        "Setting"
       ]
     },
     {
@@ -15780,6 +16011,9 @@
         "Team Fortress 2",
         "Gwent: The Witcher Card Game",
         "Griftlands"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -15789,6 +16023,11 @@
         "Wreckfest",
         "Scrap Mechanic",
         "SIGNALIS"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource",
+        "Setting"
       ]
     },
     {
@@ -15798,6 +16037,10 @@
         "Little Nightmares",
         "This War of Mine",
         "Stacklands"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -15807,6 +16050,9 @@
         "Dispatch",
         "God of War",
         "SANABI"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -15816,6 +16062,10 @@
         "DARK SOULS: REMASTERED",
         "Ring of Pain",
         "Oxygen Not Included"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -15825,6 +16075,11 @@
         "Frostpunk",
         "What Remains of Edith Finch",
         "Stellar Blade"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource",
+        "Setting"
       ]
     },
     {
@@ -15834,15 +16089,49 @@
         "Don't Starve",
         "Resident Evil 4",
         "Resident Evil 4 (2005)"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
-      "card": "strange",
+      "card": "deep-sea",
       "games": [
-        "Don't Starve Together",
+        "Subnautica",
+        "Barotrauma",
+        "DAVE THE DIVER",
+        "SOMA"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
+      ]
+    },
+    {
+      "card": "open",
+      "games": [
+        "BeamNG.drive",
+        "American Truck Simulator",
         "How to Fish",
-        "Black & White",
-        "Balatro"
+        "Burnout Paradise Remastered"
+      ],
+      "targets": [
+        "Setting"
+      ]
+    },
+    {
+      "card": "dead",
+      "games": [
+        "Before Your Eyes",
+        "Spiritfarer: Farewell Edition",
+        "What Remains of Edith Finch",
+        "Valheim"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource",
+        "Setting"
       ]
     },
     {
@@ -15851,6 +16140,11 @@
         "Noita",
         "Burnout Paradise Remastered",
         "Volcano Princess"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource",
+        "Setting"
       ]
     },
     {
@@ -15859,14 +16153,9 @@
         "Resident Evil 4",
         "Cult of the Lamb",
         "Resident Evil 4 (2005)"
-      ]
-    },
-    {
-      "card": "deep-sea",
-      "games": [
-        "Subnautica",
-        "Barotrauma",
-        "DAVE THE DIVER"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -15875,6 +16164,9 @@
         "Deep Rock Galactic",
         "Teardown",
         "Brick Rigs"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
@@ -15883,6 +16175,10 @@
         "Cookie Clicker",
         "Ravenfield",
         "Minecraft"
+      ],
+      "targets": [
+        "Resource",
+        "Setting"
       ]
     },
     {
@@ -15891,6 +16187,9 @@
         "Everlasting Summer",
         "Hades II",
         "Mount & Blade: Warband"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -15899,6 +16198,9 @@
         "Stellar Blade",
         "BioShock Infinite",
         "Redout"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
@@ -15907,14 +16209,9 @@
         "Subnautica",
         "Raft",
         "Barotrauma"
-      ]
-    },
-    {
-      "card": "fog-bound",
-      "games": [
-        "DREDGE",
-        "SILENT HILL 2",
-        "Persona 4 Golden"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
@@ -15923,6 +16220,9 @@
         "INSIDE",
         "Half-Life 2: Episode Two",
         "PAYDAY 2"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -15931,6 +16231,10 @@
         "Outer Wilds",
         "Slay the Princess — The Pristine Cut",
         "TrackMania Nations Forever"
+      ],
+      "targets": [
+        "Resource",
+        "Setting"
       ]
     },
     {
@@ -15939,6 +16243,9 @@
         "FTL: Faster Than Light",
         "Arma 3",
         "Left 4 Dead"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -15947,6 +16254,9 @@
         "Risk of Rain 2",
         "Megabonk",
         "Crab Champions"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -15955,6 +16265,10 @@
         "Cult of the Lamb",
         "Grim Dawn",
         "Super Smash Bros. Ultimate"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -15963,6 +16277,10 @@
         "Doki Doki Literature Club!",
         "Doki Doki Literature Club Plus!",
         "There Is No Game: Wrong Dimension"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -15971,6 +16289,9 @@
         "Valheim",
         "Divinity: Original Sin 2 - Definitive Edition",
         "Black Myth: Wukong"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -15979,6 +16300,9 @@
         "My Summer Car",
         "Disco Elysium - The Final Cut",
         "Griftlands"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -15987,6 +16311,10 @@
         "Ace Combat 7: Skies Unknown",
         "The Elder Scrolls V: Skyrim",
         "The Elder Scrolls V: Skyrim Special Edition"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -15995,6 +16323,9 @@
         "RimWorld",
         "Factorio",
         "Scrap Mechanic"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
@@ -16003,6 +16334,11 @@
         "Stardew Valley",
         "Fields of Mistria",
         "DREDGE"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource",
+        "Setting"
       ]
     },
     {
@@ -16011,6 +16347,10 @@
         "Stick Fight: The Game",
         "Your Only Move Is HUSTLE",
         "The Henry Stickmin Collection"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -16019,6 +16359,9 @@
         "Tomb Raider",
         "Rise of the Tomb Raider",
         "Half-Life: Alyx"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -16027,6 +16370,9 @@
         "MiSide",
         "BattleBlock Theater",
         "Hollow Knight: Silksong"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -16035,6 +16381,11 @@
         "Marvel Snap",
         "Universe Sandbox",
         "Cookie Clicker"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource",
+        "Setting"
       ]
     },
     {
@@ -16043,6 +16394,10 @@
         "Supermarket Together",
         "Microsoft Flight Simulator",
         "Rhythm Doctor"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -16051,6 +16406,9 @@
         "Age of Empires II (Retired)",
         "Batman: Arkham City - Game of the Year Edition",
         "Stray"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
@@ -16059,6 +16417,9 @@
         "Saints Row: The Third",
         "Sleeping Dogs: Definitive Edition",
         "Schedule I"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
@@ -16067,14 +16428,10 @@
         "Castle Crashers",
         "Super Mario Maker 2",
         "Ravenfield"
-      ]
-    },
-    {
-      "card": "misty",
-      "games": [
-        "DREDGE",
-        "Valheim",
-        "Hogwarts Legacy"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -16083,14 +16440,10 @@
         "Lethal League Blaze",
         "Detroit: Become Human",
         "METAL GEAR RISING: REVENGEANCE"
-      ]
-    },
-    {
-      "card": "open",
-      "games": [
-        "BeamNG.drive",
-        "American Truck Simulator",
-        "How to Fish"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -16099,6 +16452,45 @@
         "RimWorld",
         "Disco Elysium - The Final Cut",
         "Sheepy: A Short Adventure"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource",
+        "Setting"
+      ]
+    },
+    {
+      "card": "shadowy",
+      "games": [
+        "DELTARUNE",
+        "Don't Starve Together",
+        "Ghost of Tsushima DIRECTOR'S CUT"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
+      ]
+    },
+    {
+      "card": "stormy",
+      "games": [
+        "Stormworks: Build and Rescue",
+        "Ace Combat 7: Skies Unknown",
+        "Super Smash Bros. Ultimate"
+      ],
+      "targets": [
+        "Setting"
+      ]
+    },
+    {
+      "card": "convict",
+      "games": [
+        "The Walking Dead: The Telltale Definitive Series",
+        "The Walking Dead",
+        "Ace Combat 7: Skies Unknown"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -16106,6 +16498,11 @@
       "games": [
         "Stellar Blade",
         "Detroit: Become Human"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource",
+        "Setting"
       ]
     },
     {
@@ -16113,6 +16510,9 @@
       "games": [
         "Dyson Sphere Program",
         "Farming Simulator 19"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
@@ -16120,6 +16520,10 @@
       "games": [
         "This War of Mine",
         "Rust"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -16127,6 +16531,10 @@
       "games": [
         "Kingdom Come: Deliverance II",
         "Crime Scene Cleaner"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -16134,6 +16542,9 @@
       "games": [
         "Titanfall 2",
         "Dragon Ball FighterZ"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -16141,13 +16552,9 @@
       "games": [
         "Batman: Arkham Asylum Game of the Year Edition",
         "Batman: Arkham City - Game of the Year Edition"
-      ]
-    },
-    {
-      "card": "departed",
-      "games": [
-        "Before Your Eyes",
-        "Spiritfarer: Farewell Edition"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -16155,6 +16562,9 @@
       "games": [
         "Outlast",
         "POSTAL 2"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -16162,13 +16572,21 @@
       "games": [
         "People Playground",
         "Lethal Company"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource"
       ]
     },
     {
-      "card": "dragon-blooded",
+      "card": "draconic",
       "games": [
         "The Elder Scrolls V: Skyrim",
         "The Elder Scrolls V: Skyrim Special Edition"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -16176,6 +16594,10 @@
       "games": [
         "ENA: Dream BBQ",
         "Dreams"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -16183,6 +16605,10 @@
       "games": [
         "SOMA",
         "ATRI -My Dear Moments-"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -16190,6 +16616,10 @@
       "games": [
         "Kerbal Space Program",
         "Broforce"
+      ],
+      "targets": [
+        "Resource",
+        "Setting"
       ]
     },
     {
@@ -16197,6 +16627,10 @@
       "games": [
         "Saints Row: The Third",
         "HoloCure - Save the Fans!"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -16204,6 +16638,9 @@
       "games": [
         "A Short Hike",
         "Ultimate Chicken Horse"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -16211,6 +16648,11 @@
       "games": [
         "To the Moon",
         "Sheepy: A Short Adventure"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource",
+        "Setting"
       ]
     },
     {
@@ -16218,6 +16660,11 @@
       "games": [
         "R.E.P.O.",
         "OneShot"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource",
+        "Setting"
       ]
     },
     {
@@ -16225,6 +16672,9 @@
       "games": [
         "Dishonored",
         "Phoenix Wright: Ace Attorney Trilogy"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -16232,6 +16682,10 @@
       "games": [
         "Return of the Obra Dinn",
         "Persona 5 Royal"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -16239,6 +16693,11 @@
       "games": [
         "Ori and the Will of the Wisps",
         "Ori and the Blind Forest: Definitive Edition"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource",
+        "Setting"
       ]
     },
     {
@@ -16246,6 +16705,11 @@
       "games": [
         "Volcano Princess",
         "Cities: Skylines"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource",
+        "Setting"
       ]
     },
     {
@@ -16253,6 +16717,9 @@
       "games": [
         "OMORI",
         "SILENT HILL 2"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -16260,6 +16727,10 @@
       "games": [
         "Schedule I",
         "Lethal League Blaze"
+      ],
+      "targets": [
+        "Resource",
+        "Setting"
       ]
     },
     {
@@ -16267,6 +16738,11 @@
       "games": [
         "Split Fiction",
         "South Park: The Stick of Truth"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource",
+        "Setting"
       ]
     },
     {
@@ -16274,6 +16750,10 @@
       "games": [
         "Age of Empires II: Definitive Edition",
         "STAR WARS Empire at War - Gold Pack"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -16281,6 +16761,9 @@
       "games": [
         "Clone Drone in the Danger Zone",
         "Kenshi"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -16288,6 +16771,10 @@
       "games": [
         "Resident Evil 2",
         "The Room"
+      ],
+      "targets": [
+        "Resource",
+        "Setting"
       ]
     },
     {
@@ -16295,6 +16782,9 @@
       "games": [
         "Euro Truck Simulator 2",
         "American Truck Simulator"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -16302,6 +16792,10 @@
       "games": [
         "The Henry Stickmin Collection",
         "Danganronpa: Trigger Happy Havoc"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource"
       ]
     },
     {
@@ -16309,6 +16803,10 @@
       "games": [
         "DiRT Rally 2.0",
         "SnowRunner"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -16316,6 +16814,9 @@
       "games": [
         "Rise of the Tomb Raider",
         "Cultist Simulator"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -16323,6 +16824,9 @@
       "games": [
         "Half-Life 2",
         "Half-Life: Alyx"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
@@ -16330,6 +16834,9 @@
       "games": [
         "The Walking Dead: The Telltale Definitive Series",
         "The Walking Dead: Season Two"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -16337,6 +16844,9 @@
       "games": [
         "Stardew Valley",
         "Portal 2"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
@@ -16344,6 +16854,10 @@
       "games": [
         "SCP: Secret Laboratory",
         "Abiotic Factor"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -16351,6 +16865,10 @@
       "games": [
         "Dishonored",
         "Dead Cells"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -16358,6 +16876,9 @@
       "games": [
         "Outlast",
         "Dispatch"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -16365,6 +16886,9 @@
       "games": [
         "DELTARUNE",
         "BioShock Infinite"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -16372,13 +16896,9 @@
       "games": [
         "Dispatch",
         "The Wolf Among Us"
-      ]
-    },
-    {
-      "card": "shadowy",
-      "games": [
-        "DELTARUNE",
-        "Don't Starve Together"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -16386,13 +16906,10 @@
       "games": [
         "The Binding of Isaac: Rebirth",
         "The Binding of Isaac"
-      ]
-    },
-    {
-      "card": "storm-tossed",
-      "games": [
-        "Stormworks: Build and Rescue",
-        "Ace Combat 7: Skies Unknown"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -16400,6 +16917,10 @@
       "games": [
         "Sleeping Dogs: Definitive Edition",
         "A Dance of Fire and Ice"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -16407,6 +16928,9 @@
       "games": [
         "SANABI",
         "Ghost of Tsushima DIRECTOR'S CUT"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -16414,6 +16938,9 @@
       "games": [
         "VA-11 Hall-A: Cyberpunk Bartender Action",
         "Marvel's Spider-Man Remastered"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -16421,6 +16948,9 @@
       "games": [
         "The Elder Scrolls IV: Oblivion Game of the Year Edition",
         "SCP: Secret Laboratory"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -16428,6 +16958,9 @@
       "games": [
         "FTL: Faster Than Light",
         "INSIDE"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -16435,6 +16968,9 @@
       "games": [
         "Sekiro: Shadows Die Twice",
         "Sid Meier's Civilization V"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -16442,6 +16978,9 @@
       "games": [
         "Cuphead",
         "BioShock Infinite"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -16449,6 +16988,10 @@
       "games": [
         "The Planet Crafter",
         "Sheepy: A Short Adventure"
+      ],
+      "targets": [
+        "Resource",
+        "Setting"
       ]
     },
     {
@@ -16456,6 +16999,10 @@
       "games": [
         "Red Dead Redemption 2",
         "Lethal League Blaze"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -16463,6 +17010,9 @@
       "games": [
         "Sleeping Dogs: Definitive Edition",
         "Dying Light"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -16470,13 +17020,9 @@
       "games": [
         "Hogwarts Legacy",
         "Fields of Mistria"
-      ]
-    },
-    {
-      "card": "convicted",
-      "games": [
-        "The Walking Dead: The Telltale Definitive Series",
-        "The Walking Dead"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -16484,6 +17030,9 @@
       "games": [
         "Don't Starve Together",
         "Don't Starve"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -16491,6 +17040,9 @@
       "games": [
         "Half-Life",
         "Black Mesa"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -16498,6 +17050,9 @@
       "games": [
         "DELTARUNE",
         "The Elder Scrolls IV: Oblivion Game of the Year Edition"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -16505,6 +17060,9 @@
       "games": [
         "The Binding of Isaac",
         "The Binding of Isaac: Rebirth"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -16512,6 +17070,9 @@
       "games": [
         "Griftlands",
         "Resident Evil Requiem"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -16519,6 +17080,9 @@
       "games": [
         "Content Warning",
         "My Summer Car"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -16526,6 +17090,9 @@
       "games": [
         "Disco Elysium - The Final Cut",
         "Katana ZERO"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -16533,6 +17100,9 @@
       "games": [
         "Detroit: Become Human",
         "SIGNALIS"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -16540,13 +17110,9 @@
       "games": [
         "WEBFISHING",
         "Gunfire Reborn"
-      ]
-    },
-    {
-      "card": "dead",
-      "games": [
-        "What Remains of Edith Finch",
-        "Valheim"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -16554,6 +17120,10 @@
       "games": [
         "Lethal Company",
         "SCP: Secret Laboratory"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource"
       ]
     },
     {
@@ -16561,6 +17131,9 @@
       "games": [
         "Team Fortress 2",
         "BioShock Infinite"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -16568,6 +17141,9 @@
       "games": [
         "Danganronpa: Trigger Happy Havoc",
         "The Henry Stickmin Collection"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -16575,6 +17151,9 @@
       "games": [
         "SIGNALIS",
         "Resident Evil 7 Biohazard"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
@@ -16582,6 +17161,10 @@
       "games": [
         "Satisfactory",
         "Lethal Company"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -16589,6 +17172,10 @@
       "games": [
         "RimWorld",
         "Titanfall 2"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -16596,6 +17183,10 @@
       "games": [
         "Black Myth: Wukong",
         "Hades II"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -16603,6 +17194,9 @@
       "games": [
         "House Flipper",
         "Disco Elysium - The Final Cut"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
@@ -16610,6 +17204,9 @@
       "games": [
         "Portal",
         "People Playground"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
@@ -16617,6 +17214,10 @@
       "games": [
         "Sally Face - Episode One",
         "SILENT HILL 2"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -16624,6 +17225,9 @@
       "games": [
         "Resident Evil 4",
         "Resident Evil 4 (2005)"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
@@ -16631,6 +17235,9 @@
       "games": [
         "Duck Game",
         "Stick Fight: The Game"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
@@ -16638,6 +17245,10 @@
       "games": [
         "Redout",
         "Halo: The Master Chief Collection"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -16645,6 +17256,10 @@
       "games": [
         "Persona 5 Royal",
         "Marvel's Spider-Man Remastered"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -16652,6 +17267,10 @@
       "games": [
         "Hotline Miami",
         "Hotline Miami 2: Wrong Number"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
@@ -16659,6 +17278,9 @@
       "games": [
         "Days Gone",
         "The Walking Dead: Season Two"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
@@ -16666,6 +17288,9 @@
       "games": [
         "Hand of Fate",
         "Balatro"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
@@ -16673,6 +17298,9 @@
       "games": [
         "Fallout: New Vegas",
         "METRO 2033 Redux"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
@@ -16680,6 +17308,9 @@
       "games": [
         "To the Moon",
         "DAVE THE DIVER"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
@@ -16687,6 +17318,9 @@
       "games": [
         "The Walking Dead: Season Two",
         "Resident Evil Village"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
@@ -16694,6 +17328,9 @@
       "games": [
         "Crab Champions",
         "Hotline Miami 2: Wrong Number"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
@@ -16701,1433 +17338,2074 @@
       "games": [
         "Brick Rigs",
         "It Takes Two"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
+      ]
+    },
+    {
+      "card": "bouncy",
+      "games": [
+        "Slime Rancher",
+        "Geometry Dash"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
+      ]
+    },
+    {
+      "card": "cyborg",
+      "games": [
+        "METAL GEAR RISING: REVENGEANCE",
+        "Guilty Gear -Strive-"
+      ],
+      "targets": [
+        "Player Role"
+      ]
+    },
+    {
+      "card": "aspiring",
+      "games": [
+        "Content Warning",
+        "Mount & Blade: Warband"
+      ],
+      "targets": [
+        "Player Role"
+      ]
+    },
+    {
+      "card": "shy",
+      "games": [
+        "Life is Strange - Episode 1",
+        "Resident Evil Requiem"
+      ],
+      "targets": [
+        "Player Role"
+      ]
+    },
+    {
+      "card": "norse",
+      "games": [
+        "The Witcher 3: Wild Hunt",
+        "God of War"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "all-star",
       "games": [
         "Sonic & All-Stars Racing Transformed"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "ambitious",
       "games": [
         "Sid Meier's Civilization V"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
-      "card": "animatronic",
+      "card": "mechanical",
       "games": [
         "Ultimate Custom Night"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "anxious",
       "games": [
         "Celeste"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "ashen",
       "games": [
         "DARK SOULS III"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "awakened",
       "games": [
         "Detroit: Become Human"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "barren",
       "games": [
         "The Planet Crafter"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
       "card": "battered",
       "games": [
         "DiRT Rally 2.0"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "bendable",
       "games": [
         "BeamNG.drive"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "betrayed",
       "games": [
         "Fallout: New Vegas"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "blood-fueled",
       "games": [
         "ULTRAKILL"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "borrowed",
       "games": [
         "Garry's Mod"
-      ]
-    },
-    {
-      "card": "bouncy",
-      "games": [
-        "Slime Rancher"
+      ],
+      "targets": [
+        "Resource"
       ]
     },
     {
       "card": "bureaucratic",
       "games": [
         "Papers, Please"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "camouflaged",
       "games": [
         "Bloons TD 6"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "cannibal",
       "games": [
         "The Forest"
-      ]
-    },
-    {
-      "card": "captured",
-      "games": [
-        "Hollow Knight: Silksong"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "chatty",
       "games": [
         "Big Walk"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "clumsy",
       "games": [
         "PEAK"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "collared",
       "games": [
         "Divinity: Original Sin 2 - Definitive Edition"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "colliding",
       "games": [
         "Universe Sandbox"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
       "card": "colorless",
       "games": [
         "GRIS"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "contained",
       "games": [
         "SCP: Secret Laboratory"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "cornered",
       "games": [
         "Fights in Tight Spaces"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "cozy",
       "games": [
         "WEBFISHING"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
       "card": "crooked",
       "games": [
         "Griftlands"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "curious",
       "games": [
         "A Short Hike"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "cute",
       "games": [
         "HoloCure - Save the Fans!"
-      ]
-    },
-    {
-      "card": "cyborg",
-      "games": [
-        "METAL GEAR RISING: REVENGEANCE"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "dancing",
       "games": [
         "Pineapple on pizza"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "defective",
       "games": [
         "Hi-Fi RUSH"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource"
       ]
     },
     {
       "card": "determined",
       "games": [
         "Celeste"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "disgraced",
       "games": [
         "Ghost of Tsushima DIRECTOR'S CUT"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "disguised",
       "games": [
         "Among Us"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "divorcing",
       "games": [
         "It Takes Two"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "drifting",
       "games": [
         "Raft"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "drugged",
       "games": [
         "Katana ZERO"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "dystopian",
       "games": [
         "Half-Life 2"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
       "card": "eldritch",
       "games": [
         "Cookie Clicker"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "elemental",
       "games": [
         "Rivals of Aether"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource",
+        "Setting"
       ]
     },
     {
       "card": "evolving",
       "games": [
         "Spore"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "experimental",
       "games": [
         "People Playground"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource",
+        "Setting"
       ]
     },
     {
       "card": "feared",
       "games": [
         "The Wolf Among Us"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "feral",
       "games": [
         "Rivals of Aether"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "festival",
       "games": [
         "Forza Horizon 5"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
       "card": "forbidden",
       "games": [
         "Cultist Simulator"
+      ],
+      "targets": [
+        "Resource",
+        "Setting"
       ]
     },
     {
       "card": "foreign",
       "games": [
         "Chants of Sennaar"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "frantic",
       "games": [
         "Pizza Tower"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "friendly",
       "games": [
         "Marvel's Spider-Man Remastered"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "furious",
       "games": [
         "DOOM"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "furry",
       "games": [
         "Gunfire Reborn"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "gifted",
       "games": [
         "Hogwarts Legacy"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "glitched",
       "games": [
         "There Is No Game: Wrong Dimension"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource",
+        "Setting"
       ]
     },
     {
       "card": "golden",
       "games": [
         "ELDEN RING"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource",
+        "Setting"
       ]
     },
     {
       "card": "graffiti",
       "games": [
         "Lethal League Blaze"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
       "card": "greedy",
       "games": [
         "How to Fish"
-      ]
-    },
-    {
-      "card": "half-machine",
-      "games": [
-        "Guilty Gear -Strive-"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "hallowed",
       "games": [
         "Terraria"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
       "card": "hand-drawn",
       "games": [
         "Skullgirls"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "hardened",
       "games": [
         "The Walking Dead: Season Two"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "headless",
       "games": [
         "Dead Cells"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "heavy",
       "games": [
         "American Truck Simulator"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource"
       ]
     },
     {
       "card": "heavy-metal",
       "games": [
         "Guilty Gear -Strive-"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "hidden",
       "games": [
         "OMORI"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource",
+        "Setting"
       ]
     },
     {
       "card": "homeless",
       "games": [
         "Starbound"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "immune",
       "games": [
         "Left 4 Dead"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "inherited",
       "games": [
         "Stardew Valley"
+      ],
+      "targets": [
+        "Resource",
+        "Setting"
       ]
     },
     {
       "card": "jobless",
       "games": [
         "Wobbly Life"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "kind",
       "games": [
         "Spiritfarer: Farewell Edition"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "lowborn",
       "games": [
         "Kingdom Come: Deliverance II"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "lunar",
       "games": [
         "PRAGMATA"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
       "card": "many-armed",
       "games": [
         "Brotato"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "mind-controlled",
       "games": [
         "INSIDE"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "mirrored",
       "games": [
         "Mirror"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
       "card": "modded",
       "games": [
         "Assetto Corsa"
+      ],
+      "targets": [
+        "Resource",
+        "Setting"
       ]
     },
     {
       "card": "moldy",
       "games": [
         "Resident Evil Village"
+      ],
+      "targets": [
+        "Resource",
+        "Setting"
       ]
     },
     {
       "card": "molten",
       "games": [
         "The Powder Toy"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
       "card": "naked",
       "games": [
         "Rust"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "nocturnal",
       "games": [
         "Touhou Mystia's Izakaya"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "occult",
       "games": [
         "The Room"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "one-armed",
       "games": [
         "Sekiro: Shadows Die Twice"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "orbiting",
       "games": [
         "A Dance of Fire and Ice"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
       "card": "ordinary",
       "games": [
         "POSTAL 2"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "overheated",
       "games": [
         "Oxygen Not Included"
+      ],
+      "targets": [
+        "Resource",
+        "Setting"
       ]
     },
     {
       "card": "painted",
       "games": [
         "Clair Obscur: Expedition 33"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "pastel",
       "games": [
         "Townscaper"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
       "card": "patriotic",
       "games": [
         "Broforce"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "perfect",
       "games": [
         "TrackMania Nations Forever"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource",
+        "Setting"
       ]
     },
     {
       "card": "plush",
       "games": [
         "Sheepy: A Short Adventure"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "poisoned",
       "games": [
         "Batman: Arkham City - Game of the Year Edition"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource",
+        "Setting"
       ]
     },
     {
       "card": "polluted",
       "games": [
         "Factorio"
+      ],
+      "targets": [
+        "Resource",
+        "Setting"
       ]
     },
     {
       "card": "punishing",
       "games": [
         "Super Mario Maker 2"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
       "card": "quake-struck",
       "games": [
         "Fields of Mistria"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
       "card": "rare",
       "games": [
         "TCG Card Shop Simulator"
+      ],
+      "targets": [
+        "Resource"
       ]
     },
     {
       "card": "rebel",
       "games": [
         "STAR WARS Empire at War - Gold Pack"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "reckless",
       "games": [
         "Burnout Paradise Remastered"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "reopened",
       "games": [
         "Firework"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
       "card": "rewritten",
       "games": [
         "Baba Is You"
+      ],
+      "targets": [
+        "Resource",
+        "Setting"
       ]
     },
     {
       "card": "rickety",
       "games": [
         "Besiege"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
       "card": "rigged",
       "games": [
         "Balatro"
+      ],
+      "targets": [
+        "Resource",
+        "Setting"
       ]
     },
     {
       "card": "road-worn",
       "games": [
         "Days Gone"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "rogue",
       "games": [
         "PRAGMATA"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "rotting",
       "games": [
         "Resident Evil 7 Biohazard"
+      ],
+      "targets": [
+        "Resource",
+        "Setting"
       ]
     },
     {
       "card": "royal",
       "games": [
         "Gwent: The Witcher Card Game"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "rule-bound",
       "games": [
         "Baba Is You"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "sacred",
       "games": [
         "Senren*Banka"
+      ],
+      "targets": [
+        "Resource",
+        "Setting"
       ]
     },
     {
       "card": "sacrificed",
       "games": [
         "Nidhogg"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "scarred",
       "games": [
         "Sally Face - Episode One"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "scrap",
       "games": [
         "Scrap Mechanic"
+      ],
+      "targets": [
+        "Resource",
+        "Setting"
       ]
     },
     {
       "card": "sentient",
       "games": [
         "Inscryption"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "sharp-dressed",
       "games": [
         "Helltaker"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "small-time",
       "games": [
         "Schedule I"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "spotless",
       "games": [
         "PowerWash Simulator"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
       "card": "stray",
       "games": [
         "Stray"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "street-trained",
       "games": [
         "Street Fighter 6"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "stylish",
       "games": [
         "Devil May Cry 5"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "suburban",
       "games": [
         "Plants vs. Zombies"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "summoned",
       "games": [
         "Persona 3 Reload"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "sunken",
       "games": [
         "ATRI -My Dear Moments-"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
       "card": "sunless",
       "games": [
         "OneShot"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
       "card": "superpowered",
       "games": [
         "Marvel Snap"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "supersonic",
       "games": [
         "Redout"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "suspicious",
       "games": [
         "Among Us"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "teenage",
       "games": [
         "Everlasting Summer"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "televised",
       "games": [
         "Persona 4 Golden"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "thirsty",
       "games": [
         "Timberborn"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "time-bending",
       "games": [
         "Life is Strange - Episode 1"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "time-displaced",
       "games": [
         "Mortal Kombat 11"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "trigger-happy",
       "games": [
         "Enter the Gungeon"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "two-faced",
       "games": [
         "ENA: Dream BBQ"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "underfunded",
       "games": [
         "Abiotic Factor"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
       "card": "understaffed",
       "games": [
         "Supermarket Together"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
       "card": "unleashed",
       "games": [
         "METAL GEAR RISING: REVENGEANCE"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "unstoppable",
       "games": [
         "DOOM Eternal"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "wild",
       "games": [
         "Balatro"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "accused",
       "games": [
         "Magical Girl Witch Trials"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "anti-gravity",
       "games": [
         "Redout"
-      ]
-    },
-    {
-      "card": "aspiring",
-      "games": [
-        "Content Warning"
-      ]
-    },
-    {
-      "card": "bouncing",
-      "games": [
-        "Geometry Dash"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
       "card": "brawling",
       "games": [
         "Rivals of Aether"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "burned-out",
       "games": [
         "Stardew Valley"
-      ]
-    },
-    {
-      "card": "celebrity",
-      "games": [
-        "Saints Row: The Third"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "evicted",
       "games": [
         "Wobbly Life"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "failed",
       "games": [
         "ATRI -My Dear Moments-"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "fairy-tale",
       "games": [
         "The Wolf Among Us"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "fallen",
       "games": [
         "Halo: The Master Chief Collection"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "former",
       "games": [
         "METAL GEAR RISING: REVENGEANCE"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "freed",
       "games": [
         "The Elder Scrolls IV: Oblivion Game of the Year Edition"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "game-trapped",
       "games": [
         "MiSide"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "historical",
       "games": [
         "Age of Empires II: Definitive Edition"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "invited",
       "games": [
         "The Room"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "lonely",
       "games": [
         "Everlasting Summer"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "loyal",
       "games": [
         "Sekiro: Shadows Die Twice"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "master",
       "games": [
         "Batman: Arkham Asylum Game of the Year Edition"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "mysterious",
       "games": [
         "Devil May Cry 5"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource",
+        "Setting"
       ]
     },
     {
       "card": "old",
       "games": [
         "Shelldiver"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "one-legged",
       "games": [
         "ATRI -My Dear Moments-"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "pacifist",
       "games": [
         "Dishonored"
-      ]
-    },
-    {
-      "card": "parasite-infected",
-      "games": [
-        "Phasmophobia"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "probationary",
       "games": [
         "Persona 5 Royal"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "recalled",
       "games": [
         "ELDEN RING"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource"
       ]
     },
     {
       "card": "resurrected",
       "games": [
         "Cult of the Lamb"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "rising",
       "games": [
         "Grim Dawn"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource",
+        "Setting"
       ]
     },
     {
       "card": "robot-armed",
       "games": [
         "Devil May Cry 5"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "rock-and-roll",
       "games": [
         "Guilty Gear -Strive-"
-      ]
-    },
-    {
-      "card": "shadow",
-      "games": [
-        "Ghost of Tsushima DIRECTOR'S CUT"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "shut-in",
       "games": [
         "OMORI"
-      ]
-    },
-    {
-      "card": "shy",
-      "games": [
-        "Life is Strange - Episode 1"
-      ]
-    },
-    {
-      "card": "six-armed",
-      "games": [
-        "Brotato"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "space",
       "games": [
         "Deep Rock Galactic"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "stressed",
       "games": [
         "Pizza Tower"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "home-alone",
       "games": [
         "My Summer Car"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "time-rewinding",
       "games": [
         "Life is Strange - Episode 1"
-      ]
-    },
-    {
-      "card": "timid",
-      "games": [
-        "Resident Evil Requiem"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "transforming",
       "games": [
         "Sonic & All-Stars Racing Transformed"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "unseen",
       "games": [
         "OneShot"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "vacationing",
       "games": [
         "A Short Hike"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "virtual",
       "games": [
         "HoloCure - Save the Fans!"
-      ]
-    },
-    {
-      "card": "voiceless",
-      "games": [
-        "GRIS"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "wandering",
       "games": [
         "Street Fighter 6"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "wannabe",
       "games": [
         "Hi-Fi RUSH"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "widowed",
       "games": [
         "Volcano Princess"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "wish-seeking",
       "games": [
         "Skullgirls"
-      ]
-    },
-    {
-      "card": "wordless",
-      "games": [
-        "Chants of Sennaar"
-      ]
-    },
-    {
-      "card": "would-be",
-      "games": [
-        "Mount & Blade: Warband"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "spirit",
       "games": [
         "Spiritfarer: Farewell Edition"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "dungeon",
       "games": [
         "Enter the Gungeon"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
       "card": "mob",
       "games": [
         "Crime Scene Cleaner"
-      ]
-    },
-    {
-      "card": "convict",
-      "games": [
-        "Ace Combat 7: Skies Unknown"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "1920s",
       "games": [
         "Cultist Simulator"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "1990s",
       "games": [
         "My Summer Car"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "ai-run",
       "games": [
         "SANABI"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
       "card": "art-deco",
       "games": [
         "Skullgirls"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
       "card": "candy-bright",
       "games": [
         "Hi-Fi RUSH"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
       "card": "cramped",
       "games": [
         "Fights in Tight Spaces"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
       "card": "cyberpunk",
       "games": [
         "VA-11 Hall-A: Cyberpunk Bartender Action"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "demon-infested",
       "games": [
         "Devil May Cry 5"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
       "card": "calm",
       "games": [
         "Townscaper"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "european",
       "games": [
         "Euro Truck Simulator 2"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "flying",
       "games": [
         "BioShock Infinite"
-      ]
-    },
-    {
-      "card": "foggy",
-      "games": [
-        "SILENT HILL 2"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "green",
       "games": [
         "Dragon Ball FighterZ"
+      ],
+      "targets": [
+        "Player Role",
+        "Resource",
+        "Setting"
       ]
     },
     {
       "card": "grim",
       "games": [
         "INSIDE"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "gritty",
       "games": [
         "Street Fighter 6"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "timeless",
       "games": [
         "Mortal Kombat 11"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "mob-run",
       "games": [
         "A Hat in Time"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
       "card": "mediterranean",
       "games": [
         "Arma 3"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
       "card": "noir",
       "games": [
         "Katana ZERO"
-      ]
-    },
-    {
-      "card": "ice-covered",
-      "games": [
-        "Barotrauma"
-      ]
-    },
-    {
-      "card": "odd",
-      "games": [
-        "What Remains of Edith Finch"
-      ]
-    },
-    {
-      "card": "open-world",
-      "games": [
-        "Burnout Paradise Remastered"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "overrun",
       "games": [
         "Resident Evil 2"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
       "card": "remote",
       "games": [
         "Firework"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
       "card": "rival",
       "games": [
         "Team Fortress 2"
+      ],
+      "targets": [
+        "Player Role"
       ]
     },
     {
       "card": "roadside",
       "games": [
         "Touhou Mystia's Izakaya"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
       "card": "robot-run",
       "games": [
         "Scrap Mechanic"
-      ]
-    },
-    {
-      "card": "ruin-strewn",
-      "games": [
-        "Rust"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
       "card": "rural",
       "games": [
         "Farming Simulator 19"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "sealed",
       "games": [
         "Danganronpa: Trigger Happy Havoc"
+      ],
+      "targets": [
+        "Resource",
+        "Setting"
       ]
     },
     {
-      "card": "silk-woven",
+      "card": "web-covered",
       "games": [
         "Hollow Knight: Silksong"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
       "card": "sinking",
       "games": [
         "ATRI -My Dear Moments-"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
       "card": "small-town",
       "games": [
         "Supermarket Together"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "soviet",
       "games": [
         "Everlasting Summer"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "stone",
       "games": [
         "Slay the Princess — The Pristine Cut"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "storm-wrecked",
       "games": [
         "Tomb Raider"
-      ]
-    },
-    {
-      "card": "stormy",
-      "games": [
-        "Super Smash Bros. Ultimate"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
       "card": "sunny",
       "games": [
         "Forza Horizon 5"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
       "card": "swampy",
       "games": [
         "Griftlands"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
       "card": "uncharted",
       "games": [
         "Muck"
-      ]
-    },
-    {
-      "card": "undersea",
-      "games": [
-        "SOMA"
-      ]
-    },
-    {
-      "card": "viking",
-      "games": [
-        "The Witcher 3: Wild Hunt"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
       "card": "warring",
       "games": [
         "Mortal Kombat 11"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
       "card": "world-spanning",
       "games": [
         "Redout"
+      ],
+      "targets": [
+        "Setting"
       ]
     },
     {
       "card": "1930s",
       "games": [
         "Cuphead"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "musical",
       "games": [
         "Just Shapes & Beats"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "victorian",
       "games": [
         "Grim Dawn"
-      ]
-    },
-    {
-      "card": "norse",
-      "games": [
-        "God of War"
+      ],
+      "targets": [
+        "Player Role",
+        "Setting"
       ]
     },
     {
       "card": "unique",
-      "games": []
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
     }
   ],
   "Twist": [

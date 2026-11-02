@@ -13,7 +13,7 @@ The "Games" column shows which games the card came from: the Steam Top 250, plus
 | [Resource](resource.md) | 528 | 201 | 45 |
 | [Setting](setting.md) | 424 | 208 | 35 |
 | [Mood](mood.md) | 166 | 73 | 19 |
-| [Modifier](modifier.md) | 397 | 414 | 46 |
+| [Modifier](modifier.md) | 397 | 391 | 46 |
 | [Twist](twist.md) | 290 | 158 | 34 |
 | [Progression](progression.md) | 720 | 292 | 42 |
 | [Constraint](constraint.md) | 536 | 184 | 130 |

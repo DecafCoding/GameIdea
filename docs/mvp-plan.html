@@ -429,6 +429,7 @@ Genre                     (21 values. Meanings are in the Genres table.
   <li>A new board starts with all 21 genres on for every genre-tagged deck. The user did not pick this default. It was the recommended default and stands until the user changes it.</li>
   <li>Redraw All follows the single Redraw rule, so a combined card keeps its adjective ring.</li>
   <li>The badge choices other than the defaults were proposed in the interview and can change during M2.</li>
+  <li>Each Modifier cue lists the card types it fits (Player Role, Resource, Setting). How the app uses this list is not decided yet. The user decides before the Modifier combine work in M2.</li>
 </ul>
 
 <h2>Amendments</h2>
@@ -440,6 +441,7 @@ Genre                     (21 values. Meanings are in the Genres table.
 <p class="meta">2026-11-02: The hidden <code>generic</code> tag and the Generic fill are removed. The genre tags in the 4 genre-tagged decks were reviewed: 428 of 998 cues were retagged, mostly with genres they fit but did not list. No old generic cue fit every genre, so each got a genre list. 3 Constraint cues that fit every genre list all 21. A floor of 10 cues for each genre in each tagged deck replaces the fill. The split and a unit test check it. After the retag, the smallest pools are Progression Fighting (19) and Resource Metroidvania (20). Changed Data model, Rules, State and failure, M3 and Done criteria. Changed by the user's request after a review.</p>
 <p class="meta">2026-11-02: Player Role cues name the character only. Descriptions moved to the Modifier deck: 404 Player Role cues became 329 (splits, merged duplicates and 23 drops), and the Modifier deck grew from 266 to 344. Changed Cue rules. Changed by the user's request after a review.</p>
 <p class="meta">2026-11-02: Setting cues name the place only, like Player Role. Descriptions moved to the Modifier deck, for example "flooded world" became "flooded" + "world". "world of clones" stays whole. 273 Setting cues became 208. The proper-name cue rule now says it means made-up names, and that real places and eras are fine. Changed Cue rules. Changed by the user's request after a review.</p>
+<p class="meta">2026-11-02: The Modifier deck was reviewed: 3 game-linked words renamed and 23 near-duplicates merged, for 391 modifiers. Each modifier now lists the card types it fits. Its use in the app is open. Changed Assumptions. Changed by the user's request after a review.</p>
 
 </body>
 </html>
