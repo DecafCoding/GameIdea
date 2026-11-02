@@ -6417,6 +6417,14 @@
       ]
     },
     {
+      "card": "escape your captors",
+      "games": [
+        "BattleBlock Theater",
+        "The Binding of Isaac",
+        "The Binding of Isaac: Rebirth"
+      ]
+    },
+    {
       "card": "beat your captor at his own game and walk free",
       "games": [
         "Inscryption",
@@ -6452,21 +6460,28 @@
       ]
     },
     {
-      "card": "destroy every rival, build a wonder, or hold all the relics",
+      "card": "outlast every rival empire",
       "games": [
         "Age of Empires II (Retired)",
         "Age of Empires II: Definitive Edition"
       ]
     },
     {
-      "card": "escape the facility and kill the alien master",
+      "card": "escape the facility",
       "games": [
         "Half-Life",
         "Black Mesa"
       ]
     },
     {
-      "card": "escape your mother and reach the bottom floor",
+      "card": "stop the invasion",
+      "games": [
+        "Half-Life",
+        "Black Mesa"
+      ]
+    },
+    {
+      "card": "reach the bottom floor",
       "games": [
         "The Binding of Isaac",
         "The Binding of Isaac: Rebirth"
@@ -6515,14 +6530,14 @@
       ]
     },
     {
-      "card": "rekindle the dying fire, or let it go out",
+      "card": "renew the dying world, or let it end",
       "games": [
         "DARK SOULS III",
         "DARK SOULS: REMASTERED"
       ]
     },
     {
-      "card": "rescue the president's daughter",
+      "card": "rescue a VIP held by your enemy",
       "games": [
         "Resident Evil 4 (2005)",
         "Resident Evil 4"
@@ -6570,7 +6585,7 @@
       ]
     },
     {
-      "card": "beat the card kings and then the dealer",
+      "card": "beat the house at its own game",
       "games": [
         "Hand of Fate"
       ]
@@ -6618,7 +6633,7 @@
       ]
     },
     {
-      "card": "bring color back and find your voice",
+      "card": "recover what grief took from you",
       "games": [
         "GRIS"
       ]
@@ -6630,7 +6645,7 @@
       ]
     },
     {
-      "card": "build a car from loose parts and get it road legal",
+      "card": "repair a car with parts or scrap",
       "games": [
         "My Summer Car"
       ]
@@ -6672,15 +6687,9 @@
       ]
     },
     {
-      "card": "carry the secret plans home before the rebels catch you",
+      "card": "deliver vital intel",
       "games": [
         "FTL: Faster Than Light"
-      ]
-    },
-    {
-      "card": "carry the sun to the top of the tower",
-      "games": [
-        "OneShot"
       ]
     },
     {
@@ -6702,19 +6711,25 @@
       ]
     },
     {
-      "card": "change the hearts of corrupt adults and clear your name",
+      "card": "expose the corrupt",
       "games": [
         "Persona 5 Royal"
       ]
     },
     {
-      "card": "claim the wish-granting heart",
+      "card": "clear your name",
+      "games": [
+        "Persona 5 Royal"
+      ]
+    },
+    {
+      "card": "claim the wish-granting relic",
       "games": [
         "Skullgirls"
       ]
     },
     {
-      "card": "clear the dungeon under the family manor",
+      "card": "clear the evil under your family home",
       "games": [
         "Darkest Dungeon"
       ]
@@ -6738,7 +6753,7 @@
       ]
     },
     {
-      "card": "collect the six relics of the fallen hero",
+      "card": "gather the scattered pieces of a fallen legend",
       "games": [
         "Black Myth: Wukong"
       ]
@@ -6750,7 +6765,7 @@
       ]
     },
     {
-      "card": "conquer the world, reach the stars, or win the world vote",
+      "card": "win by conquest, science, or diplomacy",
       "games": [
         "Sid Meier's Civilization V"
       ]
@@ -6780,7 +6795,7 @@
       ]
     },
     {
-      "card": "defeat the titan of time and save your family",
+      "card": "defeat the tyrant holding your family",
       "games": [
         "Hades II"
       ]
@@ -6792,7 +6807,7 @@
       ]
     },
     {
-      "card": "deliver the girl and wipe away your debt",
+      "card": "deliver the prisoner to settle your debt",
       "games": [
         "BioShock Infinite"
       ]
@@ -6810,7 +6825,13 @@
       ]
     },
     {
-      "card": "drive the invaders off your island and save your uncle",
+      "card": "drive out the invaders",
+      "games": [
+        "Ghost of Tsushima DIRECTOR'S CUT"
+      ]
+    },
+    {
+      "card": "save your mentor",
       "games": [
         "Ghost of Tsushima DIRECTOR'S CUT"
       ]
@@ -6876,13 +6897,13 @@
       ]
     },
     {
-      "card": "escape the simulation and take back your stories",
+      "card": "escape the machine stealing your ideas",
       "games": [
         "Split Fiction"
       ]
     },
     {
-      "card": "escape the theater and save your best friend",
+      "card": "save your friend",
       "games": [
         "BattleBlock Theater"
       ]
@@ -6906,7 +6927,7 @@
       ]
     },
     {
-      "card": "find each killer and escape the school",
+      "card": "find the killer among you and escape",
       "games": [
         "Danganronpa: Trigger Happy Havoc"
       ]
@@ -6936,13 +6957,13 @@
       ]
     },
     {
-      "card": "find the gun that can kill the past",
+      "card": "find the weapon that can undo the past",
       "games": [
         "Enter the Gungeon"
       ]
     },
     {
-      "card": "find the lost heir and stop the demon prince",
+      "card": "find the hidden heir before the invasion",
       "games": [
         "The Elder Scrolls IV: Oblivion Game of the Year Edition"
       ]
@@ -6972,7 +6993,7 @@
       ]
     },
     {
-      "card": "find your wife, who should be dead",
+      "card": "find someone who should not be alive",
       "games": [
         "SILENT HILL 2"
       ]
@@ -6990,7 +7011,13 @@
       ]
     },
     {
-      "card": "finish every task or vote out the traitor",
+      "card": "finish the work",
+      "games": [
+        "Among Us"
+      ]
+    },
+    {
+      "card": "expose the traitor",
       "games": [
         "Among Us"
       ]
@@ -7050,13 +7077,25 @@
       ]
     },
     {
-      "card": "free your father and find the alien superweapon",
+      "card": "rescue your parent",
       "games": [
         "Half-Life: Alyx"
       ]
     },
     {
-      "card": "get back all the lost time pieces and fly home",
+      "card": "find the superweapon",
+      "games": [
+        "Half-Life: Alyx"
+      ]
+    },
+    {
+      "card": "recover what you lost",
+      "games": [
+        "A Hat in Time"
+      ]
+    },
+    {
+      "card": "get home",
       "games": [
         "A Hat in Time"
       ]
@@ -7092,7 +7131,13 @@
       ]
     },
     {
-      "card": "get your bodies back by fixing your marriage",
+      "card": "fix your relationship",
+      "games": [
+        "It Takes Two"
+      ]
+    },
+    {
+      "card": "undo the curse",
       "games": [
         "It Takes Two"
       ]
@@ -7140,7 +7185,7 @@
       ]
     },
     {
-      "card": "hold two of three places by the last turn",
+      "card": "control the board when time runs out",
       "games": [
         "Marvel Snap"
       ]
@@ -7176,7 +7221,7 @@
       ]
     },
     {
-      "card": "kill the four bishops and free the god in chains",
+      "card": "kill the rulers and free the chained one",
       "games": [
         "Cult of the Lamb"
       ]
@@ -7188,7 +7233,7 @@
       ]
     },
     {
-      "card": "kill the painter before she paints your number",
+      "card": "kill the one who decides who dies next",
       "games": [
         "Clair Obscur: Expedition 33"
       ]
@@ -7212,7 +7257,7 @@
       ]
     },
     {
-      "card": "learn how each of your family died",
+      "card": "learn the fates of everyone before you",
       "games": [
         "What Remains of Edith Finch"
       ]
@@ -7290,7 +7335,7 @@
       ]
     },
     {
-      "card": "pass the final cooking trial for the endlessly hungry goddess",
+      "card": "cook for an impossible-to-satisfy judge",
       "games": [
         "Touhou Mystia's Izakaya"
       ]
@@ -7302,7 +7347,7 @@
       ]
     },
     {
-      "card": "pay off your debt to the devil",
+      "card": "pay off a deal with the devil",
       "games": [
         "Cuphead"
       ]
@@ -7380,19 +7425,19 @@
       ]
     },
     {
-      "card": "reach the peak to get phone signal",
+      "card": "climb to the top of the mountain",
       "games": [
         "A Short Hike"
       ]
     },
     {
-      "card": "reach the top of the spire",
+      "card": "reach the top of the tower",
       "games": [
         "Slay the Spire"
       ]
     },
     {
-      "card": "rebuild the princess's castle",
+      "card": "rebuild what was destroyed",
       "games": [
         "Super Mario Maker 2"
       ]
@@ -7404,7 +7449,7 @@
       ]
     },
     {
-      "card": "rescue your lord and end his curse of immortality",
+      "card": "free your master from an endless curse",
       "games": [
         "Sekiro: Shadows Die Twice"
       ]
@@ -7452,13 +7497,13 @@
       ]
     },
     {
-      "card": "scatter your wife's ashes from the highest peak",
+      "card": "carry out a loved one's last wish",
       "games": [
         "God of War"
       ]
     },
     {
-      "card": "seal the dark fountains",
+      "card": "seal the sources of the darkness",
       "games": [
         "DELTARUNE"
       ]
@@ -7470,7 +7515,7 @@
       ]
     },
     {
-      "card": "slay the princess, or set her free",
+      "card": "kill the captive, or set them free",
       "games": [
         "Slay the Princess — The Pristine Cut"
       ]
@@ -7554,7 +7599,7 @@
       ]
     },
     {
-      "card": "survive until 6 AM",
+      "card": "survive until dawn",
       "games": [
         "Ultimate Custom Night"
       ]
@@ -7578,7 +7623,7 @@
       ]
     },
     {
-      "card": "tear down the tower before it wrecks your shop",
+      "card": "destroy the threat before it ruins your business",
       "games": [
         "Pizza Tower"
       ]

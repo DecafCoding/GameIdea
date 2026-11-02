@@ -8,7 +8,7 @@ The "Games" column shows which games the card came from: the Steam Top 250, plus
 |---|---:|---:|---:|
 | [Player Role](player-role.md) | 564 | 330 | 30 |
 | [Mechanic](mechanic.md) | 818 | 316 | 21 |
-| [Goal](goal.md) | 301 | 211 | 36 |
+| [Goal](goal.md) | 301 | 218 | 36 |
 | [Conflict](conflict.md) | 338 | 273 | 10 |
 | [Resource](resource.md) | 528 | 202 | 45 |
 | [Setting](setting.md) | 424 | 273 | 35 |
