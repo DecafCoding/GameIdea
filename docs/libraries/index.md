@@ -6,7 +6,7 @@ The "Games" column shows which games the card came from: the Steam Top 250, plus
 
 | Deck | Raw cards | General cards | Dropped |
 |---|---:|---:|---:|
-| [Player Role](player-role.md) | 564 | 331 | 30 |
+| [Player Role](player-role.md) | 564 | 330 | 30 |
 | [Mechanic](mechanic.md) | 818 | 316 | 21 |
 | [Goal](goal.md) | 301 | 211 | 36 |
 | [Conflict](conflict.md) | 338 | 273 | 10 |

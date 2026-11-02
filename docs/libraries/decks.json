@@ -277,6 +277,14 @@
       ]
     },
     {
+      "card": "bodyguard",
+      "games": [
+        "Dishonored",
+        "Sekiro: Shadows Die Twice",
+        "Resident Evil 4 (2005)"
+      ]
+    },
+    {
       "card": "mage",
       "games": [
         "Hogwarts Legacy",
@@ -358,13 +366,6 @@
       "games": [
         "Frostpunk",
         "Wildfrost"
-      ]
-    },
-    {
-      "card": "gentleman scientist",
-      "games": [
-        "Don't Starve Together",
-        "Don't Starve"
       ]
     },
     {
@@ -571,13 +572,6 @@
       ]
     },
     {
-      "card": "bodyguard",
-      "games": [
-        "Dishonored",
-        "Sekiro: Shadows Die Twice"
-      ]
-    },
-    {
       "card": "mercenary",
       "games": [
         "Team Fortress 2",
@@ -624,6 +618,13 @@
       "games": [
         "Outer Wilds",
         "PRAGMATA"
+      ]
+    },
+    {
+      "card": "eccentric scientist",
+      "games": [
+        "Don't Starve Together",
+        "Don't Starve"
       ]
     },
     {
@@ -1149,12 +1150,6 @@
       ]
     },
     {
-      "card": "hero dispatcher",
-      "games": [
-        "Dispatch"
-      ]
-    },
-    {
       "card": "hero guild master",
       "games": [
         "Darkest Dungeon"
@@ -1200,12 +1195,6 @@
       "card": "ex-soldier",
       "games": [
         "BioShock Infinite"
-      ]
-    },
-    {
-      "card": "insurance investigator",
-      "games": [
-        "Return of the Obra Dinn"
       ]
     },
     {
@@ -1341,12 +1330,6 @@
       ]
     },
     {
-      "card": "metro ranger",
-      "games": [
-        "METRO 2033 Redux"
-      ]
-    },
-    {
       "card": "metro survivor",
       "games": [
         "METRO 2033 Redux"
@@ -1404,12 +1387,6 @@
       "card": "newcomer",
       "games": [
         "Stardew Valley"
-      ]
-    },
-    {
-      "card": "night guard",
-      "games": [
-        "Ultimate Custom Night"
       ]
     },
     {
@@ -1494,12 +1471,6 @@
       "card": "poacher",
       "games": [
         "How to Fish"
-      ]
-    },
-    {
-      "card": "presidential bodyguard",
-      "games": [
-        "Resident Evil 4 (2005)"
       ]
     },
     {
@@ -1749,12 +1720,6 @@
       ]
     },
     {
-      "card": "spaceship crewmate",
-      "games": [
-        "Among Us"
-      ]
-    },
-    {
       "card": "spellsword",
       "games": [
         "Blade and Sorcery"
@@ -1830,12 +1795,6 @@
       "card": "tank driver",
       "games": [
         "Ravenfield"
-      ]
-    },
-    {
-      "card": "terraforming convict",
-      "games": [
-        "The Planet Crafter"
       ]
     },
     {
@@ -2007,12 +1966,6 @@
       ]
     },
     {
-      "card": "yokai cook",
-      "games": [
-        "Touhou Mystia's Izakaya"
-      ]
-    },
-    {
       "card": "resistance fighter",
       "games": [
         "Half-Life: Alyx"
@@ -2106,6 +2059,48 @@
       "card": "diver",
       "games": [
         "DAVE THE DIVER"
+      ]
+    },
+    {
+      "card": "emergency dispatcher",
+      "games": [
+        "Dispatch"
+      ]
+    },
+    {
+      "card": "tunnel ranger",
+      "games": [
+        "METRO 2033 Redux"
+      ]
+    },
+    {
+      "card": "security guard",
+      "games": [
+        "Ultimate Custom Night"
+      ]
+    },
+    {
+      "card": "ship crew member",
+      "games": [
+        "Among Us"
+      ]
+    },
+    {
+      "card": "terraformer",
+      "games": [
+        "The Planet Crafter"
+      ]
+    },
+    {
+      "card": "cook",
+      "games": [
+        "Touhou Mystia's Izakaya"
+      ]
+    },
+    {
+      "card": "investigator",
+      "games": [
+        "Return of the Obra Dinn"
       ]
     },
     {
