@@ -740,12 +740,6 @@
       ]
     },
     {
-      "card": "blacksmith's son",
-      "games": [
-        "Kingdom Come: Deliverance II"
-      ]
-    },
-    {
       "card": "border inspector",
       "games": [
         "Papers, Please"
@@ -992,12 +986,6 @@
       ]
     },
     {
-      "card": "dungeon gunslinger",
-      "games": [
-        "Enter the Gungeon"
-      ]
-    },
-    {
       "card": "old man",
       "games": [
         "To the Moon"
@@ -1091,12 +1079,6 @@
       "card": "child soldier",
       "games": [
         "METAL GEAR RISING: REVENGEANCE"
-      ]
-    },
-    {
-      "card": "game fixer",
-      "games": [
-        "There Is No Game: Wrong Dimension"
       ]
     },
     {
@@ -1394,12 +1376,6 @@
       ]
     },
     {
-      "card": "mob janitor",
-      "games": [
-        "Crime Scene Cleaner"
-      ]
-    },
-    {
       "card": "mobster's son",
       "games": [
         "Hotline Miami 2: Wrong Number"
@@ -1556,12 +1532,6 @@
       ]
     },
     {
-      "card": "prisoner pilot",
-      "games": [
-        "Ace Combat 7: Skies Unknown"
-      ]
-    },
-    {
       "card": "student",
       "games": [
         "Persona 5 Royal"
@@ -1625,12 +1595,6 @@
       "card": "rescue vehicle builder",
       "games": [
         "Stormworks: Build and Rescue"
-      ]
-    },
-    {
-      "card": "lamb",
-      "games": [
-        "Cult of the Lamb"
       ]
     },
     {
@@ -1772,12 +1736,6 @@
       ]
     },
     {
-      "card": "potato",
-      "games": [
-        "Brotato"
-      ]
-    },
-    {
       "card": "slave",
       "games": [
         "Kenshi"
@@ -1835,12 +1793,6 @@
       "card": "spellsword",
       "games": [
         "Blade and Sorcery"
-      ]
-    },
-    {
-      "card": "spirit ferry captain",
-      "games": [
-        "Spiritfarer: Farewell Edition"
       ]
     },
     {
@@ -2112,6 +2064,66 @@
       "games": [
         "OneShot"
       ]
+    },
+    {
+      "card": "ferry captain",
+      "games": [
+        "Spiritfarer: Farewell Edition"
+      ]
+    },
+    {
+      "card": "spirit",
+      "games": [
+        "Spiritfarer: Farewell Edition"
+      ]
+    },
+    {
+      "card": "match fixer",
+      "games": [
+        "There Is No Game: Wrong Dimension"
+      ]
+    },
+    {
+      "card": "crime scene cleaner",
+      "games": [
+        "Crime Scene Cleaner"
+      ]
+    },
+    {
+      "card": "convict",
+      "games": [
+        "Ace Combat 7: Skies Unknown"
+      ]
+    },
+    {
+      "card": "pilot",
+      "games": [
+        "Ace Combat 7: Skies Unknown"
+      ]
+    },
+    {
+      "card": "village craftsman",
+      "games": [
+        "Kingdom Come: Deliverance II"
+      ]
+    },
+    {
+      "card": "blacksmith",
+      "games": [
+        "Kingdom Come: Deliverance II"
+      ]
+    },
+    {
+      "card": "animal",
+      "games": []
+    },
+    {
+      "card": "vegetable",
+      "games": []
+    },
+    {
+      "card": "fruit",
+      "games": []
     }
   ],
   "Mechanic": [
@@ -17650,6 +17662,34 @@
       "games": [
         "Mount & Blade: Warband"
       ]
+    },
+    {
+      "card": "spirit",
+      "games": [
+        "Spiritfarer: Farewell Edition"
+      ]
+    },
+    {
+      "card": "dungeon",
+      "games": [
+        "Enter the Gungeon"
+      ]
+    },
+    {
+      "card": "mob",
+      "games": [
+        "Crime Scene Cleaner"
+      ]
+    },
+    {
+      "card": "convict",
+      "games": [
+        "Ace Combat 7: Skies Unknown"
+      ]
+    },
+    {
+      "card": "unique",
+      "games": []
     }
   ],
   "Twist": [

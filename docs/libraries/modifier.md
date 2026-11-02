@@ -1,6 +1,6 @@
 # Deck: Modifier (General)
 
-344 cards.
+349 cards.
 
 | # | Card | Count | Games |
 |---:|---|---:|---|
@@ -348,3 +348,8 @@
 | 342 | wish-seeking | 1 | Skullgirls |
 | 343 | wordless | 1 | Chants of Sennaar |
 | 344 | would-be | 1 | Mount & Blade: Warband |
+| 345 | spirit | 1 | Spiritfarer: Farewell Edition |
+| 346 | dungeon | 1 | Enter the Gungeon |
+| 347 | mob | 1 | Crime Scene Cleaner |
+| 348 | convict | 1 | Ace Combat 7: Skies Unknown |
+| 349 | unique | 0 |  |
