@@ -4,11 +4,12 @@
  */
 import { describe, expect, it } from 'vitest';
 import { iconFor } from '@/features/card';
+import { buildHookSentence } from '@/features/hook';
 import { fixtureBoard, fixtureCard } from '@/test/fixtures/boards';
 import type { Board, Card } from '@/shared/model';
 import { dropCard, splitCard } from './boardActions';
 import { hintFor } from './dropZones';
-import { cardText, isOnTop, onTopCardOf } from './reading';
+import { cardText, isOnTop, onTopCardOf, stackEntries } from './reading';
 
 const cue = (texts: string[]) => ({ cues: texts.map((text) => ({ text })), activeIndex: 0 });
 const get = (board: Board, id: string): Card => board.cards.find((c) => c.id === id)!;
@@ -70,5 +71,63 @@ describe('reading', () => {
     expect(iconFor(get(board, 'split'))).toBe('map-pin-plus');
     // With no merged ring, the next Modifier merges again.
     expect(hintFor(board, third, get(board, 'pilot'), { x: 100, y: 20 })).toBe('combine');
+  });
+});
+
+describe('stackEntries', () => {
+  const hookStack = (...cards: Card[]) =>
+    fixtureBoard([fixtureCard('hook', { x: 0, y: 0 }), ...cards]);
+
+  it('stackEntries_siblings_readInStackOrder', () => {
+    const board = hookStack(
+      fixtureCard('role', { z: 2, tuckedUnder: 'hook-1' }),
+      fixtureCard('goal', { z: 4, tuckedUnder: 'role-1' }),
+      fixtureCard('mechanic', { z: 3, tuckedUnder: 'role-1' }),
+    );
+    const entries = stackEntries(board, 'hook-1');
+    expect(entries.map((entry) => entry.type)).toEqual(['role', 'mechanic', 'goal']);
+    // The Goal reads after the Mechanic, which is the card just before it in stack order.
+    expect(entries[2]).toEqual({ type: 'goal', connector: 'to', activeText: 'keep the light on' });
+  });
+
+  it('stackEntries_roleUnderHookVowel_youAreAn', () => {
+    const board = hookStack(
+      fixtureCard('role', {
+        z: 2,
+        tuckedUnder: 'hook-1',
+        rings: [cue(['astronaut', 'pilot', 'medic', 'scout'])],
+      }),
+    );
+    expect(stackEntries(board, 'hook-1')).toEqual([
+      { type: 'role', connector: 'You are an', activeText: 'astronaut' },
+    ]);
+  });
+
+  it('stackEntries_savedWordNotInList_usesDefault', () => {
+    const board = hookStack(
+      fixtureCard('role', { z: 2, tuckedUnder: 'hook-1', connector: 'aboard the' }),
+      fixtureCard('mechanic', { z: 3, tuckedUnder: 'role-1', connector: 'who learns to' }),
+    );
+    expect(stackEntries(board, 'hook-1').map((entry) => entry.connector)).toEqual([
+      'You are a',
+      'who learns to',
+    ]);
+  });
+
+  it('stackEntries_fullFixtureStack_readsExampleSentence', () => {
+    const board = hookStack(
+      fixtureCard('role', {
+        z: 2,
+        tuckedUnder: 'hook-1',
+        rings: [cue(['lighthouse keeper', 'a', 'b', 'c'])],
+      }),
+      fixtureCard('mechanic', { z: 3, tuckedUnder: 'role-1' }),
+      fixtureCard('resource', { z: 4, tuckedUnder: 'mechanic-1' }),
+      fixtureCard('goal', { z: 5, tuckedUnder: 'resource-1' }),
+      fixtureCard('conflict', { z: 6, tuckedUnder: 'goal-1' }),
+    );
+    expect(buildHookSentence(stackEntries(board, 'hook-1'))).toBe(
+      'You are a lighthouse keeper who must trade using memories to keep the light on, but the tide rises every night.',
+    );
   });
 });
