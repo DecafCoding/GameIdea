@@ -80,7 +80,9 @@ describe('SettingsDialog', () => {
   it('settingsDialog_keyboardList_fourKeys', () => {
     renderDialog();
     const list = screen.getAllByRole('definition')[0]!.closest('dl')!;
-    const keys = within(list).getAllByRole('term').map((dt) => dt.textContent);
+    const keys = within(list)
+      .getAllByRole('term')
+      .map((dt) => dt.textContent);
     expect(keys).toEqual(['R', 'Shift+R', 'Ctrl+Z', 'Ctrl+Shift+Z']);
     expect(list.textContent).toContain('Turn the outer ring, or the only ring, one step');
     expect(list.textContent).toContain('Turn the inner ring of a combined card');
