@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>GameIdea rotation hover on a combined card</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
+<style>
+body{margin:0;background:#1B1E24}
+a{color:#ECEAE4}a:hover{color:#FFFFFF}
+.i{fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.card{position:relative;width:220px;height:220px;border-radius:15px;background:#F4F0E6;box-shadow:0 12px 30px rgba(0,0,0,0.5);flex:0 0 220px}
+.cue{position:absolute;font-family:'Space Grotesk',system-ui,sans-serif;font-weight:600;font-size:13px;color:#5A5E68;text-align:center;box-sizing:border-box;white-space:nowrap}
+.t{left:0;right:0;top:15px;transform:rotate(180deg)}
+.l{left:-98px;top:98px;width:220px;height:24px;line-height:24px;transform:rotate(90deg)}
+.r{right:-98px;top:98px;width:220px;height:24px;line-height:24px;transform:rotate(-90deg)}
+.b{left:0;right:0;bottom:15px;font-weight:700;color:#1B1E24}
+.ic{position:absolute;left:84px;top:84px;width:52px;height:52px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:#FFFFFF;background:#2F5FB8}
+.adj{color:#6E48B5}
+.cap{font-family:'Space Grotesk',system-ui,sans-serif;font-weight:600;font-size:15px}
+.txt{color:#A9ADB6;line-height:1.5;font-size:13px}
+.col{display:flex;flex-direction:column;align-items:center;gap:24px}
+.wrap{position:relative;width:300px;height:280px;display:flex;align-items:center;justify-content:center}
+kbd{font-family:inherit;padding:1px 6px;border:1px solid #4A505C;border-radius:4px;color:#ECEAE4}
+</style>
+</helmet>
+<div style="width: 900px; height: 760px; box-sizing: border-box; padding: 48px 56px; background: #1B1E24; color: #ECEAE4; font-family: Inter, system-ui, sans-serif; font-size: 14px; display: flex; flex-direction: column; gap: 28px">
+
+  <div style="display: flex; flex-direction: column; gap: 6px">
+    <h1 style="margin: 0; font-family: 'Space Grotesk', system-ui, sans-serif; font-weight: 700; font-size: 28px">Rotation hover on a combined card</h1>
+    <p style="margin: 0; color: #A9ADB6; max-width: 760px; line-height: 1.5">A combined card has 2 rings. The ring half under the pointer goes darker. A click turns only that ring one step. The other ring and the center icon stay still.</p>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px">
+
+    <div class="col">
+      <div class="wrap">
+        <div class="card">
+          <svg width="220" height="220" viewBox="0 0 220 220" style="position: absolute; left: 0; top: 0" aria-hidden="true">
+            <circle cx="110" cy="110" r="35" fill="none" stroke="#6E48B5" stroke-width="14"/>
+            <path d="M 110 75 A 35 35 0 0 0 110 145" fill="none" stroke="#4A2E86" stroke-width="14"/>
+            <circle cx="110" cy="110" r="52" fill="none" stroke="#2F5FB8" stroke-width="14"/>
+            <path d="M 110 51 V 82 M 110 138 V 169" fill="none" stroke="#F4F0E6" stroke-width="2"/>
+            <path d="M 71.5 107 L 78.5 107 L 75 113 z" fill="#F4F0E6" stroke="#F4F0E6" stroke-width="2.2" stroke-linejoin="round"/>
+            <path d="M 141.5 107 L 148.5 107 L 145 113 z" fill="#F4F0E6" stroke="#F4F0E6" stroke-width="2.2" stroke-linejoin="round"/>
+            <path d="M 54.5 107 L 61.5 107 L 58 113 z" fill="#F4F0E6" stroke="#F4F0E6" stroke-width="2.2" stroke-linejoin="round"/>
+            <path d="M 158.5 107 L 165.5 107 L 162 113 z" fill="#F4F0E6" stroke="#F4F0E6" stroke-width="2.2" stroke-linejoin="round"/>
+          </svg>
+          <div class="cue t"><span class="adj">exiled</span> beekeeper</div>
+          <div class="cue l"><span class="adj">tiny</span> courier</div>
+          <div class="cue r"><span class="adj">last</span> ghost pilot</div>
+          <div class="cue b"><span class="adj" style="color: #5B3F99">reanimated</span> lighthouse keeper</div>
+          <span class="ic"><svg class="i" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>
+        </div>
+        <svg width="28" height="28" viewBox="0 0 24 24" style="position: absolute; left: 112px; top: 140px" fill="#ECEAE4" stroke="#1B1E24" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M8 3v12.5l2.5-2 2 4.5 2.5-1.2-2-4.3H17z"/></svg>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px; max-width: 320px">
+        <span class="cap">A. Inner ring, left half</span>
+        <span class="txt">The pointer is on the purple ring. A click turns the adjectives one step. The nouns stay where they are. <kbd>Shift+R</kbd> does the same.</span>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="wrap">
+        <div class="card">
+          <svg width="220" height="220" viewBox="0 0 220 220" style="position: absolute; left: 0; top: 0" aria-hidden="true">
+            <circle cx="110" cy="110" r="35" fill="none" stroke="#6E48B5" stroke-width="14"/>
+            <circle cx="110" cy="110" r="52" fill="none" stroke="#2F5FB8" stroke-width="14"/>
+            <path d="M 110 58 A 52 52 0 0 1 110 162" fill="none" stroke="#1E428A" stroke-width="14"/>
+            <path d="M 110 51 V 82 M 110 138 V 169" fill="none" stroke="#F4F0E6" stroke-width="2"/>
+            <path d="M 71.5 107 L 78.5 107 L 75 113 z" fill="#F4F0E6" stroke="#F4F0E6" stroke-width="2.2" stroke-linejoin="round"/>
+            <path d="M 141.5 107 L 148.5 107 L 145 113 z" fill="#F4F0E6" stroke="#F4F0E6" stroke-width="2.2" stroke-linejoin="round"/>
+            <path d="M 54.5 107 L 61.5 107 L 58 113 z" fill="#F4F0E6" stroke="#F4F0E6" stroke-width="2.2" stroke-linejoin="round"/>
+            <path d="M 158.5 107 L 165.5 107 L 162 113 z" fill="#F4F0E6" stroke="#F4F0E6" stroke-width="2.2" stroke-linejoin="round"/>
+          </svg>
+          <div class="cue t"><span class="adj">exiled</span> beekeeper</div>
+          <div class="cue l"><span class="adj">tiny</span> courier</div>
+          <div class="cue r"><span class="adj">last</span> ghost pilot</div>
+          <div class="cue b"><span class="adj" style="color: #5B3F99">reanimated</span> lighthouse keeper</div>
+          <span class="ic"><svg class="i" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>
+        </div>
+        <svg width="28" height="28" viewBox="0 0 24 24" style="position: absolute; left: 194px; top: 150px" fill="#ECEAE4" stroke="#1B1E24" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M8 3v12.5l2.5-2 2 4.5 2.5-1.2-2-4.3H17z"/></svg>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px; max-width: 320px">
+        <span class="cap">B. Outer ring, right half</span>
+        <span class="txt">The pointer is on the blue ring. A click turns the nouns one step. The adjectives stay where they are. <kbd>R</kbd> does the same.</span>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":900,"height":760}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>GameIdea settings</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
+<style>
+body{margin:0;background:#1B1E24}
+a{color:#ECEAE4}a:hover{color:#FFFFFF}
+button{font-family:inherit;cursor:pointer}
+.i{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.lbl{font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#A9ADB6}
+.sec{display:flex;flex-direction:column;gap:4px;padding:18px 0;border-top:1px solid #30353F}
+.row{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:52px}
+.rt{display:flex;flex-direction:column;gap:2px}
+.rn{font-weight:600}
+.rd{font-size:13px;color:#A9ADB6;line-height:1.4}
+.sw{position:relative;width:44px;height:26px;flex:0 0 44px;border-radius:13px;border:none;padding:0}
+.sw span{position:absolute;top:3px;width:20px;height:20px;border-radius:50%;background:#FFFFFF}
+.seg{display:flex;padding:3px;border-radius:9px;background:#1B1E24;border:1px solid #30353F}
+.seg button{height:36px;padding:0 12px;border-radius:7px;border:none;background:transparent;color:#A9ADB6;font-size:13px;font-weight:500}
+.keys{display:grid;grid-template-columns:150px minmax(0,1fr);gap:8px 16px;font-size:13px;align-items:center}
+kbd{font-family:inherit;font-size:12px;padding:2px 7px;border:1px solid #4A505C;border-radius:5px;color:#ECEAE4;background:#1B1E24}
+.deck{display:flex;align-items:center;gap:10px;min-height:36px;padding:4px 10px;border-radius:8px;color:#ECEAE4;font-size:14px;font-weight:600;box-sizing:border-box}
+</style>
+</helmet>
+<div style="width: 1440px; height: 900px; box-sizing: border-box; position: relative; overflow: hidden; background: #1B1E24; color: #ECEAE4; font-family: Inter, system-ui, sans-serif; font-size: 14px">
+
+  <div aria-hidden="true" style="position: absolute; left: 0; right: 0; top: 0; height: 56px; background: #23272F; border-bottom: 1px solid #30353F"></div>
+  <div aria-hidden="true" style="position: absolute; left: 0; top: 56px; bottom: 0; width: 232px; background: #23272F; border-right: 1px solid #30353F"></div>
+  <div aria-hidden="true" style="position: absolute; inset: 0; background: rgba(10,12,16,0.62)"></div>
+  <div class="deck" aria-hidden="true" style="position: absolute; left: 12px; bottom: 12px; width: 208px; background: #2B303A; border: 1px solid #E8742E">
+    <svg class="i" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>Settings
+  </div>
+
+  <div role="dialog" aria-labelledby="sTitle" style="position: absolute; left: 300px; top: 40px; width: 760px; box-sizing: border-box; padding: 24px 28px 22px; border-radius: 14px; background: #23272F; border: 1px solid #30353F; box-shadow: 0 24px 60px rgba(0,0,0,0.6); display: flex; flex-direction: column">
+
+    <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding-bottom: 14px">
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <h2 id="sTitle" style="margin: 0; font-family: 'Space Grotesk', system-ui, sans-serif; font-weight: 700; font-size: 22px">Settings</h2>
+        <p style="margin: 0; color: #A9ADB6; line-height: 1.5">These settings apply to every board in this browser. A change applies at once.</p>
+      </div>
+      <button type="button" aria-label="Close" style="width: 44px; height: 44px; border-radius: 8px; border: 1px solid #30353F; background: transparent; color: #ECEAE4; font-size: 18px; flex: 0 0 44px">×</button>
+    </div>
+
+    <div class="sec">
+      <span class="lbl">Appearance</span>
+      <div class="row">
+        <span class="rt"><span class="rn">Mode</span><span class="rd">Dark or light screens. The cards look the same in both.</span></span>
+        <div class="seg" role="group" aria-label="Mode">
+          <button type="button" aria-pressed="true" style="background: #343A45; color: #ECEAE4; font-weight: 600">Dark</button>
+          <button type="button" aria-pressed="false">Light</button>
+        </div>
+      </div>
+      <div class="row">
+        <span class="rt"><span class="rn">Theme color</span><span class="rd">The color of buttons, the Hook Card border and the genre counts.</span></span>
+        <div class="seg" role="group" aria-label="Theme color">
+          <button type="button" aria-pressed="true" style="background: #343A45; color: #ECEAE4; font-weight: 600; display: inline-flex; align-items: center; gap: 8px"><span aria-hidden="true" style="width: 14px; height: 14px; border-radius: 50%; background: #E8742E"></span>Orange</button>
+          <button type="button" aria-pressed="false" style="display: inline-flex; align-items: center; gap: 8px"><span aria-hidden="true" style="width: 14px; height: 14px; border-radius: 50%; background: #4C8DF6"></span>Blue</button>
+          <button type="button" aria-pressed="false" style="display: inline-flex; align-items: center; gap: 8px"><span aria-hidden="true" style="width: 14px; height: 14px; border-radius: 50%; background: #3FB37F"></span>Green</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <span class="lbl">Canvas</span>
+      <div class="row">
+        <span class="rt"><span class="rn">Snap to grid</span><span class="rd">Cards and notes line up with the dot grid when you drop them. Hold Alt while you drag to place freely.</span></span>
+        <button type="button" class="sw" role="switch" aria-checked="true" aria-label="Snap to grid" style="background: {{accent}}"><span style="right: 3px"></span></button>
+      </div>
+    </div>
+
+    <div class="sec">
+      <span class="lbl">Keyboard</span>
+      <div class="keys">
+        <span><kbd>R</kbd></span><span class="rd">Turn the outer ring, or the only ring, one step</span>
+        <span><kbd>Shift</kbd> + <kbd>R</kbd></span><span class="rd">Turn the inner ring of a combined card</span>
+        <span><kbd>Ctrl</kbd> + <kbd>Z</kbd></span><span class="rd">Undo</span>
+        <span><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Z</kbd></span><span class="rd">Redo</span>
+      </div>
+    </div>
+
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 16px; border-top: 1px solid #30353F">
+      <span style="font-size: 12px; color: #A9ADB6">GameIdea [VERSION] · No account. No data leaves this computer.</span>
+      <button type="button" style="height: 44px; padding: 0 20px; border-radius: 8px; border: none; background: {{accent}}; color: #1B1E24; font-size: 14px; font-weight: 600">Done</button>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#E8742E","options":["#E8742E","#F2B134","#3B6FD1","#2F8F83"]},"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? '#E8742E' };
+  }
+}
+</script>
+</body>
+</html>

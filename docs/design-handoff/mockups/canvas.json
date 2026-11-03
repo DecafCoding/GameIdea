@@ -1,0 +1,234 @@
+{
+  "v": 3,
+  "attachments": {},
+  "boards": {
+    "BoardList.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "title": "Board list",
+      "w": 1440,
+      "x": 1520,
+      "y": 0
+    },
+    "Cards.dc.html": {
+      "h": 760,
+      "title": "Card anatomy",
+      "w": 1200,
+      "x": 1520,
+      "y": 1240
+    },
+    "Combine.dc.html": {
+      "h": 720,
+      "title": "Modifier combine",
+      "w": 1200,
+      "x": 0,
+      "y": 2360
+    },
+    "Connector.dc.html": {
+      "h": 720,
+      "title": "Connector badges",
+      "w": 1200,
+      "x": 1280,
+      "y": 2360
+    },
+    "Decks.dc.html": {
+      "h": 760,
+      "title": "The decks and the Hook Card",
+      "w": 1440,
+      "x": 0,
+      "y": 1240
+    },
+    "Genres.dc.html": {
+      "h": 900,
+      "title": "Genres panel",
+      "w": 1440,
+      "x": 2560,
+      "y": 2360
+    },
+    "HookCard.dc.html": {
+      "h": 760,
+      "title": "Hook Card",
+      "w": 1440,
+      "x": 3780,
+      "y": 1240
+    },
+    "Main.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "title": "Board screen",
+      "w": 1440,
+      "x": 0,
+      "y": 0
+    },
+    "States.dc.html": {
+      "h": 860,
+      "title": "Notices, errors and export",
+      "w": 1200,
+      "x": 4080,
+      "y": 2360
+    },
+    "Tuck.dc.html": {
+      "h": 720,
+      "title": "Tuck hint while dragging",
+      "w": 1200,
+      "x": 0,
+      "y": 3200
+    },
+    "RotationHover.dc.html": {
+      "h": 760,
+      "title": "Rotation hover on a combined card",
+      "w": 900,
+      "x": 2800,
+      "y": 1240
+    },
+    "EmptyBoard.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "title": "Empty board",
+      "w": 1440,
+      "x": 3040,
+      "y": 0
+    },
+    "ListStates.dc.html": {
+      "h": 620,
+      "title": "Board list states",
+      "w": 1200,
+      "x": 4560,
+      "y": 0
+    },
+    "RedrawAll.dc.html": {
+      "h": 820,
+      "title": "Redraw All with a locked card",
+      "w": 1200,
+      "x": 1280,
+      "y": 3200
+    },
+    "Settings.dc.html": {
+      "h": 900,
+      "title": "Settings",
+      "w": 1440,
+      "x": 5360,
+      "y": 2360
+    },
+    "ThemeOrangeLight.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "title": "Orange, light",
+      "w": 1440,
+      "x": 1520,
+      "y": 4520
+    },
+    "ThemeGreenDark.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "title": "Green, dark",
+      "w": 1440,
+      "x": 3040,
+      "y": 4520
+    },
+    "ThemeGreenLight.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "title": "Green, light",
+      "w": 1440,
+      "x": 4560,
+      "y": 4520
+    },
+    "ThemeBlueDark.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "title": "Blue, dark",
+      "w": 1440,
+      "x": 6080,
+      "y": 4520
+    },
+    "ThemeBlueLight.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "title": "Blue, light",
+      "w": 1440,
+      "x": 7600,
+      "y": 4520
+    },
+    "ThemeOrangeDark.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "title": "Orange, dark (current)",
+      "w": 1440,
+      "x": 0,
+      "y": 4520
+    }
+  },
+  "createdOnFiles": {
+    "at": "2026-11-02T15:00:00Z",
+    "v": 1
+  },
+  "designSystems": [],
+  "launch": {
+    "view": "canvas"
+  },
+  "noteOrder": [
+    "screens",
+    "parts",
+    "flows",
+    "themes"
+  ],
+  "notes": {
+    "flows": {
+      "kind": "title1",
+      "maxW": 6800,
+      "text": "Combine, connectors, genres and states",
+      "w": 240,
+      "x": 0,
+      "y": 2080
+    },
+    "parts": {
+      "kind": "title1",
+      "maxW": 5220,
+      "text": "Decks, cards and the Hook Card",
+      "w": 240,
+      "x": 0,
+      "y": 960
+    },
+    "screens": {
+      "kind": "title1",
+      "maxW": 5760,
+      "text": "Screens",
+      "w": 240,
+      "x": 0,
+      "y": -280
+    },
+    "themes": {
+      "kind": "title1",
+      "maxW": 9040,
+      "text": "Themes",
+      "x": 0,
+      "y": 4240
+    }
+  },
+  "order": [
+    "Main.dc.html",
+    "BoardList.dc.html",
+    "Decks.dc.html",
+    "Cards.dc.html",
+    "HookCard.dc.html",
+    "Combine.dc.html",
+    "Connector.dc.html",
+    "Genres.dc.html",
+    "States.dc.html",
+    "Tuck.dc.html",
+    "RotationHover.dc.html",
+    "EmptyBoard.dc.html",
+    "ListStates.dc.html",
+    "RedrawAll.dc.html",
+    "Settings.dc.html",
+    "ThemeOrangeDark.dc.html",
+    "ThemeOrangeLight.dc.html",
+    "ThemeGreenDark.dc.html",
+    "ThemeGreenLight.dc.html",
+    "ThemeBlueDark.dc.html",
+    "ThemeBlueLight.dc.html"
+  ],
+  "pages": [],
+  "title": "GameIdea mockups"
+}

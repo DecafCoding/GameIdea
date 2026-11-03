@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>GameIdea orange light theme</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
+<style>
+body{margin:0;background:#F5F3EE}
+a{color:#1B1E24}a:hover{color:#000000}
+button{font-family:inherit;cursor:pointer}
+.i{fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.grp{font-family:'Space Grotesk',system-ui,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#5E636D;padding:8px 4px 2px}
+.deck{display:flex;align-items:center;gap:10px;min-height:36px;padding:4px 10px;border-radius:8px;border:1px solid #DDD8CE;background:#F5F3EE;color:#1B1E24;text-align:left;font-size:14px;font-weight:600;width:100%;box-sizing:border-box;position:relative}
+.dot{width:28px;height:28px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;flex:0 0 28px;color:#FFFFFF}
+.gm{position:absolute;right:10px;top:50%;margin-top:-4px;width:8px;height:8px;border-radius:50%}
+.card{position:absolute;width:200px;height:200px;border-radius:14px;background:#F4F0E6;box-shadow:0 6px 18px rgba(0,0,0,0.35)}
+.cue{position:absolute;font-family:'Space Grotesk',system-ui,sans-serif;font-weight:600;font-size:15px;color:#5A5E68;text-align:center;box-sizing:border-box}
+.t{left:0;right:0;top:14px;padding:0 12px;transform:rotate(180deg)}
+.l{left:-88px;top:88px;width:200px;height:24px;line-height:24px;transform:rotate(90deg)}
+.r{right:-88px;top:88px;width:200px;height:24px;line-height:24px;transform:rotate(-90deg)}
+.b{left:0;right:0;bottom:12px;padding:0 12px;font-weight:700;font-size:14px;line-height:1.25;color:#1B1E24}
+.ic{position:absolute;left:76px;top:76px;width:48px;height:48px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:#FFFFFF}
+.badge{position:absolute;height:22px;padding:0 9px;border-radius:11px;color:#FFFFFF;font-size:11px;font-weight:600;line-height:22px;transform:translateX(-50%);box-shadow:0 2px 6px rgba(0,0,0,0.4);white-space:nowrap;border:none;font-family:Inter,system-ui,sans-serif}
+.adj{color:#5B3F99}
+.gc{margin-left:auto;min-width:16px;height:15px;padding:0 4px;box-sizing:border-box;border-radius:8px;border:1px solid #E8742E;background:rgba(232,116,46,0.18);color:#B4531A;font-size:9px;font-weight:600;line-height:13px;text-align:center}
+</style>
+</helmet>
+<div style="width: 100%; height: 100vh; min-height: 720px; box-sizing: border-box; display: flex; flex-direction: column; background: #F5F3EE; color: #1B1E24; font-family: Inter, system-ui, sans-serif; font-size: 14px; overflow: hidden">
+
+  <header style="min-height: 56px; flex: 0 0 auto; box-sizing: border-box; padding: 0 16px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; background: #FFFFFF; border-bottom: 1px solid #DDD8CE">
+    <a href="BoardList.dc.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none; min-height: 44px">
+      <span style="width: 28px; height: 28px; border-radius: 6px; background: {{accent}}; display: inline-flex; align-items: center; justify-content: center; color: #1B1E24">
+        <svg class="i" width="16" height="16" viewBox="0 0 24 24" style="stroke-width: 2.6" aria-hidden="true"><path d="M15 3v11a5 5 0 0 1-10 0v-3l3 3"/></svg>
+      </span>
+      <span style="font-family: 'Space Grotesk', system-ui, sans-serif; font-weight: 700; font-size: 17px">GameIdea</span>
+    </a>
+    <span aria-hidden="true" style="width: 1px; height: 24px; background: #DDD8CE"></span>
+    <label for="boardName" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Board name</label>
+    <input id="boardName" type="text" value="Lighthouse jam" style="font-family: Inter, system-ui, sans-serif; font-size: 15px; font-weight: 600; color: #1B1E24; background: transparent; border: 1px solid transparent; border-radius: 6px; padding: 8px 10px; min-height: 44px; box-sizing: border-box; width: 220px">
+    <span style="display: inline-flex; align-items: center; gap: 6px; color: #5E636D; font-size: 13px"><span aria-hidden="true" style="width: 8px; height: 8px; border-radius: 50%; background: #5DBB7A"></span>Saved</span>
+    <span style="flex: 1 1 40px"></span>
+    <div style="display: flex; align-items: center; gap: 4px">
+      <button type="button" aria-label="Undo" style="width: 44px; height: 44px; border-radius: 8px; border: 1px solid #DDD8CE; background: #F5F3EE; color: #1B1E24; display: inline-flex; align-items: center; justify-content: center"><svg class="i" width="18" height="18" viewBox="0 0 24 24" style="stroke-width: 2" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-4"/></svg></button>
+      <button type="button" aria-label="Redo" style="width: 44px; height: 44px; border-radius: 8px; border: 1px solid #DDD8CE; background: #F5F3EE; color: #8A8F99; display: inline-flex; align-items: center; justify-content: center"><svg class="i" width="18" height="18" viewBox="0 0 24 24" style="stroke-width: 2" aria-hidden="true"><path d="m15 14 5-5-5-5"/><path d="M20 9H9a5 5 0 0 0 0 10h4"/></svg></button>
+    </div>
+    <button type="button" style="height: 44px; padding: 0 14px; border-radius: 8px; border: 1px solid #DDD8CE; background: #F5F3EE; color: #1B1E24; font-size: 14px; font-weight: 500; display: inline-flex; align-items: center; gap: 8px"><svg class="i" width="16" height="16" viewBox="0 0 24 24" style="stroke-width: 2" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M4 21h16"/></svg>Export<svg class="i" width="12" height="12" viewBox="0 0 24 24" style="stroke-width: 2.5" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+  </header>
+
+  <div style="flex: 1 1 auto; min-height: 0; display: flex; flex-wrap: wrap">
+
+    <aside style="flex: 0 0 232px; box-sizing: border-box; padding: 10px 12px 12px; display: flex; flex-direction: column; gap: 4px; background: #FFFFFF; border-right: 1px solid #DDD8CE; overflow: auto">
+
+      <button type="button" class="deck" style="border: 1px solid {{accent}}; background: #FBE9DD; margin-top: 4px">
+        <svg class="i" width="18" height="18" viewBox="0 0 24 24" style="color: {{accent}}; stroke-width: 2.6" aria-hidden="true"><path d="M15 3v11a5 5 0 0 1-10 0v-3l3 3"/></svg>Hook Card
+      </button>
+
+      <div class="grp">Core</div>
+      <button type="button" class="deck"><svg class="i" width="18" height="18" viewBox="0 0 24 24" style="color: #2F5FB8" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Player Role</button>
+      <button type="button" class="deck"><svg class="i" width="18" height="18" viewBox="0 0 24 24" style="color: #9A5C08" aria-hidden="true"><path d="M17 2l4 4-4 4"/><path d="M3 11V9a3 3 0 0 1 3-3h15"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v2a3 3 0 0 1-3 3H3"/></svg>Mechanic<span class="gc" aria-label="3 genres on">3</span></button>
+      <button type="button" class="deck"><svg class="i" width="18" height="18" viewBox="0 0 24 24" style="color: #3A7226" aria-hidden="true"><rect width="16" height="10" x="2" y="7" rx="2" ry="2"/><path d="M22 11v2"/></svg>Resource<span class="gc" aria-label="3 genres on">3</span></button>
+      <button type="button" class="deck"><svg class="i" width="18" height="18" viewBox="0 0 24 24" style="color: #23766C" aria-hidden="true"><path d="M5 21V4"/><path d="M5 4h12l-2.5 4L17 12H5"/></svg>Goal</button>
+      <button type="button" class="deck"><svg class="i" width="18" height="18" viewBox="0 0 24 24" style="color: #B53A23" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>Conflict</button>
+
+      <div class="grp">Modifiers</div>
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px">
+        <button type="button" class="deck" aria-label="Player Role modifier" title="Player Role modifier" style="justify-content: center; padding: 4px"><svg class="i" width="18" height="18" viewBox="0 0 24 24" style="color: #6E48B5" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6"/><path d="M22 11h-6"/></svg></button>
+        <button type="button" class="deck" aria-label="Resource modifier" title="Resource modifier" style="justify-content: center; padding: 4px"><svg class="i" width="18" height="18" viewBox="0 0 24 24" style="color: #6E48B5" aria-hidden="true"><path d="M10 9v6"/><path d="M12.543 6H16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-3.605"/><path d="M22 14v-4"/><path d="M7 12h6"/><path d="M7.606 18H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h3.606"/></svg></button>
+        <button type="button" class="deck" aria-label="Setting modifier" title="Setting modifier" style="justify-content: center; padding: 4px"><svg class="i" width="18" height="18" viewBox="0 0 24 24" style="color: #6E48B5" aria-hidden="true"><path d="M19.914 11.105A7.298 7.298 0 0 0 20 10a8 8 0 0 0-16 0c0 4.993 5.539 10.193 7.399 11.799a1 1 0 0 0 1.202 0 32 32 0 0 0 .824-.738"/><circle cx="12" cy="10" r="3"/><path d="M16 18h6"/><path d="M19 15v6"/></svg></button>
+      </div>
+
+      <div class="grp">Optional</div>
+      <button type="button" class="deck"><svg class="i" width="18" height="18" viewBox="0 0 24 24" style="color: #7A5A3A" aria-hidden="true"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Setting</button>
+      <button type="button" class="deck"><svg class="i" width="18" height="18" viewBox="0 0 24 24" style="color: #A63D72" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 14.5s1.5 2 4 2 4-2 4-2"/><path d="M9 9.5h.01M15 9.5h.01"/></svg>Mood</button>
+      <button type="button" class="deck"><svg class="i" width="18" height="18" viewBox="0 0 24 24" style="color: #66691A" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>Twist</button>
+      <button type="button" class="deck"><svg class="i" width="18" height="18" viewBox="0 0 24 24" style="color: #1D6F93" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>Progression<span class="gc" aria-label="3 genres on">3</span></button>
+      <button type="button" class="deck"><svg class="i" width="18" height="18" viewBox="0 0 24 24" style="color: #555B66" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m14.5 9.5-5 5"/><path d="m9.5 9.5 5 5"/></svg>Constraint<span class="gc" aria-label="2 genres on">2</span></button>
+
+      <div class="grp">Genres</div>
+      <button type="button" class="deck" style="background: transparent; border-color: #BDB7AB">
+        <svg class="i" width="18" height="18" viewBox="0 0 24 24" style="stroke-width: 2" aria-hidden="true"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg>
+        <span style="display: flex; flex-direction: column; gap: 1px; padding: 2px 0"><span>Genres</span><span style="font-size: 12px; font-weight: 400; color: #5E636D">3 genres</span></span>
+      </button>
+      <button type="button" class="deck" style="background: transparent; border-style: dashed; border-color: #BDB7AB; margin-top: 6px">
+        <svg class="i" width="18" height="18" viewBox="0 0 24 24" style="stroke-width: 2" aria-hidden="true"><path d="M4 6h16M4 12h10M4 18h7"/></svg>Add note
+      </button>
+      <button type="button" class="deck" style="background: transparent; border-color: transparent; margin-top: auto; color: #3A3F49">
+        <svg class="i" width="18" height="18" viewBox="0 0 24 24" style="stroke-width: 2" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>Settings
+      </button>
+    </aside>
+
+    <main style="flex: 999 1 560px; min-width: 0; min-height: 640px; position: relative; overflow: hidden; background-color: #ECE9E2; background-image: radial-gradient(#C9C4B880 1.2px, transparent 1.2px); background-size: 24px 24px; background-position: 12px 12px">
+
+      <div style="position: absolute; left: 72px; top: 48px; width: 240px; height: 480px">
+        <div class="card" style="left: 20px; top: 280px; background: #E9E3D4"><div class="cue b">the tide rises every night</div></div>
+        <div class="card" style="left: 20px; top: 224px; background: #ECE6D8">
+          <div class="cue b">keep the light on</div>
+          <span aria-label="Locked" style="position: absolute; right: 12px; bottom: 30px; color: #23766C; display: inline-flex"><svg class="i" width="13" height="13" viewBox="0 0 24 24" style="stroke-width: 2.4" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
+        </div>
+        <div class="card" style="left: 20px; top: 168px; background: #EFE9DC"><div class="cue b"><span class="adj">stolen</span> memories</div></div>
+        <div class="card" style="left: 20px; top: 112px; background: #F1ECE0"><div class="cue b">trade</div></div>
+        <div class="card" style="left: 20px; top: 56px"><div class="cue b"><span class="adj">reanimated</span> lighthouse keeper</div></div>
+
+        <div style="position: absolute; left: 0; top: 0; width: 240px; height: 200px; box-sizing: border-box; padding: 14px 16px 16px; border-radius: 14px; background: #2A2F38; border: 2px solid {{accent}}; box-shadow: 0 10px 26px rgba(0,0,0,0.5); display: flex; flex-direction: column; gap: 10px">
+          <div style="display: flex; align-items: center; gap: 8px">
+            <span class="dot" style="width: 24px; height: 24px; flex-basis: 24px; background: {{accent}}; color: #1B1E24"><svg class="i" width="13" height="13" viewBox="0 0 24 24" style="stroke-width: 2.8" aria-hidden="true"><path d="M15 3v11a5 5 0 0 1-10 0v-3l3 3"/></svg></span>
+            <span style="font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #F6B08A">Hook</span>
+          </div>
+          <p style="margin: 0; flex: 1 1 auto; font-size: 14px; line-height: 1.45; color: #ECEAE4">You are a reanimated lighthouse keeper who must trade using stolen memories to keep the light on, but the tide rises every night.</p>
+        </div>
+
+        <button type="button" class="badge" style="left: 20px; top: 189px; background: #2F5FB8">You are a</button>
+        <button type="button" class="badge" style="left: 20px; top: 245px; background: #9A5C08">who must</button>
+        <button type="button" class="badge" style="left: 20px; top: 301px; background: #3A7226">using</button>
+        <button type="button" class="badge" style="left: 20px; top: 357px; background: #23766C">to</button>
+        <button type="button" class="badge" style="left: 20px; top: 413px; background: #B53A23">but</button>
+      </div>
+
+      <div style="position: absolute; left: 420px; top: 136px; width: 220px; height: 260px">
+        <div style="position: absolute; left: 0; top: -56px; display: flex; gap: 4px; padding: 4px; border-radius: 10px; background: #FFFFFF; border: 1px solid #DDD8CE; box-shadow: 0 6px 18px rgba(0,0,0,0.35)">
+          <button type="button" style="height: 44px; padding: 0 12px; border-radius: 7px; border: none; background: transparent; color: #1B1E24; font-size: 13px; font-weight: 500">Redraw</button>
+          <button type="button" style="height: 44px; padding: 0 12px; border-radius: 7px; border: none; background: transparent; color: #1B1E24; font-size: 13px; font-weight: 500; display: inline-flex; align-items: center; gap: 6px"><svg class="i" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0"/></svg>Lock</button>
+          <button type="button" style="height: 44px; padding: 0 12px; border-radius: 7px; border: none; background: transparent; color: #B53A23; font-size: 13px; font-weight: 500">Discard</button>
+        </div>
+        <div class="card" style="left: 0; top: 0; box-shadow: 0 8px 22px rgba(0,0,0,0.4); outline: 2px solid {{accent}}; outline-offset: 3px">
+          <svg width="200" height="200" viewBox="0 0 200 200" style="position: absolute; left: 0; top: 0" aria-hidden="true">
+            <circle cx="100" cy="100" r="33.5" fill="none" stroke="#66691A" stroke-width="13"/>
+            <path d="M 100 59 V 74 M 100 126 V 141" fill="none" stroke="#F4F0E6" stroke-width="2"/>
+            <path d="M 63.5 97.5 L 69.5 97.5 L 66.5 103 z" fill="#F4F0E6" stroke="#F4F0E6" stroke-width="2.2" stroke-linejoin="round"/>
+            <path d="M 130.5 97.5 L 136.5 97.5 L 133.5 103 z" fill="#F4F0E6" stroke="#F4F0E6" stroke-width="2.2" stroke-linejoin="round"/>
+          </svg>
+          <div class="cue t" style="top: 28px">the map is a lie</div>
+          <span aria-hidden="true" style="position: absolute; left: 20px; right: 20px; top: 99px; height: 1px; background: #D5CFC0"></span>
+          <div class="cue b" style="bottom: 28px">the villain is right</div>
+          <span class="ic" style="background: #66691A"><svg class="i" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg></span>
+        </div>
+      </div>
+
+      <div style="position: absolute; left: 420px; top: 400px; width: 200px; height: 200px">
+        <div class="card" style="left: 0; top: 0">
+          <div class="cue t">clockwork</div>
+          <div class="cue l">haunted</div>
+          <div class="cue r">borrowed</div>
+          <div class="cue b">drowned</div>
+          <span class="ic" style="background: #6E48B5"><svg class="i" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 9v6"/><path d="M12.543 6H16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-3.605"/><path d="M22 14v-4"/><path d="M7 12h6"/><path d="M7.606 18H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h3.606"/></svg></span>
+        </div>
+      </div>
+
+      <div style="position: absolute; left: 700px; top: 72px; width: 300px; box-sizing: border-box; padding: 16px 18px; border-radius: 12px; background: #FBF6E4; color: #1B1E24; box-shadow: 0 8px 22px rgba(0,0,0,0.4); display: flex; flex-direction: column; gap: 8px">
+        <div style="font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #6B6355">Final hook</div>
+        <p style="margin: 0; font-size: 15px; line-height: 1.5">You keep a lighthouse after death. Each night the tide rises. Trade your memories to ships for oil, and keep the light on until dawn.</p>
+      </div>
+
+      <div style="position: absolute; right: 16px; bottom: 16px; display: flex; gap: 4px; padding: 4px; border-radius: 10px; background: #FFFFFF; border: 1px solid #DDD8CE">
+        <button type="button" aria-label="Zoom out" style="width: 44px; height: 44px; border-radius: 7px; border: none; background: transparent; color: #1B1E24; font-size: 18px">−</button>
+        <button type="button" style="height: 44px; padding: 0 10px; border-radius: 7px; border: none; background: transparent; color: #1B1E24; font-size: 13px; font-weight: 500">100%</button>
+        <button type="button" aria-label="Zoom in" style="width: 44px; height: 44px; border-radius: 7px; border: none; background: transparent; color: #1B1E24; font-size: 18px">+</button>
+        <button type="button" style="height: 44px; padding: 0 12px; border-radius: 7px; border: none; background: transparent; color: #1B1E24; font-size: 13px; font-weight: 500">Fit</button>
+      </div>
+
+      <div style="position: absolute; left: 16px; bottom: 16px; padding: 8px 12px; border-radius: 8px; background: #FFFFFF; border: 1px solid #DDD8CE; font-size: 12px; color: #5E636D">8 cards · 1 note</div>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#E8742E","options":["#E8742E","#F2B134","#3B6FD1","#2F8F83"]},"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? '#E8742E' };
+  }
+}
+</script>
+</body>
+</html>

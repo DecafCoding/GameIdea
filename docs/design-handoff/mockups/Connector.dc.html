@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>GameIdea connector badges</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
+<style>
+body{margin:0;background:#1B1E24}
+a{color:#ECEAE4}a:hover{color:#FFFFFF}
+button{font-family:inherit;cursor:pointer}
+.i{fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.card{position:absolute;width:200px;height:200px;border-radius:14px;background:#F4F0E6;box-shadow:0 6px 18px rgba(0,0,0,0.35)}
+.b{position:absolute;left:0;right:0;bottom:12px;padding:0 12px;text-align:center;font-family:'Space Grotesk',system-ui,sans-serif;font-weight:700;font-size:14px;line-height:1.25;color:#1B1E24}
+.badge{position:absolute;height:22px;padding:0 9px;border-radius:11px;color:#FFFFFF;font-size:11px;font-weight:600;line-height:22px;transform:translateX(-50%);box-shadow:0 2px 6px rgba(0,0,0,0.4);white-space:nowrap;border:none}
+.pill{display:inline-flex;align-items:center;height:22px;padding:0 9px;border-radius:11px;color:#FFFFFF;font-size:11px;font-weight:600;white-space:nowrap}
+.adj{color:#5B3F99}
+.row{display:grid;grid-template-columns:200px 120px minmax(0,1fr);gap:12px;align-items:center;min-height:34px;border-bottom:1px solid #30353F;font-size:13px}
+.dk{font-weight:600}
+.alt{color:#A9ADB6}
+.opt{display:flex;align-items:center;justify-content:space-between;min-height:44px;padding:0 12px;border-radius:7px;border:none;background:transparent;color:#ECEAE4;font-size:14px;text-align:left;width:100%}
+</style>
+</helmet>
+<div style="width: 1200px; height: 720px; box-sizing: border-box; padding: 48px 56px; color: #ECEAE4; font-family: Inter, system-ui, sans-serif; font-size: 14px; display: flex; flex-direction: column; gap: 24px; background-color: #1B1E24; background-image: radial-gradient(#33384280 1.2px, transparent 1.2px); background-size: 24px 24px; background-position: 12px 12px">
+
+  <div style="display: flex; flex-direction: column; gap: 6px">
+    <h1 style="margin: 0; font-family: 'Space Grotesk', system-ui, sans-serif; font-weight: 700; font-size: 28px">Connector badges</h1>
+    <p style="margin: 0; color: #A9ADB6; max-width: 860px; line-height: 1.5">Concept C from TheForge is the base. A badge sits on the seam above a tucked card, in that card's color. A click on a badge opens its word choices. The card keeps the word while it fits the pair.</p>
+  </div>
+
+  <div style="display: flex; gap: 56px; flex: 1 1 auto">
+
+    <div style="position: relative; width: 420px; flex: 0 0 420px">
+      <div style="position: absolute; left: 40px; top: 8px; width: 240px; height: 420px">
+        <div class="card" style="left: 20px; top: 168px; background: #ECE6D8"><div class="b"><span class="adj">stolen</span> memories</div></div>
+        <div class="card" style="left: 20px; top: 112px; background: #F1ECE0"><div class="b">trade</div></div>
+        <div class="card" style="left: 20px; top: 56px"><div class="b"><span class="adj">reanimated</span> lighthouse keeper</div></div>
+        <div style="position: absolute; left: 0; top: 0; width: 240px; height: 200px; box-sizing: border-box; padding: 14px 16px; border-radius: 14px; background: #2A2F38; border: 2px solid {{accent}}; box-shadow: 0 10px 26px rgba(0,0,0,0.5)">
+          <span style="font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #F6B08A">Hook</span>
+          <p style="margin: 8px 0 0; font-size: 14px; line-height: 1.45">You are a reanimated lighthouse keeper who can only trade using stolen memories.</p>
+        </div>
+        <button type="button" class="badge" style="left: 20px; top: 189px; background: #2F5FB8">You are a</button>
+        <button type="button" class="badge" aria-expanded="true" style="left: 20px; top: 245px; background: #9A5C08; outline: 2px solid #ECEAE4; outline-offset: 2px">who can only</button>
+        <button type="button" class="badge" style="left: 20px; top: 301px; background: #3A7226">using</button>
+      </div>
+
+      <div role="menu" aria-label="Mechanic connector" style="position: absolute; left: 92px; top: 272px; width: 200px; padding: 6px; border-radius: 10px; background: #23272F; border: 1px solid #4A505C; box-shadow: 0 16px 40px rgba(0,0,0,0.55); display: flex; flex-direction: column; gap: 2px">
+        <button type="button" role="menuitemradio" aria-checked="false" class="opt">who must</button>
+        <button type="button" role="menuitemradio" aria-checked="true" class="opt" style="background: #343A45; font-weight: 600">who can only<svg class="i" width="16" height="16" viewBox="0 0 24 24" style="stroke-width: 2.6; color: {{accent}}" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg></button>
+        <button type="button" role="menuitemradio" aria-checked="false" class="opt">who learns to</button>
+      </div>
+
+      <div style="position: absolute; left: 0; bottom: 0; width: 380px; box-sizing: border-box; display: flex; flex-direction: column; gap: 6px; padding: 14px 16px; border-radius: 10px; background: #23272F; border: 1px solid #30353F; font-size: 13px; color: #A9ADB6; line-height: 1.5">
+        <span style="font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase">Tuck hint: normal places</span>
+        <span>Player Role under the Hook Card, then Mechanic, Resource, Goal and Conflict. Any card can still tuck under any card.</span>
+      </div>
+    </div>
+
+    <div style="flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column">
+      <div class="row" style="font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #A9ADB6; min-height: 28px">
+        <span>Badge above</span><span>Default</span><span>Other choices</span>
+      </div>
+      <div class="row"><span class="dk">Player Role under Hook</span><span><span class="pill" style="background: #2F5FB8">You are a / an</span></span><span class="alt">You play a / an</span></div>
+      <div class="row" style="background: rgba(232,116,46,0.08)"><span class="dk">Same deck as the card above (not Modifiers)</span><span><span class="pill" style="background: #4A505C">and</span></span><span class="alt">Player Role adds the article: and a / an · with a / an</span></div>
+      <div class="row"><span class="dk">Mechanic</span><span><span class="pill" style="background: #9A5C08">who must</span></span><span class="alt">who can only · who learns to</span></div>
+      <div class="row"><span class="dk">Resource</span><span><span class="pill" style="background: #3A7226">using</span></span><span class="alt">while managing · spending</span></div>
+      <div class="row"><span class="dk">Goal</span><span><span class="pill" style="background: #23766C">to</span></span><span class="alt">until · so you can</span></div>
+      <div class="row"><span class="dk">Conflict</span><span><span class="pill" style="background: #B53A23">but</span></span><span class="alt">while · even though</span></div>
+      <div class="row"><span class="dk">Setting</span><span><span class="pill" style="background: #7A5A3A">in the</span></span><span class="alt">aboard the · inside the</span></div>
+      <div class="row"><span class="dk">Mood</span><span><span class="pill" style="background: #A63D72">It feels</span></span><span class="alt">The tone is</span></div>
+      <div class="row"><span class="dk">Twist</span><span><span class="pill" style="background: #66691A">Except</span></span><span class="alt">The catch:</span></div>
+      <div class="row"><span class="dk">Progression</span><span><span class="pill" style="background: #1D6F93">As you play,</span></span><span class="alt">Over time,</span></div>
+      <div class="row" style="border-bottom: none"><span class="dk">Constraint</span><span><span class="pill" style="background: #555B66">with</span></span><span class="alt">using only</span></div>
+      <p style="margin: 14px 0 0; font-size: 13px; color: #A9ADB6; line-height: 1.5">"and" joins any 2 cards of the same deck, for example "who must trade and dig". Its pill takes the lower card's color. Modifiers never get "and". 2 adjectives on one card read side by side, for example "haunted reanimated keeper". "a" or "an" follows the next word. Mood, Twist and Progression start a new sentence.</p>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#E8742E","options":["#E8742E","#F2B134","#3B6FD1","#2F8F83"]},"$preview":{"width":1200,"height":720}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? '#E8742E' };
+  }
+}
+</script>
+</body>
+</html>
