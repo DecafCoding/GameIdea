@@ -27,8 +27,8 @@ test('export_textFile_downloadsPlainWords', async ({ page, browserName }) => {
   const text = await readFile(await download.path(), 'utf8');
   expect(text).toBe(
     'Salvage Run\n\nCards\n\n' +
-      'Character: exiled navigator\n' +
-      '  Motivation: wants to go home\n' +
+      'Player Role: exiled navigator\n' +
+      '  Goal: wants to go home\n' +
       '    Conflict: but the ship is dying\n\n' +
       'Notes\n\nNote\nThe fleet left without her.\n',
   );

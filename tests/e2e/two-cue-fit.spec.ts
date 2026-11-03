@@ -1,11 +1,11 @@
 /**
  * Browser tests for the cue fit on the 250 px card (design 9.2).
- * 2-cue cards: Motivation and Conflict cues of up to 8 words show in full, in at most
+ * 2-cue cards: Goal and Conflict cues of up to 8 words show in full, in at most
  * 2 lines of 17 px, visible on a tucked card, with the outer side on the 14 px inset. Each pair is served as a
  * routed 2-cue pool, so the card shows exactly those 2 cues.
  * 4-cue cards: with the longest pool cues on every edge, plain and combined, no 2 edge
  * labels touch at a corner, and each stays inside the card and outside the outer ring.
- * Character and Setting share the 2-cue frame: top and bottom edges use up to 2 lines, the
+ * Player Role and Setting share the 2-cue frame: top and bottom edges use up to 2 lines, the
  * sides up to 3, and lines break after a hyphen. A tucked card hides its side edges.
  * The genre pools hold longer cues on purpose (docs/feature-genre-pools.html, "Long cues"):
  * the user reviews them in the app and then sets limits. Until then these checks use only
@@ -19,12 +19,12 @@ import type { Card, Cue } from '@/shared/model';
 import { cardById, openBoard } from './board-helpers';
 import { draw, type DeckName } from './helpers';
 
-type TwoCueType = 'motivation' | 'conflict';
+type TwoCueType = 'goal' | 'conflict';
 
 const TYPES: { type: TwoCueType; deck: DeckName; prefix: string; worst: [string, string] }[] = [
   {
-    type: 'motivation',
-    deck: 'Motivation',
+    type: 'goal',
+    deck: 'Goal',
     prefix: 'mo',
     worst: ['wants to find the home the fleet left', 'wants to outlive the war that made her'],
   },
@@ -50,17 +50,17 @@ const MAX_WIDTH = 222;
  * Longer genre cues are out of scope here until the user sets new limits.
  */
 const FIT_LIMITS: Record<Card['type'], number> = {
-  character: 16,
+  role: 16,
   setting: 16,
-  description: 10,
-  motivation: 38,
+  modifier: 10,
+  goal: 38,
   conflict: 38,
 };
 
 /** Whether a cue is inside the old fit class for its type. */
 function inFitClass(type: Card['type'], text: string): boolean {
   if (text.length > FIT_LIMITS[type]) return false;
-  const fourCue = type === 'character' || type === 'setting' || type === 'description';
+  const fourCue = type === 'role' || type === 'setting' || type === 'modifier';
   return !fourCue || text.split(/s+/).length <= 2;
 }
 
@@ -178,15 +178,15 @@ async function widest(page: Page, type: Card['type']): Promise<Cue> {
 }
 
 /** A 4-cue card with the widest pool noun on every edge, and the widest adjective if combined. */
-async function longestCard(page: Page, type: 'character' | 'setting', combined: boolean) {
+async function longestCard(page: Page, type: 'role' | 'setting', combined: boolean) {
   const noun = await widest(page, type);
-  const adjective = await widest(page, 'description');
+  const adjective = await widest(page, 'modifier');
   const rings: Card['rings'] = [{ cues: [noun, noun, noun, noun], activeIndex: 0 }];
   if (combined) rings.push({ cues: [adjective, adjective, adjective, adjective], activeIndex: 0 });
   return fixtureCard(type, { x: 96, y: 96, rings });
 }
 
-for (const type of ['character', 'setting'] as const) {
+for (const type of ['role', 'setting'] as const) {
   for (const combined of [false, true]) {
     const name = `fourCueCard_longestCuesOnEveryEdge_labelsClearAtCorners (${type}${combined ? ', combined' : ''})`;
     test(name, async ({ page }) => {
@@ -249,18 +249,18 @@ for (const type of ['character', 'setting'] as const) {
   }
 }
 
-test('characterCard_hyphenatedNoun_splitsAtHyphenInTwoLines', async ({ page }) => {
+test('roleCard_hyphenatedNoun_splitsAtHyphenInTwoLines', async ({ page }) => {
   // No spaces and wider than 222 px: the only legal breaks are after the hyphens, so 2
   // unclipped lines prove it.
   const noun = { text: 'street-samurai-for-hire-and-mercenary' };
-  const card = fixtureCard('character', {
+  const card = fixtureCard('role', {
     x: 96,
     y: 96,
     rings: [{ cues: [noun, noun, noun, noun], activeIndex: 0 }],
   });
   await openBoard(page, fixtureBoard([card]));
   await page.evaluate(() => document.fonts.ready);
-  const label = cardById(page, 'character-1').getByTestId('active-cue');
+  const label = cardById(page, 'role-1').getByTestId('active-cue');
   const m = await label.evaluate((el) => ({
     lines: Math.round(el.clientHeight / parseFloat(getComputedStyle(el).lineHeight)),
     clipped: el.scrollHeight > el.clientHeight + 1 || el.scrollWidth > el.clientWidth + 1,
@@ -274,7 +274,7 @@ test('combinedCard_longHyphenatedCues_staysInTwoLinesAndSplitsAtHyphen', async (
   // hyphen. Together the words need more than 2 lines, so the label must clamp at 2.
   const noun = { text: 'street-samurai-for-hire-and-mercenary' };
   const adjective = { text: 'surveillance-rigged' };
-  const card = fixtureCard('character', {
+  const card = fixtureCard('role', {
     x: 96,
     y: 96,
     rings: [
@@ -284,9 +284,9 @@ test('combinedCard_longHyphenatedCues_staysInTwoLinesAndSplitsAtHyphen', async (
   });
   await openBoard(page, fixtureBoard([card]));
   await page.evaluate(() => document.fonts.ready);
-  const character = cardById(page, 'character-1');
+  const role = cardById(page, 'role-1');
   const measure = () =>
-    character.getByTestId('active-cue').evaluate((el) => ({
+    role.getByTestId('active-cue').evaluate((el) => ({
       lines: Math.round(
         el.getBoundingClientRect().height / parseFloat(getComputedStyle(el).lineHeight),
       ),
@@ -295,7 +295,7 @@ test('combinedCard_longHyphenatedCues_staysInTwoLinesAndSplitsAtHyphen', async (
   expect(await measure()).toEqual({ lines: 2, overflowsSideways: false });
 
   // A turn remounts the words with the slide-in animation; the clamp must still hold.
-  await character.getByTestId('active-cue').hover();
+  await role.getByTestId('active-cue').hover();
   await page.keyboard.press('r');
   expect(await measure()).toEqual({ lines: 2, overflowsSideways: false });
 });
@@ -303,17 +303,17 @@ test('combinedCard_longHyphenatedCues_staysInTwoLinesAndSplitsAtHyphen', async (
 test('tuckedCard_sideEdges_hidden', async ({ page }) => {
   const nouns = ['captain', 'pilot', 'medic', 'smuggler'].map((text) => ({ text }));
   const board = fixtureBoard([
-    fixtureCard('motivation', { x: 96, y: 96 }),
-    fixtureCard('character', {
+    fixtureCard('goal', { x: 96, y: 96 }),
+    fixtureCard('role', {
       x: 96,
       y: 155,
       z: 2,
-      tuckedUnder: 'motivation-1',
+      tuckedUnder: 'goal-1',
       rings: [{ cues: nouns, activeIndex: 0 }],
     }),
   ]);
   await openBoard(page, board);
-  const tucked = cardById(page, 'character-1');
+  const tucked = cardById(page, 'role-1');
   await expect(tucked.locator('[data-edge="0"]')).toBeVisible();
   await expect(tucked.locator('[data-edge="2"]')).toBeVisible();
   await expect(tucked.locator('[data-edge="1"]')).toBeHidden();

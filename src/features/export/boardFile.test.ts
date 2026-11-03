@@ -26,7 +26,7 @@ describe('boardFile', () => {
   });
 
   it('boardFileJson_board_roundTripsWithFormatVersion', () => {
-    const board = fixtureBoard([fixtureCard('character')]);
+    const board = fixtureBoard([fixtureCard('role')]);
     const parsed: unknown = JSON.parse(boardFileJson(board));
     expect(parsed).toEqual(board);
     expect((parsed as { formatVersion: number }).formatVersion).toBe(FORMAT_VERSION);

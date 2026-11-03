@@ -3,30 +3,22 @@
  * name, then a Cards section (stacks top to bottom, then left to right; tucked cards
  * indented 2 spaces per level; only the active cue or pair), then a Notes section (each
  * note: its title line, then its text).
- * A Description tucked under a card with nothing tucked under it joins its parent's line
- * ("Character: exiled navigator, devout"). LF line ends and one final newline.
+ * A Modifier tucked under a card with nothing tucked under it joins its parent's line
+ * ("Player Role: exiled navigator, devout"). LF line ends and one final newline.
  */
 import { activeText } from '@/features/card';
 import { childrenOf, isRoot } from '@/features/canvas';
-import type { Board, Card, CardType } from '@/shared/model';
+import { DECK_NAME, type Board, type Card } from '@/shared/model';
 import { downloadFile, safeFileBase } from './download';
-
-const TYPE_NAME: Record<CardType, string> = {
-  character: 'Character',
-  motivation: 'Motivation',
-  setting: 'Setting',
-  conflict: 'Conflict',
-  description: 'Description',
-};
 
 /** "<name>.txt", with characters Windows does not allow in a file name replaced. */
 export function textFileName(name: string): string {
   return `${safeFileBase(name)}.txt`;
 }
 
-/** A Description with no cards of its own joins its parent's line. */
+/** A Modifier with no cards of its own joins its parent's line. */
 function joinsParent(board: Board, card: Card): boolean {
-  return card.type === 'description' && childrenOf(board, card.id).length === 0;
+  return card.type === 'modifier' && childrenOf(board, card.id).length === 0;
 }
 
 function cardLines(board: Board): string[] {
@@ -35,7 +27,7 @@ function cardLines(board: Board): string[] {
     const children = childrenOf(board, card.id);
     const joined = children.filter((child) => joinsParent(board, child));
     const words = [activeText(card), ...joined.map(activeText)].join(', ');
-    lines.push(`${'  '.repeat(depth)}${TYPE_NAME[card.type]}: ${words}`);
+    lines.push(`${'  '.repeat(depth)}${DECK_NAME[card.type]}: ${words}`);
     for (const child of children) {
       if (!joined.includes(child)) visit(child, depth + 1);
     }

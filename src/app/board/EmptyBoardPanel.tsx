@@ -1,6 +1,6 @@
 /**
  * EmptyBoardPanel: the 440 px panel over an empty board (design 9.11), with a primary
- * "Draw A Character" button. The board screen decides when it shows.
+ * "Draw A Player Role" button. The board screen decides when it shows.
  */
 import type { CardType } from '@/shared/model';
 import { Button } from '@/shared/ui';
@@ -24,15 +24,15 @@ export function EmptyBoardPanel({ decksReady, onDraw }: EmptyBoardPanelProps) {
         ring arrow to pick the cue you like.
       </p>
       <p className={styles.text}>
-        A good first set is a Character, a Motivation and a Conflict. Drag a card near another to
-        tuck them together.
+        A good first set is a Player Role, a Goal and a Conflict. Drag a card near another to tuck
+        them together.
       </p>
       <Button
         variant="primary"
         disabled={!decksReady}
-        onClick={(event) => onDraw('character', event.currentTarget.getBoundingClientRect())}
+        onClick={(event) => onDraw('role', event.currentTarget.getBoundingClientRect())}
       >
-        Draw A Character
+        Draw A Player Role
       </Button>
     </section>
   );

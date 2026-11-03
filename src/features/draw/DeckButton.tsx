@@ -4,28 +4,20 @@
  * is where the draw motion starts.
  */
 import { TypeDisc } from '@/features/card';
-import type { CardType } from '@/shared/model';
+import { DECK_NAME, type CardType } from '@/shared/model';
 import styles from './DeckButton.module.css';
 
-const NAME: Record<CardType, string> = {
-  character: 'Character',
-  motivation: 'Motivation',
-  setting: 'Setting',
-  conflict: 'Conflict',
-  description: 'Description',
-};
-
 const CAPTION: Record<CardType, string> = {
-  character: '4 cues · a person or being',
-  motivation: '2 cues · a goal or desire',
-  setting: '4 cues · place, object or event',
-  conflict: '2 cues · an obstacle',
-  description: '4 cues · an adjective',
+  role: '4 cues · who you play',
+  goal: '2 cues · what you must do',
+  conflict: '2 cues · what stands in the way',
+  modifier: '4 cues · an adjective',
+  setting: '4 cues · where it happens',
 };
 
-/** "Draw A Character" and so on: the deck button and empty-panel label. */
+/** "Draw A Player Role" and so on: the deck button and empty-panel label. */
 export function drawLabel(type: CardType): string {
-  return `Draw A ${NAME[type]}`;
+  return `Draw A ${DECK_NAME[type]}`;
 }
 
 interface DeckButtonProps {
@@ -45,7 +37,7 @@ export function DeckButton({ type, disabled, onDraw }: DeckButtonProps) {
     >
       <TypeDisc type={type} size={36} />
       <span className={styles.words}>
-        <span className={styles.name}>{NAME[type]}</span>
+        <span className={styles.name}>{DECK_NAME[type]}</span>
         <span className={styles.caption}>{CAPTION[type]}</span>
       </span>
     </button>

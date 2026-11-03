@@ -17,11 +17,11 @@ export type DropAction =
   { kind: 'move' } | { kind: 'tuck' } | { kind: 'combine' } | { kind: 'swap' } | { kind: 'onTop' };
 export type DropHint = 'combine' | 'swapZones' | 'slot' | null;
 
-/** The normal place: a Motivation under a Character, a Conflict under a Motivation. */
+/** The normal place: a Goal under a Player Role, a Conflict under a Goal. */
 export function isNormalPlace(dragged: Card, target: Card): boolean {
   return (
-    (dragged.type === 'motivation' && target.type === 'character') ||
-    (dragged.type === 'conflict' && target.type === 'motivation')
+    (dragged.type === 'goal' && target.type === 'role') ||
+    (dragged.type === 'conflict' && target.type === 'goal')
   );
 }
 
@@ -69,14 +69,14 @@ export function dropTarget(board: Board, draggedId: string, point: Point): Card 
 
 function canCombine(dragged: Card, target: Card): boolean {
   return (
-    dragged.type === 'description' &&
-    (target.type === 'character' || target.type === 'setting') &&
+    dragged.type === 'modifier' &&
+    (target.type === 'role' || target.type === 'setting') &&
     !isCombined(target)
   );
 }
 
 function canSwap(dragged: Card, target: Card): boolean {
-  return dragged.type === 'description' && isCombined(target);
+  return dragged.type === 'modifier' && isCombined(target);
 }
 
 function inSwapCircle(target: Card, point: Point): boolean {
@@ -86,7 +86,7 @@ function inSwapCircle(target: Card, point: Point): boolean {
 }
 
 /**
- * What a drop does. A Description on a combined card swaps in the center circle and goes
+ * What a drop does. A Modifier on a combined card swaps in the center circle and goes
  * on top of the card everywhere else, so its adjectives read before the card's own.
  */
 export function dropAction(dragged: Card, target: Card | null, point: Point): DropAction {

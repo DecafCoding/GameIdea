@@ -14,6 +14,6 @@
 }
 
 .check {
-  /* The green type color; it moved from Character to Motivation on 2026-10-31. */
-  color: var(--type-motivation);
+  /* The green type color; it moved from Player Role to Goal on 2026-10-31. */
+  color: var(--type-goal);
 }

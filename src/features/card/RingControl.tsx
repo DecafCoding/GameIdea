@@ -39,7 +39,7 @@ function ringsFor(card: Card): RingSpec[] {
   }
   return [
     { slot: 'outer', ringIndex: 0, position: 'outer', colorType: card.type },
-    { slot: 'inner', ringIndex: 1, position: 'inner', colorType: 'description' },
+    { slot: 'inner', ringIndex: 1, position: 'inner', colorType: 'modifier' },
   ];
 }
 

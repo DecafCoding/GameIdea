@@ -34,16 +34,16 @@
   --note-delete: #8A5A4A;
 
   /* card types */
-  --type-character: #3B6FD1;
-  --type-character-dark: #2B539E;
-  --type-motivation: #2F8F83;
-  --type-motivation-dark: #1F6B61;
+  --type-role: #3B6FD1;
+  --type-role-dark: #2B539E;
+  --type-goal: #2F8F83;
+  --type-goal-dark: #1F6B61;
   --type-setting: #B8700E;
   --type-setting-dark: #8C540A;
   --type-conflict: #C8452C;
   --type-conflict-dark: #963321;
-  --type-description: #7B55C2;
-  --type-description-dark: #5C3F93;
+  --type-modifier: #7B55C2;
+  --type-modifier-dark: #5C3F93;
 
   /* status */
   --ok: #5DBB7A;

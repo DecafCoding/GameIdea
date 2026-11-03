@@ -21,7 +21,7 @@ const minutesAgo = (n: number) => new Date(Date.now() - n * 60_000).toISOString(
 
 async function seedThree() {
   await saveBoard({
-    ...fixtureBoard([fixtureCard('character')], [fixtureNote()]),
+    ...fixtureBoard([fixtureCard('role')], [fixtureNote()]),
     id: 'a',
     name: 'Salvage Run',
     updatedAt: minutesAgo(5),
@@ -87,7 +87,7 @@ async function storedState() {
 
 const importedFile = (name: string) =>
   boardFileJson({
-    ...fixtureBoard([fixtureCard('motivation')]),
+    ...fixtureBoard([fixtureCard('goal')]),
     id: 'file-id',
     name,
     updatedAt: minutesAgo(600),
@@ -124,7 +124,7 @@ describe('BoardList', () => {
       target: { value: 'Two Captains' },
     });
     fireEvent.click(newBoardDialog().getByRole('button', { name: 'Next' }));
-    for (const genre of ['Generic', 'Sci-Fi', 'Space Opera']) clickChip('Character', genre);
+    for (const genre of ['Generic', 'Sci-Fi', 'Space Opera']) clickChip('Player Role', genre);
     for (const genre of ['Generic', 'Sci-Fi', 'Cyberpunk']) clickChip('Setting', genre);
     fireEvent.click(newBoardDialog().getByRole('button', { name: 'Create Board' }));
     await waitFor(() => expect(onOpen).toHaveBeenCalledTimes(1));
@@ -132,7 +132,7 @@ describe('BoardList', () => {
     expect(board?.name).toBe('Two Captains');
     expect(board?.genres).toEqual({
       ...everyDeck(GENRES),
-      character: ['cyberpunk'],
+      role: ['cyberpunk'],
       setting: ['space-opera'],
     });
   });

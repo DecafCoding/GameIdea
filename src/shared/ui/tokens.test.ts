@@ -50,11 +50,11 @@ const LATER_DECISIONS: Record<string, string> = {
   '--card': '250px',
   // 2026-10-29: tuck offset 56 → 59 px, so a tucked card shows 3 px more.
   '--tuck-offset': '59px',
-  // 2026-10-31: type colors moved: Character blue, Motivation green, Setting brown.
-  '--type-character': '#3B6FD1',
-  '--type-character-dark': '#2B539E',
-  '--type-motivation': '#2F8F83',
-  '--type-motivation-dark': '#1F6B61',
+  // 2026-10-31: type colors moved: Player Role blue, Goal green, Setting brown.
+  '--type-role': '#3B6FD1',
+  '--type-role-dark': '#2B539E',
+  '--type-goal': '#2F8F83',
+  '--type-goal-dark': '#1F6B61',
   '--type-setting': '#B8700E',
   '--type-setting-dark': '#8C540A',
 };

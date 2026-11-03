@@ -39,31 +39,31 @@ function Harness({ initial }: { initial: Card }) {
 
 describe('CardView', () => {
   it('CardView_characterCard_rendersFourEdgesWithFirstCueActive', () => {
-    const { container } = render(<CardView card={card('character', [NOUNS])} onTurn={noop} />);
+    const { container } = render(<CardView card={card('role', [NOUNS])} onTurn={noop} />);
     expect(edges(container)).toHaveLength(4);
     expect(screen.getByTestId('active-cue').textContent).toBe('navigator');
   });
 
   it('CardView_motivationCard_rendersTwoCuesAndMiddleRule', () => {
     const { container } = render(
-      <CardView card={card('motivation', [['find home', 'repay a debt']])} onTurn={noop} />,
+      <CardView card={card('goal', [['find home', 'repay a debt']])} onTurn={noop} />,
     );
     expect(edges(container)).toHaveLength(2);
     expect(screen.getByTestId('middle-rule')).toBeTruthy();
   });
 
   it('CardView_combinedCard_activeCueReadsAdjectiveSpaceNoun', () => {
-    render(<CardView card={card('character', [NOUNS, ADJS])} onTurn={noop} />);
+    render(<CardView card={card('role', [NOUNS, ADJS])} onTurn={noop} />);
     expect(screen.getByTestId('active-cue').textContent).toBe('exiled navigator');
   });
 
   it('CardView_combinedCard_showsPurpleDiscEdge', () => {
-    render(<CardView card={card('character', [NOUNS, ADJS])} onTurn={noop} />);
+    render(<CardView card={card('role', [NOUNS, ADJS])} onTurn={noop} />);
     expect(screen.getByTestId('combined-disc')).toBeTruthy();
   });
 
   it('CardView_oneRingCard_hasNoPurpleDiscEdge', () => {
-    render(<CardView card={card('character', [NOUNS])} onTurn={noop} />);
+    render(<CardView card={card('role', [NOUNS])} onTurn={noop} />);
     expect(screen.queryByTestId('combined-disc')).toBeNull();
   });
 
@@ -79,13 +79,13 @@ describe('CardView', () => {
   });
 
   it('CardView_characterCard_discShowsTypeIcon', () => {
-    render(<CardView card={card('character', [NOUNS])} onTurn={noop} />);
+    render(<CardView card={card('role', [NOUNS])} onTurn={noop} />);
     expect(screen.getByTestId('type-disc').querySelector('[data-icon="person"]')).toBeTruthy();
   });
 
   it('CardView_card_hasTitleCaseAriaLabel', () => {
-    render(<CardView card={card('description', [ADJS])} onTurn={noop} />);
-    expect(screen.getByRole('article', { name: 'Description Card' })).toBeTruthy();
+    render(<CardView card={card('modifier', [ADJS])} onTurn={noop} />);
+    expect(screen.getByRole('article', { name: 'Modifier Card' })).toBeTruthy();
   });
 
   it('CardView_combinedInnerRightClick_changesOnlyBottomAdjective', () => {
@@ -93,9 +93,9 @@ describe('CardView', () => {
       type,
       cues: texts.map((text, i) => ({ id: `${type}-${i}`, text, genres: ['generic'] })),
     });
-    const character = drawCard('character', pool('character', NOUNS), GENRES);
-    const description = drawCard('description', pool('description', ADJS), GENRES);
-    const combined = combine(character, description);
+    const role = drawCard('role', pool('role', NOUNS), GENRES);
+    const modifier = drawCard('modifier', pool('modifier', ADJS), GENRES);
+    const combined = combine(role, modifier);
     const [noun, adjective] = [combined.rings[0]!.cues[0]!.text, combined.rings[1]!.cues[0]!.text];
 
     render(<Harness initial={combined} />);
@@ -109,24 +109,24 @@ describe('CardView', () => {
   });
 
   it('cardView_paperUnder1_usesUnderPaper', () => {
-    const { rerender } = render(<CardView card={card('motivation', [['a', 'b']])} onTurn={noop} />);
+    const { rerender } = render(<CardView card={card('goal', [['a', 'b']])} onTurn={noop} />);
     const top = screen.getByTestId('card').className;
-    rerender(<CardView card={card('motivation', [['a', 'b']])} onTurn={noop} paper="under-1" />);
+    rerender(<CardView card={card('goal', [['a', 'b']])} onTurn={noop} paper="under-1" />);
     const tucked = screen.getByTestId('card');
     expect(tucked.dataset.paper).toBe('under-1');
     expect(tucked.className).not.toBe(top);
   });
 
   it('cardView_tucked_showsTypeMarkOnlyWhenTucked', () => {
-    const { rerender } = render(<CardView card={card('character', [NOUNS])} onTurn={noop} />);
+    const { rerender } = render(<CardView card={card('role', [NOUNS])} onTurn={noop} />);
     expect(screen.queryByTestId('tuck-mark')).toBeNull();
-    rerender(<CardView card={card('character', [NOUNS])} onTurn={noop} paper="under-2" />);
+    rerender(<CardView card={card('role', [NOUNS])} onTurn={noop} paper="under-2" />);
     const icon = screen.getByTestId('tuck-mark').querySelector('[data-icon]');
     expect(icon?.getAttribute('data-icon')).toBe('person');
   });
 
   it('cardView_ringClassName_onEveryRingHalf', () => {
-    render(<CardView card={card('character', [NOUNS])} onTurn={noop} ringClassName="nodrag" />);
+    render(<CardView card={card('role', [NOUNS])} onTurn={noop} ringClassName="nodrag" />);
     const halves = screen.getAllByRole('button', { name: /^Turn / });
     expect(halves.every((half) => half.classList.contains('nodrag'))).toBe(true);
   });

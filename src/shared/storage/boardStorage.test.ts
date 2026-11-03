@@ -24,7 +24,7 @@ function otherTab(): BroadcastChannel {
 }
 
 function board(id: string, updatedAt: string, name = id) {
-  return { ...fixtureBoard([fixtureCard('character')]), id, name, updatedAt };
+  return { ...fixtureBoard([fixtureCard('role')]), id, name, updatedAt };
 }
 
 beforeEach(async () => {

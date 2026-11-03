@@ -7,28 +7,18 @@
 import { useRef, useState } from 'react';
 import { CardView, combine, isCombined, TypeDisc, turnCard, useRingKeys } from '@/features/card';
 import { drawCard } from '@/features/draw';
-import { CARD_TYPES, GENRES, type Card, type CardType } from '@/shared/model';
+import { CARD_TYPES, DECK_NAME, GENRES, type Card, type CardType } from '@/shared/model';
 import { usePools } from '@/shared/pools';
 import { Banner, Button } from '@/shared/ui';
 import styles from './CardTestPage.module.css';
 
-const DECK_LABEL: Record<CardType, string> = {
-  character: 'Draw A Character',
-  motivation: 'Draw A Motivation',
-  setting: 'Draw A Setting',
-  conflict: 'Draw A Conflict',
-  description: 'Draw A Description',
-};
-
 const POOLS_FAILED_TEXT =
   'The decks did not load. Saved cards still work. Drawing is off until the decks load.';
 
-/** The newest uncombined Character or Setting, and the newest Description. */
+/** The newest uncombined Player Role or Setting, and the newest Modifier. */
 function combinePair(cards: Card[]): { target: Card; source: Card } | null {
-  const target = cards.find(
-    (c) => (c.type === 'character' || c.type === 'setting') && !isCombined(c),
-  );
-  const source = cards.find((c) => c.type === 'description');
+  const target = cards.find((c) => (c.type === 'role' || c.type === 'setting') && !isCombined(c));
+  const source = cards.find((c) => c.type === 'modifier');
   return target && source ? { target, source } : null;
 }
 
@@ -71,7 +61,7 @@ export function CardTestPage() {
     <main className={styles.page}>
       <h1 className={styles.title}>Card Test</h1>
       <p className={styles.caption}>
-        Draw cards, turn their rings, and combine a Description with a Character or Setting.
+        Draw cards, turn their rings, and combine a Modifier with a Player Role or Setting.
       </p>
       {status === 'failed' && (
         <div className={styles.banner}>
@@ -88,7 +78,7 @@ export function CardTestPage() {
             onClick={() => draw(type)}
           >
             <TypeDisc type={type} size={36} />
-            {DECK_LABEL[type]}
+            {`Draw A ${DECK_NAME[type]}`}
           </button>
         ))}
         <Button variant="secondary" disabled={!pair} onClick={combinePairNow}>

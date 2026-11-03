@@ -145,10 +145,10 @@ describe('newBoard', () => {
   });
 
   it('newBoard_nameAndDeckGenres_keepsThemAsCopies', () => {
-    const chosen: DeckGenres = { ...everyDeck(GENRES), character: ['cyberpunk'] };
+    const chosen: DeckGenres = { ...everyDeck(GENRES), role: ['cyberpunk'] };
     const board = newBoard({ name: 'Salvage Run', genres: chosen });
     expect(board.name).toBe('Salvage Run');
     expect(board.genres).toEqual(chosen);
-    expect(board.genres.character).not.toBe(chosen.character);
+    expect(board.genres.role).not.toBe(chosen.role);
   });
 });

@@ -41,14 +41,14 @@ export function isRoot(board: Board, id: string): boolean {
   return rootOf(board, id).id === id;
 }
 
-/** Direct children in child order: Descriptions first, then by z (tuck time) ascending. */
+/** Direct children in child order: Modifiers first, then by z (tuck time) ascending. */
 export function childrenOf(board: Board, id: string): Card[] {
   const cards = byId(board);
   return board.cards
     .filter((card) => card.tuckedUnder === id && parentOf(cards, card)?.id === id)
     .sort((a, b) => {
-      const da = a.type === 'description' ? 0 : 1;
-      const db = b.type === 'description' ? 0 : 1;
+      const da = a.type === 'modifier' ? 0 : 1;
+      const db = b.type === 'modifier' ? 0 : 1;
       return da - db || a.z - b.z;
     });
 }
@@ -118,7 +118,7 @@ export function tuckCard(board: Board, id: string, targetId: string): Board {
 /**
  * Puts the card (with its own stack) on top of the target: it takes the target's place,
  * as a root at the target's x, y or under the target's parent, and the target (with its
- * stack) tucks under it. A second Description on a combined card uses this, so both sets
+ * stack) tucks under it. A second Modifier on a combined card uses this, so both sets
  * of adjectives read before the noun.
  */
 export function putOnTop(board: Board, id: string, targetId: string): Board {

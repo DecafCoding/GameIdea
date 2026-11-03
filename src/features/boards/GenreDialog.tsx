@@ -42,11 +42,11 @@ export const GENRE_LABEL: Record<Genre, string> = {
 };
 
 const DECK_NAME: Record<CardType, string> = {
-  character: 'Character',
-  motivation: 'Motivation',
+  role: 'Player Role',
+  goal: 'Goal',
   setting: 'Setting',
   conflict: 'Conflict',
-  description: 'Description',
+  modifier: 'Modifier',
 };
 
 export function GenreDialog({ open, onCancel, onCreate }: GenreDialogProps) {

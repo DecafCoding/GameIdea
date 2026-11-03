@@ -12,7 +12,7 @@ export const ARROW = {
   outerRight: { x: 174.5, y: 125 },
 } as const;
 
-export type DeckName = 'Character' | 'Motivation' | 'Setting' | 'Conflict' | 'Description';
+export type DeckName = 'Player Role' | 'Goal' | 'Conflict' | 'Modifier' | 'Setting';
 
 /** Clicks "Draw A <deck>" and returns the newest card (the page lists newest first). */
 export async function draw(page: Page, deck: DeckName): Promise<Locator> {

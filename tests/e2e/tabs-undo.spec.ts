@@ -3,7 +3,7 @@
  * and the keys (design 9.10 and 11).
  */
 import { expect, test, type Page } from '@playwright/test';
-import { fixtureBoard, fixtureCard, secondDescription } from '@/test/fixtures/boards';
+import { fixtureBoard, fixtureCard, secondModifier } from '@/test/fixtures/boards';
 import {
   boxOf,
   canvasCards,
@@ -43,7 +43,7 @@ async function pointerToPane(page: Page) {
 }
 
 test.describe('2 tabs', () => {
-  const board = () => fixtureBoard([fixtureCard('character', { x: 96, y: 96 })]);
+  const board = () => fixtureBoard([fixtureCard('role', { x: 96, y: 96 })]);
 
   test('tabs_changeInOne_otherReloadsAndShowsBanner', async ({ context }) => {
     const a = await context.newPage();
@@ -82,7 +82,7 @@ test.describe('undo', () => {
   test('undo_drawAndTurn_buttonsReverse', async ({ page }) => {
     await openBoard(page, fixtureBoard([fixtureCard('setting', { x: 96, y: 96 })]));
     await expect(undoButton(page)).toBeDisabled();
-    await drawFromRail(page, 'Character');
+    await drawFromRail(page, 'Player Role');
     await expect(canvasCards(page)).toHaveCount(2);
 
     await cardById(page, 'setting-1').click({ position: { x: 30, y: 30 } });
@@ -105,8 +105,8 @@ test.describe('undo', () => {
   });
 
   test('undo_ctrlZ_reversesDragAndRedoReapplies', async ({ page }) => {
-    await openBoard(page, fixtureBoard([fixtureCard('character', { x: 96, y: 96 })]));
-    const card = cardById(page, 'character-1');
+    await openBoard(page, fixtureBoard([fixtureCard('role', { x: 96, y: 96 })]));
+    const card = cardById(page, 'role-1');
     const start = await boxOf(card);
     await dragBy(page, card, 200, 100);
     await expect.poll(async () => Math.round((await boxOf(card)).x - start.x)).toBe(200);
@@ -121,43 +121,31 @@ test.describe('undo', () => {
     await openBoard(
       page,
       fixtureBoard([
-        fixtureCard('character', { x: 96, y: 96 }),
-        fixtureCard('description', { x: 528, y: 96, z: 2 }),
-        secondDescription({ x: 528, y: 360, z: 3 }),
-        fixtureCard('motivation', { x: 96, y: 420, z: 4 }),
+        fixtureCard('role', { x: 96, y: 96 }),
+        fixtureCard('modifier', { x: 528, y: 96, z: 2 }),
+        secondModifier({ x: 528, y: 360, z: 3 }),
+        fixtureCard('goal', { x: 96, y: 420, z: 4 }),
       ]),
     );
 
     // Combine.
-    await dragTo(
-      page,
-      cardById(page, 'description-1'),
-      await pointOn(page, 'character-1', 125, 125),
-    );
-    await expect(activeCue(page, 'character-1')).toHaveText('exiled navigator');
+    await dragTo(page, cardById(page, 'modifier-1'), await pointOn(page, 'role-1', 125, 125));
+    await expect(activeCue(page, 'role-1')).toHaveText('exiled navigator');
     // Swap.
-    await dragTo(
-      page,
-      cardById(page, 'description-2'),
-      await pointOn(page, 'character-1', 125, 125),
-    );
-    await expect(activeCue(page, 'character-1')).toHaveText('devout navigator');
+    await dragTo(page, cardById(page, 'modifier-2'), await pointOn(page, 'role-1', 125, 125));
+    await expect(activeCue(page, 'role-1')).toHaveText('devout navigator');
     // Split.
-    await cardById(page, 'character-1').click({ position: { x: 30, y: 30 } });
+    await cardById(page, 'role-1').click({ position: { x: 30, y: 30 } });
     await page.getByRole('button', { name: 'Split' }).click();
-    await expect(activeCue(page, 'character-1')).toHaveText('navigator');
+    await expect(activeCue(page, 'role-1')).toHaveText('navigator');
     await expect(canvasCards(page)).toHaveCount(4);
     // Tuck.
-    await dragTo(
-      page,
-      cardById(page, 'motivation-1'),
-      await pointOn(page, 'character-1', 125, 125),
-    );
+    await dragTo(page, cardById(page, 'goal-1'), await pointOn(page, 'role-1', 125, 125));
     await expect
       .poll(async () => {
-        const character = await boxOf(cardById(page, 'character-1'));
-        const motivation = await boxOf(cardById(page, 'motivation-1'));
-        return Math.round(motivation.y - character.y);
+        const role = await boxOf(cardById(page, 'role-1'));
+        const goal = await boxOf(cardById(page, 'goal-1'));
+        return Math.round(goal.y - role.y);
       })
       .toBe(59);
 
@@ -165,37 +153,37 @@ test.describe('undo', () => {
     await undoButton(page).click();
     await expect
       .poll(async () => {
-        const character = await boxOf(cardById(page, 'character-1'));
-        const motivation = await boxOf(cardById(page, 'motivation-1'));
-        return Math.round(motivation.y - character.y);
+        const role = await boxOf(cardById(page, 'role-1'));
+        const goal = await boxOf(cardById(page, 'goal-1'));
+        return Math.round(goal.y - role.y);
       })
       .not.toBe(59);
-    await expect(activeCue(page, 'character-1')).toHaveText('navigator');
+    await expect(activeCue(page, 'role-1')).toHaveText('navigator');
     await undoButton(page).click();
-    await expect(activeCue(page, 'character-1')).toHaveText('devout navigator');
+    await expect(activeCue(page, 'role-1')).toHaveText('devout navigator');
     await expect(canvasCards(page)).toHaveCount(3);
     await undoButton(page).click();
-    await expect(activeCue(page, 'character-1')).toHaveText('exiled navigator');
-    await expect(activeCue(page, 'description-2')).toHaveText('devout');
+    await expect(activeCue(page, 'role-1')).toHaveText('exiled navigator');
+    await expect(activeCue(page, 'modifier-2')).toHaveText('devout');
     await undoButton(page).click();
-    await expect(activeCue(page, 'character-1')).toHaveText('navigator');
-    await expect(cardById(page, 'description-1')).toHaveCount(1);
+    await expect(activeCue(page, 'role-1')).toHaveText('navigator');
+    await expect(cardById(page, 'modifier-1')).toHaveCount(1);
     await expect(undoButton(page)).toBeDisabled();
   });
 
   test('undo_afterReload_historyCleared', async ({ page }) => {
     await openBoard(page);
-    await drawFromRail(page, 'Character');
+    await drawFromRail(page, 'Player Role');
     await expect(undoButton(page)).toBeEnabled();
     await waitForSaved(page);
     await page.reload();
-    await expect(rail(page).getByRole('button', { name: 'Draw A Character' })).toBeEnabled();
+    await expect(rail(page).getByRole('button', { name: 'Draw A Player Role' })).toBeEnabled();
     await expect(canvasCards(page)).toHaveCount(1);
     await expect(undoButton(page)).toBeDisabled();
   });
 
   test('undo_noteTyping_ctrlZStaysInNote', async ({ page }) => {
-    await openBoard(page, fixtureBoard([fixtureCard('character', { x: 96, y: 96 })]));
+    await openBoard(page, fixtureBoard([fixtureCard('role', { x: 96, y: 96 })]));
     await rail(page).getByRole('button', { name: 'Add Note' }).click();
     const field = page.getByRole('textbox', { name: 'Note Text' });
     await expect(field).toBeFocused();

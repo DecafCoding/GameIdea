@@ -7,11 +7,11 @@ import { Icon, type IconName } from '@/shared/ui';
 import styles from './TypeDisc.module.css';
 
 export const TYPE_ICON: Record<CardType, IconName> = {
-  character: 'person',
-  motivation: 'target',
+  role: 'person',
+  goal: 'target',
   setting: 'pin',
   conflict: 'bolt',
-  description: 'tag',
+  modifier: 'tag',
 };
 
 export const KIND_ICON: Record<CueKind, IconName> = {

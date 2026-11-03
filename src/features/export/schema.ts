@@ -22,11 +22,11 @@ const ringSchema = z.object({
 
 /** Allowed ring counts and cues per ring for each card type. */
 const RING_RULES: Record<CardType, { rings: readonly number[]; cues: number }> = {
-  character: { rings: [1, 2], cues: 4 },
+  role: { rings: [1, 2], cues: 4 },
   setting: { rings: [1, 2], cues: 4 },
-  motivation: { rings: [1], cues: 2 },
+  goal: { rings: [1], cues: 2 },
   conflict: { rings: [1], cues: 2 },
-  description: { rings: [1], cues: 4 },
+  modifier: { rings: [1], cues: 4 },
 };
 
 const cardSchema = z
@@ -91,11 +91,11 @@ const deckGenreList = z
 
 /** All 5 decks are required; an unknown key is dropped like any other. */
 const deckGenresSchema = z.object({
-  character: deckGenreList,
-  motivation: deckGenreList,
+  role: deckGenreList,
+  goal: deckGenreList,
   setting: deckGenreList,
   conflict: deckGenreList,
-  description: deckGenreList,
+  modifier: deckGenreList,
 });
 
 export const boardSchema: z.ZodType<Board> = z

@@ -30,7 +30,7 @@ describe('parseBoardFile', () => {
   });
 
   it('parseBoardFile_version1File_importsWithAllGenresInEveryDeck', () => {
-    const rest: Partial<Board> = fixtureBoard([fixtureCard('character')]);
+    const rest: Partial<Board> = fixtureBoard([fixtureCard('role')]);
     delete rest.genres;
     const parsed = parseBoardFile(JSON.stringify({ ...rest, formatVersion: 1 }));
     expect(parsed).toEqual({ ...rest, formatVersion: FORMAT_VERSION, genres: everyDeck(GENRES) });
@@ -49,14 +49,14 @@ describe('parseBoardFile', () => {
     expect(parseBoardFile(JSON.stringify({ ...board, formatVersion: 2, genres: [] }))).toBeNull();
   });
 
-  it('parseBoardFile_cyberpunkCharacterBoard_keepsGenres', () => {
-    const genres = { ...everyDeck(GENRES), character: ['cyberpunk' as const] };
+  it('parseBoardFile_cyberpunkRoleBoard_keepsGenres', () => {
+    const genres = { ...everyDeck(GENRES), role: ['cyberpunk' as const] };
     const board = { ...fixtureBoard([]), genres };
     expect(parseBoardFile(boardFileJson(board))?.genres).toEqual(genres);
   });
 
   it('parseBoardFile_badCard_null', () => {
-    const card = { ...fixtureCard('motivation'), rings: [] };
+    const card = { ...fixtureCard('goal'), rings: [] };
     expect(parseBoardFile(JSON.stringify(fixtureBoard([card])))).toBeNull();
   });
 });

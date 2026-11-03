@@ -22,7 +22,7 @@ describe('summary', () => {
       updatedAt: board.updatedAt,
       cardCount: 4,
       noteCount: 1,
-      typeStrip: ['character', 'motivation', 'conflict', 'setting'],
+      typeStrip: ['role', 'goal', 'conflict', 'setting'],
     });
   });
 

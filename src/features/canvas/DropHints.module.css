@@ -12,7 +12,7 @@
 .combine {
   height: var(--card);
   border-radius: var(--radius-card);
-  outline: 3px solid var(--type-description);
+  outline: 3px solid var(--type-modifier);
   outline-offset: 4px;
 }
 
@@ -40,8 +40,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px dashed color-mix(in srgb, var(--type-description) 50%, transparent);
-  background: color-mix(in srgb, var(--type-description) 16%, transparent);
+  border: 2px dashed color-mix(in srgb, var(--type-modifier) 50%, transparent);
+  background: color-mix(in srgb, var(--type-modifier) 16%, transparent);
   color: var(--text);
   font-family: var(--font-ui);
   font-size: 12px;
@@ -49,7 +49,7 @@
 }
 
 .active {
-  border-color: var(--type-description);
+  border-color: var(--type-modifier);
 }
 
 /* The 120 px swap circle, centered on the card (dropZones SWAP_RADIUS). */
@@ -62,7 +62,7 @@
   z-index: 1;
 }
 
-/* The 64 px "Add On Top" band across the card's top: the Description goes on top of the card. */
+/* The 64 px "Add On Top" band across the card's top: the Modifier goes on top of the card. */
 .band {
   left: 0;
   top: 0;

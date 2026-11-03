@@ -19,7 +19,7 @@ export interface DragHint {
 }
 
 const SLOT_LABEL: Partial<Record<CardType, string>> = {
-  motivation: 'Motivation Goes Here',
+  goal: 'Goal Goes Here',
   conflict: 'Conflict Goes Here',
 };
 

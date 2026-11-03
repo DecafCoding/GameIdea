@@ -43,7 +43,7 @@ async function storedView(page: Page): Promise<{ panX: number; panY: number } | 
 async function makeBoard(page: Page, name: string, draw = false) {
   await openBoard(page);
   if (draw) {
-    await drawFromRail(page, 'Character');
+    await drawFromRail(page, 'Player Role');
     await expect(canvasCards(page)).toHaveCount(1);
   }
   await nameField(page).fill(name);
@@ -55,7 +55,7 @@ async function makeBoard(page: Page, name: string, draw = false) {
 
 test('persistence_drawThenReload_boardSurvives', async ({ page }) => {
   await openBoard(page);
-  await drawFromRail(page, 'Character');
+  await drawFromRail(page, 'Player Role');
   const node = page.locator('.react-flow__node:has([data-card])').first();
   const id = await node.getAttribute('data-id');
   const cue = await node.getByTestId('active-cue').textContent();
@@ -79,7 +79,7 @@ test('persistence_drawThenReload_boardSurvives', async ({ page }) => {
   const before = await boxOf(node);
 
   await page.reload();
-  await expect(rail(page).getByRole('button', { name: 'Draw A Character' })).toBeEnabled();
+  await expect(rail(page).getByRole('button', { name: 'Draw A Player Role' })).toBeEnabled();
   const after = page.locator(`.react-flow__node[data-id="${id}"]`);
   await expect(after.getByTestId('active-cue')).toHaveText(cue!);
   await expect(canvasCards(page)).toHaveCount(1);
@@ -166,7 +166,7 @@ test('boardRoute_unknownId_goesToList', async ({ page }) => {
 });
 
 test('topBar_boardListLink_showsBoardInList', async ({ page }) => {
-  await openBoard(page, fixtureBoard([fixtureCard('character', { x: 96, y: 96 })]));
+  await openBoard(page, fixtureBoard([fixtureCard('role', { x: 96, y: 96 })]));
   await page.getByRole('link', { name: 'Board List' }).click();
   await expect(boardList(page).getByRole('link')).toHaveText(['Fixture Board']);
   await expect(boardList(page)).toContainText('1 card · 0 notes');

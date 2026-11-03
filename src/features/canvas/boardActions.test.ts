@@ -10,7 +10,7 @@ import {
   fixtureBoard,
   fixtureCard,
   fixtureStack,
-  secondDescription,
+  secondModifier,
 } from '@/test/fixtures/boards';
 import {
   chooseConnector,
@@ -47,7 +47,7 @@ function overlaps(a: Card, b: Card): boolean {
 
 describe('placeNewCard', () => {
   it('placeNewCard_card_addsRootAtSpotOnTop', () => {
-    const board = fixtureBoard([fixtureCard('character', { z: 4 })]);
+    const board = fixtureBoard([fixtureCard('role', { z: 4 })]);
     const next = placeNewCard(board, fixtureCard('setting', { z: 0 }), { x: 48, y: 72 });
     expect(get(next, 'setting-1')).toMatchObject({ x: 48, y: 72, z: 5, tuckedUnder: null });
   });
@@ -57,7 +57,7 @@ describe('dropCard', () => {
   it('dropCard_onEmptyCanvas_movesRootWithStack', () => {
     const next = dropCard(
       fixtureBoard(fixtureStack(0, 0)),
-      'character-1',
+      'role-1',
       { x: 900, y: 900 },
       {
         x: 800,
@@ -82,74 +82,74 @@ describe('dropCard', () => {
 
   it('dropCard_onCard_tucks', () => {
     const board = fixtureBoard([
-      fixtureCard('character', { x: 0, y: 0 }),
-      fixtureCard('motivation', { x: 600, y: 0, z: 2 }),
+      fixtureCard('role', { x: 0, y: 0 }),
+      fixtureCard('goal', { x: 600, y: 0, z: 2 }),
     ]);
-    const next = dropCard(board, 'motivation-1', { x: 100, y: 100 }, { x: 20, y: 20 });
-    expect(get(next, 'motivation-1')).toMatchObject({ tuckedUnder: 'character-1', x: 0, y: 59 });
+    const next = dropCard(board, 'goal-1', { x: 100, y: 100 }, { x: 20, y: 20 });
+    expect(get(next, 'goal-1')).toMatchObject({ tuckedUnder: 'role-1', x: 0, y: 59 });
   });
 
-  it('dropCard_secondDescriptionOnCombinedEdge_goesOnTop', () => {
+  it('dropCard_secondModifierOnCombinedEdge_goesOnTop', () => {
     const board = fixtureBoard([
-      combinedCard('character', { x: 0, y: 0 }),
-      secondDescription({ x: 600, y: 0, z: 2 }),
+      combinedCard('role', { x: 0, y: 0 }),
+      secondModifier({ x: 600, y: 0, z: 2 }),
     ]);
-    const next = dropCard(board, 'description-2', { x: 125, y: 220 }, { x: 20, y: 150 });
-    expect(get(next, 'description-2')).toMatchObject({ tuckedUnder: null, x: 0, y: 0 });
-    expect(get(next, 'character-1')).toMatchObject({ tuckedUnder: 'description-2', y: 59 });
-    expect(isCombined(get(next, 'character-1'))).toBe(true);
+    const next = dropCard(board, 'modifier-2', { x: 125, y: 220 }, { x: 20, y: 150 });
+    expect(get(next, 'modifier-2')).toMatchObject({ tuckedUnder: null, x: 0, y: 0 });
+    expect(get(next, 'role-1')).toMatchObject({ tuckedUnder: 'modifier-2', y: 59 });
+    expect(isCombined(get(next, 'role-1'))).toBe(true);
   });
 });
 
 describe('combineOnto', () => {
-  it('combineOnto_description_absorbsAndDeletesDescription', () => {
+  it('combineOnto_description_absorbsAndDeletesModifier', () => {
     const board = fixtureBoard([
-      fixtureCard('character'),
-      fixtureCard('description', {
+      fixtureCard('role'),
+      fixtureCard('modifier', {
         x: 600,
         rings: [
           { cues: [{ text: 'a' }, { text: 'b' }, { text: 'c' }, { text: 'd' }], activeIndex: 2 },
         ],
       }),
     ]);
-    const next = combineOnto(board, 'description-1', 'character-1');
-    expect(find(next, 'description-1')).toBeUndefined();
-    expect(isCombined(get(next, 'character-1'))).toBe(true);
-    expect(activeText(get(next, 'character-1'))).toBe('c navigator');
+    const next = combineOnto(board, 'modifier-1', 'role-1');
+    expect(find(next, 'modifier-1')).toBeUndefined();
+    expect(isCombined(get(next, 'role-1'))).toBe(true);
+    expect(activeText(get(next, 'role-1'))).toBe('c navigator');
   });
 
-  it('combineOnto_tuckedDescription_closesOldStack', () => {
+  it('combineOnto_tuckedModifier_closesOldStack', () => {
     const board = fixtureBoard([
       ...fixtureStack(0, 0),
-      fixtureCard('description', { x: 0, y: 177, z: 4, tuckedUnder: 'conflict-1' }),
+      fixtureCard('modifier', { x: 0, y: 177, z: 4, tuckedUnder: 'conflict-1' }),
       fixtureCard('setting', { x: 600, y: 0, z: 5 }),
     ]);
-    const next = combineOnto(board, 'description-1', 'setting-1');
-    expect(stackOrder(next, 'character-1')).toHaveLength(3);
+    const next = combineOnto(board, 'modifier-1', 'setting-1');
+    expect(stackOrder(next, 'role-1')).toHaveLength(3);
     expect(isCombined(get(next, 'setting-1'))).toBe(true);
     expectStacksConsistent(next);
   });
 
   it('combineOnto_descriptionWithTuckedCards_reTucksThemUnderTarget', () => {
     const board = fixtureBoard([
-      fixtureCard('description', { x: 0, y: 0, z: 1 }),
-      fixtureCard('motivation', { x: 0, y: 59, z: 2, tuckedUnder: 'description-1' }),
-      fixtureCard('character', { x: 600, y: 0, z: 3 }),
+      fixtureCard('modifier', { x: 0, y: 0, z: 1 }),
+      fixtureCard('goal', { x: 0, y: 59, z: 2, tuckedUnder: 'modifier-1' }),
+      fixtureCard('role', { x: 600, y: 0, z: 3 }),
     ]);
-    const next = combineOnto(board, 'description-1', 'character-1');
-    expect(get(next, 'motivation-1')).toMatchObject({ tuckedUnder: 'character-1', x: 600, y: 59 });
+    const next = combineOnto(board, 'modifier-1', 'role-1');
+    expect(get(next, 'goal-1')).toMatchObject({ tuckedUnder: 'role-1', x: 600, y: 59 });
   });
 });
 
 describe('swapOnto', () => {
-  it('swapOnto_combinedTarget_exchangesActiveCuesAndPlacesDescriptionBeside', () => {
-    const target = combinedCard('character', { x: 0, y: 0, z: 1 });
+  it('swapOnto_combinedTarget_exchangesActiveCuesAndPlacesModifierBeside', () => {
+    const target = combinedCard('role', { x: 0, y: 0, z: 1 });
     target.rings[1] = { ...target.rings[1]!, activeIndex: 1 };
-    const second = secondDescription({
+    const second = secondModifier({
       x: 0,
       y: 59,
       z: 2,
-      tuckedUnder: 'character-1',
+      tuckedUnder: 'role-1',
       rings: [
         {
           cues: [{ text: 'devout' }, { text: 'rogue' }, { text: 'cloned' }, { text: 'hollow' }],
@@ -157,83 +157,80 @@ describe('swapOnto', () => {
         },
       ],
     });
-    const next = swapOnto(fixtureBoard([target, second]), 'description-2', 'character-1');
-    const character = get(next, 'character-1');
-    const description = get(next, 'description-2');
-    expect(activeText(character)).toBe('hollow navigator');
-    expect(activeText(description)).toBe('orbital');
-    expect(description.tuckedUnder).toBeNull();
-    expect(overlaps(character, description)).toBe(false);
-    expect(description.z).toBeGreaterThan(character.z);
+    const next = swapOnto(fixtureBoard([target, second]), 'modifier-2', 'role-1');
+    const role = get(next, 'role-1');
+    const modifier = get(next, 'modifier-2');
+    expect(activeText(role)).toBe('hollow navigator');
+    expect(activeText(modifier)).toBe('orbital');
+    expect(modifier.tuckedUnder).toBeNull();
+    expect(overlaps(role, modifier)).toBe(false);
+    expect(modifier.z).toBeGreaterThan(role.z);
   });
 });
 
 describe('splitCard', () => {
-  it('splitCard_combined_restoresDescriptionAdjectivesAndActiveCue', () => {
-    const card = combinedCard('character', { x: 0, y: 0 });
+  it('splitCard_combined_restoresModifierAdjectivesAndActiveCue', () => {
+    const card = combinedCard('role', { x: 0, y: 0 });
     card.rings[1] = { ...card.rings[1]!, activeIndex: 2 };
-    const board = fixtureBoard([
-      card,
-      fixtureCard('motivation', { y: 59, z: 2, tuckedUnder: 'character-1' }),
-    ]);
-    const next = splitCard(board, 'character-1', () => 'new-description');
-    const description = get(next, 'new-description');
-    expect(description.rings).toEqual([card.rings[1]]);
-    expect(activeText(description)).toBe('clone');
-    expect(isCombined(get(next, 'character-1'))).toBe(false);
-    expect(get(next, 'motivation-1')).toMatchObject({ tuckedUnder: 'character-1', y: 59 });
-    expect(overlaps(get(next, 'character-1'), description)).toBe(false);
+    const board = fixtureBoard([card, fixtureCard('goal', { y: 59, z: 2, tuckedUnder: 'role-1' })]);
+    const next = splitCard(board, 'role-1', () => 'new-modifier');
+    const modifier = get(next, 'new-modifier');
+    expect(modifier.rings).toEqual([card.rings[1]]);
+    expect(activeText(modifier)).toBe('clone');
+    expect(isCombined(get(next, 'role-1'))).toBe(false);
+    expect(get(next, 'goal-1')).toMatchObject({ tuckedUnder: 'role-1', y: 59 });
+    expect(overlaps(get(next, 'role-1'), modifier)).toBe(false);
   });
 });
 
 describe('redrawCard', () => {
   it('redrawCard_combined_keepsIdPlaceTucksAndAdjectives', () => {
     const board = fixtureBoard([
-      combinedCard('character', { x: 48, y: 48 }),
-      fixtureCard('motivation', { x: 48, y: 104, z: 2, tuckedUnder: 'character-1' }),
+      combinedCard('role', { x: 48, y: 48 }),
+      fixtureCard('goal', { x: 48, y: 104, z: 2, tuckedUnder: 'role-1' }),
     ]);
-    const drawn = fixtureCard('character', {
+    const drawn = fixtureCard('role', {
       id: 'drawn',
       rings: [
         { cues: [{ text: 'w' }, { text: 'x' }, { text: 'y' }, { text: 'z' }], activeIndex: 0 },
       ],
     });
-    const adjectives = get(board, 'character-1').rings[1];
-    const next = redrawCard(board, 'character-1', drawn);
-    expect(get(next, 'character-1')).toMatchObject({
+    const adjectives = get(board, 'role-1').rings[1];
+    const next = redrawCard(board, 'role-1', drawn);
+    expect(get(next, 'role-1')).toMatchObject({
       x: 48,
       y: 48,
       z: 1,
       rings: [drawn.rings[0], adjectives],
     });
-    expect(get(next, 'motivation-1').tuckedUnder).toBe('character-1');
+    expect(get(next, 'goal-1').tuckedUnder).toBe('role-1');
   });
 
   it('redrawCard_otherType_throws', () => {
-    const board = fixtureBoard([fixtureCard('character')]);
-    expect(() => redrawCard(board, 'character-1', fixtureCard('setting'))).toThrow();
+    const board = fixtureBoard([fixtureCard('role')]);
+    expect(() => redrawCard(board, 'role-1', fixtureCard('setting'))).toThrow();
   });
 });
 
 describe('discardCard', () => {
   it('discardCard_rootWithChildren_reRootsChildren', () => {
-    const next = discardCard(fixtureBoard(fixtureStack(0, 0)), 'character-1');
-    expect(find(next, 'character-1')).toBeUndefined();
-    expect(get(next, 'motivation-1')).toMatchObject({ tuckedUnder: null, y: 59 });
+    const next = discardCard(fixtureBoard(fixtureStack(0, 0)), 'role-1');
+    expect(find(next, 'role-1')).toBeUndefined();
+    expect(get(next, 'goal-1')).toMatchObject({ tuckedUnder: null, y: 59 });
     expectStacksConsistent(next);
   });
 
   it('discardCard_lastCard_removesOnlyIt', () => {
     const next = discardCard(fixtureBoard(fixtureStack(0, 0)), 'conflict-1');
-    expect(next.cards.map((c) => c.id)).toEqual(['character-1', 'motivation-1']);
+    expect(next.cards.map((c) => c.id)).toEqual(['role-1', 'goal-1']);
   });
 });
 
 describe('turnCardOnBoard', () => {
   it('turnCardOnBoard_cw_turnsOnlyThatCard', () => {
-    const board = fixtureBoard([fixtureCard('character'), fixtureCard('setting', { x: 600 })]);
-    const next = turnCardOnBoard(board, 'character-1', 'outer', 'cw');
-    expect(activeText(get(next, 'character-1'))).toBe('captain');
+    const board = fixtureBoard([fixtureCard('role'), fixtureCard('setting', { x: 600 })]);
+    const next = turnCardOnBoard(board, 'role-1', 'outer', 'cw');
+    expect(activeText(get(next, 'role-1'))).toBe('captain');
     expect(get(next, 'setting-1')).toBe(get(board, 'setting-1'));
   });
 });
@@ -250,13 +247,13 @@ describe('Milestone 2 sequence', () => {
     const center = (id: string) => ({ x: get(board(), id).x + half, y: get(board(), id).y + half });
     const at = (id: string) => ({ x: get(board(), id).x, y: get(board(), id).y });
 
-    // Draw a Character, Motivation, Conflict and 2 Descriptions in open spots.
+    // Draw a Player Role, Goal, Conflict and 2 Modifiers in open spots.
     const drawn = [
-      fixtureCard('character'),
-      fixtureCard('motivation'),
+      fixtureCard('role'),
+      fixtureCard('goal'),
       fixtureCard('conflict'),
-      fixtureCard('description'),
-      secondDescription(),
+      fixtureCard('modifier'),
+      secondModifier(),
     ];
     drawn.forEach((card, i) => {
       changeBoard((b) => placeNewCard(b, card, { x: i * 480, y: 0 }));
@@ -266,16 +263,12 @@ describe('Milestone 2 sequence', () => {
 
     const steps: [string, () => void][] = [
       [
-        'tuck motivation',
-        () =>
-          changeBoard((b) =>
-            dropCard(b, 'motivation-1', center('character-1'), at('motivation-1')),
-          ),
+        'tuck goal',
+        () => changeBoard((b) => dropCard(b, 'goal-1', center('role-1'), at('goal-1'))),
       ],
       [
         'tuck conflict',
-        () =>
-          changeBoard((b) => dropCard(b, 'conflict-1', center('motivation-1'), at('conflict-1'))),
+        () => changeBoard((b) => dropCard(b, 'conflict-1', center('goal-1'), at('conflict-1'))),
       ],
       [
         'combine',
@@ -283,21 +276,18 @@ describe('Milestone 2 sequence', () => {
           changeBoard((b) =>
             dropCard(
               b,
-              'description-1',
-              { x: at('character-1').x + 10, y: at('character-1').y + 10 },
-              at('description-1'),
+              'modifier-1',
+              { x: at('role-1').x + 10, y: at('role-1').y + 10 },
+              at('modifier-1'),
             ),
           ),
       ],
       [
         'swap',
-        () =>
-          changeBoard((b) =>
-            dropCard(b, 'description-2', center('character-1'), at('description-2')),
-          ),
+        () => changeBoard((b) => dropCard(b, 'modifier-2', center('role-1'), at('modifier-2'))),
       ],
-      ['split', () => changeBoard((b) => splitCard(b, 'character-1'))],
-      ['discard motivation', () => changeBoard((b) => discardCard(b, 'motivation-1'))],
+      ['split', () => changeBoard((b) => splitCard(b, 'role-1'))],
+      ['discard goal', () => changeBoard((b) => discardCard(b, 'goal-1'))],
     ];
     for (const [, step] of steps) {
       step();
@@ -305,13 +295,13 @@ describe('Milestone 2 sequence', () => {
     }
 
     const b = board();
-    expect(find(b, 'description-1')).toBeUndefined();
-    expect(get(b, 'description-2').rings[0]!.cues[0]!.text).toBe('exiled');
-    expect(isCombined(get(b, 'character-1'))).toBe(false);
-    expect(b.cards.filter((c) => c.type === 'description')).toHaveLength(2);
+    expect(find(b, 'modifier-1')).toBeUndefined();
+    expect(get(b, 'modifier-2').rings[0]!.cues[0]!.text).toBe('exiled');
+    expect(isCombined(get(b, 'role-1'))).toBe(false);
+    expect(b.cards.filter((c) => c.type === 'modifier')).toHaveLength(2);
     expect(get(b, 'conflict-1')).toMatchObject({
-      tuckedUnder: 'character-1',
-      y: get(b, 'character-1').y + 59,
+      tuckedUnder: 'role-1',
+      y: get(b, 'role-1').y + 59,
     });
   });
 });
@@ -319,16 +309,16 @@ describe('Milestone 2 sequence', () => {
 describe('chooseConnector', () => {
   it('chooseConnector_word_savedOnCard', () => {
     const board = fixtureBoard([
-      fixtureCard('character'),
-      fixtureCard('motivation', { y: 59, z: 2, tuckedUnder: 'character-1' }),
+      fixtureCard('role'),
+      fixtureCard('goal', { y: 59, z: 2, tuckedUnder: 'role-1' }),
     ]);
-    const next = chooseConnector(board, 'motivation-1', 'refuses to');
-    expect(get(next, 'motivation-1').connector).toBe('refuses to');
-    expect(get(board, 'motivation-1').connector).toBeUndefined();
+    const next = chooseConnector(board, 'goal-1', 'refuses to');
+    expect(get(next, 'goal-1').connector).toBe('refuses to');
+    expect(get(board, 'goal-1').connector).toBeUndefined();
   });
 
   it('chooseConnector_sameWord_sameBoard', () => {
-    const board = fixtureBoard([fixtureCard('motivation', { connector: 'must' })]);
-    expect(chooseConnector(board, 'motivation-1', 'must')).toBe(board);
+    const board = fixtureBoard([fixtureCard('goal', { connector: 'must' })]);
+    expect(chooseConnector(board, 'goal-1', 'must')).toBe(board);
   });
 });

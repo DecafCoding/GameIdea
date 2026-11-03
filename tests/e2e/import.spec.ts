@@ -12,7 +12,7 @@ import {
   fixtureCard,
   fixtureNote,
   fixtureStack,
-  secondDescription,
+  secondModifier,
 } from '@/test/fixtures/boards';
 import { canvasCards, openBoard, storedBoards } from './board-helpers';
 import { exportFile } from './export-helpers';
@@ -23,21 +23,21 @@ test.beforeEach(async ({ page }) => {
 
 const BAD_IMPORT_TEXT = 'This file is not a GameIdea board file. Nothing changed.';
 
-/** A combined Character stack with a Description tucked under it, a Setting and 2 notes. */
+/** A combined Player Role stack with a Modifier tucked under it, a Setting and 2 notes. */
 function fullBoard(): Board {
-  const [character, motivation, conflict] = fixtureStack(200, 200);
-  const combined = combinedCard('character', {
-    id: character!.id,
-    x: character!.x,
-    y: character!.y,
-    z: character!.z,
+  const [role, goal, conflict] = fixtureStack(200, 200);
+  const combined = combinedCard('role', {
+    id: role!.id,
+    x: role!.x,
+    y: role!.y,
+    z: role!.z,
   });
-  const devout = secondDescription({ x: 200, y: 200 + 59, z: 4, tuckedUnder: combined.id });
-  // The Description sorts first among the children, so the others sit one step lower.
+  const devout = secondModifier({ x: 200, y: 200 + 59, z: 4, tuckedUnder: combined.id });
+  // The Modifier sorts first among the children, so the others sit one step lower.
   const stack = [
     combined,
     devout,
-    { ...motivation!, y: 200 + 2 * 59 },
+    { ...goal!, y: 200 + 2 * 59 },
     { ...conflict!, y: 200 + 3 * 59 },
   ];
   return {
@@ -103,7 +103,7 @@ test('import_exportedBoardFile_roundTripsAsNewBoard', async ({ page }) => {
 
 test('import_freeName_keepsName', async ({ page }) => {
   await page.goto('/#/');
-  const board = { ...fixtureBoard([fixtureCard('character')]), name: 'Drift' };
+  const board = { ...fixtureBoard([fixtureCard('role')]), name: 'Drift' };
   await importThrough(page, importButton(page), {
     name: 'Drift.gameidea.json',
     buffer: Buffer.from(JSON.stringify(board)),

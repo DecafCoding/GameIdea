@@ -22,7 +22,7 @@ import {
   fixtureBoard,
   fixtureCard,
   fixtureNote,
-  secondDescription,
+  secondModifier,
 } from '@/test/fixtures/boards';
 
 const store = () => useBoardStore.getState();
@@ -45,9 +45,9 @@ function expectUndoable(start: Board, recipe: (board: Board) => Board) {
   expect(content(store().board)).toEqual(after);
 }
 
-const character = () => fixtureCard('character', { x: 0, y: 0 });
-const description = () => fixtureCard('description', { x: 600, y: 0, z: 2 });
-const withNote = () => fixtureBoard([character()], [fixtureNote({ x: 0, y: 400 })]);
+const role = () => fixtureCard('role', { x: 0, y: 0 });
+const modifier = () => fixtureCard('modifier', { x: 600, y: 0, z: 2 });
+const withNote = () => fixtureBoard([role()], [fixtureNote({ x: 0, y: 400 })]);
 
 beforeEach(() => {
   store().openBoard(fixtureBoard([]));
@@ -55,61 +55,59 @@ beforeEach(() => {
 
 describe('undo', () => {
   it('undo_draw_restoresBoard', () => {
-    expectUndoable(fixtureBoard([character()]), (b) =>
+    expectUndoable(fixtureBoard([role()]), (b) =>
       placeNewCard(b, fixtureCard('setting', { id: 'setting-new' }), { x: 400, y: 0 }),
     );
   });
 
   it('undo_turn_restoresBoard', () => {
-    expectUndoable(fixtureBoard([character()]), (b) =>
-      turnCardOnBoard(b, 'character-1', 'outer', 'cw'),
-    );
+    expectUndoable(fixtureBoard([role()]), (b) => turnCardOnBoard(b, 'role-1', 'outer', 'cw'));
   });
 
   it('undo_move_restoresBoard', () => {
-    expectUndoable(fixtureBoard([character()]), (b) =>
-      dropCard(b, 'character-1', { x: 900, y: 900 }, { x: 800, y: 800 }),
+    expectUndoable(fixtureBoard([role()]), (b) =>
+      dropCard(b, 'role-1', { x: 900, y: 900 }, { x: 800, y: 800 }),
     );
   });
 
   it('undo_tuck_restoresBoard', () => {
-    const start = fixtureBoard([character(), fixtureCard('motivation', { x: 600, y: 0, z: 2 })]);
-    expectUndoable(start, (b) => dropCard(b, 'motivation-1', { x: 100, y: 100 }, { x: 20, y: 20 }));
+    const start = fixtureBoard([role(), fixtureCard('goal', { x: 600, y: 0, z: 2 })]);
+    expectUndoable(start, (b) => dropCard(b, 'goal-1', { x: 100, y: 100 }, { x: 20, y: 20 }));
   });
 
   it('undo_combine_restoresBoard', () => {
-    expectUndoable(fixtureBoard([character(), description()]), (b) =>
-      combineOnto(b, 'description-1', 'character-1'),
+    expectUndoable(fixtureBoard([role(), modifier()]), (b) =>
+      combineOnto(b, 'modifier-1', 'role-1'),
     );
   });
 
   it('undo_swap_restoresBoard', () => {
-    const start = fixtureBoard([combinedCard('character'), secondDescription({ x: 600, z: 2 })]);
-    expectUndoable(start, (b) => swapOnto(b, 'description-2', 'character-1'));
+    const start = fixtureBoard([combinedCard('role'), secondModifier({ x: 600, z: 2 })]);
+    expectUndoable(start, (b) => swapOnto(b, 'modifier-2', 'role-1'));
   });
 
   it('undo_split_restoresBoard', () => {
-    expectUndoable(fixtureBoard([combinedCard('character')]), (b) =>
-      splitCard(b, 'character-1', () => 'description-split'),
+    expectUndoable(fixtureBoard([combinedCard('role')]), (b) =>
+      splitCard(b, 'role-1', () => 'modifier-split'),
     );
   });
 
   it('undo_redraw_restoresBoard', () => {
-    const drawn = fixtureCard('character', {
+    const drawn = fixtureCard('role', {
       id: 'drawn',
       rings: [
         { cues: [{ text: 'a' }, { text: 'b' }, { text: 'c' }, { text: 'd' }], activeIndex: 0 },
       ],
     });
-    expectUndoable(fixtureBoard([character()]), (b) => redrawCard(b, 'character-1', drawn));
+    expectUndoable(fixtureBoard([role()]), (b) => redrawCard(b, 'role-1', drawn));
   });
 
   it('undo_discard_restoresBoard', () => {
-    expectUndoable(fixtureBoard([character()]), (b) => discardCard(b, 'character-1'));
+    expectUndoable(fixtureBoard([role()]), (b) => discardCard(b, 'role-1'));
   });
 
   it('undo_addNote_restoresBoard', () => {
-    expectUndoable(fixtureBoard([character()]), (b) => addNote(b, { x: 0, y: 400 }, 'note-new'));
+    expectUndoable(fixtureBoard([role()]), (b) => addNote(b, { x: 0, y: 400 }, 'note-new'));
   });
 
   it('undo_editNoteText_restoresBoard', () => {
@@ -131,6 +129,6 @@ describe('undo', () => {
   });
 
   it('undo_rename_restoresBoard', () => {
-    expectUndoable(fixtureBoard([character()]), (b) => ({ ...b, name: 'Salvage Run' }));
+    expectUndoable(fixtureBoard([role()]), (b) => ({ ...b, name: 'Salvage Run' }));
   });
 });

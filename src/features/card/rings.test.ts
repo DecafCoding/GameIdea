@@ -26,13 +26,13 @@ const ring4 = { cues: NOUNS.map((text) => ({ text })), activeIndex: 0 };
 
 describe('turnRing', () => {
   it('turnRing_fourCuesCw_bringsRightCueToBottom', () => {
-    const right = edgeCues(card('character', [{ texts: NOUNS }]))[3]!.noun.text;
+    const right = edgeCues(card('role', [{ texts: NOUNS }]))[3]!.noun.text;
     const turned = turnRing(ring4, 'cw');
     expect(ring4.cues[turned.activeIndex]!.text).toBe(right);
   });
 
   it('turnRing_fourCuesCcw_bringsLeftCueToBottom', () => {
-    const left = edgeCues(card('character', [{ texts: NOUNS }]))[1]!.noun.text;
+    const left = edgeCues(card('role', [{ texts: NOUNS }]))[1]!.noun.text;
     const turned = turnRing(ring4, 'ccw');
     expect(ring4.cues[turned.activeIndex]!.text).toBe(left);
   });
@@ -56,7 +56,7 @@ describe('edgeCues', () => {
   it('edgeCues_allActivePairs_matchFormula', () => {
     for (let a0 = 0; a0 < 4; a0++) {
       for (let a1 = 0; a1 < 4; a1++) {
-        const c = card('character', [
+        const c = card('role', [
           { texts: NOUNS, activeIndex: a0 },
           { texts: ADJS, activeIndex: a1 },
         ]);
@@ -72,7 +72,7 @@ describe('edgeCues', () => {
 
   it('edgeCues_twoCueCard_bottomThenTop', () => {
     const edges = edgeCues(
-      card('motivation', [{ texts: ['find home', 'repay a debt'], activeIndex: 1 }]),
+      card('goal', [{ texts: ['find home', 'repay a debt'], activeIndex: 1 }]),
     );
     expect(edges.map((e) => e.noun.text)).toEqual(['repay a debt', 'find home']);
   });
@@ -80,81 +80,81 @@ describe('edgeCues', () => {
 
 describe('turnCard', () => {
   it('turnCard_combinedInner_turnsOnlyAdjectives', () => {
-    const c = card('character', [{ texts: NOUNS }, { texts: ADJS }]);
+    const c = card('role', [{ texts: NOUNS }, { texts: ADJS }]);
     const turned = turnCard(c, 'inner', 'cw');
     expect(turned.rings[0]!.activeIndex).toBe(0);
     expect(turned.rings[1]!.activeIndex).toBe(3);
   });
 
   it('turnCard_oneRingInner_turnsTheOnlyRing', () => {
-    const turned = turnCard(card('character', [{ texts: NOUNS }]), 'inner', 'ccw');
+    const turned = turnCard(card('role', [{ texts: NOUNS }]), 'inner', 'ccw');
     expect(turned.rings[0]!.activeIndex).toBe(1);
   });
 });
 
 describe('combine', () => {
-  it('combine_characterAndDescription_addsInnerRingKeepingActiveIndex', () => {
-    const target = card('character', [{ texts: NOUNS }]);
-    const description = card('description', [{ texts: ADJS, activeIndex: 2 }]);
-    const combined = combine(target, description);
+  it('combine_characterAndModifier_addsInnerRingKeepingActiveIndex', () => {
+    const target = card('role', [{ texts: NOUNS }]);
+    const modifier = card('modifier', [{ texts: ADJS, activeIndex: 2 }]);
+    const combined = combine(target, modifier);
     expect(combined.rings).toHaveLength(2);
-    expect(combined.rings[1]).toEqual(description.rings[0]);
+    expect(combined.rings[1]).toEqual(modifier.rings[0]);
     expect(combined.id).toBe(target.id);
   });
 
-  it('combine_settingAndDescription_addsInnerRing', () => {
+  it('combine_settingAndModifier_addsInnerRing', () => {
     const combined = combine(
       card('setting', [{ texts: NOUNS }]),
-      card('description', [{ texts: ADJS }]),
+      card('modifier', [{ texts: ADJS }]),
     );
     expect(combined.rings).toHaveLength(2);
   });
 
   it('combine_alreadyCombined_throws', () => {
-    const target = card('character', [{ texts: NOUNS }, { texts: ADJS }]);
-    expect(() => combine(target, card('description', [{ texts: ADJS }]))).toThrow();
+    const target = card('role', [{ texts: NOUNS }, { texts: ADJS }]);
+    expect(() => combine(target, card('modifier', [{ texts: ADJS }]))).toThrow();
   });
 
   it('combine_motivationTarget_throws', () => {
-    const target = card('motivation', [{ texts: ['a', 'b'] }]);
-    expect(() => combine(target, card('description', [{ texts: ADJS }]))).toThrow();
+    const target = card('goal', [{ texts: ['a', 'b'] }]);
+    expect(() => combine(target, card('modifier', [{ texts: ADJS }]))).toThrow();
   });
 
   it('combine_any_doesNotMutateInputs', () => {
-    const target = card('character', [{ texts: NOUNS }]);
-    const description = card('description', [{ texts: ADJS }]);
-    const before = structuredClone([target, description]);
-    const combined = combine(target, description);
+    const target = card('role', [{ texts: NOUNS }]);
+    const modifier = card('modifier', [{ texts: ADJS }]);
+    const before = structuredClone([target, modifier]);
+    const combined = combine(target, modifier);
     combined.rings[1]!.cues.push({ text: 'extra' });
-    expect([target, description]).toEqual(before);
+    expect([target, modifier]).toEqual(before);
   });
 });
 
 describe('activeText', () => {
   it('activeText_combined_returnsAdjectiveSpaceNoun', () => {
-    const c = card('character', [{ texts: NOUNS }, { texts: ADJS }]);
+    const c = card('role', [{ texts: NOUNS }, { texts: ADJS }]);
     expect(activeText(c)).toBe('exiled navigator');
-    expect(activeText(card('character', [{ texts: NOUNS }]))).toBe('navigator');
+    expect(activeText(card('role', [{ texts: NOUNS }]))).toBe('navigator');
   });
 });
 
 describe('swap', () => {
   const DEVOUT = ['devout', 'rogue', 'cloned', 'hollow'];
 
-  it('swap_combinedAndDescription_exchangesRingsWithActiveCues', () => {
-    const target = card('character', [{ texts: NOUNS }, { texts: ADJS, activeIndex: 2 }]);
-    const description = card('description', [{ texts: DEVOUT, activeIndex: 1 }]);
-    const result = swap(target, description);
+  it('swap_combinedAndModifier_exchangesRingsWithActiveCues', () => {
+    const target = card('role', [{ texts: NOUNS }, { texts: ADJS, activeIndex: 2 }]);
+    const modifier = card('modifier', [{ texts: DEVOUT, activeIndex: 1 }]);
+    const result = swap(target, modifier);
     expect(result.target.rings[0]).toEqual(target.rings[0]);
-    expect(result.target.rings[1]).toEqual(description.rings[0]);
-    expect(result.description.rings).toEqual([target.rings[1]]);
+    expect(result.target.rings[1]).toEqual(modifier.rings[0]);
+    expect(result.modifier.rings).toEqual([target.rings[1]]);
     expect(activeText(result.target)).toBe('rogue navigator');
-    expect(result.target.rings[1]!.cues).not.toBe(description.rings[0]!.cues);
+    expect(result.target.rings[1]!.cues).not.toBe(modifier.rings[0]!.cues);
   });
 
   it('swap_uncombinedTarget_throws', () => {
-    const description = card('description', [{ texts: DEVOUT }]);
-    expect(() => swap(card('character', [{ texts: NOUNS }]), description)).toThrow();
+    const modifier = card('modifier', [{ texts: DEVOUT }]);
+    expect(() => swap(card('role', [{ texts: NOUNS }]), modifier)).toThrow();
   });
 });
 
@@ -168,6 +168,6 @@ describe('split', () => {
   });
 
   it('split_uncombined_throws', () => {
-    expect(() => split(card('character', [{ texts: NOUNS }]))).toThrow();
+    expect(() => split(card('role', [{ texts: NOUNS }]))).toThrow();
   });
 });

@@ -69,7 +69,7 @@ test.describe('200-card frame rate', { tag: '@timing' }, () => {
   });
 
   test('perf_drag200Cards_atLeast50Fps', async ({ page }) => {
-    const root = await boxOf(cardById(page, 'character-stack-1'));
+    const root = await boxOf(cardById(page, 'role-stack-1'));
     const fps = await pacedDrag(page, { x: root.x + 10, y: root.y + 10 }, 200, -150);
     // The stack moves with its top card during the drag.
     expect((await boxOf(cardById(page, 'conflict-stack-1'))).x - root.x).toBeCloseTo(200, 0);

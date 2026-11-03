@@ -37,7 +37,7 @@
 }
 
 .split {
-  background: color-mix(in srgb, var(--type-description) 25%, transparent);
+  background: color-mix(in srgb, var(--type-modifier) 25%, transparent);
 }
 
 .discard {

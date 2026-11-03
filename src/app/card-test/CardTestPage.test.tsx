@@ -50,26 +50,26 @@ describe('CardTestPage', () => {
   it('CardTestPage_poolsReady_showsFiveEnabledDeckButtons', async () => {
     await renderReady();
     expect(deckButtons().map((b) => b.textContent)).toEqual([
-      'Draw A Character',
-      'Draw A Motivation',
-      'Draw A Setting',
+      'Draw A Player Role',
+      'Draw A Goal',
       'Draw A Conflict',
-      'Draw A Description',
+      'Draw A Modifier',
+      'Draw A Setting',
     ]);
     for (const button of deckButtons()) expect(button).toHaveProperty('disabled', false);
   });
 
-  it('CardTestPage_drawCharacter_addsCharacterCard', async () => {
+  it('CardTestPage_drawRole_addsRoleCard', async () => {
     await renderReady();
-    draw('Draw A Character');
+    draw('Draw A Player Role');
     expect(cards()).toHaveLength(1);
-    expect(cards()[0]!.getAttribute('data-type')).toBe('character');
+    expect(cards()[0]!.getAttribute('data-type')).toBe('role');
   });
 
-  it('CardTestPage_combineWithCharacterAndDescription_leavesOneCombinedCard', async () => {
+  it('CardTestPage_combineWithRoleAndModifier_leavesOneCombinedCard', async () => {
     await renderReady();
-    draw('Draw A Character');
-    draw('Draw A Description');
+    draw('Draw A Player Role');
+    draw('Draw A Modifier');
     expect(cards()).toHaveLength(2);
     fireEvent.click(screen.getByRole('button', { name: 'Combine' }));
     expect(cards()).toHaveLength(1);
@@ -77,9 +77,9 @@ describe('CardTestPage', () => {
     expect(screen.getByTestId('active-cue').textContent).toMatch(/^\S+ .+$/);
   });
 
-  it('CardTestPage_noDescription_combineDisabled', async () => {
+  it('CardTestPage_noModifier_combineDisabled', async () => {
     await renderReady();
-    draw('Draw A Character');
+    draw('Draw A Player Role');
     expect(screen.getByRole('button', { name: 'Combine' })).toHaveProperty('disabled', true);
   });
 
@@ -105,7 +105,7 @@ describe('CardTestPage', () => {
 
   it('CardTestPage_rKeyOverHoveredCard_turnsItsRing', async () => {
     await renderReady();
-    draw('Draw A Character');
+    draw('Draw A Player Role');
     const card = cards()[0]!;
     const before = screen.getByTestId('active-cue').textContent;
     const right = card.querySelector('[data-edge="3"]')!.textContent;

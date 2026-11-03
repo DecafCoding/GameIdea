@@ -34,7 +34,7 @@ function mixedBoard(): Board {
 }
 
 /** A board whose first card is replaced with the given overrides. */
-function withCard(overrides: Partial<Card>, base: Card = fixtureCard('character')): unknown {
+function withCard(overrides: Partial<Card>, base: Card = fixtureCard('role')): unknown {
   return fixtureBoard([{ ...base, ...overrides }]);
 }
 
@@ -50,15 +50,15 @@ describe('boardSchema', () => {
   });
 
   it('boardSchema_unknownKeys_stripped', () => {
-    const board = fixtureBoard([fixtureCard('motivation')]);
+    const board = fixtureBoard([fixtureCard('goal')]);
     const extra = { ...board, extra: 1, cards: [{ ...board.cards[0], glow: true }] };
     expect(boardSchema.parse(extra)).toEqual(board);
   });
 
   it('boardSchema_cardConnector_keptAndBlankRejected', () => {
-    const board = fixtureBoard([fixtureCard('motivation', { connector: 'refuses to' })]);
+    const board = fixtureBoard([fixtureCard('goal', { connector: 'refuses to' })]);
     expect(boardSchema.parse(board).cards[0]?.connector).toBe('refuses to');
-    const blank = fixtureBoard([fixtureCard('motivation', { connector: '' })]);
+    const blank = fixtureBoard([fixtureCard('goal', { connector: '' })]);
     expect(boardSchema.safeParse(blank).success).toBe(false);
   });
 
@@ -87,13 +87,13 @@ describe('boardSchema', () => {
   it('boardSchema_repeatedGenreInDeck_rejected', () => {
     rejects({
       ...fixtureBoard([]),
-      genres: { ...everyDeck(GENRES), character: ['cyberpunk', 'cyberpunk'] },
+      genres: { ...everyDeck(GENRES), role: ['cyberpunk', 'cyberpunk'] },
     });
   });
 
   it('boardSchema_missingDeck_rejected', () => {
     const genres: Partial<DeckGenres> = everyDeck(GENRES);
-    delete genres.description;
+    delete genres.modifier;
     rejects({ ...fixtureBoard([]), genres });
   });
 
@@ -106,37 +106,37 @@ describe('boardSchema', () => {
   });
 
   it('boardSchema_characterThreeRings_rejected', () => {
-    const card = combinedCard('character');
+    const card = combinedCard('role');
     rejects(withCard({ rings: [...card.rings, card.rings[1]!] }, card));
   });
 
   it('boardSchema_motivationFourCues_rejected', () => {
-    const four = fixtureCard('character').rings[0]!.cues;
-    rejects(withCard({ rings: [{ cues: four, activeIndex: 0 }] }, fixtureCard('motivation')));
+    const four = fixtureCard('role').rings[0]!.cues;
+    rejects(withCard({ rings: [{ cues: four, activeIndex: 0 }] }, fixtureCard('goal')));
   });
 
   it('boardSchema_activeIndexOutOfRange_rejected', () => {
-    const card = fixtureCard('character');
+    const card = fixtureCard('role');
     rejects(withCard({ rings: [{ ...card.rings[0]!, activeIndex: 4 }] }, card));
   });
 
-  it('boardSchema_kindOnCharacter_rejected', () => {
-    const card = fixtureCard('character');
+  it('boardSchema_kindOnRole_rejected', () => {
+    const card = fixtureCard('role');
     const cues = card.rings[0]!.cues.map((cue) => ({ ...cue, kind: 'place' as const }));
     rejects(withCard({ rings: [{ cues, activeIndex: 0 }] }, card));
   });
 
   it('boardSchema_duplicateCardId_rejected', () => {
-    rejects(fixtureBoard([fixtureCard('character'), fixtureCard('character')]));
+    rejects(fixtureBoard([fixtureCard('role'), fixtureCard('role')]));
   });
 
   it('boardSchema_selfTuck_rejected', () => {
-    rejects(withCard({ tuckedUnder: 'character-1' }));
+    rejects(withCard({ tuckedUnder: 'role-1' }));
   });
 
   it('boardSchema_tuckCycle_rejected', () => {
-    const [character, motivation, conflict] = fixtureStack(0, 0);
-    rejects(fixtureBoard([{ ...character!, tuckedUnder: conflict!.id }, motivation!, conflict!]));
+    const [role, goal, conflict] = fixtureStack(0, 0);
+    rejects(fixtureBoard([{ ...role!, tuckedUnder: conflict!.id }, goal!, conflict!]));
   });
 
   it('boardSchema_danglingTuck_accepted', () => {

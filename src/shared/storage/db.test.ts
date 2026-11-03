@@ -14,7 +14,7 @@ import { DB_NAME, resetDbForTests } from './db';
 /** The fixture board as version 1 stored it: no genres, formatVersion 1. */
 function version1Board(): Record<string, unknown> {
   const board: Partial<Board> = {
-    ...fixtureBoard([fixtureCard('character')], [fixtureNote({ text: 'Old note.' })]),
+    ...fixtureBoard([fixtureCard('role')], [fixtureNote({ text: 'Old note.' })]),
     id: 'old-board',
     name: 'Old Board',
   };

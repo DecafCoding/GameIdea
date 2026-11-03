@@ -25,7 +25,7 @@ export async function openBoard(page: Page, board?: Board): Promise<void> {
     await page.waitForURL(/#\/board\//);
   }
   await expect(page.locator('main[aria-label="Board"]')).toBeVisible();
-  await expect(rail(page).getByRole('button', { name: 'Draw A Character' })).toBeEnabled();
+  await expect(rail(page).getByRole('button', { name: 'Draw A Player Role' })).toBeEnabled();
 }
 
 const GENRE_LABEL: Record<Genre, string> = {
@@ -36,11 +36,11 @@ const GENRE_LABEL: Record<Genre, string> = {
 };
 
 const DECK_LABEL: Record<CardType, string> = {
-  character: 'Character',
-  motivation: 'Motivation',
+  role: 'Player Role',
+  goal: 'Goal',
   setting: 'Setting',
   conflict: 'Conflict',
-  description: 'Description',
+  modifier: 'Modifier',
 };
 
 /** The open New Board dialog, on either step (the title changes per step). */

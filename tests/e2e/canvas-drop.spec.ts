@@ -9,7 +9,7 @@ import {
   fixtureBoard,
   fixtureCard,
   fixtureStack,
-  secondDescription,
+  secondModifier,
 } from '@/test/fixtures/boards';
 import type { Board } from '@/shared/model';
 import { boxOf, canvasCards, cardById, dragBy, dragTo, openBoard, typeAt } from './board-helpers';
@@ -42,27 +42,23 @@ async function expectBelow(page: Page, id: string, parentId: string) {
 const open = (page: Page, board: Board) => openBoard(page, board);
 
 test.describe('tuck', () => {
-  test('tuck_dropMotivationOnCharacter_sits59Below', async ({ page }) => {
+  test('tuck_dropGoalOnRole_sits59Below', async ({ page }) => {
     await open(
       page,
       fixtureBoard([
-        fixtureCard('character', { x: 96, y: 96 }),
-        fixtureCard('motivation', { x: 528, y: 96, z: 2 }),
+        fixtureCard('role', { x: 96, y: 96 }),
+        fixtureCard('goal', { x: 528, y: 96, z: 2 }),
       ]),
     );
-    await dragTo(
-      page,
-      cardById(page, 'motivation-1'),
-      await pointOn(page, 'character-1', 125, 125),
-    );
-    await expectBelow(page, 'motivation-1', 'character-1');
-    await expect(cardById(page, 'motivation-1')).toHaveAttribute('data-paper', 'under-1');
+    await dragTo(page, cardById(page, 'goal-1'), await pointOn(page, 'role-1', 125, 125));
+    await expectBelow(page, 'goal-1', 'role-1');
+    await expect(cardById(page, 'goal-1')).toHaveAttribute('data-paper', 'under-1');
   });
 
   test('tuck_tuckedCard_paintsUnderParent', async ({ page }) => {
     await open(page, fixtureBoard(fixtureStack(96, 96)));
-    const ids = ['character-1', 'motivation-1', 'conflict-1'];
-    const types = ['character', 'motivation', 'conflict'];
+    const ids = ['role-1', 'goal-1', 'conflict-1'];
+    const types = ['role', 'goal', 'conflict'];
     for (let i = 1; i < ids.length; i++) {
       const parent = await boxOf(cardById(page, ids[i - 1]!));
       const tucked = await boxOf(cardById(page, ids[i]!));
@@ -74,9 +70,9 @@ test.describe('tuck', () => {
 
   test('tuck_dragParent_stackMoves', async ({ page }) => {
     await open(page, fixtureBoard(fixtureStack(96, 96)));
-    const ids = ['character-1', 'motivation-1', 'conflict-1'];
+    const ids = ['role-1', 'goal-1', 'conflict-1'];
     const before = await Promise.all(ids.map((id) => boxOf(cardById(page, id))));
-    await dragBy(page, cardById(page, 'character-1'), 300, 60);
+    await dragBy(page, cardById(page, 'role-1'), 300, 60);
     await expect
       .poll(async () => (await boxOf(cardById(page, 'conflict-1'))).x - before[2]!.x)
       .toBeCloseTo(300, 0);
@@ -97,30 +93,30 @@ test.describe('tuck', () => {
     await expect(cardById(page, 'conflict-1')).toHaveAttribute('data-paper', 'top');
     // The old stack is untouched, and moving it leaves the untucked card behind.
     const conflict = await boxOf(cardById(page, 'conflict-1'));
-    await dragBy(page, cardById(page, 'character-1'), 0, 40);
+    await dragBy(page, cardById(page, 'role-1'), 0, 40);
     await expect
-      .poll(async () => (await boxOf(cardById(page, 'motivation-1'))).y)
-      .toBeCloseTo((await boxOf(cardById(page, 'character-1'))).y + 59, 0);
+      .poll(async () => (await boxOf(cardById(page, 'goal-1'))).y)
+      .toBeCloseTo((await boxOf(cardById(page, 'role-1'))).y + 59, 0);
     expect((await boxOf(cardById(page, 'conflict-1'))).y).toBeCloseTo(conflict.y, 0);
   });
 
-  test('tuck_dragMotivationNearCharacter_showsSlotHint', async ({ page }) => {
+  test('tuck_dragGoalNearRole_showsSlotHint', async ({ page }) => {
     await open(
       page,
       fixtureBoard([
-        fixtureCard('character', { x: 96, y: 96 }),
-        fixtureCard('motivation', { x: 528, y: 96, z: 2 }),
+        fixtureCard('role', { x: 96, y: 96 }),
+        fixtureCard('goal', { x: 528, y: 96, z: 2 }),
       ]),
     );
-    // Into the 72 px band under the Character's bottom edge.
-    const band = await pointOn(page, 'character-1', 125, 280);
-    await dragTo(page, cardById(page, 'motivation-1'), band, undefined, false);
+    // Into the 72 px band under the Player Role's bottom edge.
+    const band = await pointOn(page, 'role-1', 125, 280);
+    await dragTo(page, cardById(page, 'goal-1'), band, undefined, false);
     const slot = page.getByTestId('hint-slot');
     await expect(slot).toBeVisible();
-    await expect(slot).toHaveText('Motivation Goes Here');
+    await expect(slot).toHaveText('Goal Goes Here');
     await page.mouse.up();
     await expect(slot).toHaveCount(0);
-    await expectBelow(page, 'motivation-1', 'character-1');
+    await expectBelow(page, 'goal-1', 'role-1');
   });
 
   test('tuck_dropConflictOnSetting_tucksWithoutHint', async ({ page }) => {
@@ -145,32 +141,28 @@ test.describe('tuck', () => {
 });
 
 test.describe('combine', () => {
-  const pair = (type: 'character' | 'setting') =>
+  const pair = (type: 'role' | 'setting') =>
     fixtureBoard([
       fixtureCard(type, { x: 96, y: 96 }),
-      fixtureCard('description', { x: 528, y: 96, z: 2 }),
+      fixtureCard('modifier', { x: 528, y: 96, z: 2 }),
     ]);
 
-  test('combine_firstDropAnywhere_combinesAndRemovesDescription', async ({ page }) => {
-    await open(page, pair('character'));
-    await dragTo(
-      page,
-      cardById(page, 'description-1'),
-      await pointOn(page, 'character-1', 20, 185),
-    );
-    await expect(cardById(page, 'description-1')).toHaveCount(0);
-    const character = cardById(page, 'character-1');
-    await expect(character.getByTestId('combined-disc')).toBeVisible();
-    await expect(character.getByTestId('active-cue')).toHaveText('exiled navigator');
+  test('combine_firstDropAnywhere_combinesAndRemovesModifier', async ({ page }) => {
+    await open(page, pair('role'));
+    await dragTo(page, cardById(page, 'modifier-1'), await pointOn(page, 'role-1', 20, 185));
+    await expect(cardById(page, 'modifier-1')).toHaveCount(0);
+    const role = cardById(page, 'role-1');
+    await expect(role.getByTestId('combined-disc')).toBeVisible();
+    await expect(role.getByTestId('active-cue')).toHaveText('exiled navigator');
     await expect(canvasCards(page)).toHaveCount(1);
   });
 
   test('combine_dragOver_showsDropToCombine', async ({ page }) => {
-    await open(page, pair('character'));
+    await open(page, pair('role'));
     await dragTo(
       page,
-      cardById(page, 'description-1'),
-      await pointOn(page, 'character-1', 100, 60),
+      cardById(page, 'modifier-1'),
+      await pointOn(page, 'role-1', 100, 60),
       undefined,
       false,
     );
@@ -182,46 +174,39 @@ test.describe('combine', () => {
     await expect(hint).toHaveCount(0);
   });
 
-  test('combine_setting_followsCharacterRules', async ({ page }) => {
+  test('combine_setting_followsRoleRules', async ({ page }) => {
     await open(page, pair('setting'));
-    await dragTo(page, cardById(page, 'description-1'), await pointOn(page, 'setting-1', 125, 125));
-    await expect(cardById(page, 'description-1')).toHaveCount(0);
+    await dragTo(page, cardById(page, 'modifier-1'), await pointOn(page, 'setting-1', 125, 125));
+    await expect(cardById(page, 'modifier-1')).toHaveCount(0);
     await expect(cardById(page, 'setting-1').getByTestId('active-cue')).toHaveText(
       'exiled outpost',
     );
   });
 
   const combinedPair = () =>
-    fixtureBoard([
-      combinedCard('character', { x: 96, y: 96 }),
-      secondDescription({ x: 528, y: 96, z: 2 }),
-    ]);
+    fixtureBoard([combinedCard('role', { x: 96, y: 96 }), secondModifier({ x: 528, y: 96, z: 2 })]);
 
-  test('swap_centerDrop_swapsAdjectivesAndPlacesDescriptionBeside', async ({ page }) => {
+  test('swap_centerDrop_swapsAdjectivesAndPlacesModifierBeside', async ({ page }) => {
     await open(page, combinedPair());
-    await dragTo(
-      page,
-      cardById(page, 'description-2'),
-      await pointOn(page, 'character-1', 125, 125),
-    );
-    const character = cardById(page, 'character-1');
-    const description = cardById(page, 'description-2');
-    await expect(character.getByTestId('active-cue')).toHaveText('devout navigator');
-    await expect(description.getByTestId('active-cue')).toHaveText('exiled');
-    const a = await boxOf(character);
-    const b = await boxOf(description);
+    await dragTo(page, cardById(page, 'modifier-2'), await pointOn(page, 'role-1', 125, 125));
+    const role = cardById(page, 'role-1');
+    const modifier = cardById(page, 'modifier-2');
+    await expect(role.getByTestId('active-cue')).toHaveText('devout navigator');
+    await expect(modifier.getByTestId('active-cue')).toHaveText('exiled');
+    const a = await boxOf(role);
+    const b = await boxOf(modifier);
     const overlap =
       a.x < b.x + b.width && a.x + a.width > b.x && a.y < b.y + b.height && a.y + a.height > b.y;
     expect(overlap).toBe(false);
-    await expect(description).toHaveAttribute('data-paper', 'top');
+    await expect(modifier).toHaveAttribute('data-paper', 'top');
   });
 
   test('swap_dragOverCombined_showsSwapAndAddOnTopZones', async ({ page }) => {
     await open(page, combinedPair());
     await dragTo(
       page,
-      cardById(page, 'description-2'),
-      await pointOn(page, 'character-1', 125, 125),
+      cardById(page, 'modifier-2'),
+      await pointOn(page, 'role-1', 125, 125),
       undefined,
       false,
     );
@@ -229,64 +214,53 @@ test.describe('combine', () => {
     await expect(zones).toBeVisible();
     await expect(zones.getByText('Swap')).toHaveAttribute('data-active', 'true');
     await expect(zones.getByText('Add On Top')).toHaveAttribute('data-active', 'false');
-    const edge = await pointOn(page, 'character-1', 30, 220);
+    const edge = await pointOn(page, 'role-1', 30, 220);
     await page.mouse.move(edge.x, edge.y, { steps: 4 });
     await expect(zones.getByText('Add On Top')).toHaveAttribute('data-active', 'true');
     await page.mouse.up();
   });
 
-  test('onTop_edgeDrop_putsDescriptionOnTopOfCard', async ({ page }) => {
+  test('onTop_edgeDrop_putsModifierOnTopOfCard', async ({ page }) => {
     await open(page, combinedPair());
-    const before = await boxOf(cardById(page, 'character-1'));
-    await dragTo(
-      page,
-      cardById(page, 'description-2'),
-      await pointOn(page, 'character-1', 125, 220),
-    );
-    await expectBelow(page, 'character-1', 'description-2');
+    const before = await boxOf(cardById(page, 'role-1'));
+    await dragTo(page, cardById(page, 'modifier-2'), await pointOn(page, 'role-1', 125, 220));
+    await expectBelow(page, 'role-1', 'modifier-2');
     await expect
       .poll(async () => {
-        const top = await boxOf(cardById(page, 'description-2'));
+        const top = await boxOf(cardById(page, 'modifier-2'));
         return Math.abs(top.x - before.x) <= 1 && Math.abs(top.y - before.y) <= 1;
       })
       .toBe(true);
-    await expect(cardById(page, 'description-2')).toHaveAttribute('data-paper', 'top');
-    await expect(cardById(page, 'character-1').getByTestId('active-cue')).toHaveText(
-      'exiled navigator',
-    );
-    await expect(cardById(page, 'description-2').getByTestId('active-cue')).toHaveText('devout');
+    await expect(cardById(page, 'modifier-2')).toHaveAttribute('data-paper', 'top');
+    await expect(cardById(page, 'role-1').getByTestId('active-cue')).toHaveText('exiled navigator');
+    await expect(cardById(page, 'modifier-2').getByTestId('active-cue')).toHaveText('devout');
   });
 
-  test('split_strip_restoresDescriptionAsItWas', async ({ page }) => {
-    const card = combinedCard('character', { x: 96, y: 96 });
+  test('split_strip_restoresModifierAsItWas', async ({ page }) => {
+    const card = combinedCard('role', { x: 96, y: 96 });
     card.rings[1] = { ...card.rings[1]!, activeIndex: 2 };
     await open(
       page,
-      fixtureBoard([
-        card,
-        fixtureCard('motivation', { x: 96, y: 155, z: 2, tuckedUnder: 'character-1' }),
-      ]),
+      fixtureBoard([card, fixtureCard('goal', { x: 96, y: 155, z: 2, tuckedUnder: 'role-1' })]),
     );
-    await expect(cardById(page, 'character-1').getByTestId('active-cue')).toHaveText(
-      'clone navigator',
-    );
-    await cardById(page, 'character-1').click({ position: { x: 30, y: 30 } });
+    await expect(cardById(page, 'role-1').getByTestId('active-cue')).toHaveText('clone navigator');
+    await cardById(page, 'role-1').click({ position: { x: 30, y: 30 } });
     await page.getByRole('button', { name: 'Split' }).click();
-    const description = page.locator('.react-flow__node [data-card][data-type="description"]');
-    await expect(description).toHaveCount(1);
-    await expect(description.getByTestId('active-cue')).toHaveText('clone');
-    await expect(description.locator('[data-edge]')).toHaveCount(4);
-    await expect(cardById(page, 'character-1').getByTestId('active-cue')).toHaveText('navigator');
-    await expectBelow(page, 'motivation-1', 'character-1');
+    const modifier = page.locator('.react-flow__node [data-card][data-type="modifier"]');
+    await expect(modifier).toHaveCount(1);
+    await expect(modifier.getByTestId('active-cue')).toHaveText('clone');
+    await expect(modifier.locator('[data-edge]')).toHaveCount(4);
+    await expect(cardById(page, 'role-1').getByTestId('active-cue')).toHaveText('navigator');
+    await expectBelow(page, 'goal-1', 'role-1');
   });
 
   test('combine_dropAndSwap_under100ms', { tag: '@timing' }, async ({ page }) => {
     await open(
       page,
       fixtureBoard([
-        fixtureCard('character', { x: 96, y: 96 }),
-        fixtureCard('description', { x: 528, y: 96, z: 2 }),
-        secondDescription({ x: 528, y: 360, z: 3 }),
+        fixtureCard('role', { x: 96, y: 96 }),
+        fixtureCard('modifier', { x: 528, y: 96, z: 2 }),
+        secondModifier({ x: 528, y: 360, z: 3 }),
       ]),
     );
 
@@ -314,20 +288,18 @@ test.describe('combine', () => {
     }
 
     const combineMs = await timeDrop(
-      'description-1',
-      await pointOn(page, 'character-1', 125, 125),
-      '.react-flow__node[data-id="character-1"] [data-testid="combined-disc"]',
+      'modifier-1',
+      await pointOn(page, 'role-1', 125, 125),
+      '.react-flow__node[data-id="role-1"] [data-testid="combined-disc"]',
     );
     expect(combineMs).toBeLessThan(100);
 
     const swapMs = await timeDrop(
-      'description-2',
-      await pointOn(page, 'character-1', 125, 125),
-      '.react-flow__node[data-id="description-2"] [data-testid="active-cue"]:not(:empty)',
+      'modifier-2',
+      await pointOn(page, 'role-1', 125, 125),
+      '.react-flow__node[data-id="modifier-2"] [data-testid="active-cue"]:not(:empty)',
     );
     expect(swapMs).toBeLessThan(100);
-    await expect(cardById(page, 'character-1').getByTestId('active-cue')).toHaveText(
-      'devout navigator',
-    );
+    await expect(cardById(page, 'role-1').getByTestId('active-cue')).toHaveText('devout navigator');
   });
 });

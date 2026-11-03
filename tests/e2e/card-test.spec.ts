@@ -15,16 +15,16 @@ test.beforeEach(async ({ page }) => {
 test.describe('with pools loaded', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/#/card-test');
-    await expect(page.getByRole('button', { name: 'Draw A Character' })).toBeEnabled();
+    await expect(page.getByRole('button', { name: 'Draw A Player Role' })).toBeEnabled();
   });
 
   test('draw_eachDeck_showsCardWithRightCueCount', async ({ page }) => {
     const expected = [
-      ['Character', 4],
-      ['Motivation', 2],
+      ['Player Role', 4],
+      ['Goal', 2],
       ['Setting', 4],
       ['Conflict', 2],
-      ['Description', 4],
+      ['Modifier', 4],
     ] as const;
     for (const [deck, count] of expected) {
       const card = await draw(page, deck);
@@ -38,8 +38,8 @@ test.describe('with pools loaded', () => {
     }
   });
 
-  test('ringHalf_rightClickOnCharacter_movesRightCueToBottom', async ({ page }) => {
-    const card = await draw(page, 'Character');
+  test('ringHalf_rightClickOnRole_movesRightCueToBottom', async ({ page }) => {
+    const card = await draw(page, 'Player Role');
     const right = await edge(card, 3).textContent();
     await card.hover();
     await card
@@ -55,7 +55,7 @@ test.describe('with pools loaded', () => {
   });
 
   test('ringHalf_hoverCard_ringsBecomeVisible', async ({ page }) => {
-    const card = await draw(page, 'Character');
+    const card = await draw(page, 'Player Role');
     await page.mouse.move(0, 0);
     const layer = card.getByTestId('ring-layer');
     await expect(layer).toHaveCSS('opacity', '0');
@@ -65,12 +65,12 @@ test.describe('with pools loaded', () => {
 
   test('keys_rAndShiftR_turnOuterAndInnerRings', async ({ page }) => {
     // Expected texts come from the edge cues, since nouns and adjectives may be 2 words.
-    const character = await draw(page, 'Character');
-    const noun0 = (await edge(character, 0).textContent())!;
-    const noun3 = (await edge(character, 3).textContent())!;
-    const description = await draw(page, 'Description');
-    const adj0 = (await edge(description, 0).textContent())!;
-    const adj3 = (await edge(description, 3).textContent())!;
+    const role = await draw(page, 'Player Role');
+    const noun0 = (await edge(role, 0).textContent())!;
+    const noun3 = (await edge(role, 3).textContent())!;
+    const modifier = await draw(page, 'Modifier');
+    const adj0 = (await edge(modifier, 0).textContent())!;
+    const adj3 = (await edge(modifier, 3).textContent())!;
     await page.getByRole('button', { name: 'Combine' }).click();
     const card = page.getByTestId('card').first();
     await expect(card).toHaveAttribute('data-combined', 'true');
@@ -85,19 +85,19 @@ test.describe('with pools loaded', () => {
     await expect(activeCue(card)).toHaveText(`${adj3} ${noun3}`);
   });
 
-  for (const deck of ['Character', 'Setting'] as const) {
-    test(`combine_${deck.toLowerCase()}AndDescription_activeCueIsAdjectiveNounPair`, async ({
+  for (const deck of ['Player Role', 'Setting'] as const) {
+    test(`combine_${deck.toLowerCase()}AndModifier_activeCueIsAdjectiveNounPair`, async ({
       page,
     }) => {
       const target = await draw(page, deck);
       const noun = await activeCue(target).textContent();
-      const description = await draw(page, 'Description');
-      const adjective = await activeCue(description).textContent();
-      const descriptions = page.locator('[data-testid="card"][data-type="description"]');
-      await expect(descriptions).toHaveCount(1);
+      const modifier = await draw(page, 'Modifier');
+      const adjective = await activeCue(modifier).textContent();
+      const modifiers = page.locator('[data-testid="card"][data-type="modifier"]');
+      await expect(modifiers).toHaveCount(1);
 
       await page.getByRole('button', { name: 'Combine' }).click();
-      await expect(descriptions).toHaveCount(0);
+      await expect(modifiers).toHaveCount(0);
       const combined = page.locator(`[data-testid="card"][data-type="${deck.toLowerCase()}"]`);
       await expect(combined.getByTestId('combined-disc')).toBeVisible();
       await expect(activeCue(combined)).toHaveText(`${adjective} ${noun}`);
@@ -108,13 +108,13 @@ test.describe('with pools loaded', () => {
     // Warm the browser engine with one draw, then measure on a fresh page. The first card
     // painted in a new WebKit process costs 90+ ms of one-time engine start-up on CI,
     // whatever the card's CSS; that is not the app's draw time.
-    await draw(page, 'Character');
+    await draw(page, 'Player Role');
     await page.reload();
-    await expect(page.getByRole('button', { name: 'Draw A Character' })).toBeEnabled();
+    await expect(page.getByRole('button', { name: 'Draw A Player Role' })).toBeEnabled();
     await page.evaluate(() => document.fonts.ready);
     const drawResult = await page.evaluate(async () => {
       const button = [...document.querySelectorAll('button')].find(
-        (b) => b.textContent === 'Draw A Character',
+        (b) => b.textContent === 'Draw A Player Role',
       )!;
       const before = document.querySelectorAll('[data-testid="card"]').length;
       const start = performance.now();
@@ -145,13 +145,13 @@ test.describe('with pools loaded', () => {
   });
 
   test('tokens_card_rendersAtLockedValues', async ({ page }) => {
-    const card = await draw(page, 'Character');
+    const card = await draw(page, 'Player Role');
     await page.evaluate(() => document.fonts.ready);
     const box = await card.boundingBox();
     expect(box?.width).toBe(250);
     expect(box?.height).toBe(250);
     await expect(card).toHaveCSS('border-radius', '14px');
-    // 14 percent of --type-character mixed into --paper.
+    // 14 percent of --type-role mixed into --paper.
     expectRgbNear(await backgroundRgb(card), [218, 222, 227]);
 
     const disc = card.getByTestId('type-disc');

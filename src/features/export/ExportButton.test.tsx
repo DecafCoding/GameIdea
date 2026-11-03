@@ -6,7 +6,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { combinedCard, fixtureBoard } from '@/test/fixtures/boards';
 import { ExportButton } from './ExportButton';
 
-const board = { ...fixtureBoard([combinedCard('character')]), name: 'Salvage Run' };
+const board = { ...fixtureBoard([combinedCard('role')]), name: 'Salvage Run' };
 
 let downloads: string[];
 

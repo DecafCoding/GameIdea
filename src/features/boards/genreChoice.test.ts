@@ -73,10 +73,10 @@ describe('step 1', () => {
   });
 
   it('chooseGenre_turnOffGenre_dropsItsChipsInEveryRow', () => {
-    let choice = toggle(initialChoice(), 'character', 'generic');
+    let choice = toggle(initialChoice(), 'role', 'generic');
     choice = chooseGenre(choice, 'generic', false);
-    expect(choice.off.character).toEqual([]);
-    for (const deck of ['character', 'setting'] as const) {
+    expect(choice.off.role).toEqual([]);
+    for (const deck of ['role', 'setting'] as const) {
       expect(deckChips(choice, deck).map((c) => c.genre)).toEqual([
         'sci-fi',
         'cyberpunk',
@@ -86,28 +86,28 @@ describe('step 1', () => {
   });
 
   it('chooseGenre_turnOnAgain_startsOnInEveryRow', () => {
-    let choice = toggle(initialChoice(), 'motivation', 'generic');
+    let choice = toggle(initialChoice(), 'goal', 'generic');
     choice = chooseGenre(choice, 'generic', false);
     choice = chooseGenre(choice, 'generic', true);
-    expect(deckChips(choice, 'motivation')).toContainEqual({ genre: 'generic', on: true });
+    expect(deckChips(choice, 'goal')).toContainEqual({ genre: 'generic', on: true });
   });
 
   it('chooseGenre_genreStaysOn_keepsEachRowState', () => {
     let choice = toggle(initialChoice(), 'setting', 'cyberpunk');
     choice = chooseGenre(choice, 'generic', false);
     expect(choice.off.setting).toEqual(['cyberpunk']);
-    expect(choice.off.character).toEqual([]);
+    expect(choice.off.role).toEqual([]);
   });
 
   it('chooseGenre_rowLosesItsLastOnChip_rowTurnsAllOn', () => {
     let choice = initialChoice();
     for (const genre of ['generic', 'sci-fi', 'space-opera'] as const) {
-      choice = toggle(choice, 'character', genre);
+      choice = toggle(choice, 'role', genre);
     }
-    expect(deckGenres(choice).character).toEqual(['cyberpunk']);
+    expect(deckGenres(choice).role).toEqual(['cyberpunk']);
     choice = chooseGenre(choice, 'cyberpunk', false);
-    expect(deckChips(choice, 'character').every((c) => c.on)).toBe(true);
-    expect(deckGenres(choice).character).toEqual(['generic', 'sci-fi', 'space-opera']);
+    expect(deckChips(choice, 'role').every((c) => c.on)).toBe(true);
+    expect(deckGenres(choice).role).toEqual(['generic', 'sci-fi', 'space-opera']);
   });
 
   it('chooseGenre_cyberpunk_alsoAddsSciFiChips', () => {
@@ -127,7 +127,7 @@ describe('step 2', () => {
     for (const genre of GENRES) choice = chooseGenre(choice, genre, false);
     choice = chooseGenre(choice, 'space-opera', true);
     choice = chooseGenre(choice, 'generic', true);
-    expect(deckChips(choice, 'description').map((c) => c.genre)).toEqual([
+    expect(deckChips(choice, 'modifier').map((c) => c.genre)).toEqual([
       'generic',
       'sci-fi',
       'space-opera',
@@ -137,9 +137,9 @@ describe('step 2', () => {
   it('toggleChip_lastOnChip_returnsNull', () => {
     let choice = initialChoice();
     for (const genre of ['generic', 'sci-fi', 'cyberpunk'] as const) {
-      choice = toggle(choice, 'character', genre);
+      choice = toggle(choice, 'role', genre);
     }
-    expect(toggleChip(choice, 'character', 'space-opera')).toBeNull();
+    expect(toggleChip(choice, 'role', 'space-opera')).toBeNull();
   });
 
   it('toggleChip_offChip_turnsOn', () => {
@@ -151,12 +151,12 @@ describe('step 2', () => {
 
   it('deckGenres_mixed_eachDeckItsOwnList', () => {
     let choice = chooseGenre(initialChoice(), 'generic', false);
-    choice = toggle(choice, 'character', 'sci-fi');
-    choice = toggle(choice, 'character', 'space-opera');
+    choice = toggle(choice, 'role', 'sci-fi');
+    choice = toggle(choice, 'role', 'space-opera');
     choice = toggle(choice, 'setting', 'cyberpunk');
     expect(deckGenres(choice)).toEqual({
       ...everyDeck(['sci-fi', 'cyberpunk', 'space-opera']),
-      character: ['cyberpunk'],
+      role: ['cyberpunk'],
       setting: ['sci-fi', 'space-opera'],
     });
   });

@@ -10,7 +10,7 @@ import { exportFile } from './export-helpers';
 import { draw, type DeckName } from './helpers';
 
 const APP_ORIGIN = 'http://localhost:4174';
-const DECKS: DeckName[] = ['Character', 'Motivation', 'Setting', 'Conflict', 'Description'];
+const DECKS: DeckName[] = ['Player Role', 'Goal', 'Conflict', 'Modifier', 'Setting'];
 
 test('network_fullSession_onlyOwnAddress', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
@@ -22,7 +22,7 @@ test('network_fullSession_onlyOwnAddress', async ({ page }) => {
   await createBoardWithGenres(page);
   await page.waitForURL(/#\/board\//);
   const boardUrl = page.url();
-  await expect(rail(page).getByRole('button', { name: 'Draw A Character' })).toBeEnabled();
+  await expect(rail(page).getByRole('button', { name: 'Draw A Player Role' })).toBeEnabled();
 
   // One card of each type, and a note.
   for (const [i, deck] of DECKS.entries()) {
@@ -33,8 +33,8 @@ test('network_fullSession_onlyOwnAddress', async ({ page }) => {
 
   // The card test page.
   await page.goto('/#/card-test');
-  await expect(page.getByRole('button', { name: 'Draw A Character' })).toBeEnabled();
-  await draw(page, 'Character');
+  await expect(page.getByRole('button', { name: 'Draw A Player Role' })).toBeEnabled();
+  await draw(page, 'Player Role');
   await expect(page.getByTestId('card')).toHaveCount(1);
 
   // Back to the list, open the board and export both files.

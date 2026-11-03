@@ -45,9 +45,9 @@ test('board_emptyBoard_showsPanelAndZeroCounts', async ({ page }) => {
 test('board_drawFromPanel_hidesPanelAndCountsOne', async ({ page }) => {
   await openBoard(page);
   const panel = page.getByRole('region', { name: 'Start With One Card' });
-  await panel.getByRole('button', { name: 'Draw A Character' }).click();
+  await panel.getByRole('button', { name: 'Draw A Player Role' }).click();
   await expect(canvasCards(page)).toHaveCount(1);
-  await expect(canvasCards(page).first()).toHaveAttribute('data-type', 'character');
+  await expect(canvasCards(page).first()).toHaveAttribute('data-type', 'role');
   await expect(panel).toHaveCount(0);
   await expect(badge(page)).toHaveText('1 card · 0 notes');
 
@@ -62,7 +62,7 @@ test('board_drawFromPanel_hidesPanelAndCountsOne', async ({ page }) => {
 
 test('board_drawEachDeck_cardsDoNotOverlap', async ({ page }) => {
   await openBoard(page);
-  const decks: DeckName[] = ['Character', 'Motivation', 'Setting', 'Conflict', 'Description'];
+  const decks: DeckName[] = ['Player Role', 'Goal', 'Conflict', 'Modifier', 'Setting'];
   for (const deck of decks) await drawFromRail(page, deck);
   await expect(canvasCards(page)).toHaveCount(5);
   await expect(badge(page)).toHaveText('5 cards · 0 notes');
@@ -113,13 +113,13 @@ test('board_poolsBlocked_bannerThenRetry', async ({ page }) => {
 test('board_drawAndTurn_under100ms', { tag: '@timing' }, async ({ page }) => {
   // Warm the engine with one draw, then measure on a fresh page (see card-test.spec.ts).
   await openBoard(page);
-  await drawFromRail(page, 'Character');
+  await drawFromRail(page, 'Player Role');
   await page.reload();
-  await expect(rail(page).getByRole('button', { name: 'Draw A Character' })).toBeEnabled();
+  await expect(rail(page).getByRole('button', { name: 'Draw A Player Role' })).toBeEnabled();
   await page.evaluate(() => document.fonts.ready);
   const drawResult = await page.evaluate(async () => {
     const button = document.querySelector<HTMLButtonElement>(
-      'aside [aria-label="Draw A Character"]',
+      'aside [aria-label="Draw A Player Role"]',
     )!;
     const start = performance.now();
     button.click();
@@ -167,8 +167,8 @@ test.describe('selection', () => {
   });
 
   test('select_combinedCard_stripHasSplit', async ({ page }) => {
-    await openBoard(page, fixtureBoard([combinedCard('character', { x: 96, y: 96 })]));
-    await cardById(page, 'character-1').click({ position: { x: 30, y: 30 } });
+    await openBoard(page, fixtureBoard([combinedCard('role', { x: 96, y: 96 })]));
+    await cardById(page, 'role-1').click({ position: { x: 30, y: 30 } });
     await expect(page.getByTestId('card-strip').getByRole('button')).toHaveText([
       'Split',
       'Redraw',
@@ -195,48 +195,48 @@ test.describe('selection', () => {
 
   test('strip_redraw_keepsPlaceAndTucks', async ({ page }) => {
     await openBoard(page, stack());
-    const character = cardById(page, 'character-1');
-    const before = await boxOf(character);
-    const cuesBefore = await character.locator('[data-edge]').allTextContents();
-    await character.click({ position: { x: 30, y: 30 } });
+    const role = cardById(page, 'role-1');
+    const before = await boxOf(role);
+    const cuesBefore = await role.locator('[data-edge]').allTextContents();
+    await role.click({ position: { x: 30, y: 30 } });
     await page.getByRole('button', { name: 'Redraw' }).click();
     await expect
-      .poll(async () => (await character.locator('[data-edge]').allTextContents()).join('|'))
+      .poll(async () => (await role.locator('[data-edge]').allTextContents()).join('|'))
       .not.toBe(cuesBefore.join('|'));
-    const after = await boxOf(character);
+    const after = await boxOf(role);
     expect(after.x).toBeCloseTo(before.x, 0);
     expect(after.y).toBeCloseTo(before.y, 0);
-    const motivation = await boxOf(cardById(page, 'motivation-1'));
-    expect(Math.abs(motivation.y - after.y - 59)).toBeLessThanOrEqual(1);
+    const goal = await boxOf(cardById(page, 'goal-1'));
+    expect(Math.abs(goal.y - after.y - 59)).toBeLessThanOrEqual(1);
     await expect(canvasCards(page)).toHaveCount(4);
   });
 
   test('strip_redrawCombined_keepsAdjectives', async ({ page }) => {
-    const card = combinedCard('character', { x: 96, y: 96 });
+    const card = combinedCard('role', { x: 96, y: 96 });
     const adjectives = card.rings[1]!.cues.map((cue) => cue.text);
     await openBoard(page, fixtureBoard([card]));
-    const character = cardById(page, 'character-1');
-    const before = await character.locator('[data-edge]').allTextContents();
-    await character.click({ position: { x: 30, y: 30 } });
+    const role = cardById(page, 'role-1');
+    const before = await role.locator('[data-edge]').allTextContents();
+    await role.click({ position: { x: 30, y: 30 } });
     await page.getByRole('button', { name: 'Redraw' }).click();
     await expect
-      .poll(async () => (await character.locator('[data-edge]').allTextContents()).join('|'))
+      .poll(async () => (await role.locator('[data-edge]').allTextContents()).join('|'))
       .not.toBe(before.join('|'));
     // Each edge still starts with its adjective, and the card is still combined.
-    const after = await character.locator('[data-edge]').allTextContents();
+    const after = await role.locator('[data-edge]').allTextContents();
     for (const text of after) {
       expect(
         adjectives.some((adjective) => text.startsWith(`${adjective} `)),
         text,
       ).toBe(true);
     }
-    await expect(character.getByTestId('combined-disc')).toBeVisible();
+    await expect(role.getByTestId('combined-disc')).toBeVisible();
   });
 
   test('tuckedCard_typeMark_visibleAndClearOfCue', async ({ page }) => {
     await openBoard(page, stack());
-    await expect(cardById(page, 'character-1').getByTestId('tuck-mark')).toHaveCount(0);
-    for (const id of ['motivation-1', 'conflict-1']) {
+    await expect(cardById(page, 'role-1').getByTestId('tuck-mark')).toHaveCount(0);
+    for (const id of ['goal-1', 'conflict-1']) {
       const card = cardById(page, id);
       const mark = card.getByTestId('tuck-mark');
       const m = await boxOf(mark);
@@ -299,7 +299,7 @@ test('tokens_shell_rendersAtLockedValues', async ({ page }) => {
   expect((await boxOf(topBar)).height).toBe(56);
   await expect(topBar).toHaveCSS('background-color', 'rgb(35, 39, 47)');
   expect((await boxOf(rail(page))).width).toBe(240);
-  expect((await boxOf(rail(page).getByRole('button', { name: 'Draw A Character' }))).height).toBe(
+  expect((await boxOf(rail(page).getByRole('button', { name: 'Draw A Player Role' }))).height).toBe(
     56,
   );
   for (const name of ['Zoom Out', 'Reset Zoom', 'Zoom In', 'Fit']) {
@@ -307,11 +307,11 @@ test('tokens_shell_rendersAtLockedValues', async ({ page }) => {
   }
   // The note body is white; its header band keeps --paper-note.
   await expect(page.getByTestId('note')).toHaveCSS('background-color', 'rgb(255, 255, 255)');
-  // A tucked Motivation: 14 percent of --type-motivation mixed into --paper-under-1.
-  expectRgbNear(await backgroundRgb(cardById(page, 'motivation-1')), [214, 223, 211]);
+  // A tucked Goal: 14 percent of --type-goal mixed into --paper-under-1.
+  expectRgbNear(await backgroundRgb(cardById(page, 'goal-1')), [214, 223, 211]);
 
-  await cardById(page, 'character-1').click({ position: { x: 30, y: 30 } });
-  const selected = page.locator('.react-flow__node[data-id="character-1"] [data-selected]');
+  await cardById(page, 'role-1').click({ position: { x: 30, y: 30 } });
+  const selected = page.locator('.react-flow__node[data-id="role-1"] [data-selected]');
   await expect(selected).toHaveCSS('outline-width', '2px');
   await expect(selected).toHaveCSS('outline-color', 'rgb(232, 116, 46)');
 });
@@ -321,12 +321,12 @@ test('connector_tuckedStack_badgesOnLeftSeam', async ({ page }) => {
   const badges = page.getByTestId('connector-badge');
   // Nodes paint lowest first, so the deeper badge comes first in the DOM.
   await expect(badges).toHaveText(['but', 'wants to']);
-  const character = await boxOf(cardById(page, 'character-1'));
-  const motivation = await boxOf(cardById(page, 'motivation-1'));
+  const role = await boxOf(cardById(page, 'role-1'));
+  const goal = await boxOf(cardById(page, 'goal-1'));
   const wantsTo = await boxOf(badges.filter({ hasText: 'wants to' }));
-  // Centered on the left edge, at the seam where the Character's bottom edge meets the Motivation.
-  expect(wantsTo.x + wantsTo.width / 2).toBeCloseTo(motivation.x, 0);
-  expect(wantsTo.y + wantsTo.height / 2).toBeCloseTo(character.y + character.height, 0);
+  // Centered on the left edge, at the seam where the Player Role's bottom edge meets the Goal.
+  expect(wantsTo.x + wantsTo.width / 2).toBeCloseTo(goal.x, 0);
+  expect(wantsTo.y + wantsTo.height / 2).toBeCloseTo(role.y + role.height, 0);
   await page.screenshot({ path: process.env.SHOT ?? 'test-results/connector.png' });
 });
 
@@ -338,10 +338,10 @@ test('connector_tuckedSetting_wordFollowsActiveNounKind', async ({ page }) => {
       x,
       y: 155,
       z: 2,
-      tuckedUnder: `character-${suffix}`,
+      tuckedUnder: `role-${suffix}`,
     });
     setting.rings[0] = { ...setting.rings[0]!, activeIndex };
-    return [fixtureCard('character', { id: `character-${suffix}`, x, y: 96 }), setting];
+    return [fixtureCard('role', { id: `role-${suffix}`, x, y: 96 }), setting];
   };
   await openBoard(
     page,
@@ -349,22 +349,22 @@ test('connector_tuckedSetting_wordFollowsActiveNounKind', async ({ page }) => {
   );
   const badgeOf = (id: string) =>
     page.locator(`.react-flow__node[data-id="${id}"]`).getByTestId('connector-badge');
-  await expect(badgeOf('character-1')).toHaveText('in the');
-  await expect(badgeOf('character-2')).toHaveText('with the');
-  await expect(badgeOf('character-3')).toHaveText('from the');
+  await expect(badgeOf('role-1')).toHaveText('in the');
+  await expect(badgeOf('role-2')).toHaveText('with the');
+  await expect(badgeOf('role-3')).toHaveText('from the');
   if (process.env.SHOT) await page.screenshot({ path: process.env.SHOT });
 });
 
-test('connector_conflictUnderCharacter_but', async ({ page }) => {
+test('connector_conflictUnderRole_but', async ({ page }) => {
   await openBoard(
     page,
     fixtureBoard([
-      fixtureCard('character', { x: 96, y: 96 }),
-      fixtureCard('conflict', { x: 96, y: 155, z: 2, tuckedUnder: 'character-1' }),
+      fixtureCard('role', { x: 96, y: 96 }),
+      fixtureCard('conflict', { x: 96, y: 155, z: 2, tuckedUnder: 'role-1' }),
     ]),
   );
   await expect(
-    page.locator('.react-flow__node[data-id="character-1"]').getByTestId('connector-badge'),
+    page.locator('.react-flow__node[data-id="role-1"]').getByTestId('connector-badge'),
   ).toHaveText('but');
   if (process.env.SHOT) await page.screenshot({ path: process.env.SHOT });
 });
@@ -373,8 +373,8 @@ test('connector_chooseFromList_savesWordAndUndoRestores', async ({ page }) => {
   await openBoard(
     page,
     fixtureBoard([
-      fixtureCard('character', { x: 96, y: 96 }),
-      fixtureCard('motivation', { x: 96, y: 155, z: 2, tuckedUnder: 'character-1' }),
+      fixtureCard('role', { x: 96, y: 96 }),
+      fixtureCard('goal', { x: 96, y: 155, z: 2, tuckedUnder: 'role-1' }),
     ]),
   );
   const badge = page.getByTestId('connector-badge');
@@ -396,8 +396,7 @@ test('connector_chooseFromList_savesWordAndUndoRestores', async ({ page }) => {
   await expect(page.getByRole('button', { name: 'Discard' })).toHaveCount(0);
   await expect
     .poll(
-      async () =>
-        (await storedBoards(page))[0]?.cards.find((c) => c.id === 'motivation-1')?.connector,
+      async () => (await storedBoards(page))[0]?.cards.find((c) => c.id === 'goal-1')?.connector,
     )
     .toBe('refuses to');
 
@@ -409,8 +408,8 @@ test('connector_keyboard_arrowsAndEnterChooseEscCloses', async ({ page }) => {
   await openBoard(
     page,
     fixtureBoard([
-      fixtureCard('character', { x: 96, y: 96 }),
-      fixtureCard('conflict', { x: 96, y: 155, z: 2, tuckedUnder: 'character-1' }),
+      fixtureCard('role', { x: 96, y: 96 }),
+      fixtureCard('conflict', { x: 96, y: 155, z: 2, tuckedUnder: 'role-1' }),
     ]),
   );
   const badge = page.getByTestId('connector-badge');
@@ -431,10 +430,10 @@ test('connector_articleWord_anBeforeVowel', async ({ page }) => {
     x: 96,
     y: 155,
     z: 2,
-    tuckedUnder: 'character-1',
+    tuckedUnder: 'role-1',
     connector: 'in a',
   });
   // Fixture place nouns: outpost (index 0) starts with a vowel.
-  await openBoard(page, fixtureBoard([fixtureCard('character', { x: 96, y: 96 }), setting]));
+  await openBoard(page, fixtureBoard([fixtureCard('role', { x: 96, y: 96 }), setting]));
   await expect(page.getByTestId('connector-badge')).toHaveText('in an');
 });

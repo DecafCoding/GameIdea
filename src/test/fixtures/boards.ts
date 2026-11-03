@@ -19,10 +19,10 @@ import {
 const TUCK = 59;
 
 export const CUES = {
-  character: ['navigator', 'diplomat', 'gardener', 'captain'],
-  description: ['exiled', 'orbital', 'clone', 'salvage'],
-  description2: ['devout', 'rogue', 'cloned', 'hollow'],
-  motivation: ['wants to go home', 'wants to be believed'],
+  role: ['navigator', 'diplomat', 'gardener', 'captain'],
+  modifier: ['exiled', 'orbital', 'clone', 'salvage'],
+  modifier2: ['devout', 'rogue', 'cloned', 'hollow'],
+  goal: ['wants to go home', 'wants to be believed'],
   conflict: ['but the ship is dying', 'but the fleet is gone'],
   setting: ['outpost', 'beacon', 'eclipse', 'harbor'],
 } as const;
@@ -50,21 +50,21 @@ export function fixtureCard(type: CardType, overrides: Partial<Card> = {}): Card
   };
 }
 
-/** The second Description set: devout, rogue, cloned, hollow. */
-export function secondDescription(overrides: Partial<Card> = {}): Card {
-  return fixtureCard('description', {
-    id: 'description-2',
-    rings: [{ cues: CUES.description2.map((text) => ({ text })), activeIndex: 0 }],
+/** The second Modifier set: devout, rogue, cloned, hollow. */
+export function secondModifier(overrides: Partial<Card> = {}): Card {
+  return fixtureCard('modifier', {
+    id: 'modifier-2',
+    rings: [{ cues: CUES.modifier2.map((text) => ({ text })), activeIndex: 0 }],
     ...overrides,
   });
 }
 
-/** A Character or Setting already combined with the first Description set. */
-export function combinedCard(type: 'character' | 'setting', overrides: Partial<Card> = {}): Card {
+/** A Player Role or Setting already combined with the first Modifier set. */
+export function combinedCard(type: 'role' | 'setting', overrides: Partial<Card> = {}): Card {
   return fixtureCard(type, {
     rings: [
       { cues: cuesFor(type), activeIndex: 0 },
-      { cues: cuesFor('description'), activeIndex: 0 },
+      { cues: cuesFor('modifier'), activeIndex: 0 },
     ],
     ...overrides,
   });
@@ -99,36 +99,36 @@ export function fixtureBoard(cards: Card[], notes: Note[] = []): Board {
 }
 
 /**
- * A chain stack at x, y: a Character with a Motivation tucked under it and a Conflict
- * tucked under the Motivation, each 59 px lower. Ids get the suffix.
+ * A chain stack at x, y: a Player Role with a Goal tucked under it and a Conflict
+ * tucked under the Goal, each 59 px lower. Ids get the suffix.
  */
 export function fixtureStack(x: number, y: number, suffix = '1', z = 1): Card[] {
-  const character = fixtureCard('character', { id: `character-${suffix}`, x, y, z });
-  const motivation = fixtureCard('motivation', {
-    id: `motivation-${suffix}`,
+  const role = fixtureCard('role', { id: `role-${suffix}`, x, y, z });
+  const goal = fixtureCard('goal', {
+    id: `goal-${suffix}`,
     x,
     y: y + TUCK,
     z: z + 1,
-    tuckedUnder: character.id,
+    tuckedUnder: role.id,
   });
   const conflict = fixtureCard('conflict', {
     id: `conflict-${suffix}`,
     x,
     y: y + 2 * TUCK,
     z: z + 2,
-    tuckedUnder: motivation.id,
+    tuckedUnder: goal.id,
   });
-  return [character, motivation, conflict];
+  return [role, goal, conflict];
 }
 
 /** A 250 px card plus a gap of more than the 24 px margin, on the 24 px grid. */
 const PITCH = 288;
 const COLUMNS = 20;
-const TYPES: CardType[] = ['character', 'motivation', 'setting', 'conflict', 'description'];
+const TYPES: CardType[] = ['role', 'goal', 'setting', 'conflict', 'modifier'];
 
 /**
  * The 200-card board: 140 single cards on 7 rows of 20 at a 288 px pitch, cycling the
- * 5 types (the first 20 Characters combined), and 20 stacks of 3 on the 8th row, so the
+ * 5 types (the first 20 Player Roles combined), and 20 stacks of 3 on the 8th row, so the
  * speed checks include tucked cards. No notes.
  */
 export function board200(): Board {
@@ -143,9 +143,9 @@ export function board200(): Board {
       y: Math.floor(i / COLUMNS) * PITCH,
       z: z++,
     };
-    if (type === 'character' && combined < 20) {
+    if (type === 'role' && combined < 20) {
       combined++;
-      cards.push(combinedCard('character', position));
+      cards.push(combinedCard('role', position));
     } else {
       cards.push(fixtureCard(type, position));
     }

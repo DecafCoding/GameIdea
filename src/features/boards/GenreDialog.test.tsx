@@ -65,7 +65,7 @@ describe('GenreDialog', () => {
     fireEvent.click(tile('Generic'));
     fireEvent.click(button('Next'));
     expect(screen.getByRole('dialog', { name: 'Decks For "Untitled Board"' })).toBeTruthy();
-    const decks = ['Character', 'Motivation', 'Setting', 'Conflict', 'Description'];
+    const decks = ['Player Role', 'Goal', 'Conflict', 'Modifier', 'Setting'];
     const groups = screen.getAllByRole('group');
     expect(groups.map((g) => g.getAttribute('aria-label'))).toEqual(decks);
     for (const deck of decks) {
@@ -73,16 +73,17 @@ describe('GenreDialog', () => {
       expect(chips.map((c) => c.textContent)).toEqual(['Sci-Fi', 'Cyberpunk', 'Space Opera']);
       for (const c of chips) expect(pressed(c)).toBe('true');
     }
-    expect(document.activeElement).toBe(chip('Character', 'Sci-Fi'));
+    expect(document.activeElement).toBe(chip('Player Role', 'Sci-Fi'));
   });
 
   it('genreDialog_lastChip_staysOnAndShakes', () => {
     renderDialog();
     fireEvent.click(button('Next'));
-    for (const name of ['Generic', 'Sci-Fi', 'Cyberpunk']) fireEvent.click(chip('Character', name));
-    fireEvent.click(chip('Character', 'Space Opera'));
-    expect(pressed(chip('Character', 'Space Opera'))).toBe('true');
-    expect(chip('Character', 'Space Opera').className).toMatch(/shake/);
+    for (const name of ['Generic', 'Sci-Fi', 'Cyberpunk'])
+      fireEvent.click(chip('Player Role', name));
+    fireEvent.click(chip('Player Role', 'Space Opera'));
+    expect(pressed(chip('Player Role', 'Space Opera'))).toBe('true');
+    expect(chip('Player Role', 'Space Opera').className).toMatch(/shake/);
   });
 
   it('genreDialog_back_keepsNameAndChoices', () => {
@@ -103,11 +104,11 @@ describe('GenreDialog', () => {
     fireEvent.change(nameField(), { target: { value: 'Salvage Run' } });
     fireEvent.click(button('Next'));
     for (const name of ['Generic', 'Sci-Fi', 'Space Opera'])
-      fireEvent.click(chip('Character', name));
+      fireEvent.click(chip('Player Role', name));
     fireEvent.click(button('Create Board'));
     expect(onCreate).toHaveBeenCalledWith('Salvage Run', {
       ...everyDeck(GENRES),
-      character: ['cyberpunk'],
+      role: ['cyberpunk'],
     });
     expect(onCancel).not.toHaveBeenCalled();
   });

@@ -17,32 +17,32 @@ const below = (
 });
 
 describe('connectorWords', () => {
-  it('connectorWords_characterOverMotivation_wantsToFirst', () => {
-    expect(connectorWords('character', 'motivation', null)?.[0]).toBe('wants to');
+  it('connectorWords_characterOverGoal_wantsToFirst', () => {
+    expect(connectorWords('role', 'goal', null)?.[0]).toBe('wants to');
   });
 
   it('connectorWords_conflictUnderAnyCard_butFirst', () => {
-    for (const upper of ['character', 'motivation', 'setting', 'description'] as const) {
+    for (const upper of ['role', 'goal', 'setting', 'modifier'] as const) {
       expect(connectorWords(upper, 'conflict', null)?.[0]).toBe('but');
     }
   });
 
   it('connectorWords_settingByKind_inWithFromFirst', () => {
-    expect(connectorWords('character', 'setting', 'place')?.[0]).toBe('in the');
-    expect(connectorWords('motivation', 'setting', 'object')?.[0]).toBe('with the');
+    expect(connectorWords('role', 'setting', 'place')?.[0]).toBe('in the');
+    expect(connectorWords('goal', 'setting', 'object')?.[0]).toBe('with the');
     expect(connectorWords('conflict', 'setting', 'event')?.[0]).toBe('from the');
   });
 
-  it('connectorWords_characterOverCharacter_andFirst', () => {
-    expect(connectorWords('character', 'character', null)?.[0]).toBe('and');
+  it('connectorWords_characterOverRole_andFirst', () => {
+    expect(connectorWords('role', 'role', null)?.[0]).toBe('and');
   });
 
   it('connectorWords_noPair_null', () => {
-    expect(connectorWords('description', 'setting', 'place')).toBeNull();
-    expect(connectorWords('character', 'setting', null)).toBeNull();
-    expect(connectorWords('setting', 'motivation', null)).toBeNull();
-    expect(connectorWords('character', 'description', null)).toBeNull();
-    expect(connectorWords('motivation', 'character', null)).toBeNull();
+    expect(connectorWords('modifier', 'setting', 'place')).toBeNull();
+    expect(connectorWords('role', 'setting', null)).toBeNull();
+    expect(connectorWords('setting', 'goal', null)).toBeNull();
+    expect(connectorWords('role', 'modifier', null)).toBeNull();
+    expect(connectorWords('goal', 'role', null)).toBeNull();
   });
 });
 
@@ -61,16 +61,16 @@ describe('showWord', () => {
 
 describe('connectorFor', () => {
   it('connectorFor_nothingSaved_default', () => {
-    expect(connectorFor('character', below('motivation'))).toMatchObject({
+    expect(connectorFor('role', below('goal'))).toMatchObject({
       word: 'wants to',
       text: 'wants to',
-      type: 'motivation',
+      type: 'goal',
     });
   });
 
   it('connectorFor_savedWordInList_showsIt', () => {
     const connector = connectorFor(
-      'character',
+      'role',
       below('setting', { kind: 'place', saved: 'aboard the' }),
     );
     expect(connector?.word).toBe('aboard the');
@@ -79,7 +79,7 @@ describe('connectorFor', () => {
   it('connectorFor_savedWordNotInList_default', () => {
     // A place word saved, then the Setting turned to an object.
     const connector = connectorFor(
-      'character',
+      'role',
       below('setting', { kind: 'object', saved: 'aboard the' }),
     );
     expect(connector?.word).toBe('with the');
@@ -87,7 +87,7 @@ describe('connectorFor', () => {
 
   it('connectorFor_articleWord_showsAnBeforeVowel', () => {
     const connector = connectorFor(
-      'character',
+      'role',
       below('setting', { kind: 'place', text: 'orbital dock', saved: 'in a' }),
     );
     expect(connector).toMatchObject({ word: 'in a', text: 'in an' });
@@ -95,6 +95,6 @@ describe('connectorFor', () => {
   });
 
   it('connectorFor_noPair_null', () => {
-    expect(connectorFor('motivation', below('character'))).toBeNull();
+    expect(connectorFor('goal', below('role'))).toBeNull();
   });
 });

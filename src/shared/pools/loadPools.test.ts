@@ -59,39 +59,39 @@ describe('parsePool', () => {
   });
 
   it('parsePool_characterCueWithKind_throws', () => {
-    const data = { type: 'character', cues: [{ id: 'a', text: 'b', kind: 'place' }] };
-    expect(() => parsePool('character', data)).toThrow();
+    const data = { type: 'role', cues: [{ id: 'a', text: 'b', kind: 'place' }] };
+    expect(() => parsePool('role', data)).toThrow();
   });
 
   it('parsePool_typeMismatch_throws', () => {
-    expect(() => parsePool('character', fixture('motivation'))).toThrow();
+    expect(() => parsePool('role', fixture('goal'))).toThrow();
   });
 
-  /** A one-cue character pool whose cue has the given genres value. */
+  /** A one-cue role pool whose cue has the given genres value. */
   const withGenres = (genres: unknown) => ({
-    type: 'character',
+    type: 'role',
     cues: [{ id: 'ch-0001', text: 'pilot', ...(genres === undefined ? {} : { genres }) }],
   });
 
   it('parsePool_missingGenres_throws', () => {
-    expect(() => parsePool('character', withGenres(undefined))).toThrow(/genres/);
+    expect(() => parsePool('role', withGenres(undefined))).toThrow(/genres/);
   });
 
   it('parsePool_emptyGenres_throws', () => {
-    expect(() => parsePool('character', withGenres([]))).toThrow(/genres/);
+    expect(() => parsePool('role', withGenres([]))).toThrow(/genres/);
   });
 
   it('parsePool_unknownGenre_throws', () => {
-    expect(() => parsePool('character', withGenres(['steampunk']))).toThrow(/genres/);
+    expect(() => parsePool('role', withGenres(['steampunk']))).toThrow(/genres/);
   });
 
   it('parsePool_repeatedGenre_throws', () => {
-    expect(() => parsePool('character', withGenres(['cyberpunk', 'cyberpunk']))).toThrow(/genres/);
+    expect(() => parsePool('role', withGenres(['cyberpunk', 'cyberpunk']))).toThrow(/genres/);
   });
 
   it('parsePool_twoGenres_keepsBoth', () => {
     const genres: Genre[] = ['sci-fi', 'cyberpunk'];
-    const pool = parsePool('character', withGenres(genres));
+    const pool = parsePool('role', withGenres(genres));
     expect(pool.cues[0]!.genres).toEqual(genres);
     expect(pool.cues[0]!.genres).not.toBe(genres);
   });
@@ -111,6 +111,6 @@ describe('usePools', () => {
     fail = false;
     act(() => result.current.retry());
     await waitFor(() => expect(result.current.status).toBe('ready'));
-    expect(result.current.pools?.character.cues).toHaveLength(4);
+    expect(result.current.pools?.role.cues).toHaveLength(4);
   });
 });

@@ -48,9 +48,9 @@ function expectCuesFrom(card: Card, genres: readonly Genre[]) {
   }
 }
 
-/** The fixture board with 1 Character as version 1 saved it: no genres, formatVersion 1. */
+/** The fixture board with 1 Player Role as version 1 saved it: no genres, formatVersion 1. */
 function version1Board(id: string, name: string): Record<string, unknown> {
-  const board: Partial<Board> = { ...fixtureBoard([fixtureCard('character')]), id, name };
+  const board: Partial<Board> = { ...fixtureBoard([fixtureCard('role')]), id, name };
   delete board.genres;
   return { ...board, formatVersion: 1 };
 }
@@ -83,14 +83,14 @@ test('genres_deckGenres_eachDeckDrawsOnlyItsGenres', async ({ page }) => {
   await page.goto('/');
   await createBoardWithGenres(page, {
     name: 'Deck Mix',
-    decks: { character: ['cyberpunk'], setting: ['space-opera'] },
+    decks: { role: ['cyberpunk'], setting: ['space-opera'] },
   });
   await page.waitForURL(/#\/board\//);
-  await expect(rail(page).getByRole('button', { name: 'Draw A Character' })).toBeEnabled();
+  await expect(rail(page).getByRole('button', { name: 'Draw A Player Role' })).toBeEnabled();
 
   // The count badge counts every card, in view or not, and is cheap to read.
   let n = 0;
-  for (const deck of ['Character', 'Setting'] as const) {
+  for (const deck of ['Player Role', 'Setting'] as const) {
     for (let i = 0; i < 3; i++) {
       await drawFromRail(page, deck);
       await expect(page.getByTestId('count-badge')).toHaveText(
@@ -103,7 +103,7 @@ test('genres_deckGenres_eachDeckDrawsOnlyItsGenres', async ({ page }) => {
   expect(board!.name).toBe('Deck Mix');
   expect(board!.genres).toEqual({
     ...everyDeck(GENRES),
-    character: ['cyberpunk'],
+    role: ['cyberpunk'],
     setting: ['space-opera'],
   });
   for (const card of board!.cards) expectCuesFrom(card, board!.genres[card.type]);
@@ -133,7 +133,7 @@ test('genres_newBoardDialog_escapeCreatesNothing', async ({ page }) => {
 
 test('genres_version1StoredBoard_opensWithAllGenresInEveryDeckAndDraws', async ({ page }) => {
   // A same-origin page that runs no app code, so the app has not opened the database yet.
-  await page.goto('/pools/character.json');
+  await page.goto('/pools/role.json');
   await seedOldBoard(page, version1Board('old-board', 'Old Board'), 1);
   await page.goto('/#/board/old-board');
   await expect(canvasCards(page)).toHaveCount(1);
@@ -148,7 +148,7 @@ test('genres_version1StoredBoard_opensWithAllGenresInEveryDeckAndDraws', async (
 });
 
 test('genres_version2StoredBoard_keepsItsGenresInEveryDeck', async ({ page }) => {
-  await page.goto('/pools/character.json');
+  await page.goto('/pools/role.json');
   await seedOldBoard(page, version2Board('old-board', 'Old Board', ['cyberpunk']), 2);
   await page.goto('/#/board/old-board');
   await expect(canvasCards(page)).toHaveCount(1);
@@ -173,8 +173,8 @@ test('genres_version1BoardFile_importsWithAllGenresInEveryDeck', async ({ page }
 
   await rows(page).first().getByRole('link', { name: 'Old File' }).click();
   await expect(canvasCards(page)).toHaveCount(1);
-  await expect(rail(page).getByRole('button', { name: 'Draw A Character' })).toBeEnabled();
-  await drawFromRail(page, 'Character');
+  await expect(rail(page).getByRole('button', { name: 'Draw A Player Role' })).toBeEnabled();
+  await drawFromRail(page, 'Player Role');
   await expect(canvasCards(page)).toHaveCount(2);
 });
 
@@ -187,7 +187,7 @@ test('genres_version2BoardFile_importsWithItsGenresInEveryDeck', async ({ page }
 
   await rows(page).first().getByRole('link', { name: 'Old File' }).click();
   await expect(canvasCards(page)).toHaveCount(1);
-  await expect(rail(page).getByRole('button', { name: 'Draw A Character' })).toBeEnabled();
-  await drawFromRail(page, 'Character');
+  await expect(rail(page).getByRole('button', { name: 'Draw A Player Role' })).toBeEnabled();
+  await drawFromRail(page, 'Player Role');
   await expect(canvasCards(page)).toHaveCount(2);
 });

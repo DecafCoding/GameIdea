@@ -41,9 +41,9 @@ export interface Connector {
   type: CardType;
 }
 
-const MOTIVATION = ['wants to', 'needs to', 'must', 'refuses to', 'swore to', 'is afraid to'];
+const GOAL = ['wants to', 'needs to', 'must', 'refuses to', 'swore to', 'is afraid to'];
 const CONFLICT = ['but', 'until', 'because', 'while', 'unless', 'even though'];
-const CHARACTER = ['and', 'against', 'hunted by', 'working for', 'owes', 'betrays'];
+const ROLE = ['and', 'against', 'hunted by', 'working for', 'owes', 'betrays'];
 const SETTING: Record<CueKind, string[]> = {
   place: ['in the', 'in a', 'on the', 'aboard the', 'beneath the', 'outside the'],
   object: ['with the', 'with a', 'for the', 'without the', 'hunting the', 'guarding the'],
@@ -60,12 +60,12 @@ export function connectorWords(
     case 'conflict':
       return CONFLICT;
     case 'setting':
-      // A Description over a Setting is its adjectives, not a new part of the sentence.
-      return upper === 'description' || !kind ? null : SETTING[kind];
-    case 'motivation':
-      return upper === 'character' ? MOTIVATION : null;
-    case 'character':
-      return upper === 'character' ? CHARACTER : null;
+      // A Modifier over a Setting is its adjectives, not a new part of the sentence.
+      return upper === 'modifier' || !kind ? null : SETTING[kind];
+    case 'goal':
+      return upper === 'role' ? GOAL : null;
+    case 'role':
+      return upper === 'role' ? ROLE : null;
     default:
       return null;
   }

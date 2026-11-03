@@ -25,7 +25,7 @@ const halves = () => screen.getAllByRole('button');
 
 describe('RingControl', () => {
   it('RingControl_oneRingCard_rendersTwoHalfButtons', () => {
-    render(<RingControl card={card('character', 1)} onTurn={() => {}} />);
+    render(<RingControl card={card('role', 1)} onTurn={() => {}} />);
     expect(halves().map((b) => b.getAttribute('aria-label'))).toEqual([
       'Turn Nouns Left',
       'Turn Nouns Right',
@@ -44,21 +44,21 @@ describe('RingControl', () => {
 
   it('RingControl_rightHalfClick_callsOnTurnCw', () => {
     const onTurn = vi.fn();
-    render(<RingControl card={card('motivation', 1)} onTurn={onTurn} />);
+    render(<RingControl card={card('goal', 1)} onTurn={onTurn} />);
     fireEvent.click(screen.getByRole('button', { name: 'Turn Cues Right' }));
     expect(onTurn).toHaveBeenCalledWith('outer', 'cw');
   });
 
   it('RingControl_leftHalfClick_callsOnTurnCcw', () => {
     const onTurn = vi.fn();
-    render(<RingControl card={card('description', 1)} onTurn={onTurn} />);
+    render(<RingControl card={card('modifier', 1)} onTurn={onTurn} />);
     fireEvent.click(screen.getByRole('button', { name: 'Turn Adjectives Left' }));
     expect(onTurn).toHaveBeenCalledWith('outer', 'ccw');
   });
 
   it('RingControl_innerHalfOnCombined_usesInnerSlot', () => {
     const onTurn = vi.fn();
-    render(<RingControl card={card('character', 2)} onTurn={onTurn} />);
+    render(<RingControl card={card('role', 2)} onTurn={onTurn} />);
     fireEvent.click(screen.getByRole('button', { name: 'Turn Adjectives Right' }));
     expect(onTurn).toHaveBeenCalledWith('inner', 'cw');
   });

@@ -112,7 +112,7 @@ test('notes_drag_moves', async ({ page }) => {
 });
 
 test('notes_count_badgeCountsNotes', async ({ page }) => {
-  await openBoard(page, fixtureBoard([fixtureCard('character', { x: 480, y: 96 })]));
+  await openBoard(page, fixtureBoard([fixtureCard('role', { x: 480, y: 96 })]));
   await addNote(page);
   await page.keyboard.press('Escape');
   await addNote(page);
@@ -132,14 +132,14 @@ test('notes_count_badgeCountsNotes', async ({ page }) => {
 test('notes_typingKeys_doNotTurnOrDiscardSelectedCard', async ({ page }) => {
   await openBoard(
     page,
-    fixtureBoard([fixtureCard('character', { x: 480, y: 96 })], [fixtureNote({ x: 96, y: 96 })]),
+    fixtureBoard([fixtureCard('role', { x: 480, y: 96 })], [fixtureNote({ x: 96, y: 96 })]),
   );
-  await cardById(page, 'character-1').click({ position: { x: 30, y: 30 } });
+  await cardById(page, 'role-1').click({ position: { x: 30, y: 30 } });
   await note(page).click();
   await page.keyboard.type('rr');
   await page.keyboard.press('Backspace');
   await page.keyboard.press('Delete');
   await expect(field(page)).toHaveValue('r');
-  await expect(cardById(page, 'character-1')).toHaveCount(1);
-  await expect(cardById(page, 'character-1').getByTestId('active-cue')).toHaveText('navigator');
+  await expect(cardById(page, 'role-1')).toHaveCount(1);
+  await expect(cardById(page, 'role-1').getByTestId('active-cue')).toHaveText('navigator');
 });

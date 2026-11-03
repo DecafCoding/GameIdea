@@ -5,7 +5,7 @@
  * card keeps each "adjective noun" edge centered and fades in the turned words.
  */
 import { useState, type CSSProperties, type ReactNode } from 'react';
-import type { Card, Cue } from '@/shared/model';
+import { DECK_NAME, type Card, type Cue } from '@/shared/model';
 import { Icon } from '@/shared/ui';
 import { RingControl } from './RingControl';
 import { edgeCues, isCombined, type RingSlot, type TurnDirection } from './rings';
@@ -31,14 +31,6 @@ const PAPER_CLASS: Record<CardPaper, string | undefined> = {
   'under-2': styles.under2,
 };
 
-const TITLE: Record<Card['type'], string> = {
-  character: 'Character',
-  motivation: 'Motivation',
-  setting: 'Setting',
-  conflict: 'Conflict',
-  description: 'Description',
-};
-
 /**
  * Distance from the card center to the outer side of every label: the 14 px inset on the
  * 250 px card, 125 - 14 = 111. The label grows inward, so a wrapped label keeps its outer
@@ -52,12 +44,12 @@ function slotTransform(slot: number, count: number): string {
 }
 
 /**
- * The label box for an edge. Character, Setting, Motivation and Conflict share one frame:
- * 2 wide lines on the top and bottom edges, 3 narrow lines on the sides. Description stays
+ * The label box for an edge. Player Role, Setting, Goal and Conflict share one frame:
+ * 2 wide lines on the top and bottom edges, 3 narrow lines on the sides. Modifier stays
  * on one line. Edge 0 is the bottom; on a 4-cue card the odd edges are the sides.
  */
 function labelFit(type: Card['type'], count: number, edge: number): string {
-  if (type === 'description') return '';
+  if (type === 'modifier') return '';
   return (count === 4 && edge % 2 === 1 ? styles.side : styles.wide) ?? '';
 }
 
@@ -201,7 +193,7 @@ export function CardView({ card, onTurn, ringClassName, paper = 'top' }: CardVie
       data-testid="card"
       data-type={card.type}
       data-combined={combined}
-      aria-label={`${TITLE[card.type]} Card`}
+      aria-label={`${DECK_NAME[card.type]} Card`}
     >
       <div className={styles.face}>
         {face}

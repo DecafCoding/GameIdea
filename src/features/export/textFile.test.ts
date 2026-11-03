@@ -1,5 +1,5 @@
 /**
- * Tests for the text file layout: active pairs, turned rings, stacks, joined Descriptions,
+ * Tests for the text file layout: active pairs, turned rings, stacks, joined Modifiers,
  * order and notes.
  */
 import { describe, expect, it } from 'vitest';
@@ -9,7 +9,7 @@ import {
   fixtureCard,
   fixtureNote,
   fixtureStack,
-  secondDescription,
+  secondModifier,
 } from '@/test/fixtures/boards';
 import { boardText, textFileName } from './textFile';
 
@@ -23,8 +23,8 @@ describe('textFile', () => {
   });
 
   it('boardText_combinedCard_writesActivePair', () => {
-    expect(boardText(named(fixtureBoard([combinedCard('character')])))).toBe(
-      'Salvage Run\n\nCards\n\nCharacter: exiled navigator\n',
+    expect(boardText(named(fixtureBoard([combinedCard('role')])))).toBe(
+      'Salvage Run\n\nCards\n\nPlayer Role: exiled navigator\n',
     );
   });
 
@@ -40,27 +40,27 @@ describe('textFile', () => {
   it('boardText_chainStack_indentsTuckedCards', () => {
     expect(boardText(named(fixtureBoard(fixtureStack(0, 0))))).toBe(
       'Salvage Run\n\nCards\n\n' +
-        'Character: navigator\n' +
-        '  Motivation: wants to go home\n' +
+        'Player Role: navigator\n' +
+        '  Goal: wants to go home\n' +
         '    Conflict: but the ship is dying\n',
     );
   });
 
-  it('boardText_tuckedDescription_joinsParentLine', () => {
-    const [character, motivation, conflict] = fixtureStack(0, 0);
-    const combined = combinedCard('character', { id: character!.id, z: character!.z });
-    const devout = secondDescription({ tuckedUnder: character!.id, z: 9 });
-    // A Description with its own tucked card keeps its own line.
-    const exiled = fixtureCard('description', { id: 'description-3', x: 500, z: 10 });
-    const under = fixtureCard('motivation', { id: 'motivation-9', tuckedUnder: exiled.id });
-    const board = fixtureBoard([combined, motivation!, conflict!, devout, exiled, under]);
+  it('boardText_tuckedModifier_joinsParentLine', () => {
+    const [role, goal, conflict] = fixtureStack(0, 0);
+    const combined = combinedCard('role', { id: role!.id, z: role!.z });
+    const devout = secondModifier({ tuckedUnder: role!.id, z: 9 });
+    // A Modifier with its own tucked card keeps its own line.
+    const exiled = fixtureCard('modifier', { id: 'modifier-3', x: 500, z: 10 });
+    const under = fixtureCard('goal', { id: 'goal-9', tuckedUnder: exiled.id });
+    const board = fixtureBoard([combined, goal!, conflict!, devout, exiled, under]);
     expect(boardText(named(board))).toBe(
       'Salvage Run\n\nCards\n\n' +
-        'Character: exiled navigator, devout\n' +
-        '  Motivation: wants to go home\n' +
+        'Player Role: exiled navigator, devout\n' +
+        '  Goal: wants to go home\n' +
         '    Conflict: but the ship is dying\n' +
-        'Description: exiled\n' +
-        '  Motivation: wants to go home\n',
+        'Modifier: exiled\n' +
+        '  Goal: wants to go home\n',
     );
   });
 
@@ -68,11 +68,11 @@ describe('textFile', () => {
     const board = fixtureBoard([
       fixtureCard('conflict', { id: 'c', x: 0, y: 300 }),
       fixtureCard('setting', { id: 's', x: 400, y: 0 }),
-      fixtureCard('character', { id: 'h', x: 0, y: 0 }),
+      fixtureCard('role', { id: 'h', x: 0, y: 0 }),
     ]);
     expect(boardText(named(board))).toBe(
       'Salvage Run\n\nCards\n\n' +
-        'Character: navigator\n' +
+        'Player Role: navigator\n' +
         'Setting: outpost\n' +
         'Conflict: but the ship is dying\n',
     );

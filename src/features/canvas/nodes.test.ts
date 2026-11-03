@@ -12,8 +12,8 @@ const zOf = (nodes: ReturnType<typeof toNodes>, id: string) =>
 describe('toNodes', () => {
   it('toNodes_stack_tuckedCardsBelowRoot', () => {
     const nodes = toNodes(fixtureBoard(fixtureStack(0, 0)), UI);
-    expect(zOf(nodes, 'character-1')).toBeGreaterThan(zOf(nodes, 'motivation-1'));
-    expect(zOf(nodes, 'motivation-1')).toBeGreaterThan(zOf(nodes, 'conflict-1'));
+    expect(zOf(nodes, 'role-1')).toBeGreaterThan(zOf(nodes, 'goal-1'));
+    expect(zOf(nodes, 'goal-1')).toBeGreaterThan(zOf(nodes, 'conflict-1'));
   });
 
   it('toNodes_newerRoot_paintsAboveOlder', () => {
@@ -23,18 +23,13 @@ describe('toNodes', () => {
     ]);
     const nodes = toNodes(board, UI);
     expect(zOf(nodes, 'conflict-1')).toBeGreaterThan(zOf(nodes, 'setting-1'));
-    expect(nodes.map((n) => n.id)).toEqual([
-      'setting-1',
-      'conflict-1',
-      'motivation-1',
-      'character-1',
-    ]);
+    expect(nodes.map((n) => n.id)).toEqual(['setting-1', 'conflict-1', 'goal-1', 'role-1']);
   });
 
   it('toNodes_notes_belowCards', () => {
-    const nodes = toNodes(fixtureBoard([fixtureCard('character')], [fixtureNote()]), UI);
+    const nodes = toNodes(fixtureBoard([fixtureCard('role')], [fixtureNote()]), UI);
     expect(nodes[0]!.id).toBe('note-1');
-    expect(zOf(nodes, 'note-1')).toBeLessThan(zOf(nodes, 'character-1'));
+    expect(zOf(nodes, 'note-1')).toBeLessThan(zOf(nodes, 'role-1'));
   });
 });
 
@@ -42,8 +37,8 @@ describe('toNodes below', () => {
   it('toNodes_stack_belowIsNextCardInStack', () => {
     const nodes = toNodes(fixtureBoard(fixtureStack(0, 0)), UI);
     const below = (id: string) => nodes.find((n) => n.id === id)!.data as CardNodeData;
-    expect(below('character-1').below).toMatchObject({ id: 'motivation-1', type: 'motivation' });
-    expect(below('motivation-1').below).toMatchObject({ id: 'conflict-1', type: 'conflict' });
+    expect(below('role-1').below).toMatchObject({ id: 'goal-1', type: 'goal' });
+    expect(below('goal-1').below).toMatchObject({ id: 'conflict-1', type: 'conflict' });
     expect(below('conflict-1').below).toBeNull();
   });
 
@@ -52,13 +47,13 @@ describe('toNodes below', () => {
       x: 0,
       y: 59,
       z: 2,
-      tuckedUnder: 'character-1',
+      tuckedUnder: 'role-1',
     });
     setting.rings[0] = { ...setting.rings[0]!, activeIndex: 2 };
     setting.connector = 'after the';
-    const nodes = toNodes(fixtureBoard([fixtureCard('character'), setting]), UI);
+    const nodes = toNodes(fixtureBoard([fixtureCard('role'), setting]), UI);
     const data = (id: string) => nodes.find((n) => n.id === id)!.data as CardNodeData;
-    expect(data('character-1').below).toEqual({
+    expect(data('role-1').below).toEqual({
       id: 'setting-1',
       type: 'setting',
       kind: 'event',

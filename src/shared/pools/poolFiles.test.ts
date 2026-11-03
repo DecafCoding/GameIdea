@@ -11,16 +11,16 @@ import { describe, expect, it } from 'vitest';
 import { CARD_TYPES, GENRES, type CardType, type PoolCue } from '@/shared/model';
 
 const PREFIX: Record<CardType, string> = {
-  character: 'ch',
-  motivation: 'mo',
+  role: 'ch',
+  goal: 'mo',
   setting: 'se',
   conflict: 'co',
-  description: 'de',
+  modifier: 'de',
 };
 
 /** Connector words that 2-cue types must not start with: cues are bare goals and obstacles. */
 const NO_LEAD: Partial<Record<CardType, string>> = {
-  motivation: 'wants to ',
+  goal: 'wants to ',
   conflict: 'but ',
 };
 

@@ -69,23 +69,23 @@ export function activeText(card: Card): string {
 }
 
 /**
- * First combine: the Description's ring becomes the target's rings[1], keeping its
- * active cue. The caller deletes the Description card. A later Description exchanges the
+ * First combine: the Modifier's ring becomes the target's rings[1], keeping its
+ * active cue. The caller deletes the Modifier card. A later Modifier exchanges the
  * adjectives through swap, and split takes them back out.
  */
-export function combine(target: Card, description: Card): Card {
-  if (target.type !== 'character' && target.type !== 'setting') {
+export function combine(target: Card, modifier: Card): Card {
+  if (target.type !== 'role' && target.type !== 'setting') {
     throw new Error(
-      `A Description combines only with a Character or Setting, not a ${target.type}.`,
+      `A Modifier combines only with a Player Role or Setting, not a ${target.type}.`,
     );
   }
   if (target.rings.length !== 1) {
     throw new Error('This card already has adjectives.');
   }
-  if (description.type !== 'description') {
-    throw new Error(`Only a Description can be combined, not a ${description.type}.`);
+  if (modifier.type !== 'modifier') {
+    throw new Error(`Only a Modifier can be combined, not a ${modifier.type}.`);
   }
-  const source = ringAt(description, 0);
+  const source = ringAt(modifier, 0);
   return {
     ...target,
     rings: [ringAt(target, 0), { cues: [...source.cues], activeIndex: source.activeIndex }],
@@ -101,25 +101,25 @@ function requireCombined(card: Card): void {
 }
 
 /**
- * Swap: the combined card's adjectives and the Description's ring change places, each
- * keeping its own active cue. The caller places the Description beside the card.
+ * Swap: the combined card's adjectives and the Modifier's ring change places, each
+ * keeping its own active cue. The caller places the Modifier beside the card.
  */
-export function swap(target: Card, description: Card): { target: Card; description: Card } {
+export function swap(target: Card, modifier: Card): { target: Card; modifier: Card } {
   requireCombined(target);
-  if (description.type !== 'description') {
-    throw new Error(`Only a Description can be swapped, not a ${description.type}.`);
+  if (modifier.type !== 'modifier') {
+    throw new Error(`Only a Modifier can be swapped, not a ${modifier.type}.`);
   }
   const adjectives = ringAt(target, 1);
-  const incoming = ringAt(description, 0);
+  const incoming = ringAt(modifier, 0);
   return {
     target: { ...target, rings: [ringAt(target, 0), copyRing(incoming)] },
-    description: { ...description, rings: [copyRing(adjectives)] },
+    modifier: { ...modifier, rings: [copyRing(adjectives)] },
   };
 }
 
 /**
  * Split: the combined card keeps only its nouns; the returned ring is a copy of its old
- * adjectives with their active cue, for the caller's new Description card.
+ * adjectives with their active cue, for the caller's new Modifier card.
  */
 export function split(target: Card): { target: Card; ring: Ring } {
   requireCombined(target);
@@ -131,7 +131,7 @@ export function split(target: Card): { target: Card; ring: Ring } {
 
 /** The word for a ring's cues, used in ring-half labels such as "Turn Nouns Left". */
 export function ringWord(card: Card, ringIndex: number): 'Nouns' | 'Adjectives' | 'Cues' {
-  if (card.type === 'motivation' || card.type === 'conflict') return 'Cues';
-  if (card.type === 'description' || ringIndex === 1) return 'Adjectives';
+  if (card.type === 'goal' || card.type === 'conflict') return 'Cues';
+  if (card.type === 'modifier' || ringIndex === 1) return 'Adjectives';
   return 'Nouns';
 }

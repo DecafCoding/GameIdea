@@ -22,7 +22,7 @@ describe('findOpenSpot', () => {
 
 describe('besideSpot', () => {
   it('besideSpot_freeRight_returnsNextGridPointRight', () => {
-    const card = fixtureCard('character', { x: 0, y: 0 });
+    const card = fixtureCard('role', { x: 0, y: 0 });
     expect(besideSpot(fixtureBoard([card]), card)).toEqual({ x: 288, y: 0 });
   });
 

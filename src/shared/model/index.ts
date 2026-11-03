@@ -7,14 +7,8 @@
 /** Board file and record format version. A shape change needs an upgrade step. */
 export const FORMAT_VERSION = 5;
 
-/** The 5 decks, in deck order. */
-export const CARD_TYPES = [
-  'character',
-  'motivation',
-  'setting',
-  'conflict',
-  'description',
-] as const;
+/** The 5 decks, in rail order: core, then modifiers, then optional. */
+export const CARD_TYPES = ['role', 'goal', 'conflict', 'modifier', 'setting'] as const;
 export type CardType = (typeof CARD_TYPES)[number];
 
 /** The 4 genres, in dialog order. Cyberpunk and Space Opera are sub-genres of Sci-Fi. */
@@ -27,11 +21,11 @@ export type DeckGenres = Record<CardType, Genre[]>;
 /** The same list copied into every deck: the default for a new board and the upgrade from version 2. */
 export function everyDeck(genres: readonly Genre[]): DeckGenres {
   return {
-    character: [...genres],
-    motivation: [...genres],
+    role: [...genres],
+    goal: [...genres],
     setting: [...genres],
     conflict: [...genres],
-    description: [...genres],
+    modifier: [...genres],
   };
 }
 
@@ -40,11 +34,20 @@ export type CueKind = 'place' | 'object' | 'event';
 
 /** Cues on one ring at draw time: 4 nouns / 2 cues / 4 adjectives. */
 export const CUES_PER_CARD: Record<CardType, 2 | 4> = {
-  character: 4,
-  setting: 4,
-  description: 4,
-  motivation: 2,
+  role: 4,
+  goal: 2,
   conflict: 2,
+  modifier: 4,
+  setting: 4,
+};
+
+/** The deck name shown on deck buttons, cards and in the text file. */
+export const DECK_NAME: Record<CardType, string> = {
+  role: 'Player Role',
+  goal: 'Goal',
+  conflict: 'Conflict',
+  modifier: 'Modifier',
+  setting: 'Setting',
 };
 
 /** A cue copied onto a card. kind is present on Setting nouns only. */
@@ -66,7 +69,7 @@ export interface Card {
   y: number;
   z: number;
   tuckedUnder: string | null;
-  /** Character/Setting: [nouns] or [nouns, adjectives]. Others: one ring. */
+  /** Player Role/Setting: [nouns] or [nouns, adjectives]. Others: one ring. */
   rings: Ring[];
   /**
    * The connector word chosen on the badge above this card while it was tucked, such as

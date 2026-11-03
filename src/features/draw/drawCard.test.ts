@@ -49,15 +49,15 @@ const texts = (card: ReturnType<typeof drawCard>) => card.rings[0]!.cues.map((cu
 
 describe('drawCard', () => {
   it('drawCard_character_returnsOneRingOfFourDistinctCues', () => {
-    const card = drawCard('character', pool('character', six), ALL, { createId });
+    const card = drawCard('role', pool('role', six), ALL, { createId });
     expect(card.rings).toHaveLength(1);
     expect(card.rings[0]!.activeIndex).toBe(0);
     expect(new Set(texts(card)).size).toBe(4);
-    expect(card).toMatchObject({ type: 'character', x: 0, y: 0, z: 0, tuckedUnder: null });
+    expect(card).toMatchObject({ type: 'role', x: 0, y: 0, z: 0, tuckedUnder: null });
   });
 
   it('drawCard_motivation_returnsTwoCues', () => {
-    const card = drawCard('motivation', pool('motivation', six), ALL);
+    const card = drawCard('goal', pool('goal', six), ALL);
     expect(texts(card)).toHaveLength(2);
   });
 
@@ -67,15 +67,15 @@ describe('drawCard', () => {
   });
 
   it('drawCard_characterPool_cuesHaveNoKindOrId', () => {
-    const card = drawCard('character', pool('character', six), ALL);
+    const card = drawCard('role', pool('role', six), ALL);
     for (const cue of card.rings[0]!.cues) expect(Object.keys(cue)).toEqual(['text']);
   });
 
   it('drawCard_poolWithDuplicateTexts_neverRepeatsText', () => {
-    const dupes = pool('motivation', ['a', 'A ', 'b', 'a', 'c', ' b']);
+    const dupes = pool('goal', ['a', 'A ', 'b', 'a', 'c', ' b']);
     const random = mulberry32(7);
     for (let i = 0; i < 500; i++) {
-      const drawn = texts(drawCard('motivation', dupes, ALL, { random })).map((t) =>
+      const drawn = texts(drawCard('goal', dupes, ALL, { random })).map((t) =>
         t.trim().toLowerCase(),
       );
       expect(new Set(drawn).size).toBe(2);
@@ -83,38 +83,38 @@ describe('drawCard', () => {
   });
 
   it('drawCard_poolTooSmall_throws', () => {
-    expect(() => drawCard('character', pool('character', ['a', 'b', 'B', 'c']), ALL)).toThrow();
+    expect(() => drawCard('role', pool('role', ['a', 'b', 'B', 'c']), ALL)).toThrow();
   });
 
   it('drawCard_typeMismatch_throws', () => {
-    expect(() => drawCard('character', pool('setting', six), ALL)).toThrow();
+    expect(() => drawCard('role', pool('setting', six), ALL)).toThrow();
   });
 
   it('drawCard_anyDraw_doesNotMutatePool', () => {
-    const p = pool('character', six);
+    const p = pool('role', six);
     const before = structuredClone(p);
-    for (let i = 0; i < 20; i++) drawCard('character', p, ALL);
+    for (let i = 0; i < 20; i++) drawCard('role', p, ALL);
     expect(p).toEqual(before);
   });
 
   it('drawCard_sameSeed_sameCues', () => {
-    const p = pool('character', six);
-    const a = drawCard('character', p, ALL, { random: mulberry32(42) });
-    const b = drawCard('character', p, ALL, { random: mulberry32(42) });
+    const p = pool('role', six);
+    const a = drawCard('role', p, ALL, { random: mulberry32(42) });
+    const b = drawCard('role', p, ALL, { random: mulberry32(42) });
     expect(texts(a)).toEqual(texts(b));
   });
 
   it('drawCard_genres_onlyMatchingCues', () => {
     const mixed: Pool = {
-      type: 'character',
+      type: 'role',
       cues: [
-        ...pool('character', ['a', 'b', 'c', 'd'], ['cyberpunk']).cues,
-        ...pool('character', ['e', 'f', 'g', 'h'], ['space-opera']).cues,
+        ...pool('role', ['a', 'b', 'c', 'd'], ['cyberpunk']).cues,
+        ...pool('role', ['e', 'f', 'g', 'h'], ['space-opera']).cues,
       ],
     };
     const random = mulberry32(3);
     for (let i = 0; i < 50; i++) {
-      expect(texts(drawCard('character', mixed, ['cyberpunk'], { random })).sort()).toEqual([
+      expect(texts(drawCard('role', mixed, ['cyberpunk'], { random })).sort()).toEqual([
         'a',
         'b',
         'c',
@@ -125,23 +125,23 @@ describe('drawCard', () => {
 
   it('drawCard_cueInTwoGenres_drawnForEither', () => {
     const p: Pool = {
-      type: 'motivation',
+      type: 'goal',
       cues: [
         { id: 'm-1', text: 'shared', genres: ['cyberpunk', 'space-opera'] },
         { id: 'm-2', text: 'cyber', genres: ['cyberpunk'] },
         { id: 'm-3', text: 'opera', genres: ['space-opera'] },
       ],
     };
-    expect(texts(drawCard('motivation', p, ['cyberpunk'])).sort()).toEqual(['cyber', 'shared']);
-    expect(texts(drawCard('motivation', p, ['space-opera'])).sort()).toEqual(['opera', 'shared']);
+    expect(texts(drawCard('goal', p, ['cyberpunk'])).sort()).toEqual(['cyber', 'shared']);
+    expect(texts(drawCard('goal', p, ['space-opera'])).sort()).toEqual(['opera', 'shared']);
   });
 
   it('drawCard_noMatchingCues_throws', () => {
-    expect(() => drawCard('character', pool('character', six), ['cyberpunk'])).toThrow();
+    expect(() => drawCard('role', pool('role', six), ['cyberpunk'])).toThrow();
   });
 
   it('drawCard_emptyGenres_throws', () => {
-    expect(() => drawCard('character', pool('character', six), [])).toThrow();
+    expect(() => drawCard('role', pool('role', six), [])).toThrow();
   });
 
   it('drawCard_realPoolFiles_200DrawsNeverRepeatACue', () => {
