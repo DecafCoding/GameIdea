@@ -115,31 +115,6 @@ export function tuckCard(board: Board, id: string, targetId: string): Board {
   return layoutStack(next, rootOf(next, targetId).id);
 }
 
-/**
- * Puts the card (with its own stack) on top of the target: it takes the target's place,
- * as a root at the target's x, y or under the target's parent, and the target (with its
- * stack) tucks under it. A second Modifier on a combined card uses this, so both sets
- * of adjectives read before the noun.
- */
-export function putOnTop(board: Board, id: string, targetId: string): Board {
-  if (id === targetId || descendantsOf(board, id).some((card) => card.id === targetId)) {
-    throw new Error('A card cannot go on top of itself or a card tucked under it.');
-  }
-  const before = cardAt(board, targetId);
-  // Out of its old stack first; the target sits above it there, so the target does not move.
-  let next = untuckCard(board, id, before.x, before.y);
-  const target = cardAt(next, targetId);
-  next = replaceCard(next, id, (card) => ({
-    ...card,
-    x: target.x,
-    y: target.y,
-    z: target.z,
-    tuckedUnder: target.tuckedUnder,
-  }));
-  next = replaceCard(next, targetId, (card) => ({ ...card, tuckedUnder: id, z: nextZ(next) }));
-  return layoutStack(next, rootOf(next, id).id);
-}
-
 /** Takes a tucked card (with its own stack) out of its stack, as a new root at x, y. */
 export function untuckCard(board: Board, id: string, x: number, y: number): Board {
   const oldRoot = rootOf(board, id).id;

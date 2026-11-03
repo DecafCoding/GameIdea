@@ -240,15 +240,17 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
       const dragged = b.cards.find((c) => c.id === node.id);
       if (!dragged) return;
       const target = dropTarget(b, node.id, point);
-      const kind = hintFor(dragged, target, point);
+      const kind = hintFor(b, dragged, target, point);
       setHint((current) => {
         if (!target || !kind) return current === null ? current : null;
         const zone =
           kind === 'swapZones'
-            ? dropAction(dragged, target, point).kind === 'swap'
+            ? dropAction(b, dragged, target, point).kind === 'swap'
               ? 'swap'
               : 'top'
-            : null;
+            : kind === 'swapOnly'
+              ? 'swap'
+              : null;
         if (
           current &&
           current.target === target &&

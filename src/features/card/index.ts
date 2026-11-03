@@ -12,6 +12,7 @@ export {
   activeText,
   combine,
   edgeCues,
+  edgeText,
   isCombined,
   ringIndexFor,
   ringWord,

@@ -10,6 +10,7 @@ export {
   dropCard,
   lockCard,
   placeNewCard,
+  putOnTopOf,
   redrawCard,
   splitCard,
   swapOnto,
@@ -17,4 +18,5 @@ export {
 } from './boardActions';
 export { CanvasProvider, useCanvasApi, type CanvasApi } from './CanvasProvider';
 export { boardRects, CARD_SIZE, findOpenSpot } from './placement';
+export { cardText, isOnTop, onTopCardOf } from './reading';
 export { childrenOf, isRoot } from './stack';

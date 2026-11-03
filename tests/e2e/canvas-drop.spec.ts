@@ -169,7 +169,7 @@ test.describe('combine', () => {
     );
     const hint = page.getByTestId('hint-combine');
     await expect(hint).toBeVisible();
-    await expect(hint).toHaveText('Drop To Combine');
+    await expect(hint).toHaveText('Drop to combine');
     await expect(page.getByTestId('hint-slot')).toHaveCount(0);
     await page.mouse.up();
     await expect(hint).toHaveCount(0);
@@ -214,27 +214,21 @@ test.describe('combine', () => {
     const zones = page.getByTestId('hint-zones');
     await expect(zones).toBeVisible();
     await expect(zones.getByText('Swap')).toHaveAttribute('data-active', 'true');
-    await expect(zones.getByText('Add On Top')).toHaveAttribute('data-active', 'false');
-    const edge = await pointOn(page, 'role-1', 30, 176);
-    await page.mouse.move(edge.x, edge.y, { steps: 4 });
-    await expect(zones.getByText('Add On Top')).toHaveAttribute('data-active', 'true');
+    await expect(zones.getByText('Add on top')).toHaveAttribute('data-active', 'false');
+    const band = await pointOn(page, 'role-1', 30, 20);
+    await page.mouse.move(band.x, band.y, { steps: 4 });
+    await expect(zones.getByText('Add on top')).toHaveAttribute('data-active', 'true');
     await page.mouse.up();
   });
 
-  test('onTop_edgeDrop_putsModifierOnTopOfCard', async ({ page }) => {
+  test('onTop_topBandDrop_readsBeforeTheMergedAdjective', async ({ page }) => {
     await open(page, combinedPair());
-    const before = await boxOf(cardById(page, 'role-1'));
-    await dragTo(page, cardById(page, 'modifier-2'), await pointOn(page, 'role-1', 100, 176));
-    await expectBelow(page, 'role-1', 'modifier-2');
-    await expect
-      .poll(async () => {
-        const top = await boxOf(cardById(page, 'modifier-2'));
-        return Math.abs(top.x - before.x) <= 1 && Math.abs(top.y - before.y) <= 1;
-      })
-      .toBe(true);
-    await expect(cardById(page, 'modifier-2')).toHaveAttribute('data-paper', 'top');
-    await expect(cardById(page, 'role-1').getByTestId('active-cue')).toHaveText('exiled navigator');
-    await expect(cardById(page, 'modifier-2').getByTestId('active-cue')).toHaveText('devout');
+    await dragTo(page, cardById(page, 'modifier-2'), await pointOn(page, 'role-1', 100, 20));
+    // The On Top card has no node of its own; it reads first on every edge of its base.
+    await expect(cardById(page, 'modifier-2')).toHaveCount(0);
+    await expect(cardById(page, 'role-1').getByTestId('active-cue')).toHaveText(
+      'devout exiled navigator',
+    );
   });
 
   test('split_strip_restoresModifierAsItWas', async ({ page }) => {

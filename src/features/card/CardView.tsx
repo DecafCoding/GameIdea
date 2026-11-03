@@ -5,10 +5,10 @@
  * card keeps each "adjective noun" edge centered and fades in the turned words.
  */
 import { useState, type CSSProperties, type ReactNode } from 'react';
-import { DECK_NAME, MOD_DECK_NAME, type Card, type Cue } from '@/shared/model';
+import { DECK_NAME, MOD_DECK_NAME, type Card, type Cue, type Ring } from '@/shared/model';
 import { Icon } from '@/shared/ui';
 import { RingControl } from './RingControl';
-import { edgeCues, isCombined, type RingSlot, type TurnDirection } from './rings';
+import { edgeCues, isCombined, type EdgeCue, type RingSlot, type TurnDirection } from './rings';
 import { iconFor, TypeDisc } from './TypeDisc';
 import { useTurnAngle, type TurnState } from './useTurnAngle';
 import styles from './CardView.module.css';
@@ -23,6 +23,8 @@ interface CardViewProps {
   ringClassName?: string;
   /** Tucked cards use the next paper step and the under shadow. Defaults to 'top'. */
   paper?: CardPaper;
+  /** The ring of the Modifier on top of this card: its adjective reads first on each edge. */
+  onTop?: Ring;
 }
 
 const PAPER_CLASS: Record<CardPaper, string | undefined> = {
@@ -63,6 +65,7 @@ interface CueLabelProps {
   count: number;
   noun: Cue;
   adjective?: Cue;
+  onTopAdjective?: Cue;
   /** The label box class from labelFit. */
   fit: string;
   /** Hides the label but keeps its place: side edges of a tucked card. */
@@ -79,6 +82,7 @@ function CueLabel({
   count,
   noun,
   adjective,
+  onTopAdjective,
   fit,
   hidden,
   narrow,
@@ -86,7 +90,10 @@ function CueLabel({
   slideFrom,
 }: CueLabelProps) {
   const active = edge === 0;
-  const full = adjective ? `${adjective.text} ${noun.text}` : noun.text;
+  const full = [onTopAdjective, adjective, noun]
+    .filter((cue): cue is Cue => cue !== undefined)
+    .map((cue) => cue.text)
+    .join(' ');
   const classes = [
     styles.label,
     fit,
@@ -98,16 +105,27 @@ function CueLabel({
     .join(' ');
 
   let words: ReactNode = noun.text;
-  if (adjective) {
+  if (adjective || onTopAdjective) {
     words = (
       <>
-        <span
-          key={wordKeys?.adjective}
-          className={`${styles.adj} ${wordKeys ? styles.turnIn : ''}`}
-          style={{ '--slide-from': slideFrom?.adjective } as CSSProperties}
-        >
-          {adjective.text}
-        </span>{' '}
+        {onTopAdjective && (
+          <>
+            <span className={styles.adj} data-testid="on-top-adjective">
+              {onTopAdjective.text}
+            </span>{' '}
+          </>
+        )}
+        {adjective && (
+          <>
+            <span
+              key={wordKeys?.adjective}
+              className={`${styles.adj} ${wordKeys ? styles.turnIn : ''}`}
+              style={{ '--slide-from': slideFrom?.adjective } as CSSProperties}
+            >
+              {adjective.text}
+            </span>{' '}
+          </>
+        )}
         <span
           key={wordKeys?.noun}
           className={wordKeys ? styles.turnIn : ''}
@@ -142,7 +160,7 @@ function cardLabel(card: Card): string {
 /** A clockwise turn moves words toward local -x, so they slide in from +4 px. */
 const slide = (turn: TurnState) => (turn.direction === 'cw' ? '4px' : '-4px');
 
-export function CardView({ card, onTurn, ringClassName, paper = 'top' }: CardViewProps) {
+export function CardView({ card, onTurn, ringClassName, paper = 'top', onTop }: CardViewProps) {
   const [lastDirection, setLastDirection] = useState<TurnDirection>('cw');
   const nouns = card.rings[0];
   const count = nouns?.cues.length ?? 0;
@@ -165,13 +183,13 @@ export function CardView({ card, onTurn, ringClassName, paper = 'top' }: CardVie
   let face: ReactNode;
   if (!nouns) {
     face = null;
-  } else if (combined) {
+  } else if (combined || onTop) {
     // Static composed edges; only the turned group's words remount and fade in.
     const wordKeys = { noun: `n${outerTurn.turns}`, adjective: `a${innerTurn.turns}` };
     const slideFrom = { noun: slide(outerTurn), adjective: slide(innerTurn) };
     face = (
       <div className={styles.cueLayer}>
-        {edgeCues(card).map(({ edge, noun, adjective }) => (
+        {edgeCues(card, onTop).map(({ edge, noun, adjective, onTopAdjective }: EdgeCue) => (
           <CueLabel
             key={edge}
             edge={edge}
@@ -179,6 +197,7 @@ export function CardView({ card, onTurn, ringClassName, paper = 'top' }: CardVie
             count={count}
             noun={noun}
             adjective={adjective}
+            onTopAdjective={onTopAdjective}
             {...edgeProps(edge)}
             wordKeys={wordKeys}
             slideFrom={slideFrom}

@@ -6,10 +6,10 @@
  * The array is sorted by zIndex, so Tab moves through the cards in z order.
  */
 import type { Node } from '@xyflow/react';
-import { activeText } from '@/features/card';
 import type { Board, Card } from '@/shared/model';
 import type { Below } from './connector';
 import { CARD_SIZE } from './placement';
+import { cardText, isOnTop } from './reading';
 import { isRoot, stackOrder } from './stack';
 
 export type CardNodeData = {
@@ -40,12 +40,12 @@ export interface NodeUi {
 export const STACK_RANK = 1000;
 
 /** What the connector badge needs from the card below. */
-function belowCard(card: Card | undefined): BelowCard | null {
+function belowCard(board: Board, card: Card | undefined): BelowCard | null {
   if (!card) return null;
   return {
     id: card.id,
     type: card.type,
-    text: activeText(card),
+    text: cardText(board, card),
     saved: card.connector ?? null,
   };
 }
@@ -57,7 +57,10 @@ export function sameBelow(a: BelowCard | null, b: BelowCard | null): boolean {
 }
 
 export function toNodes(board: Board, ui: NodeUi): BoardFlowNode[] {
-  const roots = board.cards.filter((card) => isRoot(board, card.id)).sort((a, b) => a.z - b.z);
+  // A card on top of another has no node: it reads as part of its base card.
+  const roots = board.cards
+    .filter((card) => isRoot(board, card.id) && !isOnTop(board, card))
+    .sort((a, b) => a.z - b.z);
   const cards: CardFlowNode[] = roots.flatMap((root, r) =>
     stackOrder(board, root.id).map((card, i, order): CardFlowNode => ({
       id: card.id,
@@ -70,7 +73,7 @@ export function toNodes(board: Board, ui: NodeUi): BoardFlowNode[] {
       data: {
         cardId: card.id,
         depth: i,
-        below: belowCard(order[i + 1]),
+        below: belowCard(board, order[i + 1]),
         selected: ui.selectedId === card.id,
         hidden: ui.hiddenIds.has(card.id),
       },

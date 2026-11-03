@@ -5,6 +5,7 @@
  */
 import {
   combine,
+  isCombined,
   split,
   swap,
   toggleLock,
@@ -15,6 +16,7 @@ import {
 import { newId, type Board, type Card } from '@/shared/model';
 import { dropAction, dropTarget } from './dropZones';
 import { besideSpot, type Point } from './placement';
+import { onTopCardOf } from './reading';
 import {
   childrenOf,
   descendantsOf,
@@ -22,7 +24,6 @@ import {
   layoutStack,
   moveCard,
   nextZ,
-  putOnTop,
   removeFromStacks,
   rootOf,
   tuckCard,
@@ -54,7 +55,7 @@ export function placeNewCard(board: Board, card: Card, spot: Point): Board {
 export function dropCard(board: Board, draggedId: string, point: Point, dropAt: Point): Board {
   const dragged = cardAt(board, draggedId);
   const target = dropTarget(board, draggedId, point);
-  const action = dropAction(dragged, target, point);
+  const action = dropAction(board, dragged, target, point);
   switch (action.kind) {
     case 'move':
       return isRoot(board, draggedId)
@@ -67,7 +68,7 @@ export function dropCard(board: Board, draggedId: string, point: Point, dropAt: 
     case 'swap':
       return swapOnto(board, draggedId, target!.id);
     case 'onTop':
-      return putOnTop(board, draggedId, target!.id);
+      return putOnTopOf(board, draggedId, target!.id);
   }
 }
 
@@ -84,6 +85,25 @@ export function combineOnto(board: Board, modifierId: string, targetId: string):
   next = { ...next, cards: next.cards.filter((c) => c.id !== modifierId) };
   for (const child of children) next = tuckCard(next, child.id, targetId);
   return layoutStack(next, rootOf(next, targetId).id);
+}
+
+/**
+ * On Top: the Modifier sits on top of a merged base card and its adjective reads first on
+ * every edge ("tall frozen pilot"). It leaves its stack (its own tucked cards re-tuck under
+ * the base, as in combine) and keeps no place of its own while it is on top.
+ * Throws when the base has no merged ring or already has an On Top Modifier.
+ */
+export function putOnTopOf(board: Board, modifierId: string, baseId: string): Board {
+  const modifier = cardAt(board, modifierId);
+  const base = cardAt(board, baseId);
+  if (modifier.type !== 'modifier') throw new Error('Only a Modifier goes on top of a card.');
+  if (!isCombined(base)) throw new Error('A Modifier goes on top only of a merged card.');
+  if (onTopCardOf(board, baseId)) throw new Error('This card already has an On Top Modifier.');
+  const children = childrenOf(board, modifierId).filter((c) => c.id !== baseId);
+  let next = removeFromStacks(board, modifierId);
+  next = replaceCard(next, { ...cardAt(next, modifierId), tuckedUnder: null, onTopOf: baseId });
+  for (const child of children) next = tuckCard(next, child.id, baseId);
+  return layoutStack(next, rootOf(next, baseId).id);
 }
 
 /**
@@ -105,12 +125,19 @@ export function swapOnto(board: Board, modifierId: string, targetId: string): Bo
 
 /**
  * Split: the combined card keeps its nouns, and its adjectives (with their active cue)
- * become a new Modifier beside it. Cards tucked under it stay where they are.
+ * become a new Modifier beside it; an On Top Modifier stays on top. A card with no merged
+ * ring but an On Top Modifier releases that Modifier beside it instead. Cards tucked under
+ * it stay where they are.
  */
 export function splitCard(board: Board, cardId: string, createId: () => string = newId): Board {
   const card = cardAt(board, cardId);
-  const result = split(card);
   const spot = besideSpot(board, card);
+  if (!isCombined(card)) {
+    const onTop = onTopCardOf(board, cardId);
+    if (!onTop) throw new Error('This card has nothing to split off.');
+    return replaceCard(board, { ...onTop, onTopOf: null, x: spot.x, y: spot.y, z: nextZ(board) });
+  }
+  const result = split(card);
   const modifier: Card = {
     id: createId(),
     type: 'modifier',
@@ -153,9 +180,17 @@ export function lockCard(board: Board, cardId: string): Board {
   return replaceCard(board, toggleLock(cardAt(board, cardId)));
 }
 
-/** Discard: deletes the card; its tucked cards move up to its parent or become roots. */
+/**
+ * Discard: deletes the card; its tucked cards move up to its parent or become roots. Its
+ * On Top Modifier becomes a free card where the card was.
+ */
 export function discardCard(board: Board, cardId: string): Board {
-  const next = removeFromStacks(board, cardId);
+  const card = cardAt(board, cardId);
+  const onTop = onTopCardOf(board, cardId);
+  let next = removeFromStacks(board, cardId);
+  if (onTop) {
+    next = replaceCard(next, { ...onTop, onTopOf: null, x: card.x, y: card.y, z: nextZ(next) });
+  }
   return { ...next, cards: next.cards.filter((c) => c.id !== cardId) };
 }
 

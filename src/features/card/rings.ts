@@ -9,9 +9,13 @@ import { BASE_TYPES, type Card, type Cue, type ModDeck, type Ring } from '@/shar
 export type TurnDirection = 'cw' | 'ccw';
 export type RingSlot = 'outer' | 'inner';
 
-/** One edge of a card: the ring-0 word, plus the adjective on a combined card. */
+/**
+ * One edge of a card: the ring-0 word, plus the adjective on a combined card, plus the
+ * On Top Modifier's adjective, which reads first ("tall frozen pilot").
+ */
 export interface EdgeCue {
   edge: number;
+  onTopAdjective?: Cue;
   adjective?: Cue;
   noun: Cue;
 }
@@ -48,24 +52,42 @@ function ringAt(card: Card, index: number): Ring {
   return ring;
 }
 
-/** The cue on each edge, clockwise from the bottom (edge 0 is the active edge). */
-export function edgeCues(card: Card): EdgeCue[] {
-  const nouns = ringAt(card, 0);
-  const adjectives = isCombined(card) ? ringAt(card, 1) : null;
-  const n = nouns.cues.length;
-  return nouns.cues.map((_, k) => {
-    const noun = nouns.cues[(nouns.activeIndex + k) % n]!;
-    if (!adjectives) return { edge: k, noun };
-    const m = adjectives.cues.length;
-    return { edge: k, noun, adjective: adjectives.cues[(adjectives.activeIndex + k) % m]! };
-  });
+/** The cue on a ring k steps clockwise from its active cue. */
+function cueAt(ring: Ring, k: number): Cue {
+  return ring.cues[(ring.activeIndex + k) % ring.cues.length]!;
 }
 
-/** The bottom edge as one string: "exiled navigator" or "navigator". */
-export function activeText(card: Card): string {
-  const [bottom] = edgeCues(card);
-  if (!bottom) return '';
-  return bottom.adjective ? `${bottom.adjective.text} ${bottom.noun.text}` : bottom.noun.text;
+/**
+ * The cue on each edge, clockwise from the bottom (edge 0 is the active edge). onTop is
+ * the ring of the Modifier on top of the card, if any; each ring keeps its own active cue.
+ */
+export function edgeCues(card: Card, onTop?: Ring): EdgeCue[] {
+  const nouns = ringAt(card, 0);
+  const adjectives = isCombined(card) ? ringAt(card, 1) : null;
+  return nouns.cues.map((_, k) => ({
+    edge: k,
+    ...(onTop ? { onTopAdjective: cueAt(onTop, k) } : {}),
+    ...(adjectives ? { adjective: cueAt(adjectives, k) } : {}),
+    noun: cueAt(nouns, k),
+  }));
+}
+
+/** An edge as one string: "tall frozen pilot", "frozen pilot" or "pilot". */
+export function edgeText(edge: EdgeCue): string {
+  return [edge.onTopAdjective, edge.adjective, edge.noun]
+    .filter((cue): cue is Cue => cue !== undefined)
+    .map((cue) => cue.text)
+    .join(' ');
+}
+
+/**
+ * The bottom edge as one string: "exiled navigator" or "navigator", with an On Top
+ * adjective first when onTop is given. A Hook Card has no cue: "".
+ */
+export function activeText(card: Card, onTop?: Ring): string {
+  if (card.rings.length === 0) return '';
+  const [bottom] = edgeCues(card, onTop);
+  return bottom ? edgeText(bottom) : '';
 }
 
 /**

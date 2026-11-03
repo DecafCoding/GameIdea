@@ -4,6 +4,7 @@
  * Points are flow coordinates.
  */
 import type { Board, Card } from '@/shared/model';
+import { isOnTop } from './reading';
 
 /** Design --card-size (design 9.4). */
 export const CARD_SIZE = 200;
@@ -65,11 +66,14 @@ export function findOpenSpot(start: Point, occupied: Rect[], size: Size): Point 
   return origin;
 }
 
-/** A rect for every card (200 × 200) and note (its size), skipping the ids given. */
+/**
+ * A rect for every card (200 × 200) and note (its size), skipping the ids given. A card on
+ * top of another has no place of its own: its base card covers it.
+ */
 export function boardRects(board: Board, skip: ReadonlySet<string> = new Set()): Rect[] {
   return [
     ...board.cards
-      .filter((card) => !skip.has(card.id))
+      .filter((card) => !skip.has(card.id) && !isOnTop(board, card))
       .map((card) => ({ x: card.x, y: card.y, width: CARD_SIZE, height: CARD_SIZE })),
     ...board.notes
       .filter((note) => !skip.has(note.id))

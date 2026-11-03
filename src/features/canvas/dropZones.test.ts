@@ -2,7 +2,14 @@
  * Tests for the drop target, the drop action and the drag hints.
  */
 import { describe, expect, it } from 'vitest';
-import { combinedCard, fixtureBoard, fixtureCard, fixtureStack } from '@/test/fixtures/boards';
+import type { Card } from '@/shared/model';
+import {
+  combinedCard,
+  fixtureBoard,
+  fixtureCard,
+  fixtureStack,
+  secondModifier,
+} from '@/test/fixtures/boards';
 import { dropAction, dropTarget, hintFor } from './dropZones';
 
 const modifier = fixtureCard('modifier', { x: 900, y: 900, z: 9 });
@@ -43,49 +50,92 @@ describe('dropTarget', () => {
 describe('dropAction', () => {
   const role = fixtureCard('role', { x: 0, y: 0 });
   const combined = combinedCard('role', { x: 0, y: 0 });
+  const on = (...cards: Card[]) => fixtureBoard(cards);
 
   it('dropAction_modifierOnUncombinedRole_combine', () => {
-    expect(dropAction(modifier, role, { x: 10, y: 10 })).toEqual({ kind: 'combine' });
+    expect(dropAction(on(role), modifier, role, { x: 10, y: 10 })).toEqual({ kind: 'combine' });
   });
 
-  it('dropAction_modifierOnCombinedCenter_swap', () => {
-    expect(dropAction(modifier, combined, { x: 140, y: 120 })).toEqual({ kind: 'swap' });
+  it('dropAction_modifierOnResource_combine', () => {
+    const resource = fixtureCard('resource');
+    expect(dropAction(on(resource), modifier, resource, { x: 5, y: 5 })).toEqual({
+      kind: 'combine',
+    });
   });
 
-  it('dropAction_modifierOnCombinedEdge_onTop', () => {
-    expect(dropAction(modifier, combined, { x: 100, y: 190 })).toEqual({ kind: 'onTop' });
-    expect(dropAction(modifier, combined, { x: 100, y: 20 })).toEqual({ kind: 'onTop' });
+  it('dropAction_centerOfMergedCard_isSwap', () => {
+    expect(dropAction(on(combined), modifier, combined, { x: 100, y: 118 })).toEqual({
+      kind: 'swap',
+    });
+    // Outside the drawn circle but below the top band still swaps.
+    expect(dropAction(on(combined), modifier, combined, { x: 10, y: 190 })).toEqual({
+      kind: 'swap',
+    });
+  });
+
+  it('dropAction_topBandOfMergedCard_isOnTop', () => {
+    expect(dropAction(on(combined), modifier, combined, { x: 100, y: 20 })).toEqual({
+      kind: 'onTop',
+    });
+    expect(dropAction(on(combined), modifier, combined, { x: 10, y: 51 })).toEqual({
+      kind: 'onTop',
+    });
+  });
+
+  it('dropAction_mergedCardWithOnTop_isSwapEverywhere', () => {
+    const onTop = secondModifier({ onTopOf: 'role-1' });
+    const board = on(combined, onTop);
+    expect(dropAction(board, modifier, combined, { x: 100, y: 20 })).toEqual({ kind: 'swap' });
+    expect(hintFor(board, modifier, combined, { x: 100, y: 20 })).toBe('swapOnly');
+  });
+
+  it('dropAction_baseWithOnTopNoMerge_combines', () => {
+    const onTop = secondModifier({ onTopOf: 'role-1' });
+    expect(dropAction(on(role, onTop), modifier, role, { x: 100, y: 20 })).toEqual({
+      kind: 'combine',
+    });
+  });
+
+  it('dropAction_modifierOnMechanic_tucks', () => {
+    const mechanic = fixtureCard('mechanic');
+    expect(dropAction(on(mechanic), modifier, mechanic, { x: 100, y: 100 })).toEqual({
+      kind: 'tuck',
+    });
+    expect(hintFor(on(mechanic), modifier, mechanic, { x: 100, y: 100 })).toBeNull();
   });
 
   it('dropAction_goalOnSetting_tuck', () => {
     const setting = fixtureCard('setting');
-    expect(dropAction(fixtureCard('goal'), setting, { x: 5, y: 5 })).toEqual({
+    expect(dropAction(on(setting), fixtureCard('goal'), setting, { x: 5, y: 5 })).toEqual({
       kind: 'tuck',
     });
   });
 
   it('dropAction_noTarget_move', () => {
-    expect(dropAction(modifier, null, { x: 5, y: 5 })).toEqual({ kind: 'move' });
+    expect(dropAction(on(), modifier, null, { x: 5, y: 5 })).toEqual({ kind: 'move' });
   });
 });
 
 describe('hintFor', () => {
   const role = fixtureCard('role', { x: 0, y: 0 });
+  const board = fixtureBoard([role]);
 
   it('hintFor_goalInSlotBandUnderRole_slot', () => {
-    expect(hintFor(fixtureCard('goal'), role, { x: 100, y: 270 })).toBe('slot');
+    expect(hintFor(board, fixtureCard('goal'), role, { x: 100, y: 230 })).toBe('slot');
   });
 
   it('hintFor_conflictOverRole_null', () => {
-    expect(hintFor(fixtureCard('conflict'), role, { x: 100, y: 100 })).toBeNull();
+    expect(hintFor(board, fixtureCard('conflict'), role, { x: 100, y: 100 })).toBeNull();
   });
 
   it('hintFor_modifierOverRole_combine', () => {
-    expect(hintFor(modifier, role, { x: 100, y: 100 })).toBe('combine');
+    expect(hintFor(board, modifier, role, { x: 100, y: 100 })).toBe('combine');
   });
 
   it('hintFor_modifierOverCombined_swapZones', () => {
     const combined = combinedCard('setting');
-    expect(hintFor(modifier, combined, { x: 10, y: 10 })).toBe('swapZones');
+    expect(hintFor(fixtureBoard([combined]), modifier, combined, { x: 10, y: 10 })).toBe(
+      'swapZones',
+    );
   });
 });

@@ -1,9 +1,11 @@
 /**
- * DropHints: the drag hints (design 9.4 and 9.5), drawn in flow coordinates inside the
+ * DropHints: the drag hints (design 9.7 and 9.8), drawn in flow coordinates inside the
  * React Flow viewport so they pan and zoom with the cards, and above every card.
- * combine: an outline around the whole target and "Drop To Combine". swapZones: the
- * "Swap" circle and the "Add On Top" band, the zone under the pointer at full strength.
- * slot: the "… Goes Here" band under the target's bottom edge.
+ * combine: the whole card is the zone, "Drop to combine". swapZones: the "Add on top" top
+ * band and the "Swap" circle, the zone under the pointer at full strength. swapOnly: the
+ * card already has an On Top Modifier, so only "Swap" shows. slot: the "… goes here" band
+ * under the target's bottom edge.
+ * The zone labels follow the phase plan's sentence case, as hint text.
  */
 import { ViewportPortal } from '@xyflow/react';
 import type { Card, CardType } from '@/shared/model';
@@ -31,24 +33,28 @@ export function DropHints({ hint }: { hint: DragHint | null }) {
   let content;
   if (hint.hint === 'combine') {
     content = (
-      <div className={styles.combine} style={at} data-testid="hint-combine">
-        <span className={styles.pill}>Drop To Combine</span>
+      <div className={`${styles.combine} ${styles.zone}`} style={at} data-testid="hint-combine">
+        Drop to combine
       </div>
     );
-  } else if (hint.hint === 'swapZones') {
+  } else if (hint.hint === 'swapZones' || hint.hint === 'swapOnly') {
     content = (
       <div className={styles.zones} style={at} data-testid="hint-zones">
+        {hint.hint === 'swapZones' && (
+          <div
+            className={`${styles.zone} ${styles.band} ${hint.zone === 'top' ? styles.active : ''}`}
+            data-active={hint.zone === 'top'}
+            data-testid="zone-top"
+          >
+            Add on top
+          </div>
+        )}
         <div
           className={`${styles.zone} ${styles.circle} ${hint.zone === 'swap' ? styles.active : ''}`}
           data-active={hint.zone === 'swap'}
+          data-testid="zone-swap"
         >
           Swap
-        </div>
-        <div
-          className={`${styles.zone} ${styles.band} ${hint.zone === 'top' ? styles.active : ''}`}
-          data-active={hint.zone === 'top'}
-        >
-          Add On Top
         </div>
       </div>
     );

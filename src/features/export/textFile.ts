@@ -7,7 +7,7 @@
  * ("Player Role: exiled navigator, devout"). LF line ends and one final newline.
  */
 import { activeText } from '@/features/card';
-import { childrenOf, isRoot } from '@/features/canvas';
+import { childrenOf, isOnTop, isRoot } from '@/features/canvas';
 import { DECK_NAME, type Board, type Card } from '@/shared/model';
 import { downloadFile, safeFileBase } from './download';
 
@@ -26,14 +26,14 @@ function cardLines(board: Board): string[] {
   const visit = (card: Card, depth: number) => {
     const children = childrenOf(board, card.id);
     const joined = children.filter((child) => joinsParent(board, child));
-    const words = [activeText(card), ...joined.map(activeText)].join(', ');
+    const words = [activeText(card), ...joined.map((c) => activeText(c))].join(', ');
     lines.push(`${'  '.repeat(depth)}${DECK_NAME[card.type]}: ${words}`);
     for (const child of children) {
       if (!joined.includes(child)) visit(child, depth + 1);
     }
   };
   const roots = board.cards
-    .filter((card) => isRoot(board, card.id))
+    .filter((card) => isRoot(board, card.id) && !isOnTop(board, card))
     .sort((a, b) => a.y - b.y || a.x - b.x || a.z - b.z);
   for (const root of roots) visit(root, 0);
   return lines;

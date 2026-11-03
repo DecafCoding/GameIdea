@@ -1,0 +1,74 @@
+/**
+ * Tests for reading a board: On Top links and card text, and the feature brief's example
+ * walked on one board.
+ */
+import { describe, expect, it } from 'vitest';
+import { iconFor } from '@/features/card';
+import { fixtureBoard, fixtureCard } from '@/test/fixtures/boards';
+import type { Board, Card } from '@/shared/model';
+import { dropCard, splitCard } from './boardActions';
+import { hintFor } from './dropZones';
+import { cardText, isOnTop, onTopCardOf } from './reading';
+
+const cue = (texts: string[]) => ({ cues: texts.map((text) => ({ text })), activeIndex: 0 });
+const get = (board: Board, id: string): Card => board.cards.find((c) => c.id === id)!;
+
+describe('reading', () => {
+  it('onTopCardOf_and_isOnTop_followTheLink', () => {
+    const base = fixtureCard('role');
+    const onTop = fixtureCard('modifier', { id: 'top', onTopOf: 'role-1' });
+    const dangling = fixtureCard('modifier', { id: 'loose', onTopOf: 'gone' });
+    const board = fixtureBoard([base, onTop, dangling]);
+    expect(onTopCardOf(board, 'role-1')?.id).toBe('top');
+    expect(isOnTop(board, onTop)).toBe(true);
+    expect(isOnTop(board, dangling)).toBe(false);
+    expect(isOnTop(board, base)).toBe(false);
+  });
+
+  it('cardText_nonBaseCard_isActiveText', () => {
+    const goal = fixtureCard('goal');
+    expect(cardText(fixtureBoard([goal]), goal)).toBe('keep the light on');
+  });
+
+  it('feature_modifierExample_readsAsBrief', () => {
+    let board = fixtureBoard([
+      fixtureCard('role', { id: 'pilot', rings: [cue(['pilot', 'diver', 'medic', 'scout'])] }),
+      fixtureCard('modifier', {
+        id: 'frozen',
+        x: 480,
+        z: 2,
+        modDeck: 'setting',
+        rings: [cue(['frozen', 'sunken', 'silent', 'flooded'])],
+      }),
+      fixtureCard('modifier', {
+        id: 'tall',
+        x: 960,
+        z: 3,
+        modDeck: 'role',
+        rings: [cue(['tall', 'brave', 'old', 'quiet'])],
+      }),
+      fixtureCard('modifier', {
+        id: 'third',
+        x: 1440,
+        z: 4,
+        modDeck: 'resource',
+        rings: [cue(['rusty', 'stolen', 'spare', 'shiny'])],
+      }),
+    ]);
+    // "frozen" anywhere on the plain card merges.
+    board = dropCard(board, 'frozen', { x: 100, y: 150 }, { x: 0, y: 0 });
+    expect(cardText(board, get(board, 'pilot'))).toBe('frozen pilot');
+    // "tall" in the top band goes on top.
+    board = dropCard(board, 'tall', { x: 100, y: 20 }, { x: 0, y: 0 });
+    expect(cardText(board, get(board, 'pilot'))).toBe('tall frozen pilot');
+    // A third Modifier over the card gets only the swap zone.
+    const third = get(board, 'third');
+    expect(hintFor(board, third, get(board, 'pilot'), { x: 100, y: 20 })).toBe('swapOnly');
+    // Split takes the merged ring off; the On Top adjective stays.
+    board = splitCard(board, 'pilot', () => 'split');
+    expect(cardText(board, get(board, 'pilot'))).toBe('tall pilot');
+    expect(iconFor(get(board, 'split'))).toBe('map-pin-plus');
+    // With no merged ring, the next Modifier merges again.
+    expect(hintFor(board, third, get(board, 'pilot'), { x: 100, y: 20 })).toBe('combine');
+  });
+});

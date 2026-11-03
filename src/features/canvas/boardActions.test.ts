@@ -19,12 +19,14 @@ import {
   dropCard,
   lockCard,
   placeNewCard,
+  putOnTopOf,
   redrawCard,
   splitCard,
   swapOnto,
   turnCardOnBoard,
 } from './boardActions';
 import { boardRects, CARD_SIZE } from './placement';
+import { cardText, onTopCardOf } from './reading';
 import { isRoot, stackOrder, TUCK_OFFSET } from './stack';
 
 const find = (board: Board, id: string): Card | undefined => board.cards.find((c) => c.id === id);
@@ -90,14 +92,14 @@ describe('dropCard', () => {
     expect(get(next, 'goal-1')).toMatchObject({ tuckedUnder: 'role-1', x: 0, y: 56 });
   });
 
-  it('dropCard_secondModifierOnCombinedEdge_goesOnTop', () => {
+  it('dropCard_secondModifierInTopBand_goesOnTop', () => {
     const board = fixtureBoard([
       combinedCard('role', { x: 0, y: 0 }),
       secondModifier({ x: 600, y: 0, z: 2 }),
     ]);
-    const next = dropCard(board, 'modifier-2', { x: 100, y: 190 }, { x: 20, y: 150 });
-    expect(get(next, 'modifier-2')).toMatchObject({ tuckedUnder: null, x: 0, y: 0 });
-    expect(get(next, 'role-1')).toMatchObject({ tuckedUnder: 'modifier-2', y: 56 });
+    const next = dropCard(board, 'modifier-2', { x: 100, y: 20 }, { x: 20, y: 0 });
+    expect(get(next, 'modifier-2')).toMatchObject({ tuckedUnder: null, onTopOf: 'role-1' });
+    expect(get(next, 'role-1')).toMatchObject({ tuckedUnder: null, x: 0, y: 0 });
     expect(isCombined(get(next, 'role-1'))).toBe(true);
   });
 });
@@ -215,6 +217,74 @@ describe('modDeck through combine, swap and Split', () => {
     expect(get(next, 'role-1').rings[1]!.modDeck).toBe('setting');
     expect(get(next, 'modifier-2').modDeck).toBe('role');
     expect(get(next, 'modifier-2').rings[0]!.modDeck).toBeUndefined();
+  });
+});
+
+describe('On Top', () => {
+  const merged = () => combinedCard('role', { x: 0, y: 0 });
+
+  it('putOnTopOf_mergedBase_linksAndRetucksChildren', () => {
+    const board = fixtureBoard([
+      merged(),
+      secondModifier({ x: 600, y: 0, z: 2 }),
+      fixtureCard('goal', { x: 600, y: 56, z: 3, tuckedUnder: 'modifier-2' }),
+    ]);
+    const next = putOnTopOf(board, 'modifier-2', 'role-1');
+    expect(get(next, 'modifier-2')).toMatchObject({ onTopOf: 'role-1', tuckedUnder: null });
+    expect(get(next, 'goal-1')).toMatchObject({ tuckedUnder: 'role-1', x: 0, y: 56 });
+    expect(onTopCardOf(next, 'role-1')?.id).toBe('modifier-2');
+  });
+
+  it('putOnTopOf_secondOnTop_throws', () => {
+    const board = fixtureBoard([
+      merged(),
+      secondModifier({ onTopOf: 'role-1' }),
+      fixtureCard('modifier', { id: 'modifier-3', x: 600 }),
+    ]);
+    expect(() => putOnTopOf(board, 'modifier-3', 'role-1')).toThrow(/already/);
+  });
+
+  it('putOnTopOf_unmergedBase_throws', () => {
+    const board = fixtureBoard([fixtureCard('role'), secondModifier({ x: 600 })]);
+    expect(() => putOnTopOf(board, 'modifier-2', 'role-1')).toThrow(/merged/);
+  });
+
+  it('splitCard_onlyOnTop_releasesIt', () => {
+    const board = fixtureBoard([fixtureCard('role'), secondModifier({ onTopOf: 'role-1' })]);
+    const next = splitCard(board, 'role-1');
+    const released = get(next, 'modifier-2');
+    expect(released.onTopOf).toBeNull();
+    expect(overlaps(released, get(next, 'role-1'))).toBe(false);
+    expect(next.cards).toHaveLength(2);
+  });
+
+  it('splitCard_mergedWithOnTop_splitsMergedAndKeepsOnTop', () => {
+    const board = fixtureBoard([merged(), secondModifier({ onTopOf: 'role-1' })]);
+    const next = splitCard(board, 'role-1', () => 'split');
+    expect(get(next, 'modifier-2').onTopOf).toBe('role-1');
+    expect(isCombined(get(next, 'role-1'))).toBe(false);
+    expect(get(next, 'split').type).toBe('modifier');
+  });
+
+  it('discardCard_baseWithOnTop_freesIt', () => {
+    const board = fixtureBoard([merged(), secondModifier({ x: 900, y: 900, onTopOf: 'role-1' })]);
+    const next = discardCard(board, 'role-1');
+    expect(get(next, 'modifier-2')).toMatchObject({ onTopOf: null, x: 0, y: 0 });
+    expect(find(next, 'role-1')).toBeUndefined();
+  });
+
+  it('redrawCard_base_keepsOnTop', () => {
+    const board = fixtureBoard([merged(), secondModifier({ onTopOf: 'role-1' })]);
+    const next = redrawCard(board, 'role-1', fixtureCard('role', { id: 'drawn' }));
+    expect(get(next, 'modifier-2')).toBe(get(board, 'modifier-2'));
+  });
+
+  it('moveCard_base_onTopStaysLinked', () => {
+    const board = fixtureBoard([merged(), secondModifier({ onTopOf: 'role-1' })]);
+    const next = dropCard(board, 'role-1', { x: 900, y: 900 }, { x: 480, y: 480 });
+    expect(get(next, 'role-1')).toMatchObject({ x: 480, y: 480 });
+    expect(get(next, 'modifier-2').onTopOf).toBe('role-1');
+    expect(cardText(next, get(next, 'role-1'))).toBe('devout exiled navigator');
   });
 });
 

@@ -56,6 +56,10 @@ function stopRingClick(event: MouseEvent) {
 
 function CardNodeView({ data }: NodeProps<CardFlowNode>) {
   const card = useBoardStore((state) => state.board.cards.find((c) => c.id === data.cardId));
+  // The ring of the Modifier on top of this card: the same object until that card changes.
+  const onTop = useBoardStore(
+    (state) => state.board.cards.find((c) => c.onTopOf === data.cardId)?.rings[0],
+  );
   const actions = useContext(CardNodeContext);
   if (!card || !actions) return null;
   const id = card.id;
@@ -85,6 +89,7 @@ function CardNodeView({ data }: NodeProps<CardFlowNode>) {
           onTurn={(slot, direction) => actions.turn(id, slot, direction)}
           ringClassName="nodrag"
           paper={paperFor(data.depth)}
+          onTop={onTop}
         />
         {below && connector && (
           <ConnectorBadge
@@ -96,7 +101,7 @@ function CardNodeView({ data }: NodeProps<CardFlowNode>) {
       </div>
       <NodeToolbar isVisible={data.selected} position={Position.Top} offset={STRIP_OFFSET}>
         <CardStrip
-          canSplit={isCombined(card)}
+          canSplit={isCombined(card) || onTop !== undefined}
           locked={card.locked}
           redrawDisabled={!actions.canRedraw}
           onSplit={() => actions.split(id)}

@@ -1,21 +1,28 @@
 /**
- * Drop zones (design 9.4 and 9.5): which card a drag points at, what the drop does, and
+ * Drop zones (design 9.7 and 9.8): which card a drag points at, what the drop does, and
  * which hint shows. Everything uses the pointer position in flow coordinates, never the
  * dragged card's rectangle.
+ * A Modifier over a Player Role, Resource or Setting with no merged ring combines anywhere.
+ * Over a merged card with no On Top Modifier, the 52 px top band adds it on top and the
+ * rest of the card swaps; with an On Top Modifier, the whole card swaps. A Modifier over
+ * any other deck tucks like a normal card.
  */
 import { isCombined } from '@/features/card';
 import { BASE_TYPES, type Board, type Card } from '@/shared/model';
 import { CARD_SIZE, type Point } from './placement';
+import { isOnTop, onTopCardOf } from './reading';
 import { descendantsOf, isRoot, stackOrder } from './stack';
 
-/** Radius of the 120 px swap circle on a combined card. */
-export const SWAP_RADIUS = 60;
+/** Height of the "Add on top" band across a merged card's top (design 9.8). */
+export const TOP_BAND = 52;
+/** The drawn swap circle (design 9.8): 96 wide, top-left at (52, 70) on the card. */
+export const SWAP_CIRCLE = { left: 52, top: 70, size: 96 } as const;
 /** Height of the slot band under a normal-place target's bottom edge. */
 export const SLOT_BAND = 72;
 
 export type DropAction =
   { kind: 'move' } | { kind: 'tuck' } | { kind: 'combine' } | { kind: 'swap' } | { kind: 'onTop' };
-export type DropHint = 'combine' | 'swapZones' | 'slot' | null;
+export type DropHint = 'combine' | 'swapZones' | 'swapOnly' | 'slot' | null;
 
 /** The normal place: a Goal under a Player Role, a Conflict under a Goal. */
 export function isNormalPlace(dragged: Card, target: Card): boolean {
@@ -46,7 +53,7 @@ function inSlotBand(card: Card, point: Point): boolean {
 /** Every card, topmost first: roots by z descending, each followed by its stack order. */
 export function paintOrder(board: Board): Card[] {
   return board.cards
-    .filter((card) => isRoot(board, card.id))
+    .filter((card) => isRoot(board, card.id) && !isOnTop(board, card))
     .sort((a, b) => b.z - a.z)
     .flatMap((root) => stackOrder(board, root.id));
 }
@@ -75,30 +82,34 @@ function canSwap(dragged: Card, target: Card): boolean {
   return dragged.type === 'modifier' && isCombined(target);
 }
 
-function inSwapCircle(target: Card, point: Point): boolean {
-  const cx = target.x + CARD_SIZE / 2;
-  const cy = target.y + CARD_SIZE / 2;
-  return Math.hypot(point.x - cx, point.y - cy) <= SWAP_RADIUS;
+function inTopBand(target: Card, point: Point): boolean {
+  return point.y < target.y + TOP_BAND;
 }
 
 /**
- * What a drop does. A Modifier on a combined card swaps in the center circle and goes
- * on top of the card everywhere else, so its adjectives read before the card's own.
+ * What a drop does. A Modifier on a merged card goes on top in the top band and swaps
+ * elsewhere; once the card has an On Top Modifier, it swaps anywhere.
  */
-export function dropAction(dragged: Card, target: Card | null, point: Point): DropAction {
+export function dropAction(
+  board: Board,
+  dragged: Card,
+  target: Card | null,
+  point: Point,
+): DropAction {
   if (!target) return { kind: 'move' };
   if (canCombine(dragged, target)) return { kind: 'combine' };
   if (canSwap(dragged, target)) {
-    return inSwapCircle(target, point) ? { kind: 'swap' } : { kind: 'onTop' };
+    if (onTopCardOf(board, target.id)) return { kind: 'swap' };
+    return inTopBand(target, point) ? { kind: 'onTop' } : { kind: 'swap' };
   }
   return { kind: 'tuck' };
 }
 
 /** The hint to draw while dragging over the target. */
-export function hintFor(dragged: Card, target: Card | null, point: Point): DropHint {
+export function hintFor(board: Board, dragged: Card, target: Card | null, point: Point): DropHint {
   if (!target) return null;
   if (canCombine(dragged, target)) return 'combine';
-  if (canSwap(dragged, target)) return 'swapZones';
+  if (canSwap(dragged, target)) return onTopCardOf(board, target.id) ? 'swapOnly' : 'swapZones';
   if (isNormalPlace(dragged, target) && (inCard(target, point) || inSlotBand(target, point))) {
     return 'slot';
   }

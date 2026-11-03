@@ -3,18 +3,11 @@
  */
 import { describe, expect, it } from 'vitest';
 import type { Board, Card } from '@/shared/model';
-import {
-  combinedCard,
-  fixtureBoard,
-  fixtureCard,
-  fixtureStack,
-  secondModifier,
-} from '@/test/fixtures/boards';
+import { fixtureBoard, fixtureCard, fixtureStack } from '@/test/fixtures/boards';
 import {
   childrenOf,
   moveCard,
   nextZ,
-  putOnTop,
   removeFromStacks,
   stackDepth,
   stackOrder,
@@ -91,59 +84,6 @@ describe('moveCard', () => {
 
   it('moveCard_tuckedCard_throws', () => {
     expect(() => moveCard(fixtureBoard(fixtureStack(0, 0)), 'conflict-1', 1, 1)).toThrow();
-  });
-});
-
-describe('putOnTop', () => {
-  const story = () =>
-    fixtureBoard([
-      combinedCard('role', { x: 96, y: 96, z: 1 }),
-      fixtureCard('goal', { x: 96, y: 152, z: 2, tuckedUnder: 'role-1' }),
-      secondModifier({ x: 600, y: 96, z: 3 }),
-    ]);
-
-  it('putOnTop_rootTarget_takesItsPlaceAndPushesStackDown', () => {
-    const next = putOnTop(story(), 'modifier-2', 'role-1');
-    expect(find(next, 'modifier-2')).toMatchObject({ tuckedUnder: null, x: 96, y: 96 });
-    expect(find(next, 'role-1')).toMatchObject({ tuckedUnder: 'modifier-2', x: 96 });
-    expect(stackOrder(next, 'modifier-2').map((c) => c.id)).toEqual([
-      'modifier-2',
-      'role-1',
-      'goal-1',
-    ]);
-    expect(ys(next, ['modifier-2', 'role-1', 'goal-1'])).toEqual([96, 152, 208]);
-  });
-
-  it('putOnTop_modifierTuckedUnderTarget_movesToTop', () => {
-    const board = tuckCard(story(), 'modifier-2', 'role-1');
-    const next = putOnTop(board, 'modifier-2', 'role-1');
-    expect(stackOrder(next, 'modifier-2').map((c) => c.id)).toEqual([
-      'modifier-2',
-      'role-1',
-      'goal-1',
-    ]);
-    expect(ys(next, ['modifier-2', 'role-1', 'goal-1'])).toEqual([96, 152, 208]);
-  });
-
-  it('putOnTop_tuckedTarget_takesTargetSlotUnderParent', () => {
-    const board = fixtureBoard([
-      fixtureCard('conflict', { x: 0, y: 0, z: 1 }),
-      combinedCard('setting', { x: 0, y: 56, z: 2, tuckedUnder: 'conflict-1' }),
-      secondModifier({ x: 600, y: 0, z: 3 }),
-    ]);
-    const next = putOnTop(board, 'modifier-2', 'setting-1');
-    expect(find(next, 'modifier-2').tuckedUnder).toBe('conflict-1');
-    expect(stackOrder(next, 'conflict-1').map((c) => c.id)).toEqual([
-      'conflict-1',
-      'modifier-2',
-      'setting-1',
-    ]);
-    expect(ys(next, ['conflict-1', 'modifier-2', 'setting-1'])).toEqual([0, 56, 112]);
-  });
-
-  it('putOnTop_ontoOwnDescendant_throws', () => {
-    const board = tuckCard(story(), 'role-1', 'modifier-2');
-    expect(() => putOnTop(board, 'modifier-2', 'role-1')).toThrow();
   });
 });
 
