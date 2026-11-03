@@ -1,0 +1,37 @@
+{
+  "type": "mood",
+  "cues": [
+    {
+      "id": "mood-test-01",
+      "text": "tense"
+    },
+    {
+      "id": "mood-test-02",
+      "text": "cozy"
+    },
+    {
+      "id": "mood-test-03",
+      "text": "eerie"
+    },
+    {
+      "id": "mood-test-04",
+      "text": "giddy"
+    },
+    {
+      "id": "mood-test-05",
+      "text": "somber"
+    },
+    {
+      "id": "mood-test-06",
+      "text": "frantic"
+    },
+    {
+      "id": "mood-test-07",
+      "text": "wistful"
+    },
+    {
+      "id": "mood-test-08",
+      "text": "proud"
+    }
+  ]
+}

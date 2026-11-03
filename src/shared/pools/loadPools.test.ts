@@ -3,16 +3,19 @@
  */
 import { act, renderHook, waitFor } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { type Deck, type Genre } from '@/shared/model';
-
-const CARD_TYPES: Deck[] = ['role', 'goal', 'conflict', 'modifier', 'setting'];
+import { DECKS, GENRE_DECKS, type Deck, type Genre } from '@/shared/model';
 import { loadPools, parsePool, poolUrl, usePools } from '.';
 
 function fixture(type: Deck) {
+  const extra = (GENRE_DECKS as readonly string[]).includes(type)
+    ? { genres: ['horror'] }
+    : type === 'modifier'
+      ? { targets: ['role'] }
+      : {};
   const cue = (n: number) =>
     type === 'setting'
       ? { id: `se-00${n}`, text: `place ${n}` }
-      : { id: `${type}-${n}`, text: `${type} ${n}` };
+      : { id: `${type}-${n}`, text: `${type} ${n}`, ...extra };
   return { type, cues: [cue(1), cue(2), cue(3), cue(4)] };
 }
 
@@ -21,7 +24,7 @@ function fakeFetch(options: { status?: Partial<Record<Deck, number>>; fail?: boo
   return ((input: RequestInfo | URL) => {
     if (options.fail) return Promise.reject(new TypeError('Failed to fetch'));
     const url = input instanceof Request ? input.url : input.toString();
-    const type = CARD_TYPES.find((t) => url.endsWith(`/pools/${t}.json`));
+    const type = DECKS.find((t) => url.endsWith(`/pools/${t}.json`));
     if (!type) return Promise.resolve(new Response('', { status: 404 }));
     const status = options.status?.[type] ?? 200;
     return Promise.resolve(new Response(JSON.stringify(fixture(type)), { status }));
@@ -29,9 +32,9 @@ function fakeFetch(options: { status?: Partial<Record<Deck, number>>; fail?: boo
 }
 
 describe('loadPools', () => {
-  it('loadPools_allFilesOk_returnsFivePools', async () => {
+  it('loadPools_allFilesOk_returnsElevenPools', async () => {
     const pools = await loadPools(fakeFetch());
-    expect(Object.keys(pools).sort()).toEqual([...CARD_TYPES].sort());
+    expect(Object.keys(pools).sort()).toEqual([...DECKS].sort());
     expect(pools.setting.cues[0]).toEqual({
       id: 'se-001',
       text: 'place 1',
@@ -99,6 +102,42 @@ describe('parsePool', () => {
     const pool = parsePool(TAGGED, withGenres(genres));
     expect(pool.cues[0]!.genres).toEqual(genres);
     expect(pool.cues[0]!.genres).not.toBe(genres);
+  });
+});
+
+describe('parsePool targets', () => {
+  const modifier = (targets: unknown) => ({
+    type: 'modifier',
+    cues: [{ id: 'mo-1', text: 'tall', ...(targets === undefined ? {} : { targets }) }],
+  });
+
+  it('parsePool_modifierWithoutTargets_throws', () => {
+    expect(() => parsePool('modifier', modifier(undefined))).toThrow(/needs a list of targets/);
+  });
+
+  it('parsePool_modifierEmptyTargets_throws', () => {
+    expect(() => parsePool('modifier', modifier([]))).toThrow(/targets/);
+  });
+
+  it('parsePool_modifierUnknownTarget_throws', () => {
+    expect(() => parsePool('modifier', modifier(['goal']))).toThrow(/targets/);
+  });
+
+  it('parsePool_modifierRepeatedTarget_throws', () => {
+    expect(() => parsePool('modifier', modifier(['role', 'role']))).toThrow(/targets/);
+  });
+
+  it('parsePool_modifierTargets_keptInOrder', () => {
+    expect(parsePool('modifier', modifier(['setting', 'role'])).cues[0]).toEqual({
+      id: 'mo-1',
+      text: 'tall',
+      targets: ['setting', 'role'],
+    });
+  });
+
+  it('parsePool_targetsOnNonModifier_throws', () => {
+    const data = { type: 'goal', cues: [{ id: 'a', text: 'b', targets: ['role'] }] };
+    expect(() => parsePool('goal', data)).toThrow(/must not have targets/);
   });
 });
 

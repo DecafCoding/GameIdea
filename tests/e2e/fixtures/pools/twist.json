@@ -1,0 +1,37 @@
+{
+  "type": "twist",
+  "cues": [
+    {
+      "id": "twist-test-01",
+      "text": "the map is alive"
+    },
+    {
+      "id": "twist-test-02",
+      "text": "your guide lies"
+    },
+    {
+      "id": "twist-test-03",
+      "text": "the island is moving"
+    },
+    {
+      "id": "twist-test-04",
+      "text": "you are the monster"
+    },
+    {
+      "id": "twist-test-05",
+      "text": "the cure is a curse"
+    },
+    {
+      "id": "twist-test-06",
+      "text": "the tide is a clock"
+    },
+    {
+      "id": "twist-test-07",
+      "text": "the enemy is your twin"
+    },
+    {
+      "id": "twist-test-08",
+      "text": "home is gone"
+    }
+  ]
+}

@@ -1,7 +1,8 @@
 /**
  * The Playwright test and expect every spec and helper uses. An automatic fixture serves
- * the made-up pools in tests/e2e/fixtures/pools/ for every pools/*.json request, because
- * no pool files ship in public/pools/ until Phase 2. The route is on the browser context,
+ * the made-up pools in tests/e2e/fixtures/pools/ for every pools/*.json request. The real
+ * pools ship in public/pools/, but the specs need fixed cue texts; the real-pool smoke test
+ * removes the route with context.unroute. The route is on the browser context,
  * so a second tab gets it too. A spec that tests the pool failure banner registers its own
  * page.route, which wins over a context route.
  */

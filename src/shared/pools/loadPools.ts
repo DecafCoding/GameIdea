@@ -1,8 +1,8 @@
 /**
- * Pool loading: fetches the 5 cue pool files from public/pools/ by web address,
- * so a later server can serve them with no app change.
+ * Pool loading: fetches the 11 cue pool files from public/pools/ by web address,
+ * so a later server can serve them with no app change (pool-files).
  */
-import type { Deck, Pool, Pools } from '@/shared/model';
+import { DECKS, type Deck, type Pool, type Pools } from '@/shared/model';
 import { parsePool } from './parsePool';
 
 /** The web address of one pool file, relative to the app's base address. */
@@ -18,11 +18,8 @@ async function loadPool(type: Deck, fetchFn: typeof fetch): Promise<Pool> {
   return parsePool(type, await response.json());
 }
 
-/** The decks whose pools load: the 5 Phase 1 decks until all 11 pools are checked. */
-const LOADED: Deck[] = ['role', 'goal', 'conflict', 'modifier', 'setting'];
-
-/** Loads the pools. Rejects on a network error, a non-OK status, bad JSON or a bad shape. */
+/** Loads all 11 pools. Rejects on a network error, a non-OK status, bad JSON or a bad shape. */
 export async function loadPools(fetchFn: typeof fetch = fetch): Promise<Pools> {
-  const pools = await Promise.all(LOADED.map((type) => loadPool(type, fetchFn)));
+  const pools = await Promise.all(DECKS.map((type) => loadPool(type, fetchFn)));
   return Object.fromEntries(pools.map((pool) => [pool.type, pool])) as Pools;
 }

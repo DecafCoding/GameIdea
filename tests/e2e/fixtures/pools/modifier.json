@@ -3,35 +3,63 @@
   "cues": [
     {
       "id": "modifier-test-01",
-      "text": "stolen"
+      "text": "exiled",
+      "targets": ["role"]
     },
     {
       "id": "modifier-test-02",
-      "text": "haunted"
+      "text": "orbital",
+      "targets": ["role"]
     },
     {
       "id": "modifier-test-03",
-      "text": "tiny"
+      "text": "reanimated",
+      "targets": ["role"]
     },
     {
       "id": "modifier-test-04",
-      "text": "clockwork"
+      "text": "haunted",
+      "targets": ["role"]
     },
     {
       "id": "modifier-test-05",
-      "text": "frozen"
+      "text": "stolen",
+      "targets": ["resource"]
     },
     {
       "id": "modifier-test-06",
-      "text": "burning"
+      "text": "borrowed",
+      "targets": ["resource"]
     },
     {
       "id": "modifier-test-07",
-      "text": "forgotten"
+      "text": "rusty",
+      "targets": ["resource"]
     },
     {
       "id": "modifier-test-08",
-      "text": "giant"
+      "text": "glowing",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-test-09",
+      "text": "flooded",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-test-10",
+      "text": "frozen",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-test-11",
+      "text": "sunken",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-test-12",
+      "text": "silent",
+      "targets": ["setting"]
     }
   ]
 }
