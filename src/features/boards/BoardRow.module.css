@@ -5,7 +5,7 @@
   gap: 16px;
   min-height: 72px;
   padding: 16px 20px;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid var(--border);
 }
 
 /* A just-imported row: --accent at 10 percent and a 2 px inset outline. */
@@ -35,7 +35,7 @@
 }
 
 .emptyChip {
-  border: 1px dashed var(--line-strong);
+  border: 1px dashed var(--border-strong);
 }
 
 .text {
@@ -77,28 +77,28 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: var(--hit-min);
-  height: var(--hit-min);
+  width: var(--button-h);
+  height: var(--button-h);
   padding: 0;
-  border: 1px solid var(--line);
+  border: 1px solid var(--border);
   border-radius: var(--radius-button);
-  background: var(--ground);
+  background: var(--bg);
   color: var(--text);
   cursor: pointer;
 }
 
 .icon:hover {
-  background: var(--panel-hover);
+  background: var(--surface-raised);
 }
 
 .field {
-  height: var(--hit-min);
+  height: var(--button-h);
   padding: 0 10px;
   border: 1px solid var(--accent);
   border-radius: var(--radius-button);
-  background: var(--ground);
+  background: var(--bg);
   color: var(--text);
-  font-family: var(--font-ui);
+  font-family: var(--font-body);
   font-size: 16px;
   font-weight: 600;
 }

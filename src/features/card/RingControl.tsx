@@ -54,8 +54,8 @@ export function RingControl({ card, onTurn, buttonClassName }: RingControlProps)
       {ringsFor(card).map((ring) => {
         const radius = ring.position === 'inner' ? INNER_RADIUS : OUTER_RADIUS;
         const colors = {
-          '--ring-color': `var(--type-${ring.colorType})`,
-          '--ring-dark': `var(--type-${ring.colorType}-dark)`,
+          '--ring-color': `var(--deck-${ring.colorType})`,
+          '--ring-dark': `var(--ring-hover-${ring.colorType})`,
         } as CSSProperties;
         return SIDES.map(({ side, direction, label }) => {
           const path = ringHalfPath(radius, side);

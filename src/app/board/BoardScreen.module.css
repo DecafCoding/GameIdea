@@ -4,11 +4,11 @@
   grid-template-areas:
     'top top'
     'rail canvas';
-  grid-template-rows: var(--topbar-h) minmax(0, 1fr);
+  grid-template-rows: var(--top-bar-h) minmax(0, 1fr);
   grid-template-columns: var(--rail-w) minmax(0, 1fr);
   height: 100vh;
   overflow: hidden;
-  background: var(--ground);
+  background: var(--bg);
 }
 
 .region {
@@ -38,7 +38,7 @@
       'top'
       'rail'
       'canvas';
-    grid-template-rows: var(--topbar-h) auto minmax(0, 1fr);
+    grid-template-rows: var(--top-bar-h) auto minmax(0, 1fr);
     grid-template-columns: minmax(0, 1fr);
   }
 }

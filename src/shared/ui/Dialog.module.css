@@ -3,9 +3,9 @@
   max-width: 400px;
   width: calc(100% - 32px);
   padding: 20px;
-  border: 1px solid var(--line);
+  border: 1px solid var(--border);
   border-radius: var(--radius-dialog);
-  background: var(--panel);
+  background: var(--surface);
   box-shadow: var(--shadow-menu);
   color: var(--text);
 }
@@ -73,7 +73,7 @@
 
 .wide .actions {
   align-items: center;
-  border-top: 1px solid var(--line);
+  border-top: 1px solid var(--border);
   padding-top: 16px;
 }
 

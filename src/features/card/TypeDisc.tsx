@@ -27,7 +27,7 @@ export function TypeDisc({ type, size, icon }: TypeDiscProps) {
     <span
       className={styles.disc}
       data-testid="type-disc"
-      style={{ width: size, height: size, background: `var(--type-${type})` }}
+      style={{ width: size, height: size, background: `var(--deck-${type})` }}
     >
       <Icon name={icon ?? TYPE_ICON[type]} size={size / 2} />
     </span>

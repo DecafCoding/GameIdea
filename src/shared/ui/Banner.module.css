@@ -10,13 +10,13 @@
 }
 
 .warning {
-  background: var(--warn-fill);
-  border-color: var(--warn-line);
+  background: var(--warn-bg);
+  border-color: var(--warn-border);
 }
 
 .status {
-  background: var(--panel);
-  border-color: var(--line);
+  background: var(--surface);
+  border-color: var(--border);
 }
 
 .icon {

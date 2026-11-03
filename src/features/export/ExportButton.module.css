@@ -8,13 +8,13 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  height: var(--hit-min);
+  height: var(--button-h);
   padding: 0 14px;
-  border: 1px solid var(--line);
+  border: 1px solid var(--border);
   border-radius: var(--radius-button);
-  background: var(--ground);
+  background: var(--bg);
   color: var(--text);
-  font-family: var(--font-ui);
+  font-family: var(--font-body);
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
@@ -38,9 +38,9 @@
   gap: 2px;
   width: 340px;
   padding: 6px;
-  border: 1px solid var(--line);
+  border: 1px solid var(--border);
   border-radius: var(--radius-dialog);
-  background: var(--panel);
+  background: var(--surface);
   box-shadow: var(--shadow-menu);
 }
 
@@ -48,20 +48,20 @@
   display: flex;
   align-items: flex-start;
   gap: 12px;
-  min-height: var(--hit-min);
+  min-height: var(--button-h);
   padding: 12px;
   border: none;
   border-radius: var(--radius-button);
   background: transparent;
   color: var(--text);
-  font-family: var(--font-ui);
+  font-family: var(--font-body);
   text-align: left;
   cursor: pointer;
 }
 
 .row:hover,
 .row:focus-visible {
-  background: var(--panel-hover);
+  background: var(--surface-raised);
 }
 
 .rowIcon {
@@ -90,5 +90,5 @@
 .fileName {
   margin-top: 2px;
   font-size: 12px;
-  color: var(--text-dim);
+  color: var(--text-disabled);
 }

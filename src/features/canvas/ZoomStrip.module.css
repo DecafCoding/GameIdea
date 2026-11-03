@@ -8,26 +8,26 @@
   gap: 2px;
   padding: 4px;
   border-radius: var(--radius-panel);
-  background: var(--panel);
-  box-shadow: var(--shadow-strip);
+  background: var(--surface);
+  box-shadow: var(--shadow-menu);
 }
 
 .button {
-  min-width: var(--hit-min);
-  height: var(--hit-min);
+  min-width: var(--button-h);
+  height: var(--button-h);
   padding: 0 10px;
   border: 0;
-  border-radius: var(--radius-button-inner);
+  border-radius: 7px;
   background: transparent;
   color: var(--text);
-  font-family: var(--font-ui);
+  font-family: var(--font-body);
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
 }
 
 .button:hover {
-  background: var(--panel-hover);
+  background: var(--surface-raised);
 }
 
 .button:active {

@@ -15,11 +15,11 @@
 }
 
 .saved .dot {
-  background: var(--ok);
+  background: var(--status-saved);
 }
 
 .saving .dot {
-  background: var(--wait);
+  background: var(--status-saving);
 }
 
 .failed {
@@ -27,5 +27,5 @@
 }
 
 .failed .dot {
-  background: var(--fail);
+  background: var(--status-failed);
 }

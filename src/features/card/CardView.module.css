@@ -5,23 +5,23 @@
  * into the paper step (user request 2026-10-31). The data-type attribute picks the color.
  */
 [data-type='role'] {
-  --card-type: var(--type-role);
+  --card-type: var(--deck-role);
 }
 
 [data-type='goal'] {
-  --card-type: var(--type-goal);
+  --card-type: var(--deck-goal);
 }
 
 [data-type='setting'] {
-  --card-type: var(--type-setting);
+  --card-type: var(--deck-setting);
 }
 
 [data-type='conflict'] {
-  --card-type: var(--type-conflict);
+  --card-type: var(--deck-conflict);
 }
 
 [data-type='modifier'] {
-  --card-type: var(--type-modifier);
+  --card-type: var(--deck-modifier);
 }
 
 .card {
@@ -31,21 +31,21 @@
   width: var(--card);
   height: var(--card);
   border-radius: var(--radius-card);
-  background: color-mix(in srgb, var(--card-type) var(--card-tint), var(--paper));
-  box-shadow: var(--shadow-card);
+  background: color-mix(in srgb, var(--card-type) var(--card-tint), var(--card-face));
+  box-shadow: var(--shadow-card-raised);
   font-family: var(--font-display);
   font-size: 15px;
 }
 
 /* Tucked cards: the next paper step and the under shadow (design 9.4). */
 .under1 {
-  background: color-mix(in srgb, var(--card-type) var(--card-tint), var(--paper-under-1));
-  box-shadow: var(--shadow-card-under);
+  background: color-mix(in srgb, var(--card-type) var(--card-tint), var(--card-tucked-1));
+  box-shadow: var(--shadow-card);
 }
 
 .under2 {
-  background: color-mix(in srgb, var(--card-type) var(--card-tint), var(--paper-under-2));
-  box-shadow: var(--shadow-card-under);
+  background: color-mix(in srgb, var(--card-type) var(--card-tint), var(--card-tucked-2));
+  box-shadow: var(--shadow-card);
 }
 
 .face {
@@ -94,7 +94,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
-  color: var(--ink-muted);
+  color: var(--card-cue);
 }
 
 /* Top and bottom label of the shared frame: 2 lines, 222 px. */
@@ -126,15 +126,15 @@
 
 .active {
   font-weight: 700;
-  color: var(--ink);
+  color: var(--card-cue-active);
 }
 
 .adj {
-  color: var(--adj-muted);
+  color: var(--card-adjective);
 }
 
 .active .adj {
-  color: var(--adj);
+  color: var(--card-adjective-active);
 }
 
 /*
@@ -164,13 +164,13 @@
   right: 20px;
   top: calc(50% - 0.5px);
   height: 1px;
-  background: var(--paper-line);
+  background: var(--card-divider);
 }
 
 .disc {
   position: absolute;
-  left: calc(50% - var(--card-disc) / 2);
-  top: calc(50% - var(--card-disc) / 2);
+  left: calc(50% - var(--card-center-icon) / 2);
+  top: calc(50% - var(--card-center-icon) / 2);
   z-index: 3;
   display: flex;
 }
@@ -192,5 +192,5 @@
 
 /* A combined card marks its disc with a 2 px Modifier-color edge, inside the disc. */
 .combinedDisc > span {
-  box-shadow: inset 0 0 0 2px var(--type-modifier);
+  box-shadow: inset 0 0 0 2px var(--deck-modifier);
 }

@@ -3,20 +3,20 @@
   display: flex;
   gap: 4px;
   padding: 4px;
-  border: 1px solid var(--line);
+  border: 1px solid var(--border);
   border-radius: var(--radius-panel);
-  background: var(--panel);
-  box-shadow: var(--shadow-strip);
+  background: var(--surface);
+  box-shadow: var(--shadow-menu);
 }
 
 .button {
-  min-height: var(--hit-min);
+  min-height: var(--button-h);
   padding: 0 12px;
   border: 0;
-  border-radius: var(--radius-button-inner);
+  border-radius: 7px;
   background: transparent;
   color: var(--text);
-  font-family: var(--font-ui);
+  font-family: var(--font-body);
   font-size: 13px;
   font-weight: 600;
   white-space: nowrap;
@@ -24,7 +24,7 @@
 }
 
 .button:hover:not(:disabled) {
-  background: var(--panel-hover);
+  background: var(--surface-raised);
 }
 
 .button:active:not(:disabled) {
@@ -32,12 +32,12 @@
 }
 
 .button:disabled {
-  color: var(--text-dim);
+  color: var(--text-disabled);
   cursor: default;
 }
 
 .split {
-  background: color-mix(in srgb, var(--type-modifier) 25%, transparent);
+  background: color-mix(in srgb, var(--deck-modifier) 25%, transparent);
 }
 
 .discard {

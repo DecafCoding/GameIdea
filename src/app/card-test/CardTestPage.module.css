@@ -33,20 +33,20 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  min-height: var(--hit-min);
+  min-height: var(--button-h);
   padding: 4px 14px 4px 4px;
-  border: 1px solid var(--line);
+  border: 1px solid var(--border);
   border-radius: var(--radius-panel);
-  background: var(--panel);
+  background: var(--surface);
   color: var(--text);
-  font-family: var(--font-ui);
+  font-family: var(--font-body);
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
 }
 
 .deck:hover:not(:disabled) {
-  background: var(--panel-hover);
+  background: var(--surface-raised);
 }
 
 .deck:active:not(:disabled) {
@@ -54,7 +54,7 @@
 }
 
 .deck:disabled {
-  color: var(--text-dim);
+  color: var(--text-disabled);
   cursor: default;
 }
 

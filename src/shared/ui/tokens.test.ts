@@ -1,20 +1,43 @@
 /**
- * Token parity with the design handoff, and the shipped icon files.
+ * Token checks: tokens.css holds the handoff token set verbatim plus only the allowed,
+ * non-color carried-over tokens, and every var(--name) used in src/ is defined. Also the
+ * shipped icon files.
  */
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
+import { CARD_TYPES } from '@/shared/model';
 import type { IconName } from './Icon';
 
-/** Reads the --name: value pairs from the first :root block of a CSS file. */
-function rootTokens(path: string): Map<string, string> {
-  const css = readFileSync(join(process.cwd(), path), 'utf8');
-  const root = /:root\s*\{([^}]*)\}/.exec(css)?.[1] ?? '';
-  const tokens = new Map<string, string>();
-  for (const match of root.matchAll(/(--[\w-]+)\s*:\s*([^;]+);/g)) {
-    tokens.set(match[1]!, match[2]!.trim());
-  }
-  return tokens;
+const read = (path: string) => readFileSync(join(process.cwd(), path), 'utf8');
+
+const HANDOFF = read('docs/design-handoff/_ds/gameidea/styles.css');
+const TOKENS = read('src/shared/ui/tokens.css');
+/** The handoff file from its first :root { to the end. */
+const HANDOFF_BODY = HANDOFF.slice(HANDOFF.indexOf(':root {'));
+
+/** Tokens kept from TheForge until Phase 2: card geometry and motion, never colors. */
+const CARRIED_OVER = [
+  '--card',
+  '--t-turn-90',
+  '--t-turn-180',
+  '--t-draw',
+  '--t-fade',
+  '--t-banner',
+];
+
+/** Every "--name: value" definition in a CSS text. */
+function definitions(css: string): [string, string][] {
+  return [...css.matchAll(/(--[\w-]+)\s*:\s*([^;]+);/g)].map((m) => [m[1]!, m[2]!.trim()]);
+}
+
+/** Every .css, .ts and .tsx file under a folder. */
+function sourceFiles(dir: string): string[] {
+  return readdirSync(join(process.cwd(), dir), { withFileTypes: true }).flatMap((entry) => {
+    const path = `${dir}/${entry.name}`;
+    if (entry.isDirectory()) return sourceFiles(path);
+    return /\.(css|tsx?)$/.test(entry.name) ? [path] : [];
+  });
 }
 
 const ICONS: IconName[] = [
@@ -39,30 +62,45 @@ const ICONS: IconName[] = [
   'file-x',
 ];
 
-/**
- * Tokens the design system changed after the handoff bundle, per its handoff log
- * (docs/design-system.html section 2). The bundle stays as it was delivered.
- */
-const LATER_DECISIONS: Record<string, string> = {
-  // 2026-10-29: card size 200 → 250 px.
-  '--card': '250px',
-  // 2026-10-29: tuck offset 56 → 59 px, so a tucked card shows 3 px more.
-  '--tuck-offset': '59px',
-  // 2026-10-31: type colors moved: Player Role blue, Goal green, Setting brown.
-  '--type-role': '#3B6FD1',
-  '--type-role-dark': '#2B539E',
-  '--type-goal': '#2F8F83',
-  '--type-goal-dark': '#1F6B61',
-  '--type-setting': '#B8700E',
-  '--type-setting-dark': '#8C540A',
-};
-
 describe('design tokens', () => {
-  it('tokens_everyHandoffToken_hasSameValue', () => {
-    const handoff = rootTokens('docs/design-handoff/_ds/gameidea/styles.css');
-    const app = rootTokens('src/shared/ui/tokens.css');
-    expect(handoff.size).toBeGreaterThan(50);
-    expect(Object.fromEntries(app)).toEqual({ ...Object.fromEntries(handoff), ...LATER_DECISIONS });
+  it('tokens_handoffBody_isCopiedVerbatim', () => {
+    expect(HANDOFF_BODY.length).toBeGreaterThan(1000);
+    expect(TOKENS).toContain(HANDOFF_BODY);
+  });
+
+  it('tokens_carriedOverTokens_areAllowedAndNotColors', () => {
+    const outside = TOKENS.replace(HANDOFF_BODY, '');
+    const extra = definitions(outside);
+    expect(extra.length).toBeGreaterThan(0);
+    for (const [name, value] of extra) {
+      expect(CARRIED_OVER, name).toContain(name);
+      expect(value, name).not.toMatch(/#|rgb|hsl/i);
+    }
+  });
+
+  it('tokens_everyVarUsedInSrc_isDefined', () => {
+    const files = sourceFiles('src');
+    const defined = new Set(definitions(TOKENS).map(([name]) => name));
+    // Local custom properties set in src/: "--name:" in CSS or '--name' as a style key.
+    for (const file of files) {
+      const text = read(file);
+      for (const m of text.matchAll(/(--[\w-]+)\s*:/g)) defined.add(m[1]!);
+      for (const m of text.matchAll(/['"](--[\w-]+)['"]\s*:/g)) defined.add(m[1]!);
+    }
+    const missing: string[] = [];
+    for (const file of files) {
+      for (const m of read(file).matchAll(/var\((--[\w-]*)(\$\{[^}]+\})?([\w-]*)\)/g)) {
+        const [, start, template, end] = m;
+        // A template use such as var(--deck-${type}) must resolve for every card type.
+        const names = template ? CARD_TYPES.map((t) => `${start!}${t}${end!}`) : [start!];
+        for (const name of names) if (!defined.has(name)) missing.push(`${file}: ${name}`);
+      }
+      // Tokens read from script, such as getPropertyValue('--t-draw').
+      for (const m of read(file).matchAll(/getPropertyValue\(['"](--[\w-]+)['"]\)/g)) {
+        if (!defined.has(m[1]!)) missing.push(`${file}: ${m[1]!}`);
+      }
+    }
+    expect(missing).toEqual([]);
   });
 
   it('icons_everyIconFile_existsAndUsesStroke22', () => {

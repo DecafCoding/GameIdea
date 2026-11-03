@@ -129,7 +129,7 @@ export function ConnectorBadge({ connector, nextText, onChoose }: ConnectorBadge
         ref={badge}
         type="button"
         className={`${styles.badge} nodrag nopan`}
-        style={{ background: `var(--type-${connector.type})` }}
+        style={{ background: `var(--deck-${connector.type})` }}
         aria-haspopup="menu"
         aria-expanded={open}
         aria-controls={open ? menuId : undefined}

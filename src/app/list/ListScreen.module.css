@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background: var(--ground);
+  background: var(--bg);
   color: var(--text);
 }
 
@@ -12,10 +12,10 @@
   flex: none;
   align-items: center;
   gap: 10px;
-  height: var(--topbar-h);
+  height: var(--top-bar-h);
   padding: 0 16px;
-  background: var(--panel);
-  border-bottom: 1px solid var(--line);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
 }
 
 .wordmark {

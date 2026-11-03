@@ -53,9 +53,9 @@
   padding: 0;
   list-style: none;
   overflow: hidden;
-  border: 1px solid var(--line);
+  border: 1px solid var(--border);
   border-radius: var(--radius-dialog);
-  background: var(--panel);
+  background: var(--surface);
 }
 
 .footer {

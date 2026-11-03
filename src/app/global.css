@@ -8,9 +8,9 @@
 html,
 body {
   margin: 0;
-  background: var(--ground);
+  background: var(--bg);
   color: var(--text);
-  font-family: var(--font-ui);
+  font-family: var(--font-body);
   font-size: 14px;
 }
 

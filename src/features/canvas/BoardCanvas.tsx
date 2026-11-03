@@ -339,7 +339,7 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
             variant={BackgroundVariant.Dots}
             gap={24}
             size={1.2}
-            color="color-mix(in srgb, var(--grid-dot) 50%, transparent)"
+            color="var(--canvas-dot)"
           />
           <DropHints hint={hint} />
           <ZoomStrip />

@@ -46,7 +46,7 @@ export function BoardRow({
           <span className={`${styles.chip} ${styles.emptyChip}`} />
         ) : (
           summary.typeStrip.map((type, i) => (
-            <span key={i} className={styles.chip} style={{ background: `var(--type-${type})` }} />
+            <span key={i} className={styles.chip} style={{ background: `var(--deck-${type})` }} />
           ))
         )}
       </span>

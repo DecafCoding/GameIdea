@@ -6,17 +6,17 @@
   width: 100%;
   height: 56px;
   padding: 0 10px;
-  border: 1px solid var(--line);
+  border: 1px solid var(--border);
   border-radius: var(--radius-panel);
-  background: var(--ground);
+  background: var(--bg);
   color: var(--text);
-  font-family: var(--font-ui);
+  font-family: var(--font-body);
   text-align: left;
   cursor: pointer;
 }
 
 .deck:hover:not(:disabled) {
-  background: var(--panel-hover);
+  background: var(--surface-raised);
 }
 
 .deck:active:not(:disabled) {
@@ -25,7 +25,7 @@
 
 .deck:disabled,
 .deck:disabled .caption {
-  color: var(--text-dim);
+  color: var(--text-disabled);
   cursor: default;
 }
 

@@ -23,7 +23,7 @@
 }
 
 .lifted :global([data-card]) {
-  box-shadow: var(--shadow-card-drag);
+  box-shadow: var(--shadow-drag);
 }
 
 .hidden {
