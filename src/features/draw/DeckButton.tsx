@@ -4,7 +4,7 @@
  * is where the draw motion starts.
  */
 import { TYPE_ICON } from '@/features/card';
-import { DECK_NAME, type CardType } from '@/shared/model';
+import { DECK_NAME, type CardType, type Deck } from '@/shared/model';
 import { Icon } from '@/shared/ui';
 import styles from './DeckButton.module.css';
 
@@ -14,9 +14,9 @@ export function drawLabel(type: CardType): string {
 }
 
 interface DeckButtonProps {
-  type: CardType;
+  type: Deck;
   disabled: boolean;
-  onDraw: (type: CardType, from: DOMRect) => void;
+  onDraw: (type: Deck, from: DOMRect) => void;
 }
 
 export function DeckButton({ type, disabled, onDraw }: DeckButtonProps) {

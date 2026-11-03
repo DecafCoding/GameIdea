@@ -24,6 +24,30 @@
   --card-type: var(--deck-modifier);
 }
 
+[data-type='mechanic'] {
+  --card-type: var(--deck-mechanic);
+}
+
+[data-type='resource'] {
+  --card-type: var(--deck-resource);
+}
+
+[data-type='mood'] {
+  --card-type: var(--deck-mood);
+}
+
+[data-type='twist'] {
+  --card-type: var(--deck-twist);
+}
+
+[data-type='progression'] {
+  --card-type: var(--deck-progression);
+}
+
+[data-type='constraint'] {
+  --card-type: var(--deck-constraint);
+}
+
 .card {
   --card-tint: 14%;
   position: relative;

@@ -107,6 +107,9 @@ export function splitCard(board: Board, cardId: string, createId: () => string =
     z: nextZ(board),
     tuckedUnder: null,
     rings: [result.ring],
+    modDeck: 'role',
+    onTopOf: null,
+    locked: false,
   };
   const next = replaceCard(board, { ...card, rings: result.target.rings });
   return { ...next, cards: [...next.cards, modifier] };

@@ -4,21 +4,24 @@
  * Core, Modifiers, Optional, Genres) and Settings come in later phases.
  */
 import { DeckButton } from '@/features/draw';
-import { CARD_TYPES, type CardType } from '@/shared/model';
+import type { Deck } from '@/shared/model';
 import { Icon } from '@/shared/ui';
 import styles from './SideRail.module.css';
 
 interface SideRailProps {
   decksReady: boolean;
-  onDraw: (type: CardType, from: DOMRect) => void;
+  onDraw: (type: Deck, from: DOMRect) => void;
   onAddNote: () => void;
 }
+
+/** The Phase 1 rail, unchanged until the grouped rail lands. */
+const PHASE1_RAIL: Deck[] = ['role', 'goal', 'conflict', 'modifier', 'setting'];
 
 export function SideRail({ decksReady, onDraw, onAddNote }: SideRailProps) {
   return (
     <aside className={styles.rail} aria-label="Decks">
       <h2 className={styles.label}>Decks</h2>
-      {CARD_TYPES.map((type) => (
+      {PHASE1_RAIL.map((type) => (
         <DeckButton key={type} type={type} disabled={!decksReady} onDraw={onDraw} />
       ))}
       <button type="button" className={styles.addNote} onClick={onAddNote}>

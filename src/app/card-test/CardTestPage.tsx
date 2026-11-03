@@ -7,7 +7,7 @@
 import { useRef, useState } from 'react';
 import { CardView, combine, isCombined, TypeDisc, turnCard, useRingKeys } from '@/features/card';
 import { drawCard } from '@/features/draw';
-import { CARD_TYPES, DECK_NAME, type Card, type CardType } from '@/shared/model';
+import { DECK_NAME, type Card, type Deck } from '@/shared/model';
 import { usePools } from '@/shared/pools';
 import { Banner, Button } from '@/shared/ui';
 import styles from './CardTestPage.module.css';
@@ -21,6 +21,9 @@ function combinePair(cards: Card[]): { target: Card; source: Card } | null {
   const source = cards.find((c) => c.type === 'modifier');
   return target && source ? { target, source } : null;
 }
+
+/** The decks this page draws; the new decks join when their faces land. */
+const CARD_TEST_DECKS: Deck[] = ['role', 'goal', 'conflict', 'modifier', 'setting'];
 
 export function CardTestPage() {
   const { status, pools, retry } = usePools();
@@ -38,7 +41,7 @@ export function CardTestPage() {
     setCards((list) => list.map((c) => (c.id === id ? change(c) : c)));
   }
 
-  function draw(type: CardType) {
+  function draw(type: Deck) {
     if (!pools) return;
     const card = drawCard(type, pools[type], null);
     setCards((list) => [card, ...list]);
@@ -69,7 +72,7 @@ export function CardTestPage() {
         </div>
       )}
       <div className={styles.toolbar}>
-        {CARD_TYPES.map((type) => (
+        {CARD_TEST_DECKS.map((type) => (
           <button
             key={type}
             type="button"

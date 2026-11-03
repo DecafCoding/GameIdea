@@ -2,11 +2,10 @@
  * Tests for the board screen shell: its controls, the board name field, the save mark, undo
  * and redo, and the banners.
  */
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { CARD_TYPES } from '@/shared/model';
 import { newBoard, useBoardStore, useSaveStatus } from '@/shared/store';
 import {
   BoardScreen,
@@ -15,18 +14,20 @@ import {
   SAVE_FAILED_TEXT,
 } from './BoardScreen';
 
-const POOL_FILES = Object.fromEntries(
-  CARD_TYPES.map((type) => [
-    type,
-    readFileSync(join(process.cwd(), 'tests', 'e2e', 'fixtures', 'pools', `${type}.json`), 'utf8'),
-  ]),
+const POOL_DIR = join(process.cwd(), 'tests', 'e2e', 'fixtures', 'pools');
+/** Every fixture pool file, by its deck name. */
+const POOL_FILES: Record<string, string> = Object.fromEntries(
+  readdirSync(POOL_DIR)
+    .filter((file) => file.endsWith('.json'))
+    .map((file) => [file.replace(/\.json$/, ''), readFileSync(join(POOL_DIR, file), 'utf8')]),
 );
+const POOL_TYPES = Object.keys(POOL_FILES);
 
 function servePools(failing: boolean) {
   vi.stubGlobal('fetch', (input: RequestInfo | URL) => {
     if (failing) return Promise.reject(new TypeError('Failed to fetch'));
     const url = input instanceof Request ? input.url : input.toString();
-    const type = CARD_TYPES.find((t) => url.endsWith(`pools/${t}.json`));
+    const type = POOL_TYPES.find((t) => url.endsWith(`pools/${t}.json`));
     return Promise.resolve(
       type ? new Response(POOL_FILES[type]) : new Response('', { status: 404 }),
     );

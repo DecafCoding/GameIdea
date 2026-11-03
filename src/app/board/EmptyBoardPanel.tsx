@@ -2,14 +2,14 @@
  * EmptyBoardPanel: the 440 px panel over an empty board (design 9.11), with a primary
  * "Draw A Player Role" button. The board screen decides when it shows.
  */
-import type { CardType } from '@/shared/model';
+import type { Deck } from '@/shared/model';
 import { Button } from '@/shared/ui';
 import { AppMark } from './TopBar';
 import styles from './EmptyBoardPanel.module.css';
 
 interface EmptyBoardPanelProps {
   decksReady: boolean;
-  onDraw: (type: CardType, from: DOMRect) => void;
+  onDraw: (type: Deck, from: DOMRect) => void;
 }
 
 export function EmptyBoardPanel({ decksReady, onDraw }: EmptyBoardPanelProps) {

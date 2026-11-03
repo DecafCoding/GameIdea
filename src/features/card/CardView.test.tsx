@@ -6,7 +6,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { useState } from 'react';
 import { describe, expect, it } from 'vitest';
 import { drawCard } from '@/features/draw';
-import { GENRES, type Card, type CardType, type Pool } from '@/shared/model';
+import { GENRES, type Card, type CardType, type Deck, type Pool } from '@/shared/model';
 import { CardView } from './CardView';
 import { combine, turnCard } from './rings';
 
@@ -18,6 +18,8 @@ function card(type: CardType, rings: string[][]): Card {
     y: 0,
     z: 0,
     tuckedUnder: null,
+    onTopOf: null,
+    locked: false,
     rings: rings.map((texts) => ({
       cues: texts.map((text) => ({ text })),
       activeIndex: 0,
@@ -87,7 +89,7 @@ describe('CardView', () => {
   });
 
   it('CardView_combinedInnerRightClick_changesOnlyBottomAdjective', () => {
-    const pool = (type: CardType, texts: string[]): Pool => ({
+    const pool = (type: Deck, texts: string[]): Pool => ({
       type,
       cues: texts.map((text, i) => ({ id: `${type}-${i}`, text, genres: ['roguelike'] })),
     });

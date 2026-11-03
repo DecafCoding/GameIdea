@@ -50,7 +50,7 @@ const MAX_WIDTH = 222;
  * The old cue fit class: most characters per type, and at most 2 words for the 4-cue types.
  * Longer genre cues are out of scope here until the user sets new limits.
  */
-const FIT_LIMITS: Record<Card['type'], number> = {
+const FIT_LIMITS: Partial<Record<Card['type'], number>> = {
   role: 16,
   setting: 16,
   modifier: 10,
@@ -60,7 +60,7 @@ const FIT_LIMITS: Record<Card['type'], number> = {
 
 /** Whether a cue is inside the old fit class for its type. */
 function inFitClass(type: Card['type'], text: string): boolean {
-  if (text.length > FIT_LIMITS[type]) return false;
+  if (text.length > (FIT_LIMITS[type] ?? 0)) return false;
   const fourCue = type === 'role' || type === 'setting' || type === 'modifier';
   return !fourCue || text.split(/s+/).length <= 2;
 }

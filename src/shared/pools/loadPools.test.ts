@@ -3,10 +3,12 @@
  */
 import { act, renderHook, waitFor } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { CARD_TYPES, type CardType, type Genre } from '@/shared/model';
+import { type Deck, type Genre } from '@/shared/model';
+
+const CARD_TYPES: Deck[] = ['role', 'goal', 'conflict', 'modifier', 'setting'];
 import { loadPools, parsePool, poolUrl, usePools } from '.';
 
-function fixture(type: CardType) {
+function fixture(type: Deck) {
   const cue = (n: number) =>
     type === 'setting'
       ? { id: `se-00${n}`, text: `place ${n}` }
@@ -15,7 +17,7 @@ function fixture(type: CardType) {
 }
 
 /** A fake fetch that serves the fixtures, with an optional status per type or a throw. */
-function fakeFetch(options: { status?: Partial<Record<CardType, number>>; fail?: boolean } = {}) {
+function fakeFetch(options: { status?: Partial<Record<Deck, number>>; fail?: boolean } = {}) {
   return ((input: RequestInfo | URL) => {
     if (options.fail) return Promise.reject(new TypeError('Failed to fetch'));
     const url = input instanceof Request ? input.url : input.toString();
@@ -67,8 +69,8 @@ describe('parsePool', () => {
     expect(() => parsePool('role', data)).toThrow(/genres/);
   });
 
-  // A genre-tagged deck. Phase 2 adds it to CARD_TYPES; until then the cast stands in.
-  const TAGGED = 'mechanic' as unknown as CardType;
+  // A genre-tagged deck.
+  const TAGGED: Deck = 'mechanic';
 
   /** A one-cue tagged pool whose cue has the given genres value. */
   const withGenres = (genres: unknown) => ({

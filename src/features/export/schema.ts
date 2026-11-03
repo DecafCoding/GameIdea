@@ -8,7 +8,14 @@
  * A tuckedUnder that names no card is allowed: the stack rules treat that card as a root.
  */
 import { z } from 'zod';
-import { CARD_TYPES, FORMAT_VERSION, GENRES, type Board, type CardType } from '@/shared/model';
+import {
+  CARD_TYPES,
+  FORMAT_VERSION,
+  GENRES,
+  MOD_DECKS,
+  type Board,
+  type CardType,
+} from '@/shared/model';
 
 const cueSchema = z.object({
   text: z.string().trim().min(1),
@@ -17,15 +24,23 @@ const cueSchema = z.object({
 const ringSchema = z.object({
   cues: z.array(cueSchema),
   activeIndex: z.int().nonnegative(),
+  modDeck: z.enum(MOD_DECKS).optional(),
 });
 
 /** Allowed ring counts and cues per ring for each card type. */
 const RING_RULES: Record<CardType, { rings: readonly number[]; cues: number }> = {
+  hook: { rings: [0], cues: 0 },
   role: { rings: [1, 2], cues: 4 },
+  mechanic: { rings: [1], cues: 4 },
+  resource: { rings: [1, 2], cues: 4 },
   setting: { rings: [1, 2], cues: 4 },
   goal: { rings: [1], cues: 2 },
   conflict: { rings: [1], cues: 2 },
   modifier: { rings: [1], cues: 4 },
+  mood: { rings: [1], cues: 4 },
+  twist: { rings: [1], cues: 2 },
+  progression: { rings: [1], cues: 2 },
+  constraint: { rings: [1], cues: 2 },
 };
 
 const cardSchema = z
@@ -38,6 +53,9 @@ const cardSchema = z
     tuckedUnder: z.string().nullable(),
     rings: z.array(ringSchema),
     connector: z.string().min(1).optional(),
+    modDeck: z.enum(MOD_DECKS).optional(),
+    onTopOf: z.string().nullable(),
+    locked: z.boolean(),
   })
   .superRefine((card, ctx) => {
     const rule = RING_RULES[card.type];

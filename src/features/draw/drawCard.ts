@@ -8,7 +8,7 @@ import {
   CUES_PER_CARD,
   newId,
   type Card,
-  type CardType,
+  type Deck,
   type Cue,
   type Genre,
   type Pool,
@@ -27,7 +27,7 @@ export interface DrawOptions {
  * them. null draws from the full pool (the decks that ignore genre).
  */
 export function drawCard(
-  type: CardType,
+  type: Deck,
   pool: Pool,
   genres: readonly Genre[] | null,
   options: DrawOptions = {},
@@ -75,5 +75,9 @@ export function drawCard(
     z: 0,
     tuckedUnder: null,
     rings: [{ cues, activeIndex: 0 }],
+    // Task 6 passes the Modifier deck in; until then the single Modifier button is role.
+    ...(type === 'modifier' ? { modDeck: 'role' as const } : {}),
+    onTopOf: null,
+    locked: false,
   };
 }

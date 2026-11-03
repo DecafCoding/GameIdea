@@ -24,6 +24,13 @@ export const CUES = {
   goal: ['keep the light on', 'map the lost caves'],
   conflict: ['the tide rises every night', 'the map keeps changing'],
   setting: ['outpost', 'beacon', 'eclipse', 'harbor'],
+  mechanic: ['trade', 'climb', 'hide', 'build'],
+  resource: ['memories', 'lamp oil', 'rope', 'favors'],
+  mood: ['tense', 'cozy', 'eerie', 'giddy'],
+  twist: ['the map is alive', 'your guide lies'],
+  progression: ['new islands open', 'tools get sharper'],
+  constraint: ['no jumping', 'only one hand'],
+  hook: [],
 } as const;
 
 function cuesFor(type: CardType): Cue[] {
@@ -39,7 +46,10 @@ export function fixtureCard(type: CardType, overrides: Partial<Card> = {}): Card
     y: 0,
     z: 1,
     tuckedUnder: null,
-    rings: [{ cues: cuesFor(type), activeIndex: 0 }],
+    rings: type === 'hook' ? [] : [{ cues: cuesFor(type), activeIndex: 0 }],
+    ...(type === 'modifier' ? { modDeck: 'role' as const } : {}),
+    onTopOf: null,
+    locked: false,
     ...overrides,
   };
 }

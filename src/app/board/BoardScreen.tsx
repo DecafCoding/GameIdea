@@ -19,7 +19,7 @@ import {
 import { drawCard } from '@/features/draw';
 import { downloadBoardFile } from '@/features/export';
 import { addNote, NOTE_SIZE } from '@/features/notes';
-import { newId, type CardType } from '@/shared/model';
+import { newId, type Deck } from '@/shared/model';
 import { usePools } from '@/shared/pools';
 import { useBoardStore, useSaveStatus } from '@/shared/store';
 import { Banner } from '@/shared/ui';
@@ -69,7 +69,7 @@ function BoardScreenBody({
   const empty = board.cards.length === 0 && board.notes.length === 0;
   const showPanel = empty && startedOn !== board.id;
 
-  function draw(type: CardType, from: DOMRect) {
+  function draw(type: Deck, from: DOMRect) {
     if (!pools) return;
     // None of the 5 Phase 1 decks is genre-tagged, so every draw uses the full pool.
     const card = drawCard(type, pools[type], null);

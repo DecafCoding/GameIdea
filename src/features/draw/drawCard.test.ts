@@ -3,7 +3,7 @@
  * mutation.
  */
 import { describe, expect, it } from 'vitest';
-import { GENRES, type CardType, type Genre, type Pool } from '@/shared/model';
+import { GENRES, type Deck, type Genre, type Pool } from '@/shared/model';
 import { drawCard } from './drawCard';
 
 /** mulberry32: a small seeded PRNG so draws repeat across runs. */
@@ -18,7 +18,7 @@ function mulberry32(seed: number): () => number {
   };
 }
 
-function pool(type: CardType, texts: string[], genres: Genre[] = ['roguelike']): Pool {
+function pool(type: Deck, texts: string[], genres: Genre[] = ['roguelike']): Pool {
   return {
     type,
     cues: texts.map((text, i) => ({

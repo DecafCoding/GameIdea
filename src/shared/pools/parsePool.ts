@@ -7,7 +7,7 @@
 import {
   GENRE_DECKS,
   GENRES,
-  type CardType,
+  type Deck,
   type Genre,
   type Pool,
   type PoolCue,
@@ -27,7 +27,7 @@ const isGenreList = (value: unknown): value is Genre[] =>
   new Set(value).size === value.length;
 
 /** Checks one pool file body for a type and returns a fresh Pool; throws on any broken rule. */
-export function parsePool(type: CardType, data: unknown): Pool {
+export function parsePool(type: Deck, data: unknown): Pool {
   if (!isRecord(data)) {
     throw new Error(`The ${type} pool file is not a JSON object.`);
   }

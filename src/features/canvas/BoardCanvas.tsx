@@ -121,7 +121,7 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
         const current = latest.current.pools;
         const board = useBoardStore.getState().board;
         const card = board.cards.find((c) => c.id === id);
-        if (!current || !card) return;
+        if (!current || !card || card.type === 'hook') return;
         // Redraw draws like a deck draw; none of the 5 Phase 1 decks is genre-tagged.
         const drawn = drawCard(card.type, current[card.type], null);
         changeBoard((b) => redrawCard(b, id, drawn));

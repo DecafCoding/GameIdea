@@ -17,6 +17,8 @@ function card(type: CardType, ringCount: 1 | 2): Card {
     y: 0,
     z: 0,
     tuckedUnder: null,
+    onTopOf: null,
+    locked: false,
     rings: ringCount === 2 ? [ring, ring] : [ring],
   };
 }
