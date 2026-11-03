@@ -1,6 +1,6 @@
 # Deck: Constraint (General)
 
-184 cards.
+222 cards.
 
 | # | Card | Genres | Count | Games |
 |---:|---|---|---:|---|
@@ -188,3 +188,41 @@
 | 182 | Only vehicles that break apart | Vehicle Sim & Racing, Sandbox | 1 | Wreckfest |
 | 183 | Only walking and talking | Narrative, Horror, Open World, Life Sim | 1 | To the Moon |
 | 184 | Only what you can see | Horror, Stealth & Immersive Sim, Strategy, Puzzle, Open World, Roguelike, Shooter, Survival Craft | 1 | Barotrauma |
+| 185 | Only real-world time | Survival Craft, Builder & Management, Life Sim, Strategy, Narrative | 0 |  |
+| 186 | Only one sitting | Roguelike, Puzzle, Horror, Narrative, Party & Multiplayer | 0 |  |
+| 187 | Only ten minutes a day | Puzzle, Builder & Management, Life Sim, Narrative, Rhythm & Arcade | 0 |  |
+| 188 | Only nighttime | Open World, Survival Craft, Horror, Life Sim, Stealth & Immersive Sim | 0 |  |
+| 189 | Only one day | Puzzle, Horror, Builder & Management, Life Sim, Narrative, Stealth & Immersive Sim | 0 |  |
+| 190 | Only one level, remixed | Roguelike, Metroidvania, Platformer, Puzzle, Shooter, Rhythm & Arcade | 0 |  |
+| 191 | Only one street | Open World, Horror, Builder & Management, Life Sim, Narrative, Stealth & Immersive Sim | 0 |  |
+| 192 | Only a vertical climb | Roguelike, Metroidvania, Platformer, Survival Craft | 0 |  |
+| 193 | No solid ground | Metroidvania, Platformer, Survival Craft, Vehicle Sim & Racing, Sandbox | 0 |  |
+| 194 | Only a shrinking area | Roguelike, Shooter, Survival Craft, Strategy, Party & Multiplayer | 0 |  |
+| 195 | No money | RPG, Open World, Survival Craft, Builder & Management, Life Sim, Strategy, Narrative | 0 |  |
+| 196 | No shops | Roguelike, Metroidvania, Shooter, RPG, Open World, Survival Craft | 0 |  |
+| 197 | No inventory | Platformer, Puzzle, Shooter, Melee Action, Horror, Rhythm & Arcade | 0 |  |
+| 198 | No crafting | RPG, Open World, Survival Craft, Life Sim, Sandbox | 0 |  |
+| 199 | No randomness | Roguelike, Platformer, Puzzle, Fighting, Strategy, Deckbuilder & Cards | 0 |  |
+| 200 | No stats | Shooter, Melee Action, Fighting, RPG, Strategy, Deckbuilder & Cards | 0 |  |
+| 201 | No romance | RPG, Life Sim, Narrative | 0 |  |
+| 202 | Only one friend | Puzzle, RPG, Horror, Life Sim, Narrative | 0 |  |
+| 203 | Only one job | Builder & Management, Life Sim, Narrative, Stealth & Immersive Sim | 0 |  |
+| 204 | No leaving home | Puzzle, Horror, Builder & Management, Life Sim, Narrative, Sandbox | 0 |  |
+| 205 | Only what you grow | Survival Craft, Builder & Management, Life Sim | 0 |  |
+| 206 | No days off | Survival Craft, Builder & Management, Life Sim, Narrative | 0 |  |
+| 207 | No special moves | Platformer, Shooter, Melee Action, Fighting | 0 |  |
+| 208 | Only mirror matches | Shooter, Melee Action, Fighting, Party & Multiplayer, Rhythm & Arcade | 0 |  |
+| 209 | Only ring-outs | Platformer, Fighting, Party & Multiplayer | 0 |  |
+| 210 | No air moves | Platformer, Melee Action, Fighting | 0 |  |
+| 211 | Only counterattacks | Melee Action, Fighting, Strategy, Deckbuilder & Cards, Rhythm & Arcade | 0 |  |
+| 212 | Only ten parts | Puzzle, Builder & Management, Vehicle Sim & Racing, Sandbox | 0 |  |
+| 213 | No deleting | Puzzle, Builder & Management, Life Sim, Sandbox | 0 |  |
+| 214 | Only one material | Puzzle, Survival Craft, Builder & Management, Sandbox | 0 |  |
+| 215 | No blueprints | Survival Craft, Builder & Management, Vehicle Sim & Racing, Sandbox | 0 |  |
+| 216 | Only one song | Platformer, Narrative, Party & Multiplayer, Rhythm & Arcade | 0 |  |
+| 217 | Only your own music | Platformer, Shooter, Vehicle Sim & Racing, Rhythm & Arcade | 0 |  |
+| 218 | No visual cues | Puzzle, Horror, Rhythm & Arcade | 0 |  |
+| 219 | Only one ability at a time | Roguelike, Metroidvania, Platformer, Puzzle, Shooter, Melee Action | 0 |  |
+| 220 | No new abilities | Metroidvania, Platformer, Puzzle, Open World, Stealth & Immersive Sim | 0 |  |
+| 221 | Only abilities you trade for | Roguelike, Metroidvania, Platformer, RPG | 0 |  |
+| 222 | Only backtracking | Metroidvania, Puzzle, Horror, Narrative | 0 |  |

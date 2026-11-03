@@ -1,6 +1,6 @@
 # Deck: Goal (General)
 
-244 cards. Read each card after "To win…".
+314 cards. Read each card after "To win…".
 
 | # | Card | Count | Games |
 |---:|---|---:|---|
@@ -248,3 +248,73 @@
 | 242 | win her heart | 1 | Everlasting Summer |
 | 243 | win the match and finish your foe | 1 | Mortal Kombat 11 |
 | 244 | win the tournament | 1 | Tekken 8 |
+| 245 | write the song everyone sings | 0 |  |
+| 246 | finish your masterpiece before you die | 0 |  |
+| 247 | build a home from nothing | 0 |  |
+| 248 | open the restaurant of your dreams | 0 |  |
+| 249 | design a city that runs itself | 0 |  |
+| 250 | make a game someone loves | 0 |  |
+| 251 | grow the tallest tree in the world | 0 |  |
+| 252 | invent something that changes everything | 0 |  |
+| 253 | make one true friend | 0 |  |
+| 254 | get the old band back together | 0 |  |
+| 255 | get everyone to the party on time | 0 |  |
+| 256 | reunite the family for one dinner | 0 |  |
+| 257 | earn your rival's respect | 0 |  |
+| 258 | become your hero's partner | 0 |  |
+| 259 | get the whole town to like you | 0 |  |
+| 260 | find a home for every stray | 0 |  |
+| 261 | say goodbye properly | 0 |  |
+| 262 | map the whole world | 0 |  |
+| 263 | name every creature on the island | 0 |  |
+| 264 | fill every page of the field guide | 0 |  |
+| 265 | read every book in the library | 0 |  |
+| 266 | find where the river ends | 0 |  |
+| 267 | learn the lost language | 0 |  |
+| 268 | photograph the creature no one believes in | 0 |  |
+| 269 | answer the question no one can | 0 |  |
+| 270 | collect one of everything | 0 |  |
+| 271 | own every house on the street | 0 |  |
+| 272 | complete the set | 0 |  |
+| 273 | buy back the family farm | 0 |  |
+| 274 | fill the museum | 0 |  |
+| 275 | hold every title at once | 0 |  |
+| 276 | win the pie contest | 0 |  |
+| 277 | get the cat down from the tree | 0 |  |
+| 278 | grow a perfect pumpkin | 0 |  |
+| 279 | make it through the first day of school | 0 |  |
+| 280 | keep your houseplant alive for a year | 0 |  |
+| 281 | finish the puzzle before the guests arrive | 0 |  |
+| 282 | have the best garden on the block | 0 |  |
+| 283 | get a good night's sleep | 0 |  |
+| 284 | learn to walk again | 0 |  |
+| 285 | face your fear of the dark | 0 |  |
+| 286 | become the person your dog thinks you are | 0 |  |
+| 287 | master the craft your father failed at | 0 |  |
+| 288 | forgive the one who hurt you | 0 |  |
+| 289 | remember who you were | 0 |  |
+| 290 | choose your own name | 0 |  |
+| 291 | steal the crown without being seen | 0 |  |
+| 292 | swap the painting before the auction | 0 |  |
+| 293 | keep your secret until the end | 0 |  |
+| 294 | fake your own death | 0 |  |
+| 295 | break out of prison | 0 |  |
+| 296 | frame the real villain | 0 |  |
+| 297 | leave no trace you were there | 0 |  |
+| 298 | pull off the perfect con | 0 |  |
+| 299 | get fired on purpose | 0 |  |
+| 300 | lose the game without anyone noticing | 0 |  |
+| 301 | ruin the wedding | 0 |  |
+| 302 | be forgotten by everyone | 0 |  |
+| 303 | become the villain the hero needs | 0 |  |
+| 304 | get the most boring job done perfectly | 0 |  |
+| 305 | convince everyone you are human | 0 |  |
+| 306 | bring the animals back | 0 |  |
+| 307 | clean the whole ocean | 0 |  |
+| 308 | wake the sleeping forest | 0 |  |
+| 309 | turn the desert green | 0 |  |
+| 310 | return every stolen thing | 0 |  |
+| 311 | land the perfect trick | 0 |  |
+| 312 | win the crowd, not the match | 0 |  |
+| 313 | play the perfect show | 0 |  |
+| 314 | go from last place to champion | 0 |  |

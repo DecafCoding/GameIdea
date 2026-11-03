@@ -93,7 +93,8 @@
   <li data-checked="true">Infinite canvas with pan, zoom, place and move</li>
   <li data-checked="true">Free-text notes with an editable title</li>
   <li data-checked="true">Genre settings: the 21 genres in the Genres table, on the 4 genre-tagged decks only (Mechanic, Resource, Progression, Constraint). The Genres panel sets the genres of those 4 decks together and one by one. The user can change them at any time. A change affects the next draw only. The other 7 decks ignore genre.</li>
-  <li data-checked="true">A left rail in labeled groups: Hook Card, Core, Modifiers (3 icon buttons), Optional, and Genres at the bottom</li>
+  <li data-checked="true">A left rail in labeled groups: Hook Card, Core, Modifiers (3 icon buttons), Optional, Genres with its count line, Add note, and Settings at the bottom</li>
+  <li data-checked="true">Settings: Dark or Light mode, Theme color (Orange, Blue, Green), Snap to grid on or off, the Keyboard list and the version footer. The settings apply to every board in the browser. See <a href="feature-settings-and-theme.html">feature-settings-and-theme.html</a>.</li>
   <li data-checked="true">Board list with multiple boards: make, open, rename and delete. The New Board dialog asks only for a name.</li>
   <li data-checked="true">Autosave after each change, a warning when a save fails, and a warning when one board is open in 2 tabs</li>
   <li data-checked="true">Undo and redo for the open session</li>
@@ -125,10 +126,12 @@
   <li data-checked="false">A Format filter, deck or tag (platform, player count, session length). Reason: indie developers already know their format, so it does not narrow a draw.</li>
   <li data-checked="false">A Style filter, deck or tag (art style and view). Reason: indie developers already know their style, and style changes few cues.</li>
   <li data-checked="false">Copying cue text from other idea generators or card decks</li>
+  <li data-checked="false">A grid size setting. The grid stays at 24 px, because the placement rules depend on it. See <a href="feature-settings-and-theme.html">feature-settings-and-theme.html</a>.</li>
 </ul>
 
 <h2>Data model</h2>
 <p>All data belongs to the user and stays in the user's browser. There are no users or accounts.</p>
+<p>The Settings record (mode, accent, snap) lives in browser local storage, one for each address and port. It is never part of a Board, a board file or the undo history. See <a href="feature-settings-and-theme.html">feature-settings-and-theme.html</a>.</p>
 <pre><code>Board                     (one record for each board)
   id, name, createdAt, updatedAt
   view: { panX, panY, zoom }
@@ -265,9 +268,11 @@ Genre                     (21 values. Meanings are in the Genres table.
   <li>Core: Player Role, Mechanic, Goal, Conflict, Resource</li>
   <li>Modifiers: 3 icon buttons, Role, Resource and Setting, each with a hover label</li>
   <li>Optional: Setting, Mood, Twist, Progression, Constraint</li>
-  <li>Genres, which opens the Genres panel</li>
+  <li>Genres, which opens the Genres panel. A line under it shows the number of genres on in the board row, for example "3 genres", or "All genres".</li>
+  <li>Add note, which places a new note at the free grid spot nearest the center of the view</li>
+  <li>Settings, at the bottom, which opens the Settings dialog</li>
 </ol>
-<p>A small mark on a genre-tagged deck button shows that the deck's genres differ from the board row.</p>
+<p>Each genre-tagged deck button shows its number of genres on. The count is hidden when all 21 are on.</p>
 
 <h3>Genres panel</h3>
 <p>One row sets the genres of the 4 genre-tagged decks together. Below it, Mechanic, Resource, Progression and Constraint each have their own row. The other 7 decks do not appear, because genre does not change their draws. Every listed deck keeps at least 1 genre. A change applies to the next draw only.</p>
@@ -297,6 +302,7 @@ Genre                     (21 values. Meanings are in the Genres table.
 
 <h3>Visual design</h3>
 <p>The look carries over from TheForge: the design tokens, the 2 fonts, the dark canvas, the top bar and side rail, the card, the ring control, tuck, combine and notes. <code>/dev-ui-update</code> writes <code>docs/design-system.html</code> for GameIdea and adds the 11 deck colors and icons, the Hook Card, the lock and the Genres panel.</p>
+<p>The app has 2 modes, Dark and Light, and 3 theme colors. Light turns the chrome and the canvas light. Cards, notes and badges look the same in both. A fixed warning color stays the same in every theme color. <code>/dev-ui-update</code> sets the values. See <a href="feature-settings-and-theme.html">feature-settings-and-theme.html</a>.</p>
 
 <h3>Outputs</h3>
 <ul>
@@ -337,6 +343,7 @@ Genre                     (21 values. Meanings are in the Genres table.
   <tr><td>A Hook Card stack has 2 cards tucked under one card</td><td>The sentence reads them in order of their place on the canvas, top first.</td></tr>
   <tr><td>The top card under a Hook Card is not a Player Role</td><td>The sentence starts with that card's badge word.</td></tr>
   <tr><td>The user tries to tuck a Hook Card under a card</td><td>The app does not allow it.</td></tr>
+  <tr><td>The browser blocks local storage</td><td>The app uses the default settings. The Settings dialog shows that settings reset when the page reloads.</td></tr>
   <tr><td>The pool files do not load</td><td>The app shows an error with a Retry button. Boards still open, and saved cards still show. Only the deck buttons stop.</td></tr>
 </table>
 <p>There is no concurrency between users, because there is only one user and no server.</p>
@@ -360,6 +367,7 @@ Genre                     (21 values. Meanings are in the Genres table.
   <li>Copy the TheForge code into this repository.</li>
   <li>Rename the app, the database and the page title to GameIdea. Set ports 5174, 4174 and 4444.</li>
   <li>Remove the story pools and story card types.</li>
+  <li>Move every hard-coded chrome color into a design token. Add a lint check that finds hex and rgba values in CSS modules. This lets Light mode in M5 be a token job.</li>
   <li>Pass bar: the copied tests pass, and the app runs at port 4174. A search of <code>src/</code> finds no TheForge story type names (character, motivation, description) and no Setting kind names.</li>
 </ul>
 
@@ -391,6 +399,7 @@ Genre                     (21 values. Meanings are in the Genres table.
 <ul>
   <li>The text export holds each hook.</li>
   <li>A full check of the carried-over features, and HTTPS on the local network.</li>
+  <li>Settings: Mode, Theme color, Snap to grid, the Keyboard list and the footer. The rail gains Add note, Settings and the genre counts. See <a href="feature-settings-and-theme.html">feature-settings-and-theme.html</a>.</li>
   <li>Pass bar: all done criteria pass.</li>
 </ul>
 
@@ -416,6 +425,7 @@ Genre                     (21 values. Meanings are in the Genres table.
   <li>Every carried-over feature in the Scope section works.</li>
   <li>The speed and first-load targets pass.</li>
   <li>An exported board file imports again with no data lost, and the text file holds each hook.</li>
+  <li>The done criteria in <a href="feature-settings-and-theme.html">feature-settings-and-theme.html</a> pass.</li>
   <li>One command runs the app at port 4174. Another command serves HTTPS on the local network at port 4444.</li>
 </ul>
 
@@ -452,5 +462,6 @@ Genre                     (21 values. Meanings are in the Genres table.
 <p class="meta">2026-11-02: The Modifier deck was reviewed: 3 game-linked words renamed and 23 near-duplicates merged, for 391 modifiers. Each modifier now lists the card types it fits. Its use in the app is open. Changed Assumptions. Changed by the user's request after a review.</p>
 
 <p class="meta">2026-11-02: The Modifier deck draws as 3 decks: Role, Resource and Setting. Each filters <code>modifier.json</code> by <code>targets</code>, so a modifier can be in 1, 2 or 3 decks. Any modifier still merges with any Player Role, Resource or Setting card. A base card holds 1 merged ring. On Top now places a second Modifier on the card as its own card, through <code>onTopOf</code>. Card and Ring gain <code>modDeck</code>. The rail Modifier group has 3 icon buttons. The M2 bar is 20 of 25 for each Modifier deck. Changed Decks, Core loop, Scope, Data model, Rules, Hook sentence rules, Left rail, Hints and drop zones, M2, Done criteria and Assumptions. Changed by <code>/dev-add-feature</code>. See <a href="feature-modifier-decks.html">feature-modifier-decks.html</a>.</p>
+<p class="meta">2026-11-02: Added Settings and theme: Dark or Light mode, 3 theme colors, Snap to grid on or off, a Keyboard list and a version footer. The grid stays at 24 px, and a grid size setting is never built. The rail gains Add note, Settings and genre counts, which replace the small mark. M1 gains a tokens-only rule with a lint check. M5 builds the feature. Changed Scope, Data model, Left rail, Visual design, State and failure, M1, M5 and Done criteria. Changed by <code>/dev-add-feature</code>. See <a href="feature-settings-and-theme.html">feature-settings-and-theme.html</a>.</p>
 </body>
 </html>

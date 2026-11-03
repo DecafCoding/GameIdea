@@ -1,6 +1,6 @@
 # Deck: Player Role (General)
 
-330 cards. Read each card after "You are…".
+467 cards. Read each card after "You are…".
 
 | # | Card | Count | Games |
 |---:|---|---:|---|
@@ -24,7 +24,7 @@
 | 18 | fighter pilot | 3 | Ravenfield, Microsoft Flight Simulator, Ace Combat 7: Skies Unknown |
 | 19 | fort builder | 3 | Unturned, Rust, Terraria |
 | 20 | insurgent | 3 | Counter-Strike, Counter-Strike: Source, Counter-Strike 2 |
-| 21 | secret agent | 3 | Resident Evil 4, Resident Evil 4 (2005), Fights in Tight Spaces |
+| 21 | secret agent (spy) | 3 | Resident Evil 4, Resident Evil 4 (2005), Fights in Tight Spaces |
 | 22 | starship captain | 3 | FTL: Faster Than Light, Starbound, Spore |
 | 23 | stunt driver | 3 | BeamNG.drive, Brick Rigs, Forza Horizon 5 |
 | 24 | hitman | 3 | Hotline Miami, Hotline Miami 2: Wrong Number, Katana ZERO |
@@ -268,7 +268,7 @@
 | 262 | space explorer | 1 | Outer Wilds |
 | 263 | space program boss | 1 | Kerbal Space Program |
 | 264 | spellsword | 1 | Blade and Sorcery |
-| 265 | crook | 1 | The Henry Stickmin Collection |
+| 265 | crook / thief | 1 | The Henry Stickmin Collection |
 | 266 | cat | 1 | Stray |
 | 267 | street car tuner | 1 | CarX Drift Racing Online |
 | 268 | street racer | 1 | Burnout Paradise Remastered |
@@ -334,3 +334,140 @@
 | 328 | animal | 0 |  |
 | 329 | vegetable | 0 |  |
 | 330 | fruit | 0 |  |
+| 331 | nurse | 0 |  |
+| 332 | doctor | 0 |  |
+| 333 | teacher | 0 |  |
+| 334 | librarian | 0 |  |
+| 335 | mail carrier | 0 |  |
+| 336 | lighthouse keeper | 0 |  |
+| 337 | night janitor | 0 |  |
+| 338 | gravedigger | 0 |  |
+| 339 | undertaker | 0 |  |
+| 340 | tax collector | 0 |  |
+| 341 | translator | 0 |  |
+| 342 | cartographer | 0 |  |
+| 343 | beekeeper | 0 |  |
+| 344 | zookeeper | 0 |  |
+| 345 | park ranger | 0 |  |
+| 346 | lifeguard | 0 |  |
+| 347 | firefighter | 0 |  |
+| 348 | tailor | 0 |  |
+| 349 | clockmaker | 0 |  |
+| 350 | locksmith | 0 |  |
+| 351 | florist | 0 |  |
+| 352 | street sweeper | 0 |  |
+| 353 | babysitter | 0 |  |
+| 354 | nanny | 0 |  |
+| 355 | midwife | 0 |  |
+| 356 | caretaker | 0 |  |
+| 357 | hospice worker | 0 |  |
+| 358 | foster parent | 0 |  |
+| 359 | grandparent | 0 |  |
+| 360 | older sister | 0 |  |
+| 361 | pet sitter | 0 |  |
+| 362 | shepherd | 0 |  |
+| 363 | villain | 0 |  |
+| 364 | henchman | 0 |  |
+| 365 | dark lord | 0 |  |
+| 366 | evil overlord | 0 |  |
+| 367 | minion | 0 |  |
+| 368 | tyrant | 0 |  |
+| 369 | saboteur | 0 |  |
+| 370 | smuggler | 0 |  |
+| 371 | pirate | 0 |  |
+| 372 | con artist | 0 |  |
+| 373 | ghost | 0 |  |
+| 374 | robot | 0 |  |
+| 375 | AI | 0 |  |
+| 376 | sentient AI | 0 |  |
+| 377 | vampire | 0 |  |
+| 378 | werewolf | 0 |  |
+| 379 | dragon | 0 |  |
+| 380 | golem | 0 |  |
+| 381 | slime | 0 |  |
+| 382 | alien | 0 |  |
+| 383 | mermaid | 0 |  |
+| 384 | fairy | 0 |  |
+| 385 | imp | 0 |  |
+| 386 | scarecrow | 0 |  |
+| 387 | zombie dog | 0 |  |
+| 388 | living doll | 0 |  |
+| 389 | puppet | 0 |  |
+| 390 | reanimated corpse | 0 |  |
+| 391 | house | 0 |  |
+| 392 | ship | 0 |  |
+| 393 | sword | 0 |  |
+| 394 | lantern | 0 |  |
+| 395 | tree | 0 |  |
+| 396 | planet | 0 |  |
+| 397 | storm | 0 |  |
+| 398 | river | 0 |  |
+| 399 | virus | 0 |  |
+| 400 | computer program | 0 |  |
+| 401 | haunted painting | 0 |  |
+| 402 | vending machine | 0 |  |
+| 403 | swarm | 0 |  |
+| 404 | hive mind | 0 |  |
+| 405 | colony | 0 |  |
+| 406 | family | 0 |  |
+| 407 | band | 0 |  |
+| 408 | crew | 0 |  |
+| 409 | village | 0 |  |
+| 410 | school of fish | 0 |  |
+| 411 | oracle | 0 |  |
+| 412 | prophet | 0 |  |
+| 413 | angel | 0 |  |
+| 414 | demon | 0 |  |
+| 415 | reaper | 0 |  |
+| 416 | trickster spirit | 0 |  |
+| 417 | river spirit | 0 |  |
+| 418 | chosen one | 0 |  |
+| 419 | wish-granter | 0 |  |
+| 420 | fortune teller | 0 |  |
+| 421 | amnesiac | 0 |  |
+| 422 | clone | 0 |  |
+| 423 | twin | 0 |  |
+| 424 | impersonator | 0 |  |
+| 425 | sleepwalker | 0 |  |
+| 426 | dreamer's double | 0 |  |
+| 427 | possessed host | 0 |  |
+| 428 | body swapper | 0 |  |
+| 429 | painter | 0 |  |
+| 430 | sculptor | 0 |  |
+| 431 | musician | 0 |  |
+| 432 | composer | 0 |  |
+| 433 | puppeteer | 0 |  |
+| 434 | magician | 0 |  |
+| 435 | clown | 0 |  |
+| 436 | chef | 0 |  |
+| 437 | potter | 0 |  |
+| 438 | inventor | 0 |  |
+| 439 | merchant | 0 |  |
+| 440 | innkeeper | 0 |  |
+| 441 | matchmaker | 0 |  |
+| 442 | diplomat | 0 |  |
+| 443 | negotiator | 0 |  |
+| 444 | auctioneer | 0 |  |
+| 445 | landlord | 0 |  |
+| 446 | pawnbroker | 0 |  |
+| 447 | fixer | 0 |  |
+| 448 | debt collector | 0 |  |
+| 449 | child courier | 0 |  |
+| 450 | nomad | 0 |  |
+| 451 | refugee | 0 |  |
+| 452 | pilgrim | 0 |  |
+| 453 | stowaway | 0 |  |
+| 454 | hitchhiker | 0 |  |
+| 455 | smuggler pilot | 0 |  |
+| 456 | cave diver | 0 |  |
+| 457 | storm chaser | 0 |  |
+| 458 | treasure hunter | 0 |  |
+| 459 | toddler | 0 |  |
+| 460 | baby | 0 |  |
+| 461 | retiree | 0 |  |
+| 462 | great-grandmother | 0 |  |
+| 463 | ghost child | 0 |  |
+| 464 | newborn god | 0 |  |
+| 465 | last elder | 0 |  |
+| 466 | apprentice | 0 |  |
+| 467 | intern | 0 |  |

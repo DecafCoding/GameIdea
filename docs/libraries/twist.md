@@ -1,6 +1,6 @@
 # Deck: Twist (General)
 
-158 cards. Read each card after "Except…".
+224 cards. Read each card after "Except…".
 
 | # | Card | Count | Games |
 |---:|---|---:|---|
@@ -162,3 +162,69 @@
 | 156 | your own mind lies to you | 1 | Disco Elysium - The Final Cut |
 | 157 | your pet copies your actions, not your orders | 1 | Black & White |
 | 158 | your power is turning you into a monster | 1 | The Binding of Isaac |
+| 159 | time only moves when you move | 0 |  |
+| 160 | the same day restarts each morning | 0 |  |
+| 161 | you live your life backwards | 0 |  |
+| 162 | the past changes when you leave it | 0 |  |
+| 163 | the future is already written down | 0 |  |
+| 164 | only you remember each loop | 0 |  |
+| 165 | every choice ages the world ten years | 0 |  |
+| 166 | the map is alive | 0 |  |
+| 167 | the world is tiny and you are huge | 0 |  |
+| 168 | you only see through others' eyes | 0 |  |
+| 169 | the rooms are bigger inside | 0 |  |
+| 170 | the map lies to you | 0 |  |
+| 171 | the camera is a character | 0 |  |
+| 172 | the epic war is between ants | 0 |  |
+| 173 | you are the side character | 0 |  |
+| 174 | you run the shop heroes visit | 0 |  |
+| 175 | you are the final boss | 0 |  |
+| 176 | you are the dungeon | 0 |  |
+| 177 | you are the weather | 0 |  |
+| 178 | the townsfolk know they are in a game | 0 |  |
+| 179 | the hero is a fraud | 0 |  |
+| 180 | you are the villain's minion | 0 |  |
+| 181 | kindness is your strongest weapon | 0 |  |
+| 182 | the villain only needs a friend | 0 |  |
+| 183 | the monsters are lonely | 0 |  |
+| 184 | everyone you help helps you back | 0 |  |
+| 185 | the end of the world is cozy | 0 |  |
+| 186 | the haunted house wants guests | 0 |  |
+| 187 | the enemies just want to go home | 0 |  |
+| 188 | money is worthless | 0 |  |
+| 189 | your health is your money | 0 |  |
+| 190 | you pay with memories | 0 |  |
+| 191 | the cheapest item is the best | 0 |  |
+| 192 | everything you own is borrowed | 0 |  |
+| 193 | you win by giving everything away | 0 |  |
+| 194 | enemies follow the same rules you do | 0 |  |
+| 195 | the tutorial never ends | 0 |  |
+| 196 | the instructions are wrong | 0 |  |
+| 197 | the save point is the danger | 0 |  |
+| 198 | pausing has a price | 0 |  |
+| 199 | the menu is part of the world | 0 |  |
+| 200 | one rule is a lie | 0 |  |
+| 201 | the last level is the first | 0 |  |
+| 202 | you can only talk to the enemy | 0 |  |
+| 203 | your rival is your only ally | 0 |  |
+| 204 | all players share one body | 0 |  |
+| 205 | the loser picks the next rule | 0 |  |
+| 206 | each player sees a different game | 0 |  |
+| 207 | the audience controls the enemies | 0 |  |
+| 208 | the villain tells the story | 0 |  |
+| 209 | the ending was the beginning | 0 |  |
+| 210 | you are reading your own diary | 0 |  |
+| 211 | every ending is the true one | 0 |  |
+| 212 | the credits roll halfway through | 0 |  |
+| 213 | the story is a lie told to you | 0 |  |
+| 214 | the land fights back | 0 |  |
+| 215 | the sun is the enemy | 0 |  |
+| 216 | the sea rises because of you | 0 |  |
+| 217 | the city is one creature | 0 |  |
+| 218 | nature wants you gone | 0 |  |
+| 219 | the rescued do not want rescuing | 0 |  |
+| 220 | the prisoner is the guard | 0 |  |
+| 221 | the cure is worse than the plague | 0 |  |
+| 222 | everyone is lying, including you | 0 |  |
+| 223 | doing right breaks the law | 0 |  |
+| 224 | the reward is for the wrong side | 0 |  |
