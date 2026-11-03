@@ -29,7 +29,7 @@ This list is closed. Keep all of these. Add none.
 4. **Dark Hook Card.** It heads a stack. It is 240 x 200 px, with a theme color border. It stays dark in light mode. Reason: it must stand apart from the cream cue cards.
 5. **Hook Card actions in a strip menu.** The actions are not shown on the card itself. Reason: less clutter, and it matches the other cards.
 6. **Connector badges are pills in the lower card's color.** This was TheForge's option C.
-7. **Genre counts replace a genre mark.** A 15 px orange pill on the 4 genre decks shows the number of genres that are on.
+7. **Genre counts replace a genre mark.** A 15 px pill in the theme color on the 4 genre decks shows the number of genres that are on.
 8. **Themes.** Dark and Light modes, and Orange, Blue and Green theme colors. Orange dark is the default. Only the base and the accent change between themes. Deck colors, cards and badges stay the same.
 9. **Settings button.** It sits at the bottom of the rail and has a gear icon.
 
