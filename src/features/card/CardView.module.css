@@ -1,0 +1,196 @@
+/* CardView: the 250 px paper card, its cue face, and the type disc with its combined edge. */
+
+/*
+ * Each card's paper is a light tint of its type color: 14 percent of the type color mixed
+ * into the paper step (user request 2026-10-31). The data-type attribute picks the color.
+ */
+[data-type='character'] {
+  --card-type: var(--type-character);
+}
+
+[data-type='motivation'] {
+  --card-type: var(--type-motivation);
+}
+
+[data-type='setting'] {
+  --card-type: var(--type-setting);
+}
+
+[data-type='conflict'] {
+  --card-type: var(--type-conflict);
+}
+
+[data-type='description'] {
+  --card-type: var(--type-description);
+}
+
+.card {
+  --card-tint: 14%;
+  position: relative;
+  flex: none;
+  width: var(--card);
+  height: var(--card);
+  border-radius: var(--radius-card);
+  background: color-mix(in srgb, var(--card-type) var(--card-tint), var(--paper));
+  box-shadow: var(--shadow-card);
+  font-family: var(--font-display);
+  font-size: 15px;
+}
+
+/* Tucked cards: the next paper step and the under shadow (design 9.4). */
+.under1 {
+  background: color-mix(in srgb, var(--card-type) var(--card-tint), var(--paper-under-1));
+  box-shadow: var(--shadow-card-under);
+}
+
+.under2 {
+  background: color-mix(in srgb, var(--card-type) var(--card-tint), var(--paper-under-2));
+  box-shadow: var(--shadow-card-under);
+}
+
+.face {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.cueLayer {
+  position: absolute;
+  inset: 0;
+}
+
+.turning {
+  transition: transform var(--t-turn-90) ease-in-out;
+}
+
+.halfTurn {
+  transition-duration: var(--t-turn-180);
+}
+
+/*
+ * Edge labels, measured from the card center. Each label's outer side sits on the 14 px
+ * inset (111 px) and it grows inward.
+ *
+ * Description (4 cues, never wraps): one 20 px line, inner side 91. Neighbours miss each
+ * other at a corner with a 6 px gap when the width is at most 2 × (91 - 6) = 170.
+ *
+ * Character, Setting, Motivation and Conflict share one text frame (user request
+ * 2026-11-01), all in 17 px lines that break at spaces and after hyphens:
+ *   top and bottom: 2 lines, up to 222 px (the card less both insets), spanning 77 to 111.
+ *     A tucked card shows its bottom 59 px (66 to 125), so both bottom lines show.
+ *   sides: 3 lines, up to 142 px, spanning 60 to 111 across and ±71 along the edge.
+ *     71 is 6 px short of the bottom label's 77, so the sides never touch it, and 60
+ *     clears the outer ring (56). A tucked card hides its sides (.tuckedSide).
+ */
+.label {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: max-content;
+  max-width: 170px;
+  line-height: 20px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
+  color: var(--ink-muted);
+}
+
+/* Top and bottom label of the shared frame: 2 lines, 222 px. */
+.wide {
+  max-width: 222px;
+  line-height: 17px;
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+/* Side label of the shared frame: 3 lines, 142 px. */
+.side {
+  max-width: 142px;
+  line-height: 17px;
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+}
+
+/* A tucked card shows only its bottom band; side text would peek into it, so it hides. */
+.tuckedSide {
+  visibility: hidden;
+}
+
+.active {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.adj {
+  color: var(--adj-muted);
+}
+
+.active .adj {
+  color: var(--adj);
+}
+
+/*
+ * A turned word on a combined card fades in and slides 4 px from its direction of travel.
+ * It stays inline and slides with relative left, not transform: an inline-block is one
+ * unbreakable box, so the label would pass the 2-line clamp and not break at a hyphen.
+ */
+.turnIn {
+  position: relative;
+  animation: cueTurnIn var(--t-turn-90) ease-in-out;
+}
+
+@keyframes cueTurnIn {
+  from {
+    opacity: 0;
+    left: var(--slide-from, 0);
+  }
+  to {
+    opacity: 1;
+    left: 0;
+  }
+}
+
+.rule {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  top: calc(50% - 0.5px);
+  height: 1px;
+  background: var(--paper-line);
+}
+
+.disc {
+  position: absolute;
+  left: calc(50% - var(--card-disc) / 2);
+  top: calc(50% - var(--card-disc) / 2);
+  z-index: 3;
+  display: flex;
+}
+
+/*
+ * A tucked card's type mark: the disc glyph, 14 px, in the type color with no disc, 8 px in
+ * from the bottom right corner. It sits right of the bottom cue (at most 236 px from the left
+ * edge on a 2-cue card) and inside the 14 px corner radius.
+ */
+.tuckMark {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  z-index: 2;
+  display: flex;
+  color: var(--card-type);
+  pointer-events: none;
+}
+
+/* A combined card marks its disc with a 2 px Description-color edge, inside the disc. */
+.combinedDisc > span {
+  box-shadow: inset 0 0 0 2px var(--type-description);
+}

@@ -1,0 +1,2595 @@
+{
+  "type": "character",
+  "cues": [
+    {
+      "id": "ch-0001",
+      "text": "courier",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "ch-0002",
+      "text": "bounty hunter",
+      "genres": ["generic", "sci-fi"]
+    },
+    {
+      "id": "ch-0003",
+      "text": "street medic",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0004",
+      "text": "scrap scavenger",
+      "genres": ["generic", "sci-fi"]
+    },
+    {
+      "id": "ch-0005",
+      "text": "wage slave",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0006",
+      "text": "corporate heir",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "ch-0007",
+      "text": "corporate lawyer",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0008",
+      "text": "whistleblower",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0009",
+      "text": "defector",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0010",
+      "text": "detective",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0011",
+      "text": "security guard",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0012",
+      "text": "gang leader",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0013",
+      "text": "street kid",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0014",
+      "text": "orphan",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0015",
+      "text": "refugee",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0016",
+      "text": "smuggler",
+      "genres": ["generic", "sci-fi"]
+    },
+    {
+      "id": "ch-0017",
+      "text": "protest organizer",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0018",
+      "text": "cult preacher",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0019",
+      "text": "rogue scientist",
+      "genres": ["generic", "sci-fi"]
+    },
+    {
+      "id": "ch-0020",
+      "text": "ex-soldier",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0021",
+      "text": "pit fighter",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0022",
+      "text": "nightclub owner",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0023",
+      "text": "bodyguard",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0024",
+      "text": "informant",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0025",
+      "text": "debt collector",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0026",
+      "text": "hitman",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0027",
+      "text": "tattoo artist",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0028",
+      "text": "news anchor",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0029",
+      "text": "taxi driver",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0030",
+      "text": "street vendor",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0031",
+      "text": "nurse",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0032",
+      "text": "child prodigy",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0033",
+      "text": "black-market dealer",
+      "genres": ["generic", "sci-fi"]
+    },
+    {
+      "id": "ch-0034",
+      "text": "tower sniper",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0035",
+      "text": "corporate spy",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "ch-0036",
+      "text": "board member",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0037",
+      "text": "compliance officer",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0038",
+      "text": "brand manager",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0039",
+      "text": "recruiter",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0040",
+      "text": "PR handler",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0041",
+      "text": "security chief",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0042",
+      "text": "contract negotiator",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0043",
+      "text": "research director",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0044",
+      "text": "intern",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0045",
+      "text": "asset manager",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0046",
+      "text": "risk analyst",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0047",
+      "text": "shareholder",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0048",
+      "text": "executive assistant",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0049",
+      "text": "patent lawyer",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0050",
+      "text": "propaganda writer",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "ch-0051",
+      "text": "chop-shop runner",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0052",
+      "text": "organ harvester",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0053",
+      "text": "arms dealer",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0054",
+      "text": "loan shark",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0055",
+      "text": "fence",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0056",
+      "text": "forger",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0057",
+      "text": "crew boss",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0058",
+      "text": "getaway driver",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0059",
+      "text": "safecracker",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0060",
+      "text": "enforcer",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0061",
+      "text": "pickpocket",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0062",
+      "text": "street hustler",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0063",
+      "text": "mule",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0064",
+      "text": "racketeer",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0065",
+      "text": "arsonist",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0066",
+      "text": "kidnapper",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0067",
+      "text": "identity thief",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "ch-0068",
+      "text": "cartel lieutenant",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0069",
+      "text": "license checker",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0070",
+      "text": "water rationer",
+      "genres": ["generic", "sci-fi"]
+    },
+    {
+      "id": "ch-0071",
+      "text": "noise warden",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0072",
+      "text": "slum architect",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "ch-0073",
+      "text": "elevator pilot",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0074",
+      "text": "ration dealer",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0075",
+      "text": "corpse recycler",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0076",
+      "text": "widow",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0077",
+      "text": "exiled prince",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0078",
+      "text": "navigator",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0079",
+      "text": "fleet admiral",
+      "genres": ["generic", "space-opera"]
+    },
+    {
+      "id": "ch-0080",
+      "text": "dowager empress",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0081",
+      "text": "cargo hauler",
+      "genres": ["generic", "sci-fi"]
+    },
+    {
+      "id": "ch-0082",
+      "text": "diplomat",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0083",
+      "text": "war veteran",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0084",
+      "text": "deserter",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0085",
+      "text": "mercenary",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0086",
+      "text": "cartographer",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0087",
+      "text": "archivist",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0088",
+      "text": "dock master",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0089",
+      "text": "customs inspector",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0090",
+      "text": "tariff collector",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0091",
+      "text": "trade envoy",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0092",
+      "text": "guild master",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0093",
+      "text": "spice merchant",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0094",
+      "text": "shipwright",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0095",
+      "text": "reactor tech",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0096",
+      "text": "hull welder",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0097",
+      "text": "medic",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0098",
+      "text": "surgeon",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0099",
+      "text": "chaplain",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0100",
+      "text": "oracle",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0101",
+      "text": "seer",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0102",
+      "text": "dream walker",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0103",
+      "text": "stowaway",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0104",
+      "text": "colonist",
+      "genres": ["generic", "sci-fi"]
+    },
+    {
+      "id": "ch-0105",
+      "text": "homesteader",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0106",
+      "text": "pirate",
+      "genres": ["generic", "sci-fi"]
+    },
+    {
+      "id": "ch-0107",
+      "text": "privateer",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0108",
+      "text": "corsair",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0109",
+      "text": "warlord",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0110",
+      "text": "viceroy",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0111",
+      "text": "regent",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0112",
+      "text": "heir",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0113",
+      "text": "consort",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0114",
+      "text": "courtier",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0115",
+      "text": "chancellor",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0116",
+      "text": "senator",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0117",
+      "text": "inquisitor",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0118",
+      "text": "assassin",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0119",
+      "text": "spymaster",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0120",
+      "text": "double agent",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0121",
+      "text": "saboteur",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0122",
+      "text": "rebel",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "ch-0123",
+      "text": "insurgent",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0124",
+      "text": "partisan",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0125",
+      "text": "freedom fighter",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0126",
+      "text": "crusader",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0127",
+      "text": "war priest",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0128",
+      "text": "cultist",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0129",
+      "text": "prophet",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0130",
+      "text": "heretic",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0131",
+      "text": "pilgrim",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0132",
+      "text": "missionary",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0133",
+      "text": "shapeshifter",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0134",
+      "text": "relic hunter",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0135",
+      "text": "ruin delver",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0136",
+      "text": "beast tamer",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0137",
+      "text": "gladiator",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0138",
+      "text": "arena champion",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0139",
+      "text": "duelist",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0140",
+      "text": "troubadour",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0141",
+      "text": "newscaster",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0142",
+      "text": "propagandist",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0143",
+      "text": "census taker",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0144",
+      "text": "judge",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0145",
+      "text": "warden",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0146",
+      "text": "convict",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0147",
+      "text": "exile",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0148",
+      "text": "outcast",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0149",
+      "text": "nomad",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0150",
+      "text": "hermit",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0151",
+      "text": "beacon keeper",
+      "genres": ["generic", "sci-fi"]
+    },
+    {
+      "id": "ch-0152",
+      "text": "gate warden",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0153",
+      "text": "fighter ace",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0154",
+      "text": "gunner",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0155",
+      "text": "marine",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0156",
+      "text": "commando",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0157",
+      "text": "quartermaster",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0158",
+      "text": "ensign",
+      "genres": ["generic", "space-opera"]
+    },
+    {
+      "id": "ch-0159",
+      "text": "cadet",
+      "genres": ["generic", "space-opera"]
+    },
+    {
+      "id": "ch-0160",
+      "text": "commodore",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0161",
+      "text": "marshal",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0162",
+      "text": "governor",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0163",
+      "text": "tribune",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0164",
+      "text": "ambassador",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0165",
+      "text": "hostage",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0166",
+      "text": "ransom broker",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0167",
+      "text": "fixer",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0168",
+      "text": "dream merchant",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "ch-0169",
+      "text": "matriarch",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0170",
+      "text": "heiress",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0171",
+      "text": "duchess",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0172",
+      "text": "baron",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0173",
+      "text": "knight",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0174",
+      "text": "squire",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0175",
+      "text": "flame keeper",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0176",
+      "text": "librarian",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0177",
+      "text": "astronomer",
+      "genres": ["generic", "sci-fi"]
+    },
+    {
+      "id": "ch-0178",
+      "text": "botanist",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0179",
+      "text": "bartender",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0180",
+      "text": "mechanic",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0181",
+      "text": "tinkerer",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0182",
+      "text": "scavenger",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0183",
+      "text": "wreck diver",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0184",
+      "text": "derelict scout",
+      "genres": ["generic", "space-opera"]
+    },
+    {
+      "id": "ch-0185",
+      "text": "twins",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0186",
+      "text": "lover",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0187",
+      "text": "gardener",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0188",
+      "text": "captain",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0189",
+      "text": "engineer",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0190",
+      "text": "prospector",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0191",
+      "text": "envoy",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0192",
+      "text": "miner",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0193",
+      "text": "test pilot",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0194",
+      "text": "linguist",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0195",
+      "text": "dockhand",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0196",
+      "text": "signal officer",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0197",
+      "text": "surveyor",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0198",
+      "text": "field medic",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0199",
+      "text": "schoolteacher",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0200",
+      "text": "magistrate",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0201",
+      "text": "journalist",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0202",
+      "text": "ethnographer",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0203",
+      "text": "ecologist",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0204",
+      "text": "geneticist",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0205",
+      "text": "commissar",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0206",
+      "text": "drill sergeant",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0207",
+      "text": "ferryman",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0208",
+      "text": "censor",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0209",
+      "text": "executioner",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0210",
+      "text": "steward",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0211",
+      "text": "gatekeeper",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0212",
+      "text": "game host",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0213",
+      "text": "forecaster",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0214",
+      "text": "inventor",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0215",
+      "text": "dockmaster",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0216",
+      "text": "undertaker",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0217",
+      "text": "advocate",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0218",
+      "text": "arena fighter",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0219",
+      "text": "monk",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0220",
+      "text": "ruin diver",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0221",
+      "text": "immortal",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0222",
+      "text": "child regent",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0223",
+      "text": "minor noble",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0224",
+      "text": "bondservant",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0225",
+      "text": "debtor",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0226",
+      "text": "false messiah",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0227",
+      "text": "zealot",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0228",
+      "text": "celebrity",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0229",
+      "text": "figurehead",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0230",
+      "text": "dissident",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0231",
+      "text": "rebel leader",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0232",
+      "text": "crime lord",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0233",
+      "text": "tycoon",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0234",
+      "text": "war hero",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0235",
+      "text": "conscript",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0236",
+      "text": "usurper",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0237",
+      "text": "holy fool",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0238",
+      "text": "gentleman thief",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0239",
+      "text": "rival",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0240",
+      "text": "last survivor",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0241",
+      "text": "lost twin",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0242",
+      "text": "old flame",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0243",
+      "text": "mentor",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0244",
+      "text": "apprentice",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0245",
+      "text": "firstborn",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0246",
+      "text": "traitor",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0247",
+      "text": "nemesis",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0248",
+      "text": "confidant",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0249",
+      "text": "guardian",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0250",
+      "text": "body double",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0251",
+      "text": "impostor",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0252",
+      "text": "prodigal child",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0253",
+      "text": "old comrade",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0254",
+      "text": "captor",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0255",
+      "text": "benefactor",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0256",
+      "text": "star witness",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0257",
+      "text": "slum kid",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0258",
+      "text": "art dealer",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0259",
+      "text": "sex worker",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0260",
+      "text": "celebrity host",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0261",
+      "text": "crime heiress",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0262",
+      "text": "bike messenger",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0263",
+      "text": "rent-a-cop",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0264",
+      "text": "teen fan",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0265",
+      "text": "small-town gamer",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0266",
+      "text": "jaded publicist",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0267",
+      "text": "app tester",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0268",
+      "text": "geologist",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0269",
+      "text": "pizza driver",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0270",
+      "text": "skateboarder",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0271",
+      "text": "startup founder",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0272",
+      "text": "codebreaker",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0273",
+      "text": "undercover narc",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0274",
+      "text": "debt-ridden tech",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0275",
+      "text": "corporate executive",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0276",
+      "text": "rights investigator",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0277",
+      "text": "diplomat in exile",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0278",
+      "text": "storm chaser",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0279",
+      "text": "smuggler pilot",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0280",
+      "text": "private detective",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0281",
+      "text": "mind therapist",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0282",
+      "text": "rock musician",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0283",
+      "text": "video artist",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0284",
+      "text": "actress",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0285",
+      "text": "government bureaucrat",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0286",
+      "text": "resistance fighter",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0287",
+      "text": "club owner",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0288",
+      "text": "drug dealer",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0289",
+      "text": "street preacher",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0290",
+      "text": "reluctant enforcer",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0291",
+      "text": "reality-show subject",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0292",
+      "text": "identity forger",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0293",
+      "text": "spy",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0294",
+      "text": "sociologist",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0295",
+      "text": "reckless scientist",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0296",
+      "text": "insurance investigator",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0297",
+      "text": "police inspector",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0298",
+      "text": "venture entrepreneur",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0299",
+      "text": "fugitive historian",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0300",
+      "text": "TV producer",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0301",
+      "text": "martial arts teacher",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0302",
+      "text": "Islamic scholar",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0303",
+      "text": "seed hunter",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0304",
+      "text": "contest hunter",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0305",
+      "text": "small-town sheriff",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0306",
+      "text": "neuroscientist",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0307",
+      "text": "election monitor",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0308",
+      "text": "military operative",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0309",
+      "text": "influencer",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0310",
+      "text": "activist",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0311",
+      "text": "teen rebel",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0312",
+      "text": "dropout",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0313",
+      "text": "theme park worker",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0314",
+      "text": "biker gang leader",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0315",
+      "text": "psychic teen",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0316",
+      "text": "gonzo journalist",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0317",
+      "text": "data processor",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0318",
+      "text": "fired programmer",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0319",
+      "text": "tribal detective",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0320",
+      "text": "network engineer",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0321",
+      "text": "hired gun",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0322",
+      "text": "reclusive loner",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0323",
+      "text": "single mother",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0324",
+      "text": "disgraced agent",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0325",
+      "text": "freelance coder",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0326",
+      "text": "war correspondent",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0327",
+      "text": "lawyer",
+      "genres": ["generic"]
+    },
+    {
+      "id": "ch-0328",
+      "text": "rogue AI",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0329",
+      "text": "clone",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0330",
+      "text": "android",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0331",
+      "text": "uploaded mind",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0332",
+      "text": "gene splicer",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0333",
+      "text": "test subject",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0334",
+      "text": "factory robot",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0335",
+      "text": "holo actor",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0336",
+      "text": "companion bot",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0337",
+      "text": "maintenance bot",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0338",
+      "text": "hive mind",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0339",
+      "text": "synthetic animal",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0340",
+      "text": "digital clone",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0341",
+      "text": "uplifted dog",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0342",
+      "text": "lab chimera",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0343",
+      "text": "service android",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0344",
+      "text": "war machine",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0345",
+      "text": "nanite swarm",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0346",
+      "text": "mind backup",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0347",
+      "text": "AI child",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0348",
+      "text": "rogue mech",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0349",
+      "text": "cryo attendant",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0350",
+      "text": "vat farmer",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0351",
+      "text": "holo projectionist",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0352",
+      "text": "synth chef",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0353",
+      "text": "bio-printer",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0354",
+      "text": "AI handler",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0355",
+      "text": "clone nanny",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0356",
+      "text": "station chief",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0357",
+      "text": "synth",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0358",
+      "text": "cyborg",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0359",
+      "text": "uplift",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0360",
+      "text": "machine mind",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0361",
+      "text": "holo star",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0362",
+      "text": "data thief",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0363",
+      "text": "memory dealer",
+      "genres": ["sci-fi", "cyberpunk"]
+    },
+    {
+      "id": "ch-0364",
+      "text": "body sculptor",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0365",
+      "text": "cryo sleeper",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0366",
+      "text": "stationer",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0367",
+      "text": "android medic",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0368",
+      "text": "clone soldier",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0369",
+      "text": "machine shrink",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0370",
+      "text": "gene tailor",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0371",
+      "text": "companion robot",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0372",
+      "text": "swarm mind",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0373",
+      "text": "uplifted octopus",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0374",
+      "text": "uplifted raven",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0375",
+      "text": "machine god",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0376",
+      "text": "gene hybrid",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0377",
+      "text": "mutant",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0378",
+      "text": "station ghost",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0379",
+      "text": "time traveler",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0380",
+      "text": "woken sleeper",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0381",
+      "text": "body thief",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0382",
+      "text": "repair robot",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0383",
+      "text": "baseline human",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0384",
+      "text": "resurrected soldier",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0385",
+      "text": "genetic variant",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0386",
+      "text": "rejuvenated elder",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0387",
+      "text": "robot maker",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0388",
+      "text": "rebel robot",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0389",
+      "text": "amnesiac clone",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0390",
+      "text": "AI guardian",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0391",
+      "text": "memory-wiped wanderer",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0392",
+      "text": "vengeful spacer",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0393",
+      "text": "posthuman heir",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0394",
+      "text": "engineered servant",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0395",
+      "text": "android child",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0396",
+      "text": "AI explorer",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0397",
+      "text": "lab escapee",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0398",
+      "text": "artificial man",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0399",
+      "text": "runaway android",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "ch-0400",
+      "text": "net diver",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0401",
+      "text": "street surgeon",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0402",
+      "text": "chrome mercenary",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0403",
+      "text": "corporate fixer",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0404",
+      "text": "data broker",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0405",
+      "text": "drone pilot",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0406",
+      "text": "synth musician",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0407",
+      "text": "implant addict",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0408",
+      "text": "arcology janitor",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0409",
+      "text": "corporate assassin",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0410",
+      "text": "augmented cop",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0411",
+      "text": "hacktivist",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0412",
+      "text": "coder",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0413",
+      "text": "prosthetic smith",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0414",
+      "text": "sensory editor",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0415",
+      "text": "digital ghost",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0416",
+      "text": "ad engineer",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0417",
+      "text": "data auditor",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0418",
+      "text": "corporate chaplain",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0419",
+      "text": "loyalty officer",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0420",
+      "text": "black-ops coordinator",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0421",
+      "text": "ransom hacker",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0422",
+      "text": "data smuggler",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0423",
+      "text": "combat drone",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0424",
+      "text": "surveillance AI",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0425",
+      "text": "city AI",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0426",
+      "text": "sentient implant",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0427",
+      "text": "feral drone",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0428",
+      "text": "virus entity",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0429",
+      "text": "ghost program",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0430",
+      "text": "implant technician",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0431",
+      "text": "neural tuner",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0432",
+      "text": "ad scrubber",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0433",
+      "text": "drone mechanic",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0434",
+      "text": "mesh network tech",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0435",
+      "text": "air filter tech",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0436",
+      "text": "sky-lane controller",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0437",
+      "text": "memory wiper",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0438",
+      "text": "dream recorder",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0439",
+      "text": "mood dealer",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0440",
+      "text": "sleep broker",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0441",
+      "text": "credit tracer",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0442",
+      "text": "augment inspector",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0443",
+      "text": "biometric clerk",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0444",
+      "text": "drone traffic cop",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0445",
+      "text": "reputation scorer",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0446",
+      "text": "net exorcist",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0447",
+      "text": "hab-pod landlord",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0448",
+      "text": "black-ice tester",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0449",
+      "text": "firmware priest",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0450",
+      "text": "sun-lamp vendor",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0451",
+      "text": "affect tuner",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0452",
+      "text": "signal jammer",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0453",
+      "text": "data janitor",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0454",
+      "text": "facial scrubber",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0455",
+      "text": "hacker",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0456",
+      "text": "memory editor",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0457",
+      "text": "washed-up hacker",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0458",
+      "text": "street samurai",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0459",
+      "text": "corporate mercenary",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0460",
+      "text": "data courier",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0461",
+      "text": "virtual cop",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0462",
+      "text": "retired hacker",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0463",
+      "text": "masked hacker",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0464",
+      "text": "cyber cop",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0465",
+      "text": "pharma pirate",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0466",
+      "text": "wired teenager",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0467",
+      "text": "cyborg officer",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0468",
+      "text": "amnesiac cyborg",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0469",
+      "text": "digital copy",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "ch-0470",
+      "text": "salvage pilot",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0471",
+      "text": "starship captain",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0472",
+      "text": "void monk",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0473",
+      "text": "jump navigator",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0474",
+      "text": "hive queen",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0475",
+      "text": "xenolinguist",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0476",
+      "text": "terraformer",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0477",
+      "text": "asteroid miner",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0478",
+      "text": "gas harvester",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0479",
+      "text": "ice hauler",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0480",
+      "text": "drive engineer",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0481",
+      "text": "telepath",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0482",
+      "text": "empath",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0483",
+      "text": "psion",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0484",
+      "text": "mind reader",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0485",
+      "text": "symbiote host",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0486",
+      "text": "hive drone",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0487",
+      "text": "ship AI",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0488",
+      "text": "xenoarchaeologist",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0489",
+      "text": "comet rider",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0490",
+      "text": "solar sailor",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0491",
+      "text": "planet breaker",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0492",
+      "text": "moon farmer",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0493",
+      "text": "ring shepherd",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0494",
+      "text": "wormhole pilot",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0495",
+      "text": "dropship pilot",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0496",
+      "text": "shipborn",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0497",
+      "text": "voidborn",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0498",
+      "text": "belter",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0499",
+      "text": "groundling",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0500",
+      "text": "hive mother",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0501",
+      "text": "brood lord",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0502",
+      "text": "swarm scout",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0503",
+      "text": "hyperspace scout",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0504",
+      "text": "hyperspace smuggler",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0505",
+      "text": "jump gate engineer",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0506",
+      "text": "alien refugee",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0507",
+      "text": "starfighter pilot",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0508",
+      "text": "xenobiologist",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0509",
+      "text": "ship mind",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0510",
+      "text": "mind parasite",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0511",
+      "text": "sentient fungus",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0512",
+      "text": "cloud dweller",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0513",
+      "text": "void whale",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0514",
+      "text": "alien hatchling",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0515",
+      "text": "energy being",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0516",
+      "text": "insect soldier",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0517",
+      "text": "alien trader",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "ch-0518",
+      "text": "starship trader",
+      "genres": ["space-opera"]
+    }
+  ]
+}

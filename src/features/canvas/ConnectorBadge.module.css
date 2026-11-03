@@ -1,0 +1,91 @@
+/*
+ * Connector badge: centered on this card's bottom left corner, which is the seam with the
+ * card tucked below it. Half of it hangs off the left edge. The tucked card's type color.
+ * The badge is a button: an invisible 44 px area around it takes the pointer.
+ */
+.badge {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 4;
+  transform: translate(-50%, 50%);
+  padding: 3px 9px;
+  border: none;
+  border-radius: var(--radius-button);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;
+  white-space: nowrap;
+  box-shadow: var(--shadow-strip);
+  cursor: pointer;
+}
+
+.badge::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: max(100%, var(--hit-min));
+  height: var(--hit-min);
+  transform: translate(-50%, -50%);
+}
+
+.badge[aria-expanded='true'] {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* The word list: screen space, under the badge (or above it near the window bottom). */
+.menu {
+  position: fixed;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 240px;
+  padding: 6px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-dialog);
+  background: var(--panel);
+  box-shadow: var(--shadow-menu);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: var(--hit-min);
+  padding: 0 12px 0 8px;
+  border: none;
+  border-radius: var(--radius-button);
+  background: transparent;
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: 14px;
+  text-align: left;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.row:hover,
+.row:focus-visible {
+  background: var(--panel-hover);
+}
+
+.check {
+  display: inline-flex;
+  flex: none;
+  width: 16px;
+  color: var(--accent);
+}
+
+.word {
+  font-family: var(--font-display);
+  font-weight: 600;
+}
+
+.preview {
+  color: var(--text-dim);
+}

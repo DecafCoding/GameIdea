@@ -1,0 +1,45 @@
+/* CardStrip: 4 px padding, --panel, --line border, radius 10, 44 px buttons with 13 px text. */
+.strip {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-panel);
+  background: var(--panel);
+  box-shadow: var(--shadow-strip);
+}
+
+.button {
+  min-height: var(--hit-min);
+  padding: 0 12px;
+  border: 0;
+  border-radius: var(--radius-button-inner);
+  background: transparent;
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.button:hover:not(:disabled) {
+  background: var(--panel-hover);
+}
+
+.button:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.button:disabled {
+  color: var(--text-dim);
+  cursor: default;
+}
+
+.split {
+  background: color-mix(in srgb, var(--type-description) 25%, transparent);
+}
+
+.discard {
+  color: var(--accent-text);
+}

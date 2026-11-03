@@ -1,0 +1,145 @@
+/*
+ * NoteView: the note, a --paper-note header band with the title over a white body, its edit
+ * outline, trash button and resize handle.
+ */
+.note {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-dialog);
+  background: #fff;
+  box-shadow: var(--shadow-card);
+  color: var(--ink);
+  cursor: text;
+  overflow: hidden;
+}
+
+.editing {
+  outline: 2px solid var(--accent);
+  outline-offset: 0;
+  overflow: visible;
+}
+
+/* The header band keeps the note paper color. Its right padding clears the 44 px trash button. */
+.header {
+  flex: none;
+  padding: 12px var(--hit-min) 10px 18px;
+  border-radius: var(--radius-dialog) var(--radius-dialog) 0 0;
+  background: var(--paper-note);
+}
+
+/* The editable title: Space Grotesk 14 / 600, shown as typed. */
+.title {
+  display: block;
+  width: 100%;
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  padding: 10px 18px 16px;
+}
+
+.text {
+  flex: 1;
+  min-height: 0;
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--ink);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  overflow: hidden;
+}
+
+.input {
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  resize: none;
+  overflow: auto;
+}
+
+.input:focus-visible {
+  outline: none;
+}
+
+/* A 44 px hit area around the 32 px trash face, in the top right corner. */
+.trash {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--hit-min);
+  height: var(--hit-min);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--note-delete);
+  cursor: pointer;
+}
+
+.trashFace {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-button-inner);
+}
+
+.trash:hover .trashFace {
+  background: color-mix(in srgb, var(--note-delete) 12%, transparent);
+}
+
+/* A 44 px hit area; the visible 14 px handle sits in the bottom right corner. */
+.handle {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: var(--hit-min);
+  height: var(--hit-min);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: nwse-resize;
+  touch-action: none;
+}
+
+.handle::after {
+  content: '';
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  width: 14px;
+  height: 14px;
+  background:
+    linear-gradient(
+      135deg,
+      transparent 45%,
+      var(--ink-caption) 45%,
+      var(--ink-caption) 55%,
+      transparent 55%
+    ),
+    linear-gradient(
+      135deg,
+      transparent 75%,
+      var(--ink-caption) 75%,
+      var(--ink-caption) 85%,
+      transparent 85%
+    );
+}

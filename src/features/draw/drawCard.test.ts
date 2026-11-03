@@ -1,0 +1,169 @@
+/**
+ * Tests for drawCard: cue counts, distinct cues, kind copies, the genre filter, no mutation
+ * and the real pool files.
+ */
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { describe, expect, it } from 'vitest';
+import {
+  CARD_TYPES,
+  CUES_PER_CARD,
+  GENRES,
+  type CardType,
+  type Genre,
+  type Pool,
+} from '@/shared/model';
+import { parsePool } from '@/shared/pools';
+import { drawCard } from './drawCard';
+
+/** mulberry32: a small seeded PRNG so draws repeat across runs. */
+function mulberry32(seed: number): () => number {
+  let a = seed >>> 0;
+  return () => {
+    a = (a + 0x6d2b79f5) >>> 0;
+    let t = a;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+function pool(type: CardType, texts: string[], genres: Genre[] = ['generic']): Pool {
+  return {
+    type,
+    cues: texts.map((text, i) => ({
+      id: `x-${i}`,
+      text,
+      ...(type === 'setting' ? { kind: 'place' as const } : {}),
+      genres: [...genres],
+    })),
+  };
+}
+
+const six = ['navigator', 'diplomat', 'gardener', 'captain', 'medic', 'pilot'];
+const ALL = GENRES;
+let idCount = 0;
+const createId = () => `card-${++idCount}`;
+
+const texts = (card: ReturnType<typeof drawCard>) => card.rings[0]!.cues.map((cue) => cue.text);
+
+describe('drawCard', () => {
+  it('drawCard_character_returnsOneRingOfFourDistinctCues', () => {
+    const card = drawCard('character', pool('character', six), ALL, { createId });
+    expect(card.rings).toHaveLength(1);
+    expect(card.rings[0]!.activeIndex).toBe(0);
+    expect(new Set(texts(card)).size).toBe(4);
+    expect(card).toMatchObject({ type: 'character', x: 0, y: 0, z: 0, tuckedUnder: null });
+  });
+
+  it('drawCard_motivation_returnsTwoCues', () => {
+    const card = drawCard('motivation', pool('motivation', six), ALL);
+    expect(texts(card)).toHaveLength(2);
+  });
+
+  it('drawCard_setting_copiesKind', () => {
+    const card = drawCard('setting', pool('setting', six), ALL);
+    for (const cue of card.rings[0]!.cues) expect(cue.kind).toBe('place');
+  });
+
+  it('drawCard_characterPool_cuesHaveNoKindOrId', () => {
+    const card = drawCard('character', pool('character', six), ALL);
+    for (const cue of card.rings[0]!.cues) expect(Object.keys(cue)).toEqual(['text']);
+  });
+
+  it('drawCard_poolWithDuplicateTexts_neverRepeatsText', () => {
+    const dupes = pool('motivation', ['a', 'A ', 'b', 'a', 'c', ' b']);
+    const random = mulberry32(7);
+    for (let i = 0; i < 500; i++) {
+      const drawn = texts(drawCard('motivation', dupes, ALL, { random })).map((t) =>
+        t.trim().toLowerCase(),
+      );
+      expect(new Set(drawn).size).toBe(2);
+    }
+  });
+
+  it('drawCard_poolTooSmall_throws', () => {
+    expect(() => drawCard('character', pool('character', ['a', 'b', 'B', 'c']), ALL)).toThrow();
+  });
+
+  it('drawCard_typeMismatch_throws', () => {
+    expect(() => drawCard('character', pool('setting', six), ALL)).toThrow();
+  });
+
+  it('drawCard_anyDraw_doesNotMutatePool', () => {
+    const p = pool('character', six);
+    const before = structuredClone(p);
+    for (let i = 0; i < 20; i++) drawCard('character', p, ALL);
+    expect(p).toEqual(before);
+  });
+
+  it('drawCard_sameSeed_sameCues', () => {
+    const p = pool('character', six);
+    const a = drawCard('character', p, ALL, { random: mulberry32(42) });
+    const b = drawCard('character', p, ALL, { random: mulberry32(42) });
+    expect(texts(a)).toEqual(texts(b));
+  });
+
+  it('drawCard_genres_onlyMatchingCues', () => {
+    const mixed: Pool = {
+      type: 'character',
+      cues: [
+        ...pool('character', ['a', 'b', 'c', 'd'], ['cyberpunk']).cues,
+        ...pool('character', ['e', 'f', 'g', 'h'], ['space-opera']).cues,
+      ],
+    };
+    const random = mulberry32(3);
+    for (let i = 0; i < 50; i++) {
+      expect(texts(drawCard('character', mixed, ['cyberpunk'], { random })).sort()).toEqual([
+        'a',
+        'b',
+        'c',
+        'd',
+      ]);
+    }
+  });
+
+  it('drawCard_cueInTwoGenres_drawnForEither', () => {
+    const p: Pool = {
+      type: 'motivation',
+      cues: [
+        { id: 'm-1', text: 'shared', genres: ['cyberpunk', 'space-opera'] },
+        { id: 'm-2', text: 'cyber', genres: ['cyberpunk'] },
+        { id: 'm-3', text: 'opera', genres: ['space-opera'] },
+      ],
+    };
+    expect(texts(drawCard('motivation', p, ['cyberpunk'])).sort()).toEqual(['cyber', 'shared']);
+    expect(texts(drawCard('motivation', p, ['space-opera'])).sort()).toEqual(['opera', 'shared']);
+  });
+
+  it('drawCard_noMatchingCues_throws', () => {
+    expect(() => drawCard('character', pool('character', six), ['cyberpunk'])).toThrow();
+  });
+
+  it('drawCard_emptyGenres_throws', () => {
+    expect(() => drawCard('character', pool('character', six), [])).toThrow();
+  });
+
+  it('drawCard_realPoolFiles_200DrawsNeverRepeatACue', () => {
+    const random = mulberry32(1);
+    const genreSets: (readonly Genre[])[] = [...GENRES.map((genre) => [genre]), GENRES];
+    for (const type of CARD_TYPES) {
+      const file = join(process.cwd(), 'public', 'pools', `${type}.json`);
+      const real = parsePool(type, JSON.parse(readFileSync(file, 'utf8')));
+      const genresOf = new Map(real.cues.map((cue) => [cue.text, cue.genres]));
+      for (const genres of genreSets) {
+        for (let i = 0; i < 200; i++) {
+          const drawn = texts(drawCard(type, real, genres, { random }));
+          expect(drawn).toHaveLength(CUES_PER_CARD[type]);
+          expect(new Set(drawn).size).toBe(drawn.length);
+          for (const text of drawn) {
+            expect(
+              genresOf.get(text)!.some((genre) => genres.includes(genre)),
+              text,
+            ).toBe(true);
+          }
+        }
+      }
+    }
+  });
+});

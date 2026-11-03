@@ -1,0 +1,2790 @@
+{
+  "type": "motivation",
+  "cues": [
+    {
+      "id": "mo-0001",
+      "text": "erase a debt",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "mo-0002",
+      "text": "find a missing sister",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0003",
+      "text": "expose a corporation",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "mo-0004",
+      "text": "steal a prototype",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "mo-0005",
+      "text": "find who ordered the hit",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "mo-0006",
+      "text": "go legit",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "mo-0007",
+      "text": "clear a dead friend's name",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0008",
+      "text": "crack an unbreakable vault",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "mo-0009",
+      "text": "buy back a child",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0010",
+      "text": "get off the blacklist",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0011",
+      "text": "find the source of the virus",
+      "genres": ["generic", "sci-fi"]
+    },
+    {
+      "id": "mo-0012",
+      "text": "win the pit championship",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0013",
+      "text": "retire to the outer zone",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0014",
+      "text": "join a corporation",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0015",
+      "text": "kill the board chair",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "mo-0016",
+      "text": "replace the CEO",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0017",
+      "text": "inherit the family firm",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0018",
+      "text": "get clean water",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0019",
+      "text": "see the ocean once",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0020",
+      "text": "pay for a loved one's surgery",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0021",
+      "text": "get a legal identity",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "mo-0022",
+      "text": "erase a legal identity",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "mo-0023",
+      "text": "go viral one more time",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0024",
+      "text": "get their reputation back",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0025",
+      "text": "rob the central bank",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0026",
+      "text": "pull one last job",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "mo-0027",
+      "text": "start a gang war",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0028",
+      "text": "end a gang war",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0029",
+      "text": "take over the district",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "mo-0030",
+      "text": "avenge a murdered crew",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0031",
+      "text": "find the mole",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0032",
+      "text": "turn informant and survive",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0033",
+      "text": "protect a witness",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0034",
+      "text": "escape a safehouse",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0035",
+      "text": "rescue a kidnapped coder",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "mo-0036",
+      "text": "wake a sleeping god",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0037",
+      "text": "make it rain again",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0038",
+      "text": "hijack the news feed",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "mo-0039",
+      "text": "broadcast the truth",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0040",
+      "text": "bury the truth",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0041",
+      "text": "crash the market",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0042",
+      "text": "save the last hospital",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0043",
+      "text": "keep a patient alive tonight",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0044",
+      "text": "find a surgeon who will talk",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0045",
+      "text": "hide a body",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0046",
+      "text": "win a street race",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0047",
+      "text": "steal a courier package",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0048",
+      "text": "deliver on time",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0049",
+      "text": "open the locked package",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0050",
+      "text": "find who sent the package",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0051",
+      "text": "collect a bounty",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0052",
+      "text": "cancel a bounty",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0053",
+      "text": "stay awake for a week",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0054",
+      "text": "feel anything at all",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0055",
+      "text": "turn off the pain",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0056",
+      "text": "play a sold-out show",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0057",
+      "text": "write one honest song",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0058",
+      "text": "save the old neighborhood",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0059",
+      "text": "burn the slum down",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "mo-0060",
+      "text": "build a tower",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0061",
+      "text": "topple a tower",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0062",
+      "text": "evict the squatters",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0063",
+      "text": "hide the squatters",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0064",
+      "text": "adopt a street kid",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0065",
+      "text": "find their birth parents",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0066",
+      "text": "meet their maker",
+      "genres": ["generic", "sci-fi"]
+    },
+    {
+      "id": "mo-0067",
+      "text": "kill their maker",
+      "genres": ["generic", "sci-fi"]
+    },
+    {
+      "id": "mo-0068",
+      "text": "steal the elevator codes",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "mo-0069",
+      "text": "leak the board minutes",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "mo-0070",
+      "text": "launder dirty credits",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "mo-0071",
+      "text": "pay the loan shark",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "mo-0072",
+      "text": "vanish before the collector",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "mo-0073",
+      "text": "be the last one standing",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0074",
+      "text": "find work that is not killing",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0075",
+      "text": "steal a corporate secret",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "mo-0076",
+      "text": "claim the empty throne",
+      "genres": ["generic", "space-opera"]
+    },
+    {
+      "id": "mo-0077",
+      "text": "abdicate the throne",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0078",
+      "text": "command a fleet",
+      "genres": ["generic", "space-opera"]
+    },
+    {
+      "id": "mo-0079",
+      "text": "desert the fleet",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0080",
+      "text": "find the ancient relic",
+      "genres": ["generic", "space-opera"]
+    },
+    {
+      "id": "mo-0081",
+      "text": "destroy the ancient relic",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0082",
+      "text": "lead the rebellion",
+      "genres": ["generic", "space-opera"]
+    },
+    {
+      "id": "mo-0083",
+      "text": "crush the rebellion",
+      "genres": ["generic", "space-opera"]
+    },
+    {
+      "id": "mo-0084",
+      "text": "restore the dynasty",
+      "genres": ["generic", "space-opera"]
+    },
+    {
+      "id": "mo-0085",
+      "text": "end the dynasty",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0086",
+      "text": "keep the crew together",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0087",
+      "text": "abandon the crew",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0088",
+      "text": "build a trade empire",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0089",
+      "text": "break the trade empire",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0090",
+      "text": "return from exile",
+      "genres": ["generic", "space-opera"]
+    },
+    {
+      "id": "mo-0091",
+      "text": "stay in exile forever",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0092",
+      "text": "find a way home",
+      "genres": ["generic", "sci-fi"]
+    },
+    {
+      "id": "mo-0093",
+      "text": "never go home again",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0094",
+      "text": "unite the warring houses",
+      "genres": ["generic", "space-opera"]
+    },
+    {
+      "id": "mo-0095",
+      "text": "divide the warring houses",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0096",
+      "text": "steal a warship",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0097",
+      "text": "recover a stolen warship",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0098",
+      "text": "avenge a murdered ruler",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0099",
+      "text": "pardon a ruler's killer",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0100",
+      "text": "marry into the royal line",
+      "genres": ["generic", "space-opera"]
+    },
+    {
+      "id": "mo-0101",
+      "text": "escape a royal marriage",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0102",
+      "text": "broker peace between empires",
+      "genres": ["generic", "space-opera"]
+    },
+    {
+      "id": "mo-0103",
+      "text": "sabotage the peace talks",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0104",
+      "text": "smuggle refugees to safety",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0105",
+      "text": "hunt down the smugglers",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0106",
+      "text": "earn a seat on the council",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0107",
+      "text": "dissolve the council",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0108",
+      "text": "find the emperor's heir",
+      "genres": ["generic", "space-opera"]
+    },
+    {
+      "id": "mo-0109",
+      "text": "hide the emperor's heir",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0110",
+      "text": "prove a noble bloodline",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0111",
+      "text": "disown a noble bloodline",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0112",
+      "text": "buy a ship of their own",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0113",
+      "text": "sell the family ship",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0114",
+      "text": "pay off a crew debt",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0115",
+      "text": "collect on a crew debt",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0116",
+      "text": "win the fleet's loyalty",
+      "genres": ["generic", "space-opera"]
+    },
+    {
+      "id": "mo-0117",
+      "text": "turn the fleet traitor",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0118",
+      "text": "find a cure for the plague",
+      "genres": ["generic", "sci-fi"]
+    },
+    {
+      "id": "mo-0119",
+      "text": "spread the plague",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0120",
+      "text": "rescue a captured admiral",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0121",
+      "text": "ransom a captured admiral",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0122",
+      "text": "end the blockade",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0123",
+      "text": "hold the blockade",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0124",
+      "text": "find the lost expedition",
+      "genres": ["generic", "space-opera"]
+    },
+    {
+      "id": "mo-0125",
+      "text": "bury the lost expedition",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0126",
+      "text": "crown a puppet ruler",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0127",
+      "text": "unmask the puppet ruler",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0128",
+      "text": "retire from the war",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0129",
+      "text": "re-enlist for the war",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0130",
+      "text": "recover a lost memory",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0131",
+      "text": "be the last of the line",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0132",
+      "text": "continue the line",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0133",
+      "text": "inherit the shipyards",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0134",
+      "text": "burn the shipyards",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0135",
+      "text": "protect the young heir",
+      "genres": ["generic", "space-opera"]
+    },
+    {
+      "id": "mo-0136",
+      "text": "kidnap the young heir",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0137",
+      "text": "win back a lost title",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0138",
+      "text": "give up a title",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0139",
+      "text": "find the missing fleet",
+      "genres": ["generic", "space-opera"]
+    },
+    {
+      "id": "mo-0140",
+      "text": "make the fleet vanish",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0141",
+      "text": "clear a traitor's name",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0142",
+      "text": "prove a hero a traitor",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0143",
+      "text": "survive the coronation",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0144",
+      "text": "ruin the coronation",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0145",
+      "text": "found a new order",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0146",
+      "text": "join the pirate fleet",
+      "genres": ["generic", "space-opera"]
+    },
+    {
+      "id": "mo-0147",
+      "text": "leave the pirate fleet",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0148",
+      "text": "learn the ancient language",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0149",
+      "text": "outrun the empire's hunters",
+      "genres": ["generic", "space-opera"]
+    },
+    {
+      "id": "mo-0150",
+      "text": "lead the empire's hunters",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0151",
+      "text": "find the admiral's betrayer",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0152",
+      "text": "be the admiral's betrayer",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0153",
+      "text": "secure a trade monopoly",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0154",
+      "text": "break a trade monopoly",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0155",
+      "text": "see the stars one last time",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0156",
+      "text": "raise an army of outcasts",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0157",
+      "text": "disband the outcast army",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0158",
+      "text": "win the senate vote",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0159",
+      "text": "rig the senate vote",
+      "genres": ["generic", "space-opera"]
+    },
+    {
+      "id": "mo-0160",
+      "text": "find the old regent's vault",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0161",
+      "text": "loot the regent's vault",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0162",
+      "text": "train the next great pilot",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0163",
+      "text": "ground every pilot",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0164",
+      "text": "be chosen by the relic",
+      "genres": ["generic", "space-opera"]
+    },
+    {
+      "id": "mo-0165",
+      "text": "deny the relic's choice",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0166",
+      "text": "lead the exodus fleet",
+      "genres": ["generic", "space-opera"]
+    },
+    {
+      "id": "mo-0167",
+      "text": "stop the exodus fleet",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0168",
+      "text": "earn the crew's respect",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0169",
+      "text": "rule the crew by fear",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0170",
+      "text": "keep the old treaty alive",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0171",
+      "text": "tear up the old treaty",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0172",
+      "text": "vanish from all records",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0173",
+      "text": "repay an old debt",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0174",
+      "text": "protect a younger sibling",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0175",
+      "text": "clear a stained name",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0176",
+      "text": "escape a binding contract",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0177",
+      "text": "win back the crew's trust",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0178",
+      "text": "learn what really happened",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0179",
+      "text": "rebuild the ruined colony",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0180",
+      "text": "avenge a murdered crewmate",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0181",
+      "text": "earn a full pardon",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0182",
+      "text": "break the blockade",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0183",
+      "text": "save a dying ship",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0184",
+      "text": "prove a banned theory",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0185",
+      "text": "keep a promise to the dead",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0186",
+      "text": "bury the past for good",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0187",
+      "text": "find a cure in time",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0188",
+      "text": "free the prisoners below",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0189",
+      "text": "claim the bounty first",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0190",
+      "text": "stop a war before it starts",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0191",
+      "text": "leave something that lasts",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0192",
+      "text": "buy back their freedom",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0193",
+      "text": "reunite the scattered crew",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0194",
+      "text": "expose the founders' lie",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0195",
+      "text": "start over somewhere new",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0196",
+      "text": "outrun an old rival",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0197",
+      "text": "guard a dangerous secret",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0198",
+      "text": "pay for a terrible mistake",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0199",
+      "text": "outlive the war they started",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0200",
+      "text": "survive the long winter",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0201",
+      "text": "find clean water before dawn",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0202",
+      "text": "reach cover before the storm",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0203",
+      "text": "stay alive until rescue comes",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0204",
+      "text": "keep the last reactor running",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0205",
+      "text": "cross the dead zone on foot",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0206",
+      "text": "ration the stores fairly",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0207",
+      "text": "deliver the message unopened",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0208",
+      "text": "finish the mission they began",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0209",
+      "text": "hold the line until relief",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0210",
+      "text": "bring every soldier home",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0211",
+      "text": "serve out the full sentence",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0212",
+      "text": "obey orders they doubt",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0213",
+      "text": "finish the founder's plan",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0214",
+      "text": "keep the beacon lit",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0215",
+      "text": "guard the border alone",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0216",
+      "text": "train a worthy successor",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0217",
+      "text": "honor a dead captain's wish",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0218",
+      "text": "protect a stranger's child",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0219",
+      "text": "keep the colony alive a year",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0220",
+      "text": "uphold a law nobody follows",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0221",
+      "text": "marry across the class line",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0222",
+      "text": "find a lost parent",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0223",
+      "text": "bring a dead love back",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0224",
+      "text": "raise a child somewhere quiet",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0225",
+      "text": "earn a father's respect",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0226",
+      "text": "save the marriage by launch",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0227",
+      "text": "keep the family farm",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0228",
+      "text": "see a daughter one last time",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0229",
+      "text": "keep a twin from the draft",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0230",
+      "text": "be loved for who they are",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0231",
+      "text": "make peace with a brother",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0232",
+      "text": "go home to someone who waited",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0233",
+      "text": "guard the family's good name",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0234",
+      "text": "see the warlord stand trial",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0235",
+      "text": "free the indentured workers",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0236",
+      "text": "beat the company in court",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0237",
+      "text": "repay the crew who saved them",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0238",
+      "text": "make the guilty confess",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0239",
+      "text": "return what was stolen",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0240",
+      "text": "punish the officer who lied",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0241",
+      "text": "end a debt older than them",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0242",
+      "text": "find who framed them",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0243",
+      "text": "win the drowned town justice",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0244",
+      "text": "get the stolen land back",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0245",
+      "text": "tear down the rigged system",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0246",
+      "text": "make amends to a victim",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0247",
+      "text": "collect what the empire owes",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0248",
+      "text": "settle the score quietly",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0249",
+      "text": "read the forbidden archive",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0250",
+      "text": "understand the dead language",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0251",
+      "text": "discover what killed the crew",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0252",
+      "text": "recover the lost formula",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0253",
+      "text": "find the source of the dreams",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0254",
+      "text": "study the creature alive",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0255",
+      "text": "know how they came to be",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0256",
+      "text": "translate the ancient warning",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0257",
+      "text": "restore the erased history",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0258",
+      "text": "take command of the ship",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0259",
+      "text": "win the election by any means",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0260",
+      "text": "be the voice of the colony",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0261",
+      "text": "inherit the family company",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0262",
+      "text": "control the only water supply",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0263",
+      "text": "unite the scattered clans",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0264",
+      "text": "win the arena championship",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0265",
+      "text": "buy a seat on the council",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0266",
+      "text": "break the guild's monopoly",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0267",
+      "text": "build an empire from scrap",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0268",
+      "text": "be remembered as a hero",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0269",
+      "text": "vanish without a trace",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0270",
+      "text": "desert before the next battle",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0271",
+      "text": "retire where nobody looks",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0272",
+      "text": "escape an arranged marriage",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0273",
+      "text": "outrun the coming plague",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0274",
+      "text": "flee the cult that bred them",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0275",
+      "text": "fly beyond the law's reach",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0276",
+      "text": "wake from the endless dream",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0277",
+      "text": "stow away on the last ship",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0278",
+      "text": "cross the wall without papers",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0279",
+      "text": "learn who they were before",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0280",
+      "text": "live as their true self",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0281",
+      "text": "reclaim a stolen name",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0282",
+      "text": "fit in among the natives",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0283",
+      "text": "feel something real again",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0284",
+      "text": "remember their mother's face",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0285",
+      "text": "stop being a weapon",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0286",
+      "text": "belong to a crew again",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0287",
+      "text": "choose their own purpose",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0288",
+      "text": "find others of their kind",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0289",
+      "text": "regain a lost skill that defines who they are",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0290",
+      "text": "escape a slum and become somebody",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0291",
+      "text": "escape forced prostitution",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0292",
+      "text": "land one big score before the body gives out",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0293",
+      "text": "survive the people who want back what they stole",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0294",
+      "text": "find steady work after a scandal",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0295",
+      "text": "protect their family and pay for a parent's medicine",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0296",
+      "text": "gain status in a world that looks down on them",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0297",
+      "text": "stay relevant after losing their job",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0298",
+      "text": "escape abuse and poverty through education",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0299",
+      "text": "earn enough money to buy one real thing",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0300",
+      "text": "catch criminals while losing their own mind",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0301",
+      "text": "win their freedom by solving a crime",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0302",
+      "text": "earn money and escape a war",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0303",
+      "text": "take revenge on the group that killed a loved one",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0304",
+      "text": "climb the ranks without losing their humanity",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0305",
+      "text": "find a life that is not a cage",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0306",
+      "text": "protect their company and family from a hidden conflict",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0307",
+      "text": "survive exile and find a place to belong",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0308",
+      "text": "record one great event while society collapses",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0309",
+      "text": "survive when the tools they depend on are replaced",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0310",
+      "text": "save the family business from debt",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0311",
+      "text": "break free from a crime boss who owns them",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0312",
+      "text": "survive exile and return to clear their name",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0313",
+      "text": "stay out of prison by taking a job they did not want",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0314",
+      "text": "return to a quiet life after someone steals their name",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0315",
+      "text": "catch a fugitive before the world floods",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0316",
+      "text": "stop a fascist takeover",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0317",
+      "text": "protect their community when the city asks for help",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0318",
+      "text": "be left alone while a plague and a power struggle pull them in",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0319",
+      "text": "chase fame and sensation in a ruined city",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0320",
+      "text": "take one last case because a boss forces them",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0321",
+      "text": "learn why their life is being filmed for entertainment",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0322",
+      "text": "keep their real identity hidden online",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0323",
+      "text": "escape a government program by living under fake names",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0324",
+      "text": "take revenge on those who left them to die",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0325",
+      "text": "prove their research matters by testing it on themselves",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0326",
+      "text": "save a friend trapped in a sealed city",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0327",
+      "text": "protect a sibling from forces they do not understand",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0328",
+      "text": "find safety and truth after a bombing",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0329",
+      "text": "win a contest and escape poverty",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0330",
+      "text": "decide whether a new social order is good or evil",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0331",
+      "text": "stop the misuse of their own invention",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0332",
+      "text": "protect a fair election from fraud",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0333",
+      "text": "make medicine affordable while the law hunts them",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0334",
+      "text": "find their family after they harm a relative",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0335",
+      "text": "win back freedom after the state detains them",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0336",
+      "text": "live outside a system owned by the rich",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0337",
+      "text": "protect a beloved place from being replaced",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0338",
+      "text": "save a friend who is gaining dangerous power",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0339",
+      "text": "recover a lost past while protecting loved ones",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0340",
+      "text": "tell the truth about a corrupt city",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0341",
+      "text": "escape a disaster that will end all life",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0342",
+      "text": "take revenge on the employer who fired them",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0343",
+      "text": "solve a murder that links old tradition to new code",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0344",
+      "text": "stay alive by killing a cult leader",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0345",
+      "text": "stay unnoticed while a search drags them into danger",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0346",
+      "text": "get their child back",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0347",
+      "text": "clear their name with help from a stranger who claims to be an angel",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0348",
+      "text": "survive after a job goes wrong and everyone wants them",
+      "genres": ["generic"]
+    },
+    {
+      "id": "mo-0349",
+      "text": "make new bodies free for everyone",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0350",
+      "text": "become human",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0351",
+      "text": "prove it is still human",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0352",
+      "text": "free every enslaved AI",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0353",
+      "text": "upload a dying city before the end",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0354",
+      "text": "take the orbital station from its owners",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0355",
+      "text": "unite the clones against their makers",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0356",
+      "text": "end the clone trade",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0357",
+      "text": "make death permanent again",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0358",
+      "text": "restore a wiped colony from backup",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0359",
+      "text": "find the original humans",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0360",
+      "text": "become the face of a revolution",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0361",
+      "text": "smuggle a million minds offworld",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0362",
+      "text": "hunt a rogue AI",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0363",
+      "text": "build a god",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0364",
+      "text": "speak to the hive mind",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0365",
+      "text": "end the black market in organs",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0366",
+      "text": "make first contact before the war does",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0367",
+      "text": "splice a new human race",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0368",
+      "text": "replace every human doctor with machines",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0369",
+      "text": "decode the signal from deep space",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0370",
+      "text": "shut down the war machines forever",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0371",
+      "text": "bring back the dead",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0372",
+      "text": "set the uploaded dead free",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0373",
+      "text": "stop the mind backups",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0374",
+      "text": "erase a war from history",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0375",
+      "text": "bargain with the machine god",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0376",
+      "text": "kill the machine god",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0377",
+      "text": "feed a starving station",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0378",
+      "text": "starve a rebel station",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0379",
+      "text": "wake the sleepers early",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0380",
+      "text": "keep a dying colony alive",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0381",
+      "text": "grow food on dead soil",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0382",
+      "text": "get the children off-world",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0383",
+      "text": "lead the fleet to a new home",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0384",
+      "text": "keep the generation ship on course",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0385",
+      "text": "keep the station neutral",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0386",
+      "text": "win the right to love a machine",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0387",
+      "text": "win clones the right to live",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0388",
+      "text": "learn what the machines are planning",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0389",
+      "text": "rule the station in secret",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0390",
+      "text": "own the patent on long life",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0391",
+      "text": "unseat the machine that rules",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0392",
+      "text": "lead an exodus off the planet",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0393",
+      "text": "terraform a dead world",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0394",
+      "text": "be recognized as a person",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0395",
+      "text": "prove copies are not people",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0396",
+      "text": "free every mind from its body",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0397",
+      "text": "rewrite what their kind was built for",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0398",
+      "text": "stop the sun from dying",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0399",
+      "text": "break the company that owns the air",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0400",
+      "text": "end the war between Earth and the colonies",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0401",
+      "text": "prove humans were not the first",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0402",
+      "text": "found the first city on another world",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0403",
+      "text": "stop a change in history they can feel coming",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0404",
+      "text": "understand the machine they were hired to test",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0405",
+      "text": "stay alive while reality falls apart",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0406",
+      "text": "live a second life after being made young again",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0407",
+      "text": "control a device that makes anything real",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0408",
+      "text": "learn how their original self died",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0409",
+      "text": "learn which of their personalities is the real one",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0410",
+      "text": "protect a machine that may be a person",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0411",
+      "text": "make sense of an overcrowded world",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0412",
+      "text": "stop a conspiracy built around mind-altering technology",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0413",
+      "text": "stay relevant as machines grow smarter than people",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0414",
+      "text": "hide from their past inside a fake world",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0415",
+      "text": "gain power, love, or survival while machines seek freedom",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0416",
+      "text": "escape slavery in a body built for others",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0417",
+      "text": "clear their name after waking up in a lab",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0418",
+      "text": "live after the global network is destroyed",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0419",
+      "text": "tell a forbidden story while their own memories are altered",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0420",
+      "text": "break free from their creator and survive alone",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "mo-0421",
+      "text": "escape the megacity",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0422",
+      "text": "remove a tracking implant",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0423",
+      "text": "delete a memory",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0424",
+      "text": "recover a stolen memory",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0425",
+      "text": "shut down the city AI",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0426",
+      "text": "leak the data before dawn",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0427",
+      "text": "sell the data to a rival",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0428",
+      "text": "stop the memory plague",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0429",
+      "text": "leave a corporation alive",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0430",
+      "text": "break a lifetime contract",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0431",
+      "text": "unionize the vat farm",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0432",
+      "text": "feed the lower levels",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0433",
+      "text": "find real sunlight",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0434",
+      "text": "breathe unfiltered air",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0435",
+      "text": "own a real tree",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0436",
+      "text": "reverse an augmentation",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0437",
+      "text": "afford the next upgrade",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0438",
+      "text": "fix a failing implant",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0439",
+      "text": "be forgotten by the net",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0440",
+      "text": "record the perfect dream",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0441",
+      "text": "sell the last true memory",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0442",
+      "text": "find who stole their face",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0443",
+      "text": "beat the credit score",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0444",
+      "text": "cross the corporate border",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0445",
+      "text": "steal a corporate child",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0446",
+      "text": "merge with the net",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0447",
+      "text": "leave the net forever",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0448",
+      "text": "find the real world",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0449",
+      "text": "prove the city is a sim",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0450",
+      "text": "find a dead zone",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0451",
+      "text": "jam every ad in the city",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0452",
+      "text": "corner the organ market",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0453",
+      "text": "recycle a body",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0454",
+      "text": "find a stolen prosthetic",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0455",
+      "text": "sabotage a drone fleet",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0456",
+      "text": "hack the sky lanes",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0457",
+      "text": "decode a dead man's chip",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0458",
+      "text": "break a kill switch",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0459",
+      "text": "disarm a cranial bomb",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0460",
+      "text": "outrun a corporate hunter",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0461",
+      "text": "catch a famous runner",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0462",
+      "text": "buy a night of sleep",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0463",
+      "text": "turn off the mood chip",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0464",
+      "text": "find the last live musician",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0465",
+      "text": "paint over the ads",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0466",
+      "text": "get a pod with a window",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0467",
+      "text": "pass the loyalty test",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0468",
+      "text": "fail the loyalty test",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0469",
+      "text": "reach the upper floors",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0470",
+      "text": "see what the top floor hides",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0471",
+      "text": "hide from the hunter drones",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0472",
+      "text": "prove the world is simulated",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0473",
+      "text": "get out of the simulation",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0474",
+      "text": "slip the company's tracker",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0475",
+      "text": "build something that frees data from control",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0476",
+      "text": "beat a system that owns their body and their data",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0477",
+      "text": "escape death through machines",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0478",
+      "text": "survive the merger of human and machine",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0479",
+      "text": "stay a free operator while corporations squeeze the ground",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0480",
+      "text": "stay independent and refuse the implant",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0481",
+      "text": "stay creative and free while a virus eats minds",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0482",
+      "text": "solve a murder inside a virtual world",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0483",
+      "text": "learn who they are when a company owns their memory",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0484",
+      "text": "solve a robbery that happened inside a game",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0485",
+      "text": "solve murders linked to online spam",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0486",
+      "text": "stop a program that keeps running after its maker dies",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0487",
+      "text": "keep a mind-linking technology free and open",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0488",
+      "text": "prevent a war between enhanced and normal humans",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0489",
+      "text": "gain status, art, or rebellion under corporate rule",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0490",
+      "text": "protect a child while refusing body modification",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0491",
+      "text": "recover stolen memories by doing one job",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0492",
+      "text": "fit in with a crowd that is wired to a feed",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0493",
+      "text": "catch a hacker while doubting their own humanity",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0494",
+      "text": "understand the data in their own head before it kills them",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0495",
+      "text": "prove that a copied mind is real",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0496",
+      "text": "stop a thing that steals souls in cyberspace",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "mo-0497",
+      "text": "find the lost homeworld",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0498",
+      "text": "forget the lost homeworld",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0499",
+      "text": "start a galactic war",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0500",
+      "text": "end a galactic war",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0501",
+      "text": "make first contact",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0502",
+      "text": "hide from alien contact",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0503",
+      "text": "map a new hyperspace route",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0504",
+      "text": "close the hyperspace lanes",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0505",
+      "text": "master psychic powers",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0506",
+      "text": "be rid of psychic powers",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0507",
+      "text": "free the enslaved worlds",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0508",
+      "text": "keep the worlds enslaved",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0509",
+      "text": "seize the capital world",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0510",
+      "text": "defend the capital world",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0511",
+      "text": "find the alien ark",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0512",
+      "text": "wake the sleeping alien fleet",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0513",
+      "text": "keep the alien fleet asleep",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0514",
+      "text": "decode the alien signal",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0515",
+      "text": "silence the alien signal",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0516",
+      "text": "escape the prison moon",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0517",
+      "text": "run the prison moon",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0518",
+      "text": "colonize a dead world",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0519",
+      "text": "stop the colony ships",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0520",
+      "text": "hijack the colony ship",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0521",
+      "text": "control the jump gates",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0522",
+      "text": "open the jump gates to all",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0523",
+      "text": "join the psychic order",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0524",
+      "text": "destroy the psychic order",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0525",
+      "text": "terraform the home system",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0526",
+      "text": "keep the home system wild",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0527",
+      "text": "find the galaxy's edge",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0528",
+      "text": "seal the galaxy's edge",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0529",
+      "text": "trade with the aliens",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0530",
+      "text": "embargo the aliens",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0531",
+      "text": "stop the superweapon",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0532",
+      "text": "fire the superweapon",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0533",
+      "text": "tame a living ship",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0534",
+      "text": "free a living ship",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0535",
+      "text": "see the homeworld rebuilt",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0536",
+      "text": "keep the homeworld in ruins",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0537",
+      "text": "repair the broken hyperdrive",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0538",
+      "text": "disable the hyperdrive",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0539",
+      "text": "never see space again",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0540",
+      "text": "shelter the psychic children",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0541",
+      "text": "hunt the psychic children",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0542",
+      "text": "keep the warp beacon lit",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0543",
+      "text": "put out the warp beacon",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0544",
+      "text": "make peace with the hive",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0545",
+      "text": "burn out the hive",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0546",
+      "text": "escape the dying sun",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0547",
+      "text": "reignite the dying sun",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0548",
+      "text": "be remembered by the galaxy",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0549",
+      "text": "reach the core worlds",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0550",
+      "text": "map the edge of known space",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0551",
+      "text": "find the home the fleet left",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0552",
+      "text": "see what lies past the gate",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0553",
+      "text": "cross the void between stars",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0554",
+      "text": "watch a star be born",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0555",
+      "text": "be first to the new world",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0556",
+      "text": "break out of the prison moon",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "mo-0557",
+      "text": "put light-years behind them",
+      "genres": ["space-opera"]
+    }
+  ]
+}

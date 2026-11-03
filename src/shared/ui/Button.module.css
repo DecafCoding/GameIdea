@@ -1,0 +1,41 @@
+/* Button: 44 px minimum height, Inter 13 / 600, primary, secondary or danger. */
+.button {
+  min-height: var(--hit-min);
+  padding: 0 14px;
+  border-radius: var(--radius-button);
+  border: 1px solid transparent;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.button:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.button:disabled {
+  color: var(--text-dim);
+  cursor: default;
+}
+
+.primary {
+  background: var(--accent);
+  color: var(--ground);
+}
+
+.secondary {
+  background: var(--ground);
+  border-color: var(--line-strong);
+  color: var(--text);
+}
+
+.secondary:hover:not(:disabled) {
+  background: var(--panel-hover);
+}
+
+/* Delete Board: --type-conflict fill with white text, as in the delete dialog. */
+.danger {
+  background: var(--type-conflict);
+  color: #fff;
+}

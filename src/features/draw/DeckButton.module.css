@@ -1,0 +1,49 @@
+/* DeckButton: 56 px, --ground, --line border, radius 10, disc, name and caption. */
+.deck {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  height: 56px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-panel);
+  background: var(--ground);
+  color: var(--text);
+  font-family: var(--font-ui);
+  text-align: left;
+  cursor: pointer;
+}
+
+.deck:hover:not(:disabled) {
+  background: var(--panel-hover);
+}
+
+.deck:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.deck:disabled,
+.deck:disabled .caption {
+  color: var(--text-dim);
+  cursor: default;
+}
+
+.words {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.name {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.caption {
+  overflow: hidden;
+  font-size: 12px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

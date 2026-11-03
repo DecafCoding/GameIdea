@@ -1,0 +1,108 @@
+/* Design tokens, copied verbatim from docs/handoff/_ds/theforge-dark-table/styles.css.
+   docs/design-system.html is the authority for every value. Keep this file out of Prettier
+   so the values stay byte-for-byte the same as the handoff. */
+:root {
+  /* surfaces on dark */
+  --ground: #1B1E24;
+  --panel: #23272F;
+  --panel-hover: #2B303A;
+  --line: #30353F;
+  --line-strong: #4A505C;
+
+  /* text on dark */
+  --text: #ECEAE4;
+  --text-muted: #A9ADB6;
+  --text-dim: #6B707B;
+
+  /* accent */
+  --accent: #E8742E;
+  --accent-text: #F6B08A;
+
+  /* paper */
+  --paper: #F4F0E6;
+  --paper-under-1: #F1ECE0;
+  --paper-under-2: #ECE6D8;
+  --paper-note: #FBF6E4;
+  --paper-line: #D5CFC0;
+
+  /* text on paper */
+  --ink: #1B1E24;
+  --ink-muted: #5A5E68;
+  --ink-caption: #6B6355;
+  --adj: #5B3F99;
+  --adj-muted: #6E57A6;
+  --note-delete: #8A5A4A;
+
+  /* card types */
+  --type-character: #3B6FD1;
+  --type-character-dark: #2B539E;
+  --type-motivation: #2F8F83;
+  --type-motivation-dark: #1F6B61;
+  --type-setting: #B8700E;
+  --type-setting-dark: #8C540A;
+  --type-conflict: #C8452C;
+  --type-conflict-dark: #963321;
+  --type-description: #7B55C2;
+  --type-description-dark: #5C3F93;
+
+  /* status */
+  --ok: #5DBB7A;
+  --wait: #F2B134;
+  --fail: #E0563A;
+  --warn-fill: #2B2320;
+  --warn-line: #6A3A2A;
+
+  /* radius */
+  --radius-card: 14px;
+  --radius-dialog: 12px;
+  --radius-panel: 10px;
+  --radius-button: 8px;
+  --radius-button-inner: 7px;
+  --radius-key: 4px;
+
+  /* elevation */
+  --shadow-card: 0 8px 22px rgba(0, 0, 0, 0.40);
+  --shadow-card-under: 0 6px 18px rgba(0, 0, 0, 0.35);
+  --shadow-card-drag: 0 22px 44px rgba(0, 0, 0, 0.55);
+  --shadow-menu: 0 16px 40px rgba(0, 0, 0, 0.50);
+  --shadow-strip: 0 6px 18px rgba(0, 0, 0, 0.35);
+
+  /* sizes */
+  --card: 250px;
+  --card-disc: 48px;
+  --ring-width: 13px;
+  --ring-gap: 3px;
+  --ring-inner-r: 33.5px;
+  --ring-outer-r: 49.5px;
+  --ring-split: 2px;
+  --tuck-offset: 59px;
+  --topbar-h: 56px;
+  --rail-w: 240px;
+  --hit-min: 44px;
+
+  /* type */
+  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --font-ui: Inter, system-ui, sans-serif;
+
+  /* canvas grid */
+  --grid-dot: #333842;
+  --grid-pitch: 24px;
+
+  /* motion */
+  --t-turn-90: 180ms;
+  --t-turn-180: 260ms;
+  --t-draw: 250ms;
+  --t-fade: 100ms;
+  --t-banner: 150ms;
+}
+
+/* Reduced motion: every duration goes to 0 (design section 11). The change is instant. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --t-turn-90: 0ms;
+    --t-turn-180: 0ms;
+    --t-draw: 0ms;
+    --t-fade: 0ms;
+    --t-banner: 0ms;
+  }
+}

@@ -1,0 +1,9 @@
+/* DrawFlight: the flying copy of a new card, above everything, never hit by the pointer. */
+.flight {
+  position: fixed;
+  z-index: 1000;
+  width: var(--card);
+  height: var(--card);
+  pointer-events: none;
+  transform-origin: center;
+}

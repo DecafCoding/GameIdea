@@ -1,0 +1,3245 @@
+{
+  "type": "setting",
+  "cues": [
+    {
+      "id": "se-0001",
+      "text": "rooftop farm",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0002",
+      "text": "sewer tunnels",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0003",
+      "text": "chop shop",
+      "kind": "place",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "se-0004",
+      "text": "corporate tower",
+      "kind": "place",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "se-0005",
+      "text": "boardroom",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0006",
+      "text": "penthouse",
+      "kind": "place",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "se-0007",
+      "text": "noodle stand",
+      "kind": "place",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "se-0008",
+      "text": "night market",
+      "kind": "place",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "se-0009",
+      "text": "pleasure district",
+      "kind": "place",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "se-0010",
+      "text": "fight pit",
+      "kind": "place",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "se-0011",
+      "text": "scrapyard",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0012",
+      "text": "landfill city",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0013",
+      "text": "flooded district",
+      "kind": "place",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "se-0014",
+      "text": "seawall",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0015",
+      "text": "offshore rig",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0016",
+      "text": "maglev station",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0017",
+      "text": "parking tower",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0018",
+      "text": "abandoned mall",
+      "kind": "place",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "se-0019",
+      "text": "dead mall",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0020",
+      "text": "cold storage",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0021",
+      "text": "organ bank",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0022",
+      "text": "mushroom farm",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0023",
+      "text": "water plant",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0024",
+      "text": "reactor core",
+      "kind": "place",
+      "genres": ["generic", "sci-fi"]
+    },
+    {
+      "id": "se-0025",
+      "text": "power grid",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0026",
+      "text": "substation",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0027",
+      "text": "relay tower",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0028",
+      "text": "quarantine zone",
+      "kind": "place",
+      "genres": ["generic", "sci-fi"]
+    },
+    {
+      "id": "se-0029",
+      "text": "border wall",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0030",
+      "text": "checkpoint",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0031",
+      "text": "refugee camp",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0032",
+      "text": "tent city",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0033",
+      "text": "company town",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0034",
+      "text": "security hub",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0035",
+      "text": "precinct",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0036",
+      "text": "holding cell",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0037",
+      "text": "prison ship",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0038",
+      "text": "courtroom",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0039",
+      "text": "recording studio",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0040",
+      "text": "newsroom",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0041",
+      "text": "church",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0042",
+      "text": "rooftop shrine",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0043",
+      "text": "safehouse",
+      "kind": "place",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "se-0044",
+      "text": "smuggler tunnel",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0045",
+      "text": "freight port",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0046",
+      "text": "cargo ship",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0047",
+      "text": "subway car",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0048",
+      "text": "elevator shaft",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0049",
+      "text": "rain street",
+      "kind": "place",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "se-0050",
+      "text": "back alley",
+      "kind": "place",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "se-0051",
+      "text": "blackout",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0052",
+      "text": "rolling blackout",
+      "kind": "event",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "se-0053",
+      "text": "corporate merger",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0054",
+      "text": "hostile takeover",
+      "kind": "event",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "se-0055",
+      "text": "layoff",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0056",
+      "text": "strike",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0057",
+      "text": "riot",
+      "kind": "event",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "se-0058",
+      "text": "lockdown",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0059",
+      "text": "curfew",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0060",
+      "text": "raid",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0061",
+      "text": "assassination",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0062",
+      "text": "election",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0063",
+      "text": "rigged vote",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0064",
+      "text": "coup",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0065",
+      "text": "product launch",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0066",
+      "text": "recall",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0067",
+      "text": "virus outbreak",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0068",
+      "text": "heat wave",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0069",
+      "text": "flood",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0070",
+      "text": "typhoon",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0071",
+      "text": "eviction",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0072",
+      "text": "demolition",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0073",
+      "text": "grand opening",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0074",
+      "text": "auction",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0075",
+      "text": "street race",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0076",
+      "text": "title fight",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0077",
+      "text": "concert",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0078",
+      "text": "funeral",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0079",
+      "text": "wedding",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0080",
+      "text": "trial",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0081",
+      "text": "execution",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0082",
+      "text": "prison break",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0083",
+      "text": "heist",
+      "kind": "event",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "se-0084",
+      "text": "extraction",
+      "kind": "event",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "se-0085",
+      "text": "hostage swap",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0086",
+      "text": "gang truce",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0087",
+      "text": "turf war",
+      "kind": "event",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "se-0088",
+      "text": "quarantine",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0089",
+      "text": "evacuation",
+      "kind": "event",
+      "genres": ["generic", "sci-fi"]
+    },
+    {
+      "id": "se-0090",
+      "text": "kill switch",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0091",
+      "text": "encryption key",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0092",
+      "text": "master key",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0093",
+      "text": "fake ID",
+      "kind": "object",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "se-0094",
+      "text": "corporate badge",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0095",
+      "text": "tracking tag",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0096",
+      "text": "courier package",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0097",
+      "text": "locked crate",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0098",
+      "text": "seed vault",
+      "kind": "object",
+      "genres": ["generic", "sci-fi"]
+    },
+    {
+      "id": "se-0099",
+      "text": "vaccine",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0100",
+      "text": "designer drug",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0101",
+      "text": "sleep drug",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0102",
+      "text": "viral video",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0103",
+      "text": "leaked file",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0104",
+      "text": "board minutes",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0105",
+      "text": "contract",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0106",
+      "text": "debt ledger",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0107",
+      "text": "hard cash",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0108",
+      "text": "bounty notice",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0109",
+      "text": "hit list",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0110",
+      "text": "last photograph",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0111",
+      "text": "paper book",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0112",
+      "text": "vinyl record",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0113",
+      "text": "real coffee",
+      "kind": "object",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "se-0114",
+      "text": "living plant",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0115",
+      "text": "rain coat",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0116",
+      "text": "server rack",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0117",
+      "text": "old satellite",
+      "kind": "object",
+      "genres": ["generic", "sci-fi"]
+    },
+    {
+      "id": "se-0118",
+      "text": "shipyard",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0119",
+      "text": "capital palace",
+      "kind": "place",
+      "genres": ["generic", "space-opera"]
+    },
+    {
+      "id": "se-0120",
+      "text": "refugee fleet",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0121",
+      "text": "border outpost",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0122",
+      "text": "derelict hulk",
+      "kind": "place",
+      "genres": ["generic", "sci-fi"]
+    },
+    {
+      "id": "se-0123",
+      "text": "flagship bridge",
+      "kind": "place",
+      "genres": ["generic", "space-opera"]
+    },
+    {
+      "id": "se-0124",
+      "text": "cargo hold",
+      "kind": "place",
+      "genres": ["generic", "sci-fi"]
+    },
+    {
+      "id": "se-0125",
+      "text": "crystal cavern",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0126",
+      "text": "ancient ark",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0127",
+      "text": "listening post",
+      "kind": "place",
+      "genres": ["generic", "sci-fi"]
+    },
+    {
+      "id": "se-0128",
+      "text": "pirate haven",
+      "kind": "place",
+      "genres": ["generic", "space-opera"]
+    },
+    {
+      "id": "se-0129",
+      "text": "trade hub",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0130",
+      "text": "frontier colony",
+      "kind": "place",
+      "genres": ["generic", "space-opera"]
+    },
+    {
+      "id": "se-0131",
+      "text": "drydock",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0132",
+      "text": "fuel depot",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0133",
+      "text": "rebel base",
+      "kind": "place",
+      "genres": ["generic", "space-opera"]
+    },
+    {
+      "id": "se-0134",
+      "text": "imperial court",
+      "kind": "place",
+      "genres": ["generic", "space-opera"]
+    },
+    {
+      "id": "se-0135",
+      "text": "senate chamber",
+      "kind": "place",
+      "genres": ["generic", "space-opera"]
+    },
+    {
+      "id": "se-0136",
+      "text": "war room",
+      "kind": "place",
+      "genres": ["generic", "space-opera"]
+    },
+    {
+      "id": "se-0137",
+      "text": "gladiator arena",
+      "kind": "place",
+      "genres": ["generic", "space-opera"]
+    },
+    {
+      "id": "se-0138",
+      "text": "mesa citadel",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0139",
+      "text": "pleasure barge",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0140",
+      "text": "hospital ship",
+      "kind": "place",
+      "genres": ["generic", "sci-fi"]
+    },
+    {
+      "id": "se-0141",
+      "text": "smuggler tunnels",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0142",
+      "text": "shield wall",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0143",
+      "text": "mirror array",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0144",
+      "text": "salvage yard",
+      "kind": "place",
+      "genres": ["generic", "sci-fi"]
+    },
+    {
+      "id": "se-0145",
+      "text": "black market",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0146",
+      "text": "hidden academy",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0147",
+      "text": "relay buoy",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0148",
+      "text": "spice fields",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0149",
+      "text": "drowned city",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0150",
+      "text": "plague ship",
+      "kind": "place",
+      "genres": ["generic", "sci-fi"]
+    },
+    {
+      "id": "se-0151",
+      "text": "engine deck",
+      "kind": "place",
+      "genres": ["generic", "sci-fi"]
+    },
+    {
+      "id": "se-0152",
+      "text": "coronation",
+      "kind": "event",
+      "genres": ["generic", "space-opera"]
+    },
+    {
+      "id": "se-0153",
+      "text": "plague outbreak",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0154",
+      "text": "armistice",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0155",
+      "text": "blockade",
+      "kind": "event",
+      "genres": ["generic", "space-opera"]
+    },
+    {
+      "id": "se-0156",
+      "text": "mutiny",
+      "kind": "event",
+      "genres": ["generic", "space-opera"]
+    },
+    {
+      "id": "se-0157",
+      "text": "succession crisis",
+      "kind": "event",
+      "genres": ["generic", "space-opera"]
+    },
+    {
+      "id": "se-0158",
+      "text": "fleet battle",
+      "kind": "event",
+      "genres": ["generic", "space-opera"]
+    },
+    {
+      "id": "se-0159",
+      "text": "siege",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0160",
+      "text": "royal wedding",
+      "kind": "event",
+      "genres": ["generic", "space-opera"]
+    },
+    {
+      "id": "se-0161",
+      "text": "treaty signing",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0162",
+      "text": "abdication",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0163",
+      "text": "famine",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0164",
+      "text": "rebellion",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0165",
+      "text": "secession",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0166",
+      "text": "ambush",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0167",
+      "text": "boarding action",
+      "kind": "event",
+      "genres": ["generic", "space-opera"]
+    },
+    {
+      "id": "se-0168",
+      "text": "reactor meltdown",
+      "kind": "event",
+      "genres": ["generic", "sci-fi"]
+    },
+    {
+      "id": "se-0169",
+      "text": "solar flare",
+      "kind": "event",
+      "genres": ["generic", "sci-fi"]
+    },
+    {
+      "id": "se-0170",
+      "text": "asteroid strike",
+      "kind": "event",
+      "genres": ["generic", "sci-fi"]
+    },
+    {
+      "id": "se-0171",
+      "text": "exile",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0172",
+      "text": "show trial",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0173",
+      "text": "duel",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0174",
+      "text": "embargo",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0175",
+      "text": "smuggling run",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0176",
+      "text": "hostage exchange",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0177",
+      "text": "colony founding",
+      "kind": "event",
+      "genres": ["generic", "sci-fi"]
+    },
+    {
+      "id": "se-0178",
+      "text": "cult rising",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0179",
+      "text": "mining strike",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0180",
+      "text": "fuel shortage",
+      "kind": "event",
+      "genres": ["generic", "sci-fi"]
+    },
+    {
+      "id": "se-0181",
+      "text": "regicide",
+      "kind": "event",
+      "genres": ["generic", "space-opera"]
+    },
+    {
+      "id": "se-0182",
+      "text": "truce talks",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0183",
+      "text": "invasion",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0184",
+      "text": "last stand",
+      "kind": "event",
+      "genres": ["generic", "space-opera"]
+    },
+    {
+      "id": "se-0185",
+      "text": "victory parade",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0186",
+      "text": "funeral rites",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0187",
+      "text": "crown jewel",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0188",
+      "text": "ancestor relic",
+      "kind": "object",
+      "genres": ["generic", "space-opera"]
+    },
+    {
+      "id": "se-0189",
+      "text": "treaty scroll",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0190",
+      "text": "royal seal",
+      "kind": "object",
+      "genres": ["generic", "space-opera"]
+    },
+    {
+      "id": "se-0191",
+      "text": "heirloom pistol",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0192",
+      "text": "nav beacon",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0193",
+      "text": "black box",
+      "kind": "object",
+      "genres": ["generic", "sci-fi"]
+    },
+    {
+      "id": "se-0194",
+      "text": "seed bank",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0195",
+      "text": "iron throne",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0196",
+      "text": "scepter",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0197",
+      "text": "battle standard",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0198",
+      "text": "distress beacon",
+      "kind": "object",
+      "genres": ["generic", "sci-fi"]
+    },
+    {
+      "id": "se-0199",
+      "text": "forged papers",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0200",
+      "text": "marque letter",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0201",
+      "text": "spice cargo",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0202",
+      "text": "prototype fighter",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0203",
+      "text": "bounty ledger",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0204",
+      "text": "charter stone",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0205",
+      "text": "ancient sword",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0206",
+      "text": "gate key",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0207",
+      "text": "fleet codes",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0208",
+      "text": "ration cache",
+      "kind": "object",
+      "genres": ["generic", "sci-fi"]
+    },
+    {
+      "id": "se-0209",
+      "text": "plague vial",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0210",
+      "text": "signal jammer",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0211",
+      "text": "mining drill",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0212",
+      "text": "dynasty ring",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0213",
+      "text": "mining colony",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0214",
+      "text": "desert outpost",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0215",
+      "text": "flooded city",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0216",
+      "text": "research lab",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0217",
+      "text": "ration crate",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0218",
+      "text": "signal beacon",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0219",
+      "text": "power outage",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0220",
+      "text": "boarding raid",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0221",
+      "text": "crash landing",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0222",
+      "text": "launch day",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0223",
+      "text": "penal colony",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0224",
+      "text": "glass city",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0225",
+      "text": "embassy",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0226",
+      "text": "mission control",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0227",
+      "text": "arena",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0228",
+      "text": "scholar cloister",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0229",
+      "text": "war school",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0230",
+      "text": "memory museum",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0231",
+      "text": "waystation",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0232",
+      "text": "engine room",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0233",
+      "text": "command deck",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0234",
+      "text": "medbay",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0235",
+      "text": "exclusion zone",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0236",
+      "text": "forbidden book",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0237",
+      "text": "ledger",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0238",
+      "text": "specimen jar",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0239",
+      "text": "embryo case",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0240",
+      "text": "blood sample",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0241",
+      "text": "dog tags",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0242",
+      "text": "ration card",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0243",
+      "text": "travel papers",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0244",
+      "text": "stun baton",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0245",
+      "text": "recorded message",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0246",
+      "text": "music box",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0247",
+      "text": "family heirloom",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0248",
+      "text": "signet ring",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0249",
+      "text": "water still",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0250",
+      "text": "seed pod",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0251",
+      "text": "debt contract",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0252",
+      "text": "colony charter",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0253",
+      "text": "ballot box",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0254",
+      "text": "toy robot",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0255",
+      "text": "eclipse",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0256",
+      "text": "meteor shower",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0257",
+      "text": "dust storm",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0258",
+      "text": "food riot",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0259",
+      "text": "dock strike",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0260",
+      "text": "harvest festival",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0261",
+      "text": "tribute lottery",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0262",
+      "text": "census",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0263",
+      "text": "ceasefire",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0264",
+      "text": "kidnapping",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0265",
+      "text": "game show",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0266",
+      "text": "pirate broadcast",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0267",
+      "text": "distress call",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0268",
+      "text": "outbreak",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0269",
+      "text": "crop blight",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0270",
+      "text": "homecoming",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0271",
+      "text": "radiation leak",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0272",
+      "text": "first birth",
+      "kind": "event",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0273",
+      "text": "corporate research campus",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0274",
+      "text": "earthquake-ruined bridge town",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0275",
+      "text": "Tokyo hotel district",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0276",
+      "text": "squatter bridge community",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0277",
+      "text": "rural Appalachian town",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0278",
+      "text": "decaying corporate offices",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0279",
+      "text": "tornado-swept plains",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0280",
+      "text": "mirrored glass metropolis",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0281",
+      "text": "armored road convoys",
+      "kind": "object",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0282",
+      "text": "desert exile camp",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0283",
+      "text": "walled Islamic city",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0284",
+      "text": "virus-stricken Los Angeles",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0285",
+      "text": "occupied Europe",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0286",
+      "text": "rock club district",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0287",
+      "text": "plague-era Los Angeles",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0288",
+      "text": "infected research lab",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0289",
+      "text": "monsoon-era India",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0290",
+      "text": "tropical Brazilian favelas",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0291",
+      "text": "bombed Istanbul street",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0292",
+      "text": "flooded Bangkok",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0293",
+      "text": "small town under siege",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0294",
+      "text": "underground drug lab",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0295",
+      "text": "divided human nations",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0296",
+      "text": "global election booth",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0297",
+      "text": "rogue medicine lab",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0298",
+      "text": "company-owned oil town",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0299",
+      "text": "detention camp America",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0300",
+      "text": "off-grid walkaway camp",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0301",
+      "text": "theme park ride",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0302",
+      "text": "post-apocalyptic Tokyo",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0303",
+      "text": "walled dream town",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0304",
+      "text": "corporate cubicle farm",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0305",
+      "text": "hidden research lab",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0306",
+      "text": "cult cathedral city",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0307",
+      "text": "ruined video archive",
+      "kind": "place",
+      "genres": ["generic"]
+    },
+    {
+      "id": "se-0308",
+      "text": "orbital elevator",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0309",
+      "text": "space dock",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0310",
+      "text": "cryo bank",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0311",
+      "text": "gene lab",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0312",
+      "text": "clone vats",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0313",
+      "text": "vat farm",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0314",
+      "text": "holo theater",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0315",
+      "text": "mass upload",
+      "kind": "event",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0316",
+      "text": "AI awakening",
+      "kind": "event",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0317",
+      "text": "gene plague",
+      "kind": "event",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0318",
+      "text": "mind backup",
+      "kind": "object",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0319",
+      "text": "cargo pod",
+      "kind": "object",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0320",
+      "text": "synth heart",
+      "kind": "object",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0321",
+      "text": "cloned organ",
+      "kind": "object",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0322",
+      "text": "gene sample",
+      "kind": "object",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0323",
+      "text": "AI core",
+      "kind": "object",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0324",
+      "text": "quantum chip",
+      "kind": "object",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0325",
+      "text": "escape pod",
+      "kind": "object",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0326",
+      "text": "orbital station",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0327",
+      "text": "mining hab",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0328",
+      "text": "cryo vault",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0329",
+      "text": "arcology spire",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0330",
+      "text": "orbital shrine",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0331",
+      "text": "ghost station",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0332",
+      "text": "hull breach",
+      "kind": "event",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0333",
+      "text": "mass awakening",
+      "kind": "event",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0334",
+      "text": "cryo failure",
+      "kind": "event",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0335",
+      "text": "AI uprising",
+      "kind": "event",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0336",
+      "text": "drone swarm",
+      "kind": "event",
+      "genres": ["sci-fi", "cyberpunk"]
+    },
+    {
+      "id": "se-0337",
+      "text": "signal storm",
+      "kind": "event",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0338",
+      "text": "data shard",
+      "kind": "object",
+      "genres": ["sci-fi", "cyberpunk"]
+    },
+    {
+      "id": "se-0339",
+      "text": "orbital cannon",
+      "kind": "object",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0340",
+      "text": "cryo pod",
+      "kind": "object",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0341",
+      "text": "kill code",
+      "kind": "object",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0342",
+      "text": "genome vault",
+      "kind": "object",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0343",
+      "text": "pulse rifle",
+      "kind": "object",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0344",
+      "text": "holo recorder",
+      "kind": "object",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0345",
+      "text": "ransom chip",
+      "kind": "object",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0346",
+      "text": "mech suit",
+      "kind": "object",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0347",
+      "text": "quantum ledger",
+      "kind": "object",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0348",
+      "text": "derelict station",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0349",
+      "text": "orbital ring",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0350",
+      "text": "fusion core",
+      "kind": "object",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0351",
+      "text": "pressure suit",
+      "kind": "object",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0352",
+      "text": "space elevator",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0353",
+      "text": "sleeper ship",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0354",
+      "text": "sky platform",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0355",
+      "text": "hab module",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0356",
+      "text": "farm dome",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0357",
+      "text": "spaceport",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0358",
+      "text": "crater town",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0359",
+      "text": "relay station",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0360",
+      "text": "machine temple",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0361",
+      "text": "spare body",
+      "kind": "object",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0362",
+      "text": "language chip",
+      "kind": "object",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0363",
+      "text": "time machine",
+      "kind": "object",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0364",
+      "text": "nanite vial",
+      "kind": "object",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0365",
+      "text": "power armor",
+      "kind": "object",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0366",
+      "text": "oxygen tank",
+      "kind": "object",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0367",
+      "text": "seeker probe",
+      "kind": "object",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0368",
+      "text": "nav computer",
+      "kind": "object",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0369",
+      "text": "cloning vat",
+      "kind": "object",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0370",
+      "text": "tether line",
+      "kind": "object",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0371",
+      "text": "plasma rifle",
+      "kind": "object",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0372",
+      "text": "ion storm",
+      "kind": "event",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0373",
+      "text": "moonquake",
+      "kind": "event",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0374",
+      "text": "revival",
+      "kind": "event",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0375",
+      "text": "near-future San Francisco",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0376",
+      "text": "nanotech Shanghai",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0377",
+      "text": "radioactive Los Angeles",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0378",
+      "text": "floating offworld colony",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0379",
+      "text": "gladiator highway city",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0380",
+      "text": "fenced genetic enclave",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0381",
+      "text": "asteroid belt habitats",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0382",
+      "text": "rejuvenation clinic city",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0383",
+      "text": "robot moon colony",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0384",
+      "text": "hybrid-infested city",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0385",
+      "text": "soft robot world",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0386",
+      "text": "alien object sites",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0387",
+      "text": "cloned soldier barracks",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0388",
+      "text": "mind therapy lab",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0389",
+      "text": "AI pilot shipyards",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0390",
+      "text": "overcrowded megaworld",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0391",
+      "text": "derelict space wreck",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0392",
+      "text": "mind-tech conspiracy city",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0393",
+      "text": "sealed nanotech city",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0394",
+      "text": "accelerating solar system",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0395",
+      "text": "fake twentieth-century town",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0396",
+      "text": "AI-ruled new order",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0397",
+      "text": "android nursery",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0398",
+      "text": "quantum prison city",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0399",
+      "text": "simulated private universe",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0400",
+      "text": "post-network world",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0401",
+      "text": "runaway android road",
+      "kind": "place",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "se-0402",
+      "text": "neon market",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0403",
+      "text": "arcology",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0404",
+      "text": "undercity",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0405",
+      "text": "server farm",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0406",
+      "text": "black clinic",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0407",
+      "text": "hab stack",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0408",
+      "text": "capsule hotel",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0409",
+      "text": "drone yard",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0410",
+      "text": "sky lane",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0411",
+      "text": "data vault",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0412",
+      "text": "dead zone",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0413",
+      "text": "net cafe",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0414",
+      "text": "virtual bar",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0415",
+      "text": "sim parlor",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0416",
+      "text": "dream den",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0417",
+      "text": "ad tower",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0418",
+      "text": "temple server",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0419",
+      "text": "acid rain",
+      "kind": "event",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0420",
+      "text": "data breach",
+      "kind": "event",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0421",
+      "text": "net crash",
+      "kind": "event",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0422",
+      "text": "net outage",
+      "kind": "event",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0423",
+      "text": "drone strike",
+      "kind": "event",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0424",
+      "text": "firmware update",
+      "kind": "event",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0425",
+      "text": "forced update",
+      "kind": "event",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0426",
+      "text": "memory wipe",
+      "kind": "event",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0427",
+      "text": "neural jack",
+      "kind": "object",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0428",
+      "text": "cyberdeck",
+      "kind": "object",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0429",
+      "text": "black ice",
+      "kind": "object",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0430",
+      "text": "cranial bomb",
+      "kind": "object",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0431",
+      "text": "prototype implant",
+      "kind": "object",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0432",
+      "text": "stolen eye",
+      "kind": "object",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0433",
+      "text": "combat arm",
+      "kind": "object",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0434",
+      "text": "spinal rig",
+      "kind": "object",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0435",
+      "text": "memory chip",
+      "kind": "object",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0436",
+      "text": "corpse chip",
+      "kind": "object",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0437",
+      "text": "loyalty collar",
+      "kind": "object",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0438",
+      "text": "smart gun",
+      "kind": "object",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0439",
+      "text": "monofilament",
+      "kind": "object",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0440",
+      "text": "mood patch",
+      "kind": "object",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0441",
+      "text": "dream recording",
+      "kind": "object",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0442",
+      "text": "credit chip",
+      "kind": "object",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0443",
+      "text": "broken drone",
+      "kind": "object",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0444",
+      "text": "data haven",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0445",
+      "text": "implant",
+      "kind": "object",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0446",
+      "text": "kill collar",
+      "kind": "object",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0447",
+      "text": "mood pills",
+      "kind": "object",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0448",
+      "text": "override code",
+      "kind": "object",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0449",
+      "text": "prosthetic arm",
+      "kind": "object",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0450",
+      "text": "system crash",
+      "kind": "event",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0451",
+      "text": "neon sprawl port city",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0452",
+      "text": "vast Atlantic megacity",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0453",
+      "text": "franchised American suburbs",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0454",
+      "text": "Pacific data haven",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0455",
+      "text": "suburban surveillance house",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0456",
+      "text": "networked island nation",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0457",
+      "text": "cyber Middle Eastern quarter",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0458",
+      "text": "actor implant studios",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0459",
+      "text": "virtual murder scene",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0460",
+      "text": "hacker underground net",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0461",
+      "text": "corporate memory factory",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0462",
+      "text": "degraded sprawl",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0463",
+      "text": "surveillance noir city",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0464",
+      "text": "anonymous virtual realm",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0465",
+      "text": "bank inside a game",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0466",
+      "text": "virtual reality school",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0467",
+      "text": "hunted global network",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0468",
+      "text": "corporate-ruled Cape Town",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0469",
+      "text": "feed-wired suburb",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0470",
+      "text": "cyborg police HQ",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0471",
+      "text": "scrapyard beneath sky city",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0472",
+      "text": "corrupt future megacity",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0473",
+      "text": "digital city of minds",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0474",
+      "text": "reservation data trail",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0475",
+      "text": "cyborg hometown",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0476",
+      "text": "corporate hacker den",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0477",
+      "text": "altered memory archive",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0478",
+      "text": "soul-stealing cyberspace",
+      "kind": "place",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "se-0479",
+      "text": "ice moon",
+      "kind": "place",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0480",
+      "text": "gas giant",
+      "kind": "place",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0481",
+      "text": "jump gate",
+      "kind": "place",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0482",
+      "text": "throne world",
+      "kind": "place",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0483",
+      "text": "asteroid belt",
+      "kind": "place",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0484",
+      "text": "dead star",
+      "kind": "place",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0485",
+      "text": "ring city",
+      "kind": "place",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0486",
+      "text": "void colony",
+      "kind": "place",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0487",
+      "text": "dyson shell",
+      "kind": "place",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0488",
+      "text": "prison asteroid",
+      "kind": "place",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0489",
+      "text": "ocean world",
+      "kind": "place",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0490",
+      "text": "desert planet",
+      "kind": "place",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0491",
+      "text": "jungle moon",
+      "kind": "place",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0492",
+      "text": "lava world",
+      "kind": "place",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0493",
+      "text": "tomb ship",
+      "kind": "place",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0494",
+      "text": "nebula edge",
+      "kind": "place",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0495",
+      "text": "wormhole mouth",
+      "kind": "place",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0496",
+      "text": "slipstream lane",
+      "kind": "place",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0497",
+      "text": "starship graveyard",
+      "kind": "place",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0498",
+      "text": "hollow moon",
+      "kind": "place",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0499",
+      "text": "generation ship",
+      "kind": "place",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0500",
+      "text": "monastery moon",
+      "kind": "place",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0501",
+      "text": "cloud city",
+      "kind": "place",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0502",
+      "text": "tidal planet",
+      "kind": "place",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0503",
+      "text": "binary system",
+      "kind": "place",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0504",
+      "text": "rogue planet",
+      "kind": "place",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0505",
+      "text": "comet nest",
+      "kind": "place",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0506",
+      "text": "terraformed moon",
+      "kind": "place",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0507",
+      "text": "twilight band",
+      "kind": "place",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0508",
+      "text": "sanctuary world",
+      "kind": "place",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0509",
+      "text": "first contact",
+      "kind": "event",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0510",
+      "text": "jump failure",
+      "kind": "event",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0511",
+      "text": "supernova",
+      "kind": "event",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0512",
+      "text": "gate collapse",
+      "kind": "event",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0513",
+      "text": "jump drive",
+      "kind": "object",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0514",
+      "text": "warp core",
+      "kind": "object",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0515",
+      "text": "star map",
+      "kind": "object",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0516",
+      "text": "cloaking device",
+      "kind": "object",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0517",
+      "text": "plasma blade",
+      "kind": "object",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0518",
+      "text": "alien artifact",
+      "kind": "object",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0519",
+      "text": "singularity engine",
+      "kind": "object",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0520",
+      "text": "shield generator",
+      "kind": "object",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0521",
+      "text": "antimatter core",
+      "kind": "object",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0522",
+      "text": "neural crown",
+      "kind": "object",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0523",
+      "text": "ship AI",
+      "kind": "object",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0524",
+      "text": "terraform seed",
+      "kind": "object",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0525",
+      "text": "void compass",
+      "kind": "object",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0526",
+      "text": "asteroid dock",
+      "kind": "place",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0527",
+      "text": "star chart",
+      "kind": "object",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0528",
+      "text": "alien relic",
+      "kind": "object",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0529",
+      "text": "floating city",
+      "kind": "place",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0530",
+      "text": "twilight belt",
+      "kind": "place",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0531",
+      "text": "ocean planet",
+      "kind": "place",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0532",
+      "text": "homeworld",
+      "kind": "place",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0533",
+      "text": "frontier world",
+      "kind": "place",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0534",
+      "text": "alien ruins",
+      "kind": "place",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0535",
+      "text": "superweapon",
+      "kind": "object",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0536",
+      "text": "alien egg",
+      "kind": "object",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0537",
+      "text": "war-torn alien ruins",
+      "kind": "place",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0538",
+      "text": "ocean planet islands",
+      "kind": "place",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0539",
+      "text": "alien trading station",
+      "kind": "place",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "se-0540",
+      "text": "flooding alien planet",
+      "kind": "place",
+      "genres": ["space-opera"]
+    }
+  ]
+}

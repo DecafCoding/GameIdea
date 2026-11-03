@@ -1,0 +1,19 @@
+/* ImportStatus: --ink on the light #ECEAE4 fill (the --text token), right aligned. */
+.status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  align-self: flex-end;
+  padding: 10px 14px;
+  border-radius: var(--radius-panel);
+  background: var(--text);
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: var(--shadow-card);
+}
+
+.check {
+  /* The green type color; it moved from Character to Motivation on 2026-10-31. */
+  color: var(--type-motivation);
+}

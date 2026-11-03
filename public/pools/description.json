@@ -1,0 +1,2755 @@
+{
+  "type": "description",
+  "cues": [
+    {
+      "id": "de-0001",
+      "text": "burned-out",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0002",
+      "text": "viral",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0003",
+      "text": "infected",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0004",
+      "text": "quarantined",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0005",
+      "text": "collared",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0006",
+      "text": "blacklisted",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0007",
+      "text": "unlicensed",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0008",
+      "text": "licensed",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0009",
+      "text": "rented",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0010",
+      "text": "foreclosed",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0011",
+      "text": "indebted",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0012",
+      "text": "bankrupt",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0013",
+      "text": "corporate",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0014",
+      "text": "sponsored",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0015",
+      "text": "flickering",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0016",
+      "text": "ghosted",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0017",
+      "text": "anonymous",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0018",
+      "text": "masked",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0019",
+      "text": "faceless",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0020",
+      "text": "nameless",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0021",
+      "text": "undocumented",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0022",
+      "text": "off-grid",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0023",
+      "text": "off-the-books",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0024",
+      "text": "underground",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0025",
+      "text": "rooftop",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0026",
+      "text": "high-rise",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0027",
+      "text": "street-level",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0028",
+      "text": "flooded",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0029",
+      "text": "drowned",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0030",
+      "text": "rain-soaked",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0031",
+      "text": "toxic",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0032",
+      "text": "irradiated",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0033",
+      "text": "sealed",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0034",
+      "text": "airtight",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0035",
+      "text": "vented",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0036",
+      "text": "derelict",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0037",
+      "text": "condemned",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0038",
+      "text": "half-demolished",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0039",
+      "text": "half-built",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0040",
+      "text": "scaffolded",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0041",
+      "text": "jury-rigged",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0042",
+      "text": "patched",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0043",
+      "text": "salvaged",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0044",
+      "text": "scrapped",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0045",
+      "text": "secondhand",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0046",
+      "text": "counterfeit",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0047",
+      "text": "knockoff",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0048",
+      "text": "bootleg",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0049",
+      "text": "black-market",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0050",
+      "text": "smuggled",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0051",
+      "text": "stolen",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0052",
+      "text": "contraband",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0053",
+      "text": "weaponized",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0054",
+      "text": "militarized",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0055",
+      "text": "armored",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0056",
+      "text": "retired",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0057",
+      "text": "legacy",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0058",
+      "text": "unreleased",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0059",
+      "text": "rogue",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0060",
+      "text": "feral",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0061",
+      "text": "dreaming",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0062",
+      "text": "sleepless",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0063",
+      "text": "insomniac",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0064",
+      "text": "sedated",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0065",
+      "text": "drugged",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0066",
+      "text": "numb",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0067",
+      "text": "burned",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0068",
+      "text": "exiled",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0069",
+      "text": "deported",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0070",
+      "text": "smuggled-in",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0071",
+      "text": "rehoused",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0072",
+      "text": "displaced",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0073",
+      "text": "evicted",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0074",
+      "text": "squatting",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0075",
+      "text": "exhausted",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0076",
+      "text": "sleep-starved",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0077",
+      "text": "hungry",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0078",
+      "text": "fed",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0079",
+      "text": "lonely",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0080",
+      "text": "loyal",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0081",
+      "text": "disloyal",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0082",
+      "text": "defecting",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0083",
+      "text": "undercover",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0084",
+      "text": "double-crossed",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0085",
+      "text": "compromised",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0086",
+      "text": "leaked",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0087",
+      "text": "redacted",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0088",
+      "text": "classified",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0089",
+      "text": "declassified",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0090",
+      "text": "dead",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0091",
+      "text": "half-dead",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0092",
+      "text": "undead",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0093",
+      "text": "posthumous",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0094",
+      "text": "immortal",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0095",
+      "text": "aging",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0096",
+      "text": "mothballed",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0097",
+      "text": "scuttled",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0098",
+      "text": "adrift",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0099",
+      "text": "dry-docked",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0100",
+      "text": "scrapyard-built",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0101",
+      "text": "refitted",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0102",
+      "text": "under-crewed",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0103",
+      "text": "skeleton-crewed",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0104",
+      "text": "mutinous",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0105",
+      "text": "commandeered",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0106",
+      "text": "impounded",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0107",
+      "text": "hijacked",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0108",
+      "text": "convoy-bound",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0109",
+      "text": "blockade-running",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0110",
+      "text": "long-haul",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0111",
+      "text": "cargo-laden",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0112",
+      "text": "ghost-crewed",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0113",
+      "text": "hull-scarred",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0114",
+      "text": "battle-scarred",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0115",
+      "text": "war-weary",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0116",
+      "text": "dock-bound",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0117",
+      "text": "armada-sworn",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0118",
+      "text": "privateer",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0119",
+      "text": "mercenary-hired",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0120",
+      "text": "repurposed",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0121",
+      "text": "bulkhead-sealed",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0122",
+      "text": "retrofitted",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "de-0123",
+      "text": "unregistered",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "de-0124",
+      "text": "sunless",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0125",
+      "text": "moonless",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0126",
+      "text": "ice-bound",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0127",
+      "text": "lava-scarred",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0128",
+      "text": "storm-wracked",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0129",
+      "text": "dust-choked",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0130",
+      "text": "cratered",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0131",
+      "text": "fog-shrouded",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0132",
+      "text": "vacuum-sealed",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0133",
+      "text": "frontier",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0134",
+      "text": "far-flung",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0135",
+      "text": "backwater",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0136",
+      "text": "volcanic",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0137",
+      "text": "tundra",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0138",
+      "text": "jungle-choked",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0139",
+      "text": "geothermal",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0140",
+      "text": "dethroned",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0141",
+      "text": "excommunicated",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0142",
+      "text": "imperial",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0143",
+      "text": "outlawed",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0144",
+      "text": "disinherited",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0145",
+      "text": "annexed",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0146",
+      "text": "occupied",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0147",
+      "text": "seceded",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0148",
+      "text": "embargoed",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0149",
+      "text": "treaty-bound",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0150",
+      "text": "warlord-held",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0151",
+      "text": "syndicate-run",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0152",
+      "text": "corporate-owned",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0153",
+      "text": "indentured",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0154",
+      "text": "disenfranchised",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0155",
+      "text": "sovereign",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0156",
+      "text": "vassal",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0157",
+      "text": "tributary",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0158",
+      "text": "rebel",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0159",
+      "text": "loyalist",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0160",
+      "text": "insurgent",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0161",
+      "text": "puppet",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0162",
+      "text": "martial-law",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0163",
+      "text": "conscripted",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0164",
+      "text": "pardoned",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0165",
+      "text": "abdicated",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0166",
+      "text": "dynastic",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0167",
+      "text": "usurped",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0168",
+      "text": "contested",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0169",
+      "text": "non-aligned",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0170",
+      "text": "blockaded",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0171",
+      "text": "sanctioned",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0172",
+      "text": "ambassadorial",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0173",
+      "text": "senate-backed",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0174",
+      "text": "oligarchic",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0175",
+      "text": "theocratic",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0176",
+      "text": "federated",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0177",
+      "text": "colonial",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0178",
+      "text": "pirate-held",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0179",
+      "text": "smuggler-run",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0180",
+      "text": "bounty-marked",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0181",
+      "text": "deserter",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0182",
+      "text": "defected",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0183",
+      "text": "renegade",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0184",
+      "text": "cold-blooded",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0185",
+      "text": "hybrid",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0186",
+      "text": "parasitic",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0187",
+      "text": "empathic",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0188",
+      "text": "long-lived",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0189",
+      "text": "short-lived",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0190",
+      "text": "near-extinct",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0191",
+      "text": "ascended",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0192",
+      "text": "automated",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0193",
+      "text": "reactor-leaking",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0194",
+      "text": "unshielded",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0195",
+      "text": "unarmed",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0196",
+      "text": "beacon-lit",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0197",
+      "text": "signal-dead",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0198",
+      "text": "dark-running",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0199",
+      "text": "scanner-blind",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0200",
+      "text": "prosthetic",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0201",
+      "text": "scavenged",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0202",
+      "text": "obsolete",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "de-0203",
+      "text": "factory-fresh",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0204",
+      "text": "mass-produced",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0205",
+      "text": "hand-forged",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0206",
+      "text": "booby-trapped",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0207",
+      "text": "overgrown",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0208",
+      "text": "neon",
+      "genres": ["generic", "cyberpunk"]
+    },
+    {
+      "id": "de-0209",
+      "text": "rusted",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0210",
+      "text": "haunted",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0211",
+      "text": "forgotten",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0212",
+      "text": "legendary",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0213",
+      "text": "ancient",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0214",
+      "text": "hidden",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0215",
+      "text": "cursed",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0216",
+      "text": "gilded",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0217",
+      "text": "ruined",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0218",
+      "text": "abandoned",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0219",
+      "text": "sacred",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0220",
+      "text": "feared",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0221",
+      "text": "grieving",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0222",
+      "text": "ambitious",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0223",
+      "text": "reluctant",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0224",
+      "text": "vengeful",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0225",
+      "text": "devoted",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0226",
+      "text": "broken",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0227",
+      "text": "hollow",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0228",
+      "text": "weary",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0229",
+      "text": "elderly",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0230",
+      "text": "silent",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0231",
+      "text": "wandering",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0232",
+      "text": "disgraced",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0233",
+      "text": "hopeful",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0234",
+      "text": "desperate",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0235",
+      "text": "crumbling",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0236",
+      "text": "sprawling",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0237",
+      "text": "cramped",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0238",
+      "text": "lavish",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0239",
+      "text": "squalid",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0240",
+      "text": "salvage",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0241",
+      "text": "frozen",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0242",
+      "text": "wounded",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0243",
+      "text": "reckless",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0244",
+      "text": "stranded",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0245",
+      "text": "sleeping",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0246",
+      "text": "burning",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0247",
+      "text": "borrowed",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0248",
+      "text": "sunken",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0249",
+      "text": "tireless",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0250",
+      "text": "radiant",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0251",
+      "text": "wary",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0252",
+      "text": "fugitive",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0253",
+      "text": "devout",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0254",
+      "text": "faithless",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0255",
+      "text": "scarred",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0256",
+      "text": "stateless",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0257",
+      "text": "orphaned",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0258",
+      "text": "widowed",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0259",
+      "text": "estranged",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0260",
+      "text": "lovesick",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0261",
+      "text": "paranoid",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0262",
+      "text": "brilliant",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0263",
+      "text": "bitter",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0264",
+      "text": "ruthless",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0265",
+      "text": "gentle",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0266",
+      "text": "crooked",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0267",
+      "text": "fearless",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0268",
+      "text": "obsessed",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0269",
+      "text": "reformed",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0270",
+      "text": "cunning",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0271",
+      "text": "reclusive",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0272",
+      "text": "infamous",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0273",
+      "text": "ageless",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0274",
+      "text": "hunted",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0275",
+      "text": "rookie",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0276",
+      "text": "veteran",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0277",
+      "text": "defiant",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0278",
+      "text": "runaway",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0279",
+      "text": "seeded",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0280",
+      "text": "molten",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0281",
+      "text": "forged",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0282",
+      "text": "cracked",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0283",
+      "text": "humming",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0284",
+      "text": "drifting",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0285",
+      "text": "tethered",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0286",
+      "text": "buried",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0287",
+      "text": "uncharted",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0288",
+      "text": "restricted",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0289",
+      "text": "military",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0290",
+      "text": "luxury",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0291",
+      "text": "makeshift",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0292",
+      "text": "modular",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0293",
+      "text": "crystal",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0294",
+      "text": "fungal",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0295",
+      "text": "smoldering",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0296",
+      "text": "icebound",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0297",
+      "text": "lightless",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0298",
+      "text": "windswept",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0299",
+      "text": "secret",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0300",
+      "text": "lost",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0301",
+      "text": "forbidden",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0302",
+      "text": "marked",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0303",
+      "text": "unstable",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0304",
+      "text": "volatile",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0305",
+      "text": "dormant",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0306",
+      "text": "awakened",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0307",
+      "text": "starving",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0308",
+      "text": "pirate",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0309",
+      "text": "outlaw",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0310",
+      "text": "royal",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0311",
+      "text": "nuclear",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0312",
+      "text": "ghost",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0313",
+      "text": "shadow",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0314",
+      "text": "glass",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0315",
+      "text": "ashen",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0316",
+      "text": "low-tech",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0317",
+      "text": "bone dry",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0318",
+      "text": "half alive",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0319",
+      "text": "long dead",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0320",
+      "text": "gritty",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0321",
+      "text": "rain-slicked",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0322",
+      "text": "pirated",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0323",
+      "text": "noir",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0324",
+      "text": "nocturnal",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0325",
+      "text": "crowded",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0326",
+      "text": "decaying",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0327",
+      "text": "polluted",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0328",
+      "text": "monitored",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0329",
+      "text": "corrupt",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0330",
+      "text": "franchised",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0331",
+      "text": "vertical",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0332",
+      "text": "disembodied",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0333",
+      "text": "dehumanized",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0334",
+      "text": "alienated",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0335",
+      "text": "addicted",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0336",
+      "text": "feverish",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0337",
+      "text": "rebellious",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0338",
+      "text": "anarchic",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0339",
+      "text": "mercenary",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0340",
+      "text": "disposable",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0341",
+      "text": "replaceable",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0342",
+      "text": "industrial",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0343",
+      "text": "acidic",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0344",
+      "text": "concrete",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0345",
+      "text": "steel",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0346",
+      "text": "leather",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0347",
+      "text": "tattooed",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0348",
+      "text": "pierced",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0349",
+      "text": "subversive",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0350",
+      "text": "cynical",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0351",
+      "text": "nihilistic",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0352",
+      "text": "hard-boiled",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0353",
+      "text": "street-smart",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0354",
+      "text": "low-life",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0355",
+      "text": "globalized",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0356",
+      "text": "lawless",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0357",
+      "text": "oppressive",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0358",
+      "text": "totalitarian",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0359",
+      "text": "fragmented",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0360",
+      "text": "contagious",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0361",
+      "text": "electric",
+      "genres": ["generic"]
+    },
+    {
+      "id": "de-0362",
+      "text": "synthetic",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0363",
+      "text": "half-synthetic",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0364",
+      "text": "cloned",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0365",
+      "text": "vat-grown",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0366",
+      "text": "gene-edited",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0367",
+      "text": "spliced",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0368",
+      "text": "bioprinted",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0369",
+      "text": "lab-grown",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0370",
+      "text": "uploaded",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0371",
+      "text": "downloaded",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0372",
+      "text": "backed-up",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0373",
+      "text": "holographic",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0374",
+      "text": "holo-lit",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0375",
+      "text": "pressurized",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0376",
+      "text": "decommissioned",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0377",
+      "text": "prototype",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0378",
+      "text": "unshackled",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0379",
+      "text": "sentient",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0380",
+      "text": "self-aware",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0381",
+      "text": "cryo-frozen",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0382",
+      "text": "thawed",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0383",
+      "text": "orbital",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0384",
+      "text": "suborbital",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0385",
+      "text": "offworld",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0386",
+      "text": "groundside",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0387",
+      "text": "cryo-shipped",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0388",
+      "text": "orbit-locked",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0389",
+      "text": "airless",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0390",
+      "text": "zero-g",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0391",
+      "text": "gene-locked",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0392",
+      "text": "uplifted",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0393",
+      "text": "clone-batch",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0394",
+      "text": "cryo-thawed",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0395",
+      "text": "hive-minded",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0396",
+      "text": "gene-spliced",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0397",
+      "text": "tank-born",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0398",
+      "text": "radiation-hardened",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0399",
+      "text": "bioengineered",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0400",
+      "text": "post-biological",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0401",
+      "text": "hull-breached",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0402",
+      "text": "cybernetic",
+      "genres": ["sci-fi", "cyberpunk"]
+    },
+    {
+      "id": "de-0403",
+      "text": "augmented",
+      "genres": ["sci-fi", "cyberpunk"]
+    },
+    {
+      "id": "de-0404",
+      "text": "nanite-infested",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0405",
+      "text": "ai-governed",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0406",
+      "text": "drone-piloted",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0407",
+      "text": "self-repairing",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0408",
+      "text": "fusion-powered",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0409",
+      "text": "encrypted",
+      "genres": ["sci-fi", "cyberpunk"]
+    },
+    {
+      "id": "de-0410",
+      "text": "hacked",
+      "genres": ["sci-fi", "cyberpunk"]
+    },
+    {
+      "id": "de-0411",
+      "text": "neural-linked",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0412",
+      "text": "stasis-locked",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0413",
+      "text": "orbital-dropped",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0414",
+      "text": "mech-piloted",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0415",
+      "text": "surveillance-rigged",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0416",
+      "text": "depressurized",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0417",
+      "text": "clone",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0418",
+      "text": "gene-bred",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0419",
+      "text": "domed",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0420",
+      "text": "mutated",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0421",
+      "text": "engineered",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0422",
+      "text": "artificial",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0423",
+      "text": "lunar",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0424",
+      "text": "quantum",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0425",
+      "text": "off-world",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0426",
+      "text": "dystopian",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0427",
+      "text": "bionic",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0428",
+      "text": "digital",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0429",
+      "text": "posthuman",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0430",
+      "text": "high-tech",
+      "genres": ["sci-fi"]
+    },
+    {
+      "id": "de-0431",
+      "text": "chrome",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0432",
+      "text": "half-augmented",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0433",
+      "text": "over-augmented",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0434",
+      "text": "unaugmented",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0435",
+      "text": "wired",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0436",
+      "text": "hardwired",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0437",
+      "text": "jacked-in",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0438",
+      "text": "unplugged",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0439",
+      "text": "offline",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0440",
+      "text": "online",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0441",
+      "text": "networked",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0442",
+      "text": "wiped",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0443",
+      "text": "mind-wiped",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0444",
+      "text": "memory-wiped",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0445",
+      "text": "corrupted",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0446",
+      "text": "glitching",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0447",
+      "text": "buffering",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0448",
+      "text": "lagging",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0449",
+      "text": "overclocked",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0450",
+      "text": "overheating",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0451",
+      "text": "short-circuited",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0452",
+      "text": "rebooted",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0453",
+      "text": "factory-reset",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0454",
+      "text": "jailbroken",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0455",
+      "text": "firewalled",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0456",
+      "text": "ice-locked",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0457",
+      "text": "surveilled",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0458",
+      "text": "tracked",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0459",
+      "text": "tagged",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0460",
+      "text": "chipped",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0461",
+      "text": "bugged",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0462",
+      "text": "delisted",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0463",
+      "text": "leased",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0464",
+      "text": "repossessed",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0465",
+      "text": "corp-owned",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0466",
+      "text": "corp-funded",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0467",
+      "text": "branded",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0468",
+      "text": "ad-covered",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0469",
+      "text": "pixelated",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0470",
+      "text": "low-res",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0471",
+      "text": "high-res",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0472",
+      "text": "rendered",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0473",
+      "text": "simulated",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0474",
+      "text": "virtual",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0475",
+      "text": "mirrored",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0476",
+      "text": "sub-level",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0477",
+      "text": "sky-level",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0478",
+      "text": "sewer-level",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0479",
+      "text": "acid-scarred",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0480",
+      "text": "smog-choked",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0481",
+      "text": "last-gen",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0482",
+      "text": "next-gen",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0483",
+      "text": "beta",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0484",
+      "text": "recalled",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0485",
+      "text": "discontinued",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0486",
+      "text": "defective",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0487",
+      "text": "mood-stabilized",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0488",
+      "text": "overstimulated",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0489",
+      "text": "encrypted-twice",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0490",
+      "text": "analog",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0491",
+      "text": "glitchy",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0492",
+      "text": "implanted",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0493",
+      "text": "privatized",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0494",
+      "text": "transhuman",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0495",
+      "text": "neon-lit",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0496",
+      "text": "modded",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0497",
+      "text": "hyperconnected",
+      "genres": ["cyberpunk"]
+    },
+    {
+      "id": "de-0498",
+      "text": "cloaked",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0499",
+      "text": "flagship-class",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0500",
+      "text": "deep-range",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0501",
+      "text": "generation-class",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0502",
+      "text": "tidally-locked",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0503",
+      "text": "terraformed",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0504",
+      "text": "ringed",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0505",
+      "text": "binary-lit",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0506",
+      "text": "ocean-world",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0507",
+      "text": "asteroid-born",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0508",
+      "text": "belt-mined",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0509",
+      "text": "twin-sunned",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0510",
+      "text": "red-dwarf",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0511",
+      "text": "dying-star",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0512",
+      "text": "nebula-veiled",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0513",
+      "text": "high-gravity",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0514",
+      "text": "low-gravity",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0515",
+      "text": "cometary",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0516",
+      "text": "rimward",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0517",
+      "text": "coreward",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0518",
+      "text": "methane-skied",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0519",
+      "text": "hive-born",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0520",
+      "text": "telepathic",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0521",
+      "text": "symbiotic",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0522",
+      "text": "chitinous",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0523",
+      "text": "bioluminescent",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0524",
+      "text": "silicon-based",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0525",
+      "text": "many-limbed",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0526",
+      "text": "spore-borne",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0527",
+      "text": "molting",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0528",
+      "text": "brood-bound",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0529",
+      "text": "pheromonal",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0530",
+      "text": "multi-eyed",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0531",
+      "text": "tentacled",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0532",
+      "text": "amphibious",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0533",
+      "text": "ammonia-breathing",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0534",
+      "text": "methane-breathing",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0535",
+      "text": "psionic",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0536",
+      "text": "exoskeletal",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0537",
+      "text": "photosynthetic",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0538",
+      "text": "first-contact",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0539",
+      "text": "pre-spaceflight",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0540",
+      "text": "pre-sentient",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0541",
+      "text": "jump-capable",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0542",
+      "text": "void-touched",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0543",
+      "text": "antimatter-fueled",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0544",
+      "text": "solar-sailed",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0545",
+      "text": "ion-driven",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0546",
+      "text": "gate-linked",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0547",
+      "text": "time-dilated",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0548",
+      "text": "relativistic",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0549",
+      "text": "half-human",
+      "genres": ["space-opera"]
+    },
+    {
+      "id": "de-0550",
+      "text": "deep-space",
+      "genres": ["space-opera"]
+    }
+  ]
+}

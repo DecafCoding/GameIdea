@@ -1,0 +1,9 @@
+/* TypeDisc: a type-color circle with a centered white glyph. */
+.disc {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: #fff;
+}

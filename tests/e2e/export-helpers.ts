@@ -1,0 +1,36 @@
+/**
+ * Helpers for the export and import browser tests: the Salvage Run fixture board and an
+ * Export menu download.
+ */
+import type { Page } from '@playwright/test';
+import type { Board } from '@/shared/model';
+import { combinedCard, fixtureBoard, fixtureNote, fixtureStack } from '@/test/fixtures/boards';
+
+/** "Salvage Run": a combined Character with a Motivation and a Conflict tucked under it. */
+export function salvageRun(): Board {
+  const [character, motivation, conflict] = fixtureStack(200, 200);
+  const combined = combinedCard('character', {
+    id: character!.id,
+    x: character!.x,
+    y: character!.y,
+    z: character!.z,
+  });
+  return {
+    ...fixtureBoard(
+      [combined, motivation!, conflict!],
+      [fixtureNote({ x: 600, y: 200, text: 'The fleet left without her.' })],
+    ),
+    id: 'salvage-run',
+    name: 'Salvage Run',
+  };
+}
+
+export const exportButton = (page: Page) => page.getByRole('button', { name: 'Export' });
+
+/** Opens the Export menu, clicks a row and returns the download. */
+export async function exportFile(page: Page, row: 'Text File' | 'Board File') {
+  await exportButton(page).click();
+  const downloading = page.waitForEvent('download');
+  await page.getByRole('menuitem', { name: new RegExp(row) }).click();
+  return downloading;
+}
