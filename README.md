@@ -99,6 +99,10 @@ Open a board from the board list. The app mark in the top bar goes back to the l
 - **Notes:** "Add Note" adds a note in edit mode. Drag the bottom-right handle to resize, the trash button deletes it, and dragging the note moves it.
 - **View:** drag the empty canvas to pan, use the mouse wheel or the zoom strip to zoom (25 to 200 percent), click the percent to reset to 100 percent, and Fit to show every card.
 
+## Design Tokens And Icons
+
+`src/shared/ui/tokens.css` holds the GameIdea token set from `docs/design-system.html`: Dark and Light mode and the Orange, Blue and Green theme colors, picked by `data-mode` and `data-theme` on `<html>`. `index.html` sets `data-mode="dark" data-theme="orange"`; the Settings switch comes in a later phase. Only the chrome and the accent follow the attributes; cards, notes and deck colors never change. The fonts (Space Grotesk and Inter) are bundled, and the deck icons, UI icons and the Hook Card icon are SVG files in `public/icons/`.
+
 ## Browser Tests And Fixture Pools
 
 No pool files ship in `public/pools/` until Phase 2. The Playwright tests serve made-up pools from `tests/e2e/fixtures/pools/*.json` through an automatic fixture in `tests/e2e/test.ts`; every spec imports `test` and `expect` from `./test`. A spec that tests the pool failure banner registers its own route, which wins.
