@@ -5,12 +5,17 @@ This folder holds the GameIdea mockups and design tokens. Use it as the input fo
 - Live canvas: https://claude.ai/artifact/8Z27m7aYUEDgXcXVJ5Nx9D
 - `mockups/` holds the source of each artboard (`.dc.html`) and the canvas index (`canvas.json`). The files need the canvas runtime to render. Open the live canvas to see them.
 - `tokens.json` holds the colors, fonts and sizes.
+- `_ds/gameidea/styles.css` holds the same tokens as CSS variables. Where a value disagrees, `styles.css` wins.
+- `_ds/gameidea/readme.md` names the base design (TheForge) and the closed list of deliberate deviations.
+- `screenshots/` holds a flat render of each artboard. `screenshots/README.md` is the frame index.
+
+Fidelity: high-fidelity static mockups. Popovers and menus are drawn open on purpose. Where a mockup and this README disagree, this README wins. No `reference/` folder is included. The current plan docs in `docs/` are the reference.
 
 The look carries over from TheForge: dark canvas, Space Grotesk and Inter, cream cards, rings on hover, tuck and notes.
 
 ## Artboards
 
-| File | Shows |
+| File (frame ID) | Shows |
 |---|---|
 | `Main.dc.html` | Board screen. Grouped rail, a full hook stack, a selected Twist card, a loose Modifier card, a note. |
 | `BoardList.dc.html` | Board list with board cards, the board menu and the New Board dialog. |
