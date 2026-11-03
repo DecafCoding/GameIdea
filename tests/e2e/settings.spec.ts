@@ -97,3 +97,102 @@ test('settings_keyboardList_eachKeyDoesWhatItSays', async ({ page }) => {
   await page.keyboard.press('Control+Shift+z');
   await expect(active).toHaveText('salvage captain');
 });
+
+test('settings_reload_keepsSettings', async ({ page }) => {
+  await openBoard(page);
+  await openSettings(page);
+  await dialog(page).getByRole('radio', { name: 'Light' }).click();
+  await dialog(page).getByRole('radio', { name: 'Blue' }).click();
+  await dialog(page).getByRole('switch', { name: 'Snap To Grid' }).click();
+  await dialog(page).getByRole('button', { name: 'Done' }).click();
+
+  await page.reload();
+  const html = page.locator('html');
+  await expect(html).toHaveAttribute('data-mode', 'light');
+  await expect(html).toHaveAttribute('data-theme', 'blue');
+  await openSettings(page);
+  await expect(dialog(page).getByRole('radio', { name: 'Light' })).toHaveAttribute(
+    'aria-checked',
+    'true',
+  );
+  await expect(dialog(page).getByRole('radio', { name: 'Blue' })).toHaveAttribute(
+    'aria-checked',
+    'true',
+  );
+  await expect(dialog(page).getByRole('switch', { name: 'Snap To Grid' })).toHaveAttribute(
+    'aria-checked',
+    'false',
+  );
+  await dialog(page).getByRole('button', { name: 'Done' }).click();
+
+  // The board list follows the same settings.
+  await page.getByRole('link', { name: 'Board List' }).click();
+  await page.reload();
+  await expect(page.getByRole('heading', { level: 1, name: 'Boards' })).toBeVisible();
+  await expect(html).toHaveAttribute('data-mode', 'light');
+  await expect(html).toHaveAttribute('data-theme', 'blue');
+});
+
+test('settings_lightReload_noDarkFrame', async ({ page }) => {
+  // Records the mode and the body ground in the first animation frame of every load.
+  await page.addInitScript(() => {
+    requestAnimationFrame(() => {
+      (window as unknown as { __firstFrame: unknown }).__firstFrame = {
+        mode: document.documentElement.dataset.mode,
+        background: document.body ? getComputedStyle(document.body).backgroundColor : null,
+      };
+    });
+  });
+  await openBoard(page);
+  await openSettings(page);
+  await dialog(page).getByRole('radio', { name: 'Light' }).click();
+  await dialog(page).getByRole('button', { name: 'Done' }).click();
+  await page.reload();
+  await expect(page.locator('main[aria-label="Board"]')).toBeVisible();
+  const first = await page.evaluate(
+    () => (window as unknown as { __firstFrame: unknown }).__firstFrame,
+  );
+  expect(first).toEqual({ mode: 'light', background: 'rgb(245, 243, 238)' });
+});
+
+test('settings_secondTab_updatesUnderOneSecond', async ({ context }) => {
+  const a = await context.newPage();
+  const b = await context.newPage();
+  await openBoard(a);
+  await b.goto('/');
+  await expect(b.getByRole('heading', { level: 1, name: 'Boards' })).toBeVisible();
+  await expect(b.locator('html')).toHaveAttribute('data-mode', 'dark');
+  await openSettings(a);
+  await dialog(a).getByRole('radio', { name: 'Light' }).click();
+  await expect(b.locator('html')).toHaveAttribute('data-mode', 'light', { timeout: 1000 });
+  await dialog(a).getByRole('radio', { name: 'Green' }).click();
+  await expect(b.locator('html')).toHaveAttribute('data-theme', 'green', { timeout: 1000 });
+});
+
+test('settings_blockedStorage_defaultsAndNote', async ({ page }) => {
+  await page.addInitScript(() => {
+    Object.defineProperty(window, 'localStorage', {
+      configurable: true,
+      get() {
+        throw new DOMException('blocked', 'SecurityError');
+      },
+    });
+  });
+  // Boards still load: IndexedDB is not blocked.
+  await openBoard(page, fixtureBoard([combinedCard('role', { x: 96, y: 96 })]));
+  await expect(cardById(page, 'role-1')).toBeVisible();
+  const html = page.locator('html');
+  await expect(html).toHaveAttribute('data-mode', 'dark');
+  await expect(html).toHaveAttribute('data-theme', 'orange');
+  await openSettings(page);
+  await expect(dialog(page)).toContainText(
+    'This browser does not save settings. They reset when the page reloads.',
+  );
+  await expect(dialog(page).getByRole('switch', { name: 'Snap To Grid' })).toHaveAttribute(
+    'aria-checked',
+    'true',
+  );
+  // A change still applies for this page.
+  await dialog(page).getByRole('radio', { name: 'Light' }).click();
+  await expect(html).toHaveAttribute('data-mode', 'light');
+});
