@@ -80,7 +80,9 @@ test('persistence_drawThenReload_boardSurvives', async ({ page }) => {
   const before = await boxOf(node);
 
   await page.reload();
-  await expect(rail(page).getByRole('button', { name: 'Draw A Player Role' })).toBeEnabled();
+  await expect(
+    rail(page).getByRole('button', { name: 'Draw A Player Role', exact: true }),
+  ).toBeEnabled();
   const after = page.locator(`.react-flow__node[data-id="${id}"]`);
   await expect(after.getByTestId('active-cue')).toHaveText(cue!);
   await expect(canvasCards(page)).toHaveCount(1);

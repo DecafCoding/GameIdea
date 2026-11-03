@@ -84,8 +84,8 @@ describe('CardView', () => {
   });
 
   it('CardView_card_hasTitleCaseAriaLabel', () => {
-    render(<CardView card={card('modifier', [ADJS])} onTurn={noop} />);
-    expect(screen.getByRole('article', { name: 'Modifier Card' })).toBeTruthy();
+    render(<CardView card={{ ...card('modifier', [ADJS]), modDeck: 'resource' }} onTurn={noop} />);
+    expect(screen.getByRole('article', { name: 'Resource Modifier Card' })).toBeTruthy();
   });
 
   it('CardView_combinedInnerRightClick_changesOnlyBottomAdjective', () => {
@@ -129,5 +129,31 @@ describe('CardView', () => {
     render(<CardView card={card('role', [NOUNS])} onTurn={noop} ringClassName="nodrag" />);
     const halves = screen.getAllByRole('button', { name: /^Turn / });
     expect(halves.every((half) => half.classList.contains('nodrag'))).toBe(true);
+  });
+
+  it.each([
+    ['role', 'user-plus'],
+    ['resource', 'battery-plus'],
+    ['setting', 'map-pin-plus'],
+  ] as const)('cardView_modifierEachModDeck_showsItsIcon (%s)', (modDeck, icon) => {
+    render(<CardView card={{ ...card('modifier', [ADJS]), modDeck }} onTurn={noop} />);
+    const article = screen.getByRole('article');
+    expect(article.getAttribute('data-mod-deck')).toBe(modDeck);
+    expect(screen.getByTestId('type-disc').querySelector(`[data-icon="${icon}"]`)).toBeTruthy();
+  });
+
+  it('cardView_mood_rendersFourCues', () => {
+    render(<CardView card={card('mood', [['tense', 'cozy', 'eerie', 'giddy']])} onTurn={noop} />);
+    expect(screen.getAllByText(/tense|cozy|eerie|giddy/)).toHaveLength(4);
+    expect(screen.queryByTestId('middle-rule')).toBeNull();
+    expect(screen.getByTestId('type-disc').querySelector('[data-icon="smile"]')).toBeTruthy();
+  });
+
+  it('cardView_constraint_rendersTwoCuesAndRule', () => {
+    render(<CardView card={card('constraint', [['no jumping', 'only one hand']])} onTurn={noop} />);
+    expect(screen.getByTestId('active-cue').textContent).toBe('no jumping');
+    expect(screen.getAllByTestId('cue')).toHaveLength(1);
+    expect(screen.getByTestId('middle-rule')).toBeTruthy();
+    expect(screen.getByRole('article', { name: 'Constraint Card' })).toBeTruthy();
   });
 });

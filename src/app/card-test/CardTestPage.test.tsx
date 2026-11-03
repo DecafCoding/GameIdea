@@ -48,14 +48,22 @@ describe('CardTestPage', () => {
     vi.unstubAllGlobals();
   });
 
-  it('CardTestPage_poolsReady_showsFiveEnabledDeckButtons', async () => {
+  it('CardTestPage_poolsReady_showsEveryDeckWithModifierAsThreeButtons', async () => {
     await renderReady();
     expect(deckButtons().map((b) => b.textContent)).toEqual([
       'Draw A Player Role',
+      'Draw A Mechanic',
+      'Draw A Resource',
       'Draw A Goal',
       'Draw A Conflict',
-      'Draw A Modifier',
+      'Draw A Player Role Modifier',
+      'Draw A Resource Modifier',
+      'Draw A Setting Modifier',
       'Draw A Setting',
+      'Draw A Mood',
+      'Draw A Twist',
+      'Draw A Progression',
+      'Draw A Constraint',
     ]);
     for (const button of deckButtons()) expect(button).toHaveProperty('disabled', false);
   });
@@ -70,7 +78,7 @@ describe('CardTestPage', () => {
   it('CardTestPage_combineWithRoleAndModifier_leavesOneCombinedCard', async () => {
     await renderReady();
     draw('Draw A Player Role');
-    draw('Draw A Modifier');
+    draw('Draw A Player Role Modifier');
     expect(cards()).toHaveLength(2);
     fireEvent.click(screen.getByRole('button', { name: 'Combine' }));
     expect(cards()).toHaveLength(1);

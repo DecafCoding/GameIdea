@@ -13,11 +13,27 @@ export const ARROW = {
   outerRight: { x: 149.5, y: 100 },
 } as const;
 
-export type DeckName = 'Player Role' | 'Goal' | 'Conflict' | 'Modifier' | 'Setting';
+/** A deck button label after "Draw A ": the rail and the card test page. */
+export type DeckName =
+  | 'Hook Card'
+  | 'Player Role'
+  | 'Mechanic'
+  | 'Resource'
+  | 'Goal'
+  | 'Conflict'
+  | 'Modifier'
+  | 'Player Role Modifier'
+  | 'Resource Modifier'
+  | 'Setting Modifier'
+  | 'Setting'
+  | 'Mood'
+  | 'Twist'
+  | 'Progression'
+  | 'Constraint';
 
 /** Clicks "Draw A <deck>" and returns the newest card (the page lists newest first). */
 export async function draw(page: Page, deck: DeckName): Promise<Locator> {
-  await page.getByRole('button', { name: `Draw A ${deck}` }).click();
+  await page.getByRole('button', { name: `Draw A ${deck}`, exact: true }).click();
   return page.getByTestId('card').first();
 }
 

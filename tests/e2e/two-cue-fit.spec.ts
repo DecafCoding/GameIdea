@@ -17,11 +17,11 @@ import { join } from 'node:path';
 import type { Page } from '@playwright/test';
 import { expect, test } from './test';
 import { fixtureBoard, fixtureCard } from '@/test/fixtures/boards';
-import type { Card, Cue } from '@/shared/model';
+import { GENRES, type Card, type Cue } from '@/shared/model';
 import { cardById, openBoard } from './board-helpers';
 import { draw, type DeckName } from './helpers';
 
-type TwoCueType = 'goal' | 'conflict';
+type TwoCueType = 'goal' | 'conflict' | 'twist' | 'progression' | 'constraint';
 
 const TYPES: { type: TwoCueType; deck: DeckName; prefix: string; worst: [string, string] }[] = [
   {
@@ -35,6 +35,24 @@ const TYPES: { type: TwoCueType; deck: DeckName; prefix: string; worst: [string,
     deck: 'Conflict',
     prefix: 'co',
     worst: ['the map keeps changing', 'but the last ship home is already gone'],
+  },
+  {
+    type: 'twist',
+    deck: 'Twist',
+    prefix: 'tw',
+    worst: ['the friendly guide was the villain all along', 'your home island sank long ago'],
+  },
+  {
+    type: 'progression',
+    deck: 'Progression',
+    prefix: 'pr',
+    worst: ['every boss you beat joins your crew', 'the town rebuilds as you return'],
+  },
+  {
+    type: 'constraint',
+    deck: 'Constraint',
+    prefix: 'cn',
+    worst: ['only footsteps show where enemies are', 'no saves'],
   },
 ];
 
@@ -56,12 +74,17 @@ const FIT_LIMITS: Partial<Record<Card['type'], number>> = {
   modifier: 10,
   goal: 38,
   conflict: 38,
+  twist: 38,
+  progression: 38,
+  constraint: 38,
+  mechanic: 16,
+  resource: 16,
 };
 
 /** Whether a cue is inside the old fit class for its type. */
 function inFitClass(type: Card['type'], text: string): boolean {
   if (text.length > (FIT_LIMITS[type] ?? 0)) return false;
-  const fourCue = type === 'role' || type === 'setting' || type === 'modifier';
+  const fourCue = ['role', 'mechanic', 'resource', 'setting', 'modifier'].includes(type);
   return !fourCue || text.split(/s+/).length <= 2;
 }
 
@@ -86,6 +109,11 @@ function longestPairs(type: TwoCueType): [string, string][] {
   ];
 }
 
+/** Genre-tagged decks need genres on every cue; every genre keeps the cue drawable. */
+function genresFor(type: TwoCueType): { genres?: readonly string[] } {
+  return type === 'progression' || type === 'constraint' ? { genres: GENRES } : {};
+}
+
 async function expectPairFits(
   page: Page,
   type: TwoCueType,
@@ -99,14 +127,14 @@ async function expectPairFits(
       json: {
         type,
         cues: [
-          { id: `${prefix}-001`, text: pair[0] },
-          { id: `${prefix}-002`, text: pair[1] },
+          { id: `${prefix}-001`, text: pair[0], ...genresFor(type) },
+          { id: `${prefix}-002`, text: pair[1], ...genresFor(type) },
         ],
       },
     }),
   );
   await page.goto('/#/card-test');
-  await expect(page.getByRole('button', { name: `Draw A ${deck}` })).toBeEnabled();
+  await expect(page.getByRole('button', { name: `Draw A ${deck}`, exact: true })).toBeEnabled();
   await page.evaluate(() => document.fonts.ready);
   const card = await draw(page, deck);
   const box = (await card.boundingBox())!;
@@ -179,16 +207,26 @@ async function widest(page: Page, type: Card['type']): Promise<Cue> {
 }
 
 /** A 4-cue card with the widest pool noun on every edge, and the widest adjective if combined. */
-async function longestCard(page: Page, type: 'role' | 'setting', combined: boolean) {
+async function longestCard(
+  page: Page,
+  type: 'role' | 'mechanic' | 'resource' | 'setting',
+  combined: boolean,
+) {
   const noun = await widest(page, type);
   const adjective = await widest(page, 'modifier');
   const rings: Card['rings'] = [{ cues: [noun, noun, noun, noun], activeIndex: 0 }];
-  if (combined) rings.push({ cues: [adjective, adjective, adjective, adjective], activeIndex: 0 });
+  if (combined) {
+    rings.push({
+      cues: [adjective, adjective, adjective, adjective],
+      activeIndex: 0,
+      modDeck: 'role',
+    });
+  }
   return fixtureCard(type, { x: 96, y: 96, rings });
 }
 
-for (const type of ['role', 'setting'] as const) {
-  for (const combined of [false, true]) {
+for (const type of ['role', 'mechanic', 'resource', 'setting'] as const) {
+  for (const combined of type === 'mechanic' ? [false] : [false, true]) {
     const name = `fourCueCard_longestCuesOnEveryEdge_labelsClearAtCorners (${type}${combined ? ', combined' : ''})`;
     test(name, async ({ page }) => {
       // Measure on the app page, then leave it so the board seam runs on a fresh load.

@@ -178,7 +178,9 @@ test.describe('undo', () => {
     await expect(undoButton(page)).toBeEnabled();
     await waitForSaved(page);
     await page.reload();
-    await expect(rail(page).getByRole('button', { name: 'Draw A Player Role' })).toBeEnabled();
+    await expect(
+      rail(page).getByRole('button', { name: 'Draw A Player Role', exact: true }),
+    ).toBeEnabled();
     await expect(canvasCards(page)).toHaveCount(1);
     await expect(undoButton(page)).toBeDisabled();
   });

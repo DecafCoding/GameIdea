@@ -3,7 +3,7 @@
  */
 import { describe, expect, it } from 'vitest';
 import type { Card, CardType } from '@/shared/model';
-import { activeText, combine, edgeCues, split, swap, turnCard, turnRing } from './rings';
+import { activeText, combine, edgeCues, ringWord, split, swap, turnCard, turnRing } from './rings';
 
 function card(type: CardType, rings: { texts: string[]; activeIndex?: number }[]): Card {
   return {
@@ -171,5 +171,31 @@ describe('split', () => {
 
   it('split_uncombined_throws', () => {
     expect(() => split(card('role', [{ texts: NOUNS }]))).toThrow();
+  });
+});
+
+describe('ringWord', () => {
+  const ringCard = (type: CardType, rings = 1): Card =>
+    card(
+      type,
+      Array.from({ length: rings }, () => ({ texts: ['a', 'b', 'c', 'd'] })),
+    );
+
+  it.each([
+    ['role', 0, 'Nouns'],
+    ['resource', 0, 'Nouns'],
+    ['setting', 0, 'Nouns'],
+    ['role', 1, 'Adjectives'],
+    ['resource', 1, 'Adjectives'],
+    ['modifier', 0, 'Adjectives'],
+    ['mechanic', 0, 'Cues'],
+    ['mood', 0, 'Cues'],
+    ['goal', 0, 'Cues'],
+    ['conflict', 0, 'Cues'],
+    ['twist', 0, 'Cues'],
+    ['progression', 0, 'Cues'],
+    ['constraint', 0, 'Cues'],
+  ] as const)('ringWord_eachDeck_namesItsCues (%s ring %i)', (type, ring, word) => {
+    expect(ringWord(ringCard(type, ring + 1), ring)).toBe(word);
   });
 });

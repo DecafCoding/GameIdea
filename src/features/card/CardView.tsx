@@ -5,11 +5,11 @@
  * card keeps each "adjective noun" edge centered and fades in the turned words.
  */
 import { useState, type CSSProperties, type ReactNode } from 'react';
-import { DECK_NAME, type Card, type Cue } from '@/shared/model';
+import { DECK_NAME, MOD_DECK_NAME, type Card, type Cue } from '@/shared/model';
 import { Icon } from '@/shared/ui';
 import { RingControl } from './RingControl';
 import { edgeCues, isCombined, type RingSlot, type TurnDirection } from './rings';
-import { TYPE_ICON, TypeDisc } from './TypeDisc';
+import { iconFor, TypeDisc } from './TypeDisc';
 import { useTurnAngle, type TurnState } from './useTurnAngle';
 import styles from './CardView.module.css';
 
@@ -46,12 +46,13 @@ function slotTransform(slot: number, count: number): string {
 }
 
 /**
- * The label box for an edge. Player Role, Setting, Goal and Conflict share one frame:
- * 2 wide lines on the top and bottom edges, 3 narrow lines on the sides. Modifier stays
- * on one line. Edge 0 is the bottom; on a 4-cue card the odd edges are the sides.
+ * The label box for an edge. Modifier and Mood (1-word decks) stay on one line. Player
+ * Role, Mechanic, Resource and Setting use the 4-cue frame: 2 lines on every edge. Goal,
+ * Conflict, Twist, Progression and Constraint use the 2-cue frame: 2 wide lines.
+ * Edge 0 is the bottom; on a 4-cue card the odd edges are the sides.
  */
 function labelFit(type: Card['type'], count: number, edge: number): string {
-  if (type === 'modifier') return '';
+  if (type === 'modifier' || type === 'mood') return '';
   if (count === 2) return styles.wide ?? '';
   return [edge % 2 === 1 ? styles.side : styles.wide, styles.four].join(' ');
 }
@@ -131,6 +132,13 @@ function CueLabel({
   );
 }
 
+/** The card's name for screen readers: "Resource Modifier Card", "Mechanic Card". */
+function cardLabel(card: Card): string {
+  const name =
+    card.type === 'modifier' ? MOD_DECK_NAME[card.modDeck ?? 'role'] : DECK_NAME[card.type];
+  return `${name} Card`;
+}
+
 /** A clockwise turn moves words toward local -x, so they slide in from +4 px. */
 const slide = (turn: TurnState) => (turn.direction === 'cw' ? '4px' : '-4px');
 
@@ -203,7 +211,8 @@ export function CardView({ card, onTurn, ringClassName, paper = 'top' }: CardVie
       data-testid="card"
       data-type={card.type}
       data-combined={combined}
-      aria-label={`${DECK_NAME[card.type]} Card`}
+      data-mod-deck={card.type === 'modifier' ? card.modDeck : undefined}
+      aria-label={cardLabel(card)}
     >
       <div className={styles.face}>
         {face}
@@ -214,12 +223,12 @@ export function CardView({ card, onTurn, ringClassName, paper = 'top' }: CardVie
         className={[styles.disc, combined ? styles.combinedDisc : ''].filter(Boolean).join(' ')}
         data-testid={combined ? 'combined-disc' : undefined}
       >
-        <TypeDisc type={card.type} size={48} />
+        <TypeDisc type={card.type} size={48} icon={iconFor(card)} />
       </span>
       {paper !== 'top' && (
         // A tucked card shows only its bottom edge, so the disc glyph repeats there, small.
         <span className={styles.tuckMark} data-testid="tuck-mark">
-          <Icon name={TYPE_ICON[card.type]} size={14} />
+          <Icon name={iconFor(card)} size={14} />
         </span>
       )}
     </article>

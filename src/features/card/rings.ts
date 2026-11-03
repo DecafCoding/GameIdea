@@ -131,7 +131,10 @@ export function split(target: Card): { target: Card; ring: Ring } {
 
 /** The word for a ring's cues, used in ring-half labels such as "Turn Nouns Left". */
 export function ringWord(card: Card, ringIndex: number): 'Nouns' | 'Adjectives' | 'Cues' {
-  if (card.type === 'goal' || card.type === 'conflict') return 'Cues';
   if (card.type === 'modifier' || ringIndex === 1) return 'Adjectives';
-  return 'Nouns';
+  if (card.type === 'role' || card.type === 'resource' || card.type === 'setting') {
+    return 'Nouns';
+  }
+  // Mechanic, Mood and the 2-cue decks.
+  return 'Cues';
 }

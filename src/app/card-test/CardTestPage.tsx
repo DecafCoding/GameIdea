@@ -1,13 +1,31 @@
 /**
- * Card test page (milestone M1): 5 deck buttons, a "Combine" button that stands in for
+ * Card test page (milestone M1): a button for each deck (the Modifier deck as its 3
+ * Modifier decks), a "Combine" button that stands in for
  * the drop, and the drawn cards in a plain grid. No canvas, no storage. It lets the user
  * judge random cards and adjective-and-noun pairs before the rest of the app is built.
  * It has no board, so a genre-tagged deck draws with every genre on.
  */
 import { useRef, useState } from 'react';
-import { CardView, combine, isCombined, TypeDisc, turnCard, useRingKeys } from '@/features/card';
+import {
+  CardView,
+  combine,
+  iconFor,
+  isCombined,
+  TypeDisc,
+  turnCard,
+  useRingKeys,
+} from '@/features/card';
 import { drawCard } from '@/features/draw';
-import { GENRES, DECK_NAME, type Card, type Deck, type ModDeck } from '@/shared/model';
+import {
+  DECK_NAME,
+  DECKS,
+  GENRES,
+  MOD_DECK_NAME,
+  MOD_DECKS,
+  type Card,
+  type Deck,
+  type ModDeck,
+} from '@/shared/model';
 import { usePools } from '@/shared/pools';
 import { Banner, Button } from '@/shared/ui';
 import styles from './CardTestPage.module.css';
@@ -22,8 +40,19 @@ function combinePair(cards: Card[]): { target: Card; source: Card } | null {
   return target && source ? { target, source } : null;
 }
 
-/** The decks this page draws; the new decks join when their faces land. */
-const CARD_TEST_DECKS: Deck[] = ['role', 'goal', 'conflict', 'modifier', 'setting'];
+/** One draw button: a deck, and for a Modifier its Modifier deck. */
+interface DrawButton {
+  type: Deck;
+  modDeck?: ModDeck;
+  label: string;
+}
+
+/** Every deck in rail order; the Modifier deck as its 3 Modifier decks. */
+const DRAW_BUTTONS: DrawButton[] = DECKS.flatMap((type): DrawButton[] =>
+  type === 'modifier'
+    ? MOD_DECKS.map((modDeck) => ({ type, modDeck, label: MOD_DECK_NAME[modDeck] }))
+    : [{ type, label: DECK_NAME[type] }],
+);
 
 export function CardTestPage() {
   const { status, pools, retry } = usePools();
@@ -73,16 +102,16 @@ export function CardTestPage() {
         </div>
       )}
       <div className={styles.toolbar}>
-        {CARD_TEST_DECKS.map((type) => (
+        {DRAW_BUTTONS.map(({ type, modDeck, label }) => (
           <button
-            key={type}
+            key={label}
             type="button"
             className={styles.deck}
             disabled={!ready}
-            onClick={() => draw(type)}
+            onClick={() => draw(type, modDeck)}
           >
-            <TypeDisc type={type} size={36} />
-            {`Draw A ${DECK_NAME[type]}`}
+            <TypeDisc type={type} size={36} icon={iconFor({ type, modDeck })} />
+            {`Draw A ${label}`}
           </button>
         ))}
         <Button variant="secondary" disabled={!pair} onClick={combinePairNow}>

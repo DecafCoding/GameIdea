@@ -46,7 +46,7 @@ test('board_emptyBoard_showsPanelAndZeroCounts', async ({ page }) => {
 test('board_drawFromPanel_hidesPanelAndCountsOne', async ({ page }) => {
   await openBoard(page);
   const panel = page.getByRole('region', { name: 'Start With One Card' });
-  await panel.getByRole('button', { name: 'Draw A Player Role' }).click();
+  await panel.getByRole('button', { name: 'Draw A Player Role', exact: true }).click();
   await expect(canvasCards(page)).toHaveCount(1);
   await expect(canvasCards(page).first()).toHaveAttribute('data-type', 'role');
   await expect(panel).toHaveCount(0);
@@ -118,7 +118,9 @@ test('board_drawAndTurn_under100ms', { tag: '@timing' }, async ({ page }) => {
   await openBoard(page);
   await drawFromRail(page, 'Player Role');
   await page.reload();
-  await expect(rail(page).getByRole('button', { name: 'Draw A Player Role' })).toBeEnabled();
+  await expect(
+    rail(page).getByRole('button', { name: 'Draw A Player Role', exact: true }),
+  ).toBeEnabled();
   await page.evaluate(() => document.fonts.ready);
   const drawResult = await page.evaluate(async () => {
     const button = document.querySelector<HTMLButtonElement>(
@@ -302,9 +304,10 @@ test('tokens_shell_rendersAtLockedValues', async ({ page }) => {
   expect((await boxOf(topBar)).height).toBe(56);
   await expect(topBar).toHaveCSS('background-color', 'rgb(35, 39, 47)');
   expect((await boxOf(rail(page))).width).toBe(232);
-  expect((await boxOf(rail(page).getByRole('button', { name: 'Draw A Player Role' }))).height).toBe(
-    36,
-  );
+  expect(
+    (await boxOf(rail(page).getByRole('button', { name: 'Draw A Player Role', exact: true })))
+      .height,
+  ).toBe(36);
   for (const name of ['Zoom Out', 'Reset Zoom', 'Zoom In', 'Fit']) {
     expect((await boxOf(page.getByRole('button', { name, exact: true }))).height).toBe(44);
   }

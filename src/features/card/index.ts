@@ -5,7 +5,7 @@
 export { CardStrip } from './CardStrip';
 export { CardView, type CardPaper } from './CardView';
 export { RingControl } from './RingControl';
-export { TYPE_ICON, TypeDisc } from './TypeDisc';
+export { iconFor, MOD_ICON, TYPE_ICON, TypeDisc } from './TypeDisc';
 export { useRingKeys } from './useRingKeys';
 export {
   activeText,

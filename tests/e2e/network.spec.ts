@@ -22,7 +22,9 @@ test('network_fullSession_onlyOwnAddress', async ({ page }) => {
   await createBoard(page);
   await page.waitForURL(/#\/board\//);
   const boardUrl = page.url();
-  await expect(rail(page).getByRole('button', { name: 'Draw A Player Role' })).toBeEnabled();
+  await expect(
+    rail(page).getByRole('button', { name: 'Draw A Player Role', exact: true }),
+  ).toBeEnabled();
 
   // One card of each type, and a note.
   for (const [i, deck] of DECKS.entries()) {
@@ -33,7 +35,7 @@ test('network_fullSession_onlyOwnAddress', async ({ page }) => {
 
   // The card test page.
   await page.goto('/#/card-test');
-  await expect(page.getByRole('button', { name: 'Draw A Player Role' })).toBeEnabled();
+  await expect(page.getByRole('button', { name: 'Draw A Player Role', exact: true })).toBeEnabled();
   await draw(page, 'Player Role');
   await expect(page.getByTestId('card')).toHaveCount(1);
 
