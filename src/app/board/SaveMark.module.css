@@ -22,8 +22,9 @@
   background: var(--status-saving);
 }
 
+/* "Save Failed" keeps a fixed color in every theme color (design 4.3). */
 .failed {
-  color: var(--accent-text);
+  color: var(--danger-text);
 }
 
 .failed .dot {

@@ -46,6 +46,20 @@
   text-transform: uppercase;
 }
 
+/* The Hook Card is dark in every mode, so in light mode the label keeps the dark-mode
+   accent text of each theme color (design 4.2). */
+:global([data-mode='light']) .label {
+  color: #f6b08a; /* fixed: Hook label keeps dark-mode accent text */
+}
+
+:global([data-mode='light'][data-theme='blue']) .label {
+  color: #a9c8ff; /* fixed: Hook label keeps dark-mode accent text */
+}
+
+:global([data-mode='light'][data-theme='green']) .label {
+  color: #8fddb5; /* fixed: Hook label keeps dark-mode accent text */
+}
+
 /* The sentence: 14, line height 1.45, --hook-text. */
 .sentence {
   flex: 1;

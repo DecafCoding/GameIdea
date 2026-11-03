@@ -15,6 +15,11 @@
   outline-offset: 3px;
 }
 
+/* Light mode: outlines use --accent-text, since --accent is too faint on light ground (design 4.2). */
+:global([data-mode='light']) .selected {
+  outline-color: var(--accent-text);
+}
+
 /* The drag look goes on the inner element; React Flow's wrapper transform is the position. */
 .inner {
   position: relative;

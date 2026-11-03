@@ -30,6 +30,12 @@
   color: var(--text);
 }
 
+/* A warning keeps its fixed colors in every mode and theme (design 4.3, 9.13). */
+.warning .icon,
+.warning .text {
+  color: var(--warn-text);
+}
+
 @keyframes slideDown {
   from {
     opacity: 0;

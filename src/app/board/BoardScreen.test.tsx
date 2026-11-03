@@ -71,11 +71,23 @@ describe('BoardScreen', () => {
     expect(screen.getByRole('button', { name: 'Undo' })).toHaveProperty('disabled', true);
     expect(screen.getByRole('button', { name: 'Redo' })).toHaveProperty('disabled', true);
     expect(screen.getByRole('button', { name: 'Add Note' })).toBeTruthy();
-    // 13 rail deck buttons (5 core, 3 Modifier, 5 optional) plus the empty board panel's button.
+    // 13 rail deck buttons (5 core, 3 Modifier, 5 optional); the empty board guide has none.
     await waitFor(() =>
       expect(decks().every((d) => !(d as HTMLButtonElement).disabled)).toBe(true),
     );
-    expect(decks()).toHaveLength(14);
+    expect(decks()).toHaveLength(13);
+  });
+
+  it('boardScreen_emptyBoard_showsGuideWithThreeSteps', () => {
+    servePools(false);
+    render(<BoardScreen />);
+    const guide = screen.getByRole('region', { name: 'Build Your First Hook' });
+    expect(guide.textContent).toContain(
+      'A hook is one or two sentences that make a person want to play your game.',
+    );
+    expect(within(guide).getAllByRole('listitem')).toHaveLength(3);
+    expect(within(guide).queryByRole('button')).toBeNull();
+    expect(screen.getByTestId('start-here').textContent).toBe('Start Here');
   });
 
   it('boardScreen_settingsButton_opensDialog', () => {

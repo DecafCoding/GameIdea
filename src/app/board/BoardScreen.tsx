@@ -172,7 +172,7 @@ function BoardScreenBody({
           </div>
         )}
         <BoardCanvas pools={pools} />
-        {showPanel && <EmptyBoardPanel decksReady={ready} onDraw={draw} />}
+        {showPanel && <EmptyBoardPanel />}
       </div>
       {genresOpenOn === board.id && (
         <GenresPanel

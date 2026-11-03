@@ -32,7 +32,7 @@ test('notes_addNote_opensInEditMode', async ({ page }) => {
   await expect(note(page)).toHaveCount(1);
   await expect(note(page).getByRole('textbox', { name: 'Note Title' })).toHaveValue('Note');
   await expect(note(page)).toHaveCSS('outline-width', '2px');
-  await expect(page.getByRole('heading', { name: 'Start With One Card' })).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: 'Build Your First Hook' })).toHaveCount(0);
   const box = await boxOf(note(page));
   expect(box.width).toBe(310);
   expect(box.height).toBe(160);
