@@ -30,12 +30,16 @@ export interface CardNodeActions {
   turn: (cardId: string, slot: RingSlot, direction: TurnDirection) => void;
   split: (cardId: string) => void;
   redraw: (cardId: string) => void;
+  lock: (cardId: string) => void;
   discard: (cardId: string) => void;
   /** Saves the connector word on the tucked card below the badge. */
   chooseConnector: (cardId: string, word: string) => void;
 }
 
 export const CardNodeContext = createContext<CardNodeActions | null>(null);
+
+/** The strip's bottom sits 56 px above the card's top (design 9.4). */
+const STRIP_OFFSET = 56;
 
 /** The paper step for a stack depth: deeper than 4 reuses the 4th step (design 9.7). */
 function paperFor(depth: number): CardPaper {
@@ -90,12 +94,14 @@ function CardNodeView({ data }: NodeProps<CardFlowNode>) {
           />
         )}
       </div>
-      <NodeToolbar isVisible={data.selected} position={Position.Top} offset={10}>
+      <NodeToolbar isVisible={data.selected} position={Position.Top} offset={STRIP_OFFSET}>
         <CardStrip
-          combined={isCombined(card)}
+          canSplit={isCombined(card)}
+          locked={card.locked}
           redrawDisabled={!actions.canRedraw}
           onSplit={() => actions.split(id)}
           onRedraw={() => actions.redraw(id)}
+          onLock={() => actions.lock(id)}
           onDiscard={() => actions.discard(id)}
         />
       </NodeToolbar>

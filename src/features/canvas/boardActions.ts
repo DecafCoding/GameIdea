@@ -3,7 +3,15 @@
  * store's changeBoard commits (one undo step and one save in Phase 4). Never mutates its
  * input; every change returns a new board with a new cards array.
  */
-import { combine, split, swap, turnCard, type RingSlot, type TurnDirection } from '@/features/card';
+import {
+  combine,
+  split,
+  swap,
+  toggleLock,
+  turnCard,
+  type RingSlot,
+  type TurnDirection,
+} from '@/features/card';
 import { newId, type Board, type Card } from '@/shared/model';
 import { dropAction, dropTarget } from './dropZones';
 import { besideSpot, type Point } from './placement';
@@ -133,6 +141,11 @@ export function redrawCard(board: Board, cardId: string, drawn: Card): Board {
     ...card,
     rings: [...drawn.rings, ...card.rings.slice(1)].map((r) => ({ ...r, cues: [...r.cues] })),
   });
+}
+
+/** Lock or unlock: flips the card's lock and keeps everything else. One undo step. */
+export function lockCard(board: Board, cardId: string): Board {
+  return replaceCard(board, toggleLock(cardAt(board, cardId)));
 }
 
 /** Discard: deletes the card; its tucked cards move up to its parent or become roots. */

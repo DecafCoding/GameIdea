@@ -8,6 +8,7 @@ export {
   combineOnto,
   discardCard,
   dropCard,
+  lockCard,
   placeNewCard,
   redrawCard,
   splitCard,

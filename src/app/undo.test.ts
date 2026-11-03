@@ -8,6 +8,7 @@ import {
   combineOnto,
   discardCard,
   dropCard,
+  lockCard,
   placeNewCard,
   redrawCard,
   splitCard,
@@ -100,6 +101,12 @@ describe('undo', () => {
       ],
     });
     expectUndoable(fixtureBoard([role()]), (b) => redrawCard(b, 'role-1', drawn));
+  });
+
+  it('undo_lockThenUndo_unlocks', () => {
+    expectUndoable(fixtureBoard([role()]), (b) => lockCard(b, 'role-1'));
+    store().undo();
+    expect(store().board.cards[0]!.locked).toBe(false);
   });
 
   it('undo_discard_restoresBoard', () => {

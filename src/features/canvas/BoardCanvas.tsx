@@ -27,6 +27,7 @@ import {
   chooseConnector,
   discardCard,
   dropCard,
+  lockCard,
   redrawCard,
   splitCard,
   turnCardOnBoard,
@@ -126,6 +127,7 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
         const drawn = drawFor(card, current, board.genres);
         changeBoard((b) => redrawCard(b, id, drawn));
       },
+      lock: (id: string) => changeBoard((b) => lockCard(b, id)),
       discard: (id: string) => {
         changeBoard((b) => discardCard(b, id));
         setSelectedId(null);

@@ -161,14 +161,48 @@ test.describe('selection', () => {
     await cardById(page, 'setting-1').click({ position: { x: 30, y: 30 } });
     const strip = page.getByTestId('card-strip');
     await expect(strip).toBeVisible();
-    await expect(strip.getByRole('button')).toHaveText(['Redraw', 'Discard']);
+    await expect(strip.getByRole('button')).toHaveText(['Redraw', 'Lock', 'Discard']);
     const wrapper = page.locator('.react-flow__node[data-id="setting-1"] [data-selected]');
     await expect(wrapper).toHaveCSS('outline-width', '2px');
     await expect(wrapper).toHaveCSS('outline-color', 'rgb(232, 116, 46)');
-    // The strip sits above the card.
-    expect((await boxOf(strip)).y + (await boxOf(strip)).height).toBeLessThanOrEqual(
-      (await boxOf(cardById(page, 'setting-1'))).y,
+    // The strip's bottom sits 56 px above the card (design 9.4).
+    const gap =
+      (await boxOf(cardById(page, 'setting-1'))).y -
+      ((await boxOf(strip)).y + (await boxOf(strip)).height);
+    expect(Math.abs(gap - 56)).toBeLessThanOrEqual(1);
+  });
+
+  test('strip_lock_marksCardAndUndoes', async ({ page }) => {
+    await openBoard(page, stack());
+    await cardById(page, 'setting-1').click({ position: { x: 30, y: 30 } });
+    const strip = page.getByTestId('card-strip');
+    await strip.getByRole('button', { name: 'Lock' }).click();
+    await expect(cardById(page, 'setting-1').getByTestId('lock-mark')).toBeVisible();
+    await expect(strip.getByRole('button', { name: 'Unlock' })).toHaveAttribute(
+      'aria-pressed',
+      'true',
     );
+    await page.keyboard.press('Control+z');
+    await expect(cardById(page, 'setting-1').getByTestId('lock-mark')).toHaveCount(0);
+  });
+
+  test('lockedTuckedMechanic_strip_showsActiveCueAndLock', async ({ page }) => {
+    const board = fixtureBoard([
+      fixtureCard('role', { x: 96, y: 96 }),
+      fixtureCard('mechanic', { x: 96, y: 152, z: 2, tuckedUnder: 'role-1', locked: true }),
+    ]);
+    await openBoard(page, board);
+    const mechanic = cardById(page, 'mechanic-1');
+    const card = await boxOf(mechanic);
+    const role = await boxOf(cardById(page, 'role-1'));
+    // The visible strip is the part below the Player Role.
+    const stripTop = role.y + role.height;
+    for (const part of [mechanic.getByTestId('active-cue'), mechanic.getByTestId('lock-mark')]) {
+      const box = await boxOf(part);
+      expect(box.y).toBeGreaterThanOrEqual(stripTop);
+      expect(box.y + box.height).toBeLessThanOrEqual(card.y + card.height);
+    }
+    expect((await boxOf(mechanic.getByTestId('lock-mark'))).width).toBe(13);
   });
 
   test('select_combinedCard_stripHasSplit', async ({ page }) => {
@@ -177,6 +211,7 @@ test.describe('selection', () => {
     await expect(page.getByTestId('card-strip').getByRole('button')).toHaveText([
       'Split',
       'Redraw',
+      'Lock',
       'Discard',
     ]);
   });

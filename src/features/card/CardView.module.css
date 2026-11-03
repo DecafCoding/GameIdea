@@ -246,3 +246,34 @@
 .combinedDisc > span {
   box-shadow: inset 0 0 0 2px var(--deck-modifier);
 }
+
+/* The lock on a full card (design 9.4): a 30 px circle 10 from the top and right, --bg. */
+.lockMark {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--bg);
+  color: var(--text);
+  pointer-events: none;
+}
+
+/*
+ * The lock on a tucked strip (design 9.4): 13 px in the deck card color, 12 from the right
+ * and 30 from the bottom of the visible 56 px strip, left of the type mark's column.
+ */
+.lockTucked {
+  position: absolute;
+  right: 12px;
+  bottom: 30px;
+  z-index: 2;
+  display: flex;
+  color: var(--card-type);
+  pointer-events: none;
+}

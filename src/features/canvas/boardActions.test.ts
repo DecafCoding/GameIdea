@@ -17,6 +17,7 @@ import {
   combineOnto,
   discardCard,
   dropCard,
+  lockCard,
   placeNewCard,
   redrawCard,
   splitCard,
@@ -224,6 +225,19 @@ describe('redrawCard', () => {
     expect(() => redrawCard(board, 'modifier-1', drawn)).toThrow();
     const same = fixtureCard('modifier', { id: 'drawn', modDeck: 'setting' });
     expect(get(redrawCard(board, 'modifier-1', same), 'modifier-1').modDeck).toBe('setting');
+  });
+});
+
+describe('lockCard', () => {
+  it('lockCard_keepsEverythingElse', () => {
+    const board = fixtureBoard([
+      combinedCard('role', { x: 48, y: 48, connector: 'with a' }),
+      fixtureCard('goal', { x: 48, y: 104, z: 2, tuckedUnder: 'role-1' }),
+    ]);
+    const next = lockCard(board, 'role-1');
+    expect(get(next, 'role-1')).toEqual({ ...get(board, 'role-1'), locked: true });
+    expect(get(next, 'goal-1')).toBe(get(board, 'goal-1'));
+    expect(get(lockCard(next, 'role-1'), 'role-1').locked).toBe(false);
   });
 });
 
