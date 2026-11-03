@@ -310,6 +310,7 @@ npm run build &amp;&amp; npm run size &amp;&amp; npx vitest run src/shared/pools
 
 <h3>Pool check</h3>
 <p>At planning (2026-11-03): <code>git diff --quiet db0d494 -- public/pools</code> → unchanged. In-memory comparison through the pure <code>splitDecks()</code>: MATCH for all 11 decks (role 467, mechanic 380, goal 314, conflict 351, resource 272, setting 279, mood 145, modifier 503, twist 224, progression 352, constraint 222). Phase 2/3 recorded the smallest genres as progression sandbox 28 and constraint fighting 42 (floor 10). Task 6 re-runs this and records the result here.</p>
+<p>At execution (2026-11-03, Task 6): <code>git diff --quiet db0d494 -- public/pools</code> → unchanged (STRICT=1). <code>poolFiles.test.ts</code> and <code>splitDecks.test.ts</code> pass (23 tests). In-memory comparison: MATCH for all 11 decks (role 467, mechanic 380, goal 314, conflict 351, resource 272, setting 279, mood 145, modifier 503, twist 224, progression 352, constraint 222). Floors: min progression sandbox 28 over 21 genres; min constraint fighting 42 over 21 genres. The split CLI was not run and <code>public/pools/</code> was not written.</p>
 
 <h3>Decisions and assumptions</h3>
 <ul>

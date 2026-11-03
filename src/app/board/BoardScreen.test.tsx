@@ -71,11 +71,11 @@ describe('BoardScreen', () => {
     expect(screen.getByRole('button', { name: 'Undo' })).toHaveProperty('disabled', true);
     expect(screen.getByRole('button', { name: 'Redo' })).toHaveProperty('disabled', true);
     expect(screen.getByRole('button', { name: 'Add Note' })).toBeTruthy();
-    // 9 rail deck buttons (5 core, 3 Modifier, Setting) plus the empty board panel's button.
+    // 13 rail deck buttons (5 core, 3 Modifier, 5 optional) plus the empty board panel's button.
     await waitFor(() =>
       expect(decks().every((d) => !(d as HTMLButtonElement).disabled)).toBe(true),
     );
-    expect(decks()).toHaveLength(10);
+    expect(decks()).toHaveLength(14);
   });
 
   it('boardScreen_genreChange_updatesRailCountsWithoutUndo', () => {
@@ -89,11 +89,17 @@ describe('BoardScreen', () => {
     const seq = useBoardStore.getState().saveSeq;
     fireEvent.click(allDecks.getByRole('button', { name: 'Roguelike' }));
     const pills = rail.getAllByRole('img', { name: '20 genres on' });
-    expect(pills).toHaveLength(2);
+    expect(pills).toHaveLength(4);
     expect(rail.getByRole('button', { name: 'Draw A Mechanic' }).contains(pills[0] ?? null)).toBe(
       true,
     );
     expect(rail.getByRole('button', { name: 'Draw A Resource' }).contains(pills[1] ?? null)).toBe(
+      true,
+    );
+    expect(
+      rail.getByRole('button', { name: 'Draw A Progression' }).contains(pills[2] ?? null),
+    ).toBe(true);
+    expect(rail.getByRole('button', { name: 'Draw A Constraint' }).contains(pills[3] ?? null)).toBe(
       true,
     );
     expect(rail.getByRole('button', { name: 'Genres' }).textContent).toContain('20 genres');

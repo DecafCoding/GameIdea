@@ -88,6 +88,31 @@ describe('buildHookSentence', () => {
     ).toBe('You are a pilot with no jumping.');
   });
 
+  it('buildHookSentence_allOptionalDecks_readsFourSentences', () => {
+    expect(
+      buildHookSentence([
+        e('role', 'You are a', 'navigator'),
+        e('mechanic', 'who must', 'trade'),
+        e('goal', 'to', 'keep the light on'),
+        e('constraint', 'with', 'no jumping'),
+        e('mood', 'It feels', 'tense'),
+        e('twist', 'Except', 'the map is alive'),
+        e('progression', 'As you play,', 'new islands open'),
+      ]),
+    ).toBe(
+      'You are a navigator who must trade to keep the light on with no jumping. It feels tense. Except the map is alive. As you play, new islands open.',
+    );
+  });
+
+  it('buildHookSentence_optionalFirstInStack_noEmptySentence', () => {
+    const sentence = buildHookSentence([
+      e('mood', 'It feels', 'eerie'),
+      e('twist', 'The catch:', 'your guide lies'),
+    ]);
+    expect(sentence).toBe('It feels eerie. The catch: your guide lies.');
+    expect(sentence).not.toMatch(/^\.|\. \./);
+  });
+
   it('buildHookSentence_looseModifier_isLeftOut', () => {
     expect(
       buildHookSentence([

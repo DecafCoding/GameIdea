@@ -18,6 +18,10 @@ const RAIL: [DeckName, string, string | null][] = [
   ['Resource Modifier', 'modifier', 'resource'],
   ['Setting Modifier', 'modifier', 'setting'],
   ['Setting', 'setting', null],
+  ['Mood', 'mood', null],
+  ['Twist', 'twist', null],
+  ['Progression', 'progression', null],
+  ['Constraint', 'constraint', null],
 ];
 
 test('poolsReal_everyRailButton_drawsItsDeck', async ({ page, context }) => {

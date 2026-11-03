@@ -71,7 +71,35 @@ test('genres_panel_turnOffTopChip_updatesPillsAndLine', async ({ page }) => {
   await expect(pill(page, 'Mechanic')).toHaveText('20');
   await expect(pill(page, 'Resource')).toHaveText('20');
   await expect(pill(page, 'Mechanic')).toHaveAccessibleName('20 genres on');
+  for (const deck of ['Progression', 'Constraint']) {
+    await expect(pill(page, deck)).toHaveText('20');
+    await expect(pill(page, deck)).toHaveAccessibleName('20 genres on');
+  }
+  for (const deck of ['Mood', 'Twist']) {
+    await expect(
+      rail(page)
+        .getByRole('button', { name: `Draw A ${deck}`, exact: true })
+        .getByRole('img'),
+    ).toHaveCount(0);
+  }
   await expect(genresButton(page)).toContainText('20 genres');
+});
+
+test('genres_deckRow_narrowsOnlyThatDecksPill', async ({ page }) => {
+  await openBoard(page);
+  await openPanel(page);
+  await panel(page)
+    .getByRole('group', { name: 'Constraint' })
+    .getByRole('button', { name: 'Roguelike', exact: true })
+    .click();
+  await panel(page).getByRole('button', { name: 'Done' }).click();
+  await expect(panel(page)).toHaveCount(0);
+  await expect(pill(page, 'Constraint')).toHaveText('20');
+  for (const deck of ['Mechanic', 'Resource', 'Progression']) {
+    await expect(pill(page, deck)).toHaveCount(0);
+  }
+  // The union of the 4 decks still has all 21 genres.
+  await expect(genresButton(page)).toContainText('All genres');
 });
 
 test('genres_change_savesAndSurvivesReload', async ({ page }) => {

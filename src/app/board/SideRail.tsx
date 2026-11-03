@@ -1,10 +1,10 @@
 /**
  * SideRail: the 232 px rail (design 8.2): the Hook Card button, then the Core group (Player
  * Role, Mechanic, Resource, Goal, Conflict), the Modifiers row of 3 icon buttons and the
- * Optional group (Setting; the other optional decks come in Phase 4), the Genres group with
- * the Genres button and its count line, then Add Note and the help panel pinned to the
- * bottom. Each genre-tagged deck button carries a genre count pill (design 8.2), hidden at
- * all 21 genres. Settings comes in Phase 5.
+ * Optional group (Setting, Mood, Twist, Progression, Constraint), the Genres group with the
+ * Genres button and its count line, then Add Note and the help panel pinned to the bottom.
+ * Each genre-tagged deck button (Mechanic, Resource, Progression, Constraint) carries a genre
+ * count pill (design 8.2), hidden at all 21 genres. Settings comes in Phase 5.
  */
 import { useId } from 'react';
 import { DeckButton, HookButton } from '@/features/draw';
@@ -33,8 +33,8 @@ interface SideRailProps {
 
 /** The Core group, in the design's order. */
 const CORE: Deck[] = ['role', 'mechanic', 'resource', 'goal', 'conflict'];
-/** The Optional group this phase ships. */
-const OPTIONAL: Deck[] = ['setting'];
+/** The Optional group, in the design's order. */
+const OPTIONAL: Deck[] = ['setting', 'mood', 'twist', 'progression', 'constraint'];
 
 function isGenreDeck(type: Deck): type is GenreDeck {
   return (GENRE_DECKS as readonly Deck[]).includes(type);

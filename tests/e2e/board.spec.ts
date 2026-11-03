@@ -75,23 +75,31 @@ test('board_drawEachDeck_cardsDoNotOverlap', async ({ page }) => {
     'Resource Modifier',
     'Setting Modifier',
     'Setting',
+    'Mood',
+    'Twist',
+    'Progression',
+    'Constraint',
   ];
   for (const deck of decks) await drawFromRail(page, deck);
-  await expect(badge(page)).toHaveText('10 cards · 0 notes');
+  await expect(badge(page)).toHaveText('14 cards · 0 notes');
   // The saved places, not the rendered nodes: the canvas renders only the cards in view.
-  await expect.poll(async () => (await storedBoards(page))[0]?.cards.length).toBe(10);
+  await expect.poll(async () => (await storedBoards(page))[0]?.cards.length).toBe(14);
   const cards = (await storedBoards(page))[0]!.cards;
   expect(cards.map((c) => c.type).sort()).toEqual([
     'conflict',
+    'constraint',
     'goal',
     'hook',
     'mechanic',
     'modifier',
     'modifier',
     'modifier',
+    'mood',
+    'progression',
     'resource',
     'role',
     'setting',
+    'twist',
   ]);
   const box = (c: Board['cards'][number]) => ({
     x: c.x,
