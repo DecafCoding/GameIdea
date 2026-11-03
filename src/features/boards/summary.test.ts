@@ -3,7 +3,7 @@
  */
 import { describe, expect, it } from 'vitest';
 import { fixtureBoard, fixtureCard, fixtureNote, fixtureStack } from '@/test/fixtures/boards';
-import { editedAgo, rowCaption, summarize } from './summary';
+import { editedAgo, metaLine, summarize } from './summary';
 
 const NOW = new Date(2026, 5, 15, 12, 0, 0);
 const ago = (ms: number) => new Date(NOW.getTime() - ms).toISOString();
@@ -22,8 +22,49 @@ describe('summary', () => {
       updatedAt: board.updatedAt,
       cardCount: 4,
       noteCount: 1,
-      typeStrip: ['role', 'goal', 'conflict', 'setting'],
+      hookCardCount: 0,
+      hooks: [],
+      firstHook: null,
+      deckTypes: ['role', 'goal', 'conflict', 'setting'],
     });
+  });
+
+  const hookBoard = () =>
+    fixtureBoard([
+      fixtureCard('hook', { x: 0, y: 0 }),
+      fixtureCard('role', { z: 2, tuckedUnder: 'hook-1' }),
+      fixtureCard('goal', { z: 3, tuckedUnder: 'role-1' }),
+    ]);
+
+  it('summarize_hookStack_firstHookIsSentence', () => {
+    const summary = summarize(hookBoard());
+    expect(summary.hookCardCount).toBe(1);
+    expect(summary.firstHook).toBe('You are a navigator to keep the light on.');
+    expect(summary.hooks).toEqual([summary.firstHook]);
+  });
+
+  it('summarize_noHookCard_firstHookNull', () => {
+    const summary = summarize(fixtureBoard([fixtureCard('role')]));
+    expect(summary.hookCardCount).toBe(0);
+    expect(summary.firstHook).toBeNull();
+  });
+
+  it('summarize_emptyHookCard_countsCardNoSentence', () => {
+    const summary = summarize(fixtureBoard([fixtureCard('hook')]));
+    expect(summary.hookCardCount).toBe(1);
+    expect(summary.hooks).toEqual([]);
+    expect(summary.firstHook).toBeNull();
+  });
+
+  it('summarize_deckTypes_distinctInDeckOrder', () => {
+    const board = fixtureBoard([
+      fixtureCard('constraint', { id: 'a' }),
+      fixtureCard('role', { id: 'b' }),
+      fixtureCard('hook', { id: 'c' }),
+      fixtureCard('role', { id: 'd' }),
+      fixtureCard('modifier', { id: 'e' }),
+    ]);
+    expect(summarize(board).deckTypes).toEqual(['hook', 'role', 'modifier', 'constraint']);
   });
 
   it('editedAgo_underAMinute_justNow', () => {
@@ -55,24 +96,31 @@ describe('summary', () => {
     );
   });
 
-  it('rowCaption_plurals_usePluralWords', () => {
-    const summary = { ...summarize(fixtureBoard([])), cardCount: 5, noteCount: 2 };
-    expect(rowCaption({ ...summary, updatedAt: ago(2 * HOUR) }, NOW)).toBe(
-      '5 cards · 2 notes · edited 2 hours ago',
+  it('metaLine_plurals_usePluralWords', () => {
+    const summary = { ...summarize(fixtureBoard([])), cardCount: 8, hooks: ['A.', 'B.'] };
+    expect(metaLine({ ...summary, updatedAt: ago(10 * MIN) }, NOW)).toBe(
+      'Edited 10 minutes ago · 8 cards · 2 hooks',
     );
   });
 
-  it('rowCaption_singulars_useSingularWords', () => {
-    const summary = { ...summarize(fixtureBoard([])), cardCount: 1, noteCount: 1 };
-    expect(rowCaption({ ...summary, updatedAt: ago(1000) }, NOW)).toBe(
-      '1 card · 1 note · edited just now',
+  it('metaLine_oneHook_singular', () => {
+    const summary = summarize(hookBoard());
+    expect(metaLine({ ...summary, cardCount: 1, updatedAt: ago(1000) }, NOW)).toBe(
+      'Edited just now · 1 card · 1 hook',
     );
   });
 
-  it('rowCaption_imported_usesImportedVerb', () => {
-    const summary = { ...summarize(fixtureBoard([])), cardCount: 2, noteCount: 0 };
-    expect(rowCaption({ ...summary, updatedAt: ago(1000) }, NOW, 'imported')).toBe(
-      '2 cards · 0 notes · imported just now',
+  it('metaLine_noHook_noHookYet', () => {
+    const summary = summarize(fixtureBoard([fixtureCard('hook')]));
+    expect(metaLine({ ...summary, updatedAt: ago(2 * HOUR) }, NOW)).toBe(
+      'Edited 2 hours ago · 1 card · no hook yet',
+    );
+  });
+
+  it('metaLine_imported_verb', () => {
+    const summary = { ...summarize(fixtureBoard([])), cardCount: 2 };
+    expect(metaLine({ ...summary, updatedAt: ago(1000) }, NOW, 'Imported')).toBe(
+      'Imported just now · 2 cards · no hook yet',
     );
   });
 });

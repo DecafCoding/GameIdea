@@ -1,11 +1,13 @@
 /**
- * BoardList: the board list page body at #/ (design 9.8): the "Boards" header with Import
- * Board File and New Board, one row per saved board newest first, and the footer line.
+ * BoardList: the board list page body at #/ (design 9.3): the "Boards" header with Import
+ * Board File and New Board, then a grid of board cards newest first, or the "No Boards Yet"
+ * box when there are none. Each card's More menu renames, exports the board file or
+ * deletes.
  * New Board opens the name-only New Board dialog; Make Board saves a board with that name
  * and all 21 genres on and opens it; Cancel and Esc create nothing and return focus to New
  * Board. Import keeps the file's genres and skips the dialog.
  * Import reads a board file through the export feature and saves it as a new board; the new
- * row is highlighted with a status message for a short time, and a bad file shows the
+ * card is highlighted with a status message for a short time, and a bad file shows the
  * bad-import banner (design 9.10) and changes nothing. It reads storage only through the
  * seam and re-reads when another tab changes a board. It knows nothing of the
  * address format: app/ passes boardHref and onOpen.
@@ -13,6 +15,7 @@
 import { useCallback, useEffect, useRef, useState, type ChangeEvent } from 'react';
 import {
   BAD_IMPORT_TEXT,
+  downloadBoardFile,
   IMPORTED_RENAMED_TEXT,
   IMPORTED_TEXT,
   importedBoard,
@@ -29,7 +32,7 @@ import {
 import { newId } from '@/shared/model';
 import { newBoard } from '@/shared/store';
 import { Banner, Button, Icon } from '@/shared/ui';
-import { BoardRow } from './BoardRow';
+import { BoardCard } from './BoardCard';
 import { DeleteBoardDialog } from './DeleteBoardDialog';
 import { NewBoardDialog } from './NewBoardDialog';
 import { ImportStatus } from './ImportStatus';
@@ -183,6 +186,15 @@ export function BoardList({ boardHref, onOpen }: BoardListProps) {
     await refresh();
   }
 
+  async function exportBoard(id: string) {
+    try {
+      const board = await loadBoard(id);
+      if (board) downloadBoardFile(board);
+    } catch {
+      // A storage error downloads nothing; the list stays as it is.
+    }
+  }
+
   async function confirmDelete() {
     const target = deleting;
     setDeleting(null);
@@ -196,25 +208,29 @@ export function BoardList({ boardHref, onOpen }: BoardListProps) {
     await refresh();
   }
 
+  const importButton = (
+    <Button
+      variant="secondary"
+      className={styles.withIcon}
+      disabled={importing}
+      onClick={chooseFile}
+    >
+      <Icon name="upload" size={16} />
+      Import Board File
+    </Button>
+  );
+
   return (
     <div className={styles.page}>
       <div className={styles.header}>
         <div className={styles.heading}>
           <h1 className={styles.title}>Boards</h1>
           <p className={styles.caption}>
-            Each board holds one story idea: its cards and its premise.
+            Each board is one place to draw cards and build hooks. Boards stay in this browser.
           </p>
         </div>
         <div className={styles.actions}>
-          <Button
-            variant="secondary"
-            className={styles.withIcon}
-            disabled={importing}
-            onClick={chooseFile}
-          >
-            <Icon name="upload" size={16} />
-            Import Board File
-          </Button>
+          {importButton}
           <Button
             variant="primary"
             className={styles.withIcon}
@@ -246,24 +262,46 @@ export function BoardList({ boardHref, onOpen }: BoardListProps) {
       )}
       {notice && <ImportStatus text={notice.text} />}
       {summaries !== null && summaries.length > 0 && (
-        <ul className={styles.list} aria-label="Saved Boards">
+        <ul className={styles.grid} aria-label="Saved Boards">
           {summaries.map((summary) => (
-            <BoardRow
+            <BoardCard
               key={summary.id}
               summary={summary}
               href={boardHref(summary.id)}
               now={now}
               onRename={rename}
+              onExport={(id) => void exportBoard(id)}
               onDelete={setDeleting}
               highlighted={summary.id === notice?.id}
             />
           ))}
         </ul>
       )}
-      <p className={styles.footer}>
-        Boards save in this browser after each change. Export a board file to keep a copy outside
-        the browser.
-      </p>
+      {summaries !== null && summaries.length === 0 && (
+        <section className={styles.empty} aria-labelledby="no-boards-title">
+          <span className={styles.emptyIcon} aria-hidden="true">
+            <Icon name="board-file" size={24} />
+          </span>
+          <h2 id="no-boards-title" className={styles.emptyTitle}>
+            No Boards Yet
+          </h2>
+          <p className={styles.emptyText}>
+            Make a board to start drawing cards. Or import a board file from another computer.
+          </p>
+          <div className={styles.actions}>
+            {importButton}
+            <Button
+              variant="primary"
+              className={styles.withIcon}
+              disabled={creating}
+              onClick={startNewBoard}
+            >
+              <Icon name="plus" size={16} />
+              New Board
+            </Button>
+          </div>
+        </section>
+      )}
       {choosing && (
         <NewBoardDialog
           open

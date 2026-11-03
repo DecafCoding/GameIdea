@@ -204,7 +204,7 @@ test('modifier_onTop_survivesRedrawReloadExportImport', async ({ page }) => {
   const buffer = await readFile(await download.path());
   await page.goto('/#/');
   const choosing = page.waitForEvent('filechooser');
-  await page.getByRole('button', { name: 'Import Board File' }).click();
+  await page.getByRole('button', { name: 'Import Board File' }).first().click();
   await (
     await choosing
   ).setFiles({ name: 'On Top.gameidea.json', buffer, mimeType: 'application/json' });

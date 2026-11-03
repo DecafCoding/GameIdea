@@ -37,7 +37,7 @@ export function newBoardDialog(page: Page): Locator {
 
 /** On the board list: clicks New Board, types the name and clicks Make Board. */
 export async function createBoard(page: Page, name = 'Test Board'): Promise<void> {
-  await page.getByRole('button', { name: 'New Board' }).click();
+  await page.getByRole('button', { name: 'New Board' }).first().click();
   const dialog = newBoardDialog(page);
   await dialog.getByRole('textbox', { name: 'Name' }).fill(name);
   await dialog.getByRole('button', { name: 'Make Board' }).click();

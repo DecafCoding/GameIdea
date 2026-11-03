@@ -65,7 +65,7 @@ test('network_fullSession_onlyOwnAddress', async ({ page }) => {
   // Import the board file on the list.
   await page.goto('/#/');
   const choosing = page.waitForEvent('filechooser');
-  await page.getByRole('button', { name: 'Import Board File' }).click();
+  await page.getByRole('button', { name: 'Import Board File' }).first().click();
   await (
     await choosing
   ).setFiles({ name: 'board.gameidea.json', mimeType: 'application/json', buffer });

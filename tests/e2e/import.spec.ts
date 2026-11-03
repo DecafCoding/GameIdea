@@ -57,7 +57,9 @@ function fullBoard(): Board {
 }
 
 const rows = (page: Page) => page.getByRole('list', { name: 'Saved Boards' }).getByRole('listitem');
-const importButton = (page: Page) => page.getByRole('button', { name: 'Import Board File' });
+// The header's button; the "No Boards Yet" box repeats it on an empty list.
+const importButton = (page: Page) =>
+  page.getByRole('button', { name: 'Import Board File' }).first();
 
 /** Chooses a file through the visible Import Board File button. */
 async function importThrough(
@@ -92,7 +94,7 @@ test('import_exportedBoardFile_roundTripsAsNewBoard', async ({ page }) => {
   const first = rows(page).first();
   await expect(first).toHaveAttribute('data-highlighted', 'true');
   await expect(first.getByRole('link')).toHaveText('Salvage Run (imported)');
-  await expect(first).toContainText('· imported just now');
+  await expect(first).toContainText('Imported just now ·');
 
   const stored = await storedBoards(page);
   expect(stored).toHaveLength(2);

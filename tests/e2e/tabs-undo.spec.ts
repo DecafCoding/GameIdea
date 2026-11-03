@@ -72,7 +72,8 @@ test.describe('2 tabs', () => {
     const b = await context.newPage();
     await openBoard(b, board());
     await a.goto('/');
-    await a.getByRole('button', { name: 'Delete Fixture Board' }).click();
+    await a.getByRole('button', { name: 'More For Fixture Board' }).click();
+    await a.getByRole('menuitem', { name: 'Delete' }).click();
     await a.getByRole('dialog').getByRole('button', { name: 'Delete Board' }).click();
     await expect(b.getByRole('heading', { level: 1, name: 'Boards' })).toBeVisible();
     await expect(b.getByRole('list', { name: 'Saved Boards' })).toHaveCount(0);

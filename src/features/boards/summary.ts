@@ -1,8 +1,10 @@
 /**
- * Board list row summary (design 9.8): card and note counts, the type strip and the
- * "N cards · N notes · edited <when>" caption with a relative time.
+ * Board card summary (design 9.3): card and note counts, the Hook Cards and their
+ * sentences, the first hook for the preview, the deck dots, and the meta line
+ * "Edited 10 minutes ago · 8 cards · 1 hook" with a relative time.
  */
-import type { Board, CardType } from '@/shared/model';
+import { hookSentences } from '@/features/canvas';
+import { CARD_TYPES, type Board, type CardType } from '@/shared/model';
 
 export interface BoardSummary {
   id: string;
@@ -10,18 +12,29 @@ export interface BoardSummary {
   updatedAt: string;
   cardCount: number;
   noteCount: number;
-  /** Each card's type in board order; tucked cards count. */
-  typeStrip: CardType[];
+  /** Hook Cards on the board, empty or not. */
+  hookCardCount: number;
+  /** Each non-empty hook sentence, in reading order. */
+  hooks: string[];
+  /** The first hook sentence, or null when there is none. */
+  firstHook: string | null;
+  /** The distinct card types on the board: Hook Card first, then deck order. */
+  deckTypes: CardType[];
 }
 
 export function summarize(board: Board): BoardSummary {
+  const hooks = hookSentences(board);
+  const types = new Set(board.cards.map((card) => card.type));
   return {
     id: board.id,
     name: board.name,
     updatedAt: board.updatedAt,
     cardCount: board.cards.length,
     noteCount: board.notes.length,
-    typeStrip: board.cards.map((card) => card.type),
+    hookCardCount: board.cards.filter((card) => card.type === 'hook').length,
+    hooks,
+    firstHook: hooks[0] ?? null,
+    deckTypes: CARD_TYPES.filter((type) => types.has(type)),
   };
 }
 
@@ -48,11 +61,15 @@ export function editedAgo(updatedAt: string, now: Date): string {
   return then.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
 }
 
-/** "5 cards · 1 note · edited 2 hours ago"; a just-imported row says "imported". */
-export function rowCaption(
+/**
+ * "Edited 10 minutes ago · 8 cards · 1 hook": the hook count counts non-empty sentences
+ * and reads "no hook yet" at 0. A just-imported board says "Imported".
+ */
+export function metaLine(
   summary: BoardSummary,
   now: Date,
-  verb: 'edited' | 'imported' = 'edited',
+  verb: 'Edited' | 'Imported' = 'Edited',
 ): string {
-  return `${plural(summary.cardCount, 'card')} · ${plural(summary.noteCount, 'note')} · ${verb} ${editedAgo(summary.updatedAt, now)}`;
+  const hooks = summary.hooks.length === 0 ? 'no hook yet' : plural(summary.hooks.length, 'hook');
+  return `${verb} ${editedAgo(summary.updatedAt, now)} · ${plural(summary.cardCount, 'card')} · ${hooks}`;
 }
