@@ -502,40 +502,40 @@ npx playwright test --project=chromium-timing</code></pre>
 
 <h2>Acceptance Criteria</h2>
 <ul class="checklist">
-  <li data-checked="false">The text file holds each non-empty hook sentence, in reading order, in a Hooks section before Cards; each matches the Hook Card on screen.</li>
-  <li data-checked="false">An exported board file of a board using every card feature imports as a new board whose record equals the original except id, name and updatedAt; FORMAT_VERSION stays 1.</li>
-  <li data-checked="false">The export menu captions match design 9.13.</li>
-  <li data-checked="false"><code>modifier_onTop_survivesRedrawReloadExportImport</code> passes 15 repeats in each of the 3 engines.</li>
-  <li data-checked="false">Settings live only in local storage key <code>gameidea.settings</code> (version 1; mode, accent, snap); a missing record, bad JSON or unknown value gives the default for that field; settings never appear in a BoardRecord, board file, text file or undo history.</li>
-  <li data-checked="false">The storage seam exports exactly the 5 board actions plus <code>loadSettings</code>, <code>saveSettings</code>, <code>onSettingsChangedElsewhere</code>; only <code>shared/storage</code> touches local storage.</li>
-  <li data-checked="false">A Light reload never shows a dark frame (first animation frame already light).</li>
-  <li data-checked="false">Settings opens from the bottom of the rail and has Mode, Theme Color, Snap To Grid, the Keyboard list and a footer with the real package.json version; a change applies at once; there is no Cancel.</li>
-  <li data-checked="false">Each key in the Keyboard list does what the list says (browser test).</li>
-  <li data-checked="false">Settings survive a reload; a second open tab updates in less than 1 second.</li>
-  <li data-checked="false">With local storage blocked, the app runs on the defaults and the dialog shows "This browser does not save settings. They reset when the page reloads."</li>
-  <li data-checked="false">All 6 mode × color combinations render the board screen and the board list with token chrome; cards, notes, badges, deck colors and the Hook Card look the same in every combination; the color lint passes.</li>
-  <li data-checked="false">In Blue and Green, warning text and icon, "Save Failed" and Discard keep their fixed colors; light-mode outlines use <code>--accent-text</code>; the Hook label keeps the dark-mode accent text in light mode.</li>
-  <li data-checked="false">With snap on, a dropped free card or note sits on a 24 px dot; with Alt held it sits where dropped; a tucked card keeps its tuck place; combine and On Top ignore snap; with snap off every drop is free; a drop is one undo step.</li>
-  <li data-checked="false">The drag, tuck, combine and On Top browser tests pass with snap on and with snap off.</li>
-  <li data-checked="false">Add Note places a note at the free 24 px grid spot nearest the view center, opens it ready to type, and is one undo step; the rail order is Hook Card, Core, Modifiers, Optional, Genres, Add Note, Settings; the help panel is gone.</li>
-  <li data-checked="false">The empty board shows the design 9.2 guide; the board list matches design 9.3 (board cards with meta line, first hook preview, deck dots and a More menu with Rename, Export Board File and Delete; "No Boards Yet" state).</li>
-  <li data-checked="false">First load is under 2 s at 25 Mbps (Chromium, throttled); JavaScript ≤ 250 KB gzip and pools ≤ 100 KB gzip; draw/turn/hook under 100 ms; 200-card pan and drag ≥ 50 fps; save under 50 ms; no request to any other address.</li>
-  <li data-checked="false"><code>npm run start:lan</code> serves the app over HTTPS at port 4444 (<code>scripts/check-lan.mjs</code> passes locally); 4174 stays plain HTTP.</li>
-  <li data-checked="false">Every done criterion in mvp-plan.html and both feature briefs maps to a passing test or recorded check (Notes, "Done criteria map").</li>
-  <li data-checked="false">CI passes: lint, format, typecheck, unit tests, build, size, port lock, Playwright in 3 engines.</li>
+  <li data-checked="true">The text file holds each non-empty hook sentence, in reading order, in a Hooks section before Cards; each matches the Hook Card on screen.</li>
+  <li data-checked="true">An exported board file of a board using every card feature imports as a new board whose record equals the original except id, name and updatedAt; FORMAT_VERSION stays 1.</li>
+  <li data-checked="true">The export menu captions match design 9.13.</li>
+  <li data-checked="true"><code>modifier_onTop_survivesRedrawReloadExportImport</code> passes 15 repeats in each of the 3 engines.</li>
+  <li data-checked="true">Settings live only in local storage key <code>gameidea.settings</code> (version 1; mode, accent, snap); a missing record, bad JSON or unknown value gives the default for that field; settings never appear in a BoardRecord, board file, text file or undo history.</li>
+  <li data-checked="true">The storage seam exports exactly the 5 board actions plus <code>loadSettings</code>, <code>saveSettings</code>, <code>onSettingsChangedElsewhere</code>; only <code>shared/storage</code> touches local storage.</li>
+  <li data-checked="true">A Light reload never shows a dark frame (first animation frame already light).</li>
+  <li data-checked="true">Settings opens from the bottom of the rail and has Mode, Theme Color, Snap To Grid, the Keyboard list and a footer with the real package.json version; a change applies at once; there is no Cancel.</li>
+  <li data-checked="true">Each key in the Keyboard list does what the list says (browser test).</li>
+  <li data-checked="true">Settings survive a reload; a second open tab updates in less than 1 second.</li>
+  <li data-checked="true">With local storage blocked, the app runs on the defaults and the dialog shows "This browser does not save settings. They reset when the page reloads."</li>
+  <li data-checked="true">All 6 mode × color combinations render the board screen and the board list with token chrome; cards, notes, badges, deck colors and the Hook Card look the same in every combination; the color lint passes.</li>
+  <li data-checked="true">In Blue and Green, warning text and icon, "Save Failed" and Discard keep their fixed colors; light-mode outlines use <code>--accent-text</code>; the Hook label keeps the dark-mode accent text in light mode.</li>
+  <li data-checked="true">With snap on, a dropped free card or note sits on a 24 px dot; with Alt held it sits where dropped; a tucked card keeps its tuck place; combine and On Top ignore snap; with snap off every drop is free; a drop is one undo step.</li>
+  <li data-checked="true">The drag, tuck, combine and On Top browser tests pass with snap on and with snap off.</li>
+  <li data-checked="true">Add Note places a note at the free 24 px grid spot nearest the view center, opens it ready to type, and is one undo step; the rail order is Hook Card, Core, Modifiers, Optional, Genres, Add Note, Settings; the help panel is gone.</li>
+  <li data-checked="true">The empty board shows the design 9.2 guide; the board list matches design 9.3 (board cards with meta line, first hook preview, deck dots and a More menu with Rename, Export Board File and Delete; "No Boards Yet" state).</li>
+  <li data-checked="true">First load is under 2 s at 25 Mbps (Chromium, throttled); JavaScript ≤ 250 KB gzip and pools ≤ 100 KB gzip; draw/turn/hook under 100 ms; 200-card pan and drag ≥ 50 fps; save under 50 ms; no request to any other address.</li>
+  <li data-checked="true"><code>npm run start:lan</code> serves the app over HTTPS at port 4444 (<code>scripts/check-lan.mjs</code> passes locally); 4174 stays plain HTTP.</li>
+  <li data-checked="true">Every done criterion in mvp-plan.html and both feature briefs maps to a passing test or recorded check (Notes, "Done criteria map").</li>
+  <li data-checked="true">CI passes: lint, format, typecheck, unit tests, build, size, port lock, Playwright in 3 engines.</li>
 </ul>
 
 <h2>Completion Checklist</h2>
 <ul class="checklist">
-  <li data-checked="false">Tasks 1–24 done in order, each VALIDATE passed at the moment its task finished.</li>
-  <li data-checked="false">Milestone 1–6 validation checkpoints passed.</li>
-  <li data-checked="false">Level 1: <code>npm run lint</code>, <code>npm run format:check</code>, <code>npm run typecheck</code> exit 0.</li>
-  <li data-checked="false">Level 2: <code>npm test</code> exits 0.</li>
-  <li data-checked="false">Level 3: build, size, port-lock and <code>npm run test:e2e</code> exit 0.</li>
-  <li data-checked="false">Level 4: manual snippet exits 0.</li>
-  <li data-checked="false">Notes updated with the done criteria map, measured numbers and any execution decisions.</li>
-  <li data-checked="false">README updated.</li>
-  <li data-checked="false">Task 25: PR open, no AI attribution anywhere.</li>
+  <li data-checked="true">Tasks 1–24 done in order, each VALIDATE passed at the moment its task finished.</li>
+  <li data-checked="true">Milestone 1–6 validation checkpoints passed.</li>
+  <li data-checked="true">Level 1: <code>npm run lint</code>, <code>npm run format:check</code>, <code>npm run typecheck</code> exit 0.</li>
+  <li data-checked="true">Level 2: <code>npm test</code> exits 0.</li>
+  <li data-checked="true">Level 3: build, size, port-lock and <code>npm run test:e2e</code> exit 0.</li>
+  <li data-checked="true">Level 4: manual snippet exits 0.</li>
+  <li data-checked="true">Notes updated with the done criteria map, measured numbers and any execution decisions.</li>
+  <li data-checked="true">README updated.</li>
+  <li data-checked="true">Task 25: PR open, no AI attribution anywhere.</li>
 </ul>
 
 <h2>Notes</h2>
@@ -592,10 +592,65 @@ npx playwright test --project=chromium-timing</code></pre>
 </ul>
 
 <h3>Done criteria map</h3>
-<p>Filled in by Task 24 at execution: one row per done criterion in mvp-plan.html, feature-modifier-decks.html and feature-settings-and-theme.html, naming the proving test or recorded check.</p>
+<h4>docs/mvp-plan.html</h4>
+<table>
+  <tr><th>Done Criterion</th><th>Proof</th></tr>
+  <tr><td>M2 pass bars (16/20 core, 20/25 Modifier, 12/20 hooks)</td><td>Manual: the user's M2 hook test (README, Phase 2 Notes). Not automated by design.</td></tr>
+  <tr><td>11 libraries converted to JSON pools cue for cue after the 2 split rules</td><td><code>src/test/splitDecks.test.ts</code>, <code>src/shared/pools/poolFiles.test.ts</code></td></tr>
+  <tr><td>Hook Card shows the correct sentence for a full stack and each failure case; Copy puts it on the clipboard as plain text</td><td><code>buildHookSentence.test.ts</code>, <code>reading.test.ts</code> (stackEntries, hookSentences); browser <code>hook_fullCoreStack_showsSentenceAndHints</code>, <code>hook_copy_putsPlainSentenceOnClipboard</code>, <code>hook_copyBlocked_showsSelectedFallback</code></td></tr>
+  <tr><td>A genre change affects only the next draw; cards on the board do not change</td><td><code>genres_realPools_drawUsesOnlyPickedGenre</code> (first card's cues unchanged), <code>genres_change_notInUndo</code>, <code>drawCard.test.ts</code> genre filters</td></tr>
+  <tr><td>Redraw All replaces every unlocked card and leaves locked cards</td><td><code>hook_redrawAll_skipsLockedAndUndoesInOneStep</code>, <code>boardActions.test.ts</code> redrawAll</td></tr>
+  <tr><td>All 8 Required scan rows work in Chrome, Edge, Firefox and Safari on desktop</td><td>Playwright suite in Chromium (Chrome, Edge), Firefox and WebKit (Safari engine): 571 tests green locally; CI runs the same 3 engines</td></tr>
+  <tr><td>Every carried-over Scope feature works</td><td>Board make/open/rename/delete: <code>persistence.spec.ts</code> (boardList_*); undo/redo: <code>tabs-undo.spec.ts</code> undo_*; lock/unlock one undo step: <code>strip_lock_marksCardAndUndoes</code>; card strip: <code>strip_*</code>, <code>select_*</code>; tuck and hints: <code>canvas-drop.spec.ts</code> (snap on and off); connector badges: <code>connector_*</code>; ring control and keys: <code>ringHalf_*</code>, <code>keys_*</code>, <code>settings_keyboardList_eachKeyDoesWhatItSays</code>; notes: <code>notes_*</code>; 2-tab notice: <code>tabs_changeInOne_otherReloadsAndShowsBanner</code>, <code>tabs_deleteInList_otherTabGoesToList</code>; save failure warning: <code>theme_blueGreen_warningColorsFixed_*</code>, <code>boardScreen_saveFailed_showsBannerAndExports</code>; pool failure and Retry: <code>board_poolsBlocked_bannerThenRetry</code>, <code>poolsBanner_poolsBlocked_showsBannerThenRetryRecovers</code>; rail groups: <code>shell_rail_*</code>; canvas pan/zoom: <code>persistence_drawThenReload_boardSurvives</code>, <code>perf_pan200Cards_atLeast50Fps</code>. No gap found, so no new browser test was needed for this row.</td></tr>
+  <tr><td>Speed and first-load targets pass</td><td><code>firstLoad_25Mbps_under2s</code>, <code>board_drawAndTurn_under100ms</code>, <code>timing_drawAndTurn_under100ms</code>, <code>perf_ringTurn_updatesHookUnder100ms</code>, <code>combine_dropAndSwap_under100ms</code>, <code>perf_pan200Cards_atLeast50Fps</code>, <code>perf_drag200Cards_atLeast50Fps</code>, <code>perf_dragLongStack_atLeast50Fps</code>, <code>saveBoard_200Cards_under50ms</code></td></tr>
+  <tr><td>An exported board file imports again with no data lost, and the text file holds each hook</td><td><code>import_richBoard_roundTripsEveryField</code>, <code>parseBoardFile_exportedRoundTripBoard_deepEqualsOriginal</code>, <code>importedBoard_roundTrip_changesOnlyIdNameUpdatedAt</code>; <code>export_textFile_holdsEachHookSentence</code>, <code>boardText_hookStack_hooksSectionBeforeCards</code></td></tr>
+  <tr><td>The done criteria in feature-settings-and-theme.html pass</td><td>See the settings table below</td></tr>
+  <tr><td>One command runs the app at 4174; another serves HTTPS on the LAN at 4444</td><td><code>npm start</code> (Playwright web server), <code>scripts/check-port-lock.mjs</code>; <code>scripts/check-lan.mjs</code> PASS locally</td></tr>
+</table>
+<h4>docs/feature-modifier-decks.html</h4>
+<table>
+  <tr><th>Done Criterion</th><th>Proof</th></tr>
+  <tr><td>Each Modifier button draws only cues whose targets include its deck (unit test on modifier.json)</td><td><code>drawCard_modifierRole_drawsOnlyRoleTargets</code>, <code>drawCard_realModifierPool_eachDeckDraws4Distinct</code>; browser <code>modifier_eachButton_drawsOnlyItsTargets</code></td></tr>
+  <tr><td>Each Modifier deck has at least 20 cues</td><td><code>poolFiles_eachModifierDeck_hasAtLeast20Cues</code></td></tr>
+  <tr><td>Modifier cards show their deck icon; merged ring and Split keep it through modDeck</td><td><code>combineThenSplit_iconSurvives</code>, <code>splitCard_newModifier_takesRingModDeck</code>, <code>swapOnto_exchangesModDecks</code></td></tr>
+  <tr><td>The frozen / tall pilot example</td><td><code>feature_modifierExample_readsAsBrief</code>, <code>modifier_briefExample_readsTallFrozenPilot</code>, <code>modifier_swapCenter_returnsOldAdjectivesBeside</code></td></tr>
+  <tr><td>1 merged ring and 1 on-top Modifier; a third shows the swap zone only</td><td><code>feature_modifierExample_readsAsBrief</code> (hintFor swapOnly), <code>swap_dragOverCombined_showsSwapAndAddOnTopZones</code></td></tr>
+  <tr><td>Split with a card on top leaves "tall" and the hook reads "tall pilot"</td><td><code>feature_modifierExample_readsAsBrief</code></td></tr>
+  <tr><td>On-top Modifier moves with its base and survives Redraw, save, reload, export and import</td><td><code>modifier_onTop_survivesRedrawReloadExportImport</code> (45 of 45 in 3 engines), <code>import_richBoard_roundTripsEveryField</code></td></tr>
+  <tr><td>M2 pass bar for Modifier decks</td><td>Manual (user's M2 hook test)</td></tr>
+</table>
+<h4>docs/feature-settings-and-theme.html</h4>
+<table>
+  <tr><th>Done Criterion</th><th>Proof</th></tr>
+  <tr><td>Settings opens from the rail with Mode, Theme Color, Snap To Grid, Keyboard list and the real version</td><td><code>settings_openFromRail_showsRowsAndVersion</code>, <code>SettingsDialog.test.tsx</code>, <code>footerText_usesPackageVersion</code>, <code>shell_rail_endsWithAddNoteThenSettings</code></td></tr>
+  <tr><td>All 6 combinations render both screens with token chrome; color lint passes; cards, notes, badges, deck colors and Hook Card unchanged</td><td><code>theme_&lt;mode&gt;_&lt;accent&gt;_boardScreenChromeFromTokens</code>, <code>…_boardListChromeFromTokens</code>, <code>…_cardsNotesBadgesHookUnchanged</code> (18 tests × 3 engines); <code>npm run lint</code> (check-css-colors PASS)</td></tr>
+  <tr><td>In Blue and Green, warning text, "Save Failed" and Discard keep the fixed color</td><td><code>theme_blueGreen_warningColorsFixed_blue</code>, <code>theme_blueGreen_warningColorsFixed_green</code></td></tr>
+  <tr><td>Snap on: free card or note on a 24 px dot; Alt: where dropped; tuck keeps its place; snap off: free</td><td><code>snap.spec.ts</code> (7 tests), <code>dropCard with snap</code> unit tests, <code>snapToGrid_*</code>; <code>canvas-drop.spec.ts</code> in both snap modes</td></tr>
+  <tr><td>Settings survive a reload; a second tab updates in under 1 s; a Light reload shows no dark frame</td><td><code>settings_reload_keepsSettings</code>, <code>settings_secondTab_updatesUnderOneSecond</code>, <code>settings_lightReload_noDarkFrame</code>, <code>themeBoot.test.ts</code></td></tr>
+  <tr><td>Local storage blocked: defaults and the note</td><td><code>settings_blockedStorage_defaultsAndNote</code>, <code>loadSettings_getterThrows_defaultsCannotSave</code>, <code>settingsDialog_cannotSave_showsNote</code></td></tr>
+  <tr><td>Add Note, the Genres line and deck counts work as settled</td><td><code>notes_addNote_freeGridSpotNearCenter</code>, <code>notes_addNote_opensReadyToType</code>, <code>notes_addNote_oneUndoStep</code>; <code>genres_newBoard_noPillsAndAllGenresLine</code>, <code>genres_panel_turnOffTopChip_updatesPillsAndLine</code>, <code>board_emptyBoard_showsPanelAndZeroCounts</code></td></tr>
+  <tr><td>Speed, size and privacy targets still pass</td><td>Timing tests above, <code>npm run size</code>, <code>network_fullSession_onlyOwnAddress</code> (now with Settings, snap, Add Note, both exports and an import)</td></tr>
+</table>
 
 <h3>Measured results</h3>
-<p>Filled in by Tasks 22–23 at execution: first-load times, JS and pool gzip sizes, timing-test numbers, save time, LAN check output.</p>
+<ul>
+  <li>First load at 25 Mbps / 40 ms latency, cache off (Chromium, CDP): board list 404 ms, board with the real pools loaded 575 ms (target under 2000 ms).</li>
+  <li>Size: JavaScript 206.1 KB gzip of 250 KB; pools 48.6 KB gzip of 100 KB.</li>
+  <li>Timing tests (Chromium timing project): draw, turn and hook update under 100 ms, 200-card pan and drag and long-stack drag at 50 fps or more, combine and swap under 100 ms: all pass. <code>saveBoard_200Cards_under50ms</code> passes (Vitest).</li>
+  <li>LAN check: <code>node scripts/check-lan.mjs</code> printed <code>PASS HTTPS on port 4444: 200 with the app, on all interfaces, port locked</code>; run from a folder with no <code>.certs/</code> it prints <code>SKIP no certificate in .certs/</code> and exits 0.</li>
+  <li><code>modifier_onTop_survivesRedrawReloadExportImport --repeat-each=15</code>: 45 of 45 in Chromium, Firefox and WebKit.</li>
+</ul>
+
+<h3>Execution notes</h3>
+<ul>
+  <li>Round trip: no field was dropped by the Zod schema; <code>schema.ts</code> is unchanged and <code>FORMAT_VERSION</code> stays 1.</li>
+  <li>Reload-after-change audit (<code>grep -n "reload()" tests/e2e/*.ts</code>): only <code>modifier_onTop_survivesRedrawReloadExportImport</code> lacked a stored-record wait; it now uses <code>waitForStoredCard</code>. The others already wait for storage (<code>storedBoardWhen</code>, <code>storedView</code>), reload a list whose rename or delete has already been written, or reload on purpose before measuring (timing tests).</li>
+  <li>Specs changed for snap on by default: <code>canvas-drop.spec.ts</code> runs its tuck, combine, swap, On Top and Split tests twice (<code>snap on</code> / <code>snap off</code> through the new <code>settings</code> option); <code>tuck_dragParent_stackMoves</code> and <code>tuck_dragTuckedCardToPane_untucks</code> assert the snapped place when snap is on; <code>notes_drag_moves</code> and <code>undo_ctrlZ_reversesDragAndRedoReapplies</code> now drag by grid-step distances (144 × 72, 192 × 96). <code>long-stack.spec.ts</code> needed no change.</li>
+  <li>The combine timing test moved to its own describe so it runs once, not once per snap mode.</li>
+  <li><code>vite.config.ts</code> imports <code>themeBoot.ts</code> with its extension (Vite's native config loader warns otherwise), so <code>tsconfig.json</code> gains <code>allowImportingTsExtensions</code> (valid with <code>noEmit</code>).</li>
+  <li>The "Start Here" tag uses an <code>--accent</code> fill with <code>--on-accent</code> text and a small notch pointing left at the rail; design 9.2 gives its size, not its colors.</li>
+  <li>The board list and empty-board buttons repeat on an empty list (header and "No Boards Yet" box), so helpers pick the header button with <code>.first()</code>.</li>
+</ul>
 
 </body>
 </html>
