@@ -3,7 +3,7 @@
  */
 import { describe, expect, it } from 'vitest';
 import { fixtureBoard, fixtureCard } from '@/test/fixtures/boards';
-import { besideSpot, boardRects, findOpenSpot } from './placement';
+import { besideSpot, boardRects, cardSize, findOpenSpot } from './placement';
 
 const SIZE = { width: 200, height: 200 };
 
@@ -32,5 +32,12 @@ describe('besideSpot', () => {
       [{ id: 'n', title: 'Note', text: '', x: 5, y: 6, width: 310, height: 160 }],
     );
     expect(boardRects(board)).toEqual([{ x: 5, y: 6, width: 310, height: 160 }]);
+  });
+});
+
+describe('cardSize', () => {
+  it('cardSize_hook_is240Wide', () => {
+    expect(cardSize(fixtureCard('hook'))).toEqual({ width: 240, height: 200 });
+    expect(cardSize(fixtureCard('mechanic'))).toEqual({ width: 200, height: 200 });
   });
 });

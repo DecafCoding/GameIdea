@@ -8,7 +8,7 @@
 import type { Node } from '@xyflow/react';
 import type { Board, Card } from '@/shared/model';
 import type { Below } from './connector';
-import { CARD_SIZE } from './placement';
+import { cardSize } from './placement';
 import { cardText, isOnTop } from './reading';
 import { isRoot, stackOrder } from './stack';
 
@@ -66,8 +66,7 @@ export function toNodes(board: Board, ui: NodeUi): BoardFlowNode[] {
       id: card.id,
       type: 'card',
       position: { x: card.x, y: card.y },
-      width: CARD_SIZE,
-      height: CARD_SIZE,
+      ...cardSize(card),
       zIndex: (r + 1) * STACK_RANK - i,
       selectable: false,
       data: {

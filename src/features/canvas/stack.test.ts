@@ -6,6 +6,7 @@ import type { Board, Card } from '@/shared/model';
 import { fixtureBoard, fixtureCard, fixtureStack } from '@/test/fixtures/boards';
 import {
   childrenOf,
+  layoutStack,
   moveCard,
   nextZ,
   removeFromStacks,
@@ -130,5 +131,21 @@ describe('nextZ', () => {
 
   it('nextZ_cards_returnsMaxPlusOne', () => {
     expect(nextZ(fixtureBoard(fixtureStack(0, 0, '1', 7)))).toBe(10);
+  });
+});
+
+describe('layoutStack with a Hook Card', () => {
+  it('layoutStack_hookRoot_insetsCards20', () => {
+    const board = fixtureBoard([
+      fixtureCard('hook', { x: 96, y: 48 }),
+      fixtureCard('role', { x: 0, y: 0, z: 2, tuckedUnder: 'hook-1' }),
+      fixtureCard('mechanic', { x: 0, y: 0, z: 3, tuckedUnder: 'role-1' }),
+    ]);
+    const next = layoutStack(board, 'hook-1');
+    expect(next.cards.map((c) => [c.x, c.y])).toEqual([
+      [96, 48],
+      [116, 104],
+      [116, 160],
+    ]);
   });
 });

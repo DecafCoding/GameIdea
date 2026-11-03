@@ -114,7 +114,13 @@ test.describe('tuck', () => {
     await dragTo(page, cardById(page, 'goal-1'), band, undefined, false);
     const slot = page.getByTestId('hint-slot');
     await expect(slot).toBeVisible();
-    await expect(slot).toHaveText('Goal Goes Here');
+    await expect(slot).toHaveText('Goal goes here');
+    // Design 9.7: 200 × 72, starting 16 above the Player Role's bottom edge.
+    const role = await boxOf(cardById(page, 'role-1'));
+    const box = await boxOf(slot);
+    expect(Math.round(box.width)).toBe(200);
+    expect(Math.round(box.height)).toBe(72);
+    expect(Math.abs(box.y - (role.y + role.height - 16))).toBeLessThanOrEqual(1);
     await page.mouse.up();
     await expect(slot).toHaveCount(0);
     await expectBelow(page, 'goal-1', 'role-1');

@@ -8,10 +8,10 @@
  * any other deck tucks like a normal card.
  */
 import { isCombined } from '@/features/card';
-import { BASE_TYPES, type Board, type Card } from '@/shared/model';
-import { CARD_SIZE, type Point } from './placement';
+import { BASE_TYPES, type Board, type Card, type CardType } from '@/shared/model';
+import { cardSize, type Point } from './placement';
 import { isOnTop, onTopCardOf } from './reading';
-import { descendantsOf, isRoot, stackOrder } from './stack';
+import { childrenOf, descendantsOf, isRoot, stackOrder } from './stack';
 
 /** Height of the "Add on top" band across a merged card's top (design 9.8). */
 export const TOP_BAND = 52;
@@ -20,33 +20,53 @@ export const SWAP_CIRCLE = { left: 52, top: 70, size: 96 } as const;
 /** Height of the slot band under a normal-place target's bottom edge. */
 export const SLOT_BAND = 72;
 
+/**
+ * What a drop does. A move may carry a refusal: the drop pointed at a card, but the dragged
+ * card cannot tuck there (a Hook Card never tucks), so it only moves and a notice shows.
+ */
 export type DropAction =
-  { kind: 'move' } | { kind: 'tuck' } | { kind: 'combine' } | { kind: 'swap' } | { kind: 'onTop' };
+  | { kind: 'move'; refused?: 'hookCannotTuck' }
+  | { kind: 'tuck' }
+  | { kind: 'combine' }
+  | { kind: 'swap' }
+  | { kind: 'onTop' };
 export type DropHint = 'combine' | 'swapZones' | 'swapOnly' | 'slot' | null;
 
-/** The normal place: a Goal under a Player Role, a Conflict under a Goal. */
-export function isNormalPlace(dragged: Card, target: Card): boolean {
-  return (
-    (dragged.type === 'goal' && target.type === 'role') ||
-    (dragged.type === 'conflict' && target.type === 'goal')
-  );
+/** The normal order of a stack under a Hook Card (design 9.7). */
+export const CORE_ORDER: readonly CardType[] = ['role', 'mechanic', 'resource', 'goal', 'conflict'];
+
+/**
+ * The normal place, where a tuck hint shows: the target is the bottom card of its stack
+ * (nothing tucked under it), and either it is a Hook Card and the dragged card a Player
+ * Role, or both are core decks with the dragged card later in the order Player Role,
+ * Mechanic, Resource, Goal, Conflict (skipping is allowed). Any card can still tuck under
+ * any card.
+ */
+export function isNormalPlace(board: Board, dragged: Card, target: Card): boolean {
+  if (childrenOf(board, target.id).length > 0) return false;
+  if (target.type === 'hook') return dragged.type === 'role';
+  const from = CORE_ORDER.indexOf(target.type);
+  const to = CORE_ORDER.indexOf(dragged.type);
+  return from >= 0 && to > from;
 }
 
 function inCard(card: Card, point: Point): boolean {
+  const { width, height } = cardSize(card);
   return (
     point.x >= card.x &&
-    point.x <= card.x + CARD_SIZE &&
+    point.x <= card.x + width &&
     point.y >= card.y &&
-    point.y <= card.y + CARD_SIZE
+    point.y <= card.y + height
   );
 }
 
 function inSlotBand(card: Card, point: Point): boolean {
+  const { width, height } = cardSize(card);
   return (
     point.x >= card.x &&
-    point.x <= card.x + CARD_SIZE &&
-    point.y > card.y + CARD_SIZE &&
-    point.y <= card.y + CARD_SIZE + SLOT_BAND
+    point.x <= card.x + width &&
+    point.y > card.y + height &&
+    point.y <= card.y + height + SLOT_BAND
   );
 }
 
@@ -69,7 +89,7 @@ export function dropTarget(board: Board, draggedId: string, point: Point): Card 
   for (const card of paintOrder(board)) {
     if (skip.has(card.id)) continue;
     if (inCard(card, point)) return card;
-    if (isNormalPlace(dragged, card) && inSlotBand(card, point)) return card;
+    if (isNormalPlace(board, dragged, card) && inSlotBand(card, point)) return card;
   }
   return null;
 }
@@ -97,6 +117,7 @@ export function dropAction(
   point: Point,
 ): DropAction {
   if (!target) return { kind: 'move' };
+  if (dragged.type === 'hook') return { kind: 'move', refused: 'hookCannotTuck' };
   if (canCombine(dragged, target)) return { kind: 'combine' };
   if (canSwap(dragged, target)) {
     if (onTopCardOf(board, target.id)) return { kind: 'swap' };
@@ -107,10 +128,13 @@ export function dropAction(
 
 /** The hint to draw while dragging over the target. */
 export function hintFor(board: Board, dragged: Card, target: Card | null, point: Point): DropHint {
-  if (!target) return null;
+  if (!target || dragged.type === 'hook') return null;
   if (canCombine(dragged, target)) return 'combine';
   if (canSwap(dragged, target)) return onTopCardOf(board, target.id) ? 'swapOnly' : 'swapZones';
-  if (isNormalPlace(dragged, target) && (inCard(target, point) || inSlotBand(target, point))) {
+  if (
+    isNormalPlace(board, dragged, target) &&
+    (inCard(target, point) || inSlotBand(target, point))
+  ) {
     return 'slot';
   }
   return null;

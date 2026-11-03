@@ -10,7 +10,7 @@ import {
   fixtureStack,
   secondModifier,
 } from '@/test/fixtures/boards';
-import { dropAction, dropTarget, hintFor } from './dropZones';
+import { dropAction, dropTarget, hintFor, isNormalPlace } from './dropZones';
 
 const modifier = fixtureCard('modifier', { x: 900, y: 900, z: 9 });
 
@@ -124,8 +124,13 @@ describe('hintFor', () => {
     expect(hintFor(board, fixtureCard('goal'), role, { x: 100, y: 230 })).toBe('slot');
   });
 
-  it('hintFor_conflictOverRole_null', () => {
-    expect(hintFor(board, fixtureCard('conflict'), role, { x: 100, y: 100 })).toBeNull();
+  it('hintFor_roleOverGoal_null', () => {
+    const goal = fixtureCard('goal');
+    expect(hintFor(fixtureBoard([goal]), role, goal, { x: 100, y: 100 })).toBeNull();
+  });
+
+  it('hintFor_hookOverCard_null', () => {
+    expect(hintFor(board, fixtureCard('hook'), role, { x: 100, y: 100 })).toBeNull();
   });
 
   it('hintFor_modifierOverRole_combine', () => {
@@ -137,5 +142,49 @@ describe('hintFor', () => {
     expect(hintFor(fixtureBoard([combined]), modifier, combined, { x: 10, y: 10 })).toBe(
       'swapZones',
     );
+  });
+});
+
+describe('isNormalPlace', () => {
+  it('isNormalPlace_roleUnderEmptyHook_true', () => {
+    const hook = fixtureCard('hook');
+    expect(isNormalPlace(fixtureBoard([hook]), fixtureCard('role'), hook)).toBe(true);
+    expect(isNormalPlace(fixtureBoard([hook]), fixtureCard('mechanic'), hook)).toBe(false);
+  });
+
+  it('isNormalPlace_goalAfterMechanic_true', () => {
+    const mechanic = fixtureCard('mechanic');
+    expect(isNormalPlace(fixtureBoard([mechanic]), fixtureCard('goal'), mechanic)).toBe(true);
+  });
+
+  it('isNormalPlace_mechanicAfterGoal_false', () => {
+    const goal = fixtureCard('goal');
+    expect(isNormalPlace(fixtureBoard([goal]), fixtureCard('mechanic'), goal)).toBe(false);
+  });
+
+  it('isNormalPlace_targetWithChildren_false', () => {
+    const board = fixtureBoard(fixtureStack(0, 0));
+    const role = board.cards[0]!;
+    expect(isNormalPlace(board, fixtureCard('mechanic'), role)).toBe(false);
+  });
+
+  it('isNormalPlace_optionalDeck_false', () => {
+    const role = fixtureCard('role');
+    expect(isNormalPlace(fixtureBoard([role]), fixtureCard('mood'), role)).toBe(false);
+  });
+});
+
+describe('hook drops', () => {
+  it('dropAction_hookOverCard_refusesTuck', () => {
+    const role = fixtureCard('role');
+    expect(dropAction(fixtureBoard([role]), fixtureCard('hook'), role, { x: 5, y: 5 })).toEqual({
+      kind: 'move',
+      refused: 'hookCannotTuck',
+    });
+  });
+
+  it('dropTarget_hookIs240Wide', () => {
+    const board = fixtureBoard([fixtureCard('hook'), fixtureCard('role', { x: 900, z: 2 })]);
+    expect(dropTarget(board, 'role-1', { x: 230, y: 100 })?.id).toBe('hook-1');
   });
 });

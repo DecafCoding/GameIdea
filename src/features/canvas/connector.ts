@@ -1,8 +1,8 @@
 /**
  * Connector words between tucked cards (docs/mvp-plan.html, Connector badges; design 9.6).
- * A stack reads top to bottom as a sentence: "lighthouse keeper to keep the light on but
- * the tide rises every night". The words depend only on the 2 card types, keyed by the
- * lower card.
+ * A stack under a Hook Card reads top to bottom as a sentence: "You are a lighthouse
+ * keeper who must trade using memories to keep the light on, but the tide rises every
+ * night." The words depend only on the 2 card types, keyed by the lower card.
  *
  * Each pair has a short word list, default first. The writer picks a word on the badge
  * and it is saved on the tucked card. The badge shows the saved word while it is in the
@@ -41,33 +41,40 @@ export interface Connector {
   type: CardType;
 }
 
+const ROLE_UNDER_HOOK = ['You are a', 'You play a'];
 const SAME_ROLE = ['and a', 'with a'];
+/** A Player Role under another deck: the table has no row, so its words are reused. */
+const ROLE_UNDER_OTHER = ['with a', 'and a'];
 const SAME_DECK = ['and'];
-const GOAL = ['to', 'until', 'so you can'];
-const CONFLICT = ['but', 'while', 'even though'];
-const SETTING = ['in the', 'aboard the', 'inside the'];
+
+/** The word list by the lower card's deck, when it sits under another deck or the Hook Card. */
+const WORDS: Partial<Record<CardType, string[]>> = {
+  mechanic: ['who must', 'who can only', 'who learns to'],
+  goal: ['to', 'until', 'so you can'],
+  conflict: ['but', 'while', 'even though'],
+  resource: ['using', 'while managing', 'spending'],
+  setting: ['in the', 'aboard the', 'inside the'],
+  mood: ['It feels', 'The tone is'],
+  twist: ['Except', 'The catch:'],
+  progression: ['As you play,', 'Over time,'],
+  constraint: ['with', 'and'],
+};
 
 /**
- * The word list for a pair, default first, or null when the pair has no badge. The
- * same-deck rule comes first. A Player Role under another deck and a Modifier under any
- * card have no badge: a Modifier over a card is its adjectives, not a new part of the
- * sentence.
+ * The word list for a pair, default first, or null when the pair has no badge. A Modifier
+ * never gets a badge: a Modifier over a card is its adjectives, not a new part of the
+ * sentence. A Player Role reads "You are a" under the Hook Card, "and a" under another
+ * Player Role and "with a" under any other card. Any other card under a card of its own
+ * deck reads "and"; otherwise the lower card's deck picks the words.
  */
 export function connectorWords(upper: CardType, lower: CardType): string[] | null {
-  if (upper === lower) {
-    if (lower === 'role') return SAME_ROLE;
-    return lower === 'modifier' ? null : SAME_DECK;
+  if (lower === 'modifier' || lower === 'hook') return null;
+  if (lower === 'role') {
+    if (upper === 'hook') return ROLE_UNDER_HOOK;
+    return upper === 'role' ? SAME_ROLE : ROLE_UNDER_OTHER;
   }
-  switch (lower) {
-    case 'goal':
-      return GOAL;
-    case 'conflict':
-      return CONFLICT;
-    case 'setting':
-      return SETTING;
-    default:
-      return null;
-  }
+  if (upper === lower) return SAME_DECK;
+  return WORDS[lower] ?? null;
 }
 
 /** "in a" before "exiled outpost" stays "in a"; before "orbital dock" it becomes "in an". */

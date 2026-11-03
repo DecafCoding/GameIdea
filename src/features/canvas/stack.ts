@@ -5,6 +5,7 @@
  * missing counts as a root. No React Flow here: the rules must hold if the canvas changes.
  */
 import type { Board, Card } from '@/shared/model';
+import { HOOK_INSET } from './placement';
 
 /** Design --tuck-offset. */
 export const TUCK_OFFSET = 56;
@@ -69,17 +70,23 @@ export function stackOrder(board: Board, rootId: string): Card[] {
   return out;
 }
 
-/** Places each card of the stack 56 px below the one before it, under the root's x, y. */
+/**
+ * Places each card of the stack 56 px below the one before it, under the root's x, y.
+ * Under a Hook Card, every stack card sits 20 px in from its left edge.
+ */
 export function layoutStack(board: Board, rootId: string): Board {
   const order = stackOrder(board, rootId);
   const root = order[0]!;
+  const x = root.type === 'hook' ? root.x + HOOK_INSET : root.x;
   const place = new Map(order.map((card, i) => [card.id, root.y + i * TUCK_OFFSET]));
   let changed = false;
   const cards = board.cards.map((card) => {
     const y = place.get(card.id);
-    if (y === undefined || (card.x === root.x && card.y === y)) return card;
+    if (y === undefined) return card;
+    const cx = card.id === root.id ? root.x : x;
+    if (card.x === cx && card.y === y) return card;
     changed = true;
-    return { ...card, x: root.x, y };
+    return { ...card, x: cx, y };
   });
   return changed ? { ...board, cards } : board;
 }

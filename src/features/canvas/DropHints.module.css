@@ -61,17 +61,27 @@
   background: color-mix(in srgb, var(--deck-modifier) 44%, transparent);
 }
 
-/* The slot: 72 px under the target's bottom edge. */
+/*
+ * The slot (design 9.7): 200 × 72, dashed 2 in the dragged deck's card color with no top
+ * border, radius 0 0 14 14, the card color at --slot-fill-alpha, and the "<Deck> goes here"
+ * label 12/600 in the deck rail color, bottom-aligned. The component sets the place and
+ * the deck colors.
+ */
 .slot {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
+  box-sizing: border-box;
   height: 72px;
-  margin-top: var(--card-size);
-  border: 2px dashed var(--accent);
-  border-radius: var(--radius-panel);
-  background: color-mix(in srgb, var(--accent) 10%, transparent);
-  color: var(--accent-text);
+  padding-bottom: 10px;
+  border: 2px dashed;
+  border-top: none;
+  border-radius: 0 0 var(--radius-card) var(--radius-card);
+  background: color-mix(
+    in srgb,
+    var(--slot-color) calc(var(--slot-fill-alpha) * 100%),
+    transparent
+  );
   font-family: var(--font-body);
   font-size: 12px;
   font-weight: 600;
