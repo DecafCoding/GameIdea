@@ -17,6 +17,7 @@ function renderRail(props: Partial<Parameters<typeof SideRail>[0]> = {}) {
       onAddNote={noop}
       genres={allGenresOn()}
       onOpenGenres={noop}
+      onOpenSettings={noop}
       {...props}
     />,
   );
@@ -127,6 +128,7 @@ describe('SideRail', () => {
         onAddNote={noop}
         genres={genres}
         onOpenGenres={noop}
+        onOpenSettings={noop}
       />,
     );
     const pill = screen.getByRole('img', { name: '3 genres on' });
@@ -146,5 +148,22 @@ describe('SideRail', () => {
     renderRail({ onOpenGenres });
     fireEvent.click(screen.getByRole('button', { name: 'Genres' }));
     expect(onOpenGenres).toHaveBeenCalledTimes(1);
+  });
+
+  it('sideRail_settings_lastAndCallsOnOpenSettings', () => {
+    const onOpenSettings = vi.fn();
+    renderRail({ onOpenSettings });
+    const rail = screen.getByRole('complementary', { name: 'Decks' });
+    const buttons = within(rail).getAllByRole('button');
+    expect(buttons.at(-2)?.textContent).toBe('Add Note');
+    expect(buttons.at(-1)?.textContent).toBe('Settings');
+    fireEvent.click(screen.getByRole('button', { name: 'Settings' }));
+    expect(onOpenSettings).toHaveBeenCalledTimes(1);
+  });
+
+  it('sideRail_helpPanel_gone', () => {
+    renderRail();
+    expect(screen.queryByText('Click a deck to draw one card.')).toBeNull();
+    expect(screen.queryByText(/Drag a card under another/)).toBeNull();
   });
 });

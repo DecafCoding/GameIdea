@@ -1,6 +1,6 @@
 /**
  * Shared model types: boards, cards with rings, cues, notes, pools and genres.
- * Types and constants, plus allGenresOn and newId, no other logic. See docs/architecture.html (schema-shape)
+ * Types and constants, plus allGenresOn, newId and parseSettings (the Settings record), no other logic. See docs/architecture.html (schema-shape)
  * and docs/feature-dual-ring-cards.html for the ring rules.
  */
 
@@ -258,3 +258,13 @@ export interface Pool {
 export type Pools = Record<Deck, Pool>;
 
 export { newId } from './newId';
+export {
+  ACCENTS,
+  DEFAULT_SETTINGS,
+  MODES,
+  parseSettings,
+  SETTINGS_KEY,
+  type Accent,
+  type Mode,
+  type Settings,
+} from './settings';

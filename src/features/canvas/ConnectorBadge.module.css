@@ -38,6 +38,11 @@
   outline-offset: 2px;
 }
 
+/* Light mode: outlines use --accent-text, since --accent is too faint on light ground (design 4.2). */
+:global([data-mode='light']) .badge[aria-expanded='true'] {
+  outline-color: var(--accent-text);
+}
+
 /* The word list: screen space, under the badge (or above it near the window bottom). */
 .menu {
   position: fixed;

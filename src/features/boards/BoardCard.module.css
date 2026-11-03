@@ -1,0 +1,174 @@
+/*
+ * BoardCard (design 9.3): padding 18, radius 12, gap 12, --surface, border 1. Name Display
+ * 17/600, meta 12 --text-muted, hook preview 13/1.5 on --bg, deck dots 10 with gap 4, a
+ * 44 px More button, and the board menu: 200 wide, padding 6, radius 10, items 44.
+ */
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-panel);
+  background: var(--surface);
+}
+
+/* A just-imported card: --accent at 10 percent and a 2 px inset outline. */
+.highlighted {
+  background: color-mix(in srgb, var(--accent) 10%, var(--surface));
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+/* Light mode: outlines use --accent-text (design 4.2). */
+:global([data-mode='light']) .highlighted {
+  outline-color: var(--accent-text);
+}
+
+.top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  min-width: 0;
+}
+
+.name {
+  min-width: 0;
+  padding-top: 10px;
+  overflow: hidden;
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 600;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.name:hover {
+  color: var(--link-hover);
+  text-decoration: underline;
+}
+
+.meta {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.preview {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: var(--radius-button);
+  background: var(--bg);
+  color: var(--text-soft);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.dots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.moreWrap {
+  position: relative;
+  flex: none;
+}
+
+.more {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--button-h);
+  height: var(--button-h);
+  margin: -6px -8px 0 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-button);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.more:hover,
+.more[aria-expanded='true'] {
+  background: var(--surface-raised);
+  color: var(--text);
+}
+
+.menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: -8px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  padding: 6px;
+  border: 1px solid var(--border);
+  border-radius: 10px; /* design 9.3; no token */
+  background: var(--surface);
+  box-shadow: var(--shadow-menu);
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: var(--button-h);
+  padding: 0 10px;
+  border: 0;
+  border-radius: var(--radius-button);
+  background: transparent;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+}
+
+.menuItem:hover,
+.menuItem:focus-visible {
+  background: var(--surface-raised);
+}
+
+.danger {
+  color: var(--danger-text);
+}
+
+.rename {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.field {
+  height: var(--button-h);
+  padding: 0 10px;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-button);
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.hint {
+  color: var(--text-muted);
+  font-size: 12px;
+}

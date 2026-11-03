@@ -60,6 +60,11 @@
   opacity: 0;
 }
 
+/* Light mode: the focus stroke uses --accent-text, like every outline (design 4.2). */
+:global([data-mode='light']) .focus {
+  stroke: var(--accent-text);
+}
+
 .half:focus-visible .focus {
   opacity: 1;
 }

@@ -172,10 +172,39 @@
   </ul>
 </section>
 
-<section class="phase" data-phase="5" data-status="not-planned">
-  <h2>Phase 5: Export and finish <span class="badge">not planned</span></h2>
-  <p class="meta"><strong>Branch:</strong> <em>to be determined by <code>/dev-plan-phase 5</code></em></p>
-  <p class="meta"><strong>Phase doc:</strong> <em>none yet — run <code>/dev-plan-phase 5</code></em></p>
+<section class="phase" data-phase="5" data-status="complete">
+  <h2>Phase 5: Export and finish <span class="badge">complete</span></h2>
+  <p class="meta"><strong>Branch:</strong> <code>phase-5-export-finish</code></p>
+  <p class="meta"><strong>Phase doc:</strong> <code>docs/phases/phase-5-export-finish.html</code></p>
+  <p class="meta"><strong>Depends on:</strong> Phase 1 (tokens for both modes and 3 themes, color lint, LAN preview), Phase 2 (hook sentence builder, export, import, notes), Phase 3 (shared Dialog sizes, genre counts), Phase 4 (all 14 rail buttons); no new npm dependency; mkcert certificate in .certs/ (local only); gh CLI authenticated</p>
+  <p class="meta"><strong>Summary:</strong> Phase 5 is the last MVP milestone (M5).</p>
+  <ul class="tasks">
+    <li class="task" data-task="1" data-status="done">Task 1: Add hookSentences reader to features/canvas</li>
+    <li class="task" data-task="2" data-status="done">Task 2: Write each hook sentence into the text file and update the export menu text</li>
+    <li class="task" data-task="3" data-status="done">Task 3: Prove the board file round trip with no data lost</li>
+    <li class="task" data-task="4" data-status="done">Task 4: Stabilise the flaky On Top reload/export/import test</li>
+    <li class="task" data-task="5" data-status="done">Task 5: Add the Settings type, defaults and field-by-field parser</li>
+    <li class="task" data-task="6" data-status="done">Task 6: Add loadSettings, saveSettings and onSettingsChangedElsewhere to the storage seam</li>
+    <li class="task" data-task="7" data-status="done">Task 7: Set mode and theme before the first render with an inline boot script</li>
+    <li class="task" data-task="8" data-status="done">Task 8: Create features/settings with its Zustand settings store</li>
+    <li class="task" data-task="9" data-status="done">Task 9: Keep the page root in sync with settings at start-up and on change</li>
+    <li class="task" data-task="10" data-status="done">Task 10: Put the package.json version into the app</li>
+    <li class="task" data-task="11" data-status="done">Task 11: Build the Settings dialog with the Keyboard list, footer and blocked-storage note</li>
+    <li class="task" data-task="12" data-status="done">Task 12: Put Settings at the bottom of the rail, restyle Add Note and remove the help panel</li>
+    <li class="task" data-task="13" data-status="done">Task 13: Browser tests for the Settings dialog, the Keyboard list and Add Note</li>
+    <li class="task" data-task="14" data-status="done">Task 14: Snap free-card and note drops to the 24 px grid, skipped with Alt</li>
+    <li class="task" data-task="15" data-status="done">Task 15: Settings option fixture, snap browser tests and the drag suite in both snap modes</li>
+    <li class="task" data-task="16" data-status="done">Task 16: Apply the light-mode outline rule and the fixed warning colors</li>
+    <li class="task" data-task="17" data-status="done">Task 17: Restyle the empty board guide to design 9.2</li>
+    <li class="task" data-task="18" data-status="done">Task 18: Extend the board summary with hook count, first hook and deck dots</li>
+    <li class="task" data-task="19" data-status="done">Task 19: Restyle the board list to design 9.3 with board cards and the board menu</li>
+    <li class="task" data-task="20" data-status="done">Task 20: Browser tests for all 6 mode and theme color combinations on both screens</li>
+    <li class="task" data-task="21" data-status="done">Task 21: Browser tests for reload, no dark frame, the second tab and blocked storage</li>
+    <li class="task" data-task="22" data-status="done">Task 22: Check first load, privacy and size targets</li>
+    <li class="task" data-task="23" data-status="done">Task 23: Confirm HTTPS on the local network at port 4444</li>
+    <li class="task" data-task="24" data-status="done">Task 24: Audit carried-over features against the done criteria and update the README</li>
+    <li class="task" data-task="25" data-status="done">Task 25: Commit, push, and open PR</li>
+  </ul>
 </section>
 
 </body>

@@ -165,9 +165,39 @@
   border-top: 1px solid var(--border);
 }
 
+/*
+ * Settings: the Settings dialog (design 9.11): 760 wide, padding 24 28 22, radius 14,
+ * --shadow-dialog. The body scrolls when the window is short.
+ */
+.settings {
+  width: min(760px, calc(100% - 32px)); /* design 9.11; no token */
+  max-width: none;
+  max-height: calc(100vh - 32px);
+  padding: 24px 28px 22px; /* design 9.11; no token */
+  border-radius: var(--radius-dialog);
+  box-shadow: var(--shadow-dialog);
+}
+
+.settings .title {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.settings .body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  color: var(--text);
+}
+
+.settings .actions {
+  align-items: center;
+}
+
 /* Open: fade in with a 0.98 to 1.0 scale (design 9.8; no token for 150 ms ease-out). */
 .wide[open],
-.panel[open] {
+.panel[open],
+.settings[open] {
   animation: dialogIn 150ms ease-out;
 }
 
@@ -180,7 +210,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .wide[open],
-  .panel[open] {
+  .panel[open],
+  .settings[open] {
     animation: none;
   }
 }

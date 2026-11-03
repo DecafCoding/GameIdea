@@ -1,4 +1,8 @@
-/* EmptyBoardPanel: 440 px, centered over the canvas, --panel, radius 12, --shadow-menu. */
+/*
+ * EmptyBoardPanel (design 9.2): the guide panel centered on the canvas, max 460 wide,
+ * padding 28, radius 14, gap 18, --surface; and the "Start Here" tag 16 from the canvas
+ * left and 14 from the top, pointing left at the Hook Card button.
+ */
 .panel {
   position: absolute;
   left: 50%;
@@ -6,26 +10,88 @@
   z-index: 6;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
-  width: min(440px, calc(100% - 32px));
-  padding: 24px;
+  gap: 18px;
+  width: min(460px, calc(100% - 32px)); /* design 9.2; no token */
+  padding: 28px; /* design 9.2; no token */
   transform: translate(-50%, -50%);
+  border: 1px solid var(--border);
   border-radius: var(--radius-dialog);
   background: var(--surface);
   box-shadow: var(--shadow-menu);
 }
 
 .title {
-  margin: 4px 0 0;
+  margin: 0;
   font-family: var(--font-display);
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 700;
 }
 
 .text {
   margin: 0;
-  color: var(--text-muted);
+  color: var(--text-soft);
   font-size: 14px;
   line-height: 1.5;
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Step circles 26 in --accent, number 13/700 --on-accent. */
+.number {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* "Start Here": padding 8 12, radius 8, 13/600, with a notch pointing left at the rail. */
+.tag {
+  position: absolute;
+  left: 16px;
+  top: 14px;
+  z-index: 6;
+  margin: 0;
+  padding: 8px 12px;
+  border-radius: var(--radius-button);
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 13px;
+  font-weight: 600;
+  pointer-events: none;
+}
+
+.tag::before {
+  position: absolute;
+  top: 50%;
+  left: -6px;
+  width: 0;
+  height: 0;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-right: 6px solid var(--accent);
+  transform: translateY(-50%);
+  content: '';
 }

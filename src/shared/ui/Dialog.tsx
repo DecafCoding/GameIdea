@@ -4,8 +4,8 @@
  * The parent owns open; Esc calls onClose and the parent sets open to false.
  * A child marked data-autofocus gets focus at open.
  * size: wide is the New Board dialog (design 9.8); panel is the Genres panel (design 9.10),
- * a wide dialog whose body scrolls between a fixed header and footer; default is the delete
- * dialog. showClose adds a × button beside the title; footerNote sits at the left of the
+ * a wide dialog whose body scrolls between a fixed header and footer; settings is the
+ * Settings dialog (design 9.11), 760 wide; default is the delete dialog. showClose adds a × button beside the title; footerNote sits at the left of the
  * actions row.
  */
 import { useEffect, useId, useRef, type ReactNode } from 'react';
@@ -16,6 +16,7 @@ const SIZE_CLASS = {
   default: styles.dialog,
   wide: `${styles.dialog} ${styles.wide}`,
   panel: `${styles.dialog} ${styles.panel}`,
+  settings: `${styles.dialog} ${styles.settings}`,
 };
 
 interface DialogProps {
@@ -26,7 +27,7 @@ interface DialogProps {
   children: ReactNode;
   /** The buttons, right aligned under the body. */
   actions: ReactNode;
-  size?: 'default' | 'wide' | 'panel';
+  size?: 'default' | 'wide' | 'panel' | 'settings';
   /** A line of muted text right under the title. */
   caption?: string;
   /** A 44 px × button beside the title that calls onClose. */

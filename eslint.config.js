@@ -11,13 +11,17 @@ import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 /**
- * Libraries owned by one folder each: Dexie (storage), React Flow (canvas), Zustand and
- * zundo (store), Zod (export).
+ * Libraries owned by one folder each: Dexie (storage), React Flow (canvas), zundo (store),
+ * Zod (export). Zustand belongs to the store and to features/settings (its own store, no
+ * zundo).
  */
 const ownedLibraries = {
   dexie: { name: 'dexie', message: 'Only src/shared/storage/ may use Dexie.' },
   reactFlow: { name: '@xyflow/react', message: 'Only src/features/canvas/ may use React Flow.' },
-  zustand: { name: 'zustand', message: 'Only src/shared/store/ may use Zustand.' },
+  zustand: {
+    name: 'zustand',
+    message: 'Only src/shared/store/ and src/features/settings/ may use Zustand.',
+  },
   zundo: { name: 'zundo', message: 'Only src/shared/store/ may use zundo.' },
   zod: { name: 'zod', message: 'Only src/features/export/ may use Zod.' },
 };
@@ -110,6 +114,10 @@ export default tseslint.config(
   {
     files: ['src/features/canvas/**'],
     rules: { 'no-restricted-imports': restrict([dexie, zustand, zundo, zod], featureImportsUp) },
+  },
+  {
+    files: ['src/features/settings/**'],
+    rules: { 'no-restricted-imports': restrict([dexie, reactFlow, zundo, zod], featureImportsUp) },
   },
   // The canvas imports the hook feature; the hook feature never imports the canvas (no cycle).
   {

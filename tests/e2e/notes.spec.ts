@@ -1,11 +1,12 @@
 /**
- * Browser tests for premise notes on the canvas (design 9.6): add, edit, end editing,
- * resize, delete, drag, the count badge, and keys while typing.
+ * Browser tests for notes on the canvas (design 9.12): Add Note (free grid spot near the
+ * view center, ready to type, one undo step), edit, end editing, resize, delete, drag, the
+ * count badge, and keys while typing.
  */
 import type { Page } from '@playwright/test';
 import { expect, test } from './test';
 import { fixtureBoard, fixtureCard, fixtureNote } from '@/test/fixtures/boards';
-import { boxOf, cardById, dragBy, openBoard, rail } from './board-helpers';
+import { boxOf, cardById, dragBy, openBoard, rail, storedBoards } from './board-helpers';
 import { backgroundRgb, expectRgbNear } from './helpers';
 
 test.beforeEach(async ({ page }) => {
@@ -31,7 +32,7 @@ test('notes_addNote_opensInEditMode', async ({ page }) => {
   await expect(note(page)).toHaveCount(1);
   await expect(note(page).getByRole('textbox', { name: 'Note Title' })).toHaveValue('Note');
   await expect(note(page)).toHaveCSS('outline-width', '2px');
-  await expect(page.getByRole('heading', { name: 'Start With One Card' })).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: 'Build Your First Hook' })).toHaveCount(0);
   const box = await boxOf(note(page));
   expect(box.width).toBe(310);
   expect(box.height).toBe(160);
@@ -106,9 +107,10 @@ test('notes_trash_deletesNote', async ({ page }) => {
 test('notes_drag_moves', async ({ page }) => {
   await openBoard(page, fixtureBoard([], [fixtureNote({ x: 96, y: 96, text: 'Move me' })]));
   const before = await boxOf(note(page));
-  await dragBy(page, note(page), 150, 80, { x: 40, y: 12 });
-  await expect.poll(async () => (await boxOf(note(page))).x - before.x).toBeCloseTo(150, 0);
-  expect((await boxOf(note(page))).y - before.y).toBeCloseTo(80, 0);
+  // Grid-step distances, so the drop lands where dragged with snap on (the default).
+  await dragBy(page, note(page), 144, 72, { x: 40, y: 12 });
+  await expect.poll(async () => (await boxOf(note(page))).x - before.x).toBeCloseTo(144, 0);
+  expect((await boxOf(note(page))).y - before.y).toBeCloseTo(72, 0);
   await expect(field(page)).toHaveCount(0);
 });
 
@@ -143,4 +145,47 @@ test('notes_typingKeys_doNotTurnOrDiscardSelectedCard', async ({ page }) => {
   await expect(field(page)).toHaveValue('r');
   await expect(cardById(page, 'role-1')).toHaveCount(1);
   await expect(cardById(page, 'role-1').getByTestId('active-cue')).toHaveText('navigator');
+});
+
+test('notes_addNote_freeGridSpotNearCenter', async ({ page }) => {
+  // A card sits near the view center, so the note must find a free spot beside it.
+  await openBoard(page, fixtureBoard([fixtureCard('role', { x: 384, y: 192 })]));
+  await addNote(page);
+  await page.keyboard.press('Escape');
+  let stored: Awaited<ReturnType<typeof storedBoards>> = [];
+  await expect
+    .poll(async () => {
+      stored = await storedBoards(page);
+      return stored[0]?.notes.length ?? 0;
+    })
+    .toBe(1);
+  const n = stored[0]!.notes[0]!;
+  expect(n.x % 24).toBe(0);
+  expect(n.y % 24).toBe(0);
+  const card = await boxOf(cardById(page, 'role-1'));
+  const box = await boxOf(note(page));
+  const overlap =
+    card.x < box.x + box.width &&
+    card.x + card.width > box.x &&
+    card.y < box.y + box.height &&
+    card.y + card.height > box.y;
+  expect(overlap).toBe(false);
+});
+
+test('notes_addNote_opensReadyToType', async ({ page }) => {
+  await openBoard(page);
+  await rail(page).getByRole('button', { name: 'Add Note' }).click();
+  // No click: the text field already has focus.
+  await page.keyboard.type('Typed at once');
+  await expect(field(page)).toHaveValue('Typed at once');
+});
+
+test('notes_addNote_oneUndoStep', async ({ page }) => {
+  await openBoard(page);
+  await addNote(page);
+  await page.keyboard.press('Escape');
+  await expect(note(page)).toHaveCount(1);
+  await page.keyboard.press('Control+z');
+  await expect(note(page)).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'Undo' })).toBeDisabled();
 });

@@ -1,13 +1,14 @@
 /**
  * Reading a board: the On Top Modifier of a base card, the words a card reads as on the
  * board, with its On Top adjective first ("tall frozen pilot"), and a Hook Card's stack in
- * reading order. The sentence builder and the connector badges read cards through this file.
+ * reading order, and every Hook Card's sentence on a board. The sentence builder, the
+ * connector badges, the text file and the board list read cards through this file.
  */
 import { activeText } from '@/features/card';
-import type { StackEntry } from '@/features/hook';
+import { buildHookSentence, type StackEntry } from '@/features/hook';
 import type { Board, Card } from '@/shared/model';
 import { connectorFor } from './connector';
-import { stackOrder } from './stack';
+import { isRoot, stackOrder } from './stack';
 
 /** The Modifier on top of the base card, or null. */
 export function onTopCardOf(board: Board, baseId: string): Card | null {
@@ -48,4 +49,18 @@ export function stackEntries(board: Board, hookId: string): StackEntry[] {
     entries.push({ type: card.type, connector: connector?.text ?? null, activeText: text });
   });
   return entries;
+}
+
+/**
+ * Every Hook Card's sentence, in reading order: Hook Cards that are stack roots, top to
+ * bottom, then left to right (the text file's root order). An empty Hook Card has no
+ * sentence and is left out. Filtering on isRoot keeps a malformed import from listing a
+ * stack twice.
+ */
+export function hookSentences(board: Board): string[] {
+  return board.cards
+    .filter((card) => card.type === 'hook' && isRoot(board, card.id))
+    .sort((a, b) => a.y - b.y || a.x - b.x || a.z - b.z)
+    .map((hook) => buildHookSentence(stackEntries(board, hook.id)))
+    .filter((sentence) => sentence !== '');
 }

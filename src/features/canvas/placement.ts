@@ -1,7 +1,7 @@
 /**
  * Placement: where a new card or note lands. A spot is the nearest free point on the
- * 24 px grid to a start point, keeping a 24 px margin to every card and note.
- * Points are flow coordinates.
+ * 24 px grid to a start point, keeping a 24 px margin to every card and note. snapToGrid
+ * puts a dropped free card or note on the grid. Points are flow coordinates.
  */
 import type { Board, Card } from '@/shared/model';
 import { isOnTop } from './reading';
@@ -33,7 +33,16 @@ export function cardSize(card: Pick<Card, 'type'>): Size {
   return { width: card.type === 'hook' ? HOOK_WIDTH : CARD_SIZE, height: CARD_SIZE };
 }
 
-const snap = (value: number) => Math.round(value / GRID) * GRID;
+// "+ 0" turns -0 into 0, so a snapped point never stores -0.
+const snap = (value: number) => Math.round(value / GRID) * GRID + 0;
+
+/**
+ * The nearest point on the 24 px grid (snap to grid, docs/feature-settings-and-theme.html).
+ * A half step rounds up (toward +∞), as Math.round does.
+ */
+export function snapToGrid(point: Point): Point {
+  return { x: snap(point.x), y: snap(point.y) };
+}
 
 function overlapsAny(spot: Point, size: Size, occupied: Rect[]): boolean {
   return occupied.some(

@@ -1,6 +1,7 @@
 /**
- * Tests for the board list, the name-only New Board dialog (Make Board, Cancel and focus
- * return), rename, the delete dialog and import on fake-indexeddb.
+ * Tests for the board list: board cards (meta line, first hook, deck dots), the "No Boards
+ * Yet" box, the name-only New Board dialog (Make Board, Cancel and focus return), the More
+ * menu (rename in place, export the board file, delete) and import on fake-indexeddb.
  */
 import 'fake-indexeddb/auto';
 import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
@@ -16,6 +17,7 @@ import { listBoards, loadBoard, saveBoard } from '@/shared/storage';
 import { resetDbForTests } from '@/shared/storage/db';
 import { fixtureBoard, fixtureCard, fixtureNote } from '@/test/fixtures/boards';
 import { BoardList, IMPORT_NOTICE_MS } from './BoardList';
+import { NO_HOOK_CARD_TEXT } from './BoardCard';
 
 const minutesAgo = (n: number) => new Date(Date.now() - n * 60_000).toISOString();
 
@@ -61,6 +63,16 @@ afterEach(() => {
 
 const fileInput = () => screen.getByTestId('import-file');
 
+/** The header's button: the "No Boards Yet" box repeats Import Board File and New Board. */
+const headerButton = (name: string) => screen.getAllByRole('button', { name })[0]!;
+
+/** Opens a board card's More menu and clicks an item. */
+async function menuItem(board: string, item: string) {
+  fireEvent.click(await screen.findByRole('button', { name: `More For ${board}` }));
+  const menu = screen.getByRole('menu', { name: `More For ${board}` });
+  fireEvent.click(within(menu).getByRole('menuitem', { name: item }));
+}
+
 /** The open New Board dialog. */
 const newBoardDialog = () => within(screen.getByRole('dialog'));
 
@@ -90,8 +102,10 @@ describe('BoardList', () => {
     await seedThree();
     renderList();
     await waitFor(() => expect(rowNames()).toEqual(['Two Captains', 'Salvage Run', 'Old Idea']));
-    expect(screen.getByText('1 card · 1 note · edited 5 minutes ago')).toBeTruthy();
-    expect(screen.getByText('2 cards · 0 notes · edited 2 hours ago')).toBeTruthy();
+    expect(screen.getByText('Edited 5 minutes ago · 1 card · no hook yet')).toBeTruthy();
+    expect(screen.getByText('Edited 2 hours ago · 2 cards · no hook yet')).toBeTruthy();
+    // No Hook Card on a board: the preview says so.
+    expect(screen.getAllByText(NO_HOOK_CARD_TEXT)).toHaveLength(3);
     expect(screen.getByRole('link', { name: 'Salvage Run' }).getAttribute('href')).toBe(
       '#/board/a',
     );
@@ -99,7 +113,7 @@ describe('BoardList', () => {
 
   it('boardList_newBoard_savesNameWithAllGenresAndOpens', async () => {
     const onOpen = renderList();
-    fireEvent.click(screen.getByRole('button', { name: 'New Board' }));
+    fireEvent.click(headerButton('New Board'));
     fireEvent.change(newBoardDialog().getByRole('textbox', { name: 'Name' }), {
       target: { value: '  Two Captains  ' },
     });
@@ -112,10 +126,10 @@ describe('BoardList', () => {
 
   it('boardList_newBoardCancel_savesNothing', async () => {
     const onOpen = renderList();
-    fireEvent.click(screen.getByRole('button', { name: 'New Board' }));
+    fireEvent.click(headerButton('New Board'));
     fireEvent.click(newBoardDialog().getByRole('button', { name: 'Cancel' }));
     expect(screen.queryByRole('dialog')).toBeNull();
-    expect(document.activeElement).toBe(screen.getByRole('button', { name: 'New Board' }));
+    expect(document.activeElement).toBe(headerButton('New Board'));
     expect(await listBoards()).toEqual([]);
     expect(onOpen).not.toHaveBeenCalled();
   });
@@ -123,7 +137,7 @@ describe('BoardList', () => {
   it('boardList_rename_savesNewName', async () => {
     await seedThree();
     renderList();
-    fireEvent.click(await screen.findByRole('button', { name: 'Rename Old Idea' }));
+    await menuItem('Old Idea', 'Rename');
     const field = screen.getByRole('textbox', { name: 'Board Name' });
     fireEvent.change(field, { target: { value: '  New Idea  ' } });
     fireEvent.keyDown(field, { key: 'Enter' });
@@ -134,11 +148,11 @@ describe('BoardList', () => {
   it('boardList_renameEmpty_keepsOldName', async () => {
     await seedThree();
     renderList();
-    fireEvent.click(await screen.findByRole('button', { name: 'Rename Old Idea' }));
+    await menuItem('Old Idea', 'Rename');
     fireEvent.change(screen.getByRole('textbox', { name: 'Board Name' }), {
       target: { value: '   ' },
     });
-    fireEvent.click(screen.getByRole('button', { name: 'Save' }));
+    fireEvent.keyDown(screen.getByRole('textbox', { name: 'Board Name' }), { key: 'Enter' });
     expect(await screen.findByRole('link', { name: 'Old Idea' })).toBeTruthy();
     expect((await loadBoard('c'))?.name).toBe('Old Idea');
   });
@@ -146,7 +160,7 @@ describe('BoardList', () => {
   it('boardList_renameEsc_keepsOldName', async () => {
     await seedThree();
     renderList();
-    fireEvent.click(await screen.findByRole('button', { name: 'Rename Old Idea' }));
+    await menuItem('Old Idea', 'Rename');
     const field = screen.getByRole('textbox', { name: 'Board Name' });
     fireEvent.change(field, { target: { value: 'Other' } });
     fireEvent.keyDown(field, { key: 'Escape' });
@@ -157,7 +171,7 @@ describe('BoardList', () => {
   it('boardList_deleteConfirm_removesBoard', async () => {
     await seedThree();
     renderList();
-    fireEvent.click(await screen.findByRole('button', { name: 'Delete Salvage Run' }));
+    await menuItem('Salvage Run', 'Delete');
     const dialog = screen.getByRole('dialog', { name: 'Delete "Salvage Run"?' });
     fireEvent.click(within(dialog).getByRole('button', { name: 'Delete Board' }));
     await waitFor(() => expect(rowNames()).toEqual(['Two Captains', 'Old Idea']));
@@ -165,10 +179,81 @@ describe('BoardList', () => {
     expect(await loadBoard('a')).toBeNull();
   });
 
+  it('boardList_renameClickOutside_saves', async () => {
+    await seedThree();
+    renderList();
+    await menuItem('Old Idea', 'Rename');
+    expect(screen.getByText('Enter saves. Esc cancels.')).toBeTruthy();
+    fireEvent.change(screen.getByRole('textbox', { name: 'Board Name' }), {
+      target: { value: 'Clicked Away' },
+    });
+    fireEvent.pointerDown(document.body);
+    await waitFor(() => expect(rowNames()[0]).toBe('Clicked Away'));
+    expect((await loadBoard('c'))?.name).toBe('Clicked Away');
+  });
+
+  it('boardList_card_showsFirstHookMetaAndDots', async () => {
+    await saveBoard({
+      ...fixtureBoard([
+        fixtureCard('hook'),
+        fixtureCard('role', { z: 2, tuckedUnder: 'hook-1' }),
+        fixtureCard('goal', { z: 3, tuckedUnder: 'role-1' }),
+      ]),
+      id: 'h',
+      name: 'Lighthouse',
+      updatedAt: minutesAgo(10),
+    });
+    renderList();
+    const card = (await screen.findByRole('link', { name: 'Lighthouse' })).closest('li')!;
+    expect(within(card).getByText('Edited 10 minutes ago · 3 cards · 1 hook')).toBeTruthy();
+    expect(within(card).getByTestId('hook-preview').textContent).toBe(
+      'You are a navigator to keep the light on.',
+    );
+    const dots = [...card.querySelectorAll('[data-type]')].map((d) => d.getAttribute('data-type'));
+    expect(dots).toEqual(['hook', 'role', 'goal']);
+  });
+
+  it('boardList_emptyHookCardOnly_noPreviewBox', async () => {
+    await saveBoard({ ...fixtureBoard([fixtureCard('hook')]), id: 'e', name: 'Empty Hook' });
+    renderList();
+    const card = (await screen.findByRole('link', { name: 'Empty Hook' })).closest('li')!;
+    expect(within(card).queryByTestId('hook-preview')).toBeNull();
+  });
+
+  it('boardList_noBoards_showsNoBoardsYet', async () => {
+    renderList();
+    const box = await screen.findByRole('region', { name: 'No Boards Yet' });
+    expect(box.textContent).toContain(
+      'Make a board to start drawing cards. Or import a board file from another computer.',
+    );
+    expect(within(box).getByRole('button', { name: 'New Board' })).toBeTruthy();
+    expect(within(box).getByRole('button', { name: 'Import Board File' })).toBeTruthy();
+    expect(screen.queryByRole('list', { name: 'Saved Boards' })).toBeNull();
+  });
+
+  it('boardList_menu_escapeClosesAndReturnsFocus', async () => {
+    await seedThree();
+    renderList();
+    const more = await screen.findByRole('button', { name: 'More For Old Idea' });
+    fireEvent.click(more);
+    const menu = screen.getByRole('menu', { name: 'More For Old Idea' });
+    expect(
+      within(menu)
+        .getAllByRole('menuitem')
+        .map((i) => i.textContent),
+    ).toEqual(['Rename', 'Export Board File', 'Delete']);
+    expect(document.activeElement?.textContent).toBe('Rename');
+    fireEvent.keyDown(menu, { key: 'ArrowDown' });
+    expect(document.activeElement?.textContent).toBe('Export Board File');
+    fireEvent.keyDown(menu, { key: 'Escape' });
+    expect(screen.queryByRole('menu')).toBeNull();
+    expect(document.activeElement).toBe(more);
+  });
+
   it('boardList_deleteCancel_keepsBoard', async () => {
     await seedThree();
     renderList();
-    fireEvent.click(await screen.findByRole('button', { name: 'Delete Salvage Run' }));
+    await menuItem('Salvage Run', 'Delete');
     const dialog = screen.getByRole('dialog', { name: 'Delete "Salvage Run"?' });
     fireEvent.click(within(dialog).getByRole('button', { name: 'Cancel' }));
     expect(screen.queryByRole('dialog')).toBeNull();
@@ -186,7 +271,7 @@ describe('BoardList import', () => {
     expect(rowNames()).toEqual(['Drift', 'Two Captains', 'Salvage Run', 'Old Idea']);
     const row = screen.getByRole('link', { name: 'Drift' }).closest('li')!;
     expect(row.hasAttribute('data-highlighted')).toBe(true);
-    expect(within(row).getByText('1 card · 0 notes · imported just now')).toBeTruthy();
+    expect(within(row).getByText('Imported just now · 1 card · no hook yet')).toBeTruthy();
     const saved = await listBoards();
     expect(saved[0]!.id).not.toBe('file-id');
     expect(await loadBoard('file-id')).toBeNull();
@@ -217,7 +302,7 @@ describe('BoardList import', () => {
   it('boardList_chooseAnotherFile_opensFileInput', async () => {
     renderList();
     const click = vi.spyOn(fileInput(), 'click').mockImplementation(() => undefined);
-    fireEvent.click(screen.getByRole('button', { name: 'Import Board File' }));
+    fireEvent.click(headerButton('Import Board File'));
     expect(click).toHaveBeenCalledTimes(1);
     chooseFile('[]');
     fireEvent.click(await screen.findByRole('button', { name: 'Choose Another File' }));

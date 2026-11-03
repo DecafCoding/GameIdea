@@ -1,11 +1,15 @@
-/* BoardList: 48 × 24 px page padding, 880 px max width, header, one --panel list box. */
+/*
+ * BoardList (design 9.3): content max 1180 wide, centered, padding 40 24 64, gap 28; the
+ * header with the title, its line and the actions on the right; a grid of board cards at
+ * least 300 wide with gap 16; and the dashed "No Boards Yet" box.
+ */
 .page {
   display: flex;
   flex-direction: column;
   gap: 28px;
-  max-width: 880px;
+  max-width: 1180px; /* design 9.3; no token */
   margin: 0 auto;
-  padding: 48px 24px;
+  padding: 40px 24px 64px; /* design 9.3; no token */
 }
 
 .header {
@@ -25,9 +29,8 @@
 .title {
   margin: 0;
   font-family: var(--font-display);
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 700;
-  letter-spacing: -0.01em;
 }
 
 .caption {
@@ -48,19 +51,49 @@
   gap: 8px;
 }
 
-.list {
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
   margin: 0;
   padding: 0;
   list-style: none;
-  overflow: hidden;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-dialog);
-  background: var(--surface);
 }
 
-.footer {
-  margin: 0;
+/* No Boards Yet: a dashed box, padding 40 28, radius 12, a 52 px icon tile. */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 40px 28px; /* design 9.3; no token */
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-panel);
+  text-align: center;
+}
+
+.emptyIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-panel);
+  background: var(--surface-raised);
   color: var(--text-muted);
-  font-size: 13px;
+}
+
+.emptyTitle {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.emptyText {
+  max-width: 420px;
+  margin: 0 0 4px;
+  color: var(--text-muted);
+  font-size: 14px;
   line-height: 1.5;
 }

@@ -36,30 +36,38 @@ const badge = (page: import('@playwright/test').Page) => page.getByTestId('count
 test('board_emptyBoard_showsPanelAndZeroCounts', async ({ page }) => {
   await openBoard(page);
   await expect(page).toHaveURL(/#\/board\/[\w-]+$/);
-  await expect(page.getByRole('heading', { name: 'Start With One Card' })).toBeVisible();
-  await expect(badge(page)).toHaveText('0 cards · 0 notes');
+  const guide = page.getByRole('region', { name: 'Build Your First Hook' });
+  await expect(guide).toBeVisible();
+  await expect(guide.getByRole('listitem')).toHaveText(
+    [
+      'Draw a Hook Card from the top of the rail.',
+      'Draw a Player Role and tuck it under the Hook Card.',
+      'Add a Mechanic, a Resource, a Goal and a Conflict. Turn the rings until the sentence reads well.',
+    ].map((step, i) => `${i + 1}${step}`),
+  );
+  await expect(page.getByTestId('start-here')).toHaveText('Start Here');
+  await expect(badge(page)).toContainText('0 cards');
+  await expect(rail(page).getByRole('button', { name: 'Genres' })).toContainText('All genres');
   await expect(page.getByRole('link', { name: 'Board List' })).toBeVisible();
   await expect(page.getByRole('textbox', { name: 'Board Name' })).toHaveValue('Test Board');
   await expect(page.getByRole('button', { name: 'Undo' })).toBeDisabled();
   await expect(page.getByTestId('zoom-strip')).toBeVisible();
 });
 
-test('board_drawFromPanel_hidesPanelAndCountsOne', async ({ page }) => {
+test('board_firstCardFromRail_hidesGuide', async ({ page }) => {
   await openBoard(page);
-  const panel = page.getByRole('region', { name: 'Start With One Card' });
-  await panel.getByRole('button', { name: 'Draw A Player Role', exact: true }).click();
+  const guide = page.getByRole('region', { name: 'Build Your First Hook' });
+  await expect(guide).toBeVisible();
+  await rail(page).getByRole('button', { name: 'Draw A Hook Card', exact: true }).click();
   await expect(canvasCards(page)).toHaveCount(1);
-  await expect(canvasCards(page).first()).toHaveAttribute('data-type', 'role');
-  await expect(panel).toHaveCount(0);
+  await expect(guide).toHaveCount(0);
+  await expect(page.getByTestId('start-here')).toHaveCount(0);
   await expect(badge(page)).toHaveText('1 card · 0 notes');
 
-  // The panel does not come back for this board, even when it empties.
-  await canvasCards(page)
-    .first()
-    .click({ position: { x: 30, y: 30 } });
-  await page.getByRole('button', { name: 'Discard' }).click();
+  // The guide does not come back for this board, even when it empties.
+  await page.getByRole('button', { name: 'Undo' }).click();
   await expect(canvasCards(page)).toHaveCount(0);
-  await expect(panel).toHaveCount(0);
+  await expect(guide).toHaveCount(0);
 });
 
 test('board_drawEachDeck_cardsDoNotOverlap', async ({ page }) => {
@@ -129,7 +137,7 @@ test('board_fixture_rendersAllCards', async ({ page }) => {
   await expect(canvasCards(page)).toHaveCount(4);
   await expect(page.getByTestId('note')).toHaveCount(1);
   await expect(badge(page)).toHaveText('4 cards · 1 note');
-  await expect(page.getByRole('heading', { name: 'Start With One Card' })).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: 'Build Your First Hook' })).toHaveCount(0);
 });
 
 test('board_poolsBlocked_bannerThenRetry', async ({ page }) => {

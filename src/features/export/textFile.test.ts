@@ -74,7 +74,7 @@ describe('textFile', () => {
     );
   });
 
-  it('boardText_hookStack_listsHookCardThenStack', () => {
+  it('boardText_hookStack_hooksSectionBeforeCards', () => {
     const board = fixtureBoard([
       fixtureCard('hook', { x: 0, y: 0 }),
       fixtureCard('role', { x: 20, y: 56, z: 2, tuckedUnder: 'hook-1' }),
@@ -82,7 +82,7 @@ describe('textFile', () => {
       fixtureCard('modifier', { x: 600, y: 0, z: 4, modDeck: 'setting' }),
     ]);
     expect(boardText(named(board))).toBe(
-      'Salvage Run\n\nCards\n\n' +
+      'Salvage Run\n\nHooks\n\nYou are a navigator who must trade.\n\nCards\n\n' +
         'Hook Card\n' +
         '  Player Role: navigator\n' +
         '    Mechanic: trade\n' +
@@ -122,6 +122,33 @@ describe('textFile', () => {
         'Note\nThe fleet left without her.\nShe has one ship and no map.\n\n' +
         'Note\nA second note.\n',
     );
+  });
+
+  it('boardText_twoHooks_oneParagraphEach', () => {
+    const board = fixtureBoard([
+      fixtureCard('hook', { id: 'h1', x: 0, y: 0 }),
+      fixtureCard('role', { z: 2, tuckedUnder: 'h1' }),
+      fixtureCard('mood', { z: 3, tuckedUnder: 'role-1' }),
+      fixtureCard('hook', { id: 'h2', x: 0, y: 600 }),
+      fixtureCard('goal', { z: 4, tuckedUnder: 'h2' }),
+    ]);
+    const text = boardText(named(board));
+    const hooks = text.split('\n\nCards\n\n')[0]!.split('Hooks\n\n')[1]!.split('\n\n');
+    expect(hooks).toHaveLength(2);
+    // A 2-sentence hook stays one paragraph.
+    expect(hooks[0]).toMatch(/^You are a navigator\. .+\.$/);
+    expect(hooks[0]).not.toContain('\n');
+    expect(hooks[1]).toBe('To keep the light on.');
+  });
+
+  it('boardText_emptyHookCard_noHooksSection', () => {
+    expect(boardText(named(fixtureBoard([fixtureCard('hook')])))).toBe(
+      'Salvage Run\n\nCards\n\nHook Card\n',
+    );
+  });
+
+  it('boardText_noHookCard_noHooksSection', () => {
+    expect(boardText(named(fixtureBoard([fixtureCard('goal')])))).not.toContain('Hooks');
   });
 
   it('textFileName_badCharacters_replaced', () => {

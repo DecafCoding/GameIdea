@@ -5,7 +5,7 @@
  */
 import type { Locator, Page } from '@playwright/test';
 import { expect } from './test';
-import type { Board } from '@/shared/model';
+import type { Board, Card } from '@/shared/model';
 import type { DeckName } from './helpers';
 
 /**
@@ -37,7 +37,7 @@ export function newBoardDialog(page: Page): Locator {
 
 /** On the board list: clicks New Board, types the name and clicks Make Board. */
 export async function createBoard(page: Page, name = 'Test Board'): Promise<void> {
-  await page.getByRole('button', { name: 'New Board' }).click();
+  await page.getByRole('button', { name: 'New Board' }).first().click();
   const dialog = newBoardDialog(page);
   await dialog.getByRole('textbox', { name: 'Name' }).fill(name);
   await dialog.getByRole('button', { name: 'Make Board' }).click();
@@ -141,4 +141,31 @@ export async function storedBoards(page: Page): Promise<Board[]> {
     db.close();
     return records.sort((a, b) => (a.id < b.id ? -1 : 1));
   });
+}
+
+/**
+ * Waits until the stored record of a board has a card that satisfies the predicate, so a
+ * reload right after a change cannot beat the save. The save mark alone is not enough: it
+ * can still read "saved" from the save before the change.
+ */
+export async function waitForStoredCard(
+  page: Page,
+  boardId: string,
+  cardId: string,
+  predicate: (card: Card) => boolean = () => true,
+  timeout = 5000,
+): Promise<Card> {
+  let found: Card | undefined;
+  await expect
+    .poll(
+      async () => {
+        const board = (await storedBoards(page)).find((b) => b.id === boardId);
+        const card = board?.cards.find((c) => c.id === cardId);
+        found = card && predicate(card) ? card : undefined;
+        return found !== undefined;
+      },
+      { timeout },
+    )
+    .toBe(true);
+  return found!;
 }

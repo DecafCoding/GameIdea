@@ -4,7 +4,8 @@
  * a tucked stack moves with its top card through our own code (the Phase 3 tuck spike).
  * View state (selection, hover, drag and its hint) stays here, never in the board store.
  * During a drag, positions live only in the local drag nodes; the store gets one change on
- * drop, so a drag is one undo step and one save.
+ * drop, so a drag is one undo step and one save. With Snap To Grid on, a free card or note
+ * dropped on empty canvas lands on the 24 px grid; Alt held at the drop places it freely.
  */
 import '@xyflow/react/dist/base.css';
 import {
@@ -21,6 +22,7 @@ import { useCallback, useEffect, useMemo, useRef, useState, type MouseEvent } fr
 import { useRingKeys, type RingSlot, type TurnDirection } from '@/features/card';
 import { drawFor } from '@/features/draw';
 import { moveNote } from '@/features/notes';
+import { getSettings } from '@/features/settings';
 import type { Pools } from '@/shared/model';
 import { useBoardStore } from '@/shared/store';
 import {
@@ -40,6 +42,7 @@ import { DropHints, type DragHint } from './DropHints';
 import { dropAction, dropTarget, hintFor } from './dropZones';
 import { toNodes, type BoardFlowNode } from './nodes';
 import { NoteNode } from './NoteNode';
+import { snapToGrid } from './placement';
 import { descendantsOf } from './stack';
 import { ZoomStrip } from './ZoomStrip';
 import styles from './BoardCanvas.module.css';
@@ -302,8 +305,10 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
       const p = pointerOf(event);
       if (Math.hypot(p.x - state.startX, p.y - state.startY) < CLICK_DISTANCE) return;
       const { x, y } = node.position;
+      const snap = getSettings().snap && !event.altKey;
       if (state.kind === 'note') {
-        changeBoard((b) => moveNote(b, node.id, x, y));
+        const at = snap ? snapToGrid({ x, y }) : { x, y };
+        changeBoard((b) => moveNote(b, node.id, at.x, at.y));
         return;
       }
       const point = flow.screenToFlowPosition(p);
@@ -314,7 +319,7 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
         const action = dropAction(b, dragged, dropTarget(b, node.id, point), point);
         if (action.kind === 'move' && action.refused) setNotice(action.refused);
       }
-      changeBoard((b) => dropCard(b, node.id, point, { x, y }));
+      changeBoard((b) => dropCard(b, node.id, point, { x, y }, { snap }));
     },
     [changeBoard, flow, setNotice],
   );

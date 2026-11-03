@@ -1,17 +1,17 @@
 /**
  * The text file: the board in plain words, downloaded as <board-name>.txt. The board
- * name, then a Cards section (stacks top to bottom, then left to right; tucked cards
+ * name, then a Hooks section (each non-empty hook sentence in reading order, one
+ * paragraph each, a blank line between), then a Cards section (stacks top to bottom, then left to right; tucked cards
  * indented 2 spaces per level; only the active cue or pair), then a Notes section (each
  * note: its title line, then its text).
  * A Modifier tucked under a card with nothing tucked under it joins its parent's line
  * ("Player Role: exiled navigator, devout"). An On Top Modifier is never its own line: it
  * reads inside its base card's words ("Player Role: tall frozen pilot"). A Hook Card line
- * reads "Hook Card", with its stack indented under it (each hook sentence joins the text
- * file in Phase 5). A Modifier line names its Modifier deck. LF line ends and one final
+ * reads "Hook Card", with its stack indented under it. A Modifier line names its Modifier deck. LF line ends and one final
  * newline.
  */
 import { activeText } from '@/features/card';
-import { cardText, childrenOf, isOnTop, isRoot } from '@/features/canvas';
+import { cardText, childrenOf, hookSentences, isOnTop, isRoot } from '@/features/canvas';
 import { DECK_NAME, MOD_DECK_NAME, type Board, type Card } from '@/shared/model';
 import { downloadFile, safeFileBase } from './download';
 
@@ -69,6 +69,8 @@ function noteBlocks(board: Board): string[] {
 /** The text file contents. A board with no cards and no non-blank notes is the name only. */
 export function boardText(board: Board): string {
   const sections = [board.name];
+  const hooks = hookSentences(board);
+  if (hooks.length > 0) sections.push(['Hooks', '', hooks.join('\n\n')].join('\n'));
   const cards = cardLines(board);
   if (cards.length > 0) sections.push(['Cards', '', ...cards].join('\n'));
   const notes = noteBlocks(board);

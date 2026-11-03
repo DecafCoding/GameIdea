@@ -1,7 +1,8 @@
 /**
- * Start-up: loads the vendored fonts, the design tokens and the global styles, saves the
- * browser-test fixture board to storage once if it is missing, starts autosave (before
- * React, so StrictMode cannot start it twice), then mounts the app into #root.
+ * Start-up: loads the vendored fonts, the design tokens and the global styles, reads the
+ * Settings and applies the mode and theme color (synchronous, before the first render),
+ * saves the browser-test fixture board to storage once if it is missing, starts autosave
+ * (before React, so StrictMode cannot start it twice), then mounts the app into #root.
  */
 import '@fontsource/space-grotesk/latin-500.css';
 import '@fontsource/space-grotesk/latin-600.css';
@@ -15,6 +16,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { loadBoard, saveBoard, startAutosave } from '@/shared/storage';
 import { App } from './app/App';
+import { startTheme } from './app/theme';
 
 // Load the card cue weights now, so the first draw does not wait on a font fetch and relayout.
 // A failed load only means the fallback font shows; nothing to report.
@@ -35,6 +37,7 @@ async function seedTestBoard(): Promise<void> {
 }
 
 async function start(): Promise<void> {
+  startTheme();
   await seedTestBoard();
   startAutosave();
 

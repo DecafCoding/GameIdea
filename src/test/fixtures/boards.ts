@@ -192,3 +192,92 @@ export function stack11Board(): Board {
     view: { panX: 0, panY: 0, zoom: 0.75 },
   };
 }
+
+/**
+ * The round-trip fixture: every card feature on one board, for the board file round trip.
+ * A Hook Card stack with all 11 deck types (a tucked Modifier among them), a combined
+ * Player Role with a merged ring and an On Top Modifier, a combined Setting that can be
+ * Split, a locked card, a saved connector word, turned rings, 2 notes with titles and
+ * multi-line text, narrowed genres on 2 decks and a non-default view.
+ */
+export function roundTripBoard(): Board {
+  const x = 240 + HOOK_INSET;
+  const chain: CardType[] = [
+    'role',
+    'mechanic',
+    'resource',
+    'goal',
+    'conflict',
+    'modifier',
+    'setting',
+    'mood',
+    'twist',
+    'progression',
+    'constraint',
+  ];
+  const cards: Card[] = [fixtureCard('hook', { id: 'rt-hook', x: 240, y: 48, z: 1 })];
+  chain.forEach((type, i) => {
+    const position = {
+      id: `rt-${type}`,
+      x,
+      y: 48 + (i + 1) * TUCK,
+      z: i + 2,
+      tuckedUnder: i === 0 ? 'rt-hook' : `rt-${chain[i - 1]}`,
+    };
+    if (type === 'role') {
+      cards.push(
+        combinedCard('role', {
+          ...position,
+          rings: [
+            { cues: cuesFor('role'), activeIndex: 2 },
+            { cues: cuesFor('modifier'), activeIndex: 1, modDeck: 'role' },
+          ],
+        }),
+      );
+    } else if (type === 'setting') {
+      cards.push(
+        fixtureCard('setting', {
+          ...position,
+          rings: [
+            { cues: cuesFor('setting'), activeIndex: 3 },
+            { cues: CUES.modifier2.map((text) => ({ text })), activeIndex: 0, modDeck: 'setting' },
+          ],
+        }),
+      );
+    } else if (type === 'modifier') {
+      cards.push(fixtureCard('modifier', { ...position, modDeck: 'resource' }));
+    } else if (type === 'mechanic') {
+      cards.push(
+        fixtureCard('mechanic', { ...position, connector: 'who learns to', locked: true }),
+      );
+    } else if (type === 'goal') {
+      cards.push(
+        fixtureCard('goal', { ...position, rings: [{ cues: cuesFor('goal'), activeIndex: 1 }] }),
+      );
+    } else {
+      cards.push(fixtureCard(type, position));
+    }
+  });
+  cards.push(secondModifier({ id: 'rt-on-top', x: 900, y: 900, z: 20, onTopOf: 'rt-role' }));
+  const notes = [
+    fixtureNote({ id: 'rt-note-1', title: 'Pitch', text: 'Line one.\nLine two.', x: 720, y: 48 }),
+    fixtureNote({
+      id: 'rt-note-2',
+      title: 'Open Questions',
+      text: 'Who built the lighthouse?\n\nWhy now?',
+      x: 720,
+      y: 288,
+      width: 360,
+      height: 220,
+    }),
+  ];
+  return {
+    ...fixtureBoard(cards, notes),
+    id: 'round-trip',
+    name: 'Round Trip',
+    createdAt: '2026-02-03T04:05:06.000Z',
+    updatedAt: '2026-03-04T05:06:07.000Z',
+    genres: { ...allGenresOn(), mechanic: ['horror', 'puzzle'], constraint: ['roguelike'] },
+    view: { panX: -120, panY: 64, zoom: 0.8 },
+  };
+}

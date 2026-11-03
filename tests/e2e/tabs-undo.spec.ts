@@ -72,7 +72,8 @@ test.describe('2 tabs', () => {
     const b = await context.newPage();
     await openBoard(b, board());
     await a.goto('/');
-    await a.getByRole('button', { name: 'Delete Fixture Board' }).click();
+    await a.getByRole('button', { name: 'More For Fixture Board' }).click();
+    await a.getByRole('menuitem', { name: 'Delete' }).click();
     await a.getByRole('dialog').getByRole('button', { name: 'Delete Board' }).click();
     await expect(b.getByRole('heading', { level: 1, name: 'Boards' })).toBeVisible();
     await expect(b.getByRole('list', { name: 'Saved Boards' })).toHaveCount(0);
@@ -109,13 +110,14 @@ test.describe('undo', () => {
     await openBoard(page, fixtureBoard([fixtureCard('role', { x: 96, y: 96 })]));
     const card = cardById(page, 'role-1');
     const start = await boxOf(card);
-    await dragBy(page, card, 200, 100);
-    await expect.poll(async () => Math.round((await boxOf(card)).x - start.x)).toBe(200);
+    // Grid-step distances, so the drop lands where dragged with snap on (the default).
+    await dragBy(page, card, 192, 96);
+    await expect.poll(async () => Math.round((await boxOf(card)).x - start.x)).toBe(192);
 
     await page.keyboard.press('ControlOrMeta+z');
     await expect.poll(async () => Math.round((await boxOf(card)).x - start.x)).toBe(0);
     await page.keyboard.press('ControlOrMeta+Shift+z');
-    await expect.poll(async () => Math.round((await boxOf(card)).x - start.x)).toBe(200);
+    await expect.poll(async () => Math.round((await boxOf(card)).x - start.x)).toBe(192);
   });
 
   test('undo_combineSwapSplitTuck_eachOneStep', async ({ page }) => {

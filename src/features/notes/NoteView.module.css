@@ -20,6 +20,11 @@
   overflow: visible;
 }
 
+/* Light mode: outlines use --accent-text, since --accent is too faint on light ground (design 4.2). */
+:global([data-mode='light']) .editing {
+  outline-color: var(--accent-text);
+}
+
 /* The header band keeps the note paper color. Its right padding clears the 44 px trash button. */
 .header {
   flex: none;

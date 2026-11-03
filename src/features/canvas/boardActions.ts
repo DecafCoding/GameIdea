@@ -15,7 +15,7 @@ import {
 } from '@/features/card';
 import { newId, type Board, type Card } from '@/shared/model';
 import { dropAction, dropTarget } from './dropZones';
-import { besideSpot, type Point } from './placement';
+import { besideSpot, snapToGrid, type Point } from './placement';
 import { onTopCardOf } from './reading';
 import {
   childrenOf,
@@ -66,17 +66,28 @@ export function placeHookCard(board: Board, id: string, spot: Point): Board {
 
 /**
  * Ends a drag. point is the pointer in flow coordinates (it picks the target and zone);
- * dropAt is the card's new top-left, used when the drop lands on empty canvas.
+ * dropAt is the card's new top-left, used when the drop lands on empty canvas. With
+ * options.snap, a drop on empty canvas (a move or an untuck) lands on the 24 px grid; a
+ * dragged root moves its tucked cards by the same delta. Tuck, combine, swap and On Top
+ * ignore snap.
  */
-export function dropCard(board: Board, draggedId: string, point: Point, dropAt: Point): Board {
+export function dropCard(
+  board: Board,
+  draggedId: string,
+  point: Point,
+  dropAt: Point,
+  options: { snap?: boolean } = {},
+): Board {
   const dragged = cardAt(board, draggedId);
   const target = dropTarget(board, draggedId, point);
   const action = dropAction(board, dragged, target, point);
   switch (action.kind) {
-    case 'move':
+    case 'move': {
+      const at = options.snap ? snapToGrid(dropAt) : dropAt;
       return isRoot(board, draggedId)
-        ? moveCard(board, draggedId, dropAt.x, dropAt.y)
-        : untuckCard(board, draggedId, dropAt.x, dropAt.y);
+        ? moveCard(board, draggedId, at.x, at.y)
+        : untuckCard(board, draggedId, at.x, at.y);
+    }
     case 'tuck':
       return tuckCard(board, draggedId, target!.id);
     case 'combine':

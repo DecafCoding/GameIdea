@@ -1,6 +1,6 @@
 /**
- * ListScreen: the board list page at #/ (design 9.8): a 56 px header bar with the app mark,
- * the wordmark and the local-only caption, and the board list below it. The board list
+ * ListScreen: the board list page at #/ (design 9.3): a 56 px header bar with the app mark
+ * and the name, as in the top bar, and the board list below it. The board list
  * feature gets the board address format from here.
  */
 import { BoardList } from '@/features/boards';
@@ -19,8 +19,6 @@ export function ListScreen() {
       <header className={styles.bar}>
         <AppMark />
         <span className={styles.wordmark}>GameIdea</span>
-        <span className={styles.gap} />
-        <span className={styles.caption}>Runs on your computer. Nothing leaves it.</span>
       </header>
       <main className={styles.main} aria-label="Board List">
         <BoardList boardHref={boardHref} onOpen={openBoard} />

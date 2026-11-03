@@ -47,6 +47,17 @@ describe('ExportButton', () => {
     expect(document.activeElement).toBe(screen.getAllByRole('menuitem')[0]);
   });
 
+  it('exportButton_captions_matchDesign', () => {
+    fireEvent.click(renderButton());
+    const menu = screen.getByRole('menu', { name: 'Export' });
+    expect(menu.textContent).toContain(
+      'Each hook on this board, then the cards and notes in plain words.',
+    );
+    expect(menu.textContent).toContain(
+      'All data of this board. Import it again on any computer. This is your only backup.',
+    );
+  });
+
   it('exportButton_textRow_downloadsTextAndCloses', () => {
     const button = renderButton();
     fireEvent.click(button);
