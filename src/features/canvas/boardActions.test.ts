@@ -175,7 +175,8 @@ describe('splitCard', () => {
     const board = fixtureBoard([card, fixtureCard('goal', { y: 59, z: 2, tuckedUnder: 'role-1' })]);
     const next = splitCard(board, 'role-1', () => 'new-modifier');
     const modifier = get(next, 'new-modifier');
-    expect(modifier.rings).toEqual([card.rings[1]]);
+    // A free Modifier's ring has no modDeck; the card carries it.
+    expect(modifier.rings).toEqual([{ cues: card.rings[1]!.cues, activeIndex: 2 }]);
     expect(activeText(modifier)).toBe('clone');
     expect(isCombined(get(next, 'role-1'))).toBe(false);
     expect(get(next, 'goal-1')).toMatchObject({ tuckedUnder: 'role-1', y: 59 });

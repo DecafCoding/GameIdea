@@ -63,12 +63,12 @@ export function secondModifier(overrides: Partial<Card> = {}): Card {
   });
 }
 
-/** A Player Role or Setting already combined with the first Modifier set. */
+/** A Player Role or Setting already combined with the first Modifier set (role deck). */
 export function combinedCard(type: 'role' | 'setting', overrides: Partial<Card> = {}): Card {
   return fixtureCard(type, {
     rings: [
       { cues: cuesFor(type), activeIndex: 0 },
-      { cues: cuesFor('modifier'), activeIndex: 0 },
+      { cues: cuesFor('modifier'), activeIndex: 0, modDeck: 'role' },
     ],
     ...overrides,
   });

@@ -6,9 +6,16 @@
  * genres: 1 list for each of the 4 genre-tagged decks, each 1 or more known genres, none
  * repeated.
  * A tuckedUnder that names no card is allowed: the stack rules treat that card as a root.
+ * Card rules: a Hook Card has no rings, is never tucked and has no badge word; a Modifier
+ * card needs its modDeck and only a merged adjective ring carries one; only a Modifier sits
+ * on top of a card (onTopOf), never tucked, on a Player Role, Resource or Setting, 1 per
+ * base card. An onTopOf that names no card is allowed, like a dangling tuckedUnder.
+ * The Phase 2 fields (hook, the 6 new decks, modDeck, onTopOf, locked) went into format 1
+ * before any user board existed, so there is no upgrade step (board-file-format).
  */
 import { z } from 'zod';
 import {
+  BASE_TYPES,
   CARD_TYPES,
   FORMAT_VERSION,
   GENRES,
@@ -43,6 +50,8 @@ const RING_RULES: Record<CardType, { rings: readonly number[]; cues: number }> =
   constraint: { rings: [1], cues: 2 },
 };
 
+const isBase = (type: CardType) => BASE_TYPES.includes(type);
+
 const cardSchema = z
   .object({
     id: z.string().min(1),
@@ -58,19 +67,32 @@ const cardSchema = z
     locked: z.boolean(),
   })
   .superRefine((card, ctx) => {
+    const issue = (message: string) => ctx.addIssue({ code: 'custom', message });
     const rule = RING_RULES[card.type];
     if (!rule.rings.includes(card.rings.length)) {
-      ctx.addIssue({ code: 'custom', message: `A ${card.type} card has the wrong ring count.` });
+      issue(`A ${card.type} card has the wrong ring count.`);
       return;
     }
     card.rings.forEach((ring, i) => {
-      if (ring.cues.length !== rule.cues) {
-        ctx.addIssue({ code: 'custom', message: `Ring ${i} has the wrong cue count.` });
-      }
-      if (ring.activeIndex >= ring.cues.length) {
-        ctx.addIssue({ code: 'custom', message: `Ring ${i} has activeIndex out of range.` });
-      }
+      if (ring.cues.length !== rule.cues) issue(`Ring ${i} has the wrong cue count.`);
+      if (ring.activeIndex >= ring.cues.length) issue(`Ring ${i} has activeIndex out of range.`);
+      // Only a merged adjective ring (rings[1] of a base card) names its Modifier deck.
+      const merged = i === 1 && isBase(card.type);
+      if (merged && !ring.modDeck) issue('A merged adjective ring needs its Modifier deck.');
+      if (!merged && ring.modDeck) issue(`Ring ${i} of a ${card.type} card has a Modifier deck.`);
     });
+    if (card.type === 'hook') {
+      if (card.tuckedUnder !== null) issue('A Hook Card is never tucked.');
+      if (card.connector !== undefined) issue('A Hook Card has no badge word.');
+    }
+    if (card.type === 'modifier' && !card.modDeck) issue('A Modifier card needs its deck.');
+    if (card.type !== 'modifier' && card.modDeck) {
+      issue(`A ${card.type} card has a Modifier deck.`);
+    }
+    if (card.onTopOf !== null) {
+      if (card.type !== 'modifier') issue('Only a Modifier sits on top of a card.');
+      if (card.tuckedUnder !== null) issue('A card on top of another is never tucked.');
+    }
   });
 
 const noteSchema = z.object({
@@ -129,6 +151,32 @@ export const boardSchema: z.ZodType<Board> = z
     }
     if (new Set(board.notes.map((note) => note.id)).size !== board.notes.length) {
       ctx.addIssue({ code: 'custom', message: 'Two notes have the same id.' });
+    }
+    const byId = new Map(board.cards.map((card) => [card.id, card]));
+    const onTopCount = new Map<string, number>();
+    for (const card of board.cards) {
+      if (card.onTopOf === null) continue;
+      const base = byId.get(card.onTopOf);
+      // An onTopOf that names no card is allowed: that card shows as a free Modifier.
+      if (!base) continue;
+      if (!isBase(base.type)) {
+        ctx.addIssue({
+          code: 'custom',
+          message: 'A card sits on top of a card that is not a base.',
+        });
+      }
+      onTopCount.set(base.id, (onTopCount.get(base.id) ?? 0) + 1);
+    }
+    if ([...onTopCount.values()].some((count) => count > 1)) {
+      ctx.addIssue({ code: 'custom', message: 'Two cards sit on top of one card.' });
+    }
+    const onTopIds = new Set(
+      board.cards
+        .filter((card) => card.onTopOf !== null && byId.has(card.onTopOf))
+        .map((c) => c.id),
+    );
+    if (board.cards.some((card) => card.tuckedUnder !== null && onTopIds.has(card.tuckedUnder))) {
+      ctx.addIssue({ code: 'custom', message: 'A card is tucked under a card that is on top.' });
     }
     if (board.cards.some((card) => card.tuckedUnder === card.id)) {
       ctx.addIssue({ code: 'custom', message: 'A card is tucked under itself.' });
