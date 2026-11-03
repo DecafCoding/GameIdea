@@ -1,0 +1,1873 @@
+{
+  "type": "role",
+  "cues": [
+    {
+      "id": "role-0001",
+      "text": "survivor"
+    },
+    {
+      "id": "role-0002",
+      "text": "hero"
+    },
+    {
+      "id": "role-0003",
+      "text": "girl"
+    },
+    {
+      "id": "role-0004",
+      "text": "father"
+    },
+    {
+      "id": "role-0005",
+      "text": "cop"
+    },
+    {
+      "id": "role-0006",
+      "text": "soldier"
+    },
+    {
+      "id": "role-0007",
+      "text": "physicist"
+    },
+    {
+      "id": "role-0008",
+      "text": "transfer student"
+    },
+    {
+      "id": "role-0009",
+      "text": "prisoner"
+    },
+    {
+      "id": "role-0010",
+      "text": "child"
+    },
+    {
+      "id": "role-0011",
+      "text": "fighter"
+    },
+    {
+      "id": "role-0012",
+      "text": "warrior"
+    },
+    {
+      "id": "role-0013",
+      "text": "boy"
+    },
+    {
+      "id": "role-0014",
+      "text": "army general"
+    },
+    {
+      "id": "role-0015",
+      "text": "bounty hunter"
+    },
+    {
+      "id": "role-0016",
+      "text": "card gambler"
+    },
+    {
+      "id": "role-0017",
+      "text": "counter-terrorist"
+    },
+    {
+      "id": "role-0018",
+      "text": "fighter pilot"
+    },
+    {
+      "id": "role-0019",
+      "text": "fort builder"
+    },
+    {
+      "id": "role-0020",
+      "text": "insurgent"
+    },
+    {
+      "id": "role-0021",
+      "text": "secret agent (spy)"
+    },
+    {
+      "id": "role-0022",
+      "text": "starship captain"
+    },
+    {
+      "id": "role-0023",
+      "text": "stunt driver"
+    },
+    {
+      "id": "role-0024",
+      "text": "hitman"
+    },
+    {
+      "id": "role-0025",
+      "text": "ruler"
+    },
+    {
+      "id": "role-0026",
+      "text": "farmer"
+    },
+    {
+      "id": "role-0027",
+      "text": "agent"
+    },
+    {
+      "id": "role-0028",
+      "text": "detective"
+    },
+    {
+      "id": "role-0029",
+      "text": "scientist"
+    },
+    {
+      "id": "role-0030",
+      "text": "heir"
+    },
+    {
+      "id": "role-0031",
+      "text": "god"
+    },
+    {
+      "id": "role-0032",
+      "text": "bodyguard"
+    },
+    {
+      "id": "role-0033",
+      "text": "mage"
+    },
+    {
+      "id": "role-0034",
+      "text": "arena fighter"
+    },
+    {
+      "id": "role-0035",
+      "text": "colony overseer"
+    },
+    {
+      "id": "role-0036",
+      "text": "man"
+    },
+    {
+      "id": "role-0037",
+      "text": "crash survivor"
+    },
+    {
+      "id": "role-0038",
+      "text": "engineer"
+    },
+    {
+      "id": "role-0039",
+      "text": "cult leader"
+    },
+    {
+      "id": "role-0040",
+      "text": "demon slayer"
+    },
+    {
+      "id": "role-0041",
+      "text": "factory engineer"
+    },
+    {
+      "id": "role-0042",
+      "text": "field medic"
+    },
+    {
+      "id": "role-0043",
+      "text": "forest spirit"
+    },
+    {
+      "id": "role-0044",
+      "text": "city leader"
+    },
+    {
+      "id": "role-0045",
+      "text": "ghost hunter"
+    },
+    {
+      "id": "role-0046",
+      "text": "lab worker"
+    },
+    {
+      "id": "role-0047",
+      "text": "humanity's last hope"
+    },
+    {
+      "id": "role-0048",
+      "text": "long-haul trucker"
+    },
+    {
+      "id": "role-0049",
+      "text": "mad scientist"
+    },
+    {
+      "id": "role-0050",
+      "text": "vigilante"
+    },
+    {
+      "id": "role-0051",
+      "text": "mountain climber"
+    },
+    {
+      "id": "role-0052",
+      "text": "mouse cursor"
+    },
+    {
+      "id": "role-0053",
+      "text": "wanderer"
+    },
+    {
+      "id": "role-0054",
+      "text": "new kid"
+    },
+    {
+      "id": "role-0055",
+      "text": "physics tinkerer"
+    },
+    {
+      "id": "role-0056",
+      "text": "race car driver"
+    },
+    {
+      "id": "role-0057",
+      "text": "raider"
+    },
+    {
+      "id": "role-0058",
+      "text": "resistance hero"
+    },
+    {
+      "id": "role-0059",
+      "text": "school club member"
+    },
+    {
+      "id": "role-0060",
+      "text": "scrap collector"
+    },
+    {
+      "id": "role-0061",
+      "text": "club leader"
+    },
+    {
+      "id": "role-0062",
+      "text": "shop owner"
+    },
+    {
+      "id": "role-0063",
+      "text": "spirit summoner"
+    },
+    {
+      "id": "role-0064",
+      "text": "squad leader"
+    },
+    {
+      "id": "role-0065",
+      "text": "test subject"
+    },
+    {
+      "id": "role-0066",
+      "text": "town founder"
+    },
+    {
+      "id": "role-0067",
+      "text": "trucking boss"
+    },
+    {
+      "id": "role-0068",
+      "text": "warlord"
+    },
+    {
+      "id": "role-0069",
+      "text": "archaeologist"
+    },
+    {
+      "id": "role-0070",
+      "text": "zombie survivor"
+    },
+    {
+      "id": "role-0071",
+      "text": "witch"
+    },
+    {
+      "id": "role-0072",
+      "text": "soul"
+    },
+    {
+      "id": "role-0073",
+      "text": "commander"
+    },
+    {
+      "id": "role-0074",
+      "text": "mercenary"
+    },
+    {
+      "id": "role-0075",
+      "text": "rescuer"
+    },
+    {
+      "id": "role-0076",
+      "text": "knight"
+    },
+    {
+      "id": "role-0077",
+      "text": "miner"
+    },
+    {
+      "id": "role-0078",
+      "text": "adventurer"
+    },
+    {
+      "id": "role-0079",
+      "text": "teen"
+    },
+    {
+      "id": "role-0080",
+      "text": "astronaut"
+    },
+    {
+      "id": "role-0081",
+      "text": "eccentric scientist"
+    },
+    {
+      "id": "role-0082",
+      "text": "adoptive parent"
+    },
+    {
+      "id": "role-0083",
+      "text": "airline captain"
+    },
+    {
+      "id": "role-0084",
+      "text": "film crew"
+    },
+    {
+      "id": "role-0085",
+      "text": "mechanic"
+    },
+    {
+      "id": "role-0086",
+      "text": "veteran"
+    },
+    {
+      "id": "role-0087",
+      "text": "android's guardian"
+    },
+    {
+      "id": "role-0088",
+      "text": "guardian"
+    },
+    {
+      "id": "role-0089",
+      "text": "rebel"
+    },
+    {
+      "id": "role-0090",
+      "text": "android's owner"
+    },
+    {
+      "id": "role-0091",
+      "text": "angler"
+    },
+    {
+      "id": "role-0092",
+      "text": "racer"
+    },
+    {
+      "id": "role-0093",
+      "text": "climber"
+    },
+    {
+      "id": "role-0094",
+      "text": "arena champion"
+    },
+    {
+      "id": "role-0095",
+      "text": "crab"
+    },
+    {
+      "id": "role-0096",
+      "text": "duck"
+    },
+    {
+      "id": "role-0097",
+      "text": "streamer"
+    },
+    {
+      "id": "role-0098",
+      "text": "axe berserker"
+    },
+    {
+      "id": "role-0099",
+      "text": "bartender"
+    },
+    {
+      "id": "role-0100",
+      "text": "big brother"
+    },
+    {
+      "id": "role-0101",
+      "text": "cube"
+    },
+    {
+      "id": "role-0102",
+      "text": "otter"
+    },
+    {
+      "id": "role-0103",
+      "text": "office worker"
+    },
+    {
+      "id": "role-0104",
+      "text": "bush pilot"
+    },
+    {
+      "id": "role-0105",
+      "text": "boyfriend"
+    },
+    {
+      "id": "role-0106",
+      "text": "performer"
+    },
+    {
+      "id": "role-0107",
+      "text": "car collector"
+    },
+    {
+      "id": "role-0108",
+      "text": "card collector"
+    },
+    {
+      "id": "role-0109",
+      "text": "card shop owner"
+    },
+    {
+      "id": "role-0110",
+      "text": "cat burglar"
+    },
+    {
+      "id": "role-0111",
+      "text": "gang boss"
+    },
+    {
+      "id": "role-0112",
+      "text": "circuit tinkerer"
+    },
+    {
+      "id": "role-0113",
+      "text": "city boy"
+    },
+    {
+      "id": "role-0114",
+      "text": "city mayor"
+    },
+    {
+      "id": "role-0115",
+      "text": "clan champion"
+    },
+    {
+      "id": "role-0116",
+      "text": "sorcerer"
+    },
+    {
+      "id": "role-0117",
+      "text": "college student"
+    },
+    {
+      "id": "role-0118",
+      "text": "pioneer"
+    },
+    {
+      "id": "role-0119",
+      "text": "tinkerer"
+    },
+    {
+      "id": "role-0120",
+      "text": "crash junkie"
+    },
+    {
+      "id": "role-0121",
+      "text": "crash tester"
+    },
+    {
+      "id": "role-0122",
+      "text": "crime lord"
+    },
+    {
+      "id": "role-0123",
+      "text": "estate heir"
+    },
+    {
+      "id": "role-0124",
+      "text": "undead"
+    },
+    {
+      "id": "role-0125",
+      "text": "ninja"
+    },
+    {
+      "id": "role-0126",
+      "text": "relative"
+    },
+    {
+      "id": "role-0127",
+      "text": "Viking warrior"
+    },
+    {
+      "id": "role-0128",
+      "text": "deep-sea explorer"
+    },
+    {
+      "id": "role-0129",
+      "text": "demolition derby driver"
+    },
+    {
+      "id": "role-0130",
+      "text": "demolition thief"
+    },
+    {
+      "id": "role-0131",
+      "text": "demon hunter"
+    },
+    {
+      "id": "role-0132",
+      "text": "gambler"
+    },
+    {
+      "id": "role-0133",
+      "text": "parent"
+    },
+    {
+      "id": "role-0134",
+      "text": "expedition member"
+    },
+    {
+      "id": "role-0135",
+      "text": "drift racer"
+    },
+    {
+      "id": "role-0136",
+      "text": "drifter"
+    },
+    {
+      "id": "role-0137",
+      "text": "biker"
+    },
+    {
+      "id": "role-0138",
+      "text": "noble heir"
+    },
+    {
+      "id": "role-0139",
+      "text": "old man"
+    },
+    {
+      "id": "role-0140",
+      "text": "beast warrior"
+    },
+    {
+      "id": "role-0141",
+      "text": "monster"
+    },
+    {
+      "id": "role-0142",
+      "text": "young adult"
+    },
+    {
+      "id": "role-0143",
+      "text": "employee"
+    },
+    {
+      "id": "role-0144",
+      "text": "facility guard"
+    },
+    {
+      "id": "role-0145",
+      "text": "prodigy"
+    },
+    {
+      "id": "role-0146",
+      "text": "sheriff"
+    },
+    {
+      "id": "role-0147",
+      "text": "fantasy writer"
+    },
+    {
+      "id": "role-0148",
+      "text": "farm animal"
+    },
+    {
+      "id": "role-0149",
+      "text": "farm tycoon"
+    },
+    {
+      "id": "role-0150",
+      "text": "fencer"
+    },
+    {
+      "id": "role-0151",
+      "text": "food stall owner"
+    },
+    {
+      "id": "role-0152",
+      "text": "foot soldier"
+    },
+    {
+      "id": "role-0153",
+      "text": "lore seeker"
+    },
+    {
+      "id": "role-0154",
+      "text": "child soldier"
+    },
+    {
+      "id": "role-0155",
+      "text": "game maker"
+    },
+    {
+      "id": "role-0156",
+      "text": "game master"
+    },
+    {
+      "id": "role-0157",
+      "text": "player"
+    },
+    {
+      "id": "role-0158",
+      "text": "gang enforcer"
+    },
+    {
+      "id": "role-0159",
+      "text": "gang soldier"
+    },
+    {
+      "id": "role-0160",
+      "text": "garden defender"
+    },
+    {
+      "id": "role-0161",
+      "text": "gentleman thief"
+    },
+    {
+      "id": "role-0162",
+      "text": "wizard"
+    },
+    {
+      "id": "role-0163",
+      "text": "widower"
+    },
+    {
+      "id": "role-0164",
+      "text": "handyman"
+    },
+    {
+      "id": "role-0165",
+      "text": "gunslinger"
+    },
+    {
+      "id": "role-0166",
+      "text": "heist crew member"
+    },
+    {
+      "id": "role-0167",
+      "text": "heist planner"
+    },
+    {
+      "id": "role-0168",
+      "text": "train conductor"
+    },
+    {
+      "id": "role-0169",
+      "text": "hero guild master"
+    },
+    {
+      "id": "role-0170",
+      "text": "war hero"
+    },
+    {
+      "id": "role-0171",
+      "text": "space traveler"
+    },
+    {
+      "id": "role-0172",
+      "text": "horde slayer"
+    },
+    {
+      "id": "role-0173",
+      "text": "hospital intern"
+    },
+    {
+      "id": "role-0174",
+      "text": "house flipper"
+    },
+    {
+      "id": "role-0175",
+      "text": "housekeeper"
+    },
+    {
+      "id": "role-0176",
+      "text": "ex-soldier"
+    },
+    {
+      "id": "role-0177",
+      "text": "investigative reporter"
+    },
+    {
+      "id": "role-0178",
+      "text": "puzzle solver"
+    },
+    {
+      "id": "role-0179",
+      "text": "jellyfish seller"
+    },
+    {
+      "id": "role-0180",
+      "text": "junkyard inventor"
+    },
+    {
+      "id": "role-0181",
+      "text": "kart racer"
+    },
+    {
+      "id": "role-0182",
+      "text": "lab nerd"
+    },
+    {
+      "id": "role-0183",
+      "text": "courier"
+    },
+    {
+      "id": "role-0184",
+      "text": "level designer"
+    },
+    {
+      "id": "role-0185",
+      "text": "toy"
+    },
+    {
+      "id": "role-0186",
+      "text": "block builder"
+    },
+    {
+      "id": "role-0187",
+      "text": "fisherman"
+    },
+    {
+      "id": "role-0188",
+      "text": "young man"
+    },
+    {
+      "id": "role-0189",
+      "text": "camper"
+    },
+    {
+      "id": "role-0190",
+      "text": "scout"
+    },
+    {
+      "id": "role-0191",
+      "text": "machine programmer"
+    },
+    {
+      "id": "role-0192",
+      "text": "magical girl"
+    },
+    {
+      "id": "role-0193",
+      "text": "assassin"
+    },
+    {
+      "id": "role-0194",
+      "text": "bank robber"
+    },
+    {
+      "id": "role-0195",
+      "text": "mech engineer"
+    },
+    {
+      "id": "role-0196",
+      "text": "mech pilot"
+    },
+    {
+      "id": "role-0197",
+      "text": "medium's assistant"
+    },
+    {
+      "id": "role-0198",
+      "text": "megastructure engineer"
+    },
+    {
+      "id": "role-0199",
+      "text": "metro survivor"
+    },
+    {
+      "id": "role-0200",
+      "text": "mobster's son"
+    },
+    {
+      "id": "role-0201",
+      "text": "monster hunter"
+    },
+    {
+      "id": "role-0202",
+      "text": "monster tamer"
+    },
+    {
+      "id": "role-0203",
+      "text": "cyborg"
+    },
+    {
+      "id": "role-0204",
+      "text": "zombie"
+    },
+    {
+      "id": "role-0205",
+      "text": "poet"
+    },
+    {
+      "id": "role-0206",
+      "text": "nation leader"
+    },
+    {
+      "id": "role-0207",
+      "text": "boat captain"
+    },
+    {
+      "id": "role-0208",
+      "text": "newcomer"
+    },
+    {
+      "id": "role-0209",
+      "text": "noble's bodyguard"
+    },
+    {
+      "id": "role-0210",
+      "text": "off-road trucker"
+    },
+    {
+      "id": "role-0211",
+      "text": "turtle"
+    },
+    {
+      "id": "role-0212",
+      "text": "shinobi"
+    },
+    {
+      "id": "role-0213",
+      "text": "one-man army"
+    },
+    {
+      "id": "role-0214",
+      "text": "orphan"
+    },
+    {
+      "id": "role-0215",
+      "text": "orphan's guardian"
+    },
+    {
+      "id": "role-0216",
+      "text": "baller"
+    },
+    {
+      "id": "role-0217",
+      "text": "gunman"
+    },
+    {
+      "id": "role-0218",
+      "text": "parkour runner"
+    },
+    {
+      "id": "role-0219",
+      "text": "party leader"
+    },
+    {
+      "id": "role-0220",
+      "text": "plane crash survivor"
+    },
+    {
+      "id": "role-0221",
+      "text": "planet thrower"
+    },
+    {
+      "id": "role-0222",
+      "text": "poacher"
+    },
+    {
+      "id": "role-0223",
+      "text": "pressure washer"
+    },
+    {
+      "id": "role-0224",
+      "text": "student"
+    },
+    {
+      "id": "role-0225",
+      "text": "quarantine survivor"
+    },
+    {
+      "id": "role-0226",
+      "text": "racing team owner"
+    },
+    {
+      "id": "role-0227",
+      "text": "raft castaway"
+    },
+    {
+      "id": "role-0228",
+      "text": "rally driver"
+    },
+    {
+      "id": "role-0229",
+      "text": "realm's champion"
+    },
+    {
+      "id": "role-0230",
+      "text": "rebel leader"
+    },
+    {
+      "id": "role-0231",
+      "text": "exile"
+    },
+    {
+      "id": "role-0232",
+      "text": "rescue captain"
+    },
+    {
+      "id": "role-0233",
+      "text": "rescue driver"
+    },
+    {
+      "id": "role-0234",
+      "text": "rescue vehicle builder"
+    },
+    {
+      "id": "role-0235",
+      "text": "superhero"
+    },
+    {
+      "id": "role-0236",
+      "text": "war veteran"
+    },
+    {
+      "id": "role-0237",
+      "text": "rhythm fighter"
+    },
+    {
+      "id": "role-0238",
+      "text": "demigod"
+    },
+    {
+      "id": "role-0239",
+      "text": "rocket engineer"
+    },
+    {
+      "id": "role-0240",
+      "text": "defense lawyer"
+    },
+    {
+      "id": "role-0241",
+      "text": "street fighter"
+    },
+    {
+      "id": "role-0242",
+      "text": "salvage robot"
+    },
+    {
+      "id": "role-0243",
+      "text": "samurai lord"
+    },
+    {
+      "id": "role-0244",
+      "text": "scavenger"
+    },
+    {
+      "id": "role-0245",
+      "text": "sci-fi writer"
+    },
+    {
+      "id": "role-0246",
+      "text": "android"
+    },
+    {
+      "id": "role-0247",
+      "text": "husband"
+    },
+    {
+      "id": "role-0248",
+      "text": "impostor"
+    },
+    {
+      "id": "role-0249",
+      "text": "samurai"
+    },
+    {
+      "id": "role-0250",
+      "text": "sharpshooter"
+    },
+    {
+      "id": "role-0251",
+      "text": "ship engineer"
+    },
+    {
+      "id": "role-0252",
+      "text": "shipwreck survivor"
+    },
+    {
+      "id": "role-0253",
+      "text": "photo student"
+    },
+    {
+      "id": "role-0254",
+      "text": "siege engineer"
+    },
+    {
+      "id": "role-0255",
+      "text": "hunter"
+    },
+    {
+      "id": "role-0256",
+      "text": "single cell"
+    },
+    {
+      "id": "role-0257",
+      "text": "slave"
+    },
+    {
+      "id": "role-0258",
+      "text": "dealer"
+    },
+    {
+      "id": "role-0259",
+      "text": "space commando"
+    },
+    {
+      "id": "role-0260",
+      "text": "dwarf"
+    },
+    {
+      "id": "role-0261",
+      "text": "space exile"
+    },
+    {
+      "id": "role-0262",
+      "text": "space explorer"
+    },
+    {
+      "id": "role-0263",
+      "text": "space program boss"
+    },
+    {
+      "id": "role-0264",
+      "text": "spellsword"
+    },
+    {
+      "id": "role-0265",
+      "text": "crook / thief"
+    },
+    {
+      "id": "role-0266",
+      "text": "cat"
+    },
+    {
+      "id": "role-0267",
+      "text": "street car tuner"
+    },
+    {
+      "id": "role-0268",
+      "text": "street racer"
+    },
+    {
+      "id": "role-0269",
+      "text": "pizza chef"
+    },
+    {
+      "id": "role-0270",
+      "text": "submarine captain"
+    },
+    {
+      "id": "role-0271",
+      "text": "submarine crew member"
+    },
+    {
+      "id": "role-0272",
+      "text": "super soldier"
+    },
+    {
+      "id": "role-0273",
+      "text": "superhero commander"
+    },
+    {
+      "id": "role-0274",
+      "text": "supermarket clerk"
+    },
+    {
+      "id": "role-0275",
+      "text": "sword bearer"
+    },
+    {
+      "id": "role-0276",
+      "text": "tank driver"
+    },
+    {
+      "id": "role-0277",
+      "text": "time trial racer"
+    },
+    {
+      "id": "role-0278",
+      "text": "FBI analyst"
+    },
+    {
+      "id": "role-0279",
+      "text": "square"
+    },
+    {
+      "id": "role-0280",
+      "text": "town painter"
+    },
+    {
+      "id": "role-0281",
+      "text": "track builder"
+    },
+    {
+      "id": "role-0282",
+      "text": "traitor"
+    },
+    {
+      "id": "role-0283",
+      "text": "car"
+    },
+    {
+      "id": "role-0284",
+      "text": "tribe chief"
+    },
+    {
+      "id": "role-0285",
+      "text": "true-crime writer"
+    },
+    {
+      "id": "role-0286",
+      "text": "guide"
+    },
+    {
+      "id": "role-0287",
+      "text": "uploaded mind"
+    },
+    {
+      "id": "role-0288",
+      "text": "bird"
+    },
+    {
+      "id": "role-0289",
+      "text": "vampire hunter"
+    },
+    {
+      "id": "role-0290",
+      "text": "village dressmaker"
+    },
+    {
+      "id": "role-0291",
+      "text": "idol"
+    },
+    {
+      "id": "role-0292",
+      "text": "virtual pet keeper"
+    },
+    {
+      "id": "role-0293",
+      "text": "walking disaster"
+    },
+    {
+      "id": "role-0294",
+      "text": "wand crafter"
+    },
+    {
+      "id": "role-0295",
+      "text": "martial artist"
+    },
+    {
+      "id": "role-0296",
+      "text": "rock star"
+    },
+    {
+      "id": "role-0297",
+      "text": "war civilian"
+    },
+    {
+      "id": "role-0298",
+      "text": "war robot"
+    },
+    {
+      "id": "role-0299",
+      "text": "warrior princess"
+    },
+    {
+      "id": "role-0300",
+      "text": "wasteland drifter"
+    },
+    {
+      "id": "role-0301",
+      "text": "willing sacrifice"
+    },
+    {
+      "id": "role-0302",
+      "text": "dreamer"
+    },
+    {
+      "id": "role-0303",
+      "text": "traveler"
+    },
+    {
+      "id": "role-0304",
+      "text": "king"
+    },
+    {
+      "id": "role-0305",
+      "text": "resistance fighter"
+    },
+    {
+      "id": "role-0306",
+      "text": "yourself"
+    },
+    {
+      "id": "role-0307",
+      "text": "ferry captain"
+    },
+    {
+      "id": "role-0308",
+      "text": "spirit"
+    },
+    {
+      "id": "role-0309",
+      "text": "match fixer"
+    },
+    {
+      "id": "role-0310",
+      "text": "crime scene cleaner"
+    },
+    {
+      "id": "role-0311",
+      "text": "convict"
+    },
+    {
+      "id": "role-0312",
+      "text": "pilot"
+    },
+    {
+      "id": "role-0313",
+      "text": "village craftsman"
+    },
+    {
+      "id": "role-0314",
+      "text": "blacksmith"
+    },
+    {
+      "id": "role-0315",
+      "text": "customs officer"
+    },
+    {
+      "id": "role-0316",
+      "text": "bakery tycoon"
+    },
+    {
+      "id": "role-0317",
+      "text": "desktop pet"
+    },
+    {
+      "id": "role-0318",
+      "text": "dream therapist"
+    },
+    {
+      "id": "role-0319",
+      "text": "creature rancher"
+    },
+    {
+      "id": "role-0320",
+      "text": "diver"
+    },
+    {
+      "id": "role-0321",
+      "text": "emergency dispatcher"
+    },
+    {
+      "id": "role-0322",
+      "text": "tunnel ranger"
+    },
+    {
+      "id": "role-0323",
+      "text": "security guard"
+    },
+    {
+      "id": "role-0324",
+      "text": "ship crew member"
+    },
+    {
+      "id": "role-0325",
+      "text": "terraformer"
+    },
+    {
+      "id": "role-0326",
+      "text": "cook"
+    },
+    {
+      "id": "role-0327",
+      "text": "investigator"
+    },
+    {
+      "id": "role-0328",
+      "text": "animal"
+    },
+    {
+      "id": "role-0329",
+      "text": "vegetable"
+    },
+    {
+      "id": "role-0330",
+      "text": "fruit"
+    },
+    {
+      "id": "role-0331",
+      "text": "nurse"
+    },
+    {
+      "id": "role-0332",
+      "text": "doctor"
+    },
+    {
+      "id": "role-0333",
+      "text": "teacher"
+    },
+    {
+      "id": "role-0334",
+      "text": "librarian"
+    },
+    {
+      "id": "role-0335",
+      "text": "mail carrier"
+    },
+    {
+      "id": "role-0336",
+      "text": "lighthouse keeper"
+    },
+    {
+      "id": "role-0337",
+      "text": "night janitor"
+    },
+    {
+      "id": "role-0338",
+      "text": "gravedigger"
+    },
+    {
+      "id": "role-0339",
+      "text": "undertaker"
+    },
+    {
+      "id": "role-0340",
+      "text": "tax collector"
+    },
+    {
+      "id": "role-0341",
+      "text": "translator"
+    },
+    {
+      "id": "role-0342",
+      "text": "cartographer"
+    },
+    {
+      "id": "role-0343",
+      "text": "beekeeper"
+    },
+    {
+      "id": "role-0344",
+      "text": "zookeeper"
+    },
+    {
+      "id": "role-0345",
+      "text": "park ranger"
+    },
+    {
+      "id": "role-0346",
+      "text": "lifeguard"
+    },
+    {
+      "id": "role-0347",
+      "text": "firefighter"
+    },
+    {
+      "id": "role-0348",
+      "text": "tailor"
+    },
+    {
+      "id": "role-0349",
+      "text": "clockmaker"
+    },
+    {
+      "id": "role-0350",
+      "text": "locksmith"
+    },
+    {
+      "id": "role-0351",
+      "text": "florist"
+    },
+    {
+      "id": "role-0352",
+      "text": "street sweeper"
+    },
+    {
+      "id": "role-0353",
+      "text": "babysitter"
+    },
+    {
+      "id": "role-0354",
+      "text": "nanny"
+    },
+    {
+      "id": "role-0355",
+      "text": "midwife"
+    },
+    {
+      "id": "role-0356",
+      "text": "caretaker"
+    },
+    {
+      "id": "role-0357",
+      "text": "hospice worker"
+    },
+    {
+      "id": "role-0358",
+      "text": "foster parent"
+    },
+    {
+      "id": "role-0359",
+      "text": "grandparent"
+    },
+    {
+      "id": "role-0360",
+      "text": "older sister"
+    },
+    {
+      "id": "role-0361",
+      "text": "pet sitter"
+    },
+    {
+      "id": "role-0362",
+      "text": "shepherd"
+    },
+    {
+      "id": "role-0363",
+      "text": "villain"
+    },
+    {
+      "id": "role-0364",
+      "text": "henchman"
+    },
+    {
+      "id": "role-0365",
+      "text": "dark lord"
+    },
+    {
+      "id": "role-0366",
+      "text": "evil overlord"
+    },
+    {
+      "id": "role-0367",
+      "text": "minion"
+    },
+    {
+      "id": "role-0368",
+      "text": "tyrant"
+    },
+    {
+      "id": "role-0369",
+      "text": "saboteur"
+    },
+    {
+      "id": "role-0370",
+      "text": "smuggler"
+    },
+    {
+      "id": "role-0371",
+      "text": "pirate"
+    },
+    {
+      "id": "role-0372",
+      "text": "con artist"
+    },
+    {
+      "id": "role-0373",
+      "text": "ghost"
+    },
+    {
+      "id": "role-0374",
+      "text": "robot"
+    },
+    {
+      "id": "role-0375",
+      "text": "AI"
+    },
+    {
+      "id": "role-0376",
+      "text": "sentient AI"
+    },
+    {
+      "id": "role-0377",
+      "text": "vampire"
+    },
+    {
+      "id": "role-0378",
+      "text": "werewolf"
+    },
+    {
+      "id": "role-0379",
+      "text": "dragon"
+    },
+    {
+      "id": "role-0380",
+      "text": "golem"
+    },
+    {
+      "id": "role-0381",
+      "text": "slime"
+    },
+    {
+      "id": "role-0382",
+      "text": "alien"
+    },
+    {
+      "id": "role-0383",
+      "text": "mermaid"
+    },
+    {
+      "id": "role-0384",
+      "text": "fairy"
+    },
+    {
+      "id": "role-0385",
+      "text": "imp"
+    },
+    {
+      "id": "role-0386",
+      "text": "scarecrow"
+    },
+    {
+      "id": "role-0387",
+      "text": "zombie dog"
+    },
+    {
+      "id": "role-0388",
+      "text": "living doll"
+    },
+    {
+      "id": "role-0389",
+      "text": "puppet"
+    },
+    {
+      "id": "role-0390",
+      "text": "reanimated corpse"
+    },
+    {
+      "id": "role-0391",
+      "text": "house"
+    },
+    {
+      "id": "role-0392",
+      "text": "ship"
+    },
+    {
+      "id": "role-0393",
+      "text": "sword"
+    },
+    {
+      "id": "role-0394",
+      "text": "lantern"
+    },
+    {
+      "id": "role-0395",
+      "text": "tree"
+    },
+    {
+      "id": "role-0396",
+      "text": "planet"
+    },
+    {
+      "id": "role-0397",
+      "text": "storm"
+    },
+    {
+      "id": "role-0398",
+      "text": "river"
+    },
+    {
+      "id": "role-0399",
+      "text": "virus"
+    },
+    {
+      "id": "role-0400",
+      "text": "computer program"
+    },
+    {
+      "id": "role-0401",
+      "text": "haunted painting"
+    },
+    {
+      "id": "role-0402",
+      "text": "vending machine"
+    },
+    {
+      "id": "role-0403",
+      "text": "swarm"
+    },
+    {
+      "id": "role-0404",
+      "text": "hive mind"
+    },
+    {
+      "id": "role-0405",
+      "text": "colony"
+    },
+    {
+      "id": "role-0406",
+      "text": "family"
+    },
+    {
+      "id": "role-0407",
+      "text": "band"
+    },
+    {
+      "id": "role-0408",
+      "text": "crew"
+    },
+    {
+      "id": "role-0409",
+      "text": "village"
+    },
+    {
+      "id": "role-0410",
+      "text": "school of fish"
+    },
+    {
+      "id": "role-0411",
+      "text": "oracle"
+    },
+    {
+      "id": "role-0412",
+      "text": "prophet"
+    },
+    {
+      "id": "role-0413",
+      "text": "angel"
+    },
+    {
+      "id": "role-0414",
+      "text": "demon"
+    },
+    {
+      "id": "role-0415",
+      "text": "reaper"
+    },
+    {
+      "id": "role-0416",
+      "text": "trickster spirit"
+    },
+    {
+      "id": "role-0417",
+      "text": "river spirit"
+    },
+    {
+      "id": "role-0418",
+      "text": "chosen one"
+    },
+    {
+      "id": "role-0419",
+      "text": "wish-granter"
+    },
+    {
+      "id": "role-0420",
+      "text": "fortune teller"
+    },
+    {
+      "id": "role-0421",
+      "text": "amnesiac"
+    },
+    {
+      "id": "role-0422",
+      "text": "clone"
+    },
+    {
+      "id": "role-0423",
+      "text": "twin"
+    },
+    {
+      "id": "role-0424",
+      "text": "impersonator"
+    },
+    {
+      "id": "role-0425",
+      "text": "sleepwalker"
+    },
+    {
+      "id": "role-0426",
+      "text": "dreamer's double"
+    },
+    {
+      "id": "role-0427",
+      "text": "possessed host"
+    },
+    {
+      "id": "role-0428",
+      "text": "body swapper"
+    },
+    {
+      "id": "role-0429",
+      "text": "painter"
+    },
+    {
+      "id": "role-0430",
+      "text": "sculptor"
+    },
+    {
+      "id": "role-0431",
+      "text": "musician"
+    },
+    {
+      "id": "role-0432",
+      "text": "composer"
+    },
+    {
+      "id": "role-0433",
+      "text": "puppeteer"
+    },
+    {
+      "id": "role-0434",
+      "text": "magician"
+    },
+    {
+      "id": "role-0435",
+      "text": "clown"
+    },
+    {
+      "id": "role-0436",
+      "text": "chef"
+    },
+    {
+      "id": "role-0437",
+      "text": "potter"
+    },
+    {
+      "id": "role-0438",
+      "text": "inventor"
+    },
+    {
+      "id": "role-0439",
+      "text": "merchant"
+    },
+    {
+      "id": "role-0440",
+      "text": "innkeeper"
+    },
+    {
+      "id": "role-0441",
+      "text": "matchmaker"
+    },
+    {
+      "id": "role-0442",
+      "text": "diplomat"
+    },
+    {
+      "id": "role-0443",
+      "text": "negotiator"
+    },
+    {
+      "id": "role-0444",
+      "text": "auctioneer"
+    },
+    {
+      "id": "role-0445",
+      "text": "landlord"
+    },
+    {
+      "id": "role-0446",
+      "text": "pawnbroker"
+    },
+    {
+      "id": "role-0447",
+      "text": "fixer"
+    },
+    {
+      "id": "role-0448",
+      "text": "debt collector"
+    },
+    {
+      "id": "role-0449",
+      "text": "child courier"
+    },
+    {
+      "id": "role-0450",
+      "text": "nomad"
+    },
+    {
+      "id": "role-0451",
+      "text": "refugee"
+    },
+    {
+      "id": "role-0452",
+      "text": "pilgrim"
+    },
+    {
+      "id": "role-0453",
+      "text": "stowaway"
+    },
+    {
+      "id": "role-0454",
+      "text": "hitchhiker"
+    },
+    {
+      "id": "role-0455",
+      "text": "smuggler pilot"
+    },
+    {
+      "id": "role-0456",
+      "text": "cave diver"
+    },
+    {
+      "id": "role-0457",
+      "text": "storm chaser"
+    },
+    {
+      "id": "role-0458",
+      "text": "treasure hunter"
+    },
+    {
+      "id": "role-0459",
+      "text": "toddler"
+    },
+    {
+      "id": "role-0460",
+      "text": "baby"
+    },
+    {
+      "id": "role-0461",
+      "text": "retiree"
+    },
+    {
+      "id": "role-0462",
+      "text": "great-grandmother"
+    },
+    {
+      "id": "role-0463",
+      "text": "ghost child"
+    },
+    {
+      "id": "role-0464",
+      "text": "newborn god"
+    },
+    {
+      "id": "role-0465",
+      "text": "last elder"
+    },
+    {
+      "id": "role-0466",
+      "text": "apprentice"
+    },
+    {
+      "id": "role-0467",
+      "text": "intern"
+    }
+  ]
+}

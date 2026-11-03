@@ -603,7 +603,14 @@ exit $ok</code></pre>
 </ul>
 
 <h3>Split report</h3>
-<p>To be filled in by the executor at Task 3 (paste the split's report lines).</p>
+<p>Task 3, 2026-11-03: <code>node scripts/split-decks.mjs</code> exit 0. Pools gzip 48.6 KB of 100 KB.</p>
+<ul id="split-report">
+  <li>Cue counts: role 467, mechanic 380, goal 314, conflict 351, resource 272, setting 279, mood 145, modifier 503, twist 224, progression 352, constraint 222.</li>
+  <li>Smallest genre per tagged deck: mechanic metroidvania 33, resource metroidvania 28, progression sandbox 28, constraint fighting 42 (all at or above the floor of 10).</li>
+  <li>Modifier targets: role 300, resource 189, setting 245 (all at or above the floor of 20).</li>
+  <li><code>WARN setting: "solar system" repeats an earlier cue and was dropped.</code> (the only WARN line)</li>
+  <li>The cue-for-cue check against decks.json passed for all 11 decks, and a second run was refused with exit 1.</li>
+</ul>
 
 <h3>Decisions and assumptions</h3>
 <ul>

@@ -1,0 +1,1409 @@
+{
+  "type": "conflict",
+  "cues": [
+    {
+      "id": "conflict-0001",
+      "text": "real physics break bad builds"
+    },
+    {
+      "id": "conflict-0002",
+      "text": "the other team wants the same win"
+    },
+    {
+      "id": "conflict-0003",
+      "text": "each floor is harder than the last"
+    },
+    {
+      "id": "conflict-0004",
+      "text": "each wave is bigger than the last"
+    },
+    {
+      "id": "conflict-0005",
+      "text": "every beat throws danger at you"
+    },
+    {
+      "id": "conflict-0006",
+      "text": "every customer wants something different"
+    },
+    {
+      "id": "conflict-0007",
+      "text": "monsters come at night"
+    },
+    {
+      "id": "conflict-0008",
+      "text": "monsters hunt you"
+    },
+    {
+      "id": "conflict-0009",
+      "text": "one hit kills you"
+    },
+    {
+      "id": "conflict-0010",
+      "text": "real physics punish every mistake"
+    },
+    {
+      "id": "conflict-0011",
+      "text": "the AI running the place wants you dead"
+    },
+    {
+      "id": "conflict-0012",
+      "text": "a cult controls the village"
+    },
+    {
+      "id": "conflict-0013",
+      "text": "a cult wants the same power"
+    },
+    {
+      "id": "conflict-0014",
+      "text": "a family curse kills the young"
+    },
+    {
+      "id": "conflict-0015",
+      "text": "alien bug swarms attack"
+    },
+    {
+      "id": "conflict-0016",
+      "text": "aliens pour in"
+    },
+    {
+      "id": "conflict-0017",
+      "text": "soldiers silence all witnesses"
+    },
+    {
+      "id": "conflict-0018",
+      "text": "demon kings guard each relic"
+    },
+    {
+      "id": "conflict-0019",
+      "text": "dragons return"
+    },
+    {
+      "id": "conflict-0020",
+      "text": "civil war tears the land"
+    },
+    {
+      "id": "conflict-0021",
+      "text": "each new part needs a longer supply chain"
+    },
+    {
+      "id": "conflict-0022",
+      "text": "every job has a hard deadline"
+    },
+    {
+      "id": "conflict-0023",
+      "text": "guards, cameras, and dogs want you caught"
+    },
+    {
+      "id": "conflict-0024",
+      "text": "one character knows she is in a game"
+    },
+    {
+      "id": "conflict-0025",
+      "text": "one loose bolt can wreck everything"
+    },
+    {
+      "id": "conflict-0026",
+      "text": "one of your friends is a killer"
+    },
+    {
+      "id": "conflict-0027",
+      "text": "other players kill you for your loot"
+    },
+    {
+      "id": "conflict-0028",
+      "text": "rival empires race you for the land"
+    },
+    {
+      "id": "conflict-0029",
+      "text": "the city's machines and soldiers hunt you"
+    },
+    {
+      "id": "conflict-0030",
+      "text": "the cold keeps getting deeper"
+    },
+    {
+      "id": "conflict-0031",
+      "text": "the corruption spreads"
+    },
+    {
+      "id": "conflict-0032",
+      "text": "the dark itself kills you"
+    },
+    {
+      "id": "conflict-0033",
+      "text": "the dead roam"
+    },
+    {
+      "id": "conflict-0034",
+      "text": "people turn on you"
+    },
+    {
+      "id": "conflict-0035",
+      "text": "the fire is fading"
+    },
+    {
+      "id": "conflict-0036",
+      "text": "the game itself fights you"
+    },
+    {
+      "id": "conflict-0037",
+      "text": "the hordes come when you are weakest"
+    },
+    {
+      "id": "conflict-0038",
+      "text": "the quota rises each round"
+    },
+    {
+      "id": "conflict-0039",
+      "text": "your floppy body barely obeys"
+    },
+    {
+      "id": "conflict-0040",
+      "text": "your friends get in the way"
+    },
+    {
+      "id": "conflict-0041",
+      "text": "your own family wants you dead"
+    },
+    {
+      "id": "conflict-0042",
+      "text": "your own team fights itself"
+    },
+    {
+      "id": "conflict-0043",
+      "text": "your people break under stress"
+    },
+    {
+      "id": "conflict-0044",
+      "text": "your rival uses the same tricks you do"
+    },
+    {
+      "id": "conflict-0045",
+      "text": "a big company wants your town"
+    },
+    {
+      "id": "conflict-0046",
+      "text": "a cartel wants your turf"
+    },
+    {
+      "id": "conflict-0047",
+      "text": "a crooked man rules the streets"
+    },
+    {
+      "id": "conflict-0048",
+      "text": "a cruel leader hunts your group"
+    },
+    {
+      "id": "conflict-0049",
+      "text": "a cult hunts survivors"
+    },
+    {
+      "id": "conflict-0050",
+      "text": "a cyborg empire guards the goal"
+    },
+    {
+      "id": "conflict-0051",
+      "text": "a dark shadow of grief chases you"
+    },
+    {
+      "id": "conflict-0052",
+      "text": "a dark wizard stole the princesses"
+    },
+    {
+      "id": "conflict-0053",
+      "text": "a family of killers will not die"
+    },
+    {
+      "id": "conflict-0054",
+      "text": "a gang and the government both want you"
+    },
+    {
+      "id": "conflict-0055",
+      "text": "a ghost army hunts you"
+    },
+    {
+      "id": "conflict-0056",
+      "text": "a giant beast hunts you"
+    },
+    {
+      "id": "conflict-0057",
+      "text": "a giant storm will destroy the town"
+    },
+    {
+      "id": "conflict-0058",
+      "text": "a god turns heroes into puppets"
+    },
+    {
+      "id": "conflict-0059",
+      "text": "a tyrant rules the underworld"
+    },
+    {
+      "id": "conflict-0060",
+      "text": "an unkillable pursuer hunts you"
+    },
+    {
+      "id": "conflict-0061",
+      "text": "an obsessed captor blocks every exit"
+    },
+    {
+      "id": "conflict-0062",
+      "text": "an obsessed admirer will not let you go"
+    },
+    {
+      "id": "conflict-0063",
+      "text": "a mad AI twists everything alive"
+    },
+    {
+      "id": "conflict-0064",
+      "text": "a mad scientist wants your blood"
+    },
+    {
+      "id": "conflict-0065",
+      "text": "a madman has taken over the asylum"
+    },
+    {
+      "id": "conflict-0066",
+      "text": "a mercenary army stands in the way"
+    },
+    {
+      "id": "conflict-0067",
+      "text": "a monster chases you when time runs out"
+    },
+    {
+      "id": "conflict-0068",
+      "text": "a parasite is changing you"
+    },
+    {
+      "id": "conflict-0069",
+      "text": "a fanatic city will not let you leave"
+    },
+    {
+      "id": "conflict-0070",
+      "text": "someone wants to steal your ideas"
+    },
+    {
+      "id": "conflict-0071",
+      "text": "a queen binds every soul to her will"
+    },
+    {
+      "id": "conflict-0072",
+      "text": "a rival wants the same relics"
+    },
+    {
+      "id": "conflict-0073",
+      "text": "a scientist opened a door to hell"
+    },
+    {
+      "id": "conflict-0074",
+      "text": "demons flood in"
+    },
+    {
+      "id": "conflict-0075",
+      "text": "a predator keeps tearing your raft apart"
+    },
+    {
+      "id": "conflict-0076",
+      "text": "a sickness has turned the island to monsters"
+    },
+    {
+      "id": "conflict-0077",
+      "text": "a sickness keeps you stranded"
+    },
+    {
+      "id": "conflict-0078",
+      "text": "a storm traps the island"
+    },
+    {
+      "id": "conflict-0079",
+      "text": "someone rewrites history"
+    },
+    {
+      "id": "conflict-0080",
+      "text": "old foes come back to life"
+    },
+    {
+      "id": "conflict-0081",
+      "text": "a titan attacks the gods"
+    },
+    {
+      "id": "conflict-0082",
+      "text": "an unstoppable pursuer stalks you"
+    },
+    {
+      "id": "conflict-0083",
+      "text": "a vast alien army wants humans gone"
+    },
+    {
+      "id": "conflict-0084",
+      "text": "a warlord clan wants your lord's blood"
+    },
+    {
+      "id": "conflict-0085",
+      "text": "a warlord turns children into weapons"
+    },
+    {
+      "id": "conflict-0086",
+      "text": "a world-eating monster wants the galaxy"
+    },
+    {
+      "id": "conflict-0087",
+      "text": "alien soldiers and parasites fill the city"
+    },
+    {
+      "id": "conflict-0088",
+      "text": "an alien empire rules the world"
+    },
+    {
+      "id": "conflict-0089",
+      "text": "an alien fleet raids your planets"
+    },
+    {
+      "id": "conflict-0090",
+      "text": "an army of clones attacks the world"
+    },
+    {
+      "id": "conflict-0091",
+      "text": "an earthquake has left the town broken"
+    },
+    {
+      "id": "conflict-0092",
+      "text": "an infection drives every creature mad"
+    },
+    {
+      "id": "conflict-0093",
+      "text": "an old secret order gets there first"
+    },
+    {
+      "id": "conflict-0094",
+      "text": "at night the sea wants you dead"
+    },
+    {
+      "id": "conflict-0095",
+      "text": "bandits, slavers, and cannibals rule the land"
+    },
+    {
+      "id": "conflict-0096",
+      "text": "blood moons and raids hit your base"
+    },
+    {
+      "id": "conflict-0097",
+      "text": "broken robots hunt the halls"
+    },
+    {
+      "id": "conflict-0098",
+      "text": "cannibals watch from the trees"
+    },
+    {
+      "id": "conflict-0099",
+      "text": "crops die when the season ends"
+    },
+    {
+      "id": "conflict-0100",
+      "text": "crosswinds and short runways test every landing"
+    },
+    {
+      "id": "conflict-0101",
+      "text": "danger closes in with every step"
+    },
+    {
+      "id": "conflict-0102",
+      "text": "heirs fight over a shattered throne"
+    },
+    {
+      "id": "conflict-0103",
+      "text": "demons from the void are coming"
+    },
+    {
+      "id": "conflict-0104",
+      "text": "dirt hides in the last tiny corner"
+    },
+    {
+      "id": "conflict-0105",
+      "text": "droughts dry the rivers"
+    },
+    {
+      "id": "conflict-0106",
+      "text": "every blink costs you time"
+    },
+    {
+      "id": "conflict-0107",
+      "text": "each boss you kill brings death closer"
+    },
+    {
+      "id": "conflict-0108",
+      "text": "each day ends too soon"
+    },
+    {
+      "id": "conflict-0109",
+      "text": "each new building costs more than the last"
+    },
+    {
+      "id": "conflict-0110",
+      "text": "each place has a strange rule"
+    },
+    {
+      "id": "conflict-0111",
+      "text": "each year more people vanish"
+    },
+    {
+      "id": "conflict-0112",
+      "text": "too many fighters on one small stage"
+    },
+    {
+      "id": "conflict-0113",
+      "text": "elemental tribes war for the land"
+    },
+    {
+      "id": "conflict-0114",
+      "text": "enemies always act first on a tie"
+    },
+    {
+      "id": "conflict-0115",
+      "text": "enemy aces and drones fill the sky"
+    },
+    {
+      "id": "conflict-0116",
+      "text": "every body part can break, burn, or bleed"
+    },
+    {
+      "id": "conflict-0117",
+      "text": "every faction wants you to pick a side"
+    },
+    {
+      "id": "conflict-0118",
+      "text": "every friend you help must leave you"
+    },
+    {
+      "id": "conflict-0119",
+      "text": "every hit makes the ball faster"
+    },
+    {
+      "id": "conflict-0120",
+      "text": "every house is a dirty, broken mess"
+    },
+    {
+      "id": "conflict-0121",
+      "text": "every layer hides another lock"
+    },
+    {
+      "id": "conflict-0122",
+      "text": "every reaction spreads out of control"
+    },
+    {
+      "id": "conflict-0123",
+      "text": "every rescue has a deadline"
+    },
+    {
+      "id": "conflict-0124",
+      "text": "every rival tries to ram you off"
+    },
+    {
+      "id": "conflict-0125",
+      "text": "every room fills with warriors and bosses"
+    },
+    {
+      "id": "conflict-0126",
+      "text": "every room is full of armed thugs"
+    },
+    {
+      "id": "conflict-0127",
+      "text": "every simple errand turns into a riot"
+    },
+    {
+      "id": "conflict-0128",
+      "text": "fines and damage cost money"
+    },
+    {
+      "id": "conflict-0129",
+      "text": "your followers need constant care"
+    },
+    {
+      "id": "conflict-0130",
+      "text": "monstrous lords rule the village"
+    },
+    {
+      "id": "conflict-0131",
+      "text": "gangs and the military stand in the way"
+    },
+    {
+      "id": "conflict-0132",
+      "text": "giants want to eat you"
+    },
+    {
+      "id": "conflict-0133",
+      "text": "guards and barriers hold the city"
+    },
+    {
+      "id": "conflict-0134",
+      "text": "your captors force you to perform"
+    },
+    {
+      "id": "conflict-0135",
+      "text": "heaven wants the hero to stay dead"
+    },
+    {
+      "id": "conflict-0136",
+      "text": "enemies climb toward you floor by floor"
+    },
+    {
+      "id": "conflict-0137",
+      "text": "hell fights back with demons and angels"
+    },
+    {
+      "id": "conflict-0138",
+      "text": "portals to hell open across the land"
+    },
+    {
+      "id": "conflict-0139",
+      "text": "an invading army has taken the world"
+    },
+    {
+      "id": "conflict-0140",
+      "text": "hordes of crazed fans swarm you"
+    },
+    {
+      "id": "conflict-0141",
+      "text": "hordes of the infected roam the roads"
+    },
+    {
+      "id": "conflict-0142",
+      "text": "humans fear and hate your kind"
+    },
+    {
+      "id": "conflict-0143",
+      "text": "hunger, cold, and wounds wear you down"
+    },
+    {
+      "id": "conflict-0144",
+      "text": "hunters, despair, and the passing days close in"
+    },
+    {
+      "id": "conflict-0145",
+      "text": "it kills when you look away"
+    },
+    {
+      "id": "conflict-0146",
+      "text": "kingdoms war over the land"
+    },
+    {
+      "id": "conflict-0147",
+      "text": "land and machines cost a fortune"
+    },
+    {
+      "id": "conflict-0148",
+      "text": "lava and falls kill you"
+    },
+    {
+      "id": "conflict-0149",
+      "text": "leviathans live in the deep"
+    },
+    {
+      "id": "conflict-0150",
+      "text": "every room is full of enemies"
+    },
+    {
+      "id": "conflict-0151",
+      "text": "loot breaks if you drop it"
+    },
+    {
+      "id": "conflict-0152",
+      "text": "mad patients hunt you"
+    },
+    {
+      "id": "conflict-0153",
+      "text": "a giant brute hunts you"
+    },
+    {
+      "id": "conflict-0154",
+      "text": "money and time are short"
+    },
+    {
+      "id": "conflict-0155",
+      "text": "money is tight"
+    },
+    {
+      "id": "conflict-0156",
+      "text": "the city is crumbling"
+    },
+    {
+      "id": "conflict-0157",
+      "text": "monster slimes eat everything"
+    },
+    {
+      "id": "conflict-0158",
+      "text": "monsters come from the woods"
+    },
+    {
+      "id": "conflict-0159",
+      "text": "monsters hunt inside the dark facility"
+    },
+    {
+      "id": "conflict-0160",
+      "text": "monsters rule the ruined world"
+    },
+    {
+      "id": "conflict-0161",
+      "text": "monsters, leaks, and crew mistakes sink subs"
+    },
+    {
+      "id": "conflict-0162",
+      "text": "monsters, soldiers, and a secret order hunt you"
+    },
+    {
+      "id": "conflict-0163",
+      "text": "most choices end in a silly fail"
+    },
+    {
+      "id": "conflict-0164",
+      "text": "mud, snow, and broken bridges block every road"
+    },
+    {
+      "id": "conflict-0165",
+      "text": "mutants threaten the last shelters"
+    },
+    {
+      "id": "conflict-0166",
+      "text": "no one speaks your language"
+    },
+    {
+      "id": "conflict-0167",
+      "text": "nobody trusts you"
+    },
+    {
+      "id": "conflict-0168",
+      "text": "old enemies of the gods rule each land"
+    },
+    {
+      "id": "conflict-0169",
+      "text": "one bad landing ruins the run"
+    },
+    {
+      "id": "conflict-0170",
+      "text": "one bullet can kill you from far away"
+    },
+    {
+      "id": "conflict-0171",
+      "text": "one hit starts a combo you must escape"
+    },
+    {
+      "id": "conflict-0172",
+      "text": "one wall at top speed wrecks your hull"
+    },
+    {
+      "id": "conflict-0173",
+      "text": "one wrong corner throws you off the road"
+    },
+    {
+      "id": "conflict-0174",
+      "text": "one wrong word means death"
+    },
+    {
+      "id": "conflict-0175",
+      "text": "oxygen runs out every dive"
+    },
+    {
+      "id": "conflict-0176",
+      "text": "poachers and rival factions rule the islands"
+    },
+    {
+      "id": "conflict-0177",
+      "text": "poison tides foul the water"
+    },
+    {
+      "id": "conflict-0178",
+      "text": "police crack down harder as you grow"
+    },
+    {
+      "id": "conflict-0179",
+      "text": "power grids overload"
+    },
+    {
+      "id": "conflict-0180",
+      "text": "prices change every day"
+    },
+    {
+      "id": "conflict-0181",
+      "text": "raids, plagues, and disasters hit the colony"
+    },
+    {
+      "id": "conflict-0182",
+      "text": "rare fish only bite in the right conditions"
+    },
+    {
+      "id": "conflict-0183",
+      "text": "rival gods steal your followers"
+    },
+    {
+      "id": "conflict-0184",
+      "text": "rival leaders smile, lie, and want your land"
+    },
+    {
+      "id": "conflict-0185",
+      "text": "rivals copy real players and race hard"
+    },
+    {
+      "id": "conflict-0186",
+      "text": "rivals throw items"
+    },
+    {
+      "id": "conflict-0187",
+      "text": "the track keeps changing"
+    },
+    {
+      "id": "conflict-0188",
+      "text": "robots raid your crops at night"
+    },
+    {
+      "id": "conflict-0189",
+      "text": "saving the world means you never go home"
+    },
+    {
+      "id": "conflict-0190",
+      "text": "sharks and rivals want the same spot"
+    },
+    {
+      "id": "conflict-0191",
+      "text": "she loves you too much"
+    },
+    {
+      "id": "conflict-0192",
+      "text": "shoplifters and long lines pile up"
+    },
+    {
+      "id": "conflict-0193",
+      "text": "smelly customers drive buyers out"
+    },
+    {
+      "id": "conflict-0194",
+      "text": "snipers, raiders, hunger, and winter close in"
+    },
+    {
+      "id": "conflict-0195",
+      "text": "special monsters pin you down"
+    },
+    {
+      "id": "conflict-0196",
+      "text": "storms, waves, and fires sink your rescues"
+    },
+    {
+      "id": "conflict-0197",
+      "text": "taking the prize starts the alarm"
+    },
+    {
+      "id": "conflict-0198",
+      "text": "terrorists, aliens, and devils hold the world"
+    },
+    {
+      "id": "conflict-0199",
+      "text": "each enemy attacks in its own way"
+    },
+    {
+      "id": "conflict-0200",
+      "text": "the bosses break your rules"
+    },
+    {
+      "id": "conflict-0201",
+      "text": "the case was closed long ago"
+    },
+    {
+      "id": "conflict-0202",
+      "text": "the city's prison breaks open"
+    },
+    {
+      "id": "conflict-0203",
+      "text": "the crowd cheers for your death"
+    },
+    {
+      "id": "conflict-0204",
+      "text": "the dead cannot speak"
+    },
+    {
+      "id": "conflict-0205",
+      "text": "the dead get faster at night"
+    },
+    {
+      "id": "conflict-0206",
+      "text": "the dead outnumber you"
+    },
+    {
+      "id": "conflict-0207",
+      "text": "one bite kills"
+    },
+    {
+      "id": "conflict-0208",
+      "text": "the deadline is close"
+    },
+    {
+      "id": "conflict-0209",
+      "text": "the cargo is fragile"
+    },
+    {
+      "id": "conflict-0210",
+      "text": "the dealer stacks your deck against you"
+    },
+    {
+      "id": "conflict-0211",
+      "text": "the deeper you go, the more you change"
+    },
+    {
+      "id": "conflict-0212",
+      "text": "a demon took your arm"
+    },
+    {
+      "id": "conflict-0213",
+      "text": "the dream hides a terrible memory"
+    },
+    {
+      "id": "conflict-0214",
+      "text": "the dream world has its own odd rules"
+    },
+    {
+      "id": "conflict-0215",
+      "text": "the enemy army is far too big"
+    },
+    {
+      "id": "conflict-0216",
+      "text": "the ghost hunts when your sanity drops"
+    },
+    {
+      "id": "conflict-0217",
+      "text": "the grid limits what you can build"
+    },
+    {
+      "id": "conflict-0218",
+      "text": "the heat keeps rising"
+    },
+    {
+      "id": "conflict-0219",
+      "text": "the ruler needs one more soul"
+    },
+    {
+      "id": "conflict-0220",
+      "text": "the land is torn by civil war"
+    },
+    {
+      "id": "conflict-0221",
+      "text": "the law closes in"
+    },
+    {
+      "id": "conflict-0222",
+      "text": "the modern age leaves you behind"
+    },
+    {
+      "id": "conflict-0223",
+      "text": "the old rulers refuse their duty"
+    },
+    {
+      "id": "conflict-0224",
+      "text": "the mob boss keeps calling you back"
+    },
+    {
+      "id": "conflict-0225",
+      "text": "the best footage is the deadliest"
+    },
+    {
+      "id": "conflict-0226",
+      "text": "the narrator lies to you"
+    },
+    {
+      "id": "conflict-0227",
+      "text": "the other players can cheat"
+    },
+    {
+      "id": "conflict-0228",
+      "text": "the other side strikes where you are weak"
+    },
+    {
+      "id": "conflict-0229",
+      "text": "the path twists, speeds up, and reverses"
+    },
+    {
+      "id": "conflict-0230",
+      "text": "the peak is high"
+    },
+    {
+      "id": "conflict-0231",
+      "text": "you start weak"
+    },
+    {
+      "id": "conflict-0232",
+      "text": "the witnesses bend the truth"
+    },
+    {
+      "id": "conflict-0233",
+      "text": "the rebel fleet chases you across the stars"
+    },
+    {
+      "id": "conflict-0234",
+      "text": "the rules block your way"
+    },
+    {
+      "id": "conflict-0235",
+      "text": "the rules change every day"
+    },
+    {
+      "id": "conflict-0236",
+      "text": "the sea keeps rising"
+    },
+    {
+      "id": "conflict-0237",
+      "text": "the town is dying"
+    },
+    {
+      "id": "conflict-0238",
+      "text": "the seasons turn harsh"
+    },
+    {
+      "id": "conflict-0239",
+      "text": "the world ends on a timer"
+    },
+    {
+      "id": "conflict-0240",
+      "text": "the swarm grows each minute"
+    },
+    {
+      "id": "conflict-0241",
+      "text": "the place makes monsters out of your guilt"
+    },
+    {
+      "id": "conflict-0242",
+      "text": "the usurper's army and traitor lords close in"
+    },
+    {
+      "id": "conflict-0243",
+      "text": "the volcano is about to blow"
+    },
+    {
+      "id": "conflict-0244",
+      "text": "the wish-granting relic twists every wish"
+    },
+    {
+      "id": "conflict-0245",
+      "text": "the world burns, floods, and explodes around you"
+    },
+    {
+      "id": "conflict-0246",
+      "text": "thousands of monsters fill the screen"
+    },
+    {
+      "id": "conflict-0247",
+      "text": "three factions want the same prize"
+    },
+    {
+      "id": "conflict-0248",
+      "text": "traffic and rivals try to wreck you"
+    },
+    {
+      "id": "conflict-0249",
+      "text": "traffic jams choke the city"
+    },
+    {
+      "id": "conflict-0250",
+      "text": "two otherworld forces fight over human bodies"
+    },
+    {
+      "id": "conflict-0251",
+      "text": "two races war over the relic"
+    },
+    {
+      "id": "conflict-0252",
+      "text": "villagers starve if not fed each moon"
+    },
+    {
+      "id": "conflict-0253",
+      "text": "winter, wolves, and giants come with the seasons"
+    },
+    {
+      "id": "conflict-0254",
+      "text": "witch hunters hunt anyone with magic"
+    },
+    {
+      "id": "conflict-0255",
+      "text": "you cannot breathe the air"
+    },
+    {
+      "id": "conflict-0256",
+      "text": "you fell asleep and woke in another season"
+    },
+    {
+      "id": "conflict-0257",
+      "text": "you forgot who you are"
+    },
+    {
+      "id": "conflict-0258",
+      "text": "you only see the moment of death"
+    },
+    {
+      "id": "conflict-0259",
+      "text": "your best friend leaves in three days"
+    },
+    {
+      "id": "conflict-0260",
+      "text": "your captor controls the game and rules"
+    },
+    {
+      "id": "conflict-0261",
+      "text": "your creatures break out of their pens"
+    },
+    {
+      "id": "conflict-0262",
+      "text": "your creatures war, rebel, and starve"
+    },
+    {
+      "id": "conflict-0263",
+      "text": "your dark reflection holds you back"
+    },
+    {
+      "id": "conflict-0264",
+      "text": "your own father wants to rule the world"
+    },
+    {
+      "id": "conflict-0265",
+      "text": "your enemy's blood poisons you"
+    },
+    {
+      "id": "conflict-0266",
+      "text": "your own family tries to stop you"
+    },
+    {
+      "id": "conflict-0267",
+      "text": "your friends keep adding traps"
+    },
+    {
+      "id": "conflict-0268",
+      "text": "your friends want you dead"
+    },
+    {
+      "id": "conflict-0269",
+      "text": "your life falls apart while you save others"
+    },
+    {
+      "id": "conflict-0270",
+      "text": "your makers want you scrapped"
+    },
+    {
+      "id": "conflict-0271",
+      "text": "your own mind lies to you"
+    },
+    {
+      "id": "conflict-0272",
+      "text": "your neighbor hides a dark secret"
+    },
+    {
+      "id": "conflict-0273",
+      "text": "your own waste and heat poison the base"
+    },
+    {
+      "id": "conflict-0274",
+      "text": "your pet's needs drop while you work"
+    },
+    {
+      "id": "conflict-0275",
+      "text": "your growth provokes the locals"
+    },
+    {
+      "id": "conflict-0276",
+      "text": "your ride leaves without you"
+    },
+    {
+      "id": "conflict-0277",
+      "text": "your rival comes back seconds after dying"
+    },
+    {
+      "id": "conflict-0278",
+      "text": "your rival knows when you run out"
+    },
+    {
+      "id": "conflict-0279",
+      "text": "your rival moves at the same time"
+    },
+    {
+      "id": "conflict-0280",
+      "text": "your rival reads your habits and punishes mistakes"
+    },
+    {
+      "id": "conflict-0281",
+      "text": "the only way out is to kill"
+    },
+    {
+      "id": "conflict-0282",
+      "text": "your teddy bear is possessed and hunts you"
+    },
+    {
+      "id": "conflict-0283",
+      "text": "your voice fades with distance and walls"
+    },
+    {
+      "id": "conflict-0284",
+      "text": "zombie soldiers and aliens attack"
+    },
+    {
+      "id": "conflict-0285",
+      "text": "zombies come in waves for your brains"
+    },
+    {
+      "id": "conflict-0286",
+      "text": "your body is failing"
+    },
+    {
+      "id": "conflict-0287",
+      "text": "you are afraid of everything"
+    },
+    {
+      "id": "conflict-0288",
+      "text": "your hands shake when it matters"
+    },
+    {
+      "id": "conflict-0289",
+      "text": "you cannot stay awake"
+    },
+    {
+      "id": "conflict-0290",
+      "text": "your memory resets every night"
+    },
+    {
+      "id": "conflict-0291",
+      "text": "you are allergic to the main thing"
+    },
+    {
+      "id": "conflict-0292",
+      "text": "an old injury slows you down"
+    },
+    {
+      "id": "conflict-0293",
+      "text": "you hear voices no one else hears"
+    },
+    {
+      "id": "conflict-0294",
+      "text": "you are far too small"
+    },
+    {
+      "id": "conflict-0295",
+      "text": "every step needs a signed form"
+    },
+    {
+      "id": "conflict-0296",
+      "text": "the office closes in five minutes"
+    },
+    {
+      "id": "conflict-0297",
+      "text": "your boss changes the plan daily"
+    },
+    {
+      "id": "conflict-0298",
+      "text": "the rent is due tomorrow"
+    },
+    {
+      "id": "conflict-0299",
+      "text": "your debts grow faster than you earn"
+    },
+    {
+      "id": "conflict-0300",
+      "text": "the tools keep breaking"
+    },
+    {
+      "id": "conflict-0301",
+      "text": "the instructions are in the wrong language"
+    },
+    {
+      "id": "conflict-0302",
+      "text": "the paperwork is lost again"
+    },
+    {
+      "id": "conflict-0303",
+      "text": "everyone is gossiping about you"
+    },
+    {
+      "id": "conflict-0304",
+      "text": "your family disapproves"
+    },
+    {
+      "id": "conflict-0305",
+      "text": "one mistake ruins your name"
+    },
+    {
+      "id": "conflict-0306",
+      "text": "the town hates newcomers"
+    },
+    {
+      "id": "conflict-0307",
+      "text": "your fans demand more every day"
+    },
+    {
+      "id": "conflict-0308",
+      "text": "your best friend is your rival"
+    },
+    {
+      "id": "conflict-0309",
+      "text": "no one shows up"
+    },
+    {
+      "id": "conflict-0310",
+      "text": "your ex is in charge"
+    },
+    {
+      "id": "conflict-0311",
+      "text": "nobody believes you"
+    },
+    {
+      "id": "conflict-0312",
+      "text": "the evidence keeps disappearing"
+    },
+    {
+      "id": "conflict-0313",
+      "text": "you are the main suspect"
+    },
+    {
+      "id": "conflict-0314",
+      "text": "the truth sounds like a lie"
+    },
+    {
+      "id": "conflict-0315",
+      "text": "the only witness is a child"
+    },
+    {
+      "id": "conflict-0316",
+      "text": "the records have been erased"
+    },
+    {
+      "id": "conflict-0317",
+      "text": "every win hurts someone innocent"
+    },
+    {
+      "id": "conflict-0318",
+      "text": "helping one side betrays the other"
+    },
+    {
+      "id": "conflict-0319",
+      "text": "the cure needs a life"
+    },
+    {
+      "id": "conflict-0320",
+      "text": "the people you save hate you"
+    },
+    {
+      "id": "conflict-0321",
+      "text": "you cannot save them all"
+    },
+    {
+      "id": "conflict-0322",
+      "text": "the easy way is the cruel way"
+    },
+    {
+      "id": "conflict-0323",
+      "text": "your orders are wrong"
+    },
+    {
+      "id": "conflict-0324",
+      "text": "it will not stop raining"
+    },
+    {
+      "id": "conflict-0325",
+      "text": "the river floods each spring"
+    },
+    {
+      "id": "conflict-0326",
+      "text": "the wind always blows against you"
+    },
+    {
+      "id": "conflict-0327",
+      "text": "fog hides everything"
+    },
+    {
+      "id": "conflict-0328",
+      "text": "the ground keeps shaking"
+    },
+    {
+      "id": "conflict-0329",
+      "text": "the bees are dying"
+    },
+    {
+      "id": "conflict-0330",
+      "text": "the forest grows back overnight"
+    },
+    {
+      "id": "conflict-0331",
+      "text": "the tide cuts off the way home"
+    },
+    {
+      "id": "conflict-0332",
+      "text": "you age a year each day"
+    },
+    {
+      "id": "conflict-0333",
+      "text": "there is never enough daylight"
+    },
+    {
+      "id": "conflict-0334",
+      "text": "the clock runs faster when you rush"
+    },
+    {
+      "id": "conflict-0335",
+      "text": "everyone you love grows old"
+    },
+    {
+      "id": "conflict-0336",
+      "text": "the past keeps catching up"
+    },
+    {
+      "id": "conflict-0337",
+      "text": "your time is borrowed"
+    },
+    {
+      "id": "conflict-0338",
+      "text": "everyone is too busy to help"
+    },
+    {
+      "id": "conflict-0339",
+      "text": "the cat keeps knocking things over"
+    },
+    {
+      "id": "conflict-0340",
+      "text": "the neighbors are very loud"
+    },
+    {
+      "id": "conflict-0341",
+      "text": "your guests arrive early"
+    },
+    {
+      "id": "conflict-0342",
+      "text": "the oven is unreliable"
+    },
+    {
+      "id": "conflict-0343",
+      "text": "the kids want attention"
+    },
+    {
+      "id": "conflict-0344",
+      "text": "the shop is too quiet"
+    },
+    {
+      "id": "conflict-0345",
+      "text": "you are terrible at this"
+    },
+    {
+      "id": "conflict-0346",
+      "text": "your partner is an idiot"
+    },
+    {
+      "id": "conflict-0347",
+      "text": "the costume is too small"
+    },
+    {
+      "id": "conflict-0348",
+      "text": "you sneeze at the worst moments"
+    },
+    {
+      "id": "conflict-0349",
+      "text": "the goose is chasing you"
+    },
+    {
+      "id": "conflict-0350",
+      "text": "everything you touch gets sticky"
+    },
+    {
+      "id": "conflict-0351",
+      "text": "you lied on your résumé"
+    }
+  ]
+}

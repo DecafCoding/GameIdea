@@ -1,0 +1,1121 @@
+{
+  "type": "setting",
+  "cues": [
+    {
+      "id": "setting-0001",
+      "text": "city"
+    },
+    {
+      "id": "setting-0002",
+      "text": "kingdom"
+    },
+    {
+      "id": "setting-0003",
+      "text": "world"
+    },
+    {
+      "id": "setting-0004",
+      "text": "town"
+    },
+    {
+      "id": "setting-0005",
+      "text": "islands"
+    },
+    {
+      "id": "setting-0006",
+      "text": "hell"
+    },
+    {
+      "id": "setting-0007",
+      "text": "alien planet"
+    },
+    {
+      "id": "setting-0008",
+      "text": "country town"
+    },
+    {
+      "id": "setting-0009",
+      "text": "outer space"
+    },
+    {
+      "id": "setting-0010",
+      "text": "race track"
+    },
+    {
+      "id": "setting-0011",
+      "text": "underworld"
+    },
+    {
+      "id": "setting-0012",
+      "text": "caves"
+    },
+    {
+      "id": "setting-0013",
+      "text": "village"
+    },
+    {
+      "id": "setting-0014",
+      "text": "wilderness"
+    },
+    {
+      "id": "setting-0015",
+      "text": "forest"
+    },
+    {
+      "id": "setting-0016",
+      "text": "galaxy"
+    },
+    {
+      "id": "setting-0017",
+      "text": "island"
+    },
+    {
+      "id": "setting-0018",
+      "text": "tombs"
+    },
+    {
+      "id": "setting-0019",
+      "text": "desert wasteland"
+    },
+    {
+      "id": "setting-0020",
+      "text": "wilds"
+    },
+    {
+      "id": "setting-0021",
+      "text": "castle"
+    },
+    {
+      "id": "setting-0022",
+      "text": "inside a dream"
+    },
+    {
+      "id": "setting-0023",
+      "text": "inside a game"
+    },
+    {
+      "id": "setting-0024",
+      "text": "starship"
+    },
+    {
+      "id": "setting-0025",
+      "text": "world after humans"
+    },
+    {
+      "id": "setting-0026",
+      "text": "your computer desktop"
+    },
+    {
+      "id": "setting-0027",
+      "text": "arena"
+    },
+    {
+      "id": "setting-0028",
+      "text": "planet"
+    },
+    {
+      "id": "setting-0029",
+      "text": "highway"
+    },
+    {
+      "id": "setting-0030",
+      "text": "bank"
+    },
+    {
+      "id": "setting-0031",
+      "text": "science lab"
+    },
+    {
+      "id": "setting-0032",
+      "text": "afterlife ferry"
+    },
+    {
+      "id": "setting-0033",
+      "text": "borderland"
+    },
+    {
+      "id": "setting-0034",
+      "text": "all of history"
+    },
+    {
+      "id": "setting-0035",
+      "text": "airship"
+    },
+    {
+      "id": "setting-0036",
+      "text": "basement"
+    },
+    {
+      "id": "setting-0037",
+      "text": "apartment block"
+    },
+    {
+      "id": "setting-0038",
+      "text": "crime scenes"
+    },
+    {
+      "id": "setting-0039",
+      "text": "mines"
+    },
+    {
+      "id": "setting-0040",
+      "text": "trench"
+    },
+    {
+      "id": "setting-0041",
+      "text": "desert town"
+    },
+    {
+      "id": "setting-0042",
+      "text": "dying man's memories"
+    },
+    {
+      "id": "setting-0043",
+      "text": "nordic land"
+    },
+    {
+      "id": "setting-0044",
+      "text": "Earth"
+    },
+    {
+      "id": "setting-0045",
+      "text": "house"
+    },
+    {
+      "id": "setting-0046",
+      "text": "insane asylum"
+    },
+    {
+      "id": "setting-0047",
+      "text": "inside a mind"
+    },
+    {
+      "id": "setting-0048",
+      "text": "island fortress"
+    },
+    {
+      "id": "setting-0049",
+      "text": "megacity"
+    },
+    {
+      "id": "setting-0050",
+      "text": "off-road trails"
+    },
+    {
+      "id": "setting-0051",
+      "text": "player-built level"
+    },
+    {
+      "id": "setting-0052",
+      "text": "port city"
+    },
+    {
+      "id": "setting-0053",
+      "text": "prison"
+    },
+    {
+      "id": "setting-0054",
+      "text": "prison island"
+    },
+    {
+      "id": "setting-0055",
+      "text": "school clubroom"
+    },
+    {
+      "id": "setting-0056",
+      "text": "desert lab"
+    },
+    {
+      "id": "setting-0057",
+      "text": "spire"
+    },
+    {
+      "id": "setting-0058",
+      "text": "card table"
+    },
+    {
+      "id": "setting-0059",
+      "text": "test chamber"
+    },
+    {
+      "id": "setting-0060",
+      "text": "swamp"
+    },
+    {
+      "id": "setting-0061",
+      "text": "solar system"
+    },
+    {
+      "id": "setting-0062",
+      "text": "anomaly lab"
+    },
+    {
+      "id": "setting-0063",
+      "text": "volcano island"
+    },
+    {
+      "id": "setting-0064",
+      "text": "feudal japan"
+    },
+    {
+      "id": "setting-0065",
+      "text": "hospital"
+    },
+    {
+      "id": "setting-0066",
+      "text": "sea"
+    },
+    {
+      "id": "setting-0067",
+      "text": "dungeon"
+    },
+    {
+      "id": "setting-0068",
+      "text": "research base"
+    },
+    {
+      "id": "setting-0069",
+      "text": "war zone"
+    },
+    {
+      "id": "setting-0070",
+      "text": "realms"
+    },
+    {
+      "id": "setting-0071",
+      "text": "countryside"
+    },
+    {
+      "id": "setting-0072",
+      "text": "child's imagination"
+    },
+    {
+      "id": "setting-0073",
+      "text": "museum"
+    },
+    {
+      "id": "setting-0074",
+      "text": "moons"
+    },
+    {
+      "id": "setting-0075",
+      "text": "school"
+    },
+    {
+      "id": "setting-0076",
+      "text": "hive"
+    },
+    {
+      "id": "setting-0077",
+      "text": "ocean planet"
+    },
+    {
+      "id": "setting-0078",
+      "text": "ranch"
+    },
+    {
+      "id": "setting-0079",
+      "text": "warship"
+    },
+    {
+      "id": "setting-0080",
+      "text": "art school"
+    },
+    {
+      "id": "setting-0081",
+      "text": "film studio"
+    },
+    {
+      "id": "setting-0082",
+      "text": "border checkpoint"
+    },
+    {
+      "id": "setting-0083",
+      "text": "box of elements"
+    },
+    {
+      "id": "setting-0084",
+      "text": "airports"
+    },
+    {
+      "id": "setting-0085",
+      "text": "tech campus"
+    },
+    {
+      "id": "setting-0086",
+      "text": "card shop"
+    },
+    {
+      "id": "setting-0087",
+      "text": "carnival"
+    },
+    {
+      "id": "setting-0088",
+      "text": "battlefield"
+    },
+    {
+      "id": "setting-0089",
+      "text": "theater"
+    },
+    {
+      "id": "setting-0090",
+      "text": "coral reef"
+    },
+    {
+      "id": "setting-0091",
+      "text": "salvage ship"
+    },
+    {
+      "id": "setting-0092",
+      "text": "bakery"
+    },
+    {
+      "id": "setting-0093",
+      "text": "courtroom"
+    },
+    {
+      "id": "setting-0094",
+      "text": "rooms"
+    },
+    {
+      "id": "setting-0095",
+      "text": "criminal hideout"
+    },
+    {
+      "id": "setting-0096",
+      "text": "cult camp"
+    },
+    {
+      "id": "setting-0097",
+      "text": "island castle"
+    },
+    {
+      "id": "setting-0098",
+      "text": "manor"
+    },
+    {
+      "id": "setting-0099",
+      "text": "dive bar"
+    },
+    {
+      "id": "setting-0100",
+      "text": "cabin"
+    },
+    {
+      "id": "setting-0101",
+      "text": "factory"
+    },
+    {
+      "id": "setting-0102",
+      "text": "study"
+    },
+    {
+      "id": "setting-0103",
+      "text": "derby arena"
+    },
+    {
+      "id": "setting-0104",
+      "text": "casino strip"
+    },
+    {
+      "id": "setting-0105",
+      "text": "wild west"
+    },
+    {
+      "id": "setting-0106",
+      "text": "fighting tournament"
+    },
+    {
+      "id": "setting-0107",
+      "text": "small town"
+    },
+    {
+      "id": "setting-0108",
+      "text": "fishing island"
+    },
+    {
+      "id": "setting-0109",
+      "text": "lake town"
+    },
+    {
+      "id": "setting-0110",
+      "text": "tower"
+    },
+    {
+      "id": "setting-0111",
+      "text": "forest peninsula"
+    },
+    {
+      "id": "setting-0112",
+      "text": "forest rebel base"
+    },
+    {
+      "id": "setting-0113",
+      "text": "crater city"
+    },
+    {
+      "id": "setting-0114",
+      "text": "train"
+    },
+    {
+      "id": "setting-0115",
+      "text": "mining prison"
+    },
+    {
+      "id": "setting-0116",
+      "text": "ghost ship"
+    },
+    {
+      "id": "setting-0117",
+      "text": "factory farm"
+    },
+    {
+      "id": "setting-0118",
+      "text": "city streets"
+    },
+    {
+      "id": "setting-0119",
+      "text": "mountain"
+    },
+    {
+      "id": "setting-0120",
+      "text": "heaven"
+    },
+    {
+      "id": "setting-0121",
+      "text": "hell on earth"
+    },
+    {
+      "id": "setting-0122",
+      "text": "dispatch office"
+    },
+    {
+      "id": "setting-0123",
+      "text": "asteroid"
+    },
+    {
+      "id": "setting-0124",
+      "text": "hot spring town"
+    },
+    {
+      "id": "setting-0125",
+      "text": "idol concert stage"
+    },
+    {
+      "id": "setting-0126",
+      "text": "inside a painting"
+    },
+    {
+      "id": "setting-0127",
+      "text": "inside a story"
+    },
+    {
+      "id": "setting-0128",
+      "text": "inside puzzle box"
+    },
+    {
+      "id": "setting-0129",
+      "text": "island hiking park"
+    },
+    {
+      "id": "setting-0130",
+      "text": "jungle islands"
+    },
+    {
+      "id": "setting-0131",
+      "text": "jungle camp"
+    },
+    {
+      "id": "setting-0132",
+      "text": "kids' make-believe"
+    },
+    {
+      "id": "setting-0133",
+      "text": "spaceship"
+    },
+    {
+      "id": "setting-0134",
+      "text": "mars"
+    },
+    {
+      "id": "setting-0135",
+      "text": "highlands"
+    },
+    {
+      "id": "setting-0136",
+      "text": "monster island"
+    },
+    {
+      "id": "setting-0137",
+      "text": "moon research base"
+    },
+    {
+      "id": "setting-0138",
+      "text": "mountain asylum"
+    },
+    {
+      "id": "setting-0139",
+      "text": "mountain peaks"
+    },
+    {
+      "id": "setting-0140",
+      "text": "mountain roads"
+    },
+    {
+      "id": "setting-0141",
+      "text": "murder hotel"
+    },
+    {
+      "id": "setting-0142",
+      "text": "china"
+    },
+    {
+      "id": "setting-0143",
+      "text": "greece"
+    },
+    {
+      "id": "setting-0144",
+      "text": "tunnel"
+    },
+    {
+      "id": "setting-0145",
+      "text": "night guard office"
+    },
+    {
+      "id": "setting-0146",
+      "text": "nursing home"
+    },
+    {
+      "id": "setting-0147",
+      "text": "ocean"
+    },
+    {
+      "id": "setting-0148",
+      "text": "family home"
+    },
+    {
+      "id": "setting-0149",
+      "text": "old gods' land"
+    },
+    {
+      "id": "setting-0150",
+      "text": "outback island"
+    },
+    {
+      "id": "setting-0151",
+      "text": "farm"
+    },
+    {
+      "id": "setting-0152",
+      "text": "police station"
+    },
+    {
+      "id": "setting-0153",
+      "text": "pizzeria"
+    },
+    {
+      "id": "setting-0154",
+      "text": "portal worlds"
+    },
+    {
+      "id": "setting-0155",
+      "text": "desert"
+    },
+    {
+      "id": "setting-0156",
+      "text": "metro"
+    },
+    {
+      "id": "setting-0157",
+      "text": "rally stages"
+    },
+    {
+      "id": "setting-0158",
+      "text": "mountain village"
+    },
+    {
+      "id": "setting-0159",
+      "text": "orbital ring"
+    },
+    {
+      "id": "setting-0160",
+      "text": "company bases"
+    },
+    {
+      "id": "setting-0161",
+      "text": "food cart"
+    },
+    {
+      "id": "setting-0162",
+      "text": "robot arena"
+    },
+    {
+      "id": "setting-0163",
+      "text": "farm planet"
+    },
+    {
+      "id": "setting-0164",
+      "text": "swamp farmhouse"
+    },
+    {
+      "id": "setting-0165",
+      "text": "coast highway"
+    },
+    {
+      "id": "setting-0166",
+      "text": "hamlet"
+    },
+    {
+      "id": "setting-0167",
+      "text": "harbor district"
+    },
+    {
+      "id": "setting-0168",
+      "text": "suburbs"
+    },
+    {
+      "id": "setting-0169",
+      "text": "farmland"
+    },
+    {
+      "id": "setting-0170",
+      "text": "sea floor cabin"
+    },
+    {
+      "id": "setting-0171",
+      "text": "high school"
+    },
+    {
+      "id": "setting-0172",
+      "text": "lighthouse"
+    },
+    {
+      "id": "setting-0173",
+      "text": "sushi bar"
+    },
+    {
+      "id": "setting-0174",
+      "text": "sewing shop"
+    },
+    {
+      "id": "setting-0175",
+      "text": "seaside town"
+    },
+    {
+      "id": "setting-0176",
+      "text": "coastal town"
+    },
+    {
+      "id": "setting-0177",
+      "text": "island village"
+    },
+    {
+      "id": "setting-0178",
+      "text": "supermarket"
+    },
+    {
+      "id": "setting-0179",
+      "text": "camp"
+    },
+    {
+      "id": "setting-0180",
+      "text": "summer camp"
+    },
+    {
+      "id": "setting-0181",
+      "text": "space elevator"
+    },
+    {
+      "id": "setting-0182",
+      "text": "space station"
+    },
+    {
+      "id": "setting-0183",
+      "text": "cellar"
+    },
+    {
+      "id": "setting-0184",
+      "text": "island seas"
+    },
+    {
+      "id": "setting-0185",
+      "text": "casino"
+    },
+    {
+      "id": "setting-0186",
+      "text": "stunt stadium"
+    },
+    {
+      "id": "setting-0187",
+      "text": "backyard"
+    },
+    {
+      "id": "setting-0188",
+      "text": "open country"
+    },
+    {
+      "id": "setting-0189",
+      "text": "swamp city"
+    },
+    {
+      "id": "setting-0190",
+      "text": "whole Earth"
+    },
+    {
+      "id": "setting-0191",
+      "text": "through the mirror"
+    },
+    {
+      "id": "setting-0192",
+      "text": "tower of tongues"
+    },
+    {
+      "id": "setting-0193",
+      "text": "card den"
+    },
+    {
+      "id": "setting-0194",
+      "text": "club backroom"
+    },
+    {
+      "id": "setting-0195",
+      "text": "vampire castle"
+    },
+    {
+      "id": "setting-0196",
+      "text": "purgatory"
+    },
+    {
+      "id": "setting-0197",
+      "text": "void"
+    },
+    {
+      "id": "setting-0198",
+      "text": "volcano kingdom"
+    },
+    {
+      "id": "setting-0199",
+      "text": "robot city"
+    },
+    {
+      "id": "setting-0200",
+      "text": "skies"
+    },
+    {
+      "id": "setting-0201",
+      "text": "warehouse"
+    },
+    {
+      "id": "setting-0202",
+      "text": "wizard school"
+    },
+    {
+      "id": "setting-0203",
+      "text": "woodland cabin"
+    },
+    {
+      "id": "setting-0204",
+      "text": "world from nothing"
+    },
+    {
+      "id": "setting-0205",
+      "text": "world of clones"
+    },
+    {
+      "id": "setting-0206",
+      "text": "tracks"
+    },
+    {
+      "id": "setting-0207",
+      "text": "yokai realm"
+    },
+    {
+      "id": "setting-0208",
+      "text": "laundromat"
+    },
+    {
+      "id": "setting-0209",
+      "text": "office cubicles"
+    },
+    {
+      "id": "setting-0210",
+      "text": "public library"
+    },
+    {
+      "id": "setting-0211",
+      "text": "shopping mall"
+    },
+    {
+      "id": "setting-0212",
+      "text": "parking garage"
+    },
+    {
+      "id": "setting-0213",
+      "text": "elevator"
+    },
+    {
+      "id": "setting-0214",
+      "text": "hotel"
+    },
+    {
+      "id": "setting-0215",
+      "text": "kitchen"
+    },
+    {
+      "id": "setting-0216",
+      "text": "motel"
+    },
+    {
+      "id": "setting-0217",
+      "text": "gas station"
+    },
+    {
+      "id": "setting-0218",
+      "text": "waiting room"
+    },
+    {
+      "id": "setting-0219",
+      "text": "hair salon"
+    },
+    {
+      "id": "setting-0220",
+      "text": "city bus"
+    },
+    {
+      "id": "setting-0221",
+      "text": "cruise ship"
+    },
+    {
+      "id": "setting-0222",
+      "text": "submarine"
+    },
+    {
+      "id": "setting-0223",
+      "text": "river barge"
+    },
+    {
+      "id": "setting-0224",
+      "text": "caravan"
+    },
+    {
+      "id": "setting-0225",
+      "text": "ice cream truck"
+    },
+    {
+      "id": "setting-0226",
+      "text": "ferris wheel"
+    },
+    {
+      "id": "setting-0227",
+      "text": "generation ship"
+    },
+    {
+      "id": "setting-0228",
+      "text": "inside a body"
+    },
+    {
+      "id": "setting-0229",
+      "text": "ant colony"
+    },
+    {
+      "id": "setting-0230",
+      "text": "dollhouse"
+    },
+    {
+      "id": "setting-0231",
+      "text": "terrarium"
+    },
+    {
+      "id": "setting-0232",
+      "text": "coat pocket"
+    },
+    {
+      "id": "setting-0233",
+      "text": "under the bed"
+    },
+    {
+      "id": "setting-0234",
+      "text": "fishbowl"
+    },
+    {
+      "id": "setting-0235",
+      "text": "sock drawer"
+    },
+    {
+      "id": "setting-0236",
+      "text": "stone age"
+    },
+    {
+      "id": "setting-0237",
+      "text": "ancient Egypt"
+    },
+    {
+      "id": "setting-0238",
+      "text": "Roman empire"
+    },
+    {
+      "id": "setting-0239",
+      "text": "Viking age"
+    },
+    {
+      "id": "setting-0240",
+      "text": "medieval monastery"
+    },
+    {
+      "id": "setting-0241",
+      "text": "pirate age"
+    },
+    {
+      "id": "setting-0242",
+      "text": "Victorian city"
+    },
+    {
+      "id": "setting-0243",
+      "text": "roaring twenties"
+    },
+    {
+      "id": "setting-0244",
+      "text": "cold war bunker"
+    },
+    {
+      "id": "setting-0245",
+      "text": "1980s arcade"
+    },
+    {
+      "id": "setting-0246",
+      "text": "arctic station"
+    },
+    {
+      "id": "setting-0247",
+      "text": "savanna"
+    },
+    {
+      "id": "setting-0248",
+      "text": "steppe"
+    },
+    {
+      "id": "setting-0249",
+      "text": "rainforest"
+    },
+    {
+      "id": "setting-0250",
+      "text": "bayou"
+    },
+    {
+      "id": "setting-0251",
+      "text": "fjord"
+    },
+    {
+      "id": "setting-0252",
+      "text": "monsoon city"
+    },
+    {
+      "id": "setting-0253",
+      "text": "salt flats"
+    },
+    {
+      "id": "setting-0254",
+      "text": "tundra"
+    },
+    {
+      "id": "setting-0255",
+      "text": "glacier"
+    },
+    {
+      "id": "setting-0256",
+      "text": "server farm"
+    },
+    {
+      "id": "setting-0257",
+      "text": "virtual world"
+    },
+    {
+      "id": "setting-0258",
+      "text": "black hole edge"
+    },
+    {
+      "id": "setting-0259",
+      "text": "dyson sphere"
+    },
+    {
+      "id": "setting-0260",
+      "text": "cloning vats"
+    },
+    {
+      "id": "setting-0261",
+      "text": "terraformed moon"
+    },
+    {
+      "id": "setting-0262",
+      "text": "space junkyard"
+    },
+    {
+      "id": "setting-0263",
+      "text": "colony dome"
+    },
+    {
+      "id": "setting-0264",
+      "text": "giant's back"
+    },
+    {
+      "id": "setting-0265",
+      "text": "fairy court"
+    },
+    {
+      "id": "setting-0266",
+      "text": "dragon's hoard"
+    },
+    {
+      "id": "setting-0267",
+      "text": "sky city"
+    },
+    {
+      "id": "setting-0268",
+      "text": "crossroads inn"
+    },
+    {
+      "id": "setting-0269",
+      "text": "witch's hut"
+    },
+    {
+      "id": "setting-0270",
+      "text": "enchanted library"
+    },
+    {
+      "id": "setting-0271",
+      "text": "labyrinth"
+    },
+    {
+      "id": "setting-0272",
+      "text": "wedding"
+    },
+    {
+      "id": "setting-0273",
+      "text": "funeral"
+    },
+    {
+      "id": "setting-0274",
+      "text": "birthday party"
+    },
+    {
+      "id": "setting-0275",
+      "text": "night market"
+    },
+    {
+      "id": "setting-0276",
+      "text": "festival"
+    },
+    {
+      "id": "setting-0277",
+      "text": "game show"
+    },
+    {
+      "id": "setting-0278",
+      "text": "school dance"
+    },
+    {
+      "id": "setting-0279",
+      "text": "family reunion"
+    }
+  ]
+}

@@ -1,0 +1,1744 @@
+{
+  "type": "resource",
+  "cues": [
+    {
+      "id": "resource-0001",
+      "text": "money",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "platformer",
+        "shooter",
+        "melee-action",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "builder-management",
+        "life-sim",
+        "vehicle-sim-racing",
+        "strategy",
+        "deckbuilder-cards",
+        "narrative",
+        "stealth-immersive-sim",
+        "party-multiplayer"
+      ]
+    },
+    {
+      "id": "resource-0002",
+      "text": "health",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "platformer",
+        "shooter",
+        "melee-action",
+        "fighting",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "life-sim",
+        "vehicle-sim-racing",
+        "strategy",
+        "deckbuilder-cards",
+        "stealth-immersive-sim",
+        "sandbox",
+        "party-multiplayer",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "resource-0003",
+      "text": "ammo",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "shooter",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "vehicle-sim-racing",
+        "strategy",
+        "stealth-immersive-sim",
+        "party-multiplayer"
+      ]
+    },
+    {
+      "id": "resource-0004",
+      "text": "food",
+      "genres": [
+        "roguelike",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "builder-management",
+        "life-sim",
+        "strategy",
+        "deckbuilder-cards",
+        "sandbox"
+      ]
+    },
+    {
+      "id": "resource-0005",
+      "text": "time",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "platformer",
+        "puzzle",
+        "shooter",
+        "melee-action",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "builder-management",
+        "life-sim",
+        "vehicle-sim-racing",
+        "strategy",
+        "deckbuilder-cards",
+        "narrative",
+        "stealth-immersive-sim",
+        "party-multiplayer",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "resource-0006",
+      "text": "mana",
+      "genres": ["roguelike", "melee-action", "rpg", "open-world", "strategy", "deckbuilder-cards"]
+    },
+    {
+      "id": "resource-0007",
+      "text": "stamina",
+      "genres": [
+        "platformer",
+        "melee-action",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "life-sim"
+      ]
+    },
+    {
+      "id": "resource-0008",
+      "text": "fuel",
+      "genres": [
+        "roguelike",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "builder-management",
+        "vehicle-sim-racing",
+        "strategy",
+        "sandbox"
+      ]
+    },
+    {
+      "id": "resource-0009",
+      "text": "special meter",
+      "genres": ["shooter", "melee-action", "fighting", "rpg", "party-multiplayer", "rhythm-arcade"]
+    },
+    {
+      "id": "resource-0010",
+      "text": "power",
+      "genres": [
+        "puzzle",
+        "survival-craft",
+        "horror",
+        "builder-management",
+        "strategy",
+        "stealth-immersive-sim",
+        "sandbox"
+      ]
+    },
+    {
+      "id": "resource-0011",
+      "text": "trust",
+      "genres": [
+        "rpg",
+        "life-sim",
+        "strategy",
+        "narrative",
+        "stealth-immersive-sim",
+        "party-multiplayer"
+      ]
+    },
+    {
+      "id": "resource-0012",
+      "text": "water",
+      "genres": ["open-world", "survival-craft", "builder-management", "life-sim", "strategy"]
+    },
+    {
+      "id": "resource-0013",
+      "text": "energy",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "shooter",
+        "survival-craft",
+        "builder-management",
+        "life-sim",
+        "vehicle-sim-racing",
+        "strategy",
+        "deckbuilder-cards",
+        "sandbox"
+      ]
+    },
+    {
+      "id": "resource-0014",
+      "text": "healing items",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "shooter",
+        "melee-action",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "resource-0015",
+      "text": "lives",
+      "genres": [
+        "roguelike",
+        "platformer",
+        "puzzle",
+        "shooter",
+        "fighting",
+        "party-multiplayer",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "resource-0016",
+      "text": "materials",
+      "genres": [
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "builder-management",
+        "life-sim",
+        "strategy",
+        "sandbox"
+      ]
+    },
+    {
+      "id": "resource-0017",
+      "text": "inventory space",
+      "genres": [
+        "roguelike",
+        "shooter",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "resource-0018",
+      "text": "light",
+      "genres": ["roguelike", "platformer", "puzzle", "survival-craft", "horror"]
+    },
+    {
+      "id": "resource-0019",
+      "text": "oxygen",
+      "genres": [
+        "roguelike",
+        "platformer",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "builder-management",
+        "sandbox"
+      ]
+    },
+    {
+      "id": "resource-0020",
+      "text": "reputation",
+      "genres": [
+        "rpg",
+        "open-world",
+        "builder-management",
+        "life-sim",
+        "strategy",
+        "narrative",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "resource-0021",
+      "text": "souls",
+      "genres": ["roguelike", "metroidvania", "melee-action", "rpg", "deckbuilder-cards"]
+    },
+    {
+      "id": "resource-0022",
+      "text": "upgrade points",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "shooter",
+        "melee-action",
+        "rpg",
+        "open-world",
+        "vehicle-sim-racing",
+        "strategy",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "resource-0023",
+      "text": "countdown",
+      "genres": [
+        "platformer",
+        "puzzle",
+        "horror",
+        "vehicle-sim-racing",
+        "strategy",
+        "deckbuilder-cards",
+        "narrative",
+        "stealth-immersive-sim",
+        "party-multiplayer",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "resource-0024",
+      "text": "daylight",
+      "genres": [
+        "open-world",
+        "survival-craft",
+        "horror",
+        "life-sim",
+        "strategy",
+        "narrative",
+        "sandbox"
+      ]
+    },
+    {
+      "id": "resource-0025",
+      "text": "armor",
+      "genres": [
+        "roguelike",
+        "shooter",
+        "melee-action",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "strategy"
+      ]
+    },
+    {
+      "id": "resource-0026",
+      "text": "durability",
+      "genres": [
+        "roguelike",
+        "melee-action",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "vehicle-sim-racing"
+      ]
+    },
+    {
+      "id": "resource-0027",
+      "text": "healing charges",
+      "genres": ["roguelike", "metroidvania", "melee-action", "rpg", "open-world"]
+    },
+    {
+      "id": "resource-0028",
+      "text": "keys",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "platformer",
+        "puzzle",
+        "rpg",
+        "horror",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "resource-0029",
+      "text": "ore",
+      "genres": ["survival-craft", "builder-management", "life-sim", "strategy", "sandbox"]
+    },
+    {
+      "id": "resource-0030",
+      "text": "parts",
+      "genres": [
+        "roguelike",
+        "survival-craft",
+        "builder-management",
+        "vehicle-sim-racing",
+        "sandbox"
+      ]
+    },
+    {
+      "id": "resource-0031",
+      "text": "vehicle condition",
+      "genres": ["open-world", "survival-craft", "vehicle-sim-racing", "sandbox"]
+    },
+    {
+      "id": "resource-0032",
+      "text": "bombs",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "platformer",
+        "puzzle",
+        "shooter",
+        "party-multiplayer",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "resource-0033",
+      "text": "carry weight",
+      "genres": ["shooter", "rpg", "open-world", "survival-craft", "horror", "vehicle-sim-racing"]
+    },
+    {
+      "id": "resource-0034",
+      "text": "clues",
+      "genres": [
+        "puzzle",
+        "rpg",
+        "horror",
+        "narrative",
+        "stealth-immersive-sim",
+        "party-multiplayer"
+      ]
+    },
+    {
+      "id": "resource-0035",
+      "text": "focus",
+      "genres": ["shooter", "melee-action", "fighting", "rpg", "stealth-immersive-sim"]
+    },
+    {
+      "id": "resource-0036",
+      "text": "momentum",
+      "genres": [
+        "platformer",
+        "puzzle",
+        "fighting",
+        "vehicle-sim-racing",
+        "deckbuilder-cards",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "resource-0037",
+      "text": "population",
+      "genres": ["builder-management", "strategy", "deckbuilder-cards", "sandbox"]
+    },
+    {
+      "id": "resource-0038",
+      "text": "potions",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "melee-action",
+        "rpg",
+        "open-world",
+        "deckbuilder-cards"
+      ]
+    },
+    {
+      "id": "resource-0039",
+      "text": "sanity",
+      "genres": ["roguelike", "rpg", "survival-craft", "horror", "narrative"]
+    },
+    {
+      "id": "resource-0040",
+      "text": "shield",
+      "genres": [
+        "roguelike",
+        "shooter",
+        "melee-action",
+        "fighting",
+        "rpg",
+        "vehicle-sim-racing",
+        "strategy"
+      ]
+    },
+    {
+      "id": "resource-0041",
+      "text": "sleep",
+      "genres": ["survival-craft", "horror", "life-sim"]
+    },
+    {
+      "id": "resource-0042",
+      "text": "supplies",
+      "genres": [
+        "roguelike",
+        "rpg",
+        "survival-craft",
+        "horror",
+        "builder-management",
+        "strategy",
+        "narrative"
+      ]
+    },
+    {
+      "id": "resource-0043",
+      "text": "affection",
+      "genres": ["rpg", "horror", "life-sim", "narrative"]
+    },
+    {
+      "id": "resource-0044",
+      "text": "build budget",
+      "genres": ["puzzle", "builder-management", "strategy", "deckbuilder-cards", "sandbox"]
+    },
+    {
+      "id": "resource-0045",
+      "text": "building space",
+      "genres": [
+        "survival-craft",
+        "builder-management",
+        "life-sim",
+        "strategy",
+        "deckbuilder-cards",
+        "sandbox"
+      ]
+    },
+    {
+      "id": "resource-0046",
+      "text": "combo",
+      "genres": [
+        "platformer",
+        "puzzle",
+        "melee-action",
+        "fighting",
+        "deckbuilder-cards",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "resource-0047",
+      "text": "days",
+      "genres": [
+        "roguelike",
+        "survival-craft",
+        "horror",
+        "builder-management",
+        "life-sim",
+        "narrative"
+      ]
+    },
+    {
+      "id": "resource-0048",
+      "text": "equipment slots",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "shooter",
+        "melee-action",
+        "rpg",
+        "deckbuilder-cards",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "resource-0049",
+      "text": "experience",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "shooter",
+        "melee-action",
+        "rpg",
+        "open-world",
+        "strategy"
+      ]
+    },
+    {
+      "id": "resource-0050",
+      "text": "gadgets",
+      "genres": ["metroidvania", "shooter", "melee-action", "open-world", "stealth-immersive-sim"]
+    },
+    {
+      "id": "resource-0051",
+      "text": "hull",
+      "genres": ["roguelike", "survival-craft", "horror", "vehicle-sim-racing", "strategy"]
+    },
+    {
+      "id": "resource-0052",
+      "text": "medicine",
+      "genres": ["shooter", "rpg", "survival-craft", "horror", "builder-management", "narrative"]
+    },
+    {
+      "id": "resource-0053",
+      "text": "morale",
+      "genres": ["rpg", "survival-craft", "builder-management", "strategy", "narrative"]
+    },
+    {
+      "id": "resource-0054",
+      "text": "one life",
+      "genres": ["roguelike", "platformer", "shooter", "horror", "party-multiplayer"]
+    },
+    {
+      "id": "resource-0055",
+      "text": "research",
+      "genres": ["roguelike", "survival-craft", "builder-management", "strategy"]
+    },
+    {
+      "id": "resource-0056",
+      "text": "suit power",
+      "genres": ["metroidvania", "shooter", "survival-craft", "horror", "stealth-immersive-sim"]
+    },
+    {
+      "id": "resource-0057",
+      "text": "survivors",
+      "genres": [
+        "roguelike",
+        "shooter",
+        "survival-craft",
+        "horror",
+        "builder-management",
+        "strategy",
+        "narrative"
+      ]
+    },
+    {
+      "id": "resource-0058",
+      "text": "tires",
+      "genres": ["vehicle-sim-racing"]
+    },
+    {
+      "id": "resource-0059",
+      "text": "warmth",
+      "genres": ["open-world", "survival-craft", "horror", "builder-management"]
+    },
+    {
+      "id": "resource-0060",
+      "text": "blood",
+      "genres": ["roguelike", "melee-action", "rpg", "horror", "deckbuilder-cards"]
+    },
+    {
+      "id": "resource-0061",
+      "text": "cooldowns",
+      "genres": ["roguelike", "shooter", "melee-action", "rpg", "strategy", "party-multiplayer"]
+    },
+    {
+      "id": "resource-0062",
+      "text": "crew",
+      "genres": [
+        "roguelike",
+        "builder-management",
+        "strategy",
+        "narrative",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "resource-0063",
+      "text": "decision time",
+      "genres": ["puzzle", "strategy", "narrative"]
+    },
+    {
+      "id": "resource-0064",
+      "text": "extra lives",
+      "genres": ["roguelike", "platformer", "puzzle", "shooter", "rhythm-arcade"]
+    },
+    {
+      "id": "resource-0065",
+      "text": "gems",
+      "genres": ["roguelike", "platformer", "puzzle", "rhythm-arcade"]
+    },
+    {
+      "id": "resource-0066",
+      "text": "happiness",
+      "genres": ["builder-management", "life-sim", "strategy"]
+    },
+    {
+      "id": "resource-0067",
+      "text": "nerve",
+      "genres": ["horror", "narrative", "stealth-immersive-sim"]
+    },
+    {
+      "id": "resource-0068",
+      "text": "noise",
+      "genres": ["survival-craft", "horror", "deckbuilder-cards", "stealth-immersive-sim"]
+    },
+    {
+      "id": "resource-0069",
+      "text": "patience",
+      "genres": ["rpg", "builder-management", "life-sim", "narrative"]
+    },
+    {
+      "id": "resource-0070",
+      "text": "scrap",
+      "genres": ["roguelike", "shooter", "open-world", "survival-craft", "builder-management"]
+    },
+    {
+      "id": "resource-0071",
+      "text": "stock",
+      "genres": ["builder-management", "life-sim"]
+    },
+    {
+      "id": "resource-0072",
+      "text": "stress",
+      "genres": ["roguelike", "rpg", "horror", "builder-management", "life-sim", "narrative"]
+    },
+    {
+      "id": "resource-0073",
+      "text": "turns",
+      "genres": ["roguelike", "puzzle", "rpg", "strategy", "deckbuilder-cards"]
+    },
+    {
+      "id": "resource-0074",
+      "text": "willpower",
+      "genres": ["melee-action", "rpg", "horror", "deckbuilder-cards", "narrative"]
+    },
+    {
+      "id": "resource-0075",
+      "text": "wood",
+      "genres": ["survival-craft", "builder-management", "life-sim", "strategy", "sandbox"]
+    },
+    {
+      "id": "resource-0076",
+      "text": "action points",
+      "genres": ["puzzle", "rpg", "strategy", "deckbuilder-cards"]
+    },
+    {
+      "id": "resource-0077",
+      "text": "attempts",
+      "genres": ["platformer", "puzzle", "vehicle-sim-racing", "rhythm-arcade"]
+    },
+    {
+      "id": "resource-0078",
+      "text": "bait",
+      "genres": ["rpg", "survival-craft", "horror", "life-sim"]
+    },
+    {
+      "id": "resource-0079",
+      "text": "batteries",
+      "genres": ["survival-craft", "horror", "stealth-immersive-sim"]
+    },
+    {
+      "id": "resource-0080",
+      "text": "bills",
+      "genres": ["builder-management", "life-sim", "narrative"]
+    },
+    {
+      "id": "resource-0081",
+      "text": "boost",
+      "genres": ["vehicle-sim-racing", "party-multiplayer", "rhythm-arcade"]
+    },
+    {
+      "id": "resource-0082",
+      "text": "cargo space",
+      "genres": [
+        "roguelike",
+        "open-world",
+        "survival-craft",
+        "builder-management",
+        "vehicle-sim-racing"
+      ]
+    },
+    {
+      "id": "resource-0083",
+      "text": "checkpoints",
+      "genres": ["platformer", "vehicle-sim-racing", "rhythm-arcade"]
+    },
+    {
+      "id": "resource-0084",
+      "text": "comeback move",
+      "genres": ["fighting"]
+    },
+    {
+      "id": "resource-0085",
+      "text": "damage percent",
+      "genres": ["fighting", "party-multiplayer"]
+    },
+    {
+      "id": "resource-0086",
+      "text": "deadline",
+      "genres": ["horror", "builder-management", "life-sim", "narrative", "stealth-immersive-sim"]
+    },
+    {
+      "id": "resource-0087",
+      "text": "discards",
+      "genres": ["deckbuilder-cards"]
+    },
+    {
+      "id": "resource-0088",
+      "text": "faith",
+      "genres": [
+        "roguelike",
+        "rpg",
+        "builder-management",
+        "strategy",
+        "deckbuilder-cards",
+        "sandbox"
+      ]
+    },
+    {
+      "id": "resource-0089",
+      "text": "family health",
+      "genres": ["survival-craft", "builder-management", "life-sim", "narrative"]
+    },
+    {
+      "id": "resource-0090",
+      "text": "gear",
+      "genres": ["shooter", "melee-action", "rpg", "open-world", "survival-craft", "horror"]
+    },
+    {
+      "id": "resource-0091",
+      "text": "head start",
+      "genres": ["horror", "stealth-immersive-sim", "party-multiplayer"]
+    },
+    {
+      "id": "resource-0092",
+      "text": "hints",
+      "genres": ["puzzle", "narrative"]
+    },
+    {
+      "id": "resource-0093",
+      "text": "hope",
+      "genres": ["survival-craft", "builder-management", "narrative"]
+    },
+    {
+      "id": "resource-0094",
+      "text": "ingredients",
+      "genres": [
+        "roguelike",
+        "rpg",
+        "survival-craft",
+        "builder-management",
+        "life-sim",
+        "party-multiplayer"
+      ]
+    },
+    {
+      "id": "resource-0095",
+      "text": "limbs",
+      "genres": ["fighting", "horror", "stealth-immersive-sim", "sandbox"]
+    },
+    {
+      "id": "resource-0096",
+      "text": "loot",
+      "genres": ["roguelike", "shooter", "melee-action", "rpg", "open-world", "survival-craft"]
+    },
+    {
+      "id": "resource-0097",
+      "text": "missiles",
+      "genres": ["roguelike", "metroidvania", "shooter", "vehicle-sim-racing", "rhythm-arcade"]
+    },
+    {
+      "id": "resource-0098",
+      "text": "quota",
+      "genres": ["horror", "builder-management", "party-multiplayer"]
+    },
+    {
+      "id": "resource-0099",
+      "text": "rage",
+      "genres": ["melee-action", "fighting", "rpg"]
+    },
+    {
+      "id": "resource-0100",
+      "text": "reinforcements",
+      "genres": ["shooter", "strategy", "party-multiplayer"]
+    },
+    {
+      "id": "resource-0101",
+      "text": "relationships",
+      "genres": ["rpg", "life-sim", "deckbuilder-cards", "narrative"]
+    },
+    {
+      "id": "resource-0102",
+      "text": "rest",
+      "genres": ["roguelike", "rpg", "survival-craft"]
+    },
+    {
+      "id": "resource-0103",
+      "text": "revives",
+      "genres": ["shooter", "melee-action", "rpg", "party-multiplayer"]
+    },
+    {
+      "id": "resource-0104",
+      "text": "save files",
+      "genres": ["platformer", "melee-action", "horror"]
+    },
+    {
+      "id": "resource-0105",
+      "text": "saves",
+      "genres": ["platformer", "melee-action", "horror"]
+    },
+    {
+      "id": "resource-0106",
+      "text": "seeds",
+      "genres": ["survival-craft", "builder-management", "life-sim"]
+    },
+    {
+      "id": "resource-0107",
+      "text": "shelf space",
+      "genres": ["builder-management", "life-sim"]
+    },
+    {
+      "id": "resource-0108",
+      "text": "stone",
+      "genres": ["survival-craft", "builder-management", "strategy", "sandbox"]
+    },
+    {
+      "id": "resource-0109",
+      "text": "sunlight",
+      "genres": ["horror", "builder-management", "life-sim", "strategy"]
+    },
+    {
+      "id": "resource-0110",
+      "text": "super move",
+      "genres": ["fighting", "vehicle-sim-racing", "party-multiplayer"]
+    },
+    {
+      "id": "resource-0111",
+      "text": "vocabulary",
+      "genres": ["puzzle", "narrative"]
+    },
+    {
+      "id": "resource-0112",
+      "text": "air jumps",
+      "genres": ["metroidvania", "platformer", "fighting"]
+    },
+    {
+      "id": "resource-0113",
+      "text": "approval",
+      "genres": ["rpg", "life-sim", "narrative"]
+    },
+    {
+      "id": "resource-0114",
+      "text": "balance",
+      "genres": ["platformer", "melee-action", "fighting", "sandbox"]
+    },
+    {
+      "id": "resource-0115",
+      "text": "base health",
+      "genres": ["roguelike", "strategy", "deckbuilder-cards"]
+    },
+    {
+      "id": "resource-0116",
+      "text": "bladder",
+      "genres": ["survival-craft", "life-sim"]
+    },
+    {
+      "id": "resource-0117",
+      "text": "blinks",
+      "genres": ["horror", "narrative"]
+    },
+    {
+      "id": "resource-0118",
+      "text": "body bags",
+      "genres": ["shooter", "builder-management", "strategy"]
+    },
+    {
+      "id": "resource-0119",
+      "text": "bond",
+      "genres": ["rpg", "open-world", "life-sim", "narrative"]
+    },
+    {
+      "id": "resource-0120",
+      "text": "bones",
+      "genres": ["roguelike", "horror", "deckbuilder-cards"]
+    },
+    {
+      "id": "resource-0121",
+      "text": "boredom",
+      "genres": ["survival-craft", "builder-management", "life-sim"]
+    },
+    {
+      "id": "resource-0122",
+      "text": "barter goods",
+      "genres": ["rpg", "open-world", "survival-craft"]
+    },
+    {
+      "id": "resource-0123",
+      "text": "candles",
+      "genres": ["roguelike", "horror", "deckbuilder-cards"]
+    },
+    {
+      "id": "resource-0124",
+      "text": "card slots",
+      "genres": ["deckbuilder-cards"]
+    },
+    {
+      "id": "resource-0125",
+      "text": "cargo condition",
+      "genres": ["vehicle-sim-racing", "stealth-immersive-sim"]
+    },
+    {
+      "id": "resource-0126",
+      "text": "cloth",
+      "genres": ["survival-craft", "builder-management", "life-sim"]
+    },
+    {
+      "id": "resource-0127",
+      "text": "coal",
+      "genres": ["survival-craft", "builder-management", "strategy"]
+    },
+    {
+      "id": "resource-0128",
+      "text": "colors",
+      "genres": ["puzzle", "sandbox"]
+    },
+    {
+      "id": "resource-0129",
+      "text": "credibility",
+      "genres": ["narrative", "stealth-immersive-sim"]
+    },
+    {
+      "id": "resource-0130",
+      "text": "darkness",
+      "genres": ["roguelike", "horror"]
+    },
+    {
+      "id": "resource-0131",
+      "text": "dashes",
+      "genres": ["roguelike", "metroidvania", "platformer", "melee-action"]
+    },
+    {
+      "id": "resource-0132",
+      "text": "dirty money",
+      "genres": ["open-world", "builder-management", "narrative", "stealth-immersive-sim"]
+    },
+    {
+      "id": "resource-0133",
+      "text": "distance",
+      "genres": ["fighting", "vehicle-sim-racing", "rhythm-arcade"]
+    },
+    {
+      "id": "resource-0134",
+      "text": "group votes",
+      "genres": ["party-multiplayer"]
+    },
+    {
+      "id": "resource-0135",
+      "text": "emotions",
+      "genres": ["life-sim", "narrative"]
+    },
+    {
+      "id": "resource-0136",
+      "text": "fertilizer",
+      "genres": ["builder-management", "life-sim"]
+    },
+    {
+      "id": "resource-0137",
+      "text": "film",
+      "genres": ["horror", "narrative"]
+    },
+    {
+      "id": "resource-0138",
+      "text": "filters",
+      "genres": ["survival-craft", "horror"]
+    },
+    {
+      "id": "resource-0139",
+      "text": "flares",
+      "genres": ["survival-craft", "horror", "vehicle-sim-racing"]
+    },
+    {
+      "id": "resource-0140",
+      "text": "followers",
+      "genres": ["roguelike", "builder-management", "strategy", "narrative"]
+    },
+    {
+      "id": "resource-0141",
+      "text": "free time",
+      "genres": ["life-sim", "narrative"]
+    },
+    {
+      "id": "resource-0142",
+      "text": "friends",
+      "genres": ["rpg", "life-sim", "narrative"]
+    },
+    {
+      "id": "resource-0143",
+      "text": "gifts",
+      "genres": ["life-sim", "narrative"]
+    },
+    {
+      "id": "resource-0144",
+      "text": "grip",
+      "genres": ["platformer", "puzzle", "survival-craft"]
+    },
+    {
+      "id": "resource-0145",
+      "text": "gunpowder",
+      "genres": ["shooter", "survival-craft", "strategy"]
+    },
+    {
+      "id": "resource-0146",
+      "text": "hand size",
+      "genres": ["deckbuilder-cards"]
+    },
+    {
+      "id": "resource-0147",
+      "text": "heirlooms",
+      "genres": ["roguelike", "rpg", "narrative"]
+    },
+    {
+      "id": "resource-0148",
+      "text": "honor",
+      "genres": ["rpg", "open-world", "strategy", "narrative"]
+    },
+    {
+      "id": "resource-0149",
+      "text": "hostages",
+      "genres": ["shooter", "strategy", "stealth-immersive-sim"]
+    },
+    {
+      "id": "resource-0150",
+      "text": "humanity",
+      "genres": ["melee-action", "rpg", "horror", "narrative"]
+    },
+    {
+      "id": "resource-0151",
+      "text": "hygiene",
+      "genres": ["survival-craft", "life-sim"]
+    },
+    {
+      "id": "resource-0152",
+      "text": "immunity",
+      "genres": ["open-world", "survival-craft", "horror"]
+    },
+    {
+      "id": "resource-0153",
+      "text": "karma",
+      "genres": ["rpg", "narrative", "stealth-immersive-sim"]
+    },
+    {
+      "id": "resource-0154",
+      "text": "knowledge",
+      "genres": ["puzzle", "rpg", "open-world", "narrative"]
+    },
+    {
+      "id": "resource-0155",
+      "text": "lifespan",
+      "genres": ["roguelike", "life-sim", "strategy"]
+    },
+    {
+      "id": "resource-0156",
+      "text": "loyalty",
+      "genres": ["rpg", "builder-management", "strategy", "narrative"]
+    },
+    {
+      "id": "resource-0157",
+      "text": "luck",
+      "genres": ["roguelike", "rpg", "deckbuilder-cards", "rhythm-arcade"]
+    },
+    {
+      "id": "resource-0158",
+      "text": "memories",
+      "genres": ["narrative"]
+    },
+    {
+      "id": "resource-0159",
+      "text": "mercy",
+      "genres": ["melee-action", "narrative", "rhythm-arcade"]
+    },
+    {
+      "id": "resource-0160",
+      "text": "metal",
+      "genres": ["survival-craft", "builder-management", "strategy", "sandbox"]
+    },
+    {
+      "id": "resource-0161",
+      "text": "moves",
+      "genres": ["puzzle", "strategy"]
+    },
+    {
+      "id": "resource-0162",
+      "text": "notoriety",
+      "genres": ["shooter", "open-world", "stealth-immersive-sim"]
+    },
+    {
+      "id": "resource-0163",
+      "text": "oil",
+      "genres": ["builder-management", "strategy"]
+    },
+    {
+      "id": "resource-0164",
+      "text": "passion",
+      "genres": ["life-sim", "deckbuilder-cards", "narrative"]
+    },
+    {
+      "id": "resource-0165",
+      "text": "patient health",
+      "genres": ["builder-management", "narrative", "rhythm-arcade"]
+    },
+    {
+      "id": "resource-0166",
+      "text": "pet health",
+      "genres": ["rpg", "life-sim"]
+    },
+    {
+      "id": "resource-0167",
+      "text": "pressure",
+      "genres": ["survival-craft", "horror", "sandbox"]
+    },
+    {
+      "id": "resource-0168",
+      "text": "production",
+      "genres": ["builder-management", "strategy"]
+    },
+    {
+      "id": "resource-0169",
+      "text": "public opinion",
+      "genres": ["builder-management", "strategy", "narrative"]
+    },
+    {
+      "id": "resource-0170",
+      "text": "radiation",
+      "genres": ["open-world", "survival-craft", "horror"]
+    },
+    {
+      "id": "resource-0171",
+      "text": "rank points",
+      "genres": ["fighting", "deckbuilder-cards", "party-multiplayer"]
+    },
+    {
+      "id": "resource-0172",
+      "text": "reagents",
+      "genres": ["roguelike", "rpg", "deckbuilder-cards"]
+    },
+    {
+      "id": "resource-0173",
+      "text": "reason",
+      "genres": ["horror", "deckbuilder-cards", "narrative"]
+    },
+    {
+      "id": "resource-0174",
+      "text": "rent",
+      "genres": ["builder-management", "life-sim"]
+    },
+    {
+      "id": "resource-0175",
+      "text": "repair time",
+      "genres": ["vehicle-sim-racing"]
+    },
+    {
+      "id": "resource-0176",
+      "text": "rewinds",
+      "genres": ["platformer", "puzzle", "vehicle-sim-racing", "narrative"]
+    },
+    {
+      "id": "resource-0177",
+      "text": "risk",
+      "genres": ["fighting", "strategy", "deckbuilder-cards", "stealth-immersive-sim"]
+    },
+    {
+      "id": "resource-0178",
+      "text": "room to move",
+      "genres": ["puzzle", "strategy", "deckbuilder-cards", "sandbox"]
+    },
+    {
+      "id": "resource-0179",
+      "text": "rope",
+      "genres": ["roguelike", "metroidvania", "platformer", "survival-craft"]
+    },
+    {
+      "id": "resource-0180",
+      "text": "rounds won",
+      "genres": ["fighting", "deckbuilder-cards", "party-multiplayer"]
+    },
+    {
+      "id": "resource-0181",
+      "text": "slow motion",
+      "genres": ["platformer", "shooter", "melee-action", "rhythm-arcade"]
+    },
+    {
+      "id": "resource-0182",
+      "text": "soap",
+      "genres": ["life-sim", "stealth-immersive-sim"]
+    },
+    {
+      "id": "resource-0183",
+      "text": "spare bodies",
+      "genres": ["roguelike", "platformer", "puzzle", "fighting"]
+    },
+    {
+      "id": "resource-0184",
+      "text": "spell slots",
+      "genres": ["rpg", "deckbuilder-cards"]
+    },
+    {
+      "id": "resource-0185",
+      "text": "spice",
+      "genres": ["builder-management", "strategy", "sandbox"]
+    },
+    {
+      "id": "resource-0186",
+      "text": "storage",
+      "genres": ["survival-craft", "builder-management", "life-sim"]
+    },
+    {
+      "id": "resource-0187",
+      "text": "strikes",
+      "genres": ["puzzle", "narrative", "rhythm-arcade"]
+    },
+    {
+      "id": "resource-0188",
+      "text": "style",
+      "genres": ["shooter", "melee-action", "vehicle-sim-racing", "rhythm-arcade"]
+    },
+    {
+      "id": "resource-0189",
+      "text": "temper",
+      "genres": ["life-sim", "narrative"]
+    },
+    {
+      "id": "resource-0190",
+      "text": "temperature",
+      "genres": ["survival-craft", "sandbox"]
+    },
+    {
+      "id": "resource-0191",
+      "text": "tension",
+      "genres": ["fighting", "narrative"]
+    },
+    {
+      "id": "resource-0192",
+      "text": "territory",
+      "genres": ["strategy", "party-multiplayer"]
+    },
+    {
+      "id": "resource-0193",
+      "text": "throughput",
+      "genres": ["builder-management"]
+    },
+    {
+      "id": "resource-0194",
+      "text": "toxicity",
+      "genres": ["open-world", "survival-craft"]
+    },
+    {
+      "id": "resource-0195",
+      "text": "traffic",
+      "genres": ["builder-management"]
+    },
+    {
+      "id": "resource-0196",
+      "text": "unrest",
+      "genres": ["builder-management", "strategy"]
+    },
+    {
+      "id": "resource-0197",
+      "text": "upkeep",
+      "genres": ["survival-craft", "builder-management", "strategy"]
+    },
+    {
+      "id": "resource-0198",
+      "text": "vehicles",
+      "genres": ["shooter", "open-world", "vehicle-sim-racing", "strategy"]
+    },
+    {
+      "id": "resource-0199",
+      "text": "views",
+      "genres": ["roguelike", "life-sim", "narrative"]
+    },
+    {
+      "id": "resource-0200",
+      "text": "weapon slots",
+      "genres": ["roguelike", "shooter", "rpg"]
+    },
+    {
+      "id": "resource-0201",
+      "text": "your weapon",
+      "genres": ["melee-action", "fighting"]
+    },
+    {
+      "id": "resource-0202",
+      "text": "breath",
+      "genres": [
+        "metroidvania",
+        "platformer",
+        "survival-craft",
+        "horror",
+        "stealth-immersive-sim",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "resource-0203",
+      "text": "heartbeat",
+      "genres": ["horror", "narrative", "stealth-immersive-sim", "rhythm-arcade"]
+    },
+    {
+      "id": "resource-0204",
+      "text": "adrenaline",
+      "genres": ["roguelike", "shooter", "melee-action", "fighting", "vehicle-sim-racing"]
+    },
+    {
+      "id": "resource-0205",
+      "text": "courage",
+      "genres": ["rpg", "horror", "strategy", "deckbuilder-cards", "narrative"]
+    },
+    {
+      "id": "resource-0206",
+      "text": "eyesight",
+      "genres": ["puzzle", "survival-craft", "horror", "stealth-immersive-sim"]
+    },
+    {
+      "id": "resource-0207",
+      "text": "voice",
+      "genres": ["narrative", "stealth-immersive-sim", "party-multiplayer", "rhythm-arcade"]
+    },
+    {
+      "id": "resource-0208",
+      "text": "pain",
+      "genres": ["roguelike", "melee-action", "horror", "deckbuilder-cards"]
+    },
+    {
+      "id": "resource-0209",
+      "text": "dreams",
+      "genres": ["puzzle", "rpg", "horror", "life-sim", "narrative"]
+    },
+    {
+      "id": "resource-0210",
+      "text": "tears",
+      "genres": ["puzzle", "horror", "life-sim", "narrative"]
+    },
+    {
+      "id": "resource-0211",
+      "text": "favors",
+      "genres": [
+        "rpg",
+        "life-sim",
+        "strategy",
+        "narrative",
+        "stealth-immersive-sim",
+        "party-multiplayer"
+      ]
+    },
+    {
+      "id": "resource-0212",
+      "text": "secrets",
+      "genres": [
+        "rpg",
+        "horror",
+        "deckbuilder-cards",
+        "narrative",
+        "stealth-immersive-sim",
+        "party-multiplayer"
+      ]
+    },
+    {
+      "id": "resource-0213",
+      "text": "lies",
+      "genres": ["deckbuilder-cards", "narrative", "stealth-immersive-sim", "party-multiplayer"]
+    },
+    {
+      "id": "resource-0214",
+      "text": "goodwill",
+      "genres": ["rpg", "builder-management", "life-sim", "strategy", "narrative"]
+    },
+    {
+      "id": "resource-0215",
+      "text": "debts",
+      "genres": ["roguelike", "rpg", "builder-management", "life-sim", "narrative"]
+    },
+    {
+      "id": "resource-0216",
+      "text": "promises",
+      "genres": ["rpg", "life-sim", "narrative"]
+    },
+    {
+      "id": "resource-0217",
+      "text": "fans",
+      "genres": [
+        "builder-management",
+        "life-sim",
+        "vehicle-sim-racing",
+        "party-multiplayer",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "resource-0218",
+      "text": "crowd hype",
+      "genres": [
+        "melee-action",
+        "fighting",
+        "vehicle-sim-racing",
+        "party-multiplayer",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "resource-0219",
+      "text": "invitations",
+      "genres": ["life-sim", "narrative", "party-multiplayer"]
+    },
+    {
+      "id": "resource-0220",
+      "text": "grapple charges",
+      "genres": ["metroidvania", "platformer", "shooter", "open-world", "rhythm-arcade"]
+    },
+    {
+      "id": "resource-0221",
+      "text": "glide time",
+      "genres": ["metroidvania", "platformer", "open-world", "vehicle-sim-racing"]
+    },
+    {
+      "id": "resource-0222",
+      "text": "placeable platforms",
+      "genres": ["metroidvania", "platformer", "puzzle", "sandbox"]
+    },
+    {
+      "id": "resource-0223",
+      "text": "height",
+      "genres": ["platformer", "open-world", "vehicle-sim-racing", "sandbox"]
+    },
+    {
+      "id": "resource-0224",
+      "text": "speed",
+      "genres": ["roguelike", "platformer", "vehicle-sim-racing", "rhythm-arcade"]
+    },
+    {
+      "id": "resource-0225",
+      "text": "gravity flips",
+      "genres": ["metroidvania", "platformer", "puzzle", "rhythm-arcade"]
+    },
+    {
+      "id": "resource-0226",
+      "text": "teleports",
+      "genres": ["roguelike", "metroidvania", "platformer", "puzzle", "shooter"]
+    },
+    {
+      "id": "resource-0227",
+      "text": "stage edge",
+      "genres": ["platformer", "fighting", "party-multiplayer"]
+    },
+    {
+      "id": "resource-0228",
+      "text": "footing",
+      "genres": ["platformer", "melee-action", "fighting", "survival-craft"]
+    },
+    {
+      "id": "resource-0229",
+      "text": "guard meter",
+      "genres": ["melee-action", "fighting", "rpg"]
+    },
+    {
+      "id": "resource-0230",
+      "text": "stagger",
+      "genres": ["shooter", "melee-action", "fighting"]
+    },
+    {
+      "id": "resource-0231",
+      "text": "burst",
+      "genres": ["melee-action", "fighting", "party-multiplayer"]
+    },
+    {
+      "id": "resource-0232",
+      "text": "parries",
+      "genres": ["roguelike", "melee-action", "fighting", "rhythm-arcade"]
+    },
+    {
+      "id": "resource-0233",
+      "text": "counters",
+      "genres": ["melee-action", "fighting", "strategy", "deckbuilder-cards"]
+    },
+    {
+      "id": "resource-0234",
+      "text": "beat streak",
+      "genres": ["fighting", "party-multiplayer", "rhythm-arcade"]
+    },
+    {
+      "id": "resource-0235",
+      "text": "accuracy",
+      "genres": ["shooter", "fighting", "vehicle-sim-racing", "rhythm-arcade"]
+    },
+    {
+      "id": "resource-0236",
+      "text": "tempo",
+      "genres": ["fighting", "strategy", "deckbuilder-cards", "rhythm-arcade"]
+    },
+    {
+      "id": "resource-0237",
+      "text": "groove",
+      "genres": ["life-sim", "party-multiplayer", "rhythm-arcade"]
+    },
+    {
+      "id": "resource-0238",
+      "text": "volume",
+      "genres": ["horror", "stealth-immersive-sim", "party-multiplayer", "rhythm-arcade"]
+    },
+    {
+      "id": "resource-0239",
+      "text": "pieces",
+      "genres": ["puzzle", "builder-management", "deckbuilder-cards", "sandbox"]
+    },
+    {
+      "id": "resource-0240",
+      "text": "mirrors",
+      "genres": ["platformer", "puzzle", "horror", "stealth-immersive-sim"]
+    },
+    {
+      "id": "resource-0241",
+      "text": "switches",
+      "genres": ["metroidvania", "platformer", "puzzle"]
+    },
+    {
+      "id": "resource-0242",
+      "text": "tiles",
+      "genres": ["puzzle", "builder-management", "strategy", "deckbuilder-cards"]
+    },
+    {
+      "id": "resource-0243",
+      "text": "matches",
+      "genres": ["puzzle", "survival-craft", "horror"]
+    },
+    {
+      "id": "resource-0244",
+      "text": "ink",
+      "genres": ["puzzle", "rpg", "deckbuilder-cards", "narrative", "sandbox"]
+    },
+    {
+      "id": "resource-0245",
+      "text": "paint",
+      "genres": ["platformer", "puzzle", "builder-management", "life-sim", "sandbox"]
+    },
+    {
+      "id": "resource-0246",
+      "text": "thread",
+      "genres": ["puzzle", "survival-craft", "life-sim", "narrative"]
+    },
+    {
+      "id": "resource-0247",
+      "text": "glass",
+      "genres": ["puzzle", "survival-craft", "builder-management", "sandbox"]
+    },
+    {
+      "id": "resource-0248",
+      "text": "wax",
+      "genres": ["puzzle", "survival-craft", "horror", "life-sim"]
+    },
+    {
+      "id": "resource-0249",
+      "text": "salt",
+      "genres": ["survival-craft", "horror", "builder-management", "life-sim"]
+    },
+    {
+      "id": "resource-0250",
+      "text": "glue",
+      "genres": ["puzzle", "builder-management", "sandbox"]
+    },
+    {
+      "id": "resource-0251",
+      "text": "brakes",
+      "genres": ["vehicle-sim-racing", "sandbox", "rhythm-arcade"]
+    },
+    {
+      "id": "resource-0252",
+      "text": "engine heat",
+      "genres": ["shooter", "vehicle-sim-racing", "sandbox"]
+    },
+    {
+      "id": "resource-0253",
+      "text": "passengers",
+      "genres": ["horror", "builder-management", "life-sim", "vehicle-sim-racing"]
+    },
+    {
+      "id": "resource-0254",
+      "text": "altitude",
+      "genres": ["open-world", "vehicle-sim-racing", "sandbox"]
+    },
+    {
+      "id": "resource-0255",
+      "text": "lift",
+      "genres": ["vehicle-sim-racing", "sandbox"]
+    },
+    {
+      "id": "resource-0256",
+      "text": "tailwind",
+      "genres": ["platformer", "vehicle-sim-racing", "sandbox"]
+    },
+    {
+      "id": "resource-0257",
+      "text": "spare parts",
+      "genres": ["survival-craft", "builder-management", "vehicle-sim-racing", "sandbox"]
+    },
+    {
+      "id": "resource-0258",
+      "text": "words",
+      "genres": ["puzzle", "deckbuilder-cards", "narrative", "rhythm-arcade"]
+    },
+    {
+      "id": "resource-0259",
+      "text": "questions",
+      "genres": ["puzzle", "narrative", "party-multiplayer"]
+    },
+    {
+      "id": "resource-0260",
+      "text": "answers",
+      "genres": ["puzzle", "horror", "narrative", "party-multiplayer"]
+    },
+    {
+      "id": "resource-0261",
+      "text": "photos",
+      "genres": ["open-world", "horror", "life-sim", "narrative"]
+    },
+    {
+      "id": "resource-0262",
+      "text": "letters",
+      "genres": ["horror", "life-sim", "narrative"]
+    },
+    {
+      "id": "resource-0263",
+      "text": "pages",
+      "genres": ["puzzle", "rpg", "horror", "narrative"]
+    },
+    {
+      "id": "resource-0264",
+      "text": "evidence",
+      "genres": ["puzzle", "narrative", "stealth-immersive-sim", "party-multiplayer"]
+    },
+    {
+      "id": "resource-0265",
+      "text": "shadows",
+      "genres": ["metroidvania", "platformer", "puzzle", "horror", "stealth-immersive-sim"]
+    },
+    {
+      "id": "resource-0266",
+      "text": "silence",
+      "genres": ["horror", "narrative", "stealth-immersive-sim", "rhythm-arcade"]
+    },
+    {
+      "id": "resource-0267",
+      "text": "songs",
+      "genres": ["rpg", "life-sim", "narrative", "rhythm-arcade"]
+    },
+    {
+      "id": "resource-0268",
+      "text": "wishes",
+      "genres": ["puzzle", "rpg", "life-sim", "deckbuilder-cards", "narrative"]
+    },
+    {
+      "id": "resource-0269",
+      "text": "dice",
+      "genres": ["roguelike", "rpg", "strategy", "deckbuilder-cards", "party-multiplayer"]
+    },
+    {
+      "id": "resource-0270",
+      "text": "stars",
+      "genres": ["platformer", "puzzle", "open-world", "rhythm-arcade"]
+    },
+    {
+      "id": "resource-0271",
+      "text": "fog",
+      "genres": ["survival-craft", "horror", "strategy", "stealth-immersive-sim"]
+    },
+    {
+      "id": "resource-0272",
+      "text": "bees",
+      "genres": ["survival-craft", "builder-management", "life-sim", "sandbox"]
+    }
+  ]
+}

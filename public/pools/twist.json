@@ -1,0 +1,901 @@
+{
+  "type": "twist",
+  "cues": [
+    {
+      "id": "twist-0001",
+      "text": "your helper is the real enemy"
+    },
+    {
+      "id": "twist-0002",
+      "text": "the game is secretly another genre"
+    },
+    {
+      "id": "twist-0003",
+      "text": "the players make the game"
+    },
+    {
+      "id": "twist-0004",
+      "text": "you can win without fighting"
+    },
+    {
+      "id": "twist-0005",
+      "text": "your teammates are the biggest threat"
+    },
+    {
+      "id": "twist-0006",
+      "text": "failing is the fun"
+    },
+    {
+      "id": "twist-0007",
+      "text": "the cute game is secretly a horror game"
+    },
+    {
+      "id": "twist-0008",
+      "text": "the world gets harder as you get stronger"
+    },
+    {
+      "id": "twist-0009",
+      "text": "you are already dead"
+    },
+    {
+      "id": "twist-0010",
+      "text": "you heal by attacking"
+    },
+    {
+      "id": "twist-0011",
+      "text": "your own weapon is your worst enemy"
+    },
+    {
+      "id": "twist-0012",
+      "text": "other people are the real danger"
+    },
+    {
+      "id": "twist-0013",
+      "text": "the monster is part of you"
+    },
+    {
+      "id": "twist-0014",
+      "text": "the monsters are the victims"
+    },
+    {
+      "id": "twist-0015",
+      "text": "the world is deadlier than the monsters"
+    },
+    {
+      "id": "twist-0016",
+      "text": "the world is not real"
+    },
+    {
+      "id": "twist-0017",
+      "text": "saving your people means breaking your code"
+    },
+    {
+      "id": "twist-0018",
+      "text": "you are the monster"
+    },
+    {
+      "id": "twist-0019",
+      "text": "you can ignore the main quest"
+    },
+    {
+      "id": "twist-0020",
+      "text": "you can join the villain"
+    },
+    {
+      "id": "twist-0021",
+      "text": "you caused it all"
+    },
+    {
+      "id": "twist-0022",
+      "text": "you never attack"
+    },
+    {
+      "id": "twist-0023",
+      "text": "your employer is using you"
+    },
+    {
+      "id": "twist-0024",
+      "text": "a stranger has been pulling your strings"
+    },
+    {
+      "id": "twist-0025",
+      "text": "beating the final boss is not the end"
+    },
+    {
+      "id": "twist-0026",
+      "text": "enemies can become yours"
+    },
+    {
+      "id": "twist-0027",
+      "text": "losing makes you stronger"
+    },
+    {
+      "id": "twist-0028",
+      "text": "losing pays off"
+    },
+    {
+      "id": "twist-0029",
+      "text": "saving everyone costs your life"
+    },
+    {
+      "id": "twist-0030",
+      "text": "the big story goes on without you"
+    },
+    {
+      "id": "twist-0031",
+      "text": "the boring part is the fun"
+    },
+    {
+      "id": "twist-0032",
+      "text": "the child protects the adults"
+    },
+    {
+      "id": "twist-0033",
+      "text": "the enemy wears a friend's face"
+    },
+    {
+      "id": "twist-0034",
+      "text": "the game is hiding another game"
+    },
+    {
+      "id": "twist-0035",
+      "text": "the game knows you are playing"
+    },
+    {
+      "id": "twist-0036",
+      "text": "the game plays while you work"
+    },
+    {
+      "id": "twist-0037",
+      "text": "the gods are the villains"
+    },
+    {
+      "id": "twist-0038",
+      "text": "the hero's quest is a trap"
+    },
+    {
+      "id": "twist-0039",
+      "text": "the heroes are nobodies"
+    },
+    {
+      "id": "twist-0040",
+      "text": "the narrator does not survive"
+    },
+    {
+      "id": "twist-0041",
+      "text": "the perfect world is a trap"
+    },
+    {
+      "id": "twist-0042",
+      "text": "the planet is a prison"
+    },
+    {
+      "id": "twist-0043",
+      "text": "the rules change mid-game"
+    },
+    {
+      "id": "twist-0044",
+      "text": "the treasure is a curse"
+    },
+    {
+      "id": "twist-0045",
+      "text": "the villain is family"
+    },
+    {
+      "id": "twist-0046",
+      "text": "the villain is right"
+    },
+    {
+      "id": "twist-0047",
+      "text": "the world is meant to end"
+    },
+    {
+      "id": "twist-0048",
+      "text": "this has all happened before"
+    },
+    {
+      "id": "twist-0049",
+      "text": "you are not the hero, only the heir"
+    },
+    {
+      "id": "twist-0050",
+      "text": "you are one of many copies"
+    },
+    {
+      "id": "twist-0051",
+      "text": "you become what you came to stop"
+    },
+    {
+      "id": "twist-0052",
+      "text": "your fears become real"
+    },
+    {
+      "id": "twist-0053",
+      "text": "adding junk makes it worth more"
+    },
+    {
+      "id": "twist-0054",
+      "text": "blocking drains your power to attack"
+    },
+    {
+      "id": "twist-0055",
+      "text": "caring for it can make it a monster"
+    },
+    {
+      "id": "twist-0056",
+      "text": "cleaning saves the world"
+    },
+    {
+      "id": "twist-0057",
+      "text": "clumsy controls are the fun"
+    },
+    {
+      "id": "twist-0058",
+      "text": "coming back from death makes others pay"
+    },
+    {
+      "id": "twist-0059",
+      "text": "crashing costs you nothing"
+    },
+    {
+      "id": "twist-0060",
+      "text": "crashing is the plan"
+    },
+    {
+      "id": "twist-0061",
+      "text": "death moves the story forward"
+    },
+    {
+      "id": "twist-0062",
+      "text": "doing nothing can win"
+    },
+    {
+      "id": "twist-0063",
+      "text": "doing your job well hurts people"
+    },
+    {
+      "id": "twist-0064",
+      "text": "each rescue swaps who you play"
+    },
+    {
+      "id": "twist-0065",
+      "text": "enemies are your best weapon"
+    },
+    {
+      "id": "twist-0066",
+      "text": "getting hurt makes you fly farther"
+    },
+    {
+      "id": "twist-0067",
+      "text": "giving up early saves you"
+    },
+    {
+      "id": "twist-0068",
+      "text": "hurting yourself can help you"
+    },
+    {
+      "id": "twist-0069",
+      "text": "if everyone wins, nobody scores"
+    },
+    {
+      "id": "twist-0070",
+      "text": "killing an enemy makes more of them"
+    },
+    {
+      "id": "twist-0071",
+      "text": "learning the rules is the puzzle"
+    },
+    {
+      "id": "twist-0072",
+      "text": "losing a limb does not stop you"
+    },
+    {
+      "id": "twist-0073",
+      "text": "no one stops you from being evil"
+    },
+    {
+      "id": "twist-0074",
+      "text": "playing a card speeds up the enemy"
+    },
+    {
+      "id": "twist-0075",
+      "text": "running away gets you punished"
+    },
+    {
+      "id": "twist-0076",
+      "text": "slowing down gets you there faster"
+    },
+    {
+      "id": "twist-0077",
+      "text": "the cold machine is your closest friend"
+    },
+    {
+      "id": "twist-0078",
+      "text": "the criminals are celebrities"
+    },
+    {
+      "id": "twist-0079",
+      "text": "the criminals are more loyal than the police"
+    },
+    {
+      "id": "twist-0080",
+      "text": "the curse is a gift"
+    },
+    {
+      "id": "twist-0081",
+      "text": "the dead are still in charge"
+    },
+    {
+      "id": "twist-0082",
+      "text": "the dead can still help"
+    },
+    {
+      "id": "twist-0083",
+      "text": "an unseen storyteller picks the disasters"
+    },
+    {
+      "id": "twist-0084",
+      "text": "the dungeon comes to you"
+    },
+    {
+      "id": "twist-0085",
+      "text": "the enemy becomes what you believe"
+    },
+    {
+      "id": "twist-0086",
+      "text": "the enemy wanted peace"
+    },
+    {
+      "id": "twist-0087",
+      "text": "the final prize lets you undo the past"
+    },
+    {
+      "id": "twist-0088",
+      "text": "the finish line is the halfway point"
+    },
+    {
+      "id": "twist-0089",
+      "text": "the game decides what you build"
+    },
+    {
+      "id": "twist-0090",
+      "text": "the game judges you for playing"
+    },
+    {
+      "id": "twist-0091",
+      "text": "the hero starts over in old age"
+    },
+    {
+      "id": "twist-0092",
+      "text": "the hero you play is against you"
+    },
+    {
+      "id": "twist-0093",
+      "text": "the prize comes with strings attached"
+    },
+    {
+      "id": "twist-0094",
+      "text": "the high-tech helper is useless"
+    },
+    {
+      "id": "twist-0095",
+      "text": "the hunter cannot be killed"
+    },
+    {
+      "id": "twist-0096",
+      "text": "the life you remember never happened"
+    },
+    {
+      "id": "twist-0097",
+      "text": "the machines are people"
+    },
+    {
+      "id": "twist-0098",
+      "text": "the monster hears your real voice"
+    },
+    {
+      "id": "twist-0099",
+      "text": "the monsters are polite"
+    },
+    {
+      "id": "twist-0100",
+      "text": "the outside world already ended"
+    },
+    {
+      "id": "twist-0101",
+      "text": "the pretend game becomes real"
+    },
+    {
+      "id": "twist-0102",
+      "text": "the puzzle is describing what you see"
+    },
+    {
+      "id": "twist-0103",
+      "text": "the real work happens before the clock starts"
+    },
+    {
+      "id": "twist-0104",
+      "text": "the robots are kind"
+    },
+    {
+      "id": "twist-0105",
+      "text": "the humans are gone"
+    },
+    {
+      "id": "twist-0106",
+      "text": "the screen fights you"
+    },
+    {
+      "id": "twist-0107",
+      "text": "the stories you wrote fight back"
+    },
+    {
+      "id": "twist-0108",
+      "text": "the storm hides you and hurts you"
+    },
+    {
+      "id": "twist-0109",
+      "text": "the test dummies feel pain"
+    },
+    {
+      "id": "twist-0110",
+      "text": "the toy can build a working computer"
+    },
+    {
+      "id": "twist-0111",
+      "text": "the villain is the law"
+    },
+    {
+      "id": "twist-0112",
+      "text": "the weakest ally is your best weapon"
+    },
+    {
+      "id": "twist-0113",
+      "text": "the weapon is a person"
+    },
+    {
+      "id": "twist-0114",
+      "text": "the weather is today's real weather"
+    },
+    {
+      "id": "twist-0115",
+      "text": "the whole world moves to the beat"
+    },
+    {
+      "id": "twist-0116",
+      "text": "winning is the worst outcome"
+    },
+    {
+      "id": "twist-0117",
+      "text": "the world ends in the first minute"
+    },
+    {
+      "id": "twist-0118",
+      "text": "there is no monster, only people"
+    },
+    {
+      "id": "twist-0119",
+      "text": "there is no right ending"
+    },
+    {
+      "id": "twist-0120",
+      "text": "undoing choices does not make them right"
+    },
+    {
+      "id": "twist-0121",
+      "text": "winning by too much loses"
+    },
+    {
+      "id": "twist-0122",
+      "text": "winning costs all your powers"
+    },
+    {
+      "id": "twist-0123",
+      "text": "you are a god who cannot control anyone"
+    },
+    {
+      "id": "twist-0124",
+      "text": "you are a soul inside the hero"
+    },
+    {
+      "id": "twist-0125",
+      "text": "you can change the rules"
+    },
+    {
+      "id": "twist-0126",
+      "text": "you can delete the sun"
+    },
+    {
+      "id": "twist-0127",
+      "text": "you can kill anyone and still win"
+    },
+    {
+      "id": "twist-0128",
+      "text": "you can never defend"
+    },
+    {
+      "id": "twist-0129",
+      "text": "you can never touch your rivals"
+    },
+    {
+      "id": "twist-0130",
+      "text": "you can race furniture"
+    },
+    {
+      "id": "twist-0131",
+      "text": "you choose your own enemies"
+    },
+    {
+      "id": "twist-0132",
+      "text": "you defend the villains from the heroes"
+    },
+    {
+      "id": "twist-0133",
+      "text": "you design your own evolution"
+    },
+    {
+      "id": "twist-0134",
+      "text": "you fight your younger self"
+    },
+    {
+      "id": "twist-0135",
+      "text": "you forgot what matters most"
+    },
+    {
+      "id": "twist-0136",
+      "text": "you grow by eating your enemies"
+    },
+    {
+      "id": "twist-0137",
+      "text": "you must build the rescue boat first"
+    },
+    {
+      "id": "twist-0138",
+      "text": "you must destroy what a loved one cherishes"
+    },
+    {
+      "id": "twist-0139",
+      "text": "you never hit your rival directly"
+    },
+    {
+      "id": "twist-0140",
+      "text": "you never see your rivals"
+    },
+    {
+      "id": "twist-0141",
+      "text": "you save the world and still lose"
+    },
+    {
+      "id": "twist-0142",
+      "text": "you save them by beating them up"
+    },
+    {
+      "id": "twist-0143",
+      "text": "you see the enemy's next move"
+    },
+    {
+      "id": "twist-0144",
+      "text": "you were made to be sacrificed"
+    },
+    {
+      "id": "twist-0145",
+      "text": "you work for the criminals"
+    },
+    {
+      "id": "twist-0146",
+      "text": "your car becomes a boat or plane"
+    },
+    {
+      "id": "twist-0147",
+      "text": "your client is guilty until proven innocent"
+    },
+    {
+      "id": "twist-0148",
+      "text": "your death is promised from the start"
+    },
+    {
+      "id": "twist-0149",
+      "text": "your deaths are only plans in your head"
+    },
+    {
+      "id": "twist-0150",
+      "text": "your deck is your village"
+    },
+    {
+      "id": "twist-0151",
+      "text": "your enemy becomes your friend"
+    },
+    {
+      "id": "twist-0152",
+      "text": "your friends' deaths earn the most"
+    },
+    {
+      "id": "twist-0153",
+      "text": "your heroes are disposable"
+    },
+    {
+      "id": "twist-0154",
+      "text": "your home is always moving"
+    },
+    {
+      "id": "twist-0155",
+      "text": "your lost love works for the enemy"
+    },
+    {
+      "id": "twist-0156",
+      "text": "your own mind lies to you"
+    },
+    {
+      "id": "twist-0157",
+      "text": "your pet copies your actions, not your orders"
+    },
+    {
+      "id": "twist-0158",
+      "text": "your power is turning you into a monster"
+    },
+    {
+      "id": "twist-0159",
+      "text": "time only moves when you move"
+    },
+    {
+      "id": "twist-0160",
+      "text": "the same day restarts each morning"
+    },
+    {
+      "id": "twist-0161",
+      "text": "you live your life backwards"
+    },
+    {
+      "id": "twist-0162",
+      "text": "the past changes when you leave it"
+    },
+    {
+      "id": "twist-0163",
+      "text": "the future is already written down"
+    },
+    {
+      "id": "twist-0164",
+      "text": "only you remember each loop"
+    },
+    {
+      "id": "twist-0165",
+      "text": "every choice ages the world ten years"
+    },
+    {
+      "id": "twist-0166",
+      "text": "the map is alive"
+    },
+    {
+      "id": "twist-0167",
+      "text": "the world is tiny and you are huge"
+    },
+    {
+      "id": "twist-0168",
+      "text": "you only see through others' eyes"
+    },
+    {
+      "id": "twist-0169",
+      "text": "the rooms are bigger inside"
+    },
+    {
+      "id": "twist-0170",
+      "text": "the map lies to you"
+    },
+    {
+      "id": "twist-0171",
+      "text": "the camera is a character"
+    },
+    {
+      "id": "twist-0172",
+      "text": "the epic war is between ants"
+    },
+    {
+      "id": "twist-0173",
+      "text": "you are the side character"
+    },
+    {
+      "id": "twist-0174",
+      "text": "you run the shop heroes visit"
+    },
+    {
+      "id": "twist-0175",
+      "text": "you are the final boss"
+    },
+    {
+      "id": "twist-0176",
+      "text": "you are the dungeon"
+    },
+    {
+      "id": "twist-0177",
+      "text": "you are the weather"
+    },
+    {
+      "id": "twist-0178",
+      "text": "the townsfolk know they are in a game"
+    },
+    {
+      "id": "twist-0179",
+      "text": "the hero is a fraud"
+    },
+    {
+      "id": "twist-0180",
+      "text": "you are the villain's minion"
+    },
+    {
+      "id": "twist-0181",
+      "text": "kindness is your strongest weapon"
+    },
+    {
+      "id": "twist-0182",
+      "text": "the villain only needs a friend"
+    },
+    {
+      "id": "twist-0183",
+      "text": "the monsters are lonely"
+    },
+    {
+      "id": "twist-0184",
+      "text": "everyone you help helps you back"
+    },
+    {
+      "id": "twist-0185",
+      "text": "the end of the world is cozy"
+    },
+    {
+      "id": "twist-0186",
+      "text": "the haunted house wants guests"
+    },
+    {
+      "id": "twist-0187",
+      "text": "the enemies just want to go home"
+    },
+    {
+      "id": "twist-0188",
+      "text": "money is worthless"
+    },
+    {
+      "id": "twist-0189",
+      "text": "your health is your money"
+    },
+    {
+      "id": "twist-0190",
+      "text": "you pay with memories"
+    },
+    {
+      "id": "twist-0191",
+      "text": "the cheapest item is the best"
+    },
+    {
+      "id": "twist-0192",
+      "text": "everything you own is borrowed"
+    },
+    {
+      "id": "twist-0193",
+      "text": "you win by giving everything away"
+    },
+    {
+      "id": "twist-0194",
+      "text": "enemies follow the same rules you do"
+    },
+    {
+      "id": "twist-0195",
+      "text": "the tutorial never ends"
+    },
+    {
+      "id": "twist-0196",
+      "text": "the instructions are wrong"
+    },
+    {
+      "id": "twist-0197",
+      "text": "the save point is the danger"
+    },
+    {
+      "id": "twist-0198",
+      "text": "pausing has a price"
+    },
+    {
+      "id": "twist-0199",
+      "text": "the menu is part of the world"
+    },
+    {
+      "id": "twist-0200",
+      "text": "one rule is a lie"
+    },
+    {
+      "id": "twist-0201",
+      "text": "the last level is the first"
+    },
+    {
+      "id": "twist-0202",
+      "text": "you can only talk to the enemy"
+    },
+    {
+      "id": "twist-0203",
+      "text": "your rival is your only ally"
+    },
+    {
+      "id": "twist-0204",
+      "text": "all players share one body"
+    },
+    {
+      "id": "twist-0205",
+      "text": "the loser picks the next rule"
+    },
+    {
+      "id": "twist-0206",
+      "text": "each player sees a different game"
+    },
+    {
+      "id": "twist-0207",
+      "text": "the audience controls the enemies"
+    },
+    {
+      "id": "twist-0208",
+      "text": "the villain tells the story"
+    },
+    {
+      "id": "twist-0209",
+      "text": "the ending was the beginning"
+    },
+    {
+      "id": "twist-0210",
+      "text": "you are reading your own diary"
+    },
+    {
+      "id": "twist-0211",
+      "text": "every ending is the true one"
+    },
+    {
+      "id": "twist-0212",
+      "text": "the credits roll halfway through"
+    },
+    {
+      "id": "twist-0213",
+      "text": "the story is a lie told to you"
+    },
+    {
+      "id": "twist-0214",
+      "text": "the land fights back"
+    },
+    {
+      "id": "twist-0215",
+      "text": "the sun is the enemy"
+    },
+    {
+      "id": "twist-0216",
+      "text": "the sea rises because of you"
+    },
+    {
+      "id": "twist-0217",
+      "text": "the city is one creature"
+    },
+    {
+      "id": "twist-0218",
+      "text": "nature wants you gone"
+    },
+    {
+      "id": "twist-0219",
+      "text": "the rescued do not want rescuing"
+    },
+    {
+      "id": "twist-0220",
+      "text": "the prisoner is the guard"
+    },
+    {
+      "id": "twist-0221",
+      "text": "the cure is worse than the plague"
+    },
+    {
+      "id": "twist-0222",
+      "text": "everyone is lying, including you"
+    },
+    {
+      "id": "twist-0223",
+      "text": "doing right breaks the law"
+    },
+    {
+      "id": "twist-0224",
+      "text": "the reward is for the wrong side"
+    }
+  ]
+}

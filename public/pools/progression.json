@@ -1,0 +1,1961 @@
+{
+  "type": "progression",
+  "cues": [
+    {
+      "id": "progression-0001",
+      "text": "story chapters",
+      "genres": [
+        "metroidvania",
+        "platformer",
+        "puzzle",
+        "shooter",
+        "melee-action",
+        "fighting",
+        "rpg",
+        "open-world",
+        "horror",
+        "strategy",
+        "narrative",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "progression-0002",
+      "text": "weapon upgrades",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "shooter",
+        "melee-action",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "progression-0003",
+      "text": "skill tree",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "shooter",
+        "melee-action",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "progression-0004",
+      "text": "new map areas",
+      "genres": [
+        "metroidvania",
+        "platformer",
+        "melee-action",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "progression-0005",
+      "text": "better gear",
+      "genres": ["roguelike", "shooter", "melee-action", "rpg", "open-world", "survival-craft"]
+    },
+    {
+      "id": "progression-0006",
+      "text": "better tools",
+      "genres": ["open-world", "survival-craft", "life-sim", "stealth-immersive-sim", "sandbox"]
+    },
+    {
+      "id": "progression-0007",
+      "text": "tech tree",
+      "genres": ["survival-craft", "builder-management", "vehicle-sim-racing", "strategy"]
+    },
+    {
+      "id": "progression-0008",
+      "text": "new heroes unlock",
+      "genres": [
+        "roguelike",
+        "shooter",
+        "fighting",
+        "rpg",
+        "strategy",
+        "deckbuilder-cards",
+        "party-multiplayer",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "progression-0009",
+      "text": "level up stats",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "melee-action",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "life-sim",
+        "vehicle-sim-racing"
+      ]
+    },
+    {
+      "id": "progression-0010",
+      "text": "cosmetic collection",
+      "genres": [
+        "platformer",
+        "shooter",
+        "fighting",
+        "life-sim",
+        "vehicle-sim-racing",
+        "deckbuilder-cards",
+        "sandbox",
+        "party-multiplayer",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "progression-0011",
+      "text": "permanent death",
+      "genres": ["roguelike", "survival-craft", "horror", "strategy", "deckbuilder-cards"]
+    },
+    {
+      "id": "progression-0012",
+      "text": "vehicle upgrades",
+      "genres": ["shooter", "open-world", "survival-craft", "vehicle-sim-racing"]
+    },
+    {
+      "id": "progression-0013",
+      "text": "base grows",
+      "genres": ["roguelike", "survival-craft", "builder-management", "strategy"]
+    },
+    {
+      "id": "progression-0014",
+      "text": "only knowledge carries over",
+      "genres": ["roguelike", "puzzle", "horror", "narrative"]
+    },
+    {
+      "id": "progression-0015",
+      "text": "ranked ladder",
+      "genres": [
+        "shooter",
+        "fighting",
+        "vehicle-sim-racing",
+        "strategy",
+        "deckbuilder-cards",
+        "party-multiplayer",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "progression-0016",
+      "text": "harder difficulty tiers",
+      "genres": [
+        "roguelike",
+        "shooter",
+        "melee-action",
+        "fighting",
+        "strategy",
+        "deckbuilder-cards",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "progression-0017",
+      "text": "new levels",
+      "genres": [
+        "platformer",
+        "puzzle",
+        "shooter",
+        "melee-action",
+        "strategy",
+        "stealth-immersive-sim",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "progression-0018",
+      "text": "skills grow from use",
+      "genres": ["rpg", "open-world", "survival-craft", "life-sim", "stealth-immersive-sim"]
+    },
+    {
+      "id": "progression-0019",
+      "text": "deeper floors",
+      "genres": ["roguelike", "rpg", "survival-craft", "horror", "life-sim", "deckbuilder-cards"]
+    },
+    {
+      "id": "progression-0020",
+      "text": "new islands to explore",
+      "genres": ["rpg", "open-world", "survival-craft", "vehicle-sim-racing", "sandbox"]
+    },
+    {
+      "id": "progression-0021",
+      "text": "new jobs",
+      "genres": ["rpg", "open-world", "life-sim", "sandbox"]
+    },
+    {
+      "id": "progression-0022",
+      "text": "relationships deepen",
+      "genres": ["rpg", "life-sim", "narrative"]
+    },
+    {
+      "id": "progression-0023",
+      "text": "career ladder",
+      "genres": ["builder-management", "life-sim", "vehicle-sim-racing"]
+    },
+    {
+      "id": "progression-0024",
+      "text": "hidden collectibles",
+      "genres": [
+        "metroidvania",
+        "platformer",
+        "puzzle",
+        "open-world",
+        "horror",
+        "vehicle-sim-racing",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "progression-0025",
+      "text": "vehicle collection grows",
+      "genres": ["open-world", "vehicle-sim-racing"]
+    },
+    {
+      "id": "progression-0026",
+      "text": "body upgrades",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "shooter",
+        "melee-action",
+        "rpg",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "progression-0027",
+      "text": "card collection grows",
+      "genres": ["roguelike", "deckbuilder-cards"]
+    },
+    {
+      "id": "progression-0028",
+      "text": "equip charms",
+      "genres": ["roguelike", "metroidvania", "platformer", "melee-action", "rpg"]
+    },
+    {
+      "id": "progression-0029",
+      "text": "items stack in a run",
+      "genres": ["roguelike", "shooter", "deckbuilder-cards"]
+    },
+    {
+      "id": "progression-0030",
+      "text": "multiple endings",
+      "genres": ["puzzle", "rpg", "horror", "life-sim", "narrative", "stealth-immersive-sim"]
+    },
+    {
+      "id": "progression-0031",
+      "text": "party grows",
+      "genres": ["rpg", "strategy", "narrative"]
+    },
+    {
+      "id": "progression-0032",
+      "text": "hire helpers",
+      "genres": ["rpg", "survival-craft", "builder-management", "life-sim", "strategy"]
+    },
+    {
+      "id": "progression-0033",
+      "text": "new content each season",
+      "genres": [
+        "shooter",
+        "fighting",
+        "vehicle-sim-racing",
+        "deckbuilder-cards",
+        "sandbox",
+        "party-multiplayer"
+      ]
+    },
+    {
+      "id": "progression-0034",
+      "text": "new recipes",
+      "genres": ["rpg", "open-world", "survival-craft", "builder-management", "life-sim"]
+    },
+    {
+      "id": "progression-0035",
+      "text": "new worlds",
+      "genres": ["platformer", "puzzle", "rhythm-arcade"]
+    },
+    {
+      "id": "progression-0036",
+      "text": "perks",
+      "genres": [
+        "roguelike",
+        "shooter",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "stealth-immersive-sim",
+        "party-multiplayer"
+      ]
+    },
+    {
+      "id": "progression-0037",
+      "text": "ship grows",
+      "genres": [
+        "roguelike",
+        "survival-craft",
+        "builder-management",
+        "vehicle-sim-racing",
+        "strategy"
+      ]
+    },
+    {
+      "id": "progression-0038",
+      "text": "skill points from hard jobs",
+      "genres": ["rpg", "open-world", "stealth-immersive-sim"]
+    },
+    {
+      "id": "progression-0039",
+      "text": "unlocks carry over between runs",
+      "genres": ["roguelike", "deckbuilder-cards"]
+    },
+    {
+      "id": "progression-0040",
+      "text": "a hidden true ending",
+      "genres": ["metroidvania", "platformer", "puzzle", "rpg", "horror", "narrative"]
+    },
+    {
+      "id": "progression-0041",
+      "text": "choices carry forward",
+      "genres": ["rpg", "horror", "narrative", "stealth-immersive-sim"]
+    },
+    {
+      "id": "progression-0042",
+      "text": "days pass",
+      "genres": ["rpg", "survival-craft", "horror", "builder-management", "life-sim"]
+    },
+    {
+      "id": "progression-0043",
+      "text": "each level adds a new idea",
+      "genres": ["platformer", "puzzle", "rhythm-arcade"]
+    },
+    {
+      "id": "progression-0044",
+      "text": "new abilities open the map",
+      "genres": ["metroidvania", "platformer", "open-world"]
+    },
+    {
+      "id": "progression-0045",
+      "text": "new cards unlock",
+      "genres": ["roguelike", "deckbuilder-cards"]
+    },
+    {
+      "id": "progression-0046",
+      "text": "new outfits",
+      "genres": ["platformer", "fighting", "open-world", "life-sim", "party-multiplayer"]
+    },
+    {
+      "id": "progression-0047",
+      "text": "new spells",
+      "genres": ["roguelike", "metroidvania", "melee-action", "rpg", "open-world", "strategy"]
+    },
+    {
+      "id": "progression-0048",
+      "text": "people remember what you did",
+      "genres": ["rpg", "open-world", "life-sim", "narrative", "stealth-immersive-sim"]
+    },
+    {
+      "id": "progression-0049",
+      "text": "seasons change",
+      "genres": [
+        "open-world",
+        "survival-craft",
+        "builder-management",
+        "life-sim",
+        "vehicle-sim-racing",
+        "strategy"
+      ]
+    },
+    {
+      "id": "progression-0050",
+      "text": "shop grows",
+      "genres": ["roguelike", "builder-management", "life-sim"]
+    },
+    {
+      "id": "progression-0051",
+      "text": "the world moves through ages",
+      "genres": ["builder-management", "strategy"]
+    },
+    {
+      "id": "progression-0052",
+      "text": "your crew grows",
+      "genres": [
+        "rpg",
+        "builder-management",
+        "vehicle-sim-racing",
+        "strategy",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "progression-0053",
+      "text": "bigger machines",
+      "genres": ["survival-craft", "builder-management", "sandbox"]
+    },
+    {
+      "id": "progression-0054",
+      "text": "buy upgrades",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "platformer",
+        "shooter",
+        "melee-action",
+        "rpg",
+        "vehicle-sim-racing",
+        "strategy"
+      ]
+    },
+    {
+      "id": "progression-0055",
+      "text": "buy vehicles",
+      "genres": ["open-world", "survival-craft", "vehicle-sim-racing", "sandbox"]
+    },
+    {
+      "id": "progression-0056",
+      "text": "campaign map",
+      "genres": ["roguelike", "shooter", "rpg", "strategy", "deckbuilder-cards"]
+    },
+    {
+      "id": "progression-0057",
+      "text": "card upgrades",
+      "genres": ["roguelike", "deckbuilder-cards"]
+    },
+    {
+      "id": "progression-0058",
+      "text": "choices decide the ending",
+      "genres": ["rpg", "horror", "narrative", "stealth-immersive-sim"]
+    },
+    {
+      "id": "progression-0059",
+      "text": "farm grows",
+      "genres": ["survival-craft", "builder-management", "life-sim"]
+    },
+    {
+      "id": "progression-0060",
+      "text": "fuse creatures into stronger ones",
+      "genres": ["rpg", "deckbuilder-cards"]
+    },
+    {
+      "id": "progression-0061",
+      "text": "keys open sealed areas",
+      "genres": ["metroidvania", "platformer", "puzzle", "melee-action", "horror", "narrative"]
+    },
+    {
+      "id": "progression-0062",
+      "text": "level ranks",
+      "genres": [
+        "platformer",
+        "puzzle",
+        "shooter",
+        "melee-action",
+        "vehicle-sim-racing",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "progression-0063",
+      "text": "levels get harder",
+      "genres": ["roguelike", "platformer", "puzzle", "shooter", "strategy", "rhythm-arcade"]
+    },
+    {
+      "id": "progression-0064",
+      "text": "more animals",
+      "genres": ["open-world", "survival-craft", "builder-management", "life-sim"]
+    },
+    {
+      "id": "progression-0065",
+      "text": "more inventory space",
+      "genres": ["rpg", "open-world", "survival-craft", "horror", "stealth-immersive-sim"]
+    },
+    {
+      "id": "progression-0066",
+      "text": "new factions",
+      "genres": ["strategy", "deckbuilder-cards"]
+    },
+    {
+      "id": "progression-0067",
+      "text": "new forms each level",
+      "genres": ["metroidvania", "platformer", "melee-action"]
+    },
+    {
+      "id": "progression-0068",
+      "text": "new laws",
+      "genres": ["builder-management", "strategy"]
+    },
+    {
+      "id": "progression-0069",
+      "text": "new mini-games",
+      "genres": ["life-sim", "party-multiplayer", "rhythm-arcade"]
+    },
+    {
+      "id": "progression-0070",
+      "text": "new moves",
+      "genres": ["metroidvania", "platformer", "melee-action", "fighting"]
+    },
+    {
+      "id": "progression-0071",
+      "text": "new paths open",
+      "genres": ["metroidvania", "platformer", "open-world", "stealth-immersive-sim"]
+    },
+    {
+      "id": "progression-0072",
+      "text": "nothing carries over",
+      "genres": ["roguelike", "shooter", "horror", "party-multiplayer", "rhythm-arcade"]
+    },
+    {
+      "id": "progression-0073",
+      "text": "permanent upgrades between runs",
+      "genres": ["roguelike", "deckbuilder-cards"]
+    },
+    {
+      "id": "progression-0074",
+      "text": "player-made levels",
+      "genres": [
+        "platformer",
+        "puzzle",
+        "vehicle-sim-racing",
+        "sandbox",
+        "party-multiplayer",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "progression-0075",
+      "text": "reputation grows",
+      "genres": ["rpg", "open-world", "builder-management", "life-sim", "stealth-immersive-sim"]
+    },
+    {
+      "id": "progression-0076",
+      "text": "romance routes",
+      "genres": ["rpg", "life-sim", "narrative"]
+    },
+    {
+      "id": "progression-0077",
+      "text": "side quests",
+      "genres": ["melee-action", "rpg", "open-world", "stealth-immersive-sim"]
+    },
+    {
+      "id": "progression-0078",
+      "text": "story jumps between heroes",
+      "genres": ["rpg", "horror", "narrative"]
+    },
+    {
+      "id": "progression-0079",
+      "text": "suit upgrades",
+      "genres": ["metroidvania", "shooter", "survival-craft", "horror", "stealth-immersive-sim"]
+    },
+    {
+      "id": "progression-0080",
+      "text": "workers gain skills",
+      "genres": ["builder-management", "strategy"]
+    },
+    {
+      "id": "progression-0081",
+      "text": "a child grows up",
+      "genres": ["life-sim", "narrative"]
+    },
+    {
+      "id": "progression-0082",
+      "text": "a companion gains abilities",
+      "genres": ["rpg", "open-world", "narrative"]
+    },
+    {
+      "id": "progression-0083",
+      "text": "a giant project built in stages",
+      "genres": ["survival-craft", "builder-management", "strategy", "sandbox"]
+    },
+    {
+      "id": "progression-0084",
+      "text": "army grows",
+      "genres": ["rpg", "strategy"]
+    },
+    {
+      "id": "progression-0085",
+      "text": "biomes change as you climb",
+      "genres": ["roguelike", "platformer", "survival-craft"]
+    },
+    {
+      "id": "progression-0086",
+      "text": "buy land",
+      "genres": ["builder-management", "life-sim"]
+    },
+    {
+      "id": "progression-0087",
+      "text": "buy property",
+      "genres": ["open-world", "builder-management", "life-sim"]
+    },
+    {
+      "id": "progression-0088",
+      "text": "challenge modes",
+      "genres": [
+        "platformer",
+        "shooter",
+        "melee-action",
+        "fighting",
+        "horror",
+        "vehicle-sim-racing",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "progression-0089",
+      "text": "choices change the world",
+      "genres": ["rpg", "open-world", "strategy", "narrative", "stealth-immersive-sim"]
+    },
+    {
+      "id": "progression-0090",
+      "text": "climb higher",
+      "genres": ["roguelike", "platformer"]
+    },
+    {
+      "id": "progression-0091",
+      "text": "clues lock in as you solve them",
+      "genres": ["puzzle", "narrative"]
+    },
+    {
+      "id": "progression-0092",
+      "text": "days survived",
+      "genres": ["survival-craft", "horror"]
+    },
+    {
+      "id": "progression-0093",
+      "text": "each boss unlocks better materials",
+      "genres": ["melee-action", "rpg", "survival-craft"]
+    },
+    {
+      "id": "progression-0094",
+      "text": "each chapter is a new genre",
+      "genres": ["narrative"]
+    },
+    {
+      "id": "progression-0095",
+      "text": "enemies get harder",
+      "genres": [
+        "roguelike",
+        "shooter",
+        "melee-action",
+        "fighting",
+        "vehicle-sim-racing",
+        "strategy",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "progression-0096",
+      "text": "faction standing",
+      "genres": ["rpg", "open-world", "strategy", "stealth-immersive-sim"]
+    },
+    {
+      "id": "progression-0097",
+      "text": "followers grow",
+      "genres": ["roguelike", "builder-management", "deckbuilder-cards"]
+    },
+    {
+      "id": "progression-0098",
+      "text": "harder remixes of old levels",
+      "genres": ["platformer", "puzzle", "rhythm-arcade"]
+    },
+    {
+      "id": "progression-0099",
+      "text": "heroes level up",
+      "genres": ["roguelike", "rpg", "strategy", "deckbuilder-cards"]
+    },
+    {
+      "id": "progression-0100",
+      "text": "hidden choices decide the ending",
+      "genres": ["rpg", "horror", "narrative", "stealth-immersive-sim"]
+    },
+    {
+      "id": "progression-0101",
+      "text": "journey to another world",
+      "genres": ["rpg", "open-world", "narrative"]
+    },
+    {
+      "id": "progression-0102",
+      "text": "learn new languages",
+      "genres": ["puzzle", "narrative"]
+    },
+    {
+      "id": "progression-0103",
+      "text": "legends teach new skills",
+      "genres": ["melee-action", "fighting", "rpg"]
+    },
+    {
+      "id": "progression-0104",
+      "text": "lessons teach new skills",
+      "genres": ["fighting", "life-sim", "vehicle-sim-racing"]
+    },
+    {
+      "id": "progression-0105",
+      "text": "mastery challenges",
+      "genres": ["shooter", "melee-action", "fighting", "vehicle-sim-racing", "rhythm-arcade"]
+    },
+    {
+      "id": "progression-0106",
+      "text": "memories go further back",
+      "genres": ["horror", "narrative"]
+    },
+    {
+      "id": "progression-0107",
+      "text": "new biomes",
+      "genres": ["roguelike", "open-world", "survival-craft"]
+    },
+    {
+      "id": "progression-0108",
+      "text": "new blueprints",
+      "genres": ["survival-craft", "builder-management", "sandbox"]
+    },
+    {
+      "id": "progression-0109",
+      "text": "new bodies",
+      "genres": ["platformer", "puzzle", "horror"]
+    },
+    {
+      "id": "progression-0110",
+      "text": "new cases",
+      "genres": ["puzzle", "narrative"]
+    },
+    {
+      "id": "progression-0111",
+      "text": "new decks and stakes unlock",
+      "genres": ["roguelike", "deckbuilder-cards"]
+    },
+    {
+      "id": "progression-0112",
+      "text": "new floors open",
+      "genres": ["roguelike", "metroidvania", "rpg", "horror"]
+    },
+    {
+      "id": "progression-0113",
+      "text": "new game plus",
+      "genres": ["metroidvania", "shooter", "melee-action", "rpg", "horror"]
+    },
+    {
+      "id": "progression-0114",
+      "text": "new garages",
+      "genres": ["vehicle-sim-racing"]
+    },
+    {
+      "id": "progression-0115",
+      "text": "new maps",
+      "genres": ["shooter", "horror", "vehicle-sim-racing", "strategy", "party-multiplayer"]
+    },
+    {
+      "id": "progression-0116",
+      "text": "new products",
+      "genres": ["builder-management", "life-sim"]
+    },
+    {
+      "id": "progression-0117",
+      "text": "new rules",
+      "genres": ["roguelike", "puzzle", "deckbuilder-cards"]
+    },
+    {
+      "id": "progression-0118",
+      "text": "new songs",
+      "genres": ["rhythm-arcade"]
+    },
+    {
+      "id": "progression-0119",
+      "text": "new tracks",
+      "genres": ["vehicle-sim-racing"]
+    },
+    {
+      "id": "progression-0120",
+      "text": "notes fill in the story",
+      "genres": ["horror", "narrative", "stealth-immersive-sim"]
+    },
+    {
+      "id": "progression-0121",
+      "text": "outfits give new powers",
+      "genres": ["metroidvania", "platformer", "rpg"]
+    },
+    {
+      "id": "progression-0122",
+      "text": "party members' own stories",
+      "genres": ["rpg", "narrative"]
+    },
+    {
+      "id": "progression-0123",
+      "text": "pets",
+      "genres": ["rpg", "open-world", "survival-craft", "life-sim"]
+    },
+    {
+      "id": "progression-0124",
+      "text": "player skill grows",
+      "genres": [
+        "platformer",
+        "shooter",
+        "melee-action",
+        "fighting",
+        "vehicle-sim-racing",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "progression-0125",
+      "text": "powers taken from bosses",
+      "genres": ["metroidvania", "platformer", "melee-action"]
+    },
+    {
+      "id": "progression-0126",
+      "text": "quota grows",
+      "genres": ["roguelike", "horror", "builder-management", "party-multiplayer"]
+    },
+    {
+      "id": "progression-0127",
+      "text": "rare variants to collect",
+      "genres": ["shooter", "rpg", "life-sim", "deckbuilder-cards"]
+    },
+    {
+      "id": "progression-0128",
+      "text": "side stories",
+      "genres": ["rpg", "open-world", "narrative"]
+    },
+    {
+      "id": "progression-0129",
+      "text": "songs get harder",
+      "genres": ["rhythm-arcade"]
+    },
+    {
+      "id": "progression-0130",
+      "text": "story branches",
+      "genres": ["rpg", "horror", "narrative", "stealth-immersive-sim"]
+    },
+    {
+      "id": "progression-0131",
+      "text": "teammates improve",
+      "genres": ["shooter", "strategy", "party-multiplayer"]
+    },
+    {
+      "id": "progression-0132",
+      "text": "the cast shrinks",
+      "genres": ["horror", "narrative"]
+    },
+    {
+      "id": "progression-0133",
+      "text": "town grows",
+      "genres": ["survival-craft", "builder-management", "life-sim"]
+    },
+    {
+      "id": "progression-0134",
+      "text": "unit upgrades",
+      "genres": ["strategy"]
+    },
+    {
+      "id": "progression-0135",
+      "text": "weapon mods",
+      "genres": ["shooter", "horror"]
+    },
+    {
+      "id": "progression-0136",
+      "text": "workbench tiers",
+      "genres": ["survival-craft", "sandbox"]
+    },
+    {
+      "id": "progression-0137",
+      "text": "your builds grow",
+      "genres": ["survival-craft", "builder-management", "sandbox"]
+    },
+    {
+      "id": "progression-0138",
+      "text": "your power grows (and costs you)",
+      "genres": ["roguelike", "rpg", "horror", "narrative"]
+    },
+    {
+      "id": "progression-0139",
+      "text": "a countdown to disaster",
+      "genres": ["survival-craft", "horror", "narrative"]
+    },
+    {
+      "id": "progression-0140",
+      "text": "a flowchart shows paths you missed",
+      "genres": ["narrative"]
+    },
+    {
+      "id": "progression-0141",
+      "text": "a hunger that grows",
+      "genres": ["platformer", "survival-craft", "horror"]
+    },
+    {
+      "id": "progression-0142",
+      "text": "a room grows",
+      "genres": ["open-world", "life-sim"]
+    },
+    {
+      "id": "progression-0143",
+      "text": "a mentor helps from beyond death",
+      "genres": ["narrative"]
+    },
+    {
+      "id": "progression-0144",
+      "text": "a new lens reveals hidden things",
+      "genres": ["metroidvania", "puzzle", "narrative"]
+    },
+    {
+      "id": "progression-0145",
+      "text": "a puzzle box opens layer by layer",
+      "genres": ["puzzle"]
+    },
+    {
+      "id": "progression-0146",
+      "text": "a vehicle you keep upgrading",
+      "genres": ["shooter", "open-world", "survival-craft", "vehicle-sim-racing"]
+    },
+    {
+      "id": "progression-0147",
+      "text": "account levels between matches",
+      "genres": ["shooter", "fighting", "party-multiplayer"]
+    },
+    {
+      "id": "progression-0148",
+      "text": "an heir takes over after death",
+      "genres": ["roguelike", "strategy", "deckbuilder-cards", "narrative"]
+    },
+    {
+      "id": "progression-0149",
+      "text": "automation takes over",
+      "genres": ["survival-craft", "builder-management"]
+    },
+    {
+      "id": "progression-0150",
+      "text": "better jobs",
+      "genres": ["life-sim", "vehicle-sim-racing"]
+    },
+    {
+      "id": "progression-0151",
+      "text": "bigger properties",
+      "genres": ["builder-management", "life-sim"]
+    },
+    {
+      "id": "progression-0152",
+      "text": "bond with a companion grows",
+      "genres": ["rpg", "open-world", "narrative"]
+    },
+    {
+      "id": "progression-0153",
+      "text": "boss after boss",
+      "genres": ["melee-action", "fighting", "survival-craft"]
+    },
+    {
+      "id": "progression-0154",
+      "text": "bosses grow stronger each day",
+      "genres": ["roguelike", "survival-craft"]
+    },
+    {
+      "id": "progression-0155",
+      "text": "bosses guard new areas",
+      "genres": ["metroidvania", "platformer", "melee-action", "rpg"]
+    },
+    {
+      "id": "progression-0156",
+      "text": "break out of the game",
+      "genres": ["puzzle", "narrative"]
+    },
+    {
+      "id": "progression-0157",
+      "text": "build wonders",
+      "genres": ["builder-management", "strategy"]
+    },
+    {
+      "id": "progression-0158",
+      "text": "buy maps",
+      "genres": ["metroidvania", "open-world"]
+    },
+    {
+      "id": "progression-0159",
+      "text": "buy new moves",
+      "genres": ["melee-action", "fighting"]
+    },
+    {
+      "id": "progression-0160",
+      "text": "buy new powers",
+      "genres": ["rpg", "stealth-immersive-sim"]
+    },
+    {
+      "id": "progression-0161",
+      "text": "camp grows into a town",
+      "genres": ["survival-craft", "builder-management"]
+    },
+    {
+      "id": "progression-0162",
+      "text": "city grows",
+      "genres": ["builder-management", "strategy"]
+    },
+    {
+      "id": "progression-0163",
+      "text": "clues fill a logbook",
+      "genres": ["puzzle", "open-world", "narrative"]
+    },
+    {
+      "id": "progression-0164",
+      "text": "collect keys to open chapters",
+      "genres": ["platformer", "puzzle"]
+    },
+    {
+      "id": "progression-0165",
+      "text": "colony grows",
+      "genres": ["survival-craft", "builder-management"]
+    },
+    {
+      "id": "progression-0166",
+      "text": "colony grows tall",
+      "genres": ["builder-management"]
+    },
+    {
+      "id": "progression-0167",
+      "text": "color returns to the world",
+      "genres": ["platformer", "puzzle", "narrative"]
+    },
+    {
+      "id": "progression-0168",
+      "text": "conquer new planets",
+      "genres": ["strategy"]
+    },
+    {
+      "id": "progression-0169",
+      "text": "craft better gear",
+      "genres": ["melee-action", "rpg", "open-world", "survival-craft"]
+    },
+    {
+      "id": "progression-0170",
+      "text": "creature breeding",
+      "genres": ["rpg", "life-sim"]
+    },
+    {
+      "id": "progression-0171",
+      "text": "curses pile up",
+      "genres": ["roguelike", "horror", "deckbuilder-cards"]
+    },
+    {
+      "id": "progression-0172",
+      "text": "danger rises",
+      "genres": ["roguelike", "horror", "rhythm-arcade"]
+    },
+    {
+      "id": "progression-0173",
+      "text": "double or nothing",
+      "genres": ["roguelike", "horror", "deckbuilder-cards"]
+    },
+    {
+      "id": "progression-0174",
+      "text": "each act changes the rules",
+      "genres": ["roguelike", "deckbuilder-cards"]
+    },
+    {
+      "id": "progression-0175",
+      "text": "each round adds more",
+      "genres": ["horror", "party-multiplayer", "rhythm-arcade"]
+    },
+    {
+      "id": "progression-0176",
+      "text": "each world adds new rules",
+      "genres": ["platformer", "puzzle", "rhythm-arcade"]
+    },
+    {
+      "id": "progression-0177",
+      "text": "earn licenses",
+      "genres": ["vehicle-sim-racing"]
+    },
+    {
+      "id": "progression-0178",
+      "text": "enemies evolve",
+      "genres": ["roguelike", "open-world", "strategy"]
+    },
+    {
+      "id": "progression-0179",
+      "text": "enemies level with you",
+      "genres": ["rpg", "open-world"]
+    },
+    {
+      "id": "progression-0180",
+      "text": "factory grows",
+      "genres": ["builder-management"]
+    },
+    {
+      "id": "progression-0181",
+      "text": "fleet grows",
+      "genres": ["builder-management", "strategy"]
+    },
+    {
+      "id": "progression-0182",
+      "text": "friends and favors",
+      "genres": ["rpg", "open-world", "life-sim"]
+    },
+    {
+      "id": "progression-0183",
+      "text": "gain land and titles",
+      "genres": ["rpg", "open-world", "strategy"]
+    },
+    {
+      "id": "progression-0184",
+      "text": "gear changes your moves",
+      "genres": ["metroidvania", "melee-action"]
+    },
+    {
+      "id": "progression-0185",
+      "text": "gear sets",
+      "genres": ["shooter", "melee-action", "rpg"]
+    },
+    {
+      "id": "progression-0186",
+      "text": "evolve through stages",
+      "genres": ["strategy", "sandbox"]
+    },
+    {
+      "id": "progression-0187",
+      "text": "guild ranks",
+      "genres": ["rpg", "open-world"]
+    },
+    {
+      "id": "progression-0188",
+      "text": "heroes gain quirks",
+      "genres": ["roguelike", "rpg", "strategy"]
+    },
+    {
+      "id": "progression-0189",
+      "text": "honor shifts",
+      "genres": ["rpg", "open-world"]
+    },
+    {
+      "id": "progression-0190",
+      "text": "hub grows",
+      "genres": ["roguelike"]
+    },
+    {
+      "id": "progression-0191",
+      "text": "ideas change your mind",
+      "genres": ["rpg", "narrative"]
+    },
+    {
+      "id": "progression-0192",
+      "text": "items carry over between runs",
+      "genres": ["roguelike"]
+    },
+    {
+      "id": "progression-0193",
+      "text": "kingdoms rise and fall",
+      "genres": ["builder-management", "strategy"]
+    },
+    {
+      "id": "progression-0194",
+      "text": "life stages",
+      "genres": ["life-sim", "narrative"]
+    },
+    {
+      "id": "progression-0195",
+      "text": "creator rank",
+      "genres": ["sandbox"]
+    },
+    {
+      "id": "progression-0196",
+      "text": "map opens as you fix towers",
+      "genres": ["open-world"]
+    },
+    {
+      "id": "progression-0197",
+      "text": "masks with powers",
+      "genres": ["platformer", "shooter"]
+    },
+    {
+      "id": "progression-0198",
+      "text": "meals raise your health",
+      "genres": ["rpg", "survival-craft", "horror"]
+    },
+    {
+      "id": "progression-0199",
+      "text": "merge weapons",
+      "genres": ["roguelike"]
+    },
+    {
+      "id": "progression-0200",
+      "text": "milestones unlock buildings",
+      "genres": ["builder-management", "strategy"]
+    },
+    {
+      "id": "progression-0201",
+      "text": "mix two classes",
+      "genres": ["melee-action", "rpg"]
+    },
+    {
+      "id": "progression-0202",
+      "text": "money builds round to round",
+      "genres": ["roguelike", "shooter", "party-multiplayer"]
+    },
+    {
+      "id": "progression-0203",
+      "text": "more escape routes",
+      "genres": ["horror", "stealth-immersive-sim"]
+    },
+    {
+      "id": "progression-0204",
+      "text": "more friends, more perks",
+      "genres": ["rpg", "life-sim", "narrative"]
+    },
+    {
+      "id": "progression-0205",
+      "text": "new abilities",
+      "genres": [
+        "metroidvania",
+        "platformer",
+        "shooter",
+        "melee-action",
+        "rpg",
+        "open-world",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "progression-0206",
+      "text": "new body parts",
+      "genres": ["roguelike", "rpg", "sandbox"]
+    },
+    {
+      "id": "progression-0207",
+      "text": "new building parts",
+      "genres": ["survival-craft", "builder-management", "vehicle-sim-racing", "sandbox"]
+    },
+    {
+      "id": "progression-0208",
+      "text": "new crew types",
+      "genres": ["roguelike", "strategy"]
+    },
+    {
+      "id": "progression-0209",
+      "text": "new dream levels",
+      "genres": ["platformer", "puzzle"]
+    },
+    {
+      "id": "progression-0210",
+      "text": "new dungeons",
+      "genres": ["roguelike", "melee-action", "rpg", "open-world"]
+    },
+    {
+      "id": "progression-0211",
+      "text": "new hacks",
+      "genres": ["shooter", "stealth-immersive-sim"]
+    },
+    {
+      "id": "progression-0212",
+      "text": "new land tiles",
+      "genres": ["builder-management", "strategy"]
+    },
+    {
+      "id": "progression-0213",
+      "text": "new loadouts",
+      "genres": ["shooter", "party-multiplayer"]
+    },
+    {
+      "id": "progression-0214",
+      "text": "new movement powers",
+      "genres": ["metroidvania", "platformer", "open-world"]
+    },
+    {
+      "id": "progression-0215",
+      "text": "new partners",
+      "genres": ["melee-action", "narrative"]
+    },
+    {
+      "id": "progression-0216",
+      "text": "new planets",
+      "genres": ["open-world", "survival-craft"]
+    },
+    {
+      "id": "progression-0217",
+      "text": "new plants",
+      "genres": ["survival-craft", "life-sim", "strategy"]
+    },
+    {
+      "id": "progression-0218",
+      "text": "new rooms open",
+      "genres": ["metroidvania", "horror"]
+    },
+    {
+      "id": "progression-0219",
+      "text": "new stances",
+      "genres": ["melee-action", "fighting"]
+    },
+    {
+      "id": "progression-0220",
+      "text": "new units",
+      "genres": ["strategy"]
+    },
+    {
+      "id": "progression-0221",
+      "text": "new voices in your head",
+      "genres": ["horror", "narrative"]
+    },
+    {
+      "id": "progression-0222",
+      "text": "notoriety rises and resets",
+      "genres": ["shooter", "open-world", "stealth-immersive-sim"]
+    },
+    {
+      "id": "progression-0223",
+      "text": "numbers grow without end",
+      "genres": ["builder-management"]
+    },
+    {
+      "id": "progression-0224",
+      "text": "old friends return",
+      "genres": ["rpg", "narrative"]
+    },
+    {
+      "id": "progression-0225",
+      "text": "old rivals return",
+      "genres": ["fighting", "rpg", "narrative"]
+    },
+    {
+      "id": "progression-0226",
+      "text": "one school year",
+      "genres": ["life-sim", "narrative"]
+    },
+    {
+      "id": "progression-0227",
+      "text": "one week, day by day",
+      "genres": ["life-sim", "narrative"]
+    },
+    {
+      "id": "progression-0228",
+      "text": "optional rules make it harder",
+      "genres": ["roguelike", "shooter", "strategy", "deckbuilder-cards"]
+    },
+    {
+      "id": "progression-0229",
+      "text": "perks at each rest stop",
+      "genres": ["roguelike", "rpg"]
+    },
+    {
+      "id": "progression-0230",
+      "text": "permanent upgrade tree",
+      "genres": ["roguelike", "strategy"]
+    },
+    {
+      "id": "progression-0231",
+      "text": "promotions",
+      "genres": ["shooter", "strategy", "party-multiplayer"]
+    },
+    {
+      "id": "progression-0232",
+      "text": "quests unlock heroes",
+      "genres": ["roguelike"]
+    },
+    {
+      "id": "progression-0233",
+      "text": "your boat grows into a town",
+      "genres": ["survival-craft"]
+    },
+    {
+      "id": "progression-0234",
+      "text": "random floors",
+      "genres": ["roguelike"]
+    },
+    {
+      "id": "progression-0235",
+      "text": "random role each round",
+      "genres": ["horror", "party-multiplayer"]
+    },
+    {
+      "id": "progression-0236",
+      "text": "random unlocks",
+      "genres": ["roguelike"]
+    },
+    {
+      "id": "progression-0237",
+      "text": "rank and titles rise",
+      "genres": ["rpg", "open-world"]
+    },
+    {
+      "id": "progression-0238",
+      "text": "reach space",
+      "genres": ["builder-management", "strategy"]
+    },
+    {
+      "id": "progression-0239",
+      "text": "read books to learn skills",
+      "genres": ["rpg", "survival-craft"]
+    },
+    {
+      "id": "progression-0240",
+      "text": "real days pass",
+      "genres": ["horror", "life-sim"]
+    },
+    {
+      "id": "progression-0241",
+      "text": "rebuild the town",
+      "genres": ["rpg", "builder-management", "life-sim"]
+    },
+    {
+      "id": "progression-0242",
+      "text": "regulars' stories unfold",
+      "genres": ["life-sim", "narrative"]
+    },
+    {
+      "id": "progression-0243",
+      "text": "rescued prisoners join you",
+      "genres": ["platformer"]
+    },
+    {
+      "id": "progression-0244",
+      "text": "reset for prestige",
+      "genres": ["builder-management"]
+    },
+    {
+      "id": "progression-0245",
+      "text": "revivals stop near the end",
+      "genres": ["horror"]
+    },
+    {
+      "id": "progression-0246",
+      "text": "romance leads to family",
+      "genres": ["life-sim"]
+    },
+    {
+      "id": "progression-0247",
+      "text": "runes",
+      "genres": ["shooter", "melee-action", "rpg"]
+    },
+    {
+      "id": "progression-0248",
+      "text": "scars and lost limbs stay",
+      "genres": ["roguelike", "builder-management", "strategy"]
+    },
+    {
+      "id": "progression-0249",
+      "text": "science and magic machines",
+      "genres": ["survival-craft", "builder-management"]
+    },
+    {
+      "id": "progression-0250",
+      "text": "secret societies",
+      "genres": ["puzzle", "narrative"]
+    },
+    {
+      "id": "progression-0251",
+      "text": "secret spells",
+      "genres": ["rpg"]
+    },
+    {
+      "id": "progression-0252",
+      "text": "shortcuts open the world",
+      "genres": ["metroidvania", "melee-action", "rpg"]
+    },
+    {
+      "id": "progression-0253",
+      "text": "spells change the world",
+      "genres": ["roguelike", "sandbox"]
+    },
+    {
+      "id": "progression-0254",
+      "text": "companions leave one at a time",
+      "genres": ["builder-management", "narrative"]
+    },
+    {
+      "id": "progression-0255",
+      "text": "spread across the stars",
+      "genres": ["builder-management", "strategy"]
+    },
+    {
+      "id": "progression-0256",
+      "text": "stamina grows",
+      "genres": ["open-world", "narrative"]
+    },
+    {
+      "id": "progression-0257",
+      "text": "story unlocks after each death",
+      "genres": ["roguelike", "narrative"]
+    },
+    {
+      "id": "progression-0258",
+      "text": "study items to learn recipes",
+      "genres": ["survival-craft"]
+    },
+    {
+      "id": "progression-0259",
+      "text": "tenants move in",
+      "genres": ["survival-craft", "builder-management"]
+    },
+    {
+      "id": "progression-0260",
+      "text": "the world darkens as you kill",
+      "genres": ["open-world", "stealth-immersive-sim"]
+    },
+    {
+      "id": "progression-0261",
+      "text": "the crew shrinks",
+      "genres": ["horror", "party-multiplayer"]
+    },
+    {
+      "id": "progression-0262",
+      "text": "the dead return in the next wave",
+      "genres": ["shooter", "horror"]
+    },
+    {
+      "id": "progression-0263",
+      "text": "the game itself changes",
+      "genres": ["puzzle", "horror", "narrative"]
+    },
+    {
+      "id": "progression-0264",
+      "text": "the hero learns to hope again",
+      "genres": ["life-sim", "narrative"]
+    },
+    {
+      "id": "progression-0265",
+      "text": "the past comes out piece by piece",
+      "genres": ["horror", "narrative"]
+    },
+    {
+      "id": "progression-0266",
+      "text": "the planet becomes livable",
+      "genres": ["survival-craft", "builder-management"]
+    },
+    {
+      "id": "progression-0267",
+      "text": "the sky heals",
+      "genres": ["survival-craft", "narrative"]
+    },
+    {
+      "id": "progression-0268",
+      "text": "the town falls apart",
+      "genres": ["shooter", "horror", "narrative"]
+    },
+    {
+      "id": "progression-0269",
+      "text": "the truth about you",
+      "genres": ["horror", "narrative"]
+    },
+    {
+      "id": "progression-0270",
+      "text": "the world decays",
+      "genres": ["survival-craft", "horror"]
+    },
+    {
+      "id": "progression-0271",
+      "text": "the world reflects good or evil",
+      "genres": ["rpg", "open-world", "narrative", "sandbox"]
+    },
+    {
+      "id": "progression-0272",
+      "text": "the world remembers your last run",
+      "genres": ["roguelike", "horror", "narrative"]
+    },
+    {
+      "id": "progression-0273",
+      "text": "the world shifts into dreams",
+      "genres": ["horror", "narrative"]
+    },
+    {
+      "id": "progression-0274",
+      "text": "the world wipes and resets",
+      "genres": ["survival-craft", "party-multiplayer"]
+    },
+    {
+      "id": "progression-0275",
+      "text": "thin your deck",
+      "genres": ["roguelike", "deckbuilder-cards"]
+    },
+    {
+      "id": "progression-0276",
+      "text": "time loops",
+      "genres": ["roguelike", "puzzle", "horror", "narrative"]
+    },
+    {
+      "id": "progression-0277",
+      "text": "timed reward chests",
+      "genres": ["puzzle", "party-multiplayer"]
+    },
+    {
+      "id": "progression-0278",
+      "text": "tower upgrade paths",
+      "genres": ["strategy"]
+    },
+    {
+      "id": "progression-0279",
+      "text": "townspeople move in",
+      "genres": ["survival-craft", "builder-management", "life-sim"]
+    },
+    {
+      "id": "progression-0280",
+      "text": "trade up to rarer items",
+      "genres": ["rpg", "life-sim"]
+    },
+    {
+      "id": "progression-0281",
+      "text": "trust levels",
+      "genres": ["rpg", "narrative"]
+    },
+    {
+      "id": "progression-0282",
+      "text": "two rival skill trees",
+      "genres": ["rpg", "open-world"]
+    },
+    {
+      "id": "progression-0283",
+      "text": "upgrades after each round",
+      "genres": ["roguelike", "party-multiplayer"]
+    },
+    {
+      "id": "progression-0284",
+      "text": "vehicle built part by part",
+      "genres": ["vehicle-sim-racing", "sandbox"]
+    },
+    {
+      "id": "progression-0285",
+      "text": "waves get harder",
+      "genres": ["roguelike", "shooter", "strategy", "rhythm-arcade"]
+    },
+    {
+      "id": "progression-0286",
+      "text": "weapon evolutions",
+      "genres": ["roguelike"]
+    },
+    {
+      "id": "progression-0287",
+      "text": "weapon forms",
+      "genres": ["roguelike", "melee-action"]
+    },
+    {
+      "id": "progression-0288",
+      "text": "weapons and curses",
+      "genres": ["roguelike"]
+    },
+    {
+      "id": "progression-0289",
+      "text": "your death shapes your next run",
+      "genres": ["roguelike", "deckbuilder-cards"]
+    },
+    {
+      "id": "progression-0290",
+      "text": "your deck gets stronger",
+      "genres": ["roguelike", "deckbuilder-cards"]
+    },
+    {
+      "id": "progression-0291",
+      "text": "your politics form from your choices",
+      "genres": ["rpg", "narrative"]
+    },
+    {
+      "id": "progression-0292",
+      "text": "your tool gets supercharged",
+      "genres": ["shooter", "sandbox"]
+    },
+    {
+      "id": "progression-0293",
+      "text": "move list grows",
+      "genres": ["platformer", "melee-action", "fighting", "rpg"]
+    },
+    {
+      "id": "progression-0294",
+      "text": "new fighting styles",
+      "genres": ["melee-action", "fighting", "rpg", "open-world"]
+    },
+    {
+      "id": "progression-0295",
+      "text": "character endings unlock",
+      "genres": ["fighting", "narrative", "party-multiplayer"]
+    },
+    {
+      "id": "progression-0296",
+      "text": "rival roster grows",
+      "genres": ["melee-action", "fighting", "vehicle-sim-racing", "party-multiplayer"]
+    },
+    {
+      "id": "progression-0297",
+      "text": "training ranks",
+      "genres": ["shooter", "melee-action", "fighting", "rhythm-arcade"]
+    },
+    {
+      "id": "progression-0298",
+      "text": "signature moves unlock",
+      "genres": ["shooter", "melee-action", "fighting", "party-multiplayer"]
+    },
+    {
+      "id": "progression-0299",
+      "text": "new materials unlock",
+      "genres": ["puzzle", "survival-craft", "builder-management", "sandbox"]
+    },
+    {
+      "id": "progression-0300",
+      "text": "physics tools unlock",
+      "genres": ["puzzle", "vehicle-sim-racing", "sandbox"]
+    },
+    {
+      "id": "progression-0301",
+      "text": "creations get remixed by others",
+      "genres": ["platformer", "puzzle", "sandbox", "party-multiplayer"]
+    },
+    {
+      "id": "progression-0302",
+      "text": "world size grows",
+      "genres": ["open-world", "survival-craft", "builder-management", "sandbox"]
+    },
+    {
+      "id": "progression-0303",
+      "text": "build limits rise",
+      "genres": ["builder-management", "vehicle-sim-racing", "strategy", "sandbox"]
+    },
+    {
+      "id": "progression-0304",
+      "text": "spawn menu grows",
+      "genres": ["shooter", "sandbox", "party-multiplayer"]
+    },
+    {
+      "id": "progression-0305",
+      "text": "team rank rises",
+      "genres": ["shooter", "fighting", "vehicle-sim-racing", "strategy", "party-multiplayer"]
+    },
+    {
+      "id": "progression-0306",
+      "text": "group trophies",
+      "genres": ["platformer", "puzzle", "party-multiplayer", "rhythm-arcade"]
+    },
+    {
+      "id": "progression-0307",
+      "text": "mini-games rotate",
+      "genres": ["life-sim", "party-multiplayer", "rhythm-arcade"]
+    },
+    {
+      "id": "progression-0308",
+      "text": "shared village grows",
+      "genres": ["survival-craft", "builder-management", "life-sim", "party-multiplayer"]
+    },
+    {
+      "id": "progression-0309",
+      "text": "emotes unlock",
+      "genres": ["shooter", "fighting", "party-multiplayer", "rhythm-arcade"]
+    },
+    {
+      "id": "progression-0310",
+      "text": "house rules unlock",
+      "genres": ["puzzle", "strategy", "deckbuilder-cards", "party-multiplayer"]
+    },
+    {
+      "id": "progression-0311",
+      "text": "new difficulty charts",
+      "genres": ["platformer", "fighting", "rhythm-arcade"]
+    },
+    {
+      "id": "progression-0312",
+      "text": "combo multiplier tiers",
+      "genres": ["platformer", "shooter", "melee-action", "fighting", "rhythm-arcade"]
+    },
+    {
+      "id": "progression-0313",
+      "text": "new instruments",
+      "genres": ["life-sim", "sandbox", "rhythm-arcade"]
+    },
+    {
+      "id": "progression-0314",
+      "text": "song packs unlock",
+      "genres": ["party-multiplayer", "rhythm-arcade"]
+    },
+    {
+      "id": "progression-0315",
+      "text": "venues get bigger",
+      "genres": ["builder-management", "life-sim", "party-multiplayer", "rhythm-arcade"]
+    },
+    {
+      "id": "progression-0316",
+      "text": "tempo speeds up",
+      "genres": ["roguelike", "platformer", "puzzle", "rhythm-arcade"]
+    },
+    {
+      "id": "progression-0317",
+      "text": "map fills in",
+      "genres": ["metroidvania", "rpg", "open-world", "horror", "stealth-immersive-sim"]
+    },
+    {
+      "id": "progression-0318",
+      "text": "health fragments",
+      "genres": ["roguelike", "metroidvania", "platformer", "melee-action", "rpg"]
+    },
+    {
+      "id": "progression-0319",
+      "text": "lore rooms",
+      "genres": ["metroidvania", "rpg", "horror", "narrative"]
+    },
+    {
+      "id": "progression-0320",
+      "text": "fast travel points unlock",
+      "genres": ["metroidvania", "rpg", "open-world", "survival-craft"]
+    },
+    {
+      "id": "progression-0321",
+      "text": "the world flips upside down",
+      "genres": ["metroidvania", "platformer", "puzzle", "horror"]
+    },
+    {
+      "id": "progression-0322",
+      "text": "sealed doors remember you",
+      "genres": ["metroidvania", "puzzle", "rpg", "horror"]
+    },
+    {
+      "id": "progression-0323",
+      "text": "relics pile up",
+      "genres": ["roguelike", "rpg", "deckbuilder-cards"]
+    },
+    {
+      "id": "progression-0324",
+      "text": "deck size cap rises",
+      "genres": ["strategy", "deckbuilder-cards"]
+    },
+    {
+      "id": "progression-0325",
+      "text": "cards evolve after use",
+      "genres": ["roguelike", "rpg", "deckbuilder-cards"]
+    },
+    {
+      "id": "progression-0326",
+      "text": "new card types",
+      "genres": ["puzzle", "strategy", "deckbuilder-cards"]
+    },
+    {
+      "id": "progression-0327",
+      "text": "card rarities rise",
+      "genres": ["roguelike", "deckbuilder-cards", "party-multiplayer"]
+    },
+    {
+      "id": "progression-0328",
+      "text": "draft new cards each fight",
+      "genres": ["roguelike", "strategy", "deckbuilder-cards"]
+    },
+    {
+      "id": "progression-0329",
+      "text": "star ratings",
+      "genres": ["platformer", "puzzle", "vehicle-sim-racing", "rhythm-arcade"]
+    },
+    {
+      "id": "progression-0330",
+      "text": "puzzles combine earlier rules",
+      "genres": ["metroidvania", "platformer", "puzzle", "narrative"]
+    },
+    {
+      "id": "progression-0331",
+      "text": "a hidden layer of puzzles",
+      "genres": ["metroidvania", "puzzle", "open-world", "narrative"]
+    },
+    {
+      "id": "progression-0332",
+      "text": "optional brain-busters",
+      "genres": ["platformer", "puzzle", "rpg"]
+    },
+    {
+      "id": "progression-0333",
+      "text": "hints unlock over time",
+      "genres": ["puzzle", "horror", "narrative"]
+    },
+    {
+      "id": "progression-0334",
+      "text": "solved rooms change shape",
+      "genres": ["metroidvania", "puzzle", "horror", "narrative"]
+    },
+    {
+      "id": "progression-0335",
+      "text": "tuning parts",
+      "genres": ["vehicle-sim-racing", "sandbox"]
+    },
+    {
+      "id": "progression-0336",
+      "text": "sponsors join",
+      "genres": ["fighting", "builder-management", "life-sim", "vehicle-sim-racing"]
+    },
+    {
+      "id": "progression-0337",
+      "text": "faster classes unlock",
+      "genres": ["vehicle-sim-racing", "rhythm-arcade"]
+    },
+    {
+      "id": "progression-0338",
+      "text": "new routes",
+      "genres": ["open-world", "survival-craft", "builder-management", "vehicle-sim-racing"]
+    },
+    {
+      "id": "progression-0339",
+      "text": "pit crew improves",
+      "genres": ["builder-management", "vehicle-sim-racing", "strategy"]
+    },
+    {
+      "id": "progression-0340",
+      "text": "new gadgets",
+      "genres": ["metroidvania", "platformer", "shooter", "stealth-immersive-sim"]
+    },
+    {
+      "id": "progression-0341",
+      "text": "disguises unlock",
+      "genres": ["open-world", "narrative", "stealth-immersive-sim", "party-multiplayer"]
+    },
+    {
+      "id": "progression-0342",
+      "text": "more approaches open",
+      "genres": ["puzzle", "shooter", "open-world", "stealth-immersive-sim"]
+    },
+    {
+      "id": "progression-0343",
+      "text": "alert levels persist",
+      "genres": ["shooter", "horror", "strategy", "stealth-immersive-sim"]
+    },
+    {
+      "id": "progression-0344",
+      "text": "intel reveals routes",
+      "genres": ["puzzle", "shooter", "strategy", "stealth-immersive-sim"]
+    },
+    {
+      "id": "progression-0345",
+      "text": "you grow older",
+      "genres": ["rpg", "builder-management", "life-sim", "narrative"]
+    },
+    {
+      "id": "progression-0346",
+      "text": "powers fade with age",
+      "genres": ["melee-action", "rpg", "open-world", "narrative"]
+    },
+    {
+      "id": "progression-0347",
+      "text": "you forget skills",
+      "genres": ["roguelike", "rpg", "horror", "narrative"]
+    },
+    {
+      "id": "progression-0348",
+      "text": "your home fills with keepsakes",
+      "genres": ["roguelike", "survival-craft", "life-sim", "narrative"]
+    },
+    {
+      "id": "progression-0349",
+      "text": "friendships fade if ignored",
+      "genres": ["rpg", "life-sim", "narrative"]
+    },
+    {
+      "id": "progression-0350",
+      "text": "the music evolves",
+      "genres": ["platformer", "life-sim", "narrative", "rhythm-arcade"]
+    },
+    {
+      "id": "progression-0351",
+      "text": "a diary fills in",
+      "genres": ["survival-craft", "horror", "life-sim", "narrative"]
+    },
+    {
+      "id": "progression-0352",
+      "text": "the title screen changes",
+      "genres": ["roguelike", "puzzle", "horror", "narrative"]
+    }
+  ]
+}

@@ -1,0 +1,2098 @@
+{
+  "type": "mechanic",
+  "cues": [
+    {
+      "id": "mechanic-0001",
+      "text": "shoot",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "platformer",
+        "shooter",
+        "open-world",
+        "horror",
+        "vehicle-sim-racing",
+        "stealth-immersive-sim",
+        "party-multiplayer",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "mechanic-0002",
+      "text": "explore",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "platformer",
+        "puzzle",
+        "melee-action",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "life-sim",
+        "strategy",
+        "narrative",
+        "stealth-immersive-sim",
+        "sandbox"
+      ]
+    },
+    {
+      "id": "mechanic-0003",
+      "text": "fight",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "shooter",
+        "melee-action",
+        "fighting",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "deckbuilder-cards",
+        "party-multiplayer"
+      ]
+    },
+    {
+      "id": "mechanic-0004",
+      "text": "solve puzzles",
+      "genres": [
+        "metroidvania",
+        "platformer",
+        "puzzle",
+        "open-world",
+        "horror",
+        "narrative",
+        "stealth-immersive-sim",
+        "party-multiplayer"
+      ]
+    },
+    {
+      "id": "mechanic-0005",
+      "text": "dodge",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "platformer",
+        "shooter",
+        "melee-action",
+        "fighting",
+        "vehicle-sim-racing",
+        "party-multiplayer",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "mechanic-0006",
+      "text": "craft",
+      "genres": ["rpg", "open-world", "survival-craft", "builder-management", "life-sim", "sandbox"]
+    },
+    {
+      "id": "mechanic-0007",
+      "text": "jump",
+      "genres": ["metroidvania", "platformer", "party-multiplayer", "rhythm-arcade"]
+    },
+    {
+      "id": "mechanic-0008",
+      "text": "make choices",
+      "genres": [
+        "roguelike",
+        "rpg",
+        "horror",
+        "life-sim",
+        "strategy",
+        "deckbuilder-cards",
+        "narrative",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "mechanic-0009",
+      "text": "build a base",
+      "genres": ["survival-craft", "builder-management", "strategy", "sandbox"]
+    },
+    {
+      "id": "mechanic-0010",
+      "text": "drive",
+      "genres": [
+        "open-world",
+        "vehicle-sim-racing",
+        "sandbox",
+        "party-multiplayer",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "mechanic-0011",
+      "text": "cast spells",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "melee-action",
+        "rpg",
+        "open-world",
+        "strategy",
+        "deckbuilder-cards",
+        "sandbox"
+      ]
+    },
+    {
+      "id": "mechanic-0012",
+      "text": "chain combos",
+      "genres": [
+        "roguelike",
+        "puzzle",
+        "melee-action",
+        "fighting",
+        "deckbuilder-cards",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "mechanic-0013",
+      "text": "climb",
+      "genres": ["metroidvania", "platformer", "open-world", "survival-craft"]
+    },
+    {
+      "id": "mechanic-0014",
+      "text": "talk",
+      "genres": [
+        "rpg",
+        "open-world",
+        "horror",
+        "life-sim",
+        "narrative",
+        "stealth-immersive-sim",
+        "party-multiplayer"
+      ]
+    },
+    {
+      "id": "mechanic-0015",
+      "text": "parry",
+      "genres": ["roguelike", "metroidvania", "melee-action", "fighting", "rhythm-arcade"]
+    },
+    {
+      "id": "mechanic-0016",
+      "text": "build",
+      "genres": ["puzzle", "survival-craft", "builder-management", "strategy", "sandbox"]
+    },
+    {
+      "id": "mechanic-0017",
+      "text": "dash",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "platformer",
+        "shooter",
+        "melee-action",
+        "fighting",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "mechanic-0018",
+      "text": "gather",
+      "genres": [
+        "open-world",
+        "survival-craft",
+        "builder-management",
+        "life-sim",
+        "strategy",
+        "sandbox"
+      ]
+    },
+    {
+      "id": "mechanic-0019",
+      "text": "sneak",
+      "genres": ["open-world", "horror", "stealth-immersive-sim"]
+    },
+    {
+      "id": "mechanic-0020",
+      "text": "fight in turns",
+      "genres": ["roguelike", "rpg", "strategy", "deckbuilder-cards"]
+    },
+    {
+      "id": "mechanic-0021",
+      "text": "loot",
+      "genres": [
+        "roguelike",
+        "shooter",
+        "melee-action",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "horror"
+      ]
+    },
+    {
+      "id": "mechanic-0022",
+      "text": "play cards",
+      "genres": ["roguelike", "puzzle", "strategy", "deckbuilder-cards", "party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0023",
+      "text": "buy gear",
+      "genres": ["roguelike", "shooter", "melee-action", "rpg"]
+    },
+    {
+      "id": "mechanic-0024",
+      "text": "do odd jobs",
+      "genres": ["rpg", "open-world", "life-sim", "narrative"]
+    },
+    {
+      "id": "mechanic-0025",
+      "text": "hide",
+      "genres": ["horror", "stealth-immersive-sim", "party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0026",
+      "text": "mine",
+      "genres": ["roguelike", "survival-craft", "builder-management", "life-sim", "sandbox"]
+    },
+    {
+      "id": "mechanic-0027",
+      "text": "read",
+      "genres": ["horror", "narrative"]
+    },
+    {
+      "id": "mechanic-0028",
+      "text": "scavenge",
+      "genres": [
+        "roguelike",
+        "shooter",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "mechanic-0029",
+      "text": "throw objects",
+      "genres": ["puzzle", "stealth-immersive-sim", "sandbox", "party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0030",
+      "text": "wire circuits",
+      "genres": ["puzzle", "builder-management", "sandbox"]
+    },
+    {
+      "id": "mechanic-0031",
+      "text": "brawl",
+      "genres": [
+        "roguelike",
+        "melee-action",
+        "fighting",
+        "open-world",
+        "party-multiplayer",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "mechanic-0032",
+      "text": "collect",
+      "genres": [
+        "metroidvania",
+        "platformer",
+        "rpg",
+        "open-world",
+        "life-sim",
+        "deckbuilder-cards",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "mechanic-0033",
+      "text": "combine",
+      "genres": [
+        "puzzle",
+        "rpg",
+        "survival-craft",
+        "builder-management",
+        "life-sim",
+        "deckbuilder-cards",
+        "sandbox"
+      ]
+    },
+    {
+      "id": "mechanic-0034",
+      "text": "farm",
+      "genres": ["survival-craft", "builder-management", "life-sim", "sandbox"]
+    },
+    {
+      "id": "mechanic-0035",
+      "text": "keep the beat",
+      "genres": ["roguelike", "shooter", "melee-action", "party-multiplayer", "rhythm-arcade"]
+    },
+    {
+      "id": "mechanic-0036",
+      "text": "run",
+      "genres": ["platformer", "horror", "party-multiplayer", "rhythm-arcade"]
+    },
+    {
+      "id": "mechanic-0037",
+      "text": "search for clues",
+      "genres": ["puzzle", "horror", "narrative", "stealth-immersive-sim"]
+    },
+    {
+      "id": "mechanic-0038",
+      "text": "sell",
+      "genres": ["rpg", "builder-management", "life-sim"]
+    },
+    {
+      "id": "mechanic-0039",
+      "text": "build machines",
+      "genres": ["puzzle", "survival-craft", "builder-management", "vehicle-sim-racing", "sandbox"]
+    },
+    {
+      "id": "mechanic-0040",
+      "text": "fish",
+      "genres": ["open-world", "survival-craft", "life-sim", "rhythm-arcade"]
+    },
+    {
+      "id": "mechanic-0041",
+      "text": "heal",
+      "genres": ["shooter", "rpg", "party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0042",
+      "text": "hunt",
+      "genres": ["shooter", "melee-action", "rpg", "open-world", "survival-craft", "horror"]
+    },
+    {
+      "id": "mechanic-0043",
+      "text": "investigate",
+      "genres": ["puzzle", "horror", "narrative", "stealth-immersive-sim"]
+    },
+    {
+      "id": "mechanic-0044",
+      "text": "race",
+      "genres": ["vehicle-sim-racing", "party-multiplayer", "rhythm-arcade"]
+    },
+    {
+      "id": "mechanic-0045",
+      "text": "shove",
+      "genres": ["platformer", "fighting", "strategy", "deckbuilder-cards", "party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0046",
+      "text": "solve physics puzzles",
+      "genres": ["platformer", "puzzle", "sandbox"]
+    },
+    {
+      "id": "mechanic-0047",
+      "text": "trade",
+      "genres": ["rpg", "open-world", "builder-management", "life-sim", "strategy"]
+    },
+    {
+      "id": "mechanic-0048",
+      "text": "clear rooms",
+      "genres": ["roguelike", "shooter", "melee-action", "rpg"]
+    },
+    {
+      "id": "mechanic-0049",
+      "text": "command troops",
+      "genres": ["strategy"]
+    },
+    {
+      "id": "mechanic-0050",
+      "text": "dig",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "puzzle",
+        "survival-craft",
+        "life-sim",
+        "sandbox",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "mechanic-0051",
+      "text": "dive",
+      "genres": ["open-world", "survival-craft", "horror"]
+    },
+    {
+      "id": "mechanic-0052",
+      "text": "duel",
+      "genres": ["shooter", "melee-action", "fighting", "deckbuilder-cards", "party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0053",
+      "text": "fight bosses",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "platformer",
+        "shooter",
+        "melee-action",
+        "rpg",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "mechanic-0054",
+      "text": "raise creatures",
+      "genres": ["rpg", "builder-management", "life-sim", "sandbox"]
+    },
+    {
+      "id": "mechanic-0055",
+      "text": "transform",
+      "genres": [
+        "metroidvania",
+        "platformer",
+        "puzzle",
+        "melee-action",
+        "rpg",
+        "vehicle-sim-racing"
+      ]
+    },
+    {
+      "id": "mechanic-0056",
+      "text": "tune cars",
+      "genres": ["vehicle-sim-racing"]
+    },
+    {
+      "id": "mechanic-0057",
+      "text": "upgrade gear",
+      "genres": [
+        "roguelike",
+        "shooter",
+        "melee-action",
+        "rpg",
+        "survival-craft",
+        "vehicle-sim-racing",
+        "deckbuilder-cards"
+      ]
+    },
+    {
+      "id": "mechanic-0058",
+      "text": "work together",
+      "genres": ["party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0059",
+      "text": "assign workers",
+      "genres": ["builder-management", "strategy"]
+    },
+    {
+      "id": "mechanic-0060",
+      "text": "build a deck",
+      "genres": ["roguelike", "deckbuilder-cards"]
+    },
+    {
+      "id": "mechanic-0061",
+      "text": "call in support",
+      "genres": ["shooter", "fighting", "strategy"]
+    },
+    {
+      "id": "mechanic-0062",
+      "text": "choose a loadout",
+      "genres": [
+        "roguelike",
+        "shooter",
+        "melee-action",
+        "fighting",
+        "strategy",
+        "deckbuilder-cards"
+      ]
+    },
+    {
+      "id": "mechanic-0063",
+      "text": "clean",
+      "genres": ["builder-management", "life-sim", "stealth-immersive-sim"]
+    },
+    {
+      "id": "mechanic-0064",
+      "text": "click",
+      "genres": ["puzzle", "builder-management", "narrative"]
+    },
+    {
+      "id": "mechanic-0065",
+      "text": "cook",
+      "genres": ["survival-craft", "builder-management", "life-sim", "party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0066",
+      "text": "craft weapons",
+      "genres": ["roguelike", "melee-action", "rpg", "open-world", "survival-craft"]
+    },
+    {
+      "id": "mechanic-0067",
+      "text": "date",
+      "genres": ["rpg", "life-sim", "narrative"]
+    },
+    {
+      "id": "mechanic-0068",
+      "text": "defend",
+      "genres": ["roguelike", "shooter", "survival-craft", "builder-management", "strategy"]
+    },
+    {
+      "id": "mechanic-0069",
+      "text": "escape",
+      "genres": ["roguelike", "puzzle", "horror", "stealth-immersive-sim", "party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0070",
+      "text": "hack",
+      "genres": ["puzzle", "shooter", "rpg", "stealth-immersive-sim"]
+    },
+    {
+      "id": "mechanic-0071",
+      "text": "make friends",
+      "genres": ["rpg", "life-sim", "narrative"]
+    },
+    {
+      "id": "mechanic-0072",
+      "text": "manage inventory",
+      "genres": ["roguelike", "puzzle", "shooter", "rpg", "survival-craft", "horror"]
+    },
+    {
+      "id": "mechanic-0073",
+      "text": "mix",
+      "genres": ["puzzle", "builder-management", "life-sim", "sandbox"]
+    },
+    {
+      "id": "mechanic-0074",
+      "text": "paint",
+      "genres": ["puzzle", "life-sim", "sandbox", "party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0075",
+      "text": "persuade",
+      "genres": ["rpg", "strategy", "deckbuilder-cards", "narrative", "stealth-immersive-sim"]
+    },
+    {
+      "id": "mechanic-0076",
+      "text": "pick up weapons",
+      "genres": ["shooter", "melee-action", "fighting", "party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0077",
+      "text": "pick upgrades",
+      "genres": ["roguelike", "deckbuilder-cards"]
+    },
+    {
+      "id": "mechanic-0078",
+      "text": "raise a child",
+      "genres": ["life-sim", "narrative"]
+    },
+    {
+      "id": "mechanic-0079",
+      "text": "react fast",
+      "genres": [
+        "melee-action",
+        "fighting",
+        "vehicle-sim-racing",
+        "party-multiplayer",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "mechanic-0080",
+      "text": "serve customers",
+      "genres": ["builder-management", "life-sim", "party-multiplayer", "rhythm-arcade"]
+    },
+    {
+      "id": "mechanic-0081",
+      "text": "shout",
+      "genres": ["open-world", "party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0082",
+      "text": "spawn things",
+      "genres": ["puzzle", "sandbox"]
+    },
+    {
+      "id": "mechanic-0083",
+      "text": "steal",
+      "genres": ["rpg", "open-world", "stealth-immersive-sim"]
+    },
+    {
+      "id": "mechanic-0084",
+      "text": "switch weapons",
+      "genres": ["roguelike", "shooter", "melee-action"]
+    },
+    {
+      "id": "mechanic-0085",
+      "text": "teleport",
+      "genres": ["metroidvania", "platformer", "puzzle", "fighting", "stealth-immersive-sim"]
+    },
+    {
+      "id": "mechanic-0086",
+      "text": "throw weapons",
+      "genres": ["shooter", "melee-action", "fighting"]
+    },
+    {
+      "id": "mechanic-0087",
+      "text": "use gadgets",
+      "genres": ["metroidvania", "puzzle", "shooter", "stealth-immersive-sim"]
+    },
+    {
+      "id": "mechanic-0088",
+      "text": "balance systems",
+      "genres": ["builder-management", "strategy"]
+    },
+    {
+      "id": "mechanic-0089",
+      "text": "barricade",
+      "genres": ["shooter", "survival-craft", "horror"]
+    },
+    {
+      "id": "mechanic-0090",
+      "text": "break things",
+      "genres": ["vehicle-sim-racing", "sandbox", "party-multiplayer", "rhythm-arcade"]
+    },
+    {
+      "id": "mechanic-0091",
+      "text": "call out lies",
+      "genres": ["narrative", "party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0092",
+      "text": "catch creatures",
+      "genres": ["rpg", "open-world", "life-sim"]
+    },
+    {
+      "id": "mechanic-0093",
+      "text": "chase",
+      "genres": ["open-world", "horror", "vehicle-sim-racing", "party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0094",
+      "text": "choose a path",
+      "genres": ["roguelike", "deckbuilder-cards", "narrative"]
+    },
+    {
+      "id": "mechanic-0095",
+      "text": "connect belts",
+      "genres": ["puzzle", "builder-management"]
+    },
+    {
+      "id": "mechanic-0096",
+      "text": "crash",
+      "genres": ["vehicle-sim-racing", "sandbox", "party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0097",
+      "text": "decode writing",
+      "genres": ["puzzle", "narrative"]
+    },
+    {
+      "id": "mechanic-0098",
+      "text": "deliver cargo",
+      "genres": ["open-world", "vehicle-sim-racing"]
+    },
+    {
+      "id": "mechanic-0099",
+      "text": "destroy terrain",
+      "genres": ["shooter", "strategy", "sandbox"]
+    },
+    {
+      "id": "mechanic-0100",
+      "text": "drift",
+      "genres": ["vehicle-sim-racing", "rhythm-arcade"]
+    },
+    {
+      "id": "mechanic-0101",
+      "text": "fight hordes",
+      "genres": ["roguelike", "shooter", "melee-action", "horror"]
+    },
+    {
+      "id": "mechanic-0102",
+      "text": "fly",
+      "genres": ["open-world", "vehicle-sim-racing"]
+    },
+    {
+      "id": "mechanic-0103",
+      "text": "gamble",
+      "genres": ["roguelike", "deckbuilder-cards", "party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0104",
+      "text": "grapple",
+      "genres": ["metroidvania", "platformer", "open-world"]
+    },
+    {
+      "id": "mechanic-0105",
+      "text": "haul loot",
+      "genres": ["shooter", "horror", "party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0106",
+      "text": "hire workers",
+      "genres": ["builder-management"]
+    },
+    {
+      "id": "mechanic-0107",
+      "text": "manage moods",
+      "genres": ["builder-management", "life-sim"]
+    },
+    {
+      "id": "mechanic-0108",
+      "text": "place units",
+      "genres": ["strategy", "deckbuilder-cards"]
+    },
+    {
+      "id": "mechanic-0109",
+      "text": "plan your days",
+      "genres": ["life-sim"]
+    },
+    {
+      "id": "mechanic-0110",
+      "text": "plant or defuse bombs",
+      "genres": ["puzzle", "shooter", "party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0111",
+      "text": "play mini-games",
+      "genres": ["life-sim", "party-multiplayer", "rhythm-arcade"]
+    },
+    {
+      "id": "mechanic-0112",
+      "text": "push forward",
+      "genres": ["shooter", "strategy"]
+    },
+    {
+      "id": "mechanic-0113",
+      "text": "recruit",
+      "genres": ["rpg", "builder-management", "strategy", "deckbuilder-cards"]
+    },
+    {
+      "id": "mechanic-0114",
+      "text": "redirect lasers",
+      "genres": ["puzzle"]
+    },
+    {
+      "id": "mechanic-0115",
+      "text": "relive memories",
+      "genres": ["narrative"]
+    },
+    {
+      "id": "mechanic-0116",
+      "text": "rescue hostages",
+      "genres": ["shooter", "stealth-immersive-sim"]
+    },
+    {
+      "id": "mechanic-0117",
+      "text": "restart instantly",
+      "genres": ["platformer", "puzzle", "vehicle-sim-racing", "rhythm-arcade"]
+    },
+    {
+      "id": "mechanic-0118",
+      "text": "revive teammates",
+      "genres": ["shooter", "party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0119",
+      "text": "ride",
+      "genres": ["open-world", "vehicle-sim-racing"]
+    },
+    {
+      "id": "mechanic-0120",
+      "text": "scan",
+      "genres": ["metroidvania", "open-world", "stealth-immersive-sim"]
+    },
+    {
+      "id": "mechanic-0121",
+      "text": "slash",
+      "genres": ["roguelike", "metroidvania", "melee-action", "fighting", "rhythm-arcade"]
+    },
+    {
+      "id": "mechanic-0122",
+      "text": "stealth kill",
+      "genres": ["stealth-immersive-sim"]
+    },
+    {
+      "id": "mechanic-0123",
+      "text": "switch stances",
+      "genres": ["melee-action", "fighting"]
+    },
+    {
+      "id": "mechanic-0124",
+      "text": "take photos",
+      "genres": ["open-world", "horror", "narrative"]
+    },
+    {
+      "id": "mechanic-0125",
+      "text": "use skills",
+      "genres": ["roguelike", "shooter", "melee-action", "fighting", "rpg", "strategy"]
+    },
+    {
+      "id": "mechanic-0126",
+      "text": "walk",
+      "genres": ["horror", "narrative"]
+    },
+    {
+      "id": "mechanic-0127",
+      "text": "watch it play out",
+      "genres": ["builder-management", "strategy", "deckbuilder-cards", "sandbox"]
+    },
+    {
+      "id": "mechanic-0128",
+      "text": "answer questions",
+      "genres": ["puzzle", "narrative", "party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0129",
+      "text": "automate",
+      "genres": ["puzzle", "builder-management", "sandbox"]
+    },
+    {
+      "id": "mechanic-0130",
+      "text": "block",
+      "genres": ["melee-action", "fighting"]
+    },
+    {
+      "id": "mechanic-0131",
+      "text": "blow things up",
+      "genres": ["shooter", "sandbox"]
+    },
+    {
+      "id": "mechanic-0132",
+      "text": "boost",
+      "genres": ["platformer", "vehicle-sim-racing", "rhythm-arcade"]
+    },
+    {
+      "id": "mechanic-0133",
+      "text": "break combos",
+      "genres": ["fighting"]
+    },
+    {
+      "id": "mechanic-0134",
+      "text": "brew potions",
+      "genres": ["rpg", "life-sim"]
+    },
+    {
+      "id": "mechanic-0135",
+      "text": "build factories",
+      "genres": ["builder-management", "sandbox"]
+    },
+    {
+      "id": "mechanic-0136",
+      "text": "build vehicles",
+      "genres": ["survival-craft", "vehicle-sim-racing", "sandbox"]
+    },
+    {
+      "id": "mechanic-0137",
+      "text": "buy property",
+      "genres": ["builder-management", "life-sim", "party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0138",
+      "text": "capture points",
+      "genres": ["shooter", "strategy", "party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0139",
+      "text": "scavenge ammo from foes",
+      "genres": ["shooter"]
+    },
+    {
+      "id": "mechanic-0140",
+      "text": "choose blessings",
+      "genres": ["roguelike"]
+    },
+    {
+      "id": "mechanic-0141",
+      "text": "chop trees",
+      "genres": ["survival-craft", "life-sim"]
+    },
+    {
+      "id": "mechanic-0142",
+      "text": "conquer",
+      "genres": ["strategy"]
+    },
+    {
+      "id": "mechanic-0143",
+      "text": "crawl through vents",
+      "genres": ["horror", "stealth-immersive-sim"]
+    },
+    {
+      "id": "mechanic-0144",
+      "text": "cut off limbs",
+      "genres": ["melee-action", "fighting", "horror"]
+    },
+    {
+      "id": "mechanic-0145",
+      "text": "decorate",
+      "genres": ["builder-management", "life-sim", "sandbox"]
+    },
+    {
+      "id": "mechanic-0146",
+      "text": "dress up",
+      "genres": ["life-sim"]
+    },
+    {
+      "id": "mechanic-0147",
+      "text": "find secrets",
+      "genres": ["metroidvania", "platformer", "puzzle", "open-world"]
+    },
+    {
+      "id": "mechanic-0148",
+      "text": "finish stunned enemies",
+      "genres": ["shooter", "melee-action"]
+    },
+    {
+      "id": "mechanic-0149",
+      "text": "fix up rooms",
+      "genres": ["builder-management", "life-sim"]
+    },
+    {
+      "id": "mechanic-0150",
+      "text": "flip tables",
+      "genres": ["narrative"]
+    },
+    {
+      "id": "mechanic-0151",
+      "text": "forage",
+      "genres": ["open-world", "survival-craft", "life-sim"]
+    },
+    {
+      "id": "mechanic-0152",
+      "text": "glide",
+      "genres": ["platformer", "open-world"]
+    },
+    {
+      "id": "mechanic-0153",
+      "text": "jump between stars",
+      "genres": ["roguelike", "sandbox"]
+    },
+    {
+      "id": "mechanic-0154",
+      "text": "kill fast",
+      "genres": ["shooter", "melee-action", "rhythm-arcade"]
+    },
+    {
+      "id": "mechanic-0155",
+      "text": "knock foes out of the arena",
+      "genres": ["fighting", "party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0156",
+      "text": "land",
+      "genres": ["vehicle-sim-racing"]
+    },
+    {
+      "id": "mechanic-0157",
+      "text": "open packs",
+      "genres": ["deckbuilder-cards"]
+    },
+    {
+      "id": "mechanic-0158",
+      "text": "pack items",
+      "genres": ["puzzle"]
+    },
+    {
+      "id": "mechanic-0159",
+      "text": "pass skill checks",
+      "genres": ["rpg", "narrative"]
+    },
+    {
+      "id": "mechanic-0160",
+      "text": "pick your fights",
+      "genres": ["roguelike", "rpg", "strategy", "deckbuilder-cards"]
+    },
+    {
+      "id": "mechanic-0161",
+      "text": "place blocks",
+      "genres": ["puzzle", "survival-craft", "builder-management", "sandbox"]
+    },
+    {
+      "id": "mechanic-0162",
+      "text": "open portals",
+      "genres": ["puzzle"]
+    },
+    {
+      "id": "mechanic-0163",
+      "text": "plan a route",
+      "genres": ["puzzle", "vehicle-sim-racing", "strategy"]
+    },
+    {
+      "id": "mechanic-0164",
+      "text": "plan ahead",
+      "genres": ["puzzle", "strategy", "deckbuilder-cards"]
+    },
+    {
+      "id": "mechanic-0165",
+      "text": "play others' levels",
+      "genres": ["platformer", "sandbox", "party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0166",
+      "text": "possess",
+      "genres": ["puzzle", "stealth-immersive-sim"]
+    },
+    {
+      "id": "mechanic-0167",
+      "text": "push blocks",
+      "genres": ["puzzle"]
+    },
+    {
+      "id": "mechanic-0168",
+      "text": "question suspects",
+      "genres": ["narrative"]
+    },
+    {
+      "id": "mechanic-0169",
+      "text": "ragdoll",
+      "genres": ["sandbox", "party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0170",
+      "text": "raid tombs",
+      "genres": ["platformer", "open-world"]
+    },
+    {
+      "id": "mechanic-0171",
+      "text": "ram rivals",
+      "genres": ["vehicle-sim-racing", "party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0172",
+      "text": "repair",
+      "genres": ["survival-craft", "vehicle-sim-racing"]
+    },
+    {
+      "id": "mechanic-0173",
+      "text": "repeat the loop",
+      "genres": ["puzzle", "narrative"]
+    },
+    {
+      "id": "mechanic-0174",
+      "text": "research tech",
+      "genres": ["builder-management", "strategy"]
+    },
+    {
+      "id": "mechanic-0175",
+      "text": "rest at checkpoints",
+      "genres": ["metroidvania", "melee-action"]
+    },
+    {
+      "id": "mechanic-0176",
+      "text": "rewind time",
+      "genres": ["platformer", "puzzle"]
+    },
+    {
+      "id": "mechanic-0177",
+      "text": "roll dice",
+      "genres": ["roguelike", "rpg", "strategy", "deckbuilder-cards", "party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0178",
+      "text": "run rooftops",
+      "genres": ["platformer", "open-world"]
+    },
+    {
+      "id": "mechanic-0179",
+      "text": "scout",
+      "genres": ["vehicle-sim-racing", "strategy"]
+    },
+    {
+      "id": "mechanic-0180",
+      "text": "send out heroes",
+      "genres": ["rpg", "builder-management"]
+    },
+    {
+      "id": "mechanic-0181",
+      "text": "sew",
+      "genres": ["life-sim"]
+    },
+    {
+      "id": "mechanic-0182",
+      "text": "solve puzzles together",
+      "genres": ["puzzle", "party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0183",
+      "text": "show mercy",
+      "genres": ["rpg", "narrative"]
+    },
+    {
+      "id": "mechanic-0184",
+      "text": "stack",
+      "genres": ["puzzle", "rhythm-arcade"]
+    },
+    {
+      "id": "mechanic-0185",
+      "text": "stock shelves",
+      "genres": ["builder-management", "life-sim"]
+    },
+    {
+      "id": "mechanic-0186",
+      "text": "survive",
+      "genres": ["roguelike", "survival-craft", "horror"]
+    },
+    {
+      "id": "mechanic-0187",
+      "text": "tag in teammates",
+      "genres": ["fighting"]
+    },
+    {
+      "id": "mechanic-0188",
+      "text": "talk to ghosts",
+      "genres": ["horror", "narrative"]
+    },
+    {
+      "id": "mechanic-0189",
+      "text": "terraform",
+      "genres": ["builder-management", "sandbox"]
+    },
+    {
+      "id": "mechanic-0190",
+      "text": "train troops",
+      "genres": ["strategy"]
+    },
+    {
+      "id": "mechanic-0191",
+      "text": "tune the radio",
+      "genres": ["horror"]
+    },
+    {
+      "id": "mechanic-0192",
+      "text": "unlock skills",
+      "genres": ["roguelike", "rpg"]
+    },
+    {
+      "id": "mechanic-0193",
+      "text": "upgrade cards",
+      "genres": ["roguelike", "deckbuilder-cards"]
+    },
+    {
+      "id": "mechanic-0194",
+      "text": "wait",
+      "genres": ["builder-management", "deckbuilder-cards"]
+    },
+    {
+      "id": "mechanic-0195",
+      "text": "weld",
+      "genres": ["survival-craft"]
+    },
+    {
+      "id": "mechanic-0196",
+      "text": "write poems",
+      "genres": ["life-sim", "narrative"]
+    },
+    {
+      "id": "mechanic-0197",
+      "text": "age up",
+      "genres": ["strategy"]
+    },
+    {
+      "id": "mechanic-0198",
+      "text": "animate",
+      "genres": ["sandbox"]
+    },
+    {
+      "id": "mechanic-0199",
+      "text": "assassinate",
+      "genres": ["stealth-immersive-sim"]
+    },
+    {
+      "id": "mechanic-0200",
+      "text": "back up a trailer",
+      "genres": ["vehicle-sim-racing"]
+    },
+    {
+      "id": "mechanic-0201",
+      "text": "beat the clock",
+      "genres": ["platformer", "puzzle", "vehicle-sim-racing", "rhythm-arcade"]
+    },
+    {
+      "id": "mechanic-0202",
+      "text": "besiege castles",
+      "genres": ["strategy"]
+    },
+    {
+      "id": "mechanic-0203",
+      "text": "bless or curse",
+      "genres": ["builder-management"]
+    },
+    {
+      "id": "mechanic-0204",
+      "text": "breach rooms",
+      "genres": ["shooter", "stealth-immersive-sim"]
+    },
+    {
+      "id": "mechanic-0205",
+      "text": "break the fourth wall",
+      "genres": ["narrative"]
+    },
+    {
+      "id": "mechanic-0206",
+      "text": "bribe",
+      "genres": ["rpg", "strategy", "deckbuilder-cards", "narrative", "stealth-immersive-sim"]
+    },
+    {
+      "id": "mechanic-0207",
+      "text": "build bridges",
+      "genres": ["puzzle", "sandbox"]
+    },
+    {
+      "id": "mechanic-0208",
+      "text": "build levels",
+      "genres": ["platformer", "puzzle", "sandbox", "party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0209",
+      "text": "build roads",
+      "genres": ["builder-management"]
+    },
+    {
+      "id": "mechanic-0210",
+      "text": "build tracks",
+      "genres": ["vehicle-sim-racing", "sandbox"]
+    },
+    {
+      "id": "mechanic-0211",
+      "text": "camp",
+      "genres": ["rpg", "survival-craft"]
+    },
+    {
+      "id": "mechanic-0212",
+      "text": "cancel moves",
+      "genres": ["melee-action", "fighting"]
+    },
+    {
+      "id": "mechanic-0213",
+      "text": "cast disasters",
+      "genres": ["builder-management", "sandbox"]
+    },
+    {
+      "id": "mechanic-0214",
+      "text": "cause chaos",
+      "genres": ["sandbox", "party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0215",
+      "text": "control each hand",
+      "genres": ["puzzle"]
+    },
+    {
+      "id": "mechanic-0216",
+      "text": "craft from junk",
+      "genres": ["survival-craft"]
+    },
+    {
+      "id": "mechanic-0217",
+      "text": "crawl dungeons",
+      "genres": ["roguelike", "rpg"]
+    },
+    {
+      "id": "mechanic-0218",
+      "text": "dam rivers",
+      "genres": ["builder-management"]
+    },
+    {
+      "id": "mechanic-0219",
+      "text": "deduce",
+      "genres": ["puzzle", "narrative"]
+    },
+    {
+      "id": "mechanic-0220",
+      "text": "design a creature",
+      "genres": ["rpg", "life-sim", "sandbox"]
+    },
+    {
+      "id": "mechanic-0221",
+      "text": "do tricks",
+      "genres": ["platformer", "vehicle-sim-racing", "rhythm-arcade"]
+    },
+    {
+      "id": "mechanic-0222",
+      "text": "dogfight",
+      "genres": ["shooter", "vehicle-sim-racing"]
+    },
+    {
+      "id": "mechanic-0223",
+      "text": "draw maps",
+      "genres": ["metroidvania"]
+    },
+    {
+      "id": "mechanic-0224",
+      "text": "drink",
+      "genres": ["life-sim"]
+    },
+    {
+      "id": "mechanic-0225",
+      "text": "drive off-road",
+      "genres": ["open-world", "vehicle-sim-racing"]
+    },
+    {
+      "id": "mechanic-0226",
+      "text": "eat",
+      "genres": ["survival-craft", "horror", "life-sim"]
+    },
+    {
+      "id": "mechanic-0227",
+      "text": "escort a convoy",
+      "genres": ["shooter", "party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0228",
+      "text": "evolve",
+      "genres": ["roguelike", "strategy", "sandbox"]
+    },
+    {
+      "id": "mechanic-0229",
+      "text": "face fears",
+      "genres": ["horror"]
+    },
+    {
+      "id": "mechanic-0230",
+      "text": "fail for laughs",
+      "genres": ["sandbox", "party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0231",
+      "text": "feed your people",
+      "genres": ["survival-craft", "builder-management", "strategy", "deckbuilder-cards"]
+    },
+    {
+      "id": "mechanic-0232",
+      "text": "fight space battles",
+      "genres": ["vehicle-sim-racing", "strategy"]
+    },
+    {
+      "id": "mechanic-0233",
+      "text": "fight with light",
+      "genres": ["horror"]
+    },
+    {
+      "id": "mechanic-0234",
+      "text": "find keys",
+      "genres": ["puzzle", "horror"]
+    },
+    {
+      "id": "mechanic-0235",
+      "text": "finish with a brutal move",
+      "genres": ["melee-action", "fighting"]
+    },
+    {
+      "id": "mechanic-0236",
+      "text": "fire missiles",
+      "genres": ["shooter", "vehicle-sim-racing"]
+    },
+    {
+      "id": "mechanic-0237",
+      "text": "fix traffic",
+      "genres": ["builder-management"]
+    },
+    {
+      "id": "mechanic-0238",
+      "text": "flee",
+      "genres": ["horror"]
+    },
+    {
+      "id": "mechanic-0239",
+      "text": "flip cards",
+      "genres": ["roguelike", "puzzle", "deckbuilder-cards"]
+    },
+    {
+      "id": "mechanic-0240",
+      "text": "follow checklists",
+      "genres": ["life-sim", "vehicle-sim-racing"]
+    },
+    {
+      "id": "mechanic-0241",
+      "text": "follow pace notes",
+      "genres": ["vehicle-sim-racing"]
+    },
+    {
+      "id": "mechanic-0242",
+      "text": "found cities",
+      "genres": ["builder-management", "strategy"]
+    },
+    {
+      "id": "mechanic-0243",
+      "text": "give gifts",
+      "genres": ["life-sim"]
+    },
+    {
+      "id": "mechanic-0244",
+      "text": "grow",
+      "genres": ["life-sim"]
+    },
+    {
+      "id": "mechanic-0245",
+      "text": "guess words",
+      "genres": ["puzzle", "party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0246",
+      "text": "harvest",
+      "genres": ["survival-craft", "life-sim"]
+    },
+    {
+      "id": "mechanic-0247",
+      "text": "heat and cool",
+      "genres": ["puzzle", "sandbox"]
+    },
+    {
+      "id": "mechanic-0248",
+      "text": "hide bodies",
+      "genres": ["stealth-immersive-sim"]
+    },
+    {
+      "id": "mechanic-0249",
+      "text": "hit the ball",
+      "genres": ["fighting", "party-multiplayer", "rhythm-arcade"]
+    },
+    {
+      "id": "mechanic-0250",
+      "text": "hit the racing line",
+      "genres": ["vehicle-sim-racing"]
+    },
+    {
+      "id": "mechanic-0251",
+      "text": "hit weak spots",
+      "genres": ["shooter", "melee-action"]
+    },
+    {
+      "id": "mechanic-0252",
+      "text": "inject chemicals",
+      "genres": ["sandbox"]
+    },
+    {
+      "id": "mechanic-0253",
+      "text": "interrupt",
+      "genres": ["fighting"]
+    },
+    {
+      "id": "mechanic-0254",
+      "text": "juggle foes",
+      "genres": ["melee-action", "fighting"]
+    },
+    {
+      "id": "mechanic-0255",
+      "text": "keep a fire lit",
+      "genres": ["survival-craft", "horror"]
+    },
+    {
+      "id": "mechanic-0256",
+      "text": "keep a journal",
+      "genres": ["narrative"]
+    },
+    {
+      "id": "mechanic-0257",
+      "text": "keep moving",
+      "genres": ["rhythm-arcade"]
+    },
+    {
+      "id": "mechanic-0258",
+      "text": "launch",
+      "genres": ["puzzle"]
+    },
+    {
+      "id": "mechanic-0259",
+      "text": "lie",
+      "genres": ["narrative", "party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0260",
+      "text": "light the way",
+      "genres": ["puzzle", "horror"]
+    },
+    {
+      "id": "mechanic-0261",
+      "text": "listen",
+      "genres": ["horror", "narrative"]
+    },
+    {
+      "id": "mechanic-0262",
+      "text": "match gems",
+      "genres": ["puzzle"]
+    },
+    {
+      "id": "mechanic-0263",
+      "text": "move pieces",
+      "genres": ["puzzle", "strategy"]
+    },
+    {
+      "id": "mechanic-0264",
+      "text": "navigate",
+      "genres": ["open-world", "survival-craft", "vehicle-sim-racing"]
+    },
+    {
+      "id": "mechanic-0265",
+      "text": "park",
+      "genres": ["vehicle-sim-racing"]
+    },
+    {
+      "id": "mechanic-0266",
+      "text": "pass at the right moment",
+      "genres": ["strategy", "deckbuilder-cards"]
+    },
+    {
+      "id": "mechanic-0267",
+      "text": "pass laws",
+      "genres": ["builder-management"]
+    },
+    {
+      "id": "mechanic-0268",
+      "text": "place towers",
+      "genres": ["strategy"]
+    },
+    {
+      "id": "mechanic-0269",
+      "text": "place traps",
+      "genres": ["strategy"]
+    },
+    {
+      "id": "mechanic-0270",
+      "text": "plan a city",
+      "genres": ["builder-management"]
+    },
+    {
+      "id": "mechanic-0271",
+      "text": "plan heists",
+      "genres": ["stealth-immersive-sim"]
+    },
+    {
+      "id": "mechanic-0272",
+      "text": "plan missions",
+      "genres": ["strategy"]
+    },
+    {
+      "id": "mechanic-0273",
+      "text": "plan orbits",
+      "genres": ["puzzle"]
+    },
+    {
+      "id": "mechanic-0274",
+      "text": "power up",
+      "genres": ["melee-action", "fighting", "rhythm-arcade"]
+    },
+    {
+      "id": "mechanic-0275",
+      "text": "preach",
+      "genres": ["builder-management"]
+    },
+    {
+      "id": "mechanic-0276",
+      "text": "punch and kick",
+      "genres": ["melee-action", "fighting"]
+    },
+    {
+      "id": "mechanic-0277",
+      "text": "race your ghost",
+      "genres": ["platformer", "vehicle-sim-racing", "rhythm-arcade"]
+    },
+    {
+      "id": "mechanic-0278",
+      "text": "raid",
+      "genres": ["party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0279",
+      "text": "raise the stakes",
+      "genres": ["roguelike", "deckbuilder-cards", "party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0280",
+      "text": "read your rival",
+      "genres": ["fighting"]
+    },
+    {
+      "id": "mechanic-0281",
+      "text": "recover to the ledge",
+      "genres": ["platformer", "fighting"]
+    },
+    {
+      "id": "mechanic-0282",
+      "text": "reload by hand",
+      "genres": ["shooter"]
+    },
+    {
+      "id": "mechanic-0283",
+      "text": "rescue people",
+      "genres": ["open-world", "vehicle-sim-racing", "sandbox"]
+    },
+    {
+      "id": "mechanic-0284",
+      "text": "retreat",
+      "genres": ["strategy", "deckbuilder-cards"]
+    },
+    {
+      "id": "mechanic-0285",
+      "text": "change the rules",
+      "genres": ["puzzle"]
+    },
+    {
+      "id": "mechanic-0286",
+      "text": "ride rails",
+      "genres": ["rhythm-arcade"]
+    },
+    {
+      "id": "mechanic-0287",
+      "text": "run trade routes",
+      "genres": ["builder-management"]
+    },
+    {
+      "id": "mechanic-0288",
+      "text": "rush in",
+      "genres": ["melee-action", "fighting"]
+    },
+    {
+      "id": "mechanic-0289",
+      "text": "sabotage",
+      "genres": ["party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0290",
+      "text": "sacrifice",
+      "genres": ["strategy"]
+    },
+    {
+      "id": "mechanic-0291",
+      "text": "sail",
+      "genres": ["open-world", "vehicle-sim-racing"]
+    },
+    {
+      "id": "mechanic-0292",
+      "text": "sculpt",
+      "genres": ["sandbox"]
+    },
+    {
+      "id": "mechanic-0293",
+      "text": "send signals",
+      "genres": ["puzzle"]
+    },
+    {
+      "id": "mechanic-0294",
+      "text": "set prices",
+      "genres": ["builder-management"]
+    },
+    {
+      "id": "mechanic-0295",
+      "text": "share creations",
+      "genres": ["sandbox", "party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0296",
+      "text": "sidestep",
+      "genres": ["melee-action", "fighting"]
+    },
+    {
+      "id": "mechanic-0297",
+      "text": "slide",
+      "genres": ["platformer", "shooter"]
+    },
+    {
+      "id": "mechanic-0298",
+      "text": "slow time",
+      "genres": ["shooter"]
+    },
+    {
+      "id": "mechanic-0299",
+      "text": "smash planets",
+      "genres": ["sandbox"]
+    },
+    {
+      "id": "mechanic-0300",
+      "text": "space your attacks",
+      "genres": ["melee-action", "fighting"]
+    },
+    {
+      "id": "mechanic-0301",
+      "text": "speed up time",
+      "genres": ["builder-management", "strategy", "sandbox"]
+    },
+    {
+      "id": "mechanic-0302",
+      "text": "spot fakes",
+      "genres": ["puzzle"]
+    },
+    {
+      "id": "mechanic-0303",
+      "text": "strafe",
+      "genres": ["shooter", "vehicle-sim-racing"]
+    },
+    {
+      "id": "mechanic-0304",
+      "text": "summon",
+      "genres": ["rpg", "strategy", "deckbuilder-cards"]
+    },
+    {
+      "id": "mechanic-0305",
+      "text": "swing",
+      "genres": ["platformer", "open-world"]
+    },
+    {
+      "id": "mechanic-0306",
+      "text": "tame beasts",
+      "genres": ["rpg"]
+    },
+    {
+      "id": "mechanic-0307",
+      "text": "test-play",
+      "genres": ["platformer", "sandbox"]
+    },
+    {
+      "id": "mechanic-0308",
+      "text": "train by doing",
+      "genres": ["rpg"]
+    },
+    {
+      "id": "mechanic-0309",
+      "text": "tweak physics",
+      "genres": ["puzzle", "sandbox"]
+    },
+    {
+      "id": "mechanic-0310",
+      "text": "unleash a super move",
+      "genres": ["melee-action", "fighting", "party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0311",
+      "text": "use power-ups",
+      "genres": ["platformer", "vehicle-sim-racing", "party-multiplayer", "rhythm-arcade"]
+    },
+    {
+      "id": "mechanic-0312",
+      "text": "vote out suspects",
+      "genres": ["party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0313",
+      "text": "wall jump",
+      "genres": ["metroidvania", "platformer", "fighting"]
+    },
+    {
+      "id": "mechanic-0314",
+      "text": "watch cameras",
+      "genres": ["horror"]
+    },
+    {
+      "id": "mechanic-0315",
+      "text": "winch",
+      "genres": ["vehicle-sim-racing", "sandbox"]
+    },
+    {
+      "id": "mechanic-0316",
+      "text": "write code",
+      "genres": ["puzzle", "sandbox"]
+    },
+    {
+      "id": "mechanic-0317",
+      "text": "double jump",
+      "genres": ["metroidvania", "platformer", "melee-action", "rhythm-arcade"]
+    },
+    {
+      "id": "mechanic-0318",
+      "text": "swim",
+      "genres": ["metroidvania", "platformer", "open-world", "survival-craft"]
+    },
+    {
+      "id": "mechanic-0319",
+      "text": "bounce",
+      "genres": ["platformer", "puzzle", "sandbox", "rhythm-arcade"]
+    },
+    {
+      "id": "mechanic-0320",
+      "text": "burrow",
+      "genres": ["metroidvania", "platformer", "survival-craft", "sandbox"]
+    },
+    {
+      "id": "mechanic-0321",
+      "text": "shrink and grow",
+      "genres": ["metroidvania", "platformer", "puzzle", "sandbox"]
+    },
+    {
+      "id": "mechanic-0322",
+      "text": "flip gravity",
+      "genres": ["metroidvania", "platformer", "puzzle", "rhythm-arcade"]
+    },
+    {
+      "id": "mechanic-0323",
+      "text": "swing on ropes",
+      "genres": ["metroidvania", "platformer", "open-world", "rhythm-arcade"]
+    },
+    {
+      "id": "mechanic-0324",
+      "text": "wall run",
+      "genres": ["metroidvania", "platformer", "shooter", "rhythm-arcade"]
+    },
+    {
+      "id": "mechanic-0325",
+      "text": "backtrack",
+      "genres": ["metroidvania", "rpg", "open-world", "horror"]
+    },
+    {
+      "id": "mechanic-0326",
+      "text": "echolocate",
+      "genres": ["metroidvania", "puzzle", "horror", "stealth-immersive-sim"]
+    },
+    {
+      "id": "mechanic-0327",
+      "text": "disguise",
+      "genres": ["open-world", "narrative", "stealth-immersive-sim", "party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0328",
+      "text": "distract",
+      "genres": ["puzzle", "horror", "strategy", "stealth-immersive-sim"]
+    },
+    {
+      "id": "mechanic-0329",
+      "text": "lure",
+      "genres": ["puzzle", "survival-craft", "horror", "stealth-immersive-sim"]
+    },
+    {
+      "id": "mechanic-0330",
+      "text": "eavesdrop",
+      "genres": ["rpg", "narrative", "stealth-immersive-sim"]
+    },
+    {
+      "id": "mechanic-0331",
+      "text": "pickpocket",
+      "genres": ["rpg", "open-world", "stealth-immersive-sim"]
+    },
+    {
+      "id": "mechanic-0332",
+      "text": "pick locks",
+      "genres": ["puzzle", "rpg", "horror", "stealth-immersive-sim"]
+    },
+    {
+      "id": "mechanic-0333",
+      "text": "tail a target",
+      "genres": ["open-world", "narrative", "stealth-immersive-sim"]
+    },
+    {
+      "id": "mechanic-0334",
+      "text": "mark targets",
+      "genres": ["shooter", "strategy", "stealth-immersive-sim"]
+    },
+    {
+      "id": "mechanic-0335",
+      "text": "smuggle",
+      "genres": ["builder-management", "vehicle-sim-racing", "narrative", "stealth-immersive-sim"]
+    },
+    {
+      "id": "mechanic-0336",
+      "text": "negotiate",
+      "genres": ["rpg", "builder-management", "strategy", "narrative"]
+    },
+    {
+      "id": "mechanic-0337",
+      "text": "haggle",
+      "genres": ["rpg", "builder-management", "life-sim", "narrative"]
+    },
+    {
+      "id": "mechanic-0338",
+      "text": "bluff",
+      "genres": ["strategy", "deckbuilder-cards", "narrative", "party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0339",
+      "text": "translate",
+      "genres": ["puzzle", "rpg", "narrative"]
+    },
+    {
+      "id": "mechanic-0340",
+      "text": "comfort",
+      "genres": ["rpg", "life-sim", "narrative"]
+    },
+    {
+      "id": "mechanic-0341",
+      "text": "apologize",
+      "genres": ["life-sim", "narrative"]
+    },
+    {
+      "id": "mechanic-0342",
+      "text": "write letters",
+      "genres": ["life-sim", "narrative"]
+    },
+    {
+      "id": "mechanic-0343",
+      "text": "forge documents",
+      "genres": ["puzzle", "narrative", "stealth-immersive-sim"]
+    },
+    {
+      "id": "mechanic-0344",
+      "text": "gossip",
+      "genres": ["life-sim", "narrative", "party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0345",
+      "text": "draft cards",
+      "genres": ["roguelike", "strategy", "deckbuilder-cards", "party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0346",
+      "text": "discard",
+      "genres": ["roguelike", "puzzle", "deckbuilder-cards"]
+    },
+    {
+      "id": "mechanic-0347",
+      "text": "bid",
+      "genres": ["builder-management", "strategy", "deckbuilder-cards", "party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0348",
+      "text": "combo cards",
+      "genres": ["roguelike", "fighting", "deckbuilder-cards"]
+    },
+    {
+      "id": "mechanic-0349",
+      "text": "exhaust cards",
+      "genres": ["roguelike", "deckbuilder-cards"]
+    },
+    {
+      "id": "mechanic-0350",
+      "text": "shuffle",
+      "genres": ["roguelike", "deckbuilder-cards", "party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0351",
+      "text": "sing",
+      "genres": ["life-sim", "narrative", "party-multiplayer", "rhythm-arcade"]
+    },
+    {
+      "id": "mechanic-0352",
+      "text": "dance",
+      "genres": ["life-sim", "party-multiplayer", "rhythm-arcade"]
+    },
+    {
+      "id": "mechanic-0353",
+      "text": "conduct",
+      "genres": ["strategy", "rhythm-arcade"]
+    },
+    {
+      "id": "mechanic-0354",
+      "text": "freestyle",
+      "genres": ["sandbox", "party-multiplayer", "rhythm-arcade"]
+    },
+    {
+      "id": "mechanic-0355",
+      "text": "tap in rhythm",
+      "genres": ["platformer", "fighting", "party-multiplayer", "rhythm-arcade"]
+    },
+    {
+      "id": "mechanic-0356",
+      "text": "compose music",
+      "genres": ["life-sim", "sandbox", "rhythm-arcade"]
+    },
+    {
+      "id": "mechanic-0357",
+      "text": "DJ",
+      "genres": ["sandbox", "party-multiplayer", "rhythm-arcade"]
+    },
+    {
+      "id": "mechanic-0358",
+      "text": "perform",
+      "genres": ["life-sim", "narrative", "party-multiplayer", "rhythm-arcade"]
+    },
+    {
+      "id": "mechanic-0359",
+      "text": "water plants",
+      "genres": ["survival-craft", "builder-management", "life-sim"]
+    },
+    {
+      "id": "mechanic-0360",
+      "text": "prune",
+      "genres": ["puzzle", "builder-management", "life-sim"]
+    },
+    {
+      "id": "mechanic-0361",
+      "text": "knit",
+      "genres": ["life-sim", "sandbox"]
+    },
+    {
+      "id": "mechanic-0362",
+      "text": "bake",
+      "genres": ["puzzle", "builder-management", "life-sim"]
+    },
+    {
+      "id": "mechanic-0363",
+      "text": "babysit",
+      "genres": ["horror", "life-sim", "narrative"]
+    },
+    {
+      "id": "mechanic-0364",
+      "text": "teach",
+      "genres": ["rpg", "builder-management", "life-sim", "narrative"]
+    },
+    {
+      "id": "mechanic-0365",
+      "text": "sort",
+      "genres": ["puzzle", "builder-management", "life-sim"]
+    },
+    {
+      "id": "mechanic-0366",
+      "text": "bury the dead",
+      "genres": ["survival-craft", "horror", "life-sim", "narrative"]
+    },
+    {
+      "id": "mechanic-0367",
+      "text": "pray",
+      "genres": ["rpg", "horror", "strategy", "narrative"]
+    },
+    {
+      "id": "mechanic-0368",
+      "text": "memorize",
+      "genres": ["puzzle", "horror", "narrative", "rhythm-arcade"]
+    },
+    {
+      "id": "mechanic-0369",
+      "text": "swap bodies",
+      "genres": ["platformer", "puzzle", "narrative", "stealth-immersive-sim"]
+    },
+    {
+      "id": "mechanic-0370",
+      "text": "mimic",
+      "genres": ["puzzle", "fighting", "stealth-immersive-sim", "rhythm-arcade"]
+    },
+    {
+      "id": "mechanic-0371",
+      "text": "copy powers",
+      "genres": ["roguelike", "metroidvania", "platformer", "fighting"]
+    },
+    {
+      "id": "mechanic-0372",
+      "text": "track footprints",
+      "genres": ["open-world", "survival-craft", "horror", "stealth-immersive-sim"]
+    },
+    {
+      "id": "mechanic-0373",
+      "text": "bait",
+      "genres": ["survival-craft", "horror", "life-sim", "stealth-immersive-sim"]
+    },
+    {
+      "id": "mechanic-0374",
+      "text": "herd",
+      "genres": ["survival-craft", "life-sim", "strategy", "party-multiplayer"]
+    },
+    {
+      "id": "mechanic-0375",
+      "text": "sort mail",
+      "genres": ["puzzle", "builder-management", "life-sim"]
+    },
+    {
+      "id": "mechanic-0376",
+      "text": "inflate",
+      "genres": ["platformer", "puzzle", "sandbox", "rhythm-arcade"]
+    },
+    {
+      "id": "mechanic-0377",
+      "text": "melt",
+      "genres": ["platformer", "puzzle", "sandbox"]
+    },
+    {
+      "id": "mechanic-0378",
+      "text": "magnetize",
+      "genres": ["platformer", "puzzle", "shooter", "sandbox"]
+    },
+    {
+      "id": "mechanic-0379",
+      "text": "echo",
+      "genres": ["puzzle", "horror", "rhythm-arcade"]
+    },
+    {
+      "id": "mechanic-0380",
+      "text": "dream",
+      "genres": ["platformer", "puzzle", "horror", "narrative"]
+    }
+  ]
+}

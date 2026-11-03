@@ -1,0 +1,2214 @@
+{
+  "type": "constraint",
+  "cues": [
+    {
+      "id": "constraint-0001",
+      "text": "no combat",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "platformer",
+        "puzzle",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "life-sim",
+        "vehicle-sim-racing",
+        "strategy",
+        "narrative",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "constraint-0002",
+      "text": "only one life",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "platformer",
+        "shooter",
+        "melee-action",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "vehicle-sim-racing",
+        "deckbuilder-cards",
+        "stealth-immersive-sim",
+        "party-multiplayer",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "constraint-0003",
+      "text": "only a few controls",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "platformer",
+        "puzzle",
+        "shooter",
+        "melee-action",
+        "fighting",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "builder-management",
+        "life-sim",
+        "vehicle-sim-racing",
+        "strategy",
+        "deckbuilder-cards",
+        "narrative",
+        "stealth-immersive-sim",
+        "sandbox",
+        "party-multiplayer",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "constraint-0004",
+      "text": "only a small inventory",
+      "genres": [
+        "roguelike",
+        "puzzle",
+        "shooter",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "life-sim",
+        "narrative",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "constraint-0005",
+      "text": "no fail state",
+      "genres": [
+        "platformer",
+        "puzzle",
+        "horror",
+        "builder-management",
+        "life-sim",
+        "narrative",
+        "sandbox",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "constraint-0006",
+      "text": "no keeping loot on death",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "shooter",
+        "melee-action",
+        "rpg",
+        "survival-craft",
+        "horror"
+      ]
+    },
+    {
+      "id": "constraint-0007",
+      "text": "only first-person view",
+      "genres": [
+        "platformer",
+        "puzzle",
+        "shooter",
+        "melee-action",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "vehicle-sim-racing",
+        "narrative",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "constraint-0008",
+      "text": "only one hit",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "platformer",
+        "shooter",
+        "melee-action",
+        "fighting",
+        "horror",
+        "stealth-immersive-sim",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "constraint-0009",
+      "text": "no direct control",
+      "genres": [
+        "puzzle",
+        "rpg",
+        "builder-management",
+        "life-sim",
+        "strategy",
+        "narrative",
+        "sandbox"
+      ]
+    },
+    {
+      "id": "constraint-0010",
+      "text": "no cutscenes",
+      "genres": [
+        "metroidvania",
+        "platformer",
+        "shooter",
+        "melee-action",
+        "rpg",
+        "open-world",
+        "horror",
+        "narrative",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "constraint-0011",
+      "text": "no goal",
+      "genres": [
+        "open-world",
+        "survival-craft",
+        "builder-management",
+        "life-sim",
+        "narrative",
+        "sandbox"
+      ]
+    },
+    {
+      "id": "constraint-0012",
+      "text": "no respawn",
+      "genres": [
+        "roguelike",
+        "shooter",
+        "survival-craft",
+        "horror",
+        "strategy",
+        "party-multiplayer"
+      ]
+    },
+    {
+      "id": "constraint-0013",
+      "text": "no undo",
+      "genres": [
+        "puzzle",
+        "builder-management",
+        "vehicle-sim-racing",
+        "strategy",
+        "deckbuilder-cards",
+        "narrative"
+      ]
+    },
+    {
+      "id": "constraint-0014",
+      "text": "only a side view",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "platformer",
+        "puzzle",
+        "shooter",
+        "melee-action",
+        "fighting",
+        "survival-craft",
+        "horror",
+        "builder-management"
+      ]
+    },
+    {
+      "id": "constraint-0015",
+      "text": "only one path",
+      "genres": [
+        "platformer",
+        "shooter",
+        "melee-action",
+        "rpg",
+        "horror",
+        "narrative",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "constraint-0016",
+      "text": "only one weapon",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "shooter",
+        "melee-action",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "constraint-0017",
+      "text": "only real-world physics",
+      "genres": [
+        "platformer",
+        "puzzle",
+        "shooter",
+        "builder-management",
+        "vehicle-sim-racing",
+        "sandbox"
+      ]
+    },
+    {
+      "id": "constraint-0018",
+      "text": "no attack button",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "platformer",
+        "puzzle",
+        "horror",
+        "stealth-immersive-sim",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "constraint-0019",
+      "text": "no automation",
+      "genres": ["survival-craft", "builder-management", "life-sim", "strategy"]
+    },
+    {
+      "id": "constraint-0020",
+      "text": "no free movement",
+      "genres": [
+        "roguelike",
+        "puzzle",
+        "shooter",
+        "rpg",
+        "horror",
+        "strategy",
+        "narrative",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "constraint-0021",
+      "text": "no going back",
+      "genres": [
+        "roguelike",
+        "platformer",
+        "shooter",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "deckbuilder-cards",
+        "narrative"
+      ]
+    },
+    {
+      "id": "constraint-0022",
+      "text": "no guns",
+      "genres": [
+        "shooter",
+        "melee-action",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "constraint-0023",
+      "text": "no HUD",
+      "genres": [
+        "metroidvania",
+        "platformer",
+        "shooter",
+        "melee-action",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "vehicle-sim-racing",
+        "stealth-immersive-sim",
+        "sandbox"
+      ]
+    },
+    {
+      "id": "constraint-0024",
+      "text": "no pause",
+      "genres": [
+        "roguelike",
+        "puzzle",
+        "melee-action",
+        "rpg",
+        "survival-craft",
+        "horror",
+        "builder-management",
+        "life-sim",
+        "strategy",
+        "deckbuilder-cards",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "constraint-0025",
+      "text": "no playing alone",
+      "genres": [
+        "platformer",
+        "puzzle",
+        "shooter",
+        "fighting",
+        "rpg",
+        "survival-craft",
+        "horror",
+        "vehicle-sim-racing",
+        "strategy",
+        "deckbuilder-cards",
+        "narrative",
+        "party-multiplayer"
+      ]
+    },
+    {
+      "id": "constraint-0026",
+      "text": "no quest markers",
+      "genres": [
+        "metroidvania",
+        "melee-action",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "constraint-0027",
+      "text": "only a few actions per day",
+      "genres": [
+        "roguelike",
+        "rpg",
+        "survival-craft",
+        "builder-management",
+        "life-sim",
+        "strategy",
+        "narrative"
+      ]
+    },
+    {
+      "id": "constraint-0028",
+      "text": "only a few days",
+      "genres": [
+        "roguelike",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "builder-management",
+        "life-sim",
+        "narrative",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "constraint-0029",
+      "text": "only a few minutes per run",
+      "genres": [
+        "roguelike",
+        "platformer",
+        "shooter",
+        "survival-craft",
+        "builder-management",
+        "strategy",
+        "deckbuilder-cards",
+        "narrative",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "constraint-0030",
+      "text": "only cards",
+      "genres": [
+        "roguelike",
+        "puzzle",
+        "fighting",
+        "rpg",
+        "horror",
+        "builder-management",
+        "strategy",
+        "deckbuilder-cards",
+        "narrative"
+      ]
+    },
+    {
+      "id": "constraint-0031",
+      "text": "only forward",
+      "genres": [
+        "roguelike",
+        "platformer",
+        "shooter",
+        "melee-action",
+        "horror",
+        "vehicle-sim-racing",
+        "narrative",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "constraint-0032",
+      "text": "only one button",
+      "genres": [
+        "platformer",
+        "puzzle",
+        "shooter",
+        "fighting",
+        "vehicle-sim-racing",
+        "party-multiplayer",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "constraint-0033",
+      "text": "only save at set points",
+      "genres": [
+        "metroidvania",
+        "shooter",
+        "melee-action",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "constraint-0034",
+      "text": "only seconds to choose",
+      "genres": [
+        "puzzle",
+        "rpg",
+        "horror",
+        "strategy",
+        "deckbuilder-cards",
+        "narrative",
+        "party-multiplayer"
+      ]
+    },
+    {
+      "id": "constraint-0035",
+      "text": "only what you build",
+      "genres": [
+        "puzzle",
+        "open-world",
+        "survival-craft",
+        "builder-management",
+        "vehicle-sim-racing",
+        "strategy",
+        "sandbox"
+      ]
+    },
+    {
+      "id": "constraint-0036",
+      "text": "no choosing your gear",
+      "genres": [
+        "roguelike",
+        "shooter",
+        "melee-action",
+        "fighting",
+        "rpg",
+        "vehicle-sim-racing",
+        "deckbuilder-cards",
+        "party-multiplayer"
+      ]
+    },
+    {
+      "id": "constraint-0037",
+      "text": "no classes",
+      "genres": ["roguelike", "shooter", "melee-action", "rpg", "open-world", "party-multiplayer"]
+    },
+    {
+      "id": "constraint-0038",
+      "text": "no free healing",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "shooter",
+        "melee-action",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "strategy",
+        "deckbuilder-cards",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "constraint-0039",
+      "text": "no hand-holding",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "platformer",
+        "puzzle",
+        "shooter",
+        "melee-action",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "builder-management",
+        "strategy",
+        "deckbuilder-cards",
+        "narrative",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "constraint-0040",
+      "text": "no health bar",
+      "genres": [
+        "metroidvania",
+        "platformer",
+        "shooter",
+        "melee-action",
+        "fighting",
+        "rpg",
+        "horror",
+        "stealth-immersive-sim",
+        "party-multiplayer"
+      ]
+    },
+    {
+      "id": "constraint-0041",
+      "text": "no killing",
+      "genres": ["shooter", "melee-action", "rpg", "open-world", "horror", "stealth-immersive-sim"]
+    },
+    {
+      "id": "constraint-0042",
+      "text": "no leaving your seat",
+      "genres": [
+        "puzzle",
+        "shooter",
+        "horror",
+        "builder-management",
+        "vehicle-sim-racing",
+        "strategy",
+        "narrative",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "constraint-0043",
+      "text": "no text",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "platformer",
+        "puzzle",
+        "shooter",
+        "melee-action",
+        "fighting",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "builder-management",
+        "life-sim",
+        "vehicle-sim-racing",
+        "strategy",
+        "deckbuilder-cards",
+        "narrative",
+        "stealth-immersive-sim",
+        "sandbox",
+        "party-multiplayer",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "constraint-0044",
+      "text": "no upgrades",
+      "genres": [
+        "roguelike",
+        "platformer",
+        "shooter",
+        "melee-action",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "builder-management",
+        "vehicle-sim-racing",
+        "strategy",
+        "deckbuilder-cards",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "constraint-0045",
+      "text": "no voice for the hero",
+      "genres": [
+        "platformer",
+        "shooter",
+        "melee-action",
+        "rpg",
+        "open-world",
+        "horror",
+        "narrative",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "constraint-0046",
+      "text": "no weapons",
+      "genres": [
+        "metroidvania",
+        "platformer",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "constraint-0047",
+      "text": "only a set unit cap",
+      "genres": ["rpg", "builder-management", "strategy", "deckbuilder-cards"]
+    },
+    {
+      "id": "constraint-0048",
+      "text": "only breakable terrain",
+      "genres": [
+        "roguelike",
+        "platformer",
+        "puzzle",
+        "shooter",
+        "survival-craft",
+        "strategy",
+        "sandbox"
+      ]
+    },
+    {
+      "id": "constraint-0049",
+      "text": "only limited saves",
+      "genres": [
+        "metroidvania",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "constraint-0050",
+      "text": "only one building",
+      "genres": [
+        "puzzle",
+        "shooter",
+        "survival-craft",
+        "horror",
+        "builder-management",
+        "life-sim",
+        "narrative",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "constraint-0051",
+      "text": "only one room",
+      "genres": [
+        "roguelike",
+        "puzzle",
+        "shooter",
+        "horror",
+        "builder-management",
+        "life-sim",
+        "strategy",
+        "narrative",
+        "sandbox"
+      ]
+    },
+    {
+      "id": "constraint-0052",
+      "text": "only one vehicle",
+      "genres": [
+        "roguelike",
+        "open-world",
+        "survival-craft",
+        "vehicle-sim-racing",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "constraint-0053",
+      "text": "only one way to heal",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "shooter",
+        "melee-action",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "deckbuilder-cards",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "constraint-0054",
+      "text": "only one way to score",
+      "genres": [
+        "roguelike",
+        "platformer",
+        "puzzle",
+        "shooter",
+        "melee-action",
+        "vehicle-sim-racing",
+        "party-multiplayer",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "constraint-0055",
+      "text": "only skills you use improve",
+      "genres": [
+        "melee-action",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "life-sim",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "constraint-0056",
+      "text": "only so much time each day",
+      "genres": [
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "builder-management",
+        "life-sim",
+        "narrative"
+      ]
+    },
+    {
+      "id": "constraint-0057",
+      "text": "only turn-based play",
+      "genres": [
+        "roguelike",
+        "puzzle",
+        "shooter",
+        "fighting",
+        "rpg",
+        "strategy",
+        "deckbuilder-cards",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "constraint-0058",
+      "text": "only two players",
+      "genres": [
+        "platformer",
+        "puzzle",
+        "shooter",
+        "melee-action",
+        "fighting",
+        "survival-craft",
+        "horror",
+        "vehicle-sim-racing",
+        "strategy",
+        "deckbuilder-cards",
+        "narrative",
+        "party-multiplayer"
+      ]
+    },
+    {
+      "id": "constraint-0059",
+      "text": "only two weapons at once",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "shooter",
+        "melee-action",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "constraint-0060",
+      "text": "only what you find",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "shooter",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "constraint-0061",
+      "text": "no blocking",
+      "genres": ["melee-action", "fighting"]
+    },
+    {
+      "id": "constraint-0062",
+      "text": "no built-in rules",
+      "genres": ["strategy", "deckbuilder-cards", "sandbox", "party-multiplayer"]
+    },
+    {
+      "id": "constraint-0063",
+      "text": "no checkpoints",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "platformer",
+        "shooter",
+        "melee-action",
+        "horror",
+        "vehicle-sim-racing",
+        "stealth-immersive-sim",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "constraint-0064",
+      "text": "no cover",
+      "genres": ["shooter", "strategy", "stealth-immersive-sim"]
+    },
+    {
+      "id": "constraint-0065",
+      "text": "no fast travel",
+      "genres": ["metroidvania", "rpg", "open-world", "survival-craft"]
+    },
+    {
+      "id": "constraint-0066",
+      "text": "no fixed path",
+      "genres": [
+        "metroidvania",
+        "puzzle",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "vehicle-sim-racing",
+        "narrative",
+        "stealth-immersive-sim",
+        "sandbox"
+      ]
+    },
+    {
+      "id": "constraint-0067",
+      "text": "no hints",
+      "genres": [
+        "metroidvania",
+        "puzzle",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "narrative",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "constraint-0068",
+      "text": "no leaving the area",
+      "genres": [
+        "roguelike",
+        "puzzle",
+        "shooter",
+        "melee-action",
+        "survival-craft",
+        "horror",
+        "builder-management",
+        "strategy",
+        "narrative",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "constraint-0069",
+      "text": "no map",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "melee-action",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "vehicle-sim-racing",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "constraint-0070",
+      "text": "no moving while you aim",
+      "genres": ["roguelike", "shooter", "horror", "strategy", "stealth-immersive-sim"]
+    },
+    {
+      "id": "constraint-0071",
+      "text": "no need to kill",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "platformer",
+        "shooter",
+        "melee-action",
+        "rpg",
+        "open-world",
+        "horror",
+        "stealth-immersive-sim",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "constraint-0072",
+      "text": "no open world",
+      "genres": [
+        "shooter",
+        "melee-action",
+        "rpg",
+        "survival-craft",
+        "vehicle-sim-racing",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "constraint-0073",
+      "text": "no opponents",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "platformer",
+        "open-world",
+        "survival-craft",
+        "builder-management",
+        "vehicle-sim-racing",
+        "strategy",
+        "deckbuilder-cards"
+      ]
+    },
+    {
+      "id": "constraint-0074",
+      "text": "no other players",
+      "genres": [
+        "shooter",
+        "melee-action",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "vehicle-sim-racing",
+        "strategy",
+        "deckbuilder-cards",
+        "sandbox"
+      ]
+    },
+    {
+      "id": "constraint-0075",
+      "text": "no reloading",
+      "genres": ["shooter", "horror", "stealth-immersive-sim"]
+    },
+    {
+      "id": "constraint-0076",
+      "text": "no safe teammates",
+      "genres": [
+        "platformer",
+        "shooter",
+        "melee-action",
+        "survival-craft",
+        "horror",
+        "strategy",
+        "party-multiplayer"
+      ]
+    },
+    {
+      "id": "constraint-0077",
+      "text": "no saving",
+      "genres": [
+        "roguelike",
+        "platformer",
+        "shooter",
+        "survival-craft",
+        "horror",
+        "deckbuilder-cards",
+        "narrative",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "constraint-0078",
+      "text": "no saving everyone",
+      "genres": [
+        "puzzle",
+        "rpg",
+        "survival-craft",
+        "horror",
+        "builder-management",
+        "strategy",
+        "narrative",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "constraint-0079",
+      "text": "no standing still",
+      "genres": [
+        "roguelike",
+        "platformer",
+        "shooter",
+        "melee-action",
+        "horror",
+        "vehicle-sim-racing",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "constraint-0080",
+      "text": "no story",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "platformer",
+        "puzzle",
+        "shooter",
+        "melee-action",
+        "fighting",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "builder-management",
+        "vehicle-sim-racing",
+        "strategy",
+        "deckbuilder-cards",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "constraint-0081",
+      "text": "only a few characters",
+      "genres": [
+        "shooter",
+        "fighting",
+        "rpg",
+        "horror",
+        "life-sim",
+        "strategy",
+        "narrative",
+        "party-multiplayer"
+      ]
+    },
+    {
+      "id": "constraint-0082",
+      "text": "only a few classes",
+      "genres": [
+        "roguelike",
+        "shooter",
+        "melee-action",
+        "rpg",
+        "strategy",
+        "deckbuilder-cards",
+        "party-multiplayer"
+      ]
+    },
+    {
+      "id": "constraint-0083",
+      "text": "only a few hours long",
+      "genres": [
+        "metroidvania",
+        "platformer",
+        "puzzle",
+        "shooter",
+        "melee-action",
+        "rpg",
+        "open-world",
+        "horror",
+        "narrative",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "constraint-0084",
+      "text": "only a set number of moves",
+      "genres": ["roguelike", "puzzle", "life-sim", "strategy", "deckbuilder-cards", "narrative"]
+    },
+    {
+      "id": "constraint-0085",
+      "text": "only a small party",
+      "genres": ["roguelike", "rpg", "horror", "strategy", "deckbuilder-cards"]
+    },
+    {
+      "id": "constraint-0086",
+      "text": "only beside your other apps",
+      "genres": [
+        "puzzle",
+        "rpg",
+        "builder-management",
+        "life-sim",
+        "sandbox",
+        "party-multiplayer",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "constraint-0087",
+      "text": "only bricks",
+      "genres": ["platformer", "puzzle", "builder-management", "sandbox"]
+    },
+    {
+      "id": "constraint-0088",
+      "text": "only choices",
+      "genres": [
+        "rpg",
+        "horror",
+        "builder-management",
+        "life-sim",
+        "strategy",
+        "deckbuilder-cards",
+        "narrative"
+      ]
+    },
+    {
+      "id": "constraint-0089",
+      "text": "only cleaning",
+      "genres": [
+        "puzzle",
+        "horror",
+        "builder-management",
+        "life-sim",
+        "stealth-immersive-sim",
+        "sandbox"
+      ]
+    },
+    {
+      "id": "constraint-0090",
+      "text": "only dice",
+      "genres": [
+        "roguelike",
+        "puzzle",
+        "rpg",
+        "strategy",
+        "deckbuilder-cards",
+        "narrative",
+        "party-multiplayer"
+      ]
+    },
+    {
+      "id": "constraint-0091",
+      "text": "only hide or run",
+      "genres": ["survival-craft", "horror", "stealth-immersive-sim", "party-multiplayer"]
+    },
+    {
+      "id": "constraint-0092",
+      "text": "only knowledge carries over",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "puzzle",
+        "open-world",
+        "horror",
+        "narrative",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "constraint-0093",
+      "text": "only melee",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "melee-action",
+        "fighting",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "stealth-immersive-sim",
+        "party-multiplayer"
+      ]
+    },
+    {
+      "id": "constraint-0094",
+      "text": "only move on the beat",
+      "genres": [
+        "roguelike",
+        "platformer",
+        "puzzle",
+        "shooter",
+        "melee-action",
+        "fighting",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "constraint-0095",
+      "text": "only one item at a time",
+      "genres": [
+        "platformer",
+        "puzzle",
+        "survival-craft",
+        "horror",
+        "vehicle-sim-racing",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "constraint-0096",
+      "text": "only one object",
+      "genres": ["platformer", "puzzle", "narrative", "sandbox"]
+    },
+    {
+      "id": "constraint-0097",
+      "text": "only one shared screen",
+      "genres": [
+        "platformer",
+        "puzzle",
+        "shooter",
+        "melee-action",
+        "fighting",
+        "vehicle-sim-racing",
+        "party-multiplayer",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "constraint-0098",
+      "text": "only one tool",
+      "genres": [
+        "metroidvania",
+        "platformer",
+        "puzzle",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "narrative",
+        "stealth-immersive-sim",
+        "sandbox"
+      ]
+    },
+    {
+      "id": "constraint-0099",
+      "text": "only one year",
+      "genres": ["rpg", "survival-craft", "builder-management", "life-sim", "strategy", "narrative"]
+    },
+    {
+      "id": "constraint-0100",
+      "text": "only physics",
+      "genres": [
+        "platformer",
+        "puzzle",
+        "fighting",
+        "horror",
+        "vehicle-sim-racing",
+        "sandbox",
+        "party-multiplayer"
+      ]
+    },
+    {
+      "id": "constraint-0101",
+      "text": "only proximity voice chat",
+      "genres": [
+        "shooter",
+        "survival-craft",
+        "horror",
+        "stealth-immersive-sim",
+        "party-multiplayer"
+      ]
+    },
+    {
+      "id": "constraint-0102",
+      "text": "only puzzles",
+      "genres": [
+        "metroidvania",
+        "platformer",
+        "open-world",
+        "horror",
+        "narrative",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "constraint-0103",
+      "text": "only small teams",
+      "genres": ["shooter", "fighting", "rpg", "strategy", "party-multiplayer"]
+    },
+    {
+      "id": "constraint-0104",
+      "text": "only the cards on the table",
+      "genres": ["deckbuilder-cards"]
+    },
+    {
+      "id": "constraint-0105",
+      "text": "only a certain number of something",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "platformer",
+        "puzzle",
+        "shooter",
+        "melee-action",
+        "fighting",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "builder-management",
+        "life-sim",
+        "vehicle-sim-racing",
+        "strategy",
+        "deckbuilder-cards",
+        "narrative",
+        "stealth-immersive-sim",
+        "sandbox",
+        "party-multiplayer",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "constraint-0106",
+      "text": "only VR",
+      "genres": [
+        "puzzle",
+        "shooter",
+        "melee-action",
+        "horror",
+        "vehicle-sim-racing",
+        "narrative",
+        "stealth-immersive-sim",
+        "sandbox",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "constraint-0107",
+      "text": "no aiming",
+      "genres": ["roguelike", "shooter", "melee-action", "rhythm-arcade"]
+    },
+    {
+      "id": "constraint-0108",
+      "text": "no camera cuts",
+      "genres": [
+        "shooter",
+        "melee-action",
+        "rpg",
+        "open-world",
+        "horror",
+        "narrative",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "constraint-0109",
+      "text": "no combat in the story",
+      "genres": ["fighting", "rpg", "narrative"]
+    },
+    {
+      "id": "constraint-0110",
+      "text": "no control over the deck",
+      "genres": ["deckbuilder-cards"]
+    },
+    {
+      "id": "constraint-0111",
+      "text": "no dialogue choices",
+      "genres": ["rpg", "open-world", "horror", "life-sim", "narrative", "stealth-immersive-sim"]
+    },
+    {
+      "id": "constraint-0112",
+      "text": "no direct attacks",
+      "genres": [
+        "fighting",
+        "rpg",
+        "strategy",
+        "deckbuilder-cards",
+        "stealth-immersive-sim",
+        "party-multiplayer"
+      ]
+    },
+    {
+      "id": "constraint-0113",
+      "text": "no ending",
+      "genres": [
+        "roguelike",
+        "open-world",
+        "survival-craft",
+        "builder-management",
+        "life-sim",
+        "strategy",
+        "sandbox",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "constraint-0114",
+      "text": "no energy or mana",
+      "genres": ["rpg", "deckbuilder-cards"]
+    },
+    {
+      "id": "constraint-0115",
+      "text": "no free guesses",
+      "genres": ["puzzle", "narrative", "stealth-immersive-sim"]
+    },
+    {
+      "id": "constraint-0116",
+      "text": "no free kills",
+      "genres": ["shooter", "melee-action", "strategy", "stealth-immersive-sim"]
+    },
+    {
+      "id": "constraint-0117",
+      "text": "no free repairs",
+      "genres": [
+        "roguelike",
+        "survival-craft",
+        "builder-management",
+        "vehicle-sim-racing",
+        "strategy"
+      ]
+    },
+    {
+      "id": "constraint-0118",
+      "text": "no hand of cards",
+      "genres": ["deckbuilder-cards"]
+    },
+    {
+      "id": "constraint-0119",
+      "text": "no hidden enemy moves",
+      "genres": ["roguelike", "puzzle", "rpg", "strategy", "deckbuilder-cards"]
+    },
+    {
+      "id": "constraint-0120",
+      "text": "no item pickups",
+      "genres": ["shooter", "melee-action", "fighting", "vehicle-sim-racing", "party-multiplayer"]
+    },
+    {
+      "id": "constraint-0121",
+      "text": "no lasting damage",
+      "genres": ["vehicle-sim-racing", "sandbox"]
+    },
+    {
+      "id": "constraint-0122",
+      "text": "no levels",
+      "genres": ["platformer", "rpg", "sandbox"]
+    },
+    {
+      "id": "constraint-0123",
+      "text": "no magic",
+      "genres": [
+        "melee-action",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "strategy",
+        "deckbuilder-cards",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "constraint-0124",
+      "text": "no map until you earn one",
+      "genres": ["metroidvania", "rpg", "open-world", "survival-craft", "horror"]
+    },
+    {
+      "id": "constraint-0125",
+      "text": "no melee",
+      "genres": ["roguelike", "shooter", "rpg", "horror", "strategy", "stealth-immersive-sim"]
+    },
+    {
+      "id": "constraint-0126",
+      "text": "no mistakes allowed",
+      "genres": [
+        "platformer",
+        "puzzle",
+        "vehicle-sim-racing",
+        "stealth-immersive-sim",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "constraint-0127",
+      "text": "no racing",
+      "genres": ["vehicle-sim-racing"]
+    },
+    {
+      "id": "constraint-0128",
+      "text": "no random encounters",
+      "genres": ["rpg", "open-world", "horror"]
+    },
+    {
+      "id": "constraint-0129",
+      "text": "no reflexes needed",
+      "genres": [
+        "roguelike",
+        "platformer",
+        "puzzle",
+        "shooter",
+        "fighting",
+        "rpg",
+        "strategy",
+        "deckbuilder-cards"
+      ]
+    },
+    {
+      "id": "constraint-0130",
+      "text": "no single right answer",
+      "genres": [
+        "platformer",
+        "puzzle",
+        "rpg",
+        "strategy",
+        "narrative",
+        "stealth-immersive-sim",
+        "sandbox"
+      ]
+    },
+    {
+      "id": "constraint-0131",
+      "text": "no translation",
+      "genres": ["puzzle", "rpg", "open-world", "horror", "narrative"]
+    },
+    {
+      "id": "constraint-0132",
+      "text": "no two stages alike",
+      "genres": [
+        "platformer",
+        "puzzle",
+        "shooter",
+        "melee-action",
+        "vehicle-sim-racing",
+        "party-multiplayer",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "constraint-0133",
+      "text": "only a child's moves",
+      "genres": [
+        "platformer",
+        "puzzle",
+        "open-world",
+        "horror",
+        "narrative",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "constraint-0134",
+      "text": "only a few actions per turn",
+      "genres": ["roguelike", "puzzle", "rpg", "life-sim", "strategy", "deckbuilder-cards"]
+    },
+    {
+      "id": "constraint-0135",
+      "text": "only a few days per season",
+      "genres": ["survival-craft", "builder-management", "life-sim"]
+    },
+    {
+      "id": "constraint-0136",
+      "text": "only a few guns",
+      "genres": [
+        "roguelike",
+        "shooter",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "constraint-0137",
+      "text": "only a few lanes",
+      "genres": ["vehicle-sim-racing", "strategy", "deckbuilder-cards", "rhythm-arcade"]
+    },
+    {
+      "id": "constraint-0138",
+      "text": "only a few turns a game",
+      "genres": ["puzzle", "strategy", "deckbuilder-cards"]
+    },
+    {
+      "id": "constraint-0139",
+      "text": "only a set points budget",
+      "genres": ["fighting", "rpg", "builder-management", "strategy", "deckbuilder-cards"]
+    },
+    {
+      "id": "constraint-0140",
+      "text": "only a tiny deck",
+      "genres": ["deckbuilder-cards"]
+    },
+    {
+      "id": "constraint-0141",
+      "text": "only an animal's moves",
+      "genres": [
+        "platformer",
+        "puzzle",
+        "open-world",
+        "survival-craft",
+        "narrative",
+        "stealth-immersive-sim",
+        "sandbox"
+      ]
+    },
+    {
+      "id": "constraint-0142",
+      "text": "only an over-the-shoulder view",
+      "genres": [
+        "shooter",
+        "melee-action",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "constraint-0143",
+      "text": "only arcade physics",
+      "genres": ["platformer", "vehicle-sim-racing", "rhythm-arcade"]
+    },
+    {
+      "id": "constraint-0144",
+      "text": "only automation",
+      "genres": ["roguelike", "puzzle", "builder-management", "strategy", "sandbox"]
+    },
+    {
+      "id": "constraint-0145",
+      "text": "only boss fights",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "platformer",
+        "shooter",
+        "melee-action",
+        "fighting",
+        "rpg",
+        "deckbuilder-cards",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "constraint-0146",
+      "text": "only bots",
+      "genres": [
+        "shooter",
+        "fighting",
+        "vehicle-sim-racing",
+        "strategy",
+        "deckbuilder-cards",
+        "party-multiplayer"
+      ]
+    },
+    {
+      "id": "constraint-0147",
+      "text": "only chores",
+      "genres": ["horror", "builder-management", "life-sim", "narrative"]
+    },
+    {
+      "id": "constraint-0148",
+      "text": "only grid moves",
+      "genres": ["roguelike", "puzzle", "rpg", "strategy", "stealth-immersive-sim", "rhythm-arcade"]
+    },
+    {
+      "id": "constraint-0149",
+      "text": "only local play",
+      "genres": [
+        "platformer",
+        "puzzle",
+        "shooter",
+        "fighting",
+        "vehicle-sim-racing",
+        "strategy",
+        "deckbuilder-cards",
+        "party-multiplayer",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "constraint-0150",
+      "text": "only one action",
+      "genres": ["platformer", "puzzle", "sandbox", "rhythm-arcade"]
+    },
+    {
+      "id": "constraint-0151",
+      "text": "only one base to defend",
+      "genres": ["shooter", "survival-craft", "builder-management", "strategy", "deckbuilder-cards"]
+    },
+    {
+      "id": "constraint-0152",
+      "text": "only one button per limb",
+      "genres": ["fighting", "sandbox", "party-multiplayer"]
+    },
+    {
+      "id": "constraint-0153",
+      "text": "only one camera",
+      "genres": ["roguelike", "puzzle", "horror", "stealth-immersive-sim"]
+    },
+    {
+      "id": "constraint-0154",
+      "text": "only one card per turn",
+      "genres": ["deckbuilder-cards"]
+    },
+    {
+      "id": "constraint-0155",
+      "text": "only one character",
+      "genres": ["rpg", "open-world", "strategy", "deckbuilder-cards", "narrative"]
+    },
+    {
+      "id": "constraint-0156",
+      "text": "only one ending",
+      "genres": ["rpg", "horror", "narrative", "stealth-immersive-sim"]
+    },
+    {
+      "id": "constraint-0157",
+      "text": "only one hand of cards",
+      "genres": ["deckbuilder-cards"]
+    },
+    {
+      "id": "constraint-0158",
+      "text": "only one island",
+      "genres": [
+        "shooter",
+        "open-world",
+        "survival-craft",
+        "builder-management",
+        "life-sim",
+        "strategy",
+        "sandbox",
+        "party-multiplayer"
+      ]
+    },
+    {
+      "id": "constraint-0159",
+      "text": "only one map",
+      "genres": ["shooter", "vehicle-sim-racing", "strategy", "party-multiplayer"]
+    },
+    {
+      "id": "constraint-0160",
+      "text": "only one season",
+      "genres": ["rpg", "survival-craft", "builder-management", "life-sim"]
+    },
+    {
+      "id": "constraint-0161",
+      "text": "only one trick per level",
+      "genres": ["platformer", "puzzle", "shooter", "rhythm-arcade"]
+    },
+    {
+      "id": "constraint-0162",
+      "text": "only one unit per tile",
+      "genres": ["roguelike", "puzzle", "rpg", "strategy"]
+    },
+    {
+      "id": "constraint-0163",
+      "text": "only one-button combos",
+      "genres": ["melee-action", "fighting"]
+    },
+    {
+      "id": "constraint-0164",
+      "text": "only one-on-one duels",
+      "genres": ["shooter", "melee-action", "fighting", "deckbuilder-cards"]
+    },
+    {
+      "id": "constraint-0165",
+      "text": "only parts that snap to a grid",
+      "genres": ["puzzle", "survival-craft", "builder-management", "vehicle-sim-racing", "sandbox"]
+    },
+    {
+      "id": "constraint-0166",
+      "text": "only planned moves",
+      "genres": [
+        "roguelike",
+        "puzzle",
+        "shooter",
+        "fighting",
+        "rpg",
+        "strategy",
+        "deckbuilder-cards"
+      ]
+    },
+    {
+      "id": "constraint-0167",
+      "text": "only ragdoll controls",
+      "genres": ["platformer", "fighting", "open-world", "sandbox", "party-multiplayer"]
+    },
+    {
+      "id": "constraint-0168",
+      "text": "only real history",
+      "genres": [
+        "shooter",
+        "melee-action",
+        "rpg",
+        "open-world",
+        "builder-management",
+        "strategy",
+        "narrative",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "constraint-0169",
+      "text": "only scarce ammo",
+      "genres": ["roguelike", "shooter", "survival-craft", "horror", "stealth-immersive-sim"]
+    },
+    {
+      "id": "constraint-0170",
+      "text": "only short rewinds",
+      "genres": ["platformer", "puzzle", "vehicle-sim-racing", "narrative", "rhythm-arcade"]
+    },
+    {
+      "id": "constraint-0171",
+      "text": "only short rounds",
+      "genres": ["shooter", "fighting", "strategy", "deckbuilder-cards", "party-multiplayer"]
+    },
+    {
+      "id": "constraint-0172",
+      "text": "only short waves",
+      "genres": [
+        "roguelike",
+        "shooter",
+        "melee-action",
+        "survival-craft",
+        "strategy",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "constraint-0173",
+      "text": "only slow, heavy vehicles",
+      "genres": ["vehicle-sim-racing"]
+    },
+    {
+      "id": "constraint-0174",
+      "text": "only small rooms",
+      "genres": [
+        "roguelike",
+        "puzzle",
+        "horror",
+        "strategy",
+        "deckbuilder-cards",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "constraint-0175",
+      "text": "only talk at set times",
+      "genres": ["party-multiplayer"]
+    },
+    {
+      "id": "constraint-0176",
+      "text": "only text chat",
+      "genres": ["rpg", "narrative", "party-multiplayer"]
+    },
+    {
+      "id": "constraint-0177",
+      "text": "only the mouse",
+      "genres": [
+        "puzzle",
+        "horror",
+        "builder-management",
+        "life-sim",
+        "strategy",
+        "deckbuilder-cards",
+        "narrative",
+        "sandbox",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "constraint-0178",
+      "text": "only two choices each step",
+      "genres": ["roguelike", "rpg", "deckbuilder-cards", "narrative"]
+    },
+    {
+      "id": "constraint-0179",
+      "text": "only two colors",
+      "genres": [
+        "roguelike",
+        "metroidvania",
+        "platformer",
+        "puzzle",
+        "shooter",
+        "melee-action",
+        "fighting",
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "builder-management",
+        "life-sim",
+        "vehicle-sim-racing",
+        "strategy",
+        "deckbuilder-cards",
+        "narrative",
+        "stealth-immersive-sim",
+        "sandbox",
+        "party-multiplayer",
+        "rhythm-arcade"
+      ]
+    },
+    {
+      "id": "constraint-0180",
+      "text": "only two decks",
+      "genres": ["deckbuilder-cards"]
+    },
+    {
+      "id": "constraint-0181",
+      "text": "only two hands",
+      "genres": [
+        "platformer",
+        "puzzle",
+        "survival-craft",
+        "horror",
+        "stealth-immersive-sim",
+        "sandbox"
+      ]
+    },
+    {
+      "id": "constraint-0182",
+      "text": "only vehicles that break apart",
+      "genres": ["vehicle-sim-racing", "sandbox"]
+    },
+    {
+      "id": "constraint-0183",
+      "text": "only walking and talking",
+      "genres": ["open-world", "horror", "life-sim", "narrative"]
+    },
+    {
+      "id": "constraint-0184",
+      "text": "only what you can see",
+      "genres": [
+        "roguelike",
+        "puzzle",
+        "shooter",
+        "open-world",
+        "survival-craft",
+        "horror",
+        "strategy",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "constraint-0185",
+      "text": "only real-world time",
+      "genres": ["survival-craft", "builder-management", "life-sim", "strategy", "narrative"]
+    },
+    {
+      "id": "constraint-0186",
+      "text": "only one sitting",
+      "genres": ["roguelike", "puzzle", "horror", "narrative", "party-multiplayer"]
+    },
+    {
+      "id": "constraint-0187",
+      "text": "only ten minutes a day",
+      "genres": ["puzzle", "builder-management", "life-sim", "narrative", "rhythm-arcade"]
+    },
+    {
+      "id": "constraint-0188",
+      "text": "only nighttime",
+      "genres": ["open-world", "survival-craft", "horror", "life-sim", "stealth-immersive-sim"]
+    },
+    {
+      "id": "constraint-0189",
+      "text": "only one day",
+      "genres": [
+        "puzzle",
+        "horror",
+        "builder-management",
+        "life-sim",
+        "narrative",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "constraint-0190",
+      "text": "only one level, remixed",
+      "genres": ["roguelike", "metroidvania", "platformer", "puzzle", "shooter", "rhythm-arcade"]
+    },
+    {
+      "id": "constraint-0191",
+      "text": "only one street",
+      "genres": [
+        "open-world",
+        "horror",
+        "builder-management",
+        "life-sim",
+        "narrative",
+        "stealth-immersive-sim"
+      ]
+    },
+    {
+      "id": "constraint-0192",
+      "text": "only a vertical climb",
+      "genres": ["roguelike", "metroidvania", "platformer", "survival-craft"]
+    },
+    {
+      "id": "constraint-0193",
+      "text": "no solid ground",
+      "genres": ["metroidvania", "platformer", "survival-craft", "vehicle-sim-racing", "sandbox"]
+    },
+    {
+      "id": "constraint-0194",
+      "text": "only a shrinking area",
+      "genres": ["roguelike", "shooter", "survival-craft", "strategy", "party-multiplayer"]
+    },
+    {
+      "id": "constraint-0195",
+      "text": "no money",
+      "genres": [
+        "rpg",
+        "open-world",
+        "survival-craft",
+        "builder-management",
+        "life-sim",
+        "strategy",
+        "narrative"
+      ]
+    },
+    {
+      "id": "constraint-0196",
+      "text": "no shops",
+      "genres": ["roguelike", "metroidvania", "shooter", "rpg", "open-world", "survival-craft"]
+    },
+    {
+      "id": "constraint-0197",
+      "text": "no inventory",
+      "genres": ["platformer", "puzzle", "shooter", "melee-action", "horror", "rhythm-arcade"]
+    },
+    {
+      "id": "constraint-0198",
+      "text": "no crafting",
+      "genres": ["rpg", "open-world", "survival-craft", "life-sim", "sandbox"]
+    },
+    {
+      "id": "constraint-0199",
+      "text": "no randomness",
+      "genres": ["roguelike", "platformer", "puzzle", "fighting", "strategy", "deckbuilder-cards"]
+    },
+    {
+      "id": "constraint-0200",
+      "text": "no stats",
+      "genres": ["shooter", "melee-action", "fighting", "rpg", "strategy", "deckbuilder-cards"]
+    },
+    {
+      "id": "constraint-0201",
+      "text": "no romance",
+      "genres": ["rpg", "life-sim", "narrative"]
+    },
+    {
+      "id": "constraint-0202",
+      "text": "only one friend",
+      "genres": ["puzzle", "rpg", "horror", "life-sim", "narrative"]
+    },
+    {
+      "id": "constraint-0203",
+      "text": "only one job",
+      "genres": ["builder-management", "life-sim", "narrative", "stealth-immersive-sim"]
+    },
+    {
+      "id": "constraint-0204",
+      "text": "no leaving home",
+      "genres": ["puzzle", "horror", "builder-management", "life-sim", "narrative", "sandbox"]
+    },
+    {
+      "id": "constraint-0205",
+      "text": "only what you grow",
+      "genres": ["survival-craft", "builder-management", "life-sim"]
+    },
+    {
+      "id": "constraint-0206",
+      "text": "no days off",
+      "genres": ["survival-craft", "builder-management", "life-sim", "narrative"]
+    },
+    {
+      "id": "constraint-0207",
+      "text": "no special moves",
+      "genres": ["platformer", "shooter", "melee-action", "fighting"]
+    },
+    {
+      "id": "constraint-0208",
+      "text": "only mirror matches",
+      "genres": ["shooter", "melee-action", "fighting", "party-multiplayer", "rhythm-arcade"]
+    },
+    {
+      "id": "constraint-0209",
+      "text": "only ring-outs",
+      "genres": ["platformer", "fighting", "party-multiplayer"]
+    },
+    {
+      "id": "constraint-0210",
+      "text": "no air moves",
+      "genres": ["platformer", "melee-action", "fighting"]
+    },
+    {
+      "id": "constraint-0211",
+      "text": "only counterattacks",
+      "genres": ["melee-action", "fighting", "strategy", "deckbuilder-cards", "rhythm-arcade"]
+    },
+    {
+      "id": "constraint-0212",
+      "text": "only ten parts",
+      "genres": ["puzzle", "builder-management", "vehicle-sim-racing", "sandbox"]
+    },
+    {
+      "id": "constraint-0213",
+      "text": "no deleting",
+      "genres": ["puzzle", "builder-management", "life-sim", "sandbox"]
+    },
+    {
+      "id": "constraint-0214",
+      "text": "only one material",
+      "genres": ["puzzle", "survival-craft", "builder-management", "sandbox"]
+    },
+    {
+      "id": "constraint-0215",
+      "text": "no blueprints",
+      "genres": ["survival-craft", "builder-management", "vehicle-sim-racing", "sandbox"]
+    },
+    {
+      "id": "constraint-0216",
+      "text": "only one song",
+      "genres": ["platformer", "narrative", "party-multiplayer", "rhythm-arcade"]
+    },
+    {
+      "id": "constraint-0217",
+      "text": "only your own music",
+      "genres": ["platformer", "shooter", "vehicle-sim-racing", "rhythm-arcade"]
+    },
+    {
+      "id": "constraint-0218",
+      "text": "no visual cues",
+      "genres": ["puzzle", "horror", "rhythm-arcade"]
+    },
+    {
+      "id": "constraint-0219",
+      "text": "only one ability at a time",
+      "genres": ["roguelike", "metroidvania", "platformer", "puzzle", "shooter", "melee-action"]
+    },
+    {
+      "id": "constraint-0220",
+      "text": "no new abilities",
+      "genres": ["metroidvania", "platformer", "puzzle", "open-world", "stealth-immersive-sim"]
+    },
+    {
+      "id": "constraint-0221",
+      "text": "only abilities you trade for",
+      "genres": ["roguelike", "metroidvania", "platformer", "rpg"]
+    },
+    {
+      "id": "constraint-0222",
+      "text": "only backtracking",
+      "genres": ["metroidvania", "puzzle", "horror", "narrative"]
+    }
+  ]
+}
