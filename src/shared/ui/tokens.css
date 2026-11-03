@@ -200,6 +200,14 @@
   --t-banner: 150ms;
 }
 
+/*
+ * User changes after the handoff, recorded in docs/design-system.html: non-color values
+ * only. They come after the handoff body, so they win.
+ */
+:root {
+  --radius-card: 7px; /* user 2026-11-03: half of the handoff's 14 */
+}
+
 /* Reduced motion: every duration goes to 0 (design section 11). The change is instant. */
 @media (prefers-reduced-motion: reduce) {
   :root {

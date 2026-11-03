@@ -95,7 +95,7 @@
 .wide {
   max-width: 640px; /* design 9.8; no token */
   padding: 24px 28px; /* design 9.8; no token */
-  border-radius: var(--radius-card);
+  border-radius: var(--radius-dialog);
   box-shadow: var(--shadow-dialog);
 }
 

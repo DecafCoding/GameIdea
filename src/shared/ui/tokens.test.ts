@@ -1,7 +1,7 @@
 /**
  * Token checks: tokens.css holds the handoff token set verbatim plus only the allowed,
- * non-color carried-over tokens, and every var(--name) used in src/ is defined. Also the
- * shipped icon files.
+ * non-color carried-over and user-override tokens, and every var(--name) used in src/ is
+ * defined. Also the shipped icon files.
  */
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -18,6 +18,8 @@ const HANDOFF_BODY = HANDOFF.slice(HANDOFF.indexOf(':root {'));
 
 /** Tokens kept from TheForge until Phase 2: card geometry and motion, never colors. */
 const CARRIED_OVER = ['--t-turn-90', '--t-turn-180', '--t-draw', '--t-fade', '--t-banner'];
+/** Handoff tokens the user changed later (recorded in docs/design-system.html), never colors. */
+const USER_OVERRIDES = ['--radius-card'];
 
 /** Every "--name: value" definition in a CSS text. */
 function definitions(css: string): [string, string][] {
@@ -84,7 +86,7 @@ describe('design tokens', () => {
     const extra = definitions(outside);
     expect(extra.length).toBeGreaterThan(0);
     for (const [name, value] of extra) {
-      expect(CARRIED_OVER, name).toContain(name);
+      expect([...CARRIED_OVER, ...USER_OVERRIDES], name).toContain(name);
       expect(value, name).not.toMatch(/#|rgb|hsl/i);
     }
   });

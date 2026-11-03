@@ -62,7 +62,7 @@ const TYPES: { type: TwoCueType; deck: DeckName; prefix: string; worst: [string,
  */
 const TUCK_VISIBLE = 44;
 const INSET_EDGE = 86;
-const MAX_WIDTH = 172;
+const MAX_WIDTH = 180; // user 2026-11-03; was 172
 
 /**
  * The old cue fit class: most characters per type, and at most 2 words for the 4-cue types.
