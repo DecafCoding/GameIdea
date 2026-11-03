@@ -598,7 +598,9 @@ exit $ok</code></pre>
 <p><code>canvas-library</code> (Task 1 is its planned long-stack check; fail → BLOCKED, no redesign), <code>nfr-targets</code> (long stack, 50 fps, 100 ms, pools ≤ 100 KB), <code>test-data</code> (11-card stack fixture), <code>pool-files</code> (amended, settled: one split of decks.json into 11 files, 2 grammar rules, kebab genres, required targets, stable ids, floors 10 / 20), <code>pool-load-failure</code>, <code>schema-shape</code>, <code>board-file-format</code>, <code>schema-versions</code>, <code>import-checks</code>, <code>import-policy</code>, <code>hook-sentence</code>, <code>clipboard</code>, <code>outside-code</code>, <code>state-store</code>, <code>undo-history</code>, <code>save-transaction</code>, <code>architecture-pattern</code>, <code>module-layout</code> (new <code>features/hook/</code>), <code>import-rules</code>, <code>storage-seam</code> (unchanged), <code>test-tools</code>, <code>ci</code>, <code>local-run</code>. None of these is <code>data-status="open"</code>. The open question "Does an 11-card stack drag smoothly in React Flow?" is answered by Task 1; "Final badge word choices" is the user's M2 hook test and needs no task (words live in <code>connector.ts</code>). No architecture decision changes.</p>
 
 <h3>Long-stack result</h3>
-<p>To be filled in by the executor at Task 1 (engine, measured fps) and re-measured at Tasks 15 and 21.</p>
+<ul id="long-stack-result">
+  <li><strong>Task 1 (2026-11-03, Phase 1 card types, flat-node canvas, no fixes needed):</strong> Chromium timing project, <code>perf_dragLongStack_atLeast50Fps</code> 60.1 fps (pass). The functional test <code>longStack_dragRoot_wholeStackMovesAndDropsOnce</code> passes in Chromium, Firefox and WebKit. The 200-card checks in the same run: pan 59.8 fps, drag 59.8 fps. Note: the during-drag comparison measures the React Flow node wrappers, because the lifted card is scaled and turned by the drag look (design 9.7) and its card box is not its position.</li>
+</ul>
 
 <h3>Split report</h3>
 <p>To be filled in by the executor at Task 3 (paste the split's report lines).</p>

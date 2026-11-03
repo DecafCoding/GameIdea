@@ -15,7 +15,7 @@ import {
 } from '@/shared/model';
 
 /** Distance between a tucked card and the card above it (design --tuck-offset). */
-const TUCK = 59;
+export const TUCK = 59;
 
 export const CUES = {
   role: ['navigator', 'diplomat', 'gardener', 'captain'],
@@ -149,4 +149,32 @@ export function board200(): Board {
     z += 3;
   }
   return { ...fixtureBoard(cards), id: 'board-200', name: 'Board 200' };
+}
+
+/**
+ * The long-stack fixture (test-data in docs/architecture.html): one chain of 11 cards,
+ * long-0 to long-10, each tucked under the one before, for the 11-card stack drag test.
+ * Modifiers sit tucked, never combined, because only a drop combines.
+ */
+export function stack11Board(): Board {
+  const cycle: CardType[] = ['role', 'goal', 'conflict', 'setting', 'modifier'];
+  const cards: Card[] = [];
+  for (let i = 0; i < 11; i++) {
+    const type = cycle[i % cycle.length]!;
+    cards.push(
+      fixtureCard(type, {
+        id: `long-${i}`,
+        x: 240,
+        y: 48 + i * TUCK,
+        z: i + 1,
+        tuckedUnder: i === 0 ? null : `long-${i - 1}`,
+      }),
+    );
+  }
+  return {
+    ...fixtureBoard(cards),
+    id: 'board-long-stack',
+    name: 'Long Stack',
+    view: { panX: 0, panY: 0, zoom: 0.75 },
+  };
 }

@@ -4,48 +4,10 @@
  * timing project, so it runs alone. Frames are counted with requestAnimationFrame while
  * paced mouse moves run.
  */
-import type { Page } from '@playwright/test';
 import { expect, test } from './test';
 import { board200 } from '@/test/fixtures/boards';
 import { boxOf, cardById, openBoard } from './board-helpers';
-
-const STEPS = 60;
-const PACE_MS = 33;
-
-async function startFrameCounter(page: Page) {
-  await page.evaluate(() => {
-    const w = window as unknown as { __frames: { count: number; start: number; run: boolean } };
-    w.__frames = { count: 0, start: performance.now(), run: true };
-    const tick = () => {
-      if (!w.__frames.run) return;
-      w.__frames.count++;
-      requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
-  });
-}
-
-async function stopFrameCounter(page: Page): Promise<number> {
-  return page.evaluate(() => {
-    const w = window as unknown as { __frames: { count: number; start: number; run: boolean } };
-    w.__frames.run = false;
-    return w.__frames.count / ((performance.now() - w.__frames.start) / 1000);
-  });
-}
-
-/** Presses at from and moves by dx, dy in paced steps (about 2 seconds). The mouse stays down. */
-async function pacedDrag(page: Page, from: { x: number; y: number }, dx: number, dy: number) {
-  await page.mouse.move(from.x, from.y);
-  await page.mouse.down();
-  await startFrameCounter(page);
-  for (let i = 1; i <= STEPS; i++) {
-    await page.mouse.move(from.x + (dx * i) / STEPS, from.y + (dy * i) / STEPS);
-    await page.waitForTimeout(PACE_MS);
-  }
-  const fps = await stopFrameCounter(page);
-  test.info().annotations.push({ type: 'fps', description: fps.toFixed(1) });
-  return fps;
-}
+import { pacedDrag } from './frames';
 
 test.describe('200-card frame rate', { tag: '@timing' }, () => {
   test.skip(({ browserName }) => browserName !== 'chromium', 'The trace target is Chromium only.');
