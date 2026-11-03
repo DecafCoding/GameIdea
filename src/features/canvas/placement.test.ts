@@ -3,7 +3,7 @@
  */
 import { describe, expect, it } from 'vitest';
 import { fixtureBoard, fixtureCard } from '@/test/fixtures/boards';
-import { besideSpot, boardRects, cardSize, findOpenSpot } from './placement';
+import { besideSpot, boardRects, cardSize, findOpenSpot, snapToGrid } from './placement';
 
 const SIZE = { width: 200, height: 200 };
 
@@ -39,5 +39,24 @@ describe('cardSize', () => {
   it('cardSize_hook_is240Wide', () => {
     expect(cardSize(fixtureCard('hook'))).toEqual({ width: 240, height: 200 });
     expect(cardSize(fixtureCard('mechanic'))).toEqual({ width: 200, height: 200 });
+  });
+});
+
+describe('snapToGrid', () => {
+  it('snapToGrid_nearestPoint', () => {
+    expect(snapToGrid({ x: 37, y: 61 })).toEqual({ x: 48, y: 72 });
+    expect(snapToGrid({ x: 35, y: 59 })).toEqual({ x: 24, y: 48 });
+    expect(snapToGrid({ x: 96, y: 0 })).toEqual({ x: 96, y: 0 });
+  });
+
+  it('snapToGrid_negativeCoordinates', () => {
+    expect(snapToGrid({ x: -37, y: -11 })).toEqual({ x: -48, y: 0 });
+    expect(Object.is(snapToGrid({ x: -5, y: -1 }).x, 0)).toBe(true);
+    expect(Object.is(snapToGrid({ x: -5, y: -1 }).y, 0)).toBe(true);
+  });
+
+  it('snapToGrid_halfwayRoundsUp', () => {
+    expect(snapToGrid({ x: 12, y: 36 })).toEqual({ x: 24, y: 48 });
+    expect(snapToGrid({ x: -12, y: -36 })).toEqual({ x: 0, y: -24 });
   });
 });

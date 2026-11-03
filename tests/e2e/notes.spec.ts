@@ -107,9 +107,10 @@ test('notes_trash_deletesNote', async ({ page }) => {
 test('notes_drag_moves', async ({ page }) => {
   await openBoard(page, fixtureBoard([], [fixtureNote({ x: 96, y: 96, text: 'Move me' })]));
   const before = await boxOf(note(page));
-  await dragBy(page, note(page), 150, 80, { x: 40, y: 12 });
-  await expect.poll(async () => (await boxOf(note(page))).x - before.x).toBeCloseTo(150, 0);
-  expect((await boxOf(note(page))).y - before.y).toBeCloseTo(80, 0);
+  // Grid-step distances, so the drop lands where dragged with snap on (the default).
+  await dragBy(page, note(page), 144, 72, { x: 40, y: 12 });
+  await expect.poll(async () => (await boxOf(note(page))).x - before.x).toBeCloseTo(144, 0);
+  expect((await boxOf(note(page))).y - before.y).toBeCloseTo(72, 0);
   await expect(field(page)).toHaveCount(0);
 });
 

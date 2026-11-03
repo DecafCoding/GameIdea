@@ -14,7 +14,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import react from '@vitejs/plugin-react';
 import { defineConfig, type Plugin, type PreviewOptions } from 'vite';
-import { THEME_BOOT_SCRIPT } from './src/shared/storage/themeBoot';
+import { THEME_BOOT_SCRIPT } from './src/shared/storage/themeBoot.ts';
 
 const CERT_DIR = fileURLToPath(new URL('./.certs/', import.meta.url));
 const CERT_FILE = `${CERT_DIR}lan.pem`;

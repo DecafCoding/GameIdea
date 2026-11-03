@@ -106,6 +106,68 @@ describe('dropCard', () => {
   });
 });
 
+describe('dropCard with snap', () => {
+  const snap = { snap: true };
+
+  it('dropCard_moveWithSnap_landsOnGrid', () => {
+    const board = fixtureBoard([fixtureCard('goal', { x: 0, y: 0 })]);
+    const next = dropCard(board, 'goal-1', { x: 900, y: 900 }, { x: 813, y: 790 }, snap);
+    expect(get(next, 'goal-1')).toMatchObject({ x: 816, y: 792 });
+  });
+
+  it('dropCard_moveWithoutSnap_staysFree', () => {
+    const board = fixtureBoard([fixtureCard('goal', { x: 0, y: 0 })]);
+    const next = dropCard(board, 'goal-1', { x: 900, y: 900 }, { x: 813, y: 790 });
+    expect(get(next, 'goal-1')).toMatchObject({ x: 813, y: 790 });
+    const off = dropCard(board, 'goal-1', { x: 900, y: 900 }, { x: 813, y: 790 }, { snap: false });
+    expect(get(off, 'goal-1')).toMatchObject({ x: 813, y: 790 });
+  });
+
+  it('dropCard_untuckWithSnap_landsOnGrid', () => {
+    const board = fixtureBoard(fixtureStack(0, 0));
+    const next = dropCard(board, 'conflict-1', { x: 900, y: 900 }, { x: 805, y: 803 }, snap);
+    expect(get(next, 'conflict-1')).toMatchObject({ tuckedUnder: null, x: 816, y: 792 });
+  });
+
+  it('dropCard_tuckWithSnap_keepsTuckPlace', () => {
+    const board = fixtureBoard([
+      fixtureCard('role', { x: 5, y: 7 }),
+      fixtureCard('goal', { x: 600, y: 0, z: 2 }),
+    ]);
+    const next = dropCard(board, 'goal-1', { x: 100, y: 100 }, { x: 33, y: 41 }, snap);
+    expect(get(next, 'goal-1')).toMatchObject({ tuckedUnder: 'role-1', x: 5, y: 63 });
+  });
+
+  it('dropCard_combineWithSnap_ignoresSnap', () => {
+    const board = fixtureBoard([
+      fixtureCard('role', { x: 5, y: 7 }),
+      fixtureCard('modifier', { x: 600, y: 0, z: 2 }),
+    ]);
+    const next = dropCard(board, 'modifier-1', { x: 105, y: 157 }, { x: 33, y: 41 }, snap);
+    expect(find(next, 'modifier-1')).toBeUndefined();
+    expect(isCombined(get(next, 'role-1'))).toBe(true);
+    expect(get(next, 'role-1')).toMatchObject({ x: 5, y: 7 });
+  });
+
+  it('dropCard_onTopWithSnap_ignoresSnap', () => {
+    const board = fixtureBoard([
+      combinedCard('role', { x: 5, y: 7 }),
+      secondModifier({ x: 600, y: 0, z: 2 }),
+    ]);
+    const next = dropCard(board, 'modifier-2', { x: 105, y: 27 }, { x: 33, y: 13 }, snap);
+    expect(get(next, 'modifier-2')).toMatchObject({ onTopOf: 'role-1' });
+    expect(get(next, 'role-1')).toMatchObject({ x: 5, y: 7 });
+  });
+
+  it('dropCard_rootWithStack_stackMovesByDelta', () => {
+    const board = fixtureBoard(fixtureStack(0, 0));
+    const next = dropCard(board, 'role-1', { x: 900, y: 900 }, { x: 803, y: 811 }, snap);
+    expect(get(next, 'role-1')).toMatchObject({ x: 792, y: 816 });
+    expect(get(next, 'goal-1')).toMatchObject({ x: 792, y: 872 });
+    expect(get(next, 'conflict-1')).toMatchObject({ x: 792, y: 928 });
+  });
+});
+
 describe('combineOnto', () => {
   it('combineOnto_modifier_absorbsAndDeletesModifier', () => {
     const board = fixtureBoard([
