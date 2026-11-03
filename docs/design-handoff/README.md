@@ -219,3 +219,7 @@ The mockups show these details. Confirm or remove each one.
 - A note while the user edits its title or text.
 - A stack with optional cards (Setting, Mood, Twist, Progression, Constraint) and their badges.
 - 2 same-deck cards joined by an "and" badge on a stack.
+
+## Consolidated
+
+This bundle was consolidated into `docs/design-system.html` on 2026-11-02 by `/dev-ui-update`. The design doc is now the authority, and it wins over this bundle. This bundle has no `reference/` folder; the plan docs in `docs/` are current. Decisions made after the handoff (for example, the Hook Card menu opens on hover, and genre counts hide at 21) are recorded in the design doc's Handoff log, not here.
