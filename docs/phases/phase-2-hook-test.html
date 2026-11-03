@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Phase 2: Hook test</title>
+  <style>
+    :root { --fg:#1a1a1a; --muted:#666; --accent:#2563eb; --done:#16a34a; --warn:#dc2626; --rule:#e5e7eb; }
+    body { font:16px/1.6 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; color:var(--fg); max-width:62rem; margin:2rem auto; padding:0 1.25rem; }
+    h1 { font-size:2rem; border-bottom:2px solid var(--rule); padding-bottom:.3rem; }
+    h2 { font-size:1.5rem; margin-top:2.5rem; border-bottom:1px solid var(--rule); padding-bottom:.2rem; }
+    h3.milestone { font-size:1.25rem; margin-top:2rem; color:var(--accent); }
+    h4.task { font-size:1.1rem; margin-top:1.5rem; }
+    dl.phase-meta { display:grid; grid-template-columns:max-content 1fr; gap:.25rem 1rem; }
+    dl.phase-meta dt { font-weight:600; color:var(--muted); }
+    code, pre { font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+    pre { background:#f6f8fa; padding:1rem; border-radius:6px; overflow:auto; }
+    code { background:#f6f8fa; padding:.1rem .3rem; border-radius:4px; }
+    pre code { background:none; padding:0; }
+    table { border-collapse:collapse; margin:.5rem 0; }
+    th, td { border:1px solid var(--rule); padding:.25rem .5rem; text-align:left; vertical-align:top; font-size:.9rem; }
+    ul.checklist { list-style:none; padding-left:0; }
+    ul.checklist > li::before { content:"☐ "; color:var(--muted); }
+    ul.checklist > li[data-checked="true"]::before { content:"☑ "; color:var(--done); }
+    .validate { color:var(--done); font-weight:600; }
+    .stop { color:var(--warn); font-weight:600; }
+  </style>
+</head>
+<body>
+
+<h1 data-phase="2">Phase 2: Hook test</h1>
+<p>The following plan should be complete, but validate documentation, codebase patterns, and task sanity before implementing. Pay special attention to naming of existing utils, types, and models — import from the right files.</p>
+<p><strong>Preconditions (checked on 2026-11-03):</strong> Phase 1 is merged on <code>main</code> (<code>10e386c</code>); <code>npx vitest run</code> passes 38 files / 337 tests; Node.js 24, npm, Playwright browsers (Chromium, Firefox, WebKit) installed; <code>gh</code> authenticated as <code>DecafCoding</code>; <code>docs/libraries/decks.json</code> holds all 11 decks (Player Role 467, Mechanic 380, Goal 314, Conflict 351, Resource 272, Setting 280, Mood 145, Modifier 503, Twist 224, Progression 352, Constraint 222) and every genre floor already passes (smallest: Mechanic Metroidvania 33, Resource Metroidvania 28, Progression Sandbox 28, Constraint Fighting 42; Modifier targets Role 300, Setting 245, Resource 189).</p>
+<p><strong>Gate:</strong> Task 1 is the planned check of <code>canvas-library</code>. <span class="stop">If it fails, the executor stops the phase with <code>BLOCKED: canvas-library</code> and does not redesign the canvas</span> (see Task 1).</p>
+
+<h2>Phase Description</h2>
+<p>Phase 2 (milestone M2 in <code>docs/mvp-plan.html</code>) turns the story-free Phase 1 copy into a working hook machine: the user draws game concept cards from the real pools, turns rings, locks and combines Modifiers, tucks cards under a Hook Card, reads the computed hook sentence and copies it. Its purpose is to prove the product's biggest risk early — that stacks of core and Modifier cards read as hooks worth building — so the user can run the M2 hook test.</p>
+<p>It bundles eight work items, in order:</p>
+<ol>
+  <li><strong>Long-stack gate</strong>: an 11-card stack fixture and a drag-speed test, first (architecture open question "Does an 11-card stack drag smoothly in React Flow?").</li>
+  <li><strong>Pools</strong>: the one-time split of <code>docs/libraries/decks.json</code> into the 11 pool files in <code>public/pools/</code>, with the 2 grammar rules, kebab-case genres, targets, stable ids and floor checks; pool unit tests.</li>
+  <li><strong>Data model</strong>: the 12 card types (Hook Card plus 11 decks), <code>modDeck</code>, <code>onTopOf</code>, <code>locked</code>, the ring <code>modDeck</code>, pool <code>targets</code>, draws with the genre and target filters, and the Zod import check.</li>
+  <li><strong>Cards</strong>: the 200 px card and 56 px tuck, the cream card face, the new deck faces and icons (Modifier icon by <code>modDeck</code>), the lock and the full card strip (Split, Redraw, Lock / Unlock, Discard).</li>
+  <li><strong>Modifiers</strong>: combine, swap and Split on Player Role, Resource and Setting with <code>modDeck</code>; On Top through <code>onTopOf</code> and the 2 drop zones.</li>
+  <li><strong>Stack and Hook Card</strong>: connector words for all 12 types, tuck hints in the core order, the pure sentence builder, the dark 240 × 200 Hook Card with its hover menu (Copy with the fallback dialog, Redraw All, Discard).</li>
+  <li><strong>Rail and notices</strong>: the grouped rail (Hook Card button, Core, Modifiers row of 3 icon buttons, Optional with Setting), the notices of design 9.13 and the text file for the new card types.</li>
+  <li><strong>Browser tests and handoff</strong>: Playwright flows for the Modifier decks and the Hook Card, a real-pool smoke test, the full check suite, and the README handoff for the user's manual M2 hook test.</li>
+</ol>
+
+<h2>User Stories</h2>
+<p>As a game jam entrant<br>I want to draw a full concept stack in a minute and copy its hook<br>So that I can start building before the jam clock runs out.</p>
+<p>As a hobby developer<br>I want to turn rings, lock the cards I like and Redraw All the rest<br>So that I steer the idea instead of accepting the first random draw.</p>
+<p>As a user<br>I want to add an adjective from the Role, Resource or Setting Modifier deck to a card, and a second one on top<br>So that a plain noun becomes a hook with a twist ("tall frozen pilot").</p>
+<p>As the pool author<br>I want the pools made once from my libraries, with floors checked by the split and by a unit test<br>So that a draw never comes up short and a later pool edit that breaks a floor fails CI.</p>
+<p>As the developer<br>I want the hook sentence built by a pure function and the 11-card stack tested first<br>So that every grammar rule is unit-tested and the canvas risk is known before the rest of M2 is built.</p>
+
+<h2>Problem Statement</h2>
+<p>After Phase 1 the app has 5 renamed card types, no pool files (deck buttons are off on port 4174), TheForge's 250 px card and 59 px tuck, a single Modifier deck, TheForge's tuck-based On Top, and no Hook Card, lock, sentence or grouped rail. The MVP's top risk (scan and <code>mvp-plan.html</code> Risks) is that random stacks read as nonsense; it cannot be tested until real pools, the Hook Card, the badges and the sentence exist. The architecture also lists an open canvas risk: a 6 to 11 card stack in one parent chain may not drag at the speed target.</p>
+
+<h2>Solution Statement</h2>
+<p>Measure the long-stack drag first on the existing flat-node canvas. Then split <code>decks.json</code> once into 11 pool files with a tested script, widen the model to the 12 card types and the new fields at <code>formatVersion</code> 1, and rebuild the card at the design's 200 px size. Combine, swap, Split and On Top become pure <code>Board → Board</code> recipes that carry <code>modDeck</code>; On Top becomes an <code>onTopOf</code> link rendered as part of the base card. The canvas computes each stack's reading order and connector words, and a pure <code>buildHookSentence</code> in <code>features/hook/</code> turns them into the sentence the Hook Card shows and copies. The rail is regrouped to design 8.2 for the decks this phase ships. Browser tests prove the flows in 3 engines; the user then runs the manual M2 hook test from a README handoff.</p>
+
+<h2>Phase Metadata</h2>
+<dl class="phase-meta">
+  <dt>Phase Type</dt><dd data-field="type">Mixed (new capability + data + refactor)</dd>
+  <dt>Estimated Complexity</dt><dd data-field="complexity">High</dd>
+  <dt>Primary Systems Affected</dt><dd data-field="systems">scripts (split), public/pools, shared/model, shared/pools, features/draw, features/card, features/canvas, features/hook (new), features/export, app/board (rail, notices), tests/e2e, src/test/fixtures</dd>
+  <dt>Dependencies</dt><dd data-field="dependencies">Phase 1 (copy-rename, merged); docs/libraries/decks.json and genres.json; @xyflow/react 12.12.0, zustand 5.0.16 + zundo 2.3.0, zod 4.6.7, Vitest 5.0.5, Playwright 1.64.1 (all already pinned); gh CLI authenticated</dd>
+</dl>
+
+<h2>Context References</h2>
+
+<h3>Relevant Codebase Files — READ THESE BEFORE IMPLEMENTING</h3>
+<ul>
+  <li><code>CLAUDE.md</code> (whole file) — Why: import rules, Key Patterns (Draws, Rings, Combine, Hook sentence, Pools, Board file format), Title Case UI rule, test naming <code>functionName_condition_expectedResult</code>, no AI attribution in commits/PRs.</li>
+  <li><code>docs/architecture.html</code> — Why: the authority. Decisions this phase touches are listed in Notes.</li>
+  <li><code>docs/mvp-plan.html</code> sections Data model, Rules, Hook sentence rules, Connector badges, Hints and drop zones — Why: field rules, draw rules and every sentence rule.</li>
+  <li><code>docs/feature-modifier-decks.html</code> — Why: 3 Modifier decks, modDeck, onTopOf, drop zones, Split, done criteria.</li>
+  <li><code>docs/design-system.html</code> §4.4, §4.5, §7, §8.2, §9.4–§9.9, §9.13, §10, §11, §16 — Why: deck colors and icons, card face tokens, rail spec, card / Hook Card / badge / tuck / combine / Redraw All specs, notices, motion timings.</li>
+  <li><code>docs/design-handoff/screenshots/Combine.png</code>, <code>HookCard.png</code>, <code>Connector.png</code>, <code>Tuck.png</code>, <code>RedrawAll.png</code>, <code>Cards.png</code>, <code>Main.png</code> — Why: visual reference (record only; design-system.html wins).</li>
+  <li><code>docs/phases/phase-1-copy-rename.html</code> Notes — Why: decisions this phase inherits (type mapping, no pools, genres shape, formatVersion, DECK_NAME in shared/model, 250 px carried-over geometry).</li>
+  <li><code>src/shared/model/index.ts</code> (lines 7-166) — Why: FORMAT_VERSION, CARD_TYPES, GENRES, GENRE_DECKS, CUES_PER_CARD, DECK_NAME, Cue, Ring, Card, Board, PoolCue, Pool, Pools — the root of every type change.</li>
+  <li><code>src/shared/pools/parsePool.ts</code> (lines 1-60), <code>loadPools.ts</code> (lines 1-25), <code>usePools.ts</code> — Why: the hand-written pool checks (no Zod outside export) and the per-type load loop to widen to the 11 decks.</li>
+  <li><code>src/features/draw/drawCard.ts</code> (lines 29-79) — Why: the genre filter, distinct cues and partial Fisher-Yates; add the target filter and modDeck here.</li>
+  <li><code>src/features/card/rings.ts</code> (lines 19-137) — Why: turnRing, edgeCues, activeText, combine (role/setting only today), swap, split, ringWord.</li>
+  <li><code>src/features/card/CardView.tsx</code> (lines 34-213), <code>CardView.module.css</code> (lines 1-60), <code>ringGeometry.ts</code> (lines 1-51), <code>TypeDisc.tsx</code>, <code>CardStrip.tsx</code>, <code>RingControl.tsx</code>, <code>useRingKeys.ts</code> — Why: 250 px geometry, the tint paper to replace, label fits, the TYPE_ICON map, the strip to extend.</li>
+  <li><code>src/features/canvas/stack.ts</code> (lines 1-178) — Why: TUCK_OFFSET 59, childrenOf ordering (Modifiers first, then z), stackOrder, layoutStack, putOnTop (TheForge's tuck-based On Top, to be replaced), removeFromStacks.</li>
+  <li><code>src/features/canvas/dropZones.ts</code> (lines 1-110), <code>boardActions.ts</code> (lines 1-151), <code>placement.ts</code> (lines 1-86), <code>nodes.ts</code> (lines 1-90) — Why: hit tests on CARD_SIZE, isNormalPlace (goal under role only), dropAction / hintFor, combineOnto / swapOnto / splitCard / redrawCard / discardCard recipes, node paint order.</li>
+  <li><code>src/features/canvas/connector.ts</code> (lines 1-89) — Why: connectorWords for 5 types, showWord ("a" / "an"), connectorFor — keep the last 2.</li>
+  <li><code>src/features/canvas/BoardCanvas.tsx</code> (lines 81-351), <code>CardNode.tsx</code> (lines 1-119), <code>CanvasProvider.tsx</code>, <code>DropHints.tsx</code>, <code>ConnectorBadge.tsx</code> — Why: flat top-level nodes with zIndexMode="manual", the move-with-parent drag code, one changeBoard per drop, NodeToolbar strip, badge menu.</li>
+  <li><code>src/features/export/schema.ts</code> (lines 1-120), <code>upgrade.ts</code>, <code>textFile.ts</code> (lines 1-66), <code>importBoard.ts</code> — Why: the Zod board schema with RING_RULES to widen; no upgrade steps; text file lines.</li>
+  <li><code>src/app/board/BoardScreen.tsx</code> (lines 32-135), <code>SideRail.tsx</code>, <code>SideRail.module.css</code>, <code>EmptyBoardPanel.tsx</code>, <code>src/features/draw/DeckButton.tsx</code> — Why: draw wiring (genres null today), banners and texts, the flat 5-button rail.</li>
+  <li><code>src/shared/store/boardStore.ts</code> (lines 1-120) — Why: one changeBoard = one undo step and one save; view state never enters the store.</li>
+  <li><code>src/shared/ui/tokens.css</code> (lines 56-96, 120-170, 194-213), <code>tokens.test.ts</code> (lines 85-120), <code>Icon.tsx</code> — Why: card, hook, deck, rail, ring-hover, status tokens exist; the carried-over <code>--card</code> block and its allow list; IconName union (all deck and Modifier icons are already vendored).</li>
+  <li><code>src/test/fixtures/boards.ts</code> (lines 1-152) — Why: CUES, fixtureCard, combinedCard, fixtureStack, board200, TUCK 59; add stack11Board here.</li>
+  <li><code>src/test/storyNames.test.ts</code> — Why: it fails on the words "character", "motivation", "description" anywhere in src/ (whole word, any case); avoid them in new code, comments and fixture cue texts.</li>
+  <li><code>tests/e2e/test.ts</code>, <code>helpers.ts</code> (ARROW, DeckName, draw), <code>board-helpers.ts</code> (openBoard, rail, drawFromRail, cardById, drag helpers), <code>canvas-perf.spec.ts</code> (frame counter and pacedDrag), <code>canvas-drop.spec.ts</code>, <code>two-cue-fit.spec.ts</code>, <code>network.spec.ts</code>, <code>tests/e2e/fixtures/pools/*.json</code> — Why: the auto fixture-pool route, helpers and the timing pattern to mirror.</li>
+  <li><code>playwright.config.ts</code> — Why: <code>@timing</code> projects (<code>chromium-timing</code> etc.) depend on the functional projects; run a single timing spec with <code>--no-deps</code>.</li>
+  <li><code>scripts/check-size.mjs</code>, <code>scripts/check-css-colors.mjs</code> — Why: the script style to mirror (ESM, doc comment naming the decision, PASS/FAIL lines, exit code); the size check already counts <code>public/pools/</code>.</li>
+  <li><code>~/repos/theforge/scripts/convert-pools.mjs</code> — Why: TheForge's pool writer (JSON.stringify with 2 spaces, id padding, per-genre report) — style reference only; its rules do not apply.</li>
+</ul>
+
+<h3>New Files to Create</h3>
+<ul>
+  <li><code>tests/e2e/long-stack.spec.ts</code> — the 11-card stack drag tests (functional in 3 engines + <code>@timing</code> frame rate in Chromium).</li>
+  <li><code>scripts/split-decks.mjs</code> — the one-time split: exports a pure <code>splitDecks(decks, genres)</code> plus a CLI that writes <code>public/pools/*.json</code> and refuses to overwrite.</li>
+  <li><code>src/test/splitDecks.test.ts</code> — unit tests for <code>splitDecks</code> on small inline decks (rules and every error).</li>
+  <li><code>public/pools/{role,mechanic,goal,conflict,resource,modifier,setting,mood,twist,progression,constraint}.json</code> — the 11 pools (generated by the split, then the source).</li>
+  <li><code>src/shared/pools/poolFiles.test.ts</code> — the durable pool test on <code>public/pools/</code>: parses, ids unique, genre floor 10, Modifier deck floor 20.</li>
+  <li><code>tests/e2e/fixtures/pools/{mechanic,resource,mood,twist,progression,constraint}.json</code> — made-up browser-test pools (8 cues each).</li>
+  <li><code>src/features/card/lock.ts</code> (+ <code>lock.test.ts</code>) — <code>toggleLock(card)</code>; and <code>LockMark</code> inside CardView.</li>
+  <li><code>src/features/canvas/reading.ts</code> (+ <code>reading.test.ts</code>) — <code>onTopCardOf</code>, <code>cardText</code>, <code>stackEntries(board, hookId)</code>: the stack in reading order with shown connector words.</li>
+  <li><code>src/features/hook/</code>: <code>index.ts</code>, <code>buildHookSentence.ts</code> (+ <code>.test.ts</code>), <code>HookCard.tsx</code> (+ <code>.module.css</code>, <code>.test.tsx</code>), <code>HookMenu.tsx</code> (+ <code>.module.css</code>), <code>copyHook.ts</code> (+ <code>.test.ts</code>), <code>CopyFallbackDialog.tsx</code>.</li>
+  <li><code>tests/e2e/modifier.spec.ts</code>, <code>tests/e2e/hook.spec.ts</code>, <code>tests/e2e/pools-real.spec.ts</code> — browser flows.</li>
+</ul>
+
+<h3>Relevant Documentation — READ BEFORE IMPLEMENTING</h3>
+<ul>
+  <li><a href="https://reactflow.dev/api-reference/components/node-toolbar">React Flow: NodeToolbar</a> — Why: the card strip and the Hook Card hover menu paint above every node; <code>isVisible</code> drives the hover menu.</li>
+  <li><a href="https://reactflow.dev/api-reference/react-flow#zindexmode">React Flow: ReactFlow props (zIndexMode, onlyRenderVisibleElements)</a> — Why: the flat-node paint order the long-stack test measures.</li>
+  <li><a href="https://reactflow.dev/learn/advanced-use/performance">React Flow: performance</a> — Why: the only allowed fixes if Task 1 is slow (memoized nodes, stable callbacks, small node data).</li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Clipboard/writeText">MDN: Clipboard.writeText()</a> — Why: Copy; it rejects outside a secure context or without a user gesture, which opens the fallback dialog.</li>
+  <li><a href="https://playwright.dev/docs/api/class-page#page-add-init-script">Playwright: page.addInitScript</a> — Why: stub <code>navigator.clipboard.writeText</code> in all 3 engines (clipboard permissions exist only in Chromium).</li>
+  <li><a href="https://playwright.dev/docs/test-cli#reference">Playwright CLI: --no-deps, --project, --grep</a> — Why: run one <code>@timing</code> spec without the functional projects.</li>
+  <li><a href="https://playwright.dev/docs/api/class-browsercontext#browser-context-unroute">Playwright: browserContext.unroute</a> — Why: the real-pool smoke test removes the fixture route.</li>
+  <li><a href="https://zod.dev/api#refinements">Zod 4: superRefine</a> — Why: cross-card rules (onTopOf target, 1 on-top per base, hook never tucked).</li>
+  <li><a href="https://nodejs.org/api/esm.html#importmetaurl">Node.js: import.meta.url</a> and <a href="https://nodejs.org/api/fs.html#fsexistssyncpath">fs.existsSync</a> — Why: the split's run-as-script guard and its refuse-to-overwrite check.</li>
+  <li><a href="https://vitest.dev/api/#test-each">Vitest: test.each</a> — Why: table tests for connector words and sentence rules.</li>
+</ul>
+
+<h3>Patterns to Follow</h3>
+<p><strong>Module doc comment</strong> (every module starts with one; name the architecture decision where one applies):</p>
+<pre><code>/**
+ * Pool loading: fetches the 11 cue pool files from public/pools/ by web address,
+ * so a later server can serve them with no app change (pool-files).
+ */</code></pre>
+<p><strong>Pure board recipes</strong> — <code>src/features/canvas/boardActions.ts:180-189</code>: never mutate, return a new board; the canvas commits one recipe per user action with <code>changeBoard</code> (one undo step and one save):</p>
+<pre><code>export function combineOnto(board: Board, modifierId: string, targetId: string): Board {
+  const modifier = cardAt(board, modifierId);
+  const combined = combine(cardAt(board, targetId), modifier);
+  ...
+  return layoutStack(next, rootOf(next, targetId).id);
+}
+// BoardCanvas.tsx:119
+split: (id: string) =&gt; changeBoard((b) =&gt; splitCard(b, id)),</code></pre>
+<p><strong>Hand-checked pool errors</strong> (Zod only in features/export) — <code>src/shared/pools/parsePool.ts:28-30</code>:</p>
+<pre><code>if (data.type !== type) {
+  throw new Error(`The ${type} pool file says its type is ${String(data.type)}.`);
+}</code></pre>
+<p><strong>Zod with cross-field rules</strong> — <code>src/features/export/schema.ts:42-56, 107-120</code>: <code>superRefine</code> with <code>ctx.addIssue({ code: 'custom', message })</code>; the schema is typed <code>z.ZodType&lt;Board&gt;</code> so model drift is a type error.</p>
+<p><strong>Tokens, never values, from TSX</strong> — <code>src/features/card/TypeDisc.tsx:82</code>:</p>
+<pre><code>style={{ width: size, height: size, background: `var(--deck-${type})` }}</code></pre>
+<p><strong>Script style</strong> — <code>scripts/check-size.mjs</code>: ESM, doc comment naming the decision, <code>process.stdout.write</code> of report lines, <code>process.exit(failed ? 1 : 0)</code>; errors go to <code>process.stderr</code>.</p>
+<p><strong>Timing test</strong> — <code>tests/e2e/canvas-perf.spec.ts:15-48, 50-58</code>: frame counter with requestAnimationFrame, 60 paced mouse moves at 33 ms, <code>{ tag: '@timing' }</code>, Chromium only, reduced motion.</p>
+<p><strong>Naming:</strong> camelCase functions, PascalCase components, CSS modules beside components, tests named <code>functionName_condition_expectedResult</code>; Title Case for button, menu, field and dialog labels ("Redraw All", "Copy The Hook", "Hook Sentence"); notices, help text and dialog body text in sentence case as written in design 9.5 / 9.13.</p>
+<p><strong>Logging:</strong> none (<code>no-console</code> is an ESLint error). User-facing failures go through <code>Banner</code> (<code>src/shared/ui/Banner.tsx</code>) or a <code>Dialog</code> (<code>src/shared/ui/Dialog.tsx</code>).</p>
+<p><strong>Imports:</strong> the <code>@/</code> alias; another feature only through its <code>index.ts</code>. New edge this phase: <code>features/canvas</code> imports <code>@/features/hook</code> (the Hook Card view and the sentence builder); <code>features/hook</code> must never import <code>@/features/canvas</code> (that would be a cycle). <code>features/export</code> may import both.</p>
+
+<h2>Implementation Plan</h2>
+<p><strong>Rendering:</strong> Milestones</p>
+<p><strong>Rationale:</strong> 23 tasks with clear sub-layers: a gate that must pass before anything else, pools, the model, cards, Modifiers, the stack and Hook Card, the rail, then browser tests and the handoff. Tasks inside a layer are coupled (each model change ripples through card, canvas and export); layers are loosely coupled. Every task leaves <code>npm run typecheck</code>, <code>npm run lint</code> and <code>npx vitest run</code> green.</p>
+<p><strong>Always:</strong> before any Playwright command, make sure no stale <code>npm start</code> is serving port 4174 (<code>reuseExistingServer</code> is true outside CI, so an old build would be tested). <code>! curl -fsS http://localhost:4174 &gt;/dev/null 2&gt;&amp;1</code> must be true, or stop that server first.</p>
+
+<h3 class="milestone" data-milestone="1">Milestone 1: Long-stack gate</h3>
+<p>Measure the architecture's open canvas risk before building on it.</p>
+<p><strong>Validation checkpoint:</strong> <code>npx playwright test tests/e2e/long-stack.spec.ts --project=chromium --project=firefox --project=webkit &amp;&amp; npx playwright test tests/e2e/long-stack.spec.ts --project=chromium-timing --no-deps</code> passes, and <code>npx vitest run</code> is still 337+ green.</p>
+
+<h4 class="task" data-task="1">Task 1: Add the 11-card stack fixture and the long-stack drag test (gate for canvas-library)</h4>
+<p>The nfr-targets row "Long stack: an 11-card stack drags at the canvas target (≥ 50 fps)" is checked at the start of M2. The current canvas (flat top-level nodes, our own move-with-parent code) is what is measured. Phase 1 card types only; Task 15 later swaps the root for a Hook Card and re-runs it.</p>
+<ul>
+  <li><strong>CREATE:</strong> in <code>src/test/fixtures/boards.ts</code>, <code>export function stack11Board(): Board</code> — one chain of 11 cards, ids <code>long-0</code> … <code>long-10</code>, root <code>long-0</code> at <code>(240, 48)</code>, each card <code>tuckedUnder</code> the one before, <code>y = 48 + i * TUCK</code>, <code>z = i + 1</code>, types cycling <code>role, goal, conflict, setting, modifier</code> (Modifiers never combine here because they are tucked, not dropped), board id <code>board-long-stack</code>, name <code>Long Stack</code>, view <code>{ panX: 0, panY: 0, zoom: 0.75 }</code>. Use the existing <code>TUCK</code> constant so Task 8's geometry change carries over.</li>
+  <li><strong>CREATE:</strong> <code>tests/e2e/long-stack.spec.ts</code>, importing <code>test, expect</code> from <code>./test</code> and <code>openBoard, cardById, boxOf</code> from <code>./board-helpers</code>. Move <code>startFrameCounter</code>, <code>stopFrameCounter</code> and <code>pacedDrag</code> out of <code>canvas-perf.spec.ts</code> into <code>tests/e2e/frames.ts</code> and import them in both specs (no duplicate code).
+    <ul>
+      <li><code>longStack_dragRoot_wholeStackMovesAndDropsOnce</code> (all 3 engines, no tag): open <code>stack11Board()</code>, reduced motion; drag <code>long-0</code> from (+12, +12) by (+180, +40) with <code>page.mouse.move(..., { steps: 15 })</code>; during the drag (before <code>mouse.up</code>) <code>long-10</code>'s box moved by the same delta ±1; after <code>mouse.up</code> every <code>long-i</code> box sits <code>i * TUCK * 0.75</code> ±1 below <code>long-0</code> and shares its x ±1; then <code>Control+z</code> once puts <code>long-0</code> back at its start box ±1 (a drag is one undo step).</li>
+      <li><code>perf_dragLongStack_atLeast50Fps</code> in <code>test.describe('Long stack frame rate', { tag: '@timing' }, …)</code>, Chromium only (<code>test.skip(browserName !== 'chromium')</code>), reduced motion: <code>pacedDrag</code> on <code>long-0</code> by (+200, −40); assert <code>long-10</code> moved with it, then <code>mouse.up()</code>, then <code>expect(fps).toBeGreaterThanOrEqual(50)</code>; push the fps as an annotation.</li>
+    </ul>
+  </li>
+  <li><strong>PATTERN:</strong> <code>tests/e2e/canvas-perf.spec.ts:50-79</code>.</li>
+  <li><strong>GOTCHA:</strong> the Desktop Chrome viewport is 1280 × 720; at zoom 0.75 the 250 px stack (250 + 10 × 59 = 840 px → 630 px on screen) fits from y 48. Keep the drag inside the canvas region.</li>
+  <li class="stop"><strong>FAIL PATH:</strong> if <code>perf_dragLongStack_atLeast50Fps</code> is below 50 fps, make at most a fair fix attempt inside <code>src/features/canvas/</code> only (memoization, stable callbacks, smaller node data, avoiding per-move store reads) and re-run 3 times. If it still fails, or if the functional test fails in any engine, STOP THE PHASE: do not start Task 2, record the engine, the measured fps and the failing assertion in this doc's Notes under "Long-stack result", and return <code>BLOCKED: canvas-library (data-reversible="moderate") — 11-card stack drags at &lt;N&gt; fps</code>. The fallback (features/canvas lays out the stack itself) is an amendment that <code>/dev-architecture</code> must make; do not redesign the canvas in this phase.</li>
+  <li><strong>On pass:</strong> record the measured fps under "Long-stack result" in Notes.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx tsc --noEmit &amp;&amp; npx playwright test tests/e2e/long-stack.spec.ts tests/e2e/canvas-perf.spec.ts --project=chromium --project=firefox --project=webkit &amp;&amp; npx playwright test tests/e2e/long-stack.spec.ts tests/e2e/canvas-perf.spec.ts --project=chromium-timing --no-deps</code></li>
+</ul>
+
+<h3 class="milestone" data-milestone="2">Milestone 2: Pools</h3>
+<p>The one-time split, tested, then run once.</p>
+<p><strong>Validation checkpoint:</strong> <code>ls public/pools/*.json | wc -l</code> prints 11, <code>npx vitest run src/test/splitDecks.test.ts</code> passes, <code>npm run build &amp;&amp; npm run size</code> passes with pools at most 100 KB gzip, and the app (which still loads its 5 Phase 1 types) draws from the real pools on <code>npm run dev</code>.</p>
+
+<h4 class="task" data-task="2">Task 2: Write the split script and its unit tests</h4>
+<ul>
+  <li><strong>CREATE:</strong> <code>scripts/split-decks.mjs</code> (ESM, doc comment citing <code>pool-files</code>). Export <code>DECK_FILES</code> (decks.json name → pool type: "Player Role" → role, Mechanic → mechanic, Goal → goal, Conflict → conflict, Resource → resource, Setting → setting, Mood → mood, Modifier → modifier, Twist → twist, Progression → progression, Constraint → constraint), <code>genreValue(name)</code> (lowercase, drop "&amp;", every run of non-alphanumerics becomes one "-", trim "-": "Builder &amp; Management" → <code>builder-management</code> — the same rule Phase 1 used for <code>GENRES</code>), and a pure <code>splitDecks(decks, genres)</code> that returns <code>{ pools: Record&lt;type, { type, cues }&gt;, report: string[] }</code> or throws an <code>Error</code> with a readable message. Rules, in order:
+    <ol>
+      <li>Every decks.json key must be in <code>DECK_FILES</code> and all 11 must be present; else throw ("Unknown deck X" / "Missing deck X").</li>
+      <li><code>text</code> = <code>card</code> unchanged, except: Constraint — lowercase the first word only ("No combat" → "no combat", "Only first-person view" → "only first-person view"); Setting — drop one leading "the ", "a " or "an " (case-insensitive, then nothing else changes: "the whole Earth" → "whole Earth"). An empty or whitespace-only card throws.</li>
+      <li>Within one deck, a text that repeats an earlier text (case-insensitive) after the rules is dropped, keeping the first, with a report line <code>WARN setting: "solar system" repeats an earlier cue and was dropped.</code> (today exactly 1: Setting "the solar system" / "solar system").</li>
+      <li><code>genres</code>: only on Mechanic, Resource, Progression and Constraint cues; required and non-empty there; each name must be a key of genres.json (else throw "Unknown genre X on mechanic cue Y"; "any" and "generic" are unknown); mapped with <code>genreValue</code>, listed in genres.json order, no repeats. A genres key on any other deck throws.</li>
+      <li><code>targets</code>: only on Modifier cues; required and non-empty; "Player Role" → role, "Resource" → resource, "Setting" → setting, listed in that order; anything else throws. A targets key on any other deck throws.</li>
+      <li><code>games</code> is dropped.</li>
+      <li><code>id</code> = <code>&lt;type&gt;-&lt;4-digit index from 1&gt;</code> in decks.json order after duplicates are dropped (<code>mechanic-0001</code>).</li>
+      <li>Floors: every genre has ≥ 10 cues in each of the 4 tagged decks, and each of role / resource / setting has ≥ 20 Modifier cues; else throw naming the deck, genre or target and its count.</li>
+      <li>Report lines: one per deck with its cue count, per-genre counts for tagged decks, per-target counts for Modifier.</li>
+    </ol>
+    CLI part, run only when the file is executed directly (<code>import.meta.url === pathToFileURL(process.argv[1]).href</code>): read <code>docs/libraries/decks.json</code> and <code>genres.json</code>; if any <code>public/pools/*.json</code> already exists, write <code>FAIL public/pools/ already holds pool files. The split runs once; edit the JSON files instead.</code> to stderr and exit 1; else create <code>public/pools/</code>, write each pool as <code>JSON.stringify(pool, null, 2) + '\n'</code>, print the report, exit 0. On a thrown error print it to stderr and exit 1 with nothing written.</li>
+  <li><strong>CREATE:</strong> <code>src/test/splitDecks.test.ts</code> importing <code>{ splitDecks, genreValue }</code> from <code>'../../scripts/split-decks.mjs'</code> (allowJs is on). Build a tiny valid input in the test (11 decks; 10 cues per genre for 2 genres via a 2-genre genres object; 20 Modifier cues per target) and cover: <code>splitDecks_constraintCue_lowercasesFirstWordOnly</code>, <code>splitDecks_settingCue_dropsLeadingArticle</code> (the / a / an, and "theater" is not touched), <code>splitDecks_repeatAfterRules_keepsFirstAndWarns</code>, <code>splitDecks_genreNames_becomeKebabInFileOrder</code>, <code>splitDecks_unknownGenre_throws</code>, <code>splitDecks_genresOnUntaggedDeck_throws</code>, <code>splitDecks_missingGenresOnTaggedDeck_throws</code>, <code>splitDecks_targets_mapToRoleResourceSetting</code>, <code>splitDecks_unknownOrEmptyTargets_throws</code>, <code>splitDecks_genreBelow10_throwsNamingGenre</code>, <code>splitDecks_modifierDeckBelow20_throwsNamingTarget</code>, <code>splitDecks_games_areDropped</code>, <code>splitDecks_ids_areStableAndPadded</code>, <code>genreValue_ampersandNames_matchModelGenres</code> (all 21 genres.json names map to <code>GENRES</code> from <code>@/shared/model</code>).</li>
+  <li><strong>GOTCHA:</strong> do not run the CLI in this task. Keep the script free of the words the story-name test bans only if it sits under src/ (it does not; scripts/ is not scanned), but the test file under src/ must avoid them.</li>
+  <li><strong>GOTCHA:</strong> ESLint covers <code>scripts/</code>; Node globals are configured there already (check-size.mjs). Prettier formats it.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/test/splitDecks.test.ts &amp;&amp; npx eslint scripts/split-decks.mjs src/test/splitDecks.test.ts &amp;&amp; npx tsc --noEmit &amp;&amp; test ! -e public/pools/role.json</code></li>
+</ul>
+
+<h4 class="task" data-task="3">Task 3: Run the split once and commit the 11 pool files</h4>
+<ul>
+  <li><strong>IMPLEMENT:</strong> <code>node scripts/split-decks.mjs</code>, then <code>npx prettier --write public/pools</code>. Paste the report (cue counts, smallest genre per tagged deck, Modifier target counts, the WARN lines) into this doc's Notes under "Split report".</li>
+  <li><strong>IMPLEMENT:</strong> one-off cue-for-cue check (the M3/M4 pass bar "every converted pool matches its library cue for cue after the 2 split rules", done now because all 11 are split now): the VALIDATE below re-derives each expected text from decks.json with the 2 rules and the duplicate drop and compares it to the pool, in order. This check is NOT added as a durable test, because after the split the user edits the JSON directly.</li>
+  <li><strong>GOTCHA:</strong> after this task the split never runs again. If the split must be redone before this phase merges, delete <code>public/pools/</code> first; after merge, never.</li>
+  <li><strong>GOTCHA:</strong> the app still loads only its 5 Phase 1 types (role, goal, conflict, modifier, setting); <code>parsePool</code> ignores the new <code>targets</code> key on Modifier cues until Task 5, so the app keeps working. Browser tests still use the fixture pools (auto route), so they are unaffected.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>test "$(ls public/pools/*.json | wc -l)" -eq 11 &amp;&amp; node -e "const fs=require('fs');const d=JSON.parse(fs.readFileSync('docs/libraries/decks.json'));const m={'Player Role':'role'};let bad=0;for(const [k,v] of Object.entries(d)){const t=m[k]??k.toLowerCase();const p=JSON.parse(fs.readFileSync('public/pools/'+t+'.json'));const seen=new Set();const exp=[];for(const c of v){let x=c.card;if(t==='constraint')x=x.replace(/^\S+/,w=&gt;w.toLowerCase());if(t==='setting')x=x.replace(/^(the|a|an) /i,'');if(seen.has(x.toLowerCase()))continue;seen.add(x.toLowerCase());exp.push(x);}const got=p.cues.map(c=&gt;c.text);if(p.type!==t||JSON.stringify(got)!==JSON.stringify(exp)){console.error('mismatch',t);bad++;}if(p.cues.some(c=&gt;'games' in c))bad++;}process.exit(bad?1:0)" &amp;&amp; (node scripts/split-decks.mjs &gt;/dev/null 2&gt;&amp;1; test $? -eq 1) &amp;&amp; npm run build &amp;&amp; npm run size</code></li>
+</ul>
+
+<h3 class="milestone" data-milestone="3">Milestone 3: Data model, pools and draws</h3>
+<p>The 12 card types and the new fields, loaded pools for all 11 decks, draws with both filters, and the import check.</p>
+<p><strong>Validation checkpoint:</strong> <code>npx vitest run</code> passes; a fixture board containing every card type, a Modifier of each <code>modDeck</code>, a combined Resource with ring <code>modDeck</code>, an on-top Modifier and a locked card round-trips through <code>boardFileText</code> → <code>parseBoardFile</code> with deep equality (add this as <code>schema_everyCardType_roundTrips</code> in Task 7).</p>
+
+<h4 class="task" data-task="4">Task 4: Widen the model to the 12 card types and the new card fields</h4>
+<ul>
+  <li><strong>UPDATE:</strong> <code>src/shared/model/index.ts</code>:
+    <ul>
+      <li><code>DECKS = ['role', 'mechanic', 'resource', 'goal', 'conflict', 'modifier', 'setting', 'mood', 'twist', 'progression', 'constraint'] as const</code> (rail order: core in design order, Modifier, optional), <code>type Deck</code>.</li>
+      <li><code>CARD_TYPES = ['hook', ...DECKS] as const</code>, <code>type CardType</code>.</li>
+      <li><code>MOD_DECKS = ['role', 'resource', 'setting'] as const</code>, <code>type ModDeck</code>; <code>BASE_TYPES</code> = the same 3 (the card types a Modifier combines with).</li>
+      <li><code>CUES_PER_CARD: Record&lt;Deck, 2 | 4&gt;</code> — 4 for role, mechanic, resource, modifier, setting, mood; 2 for goal, conflict, twist, progression, constraint.</li>
+      <li><code>DECK_NAME: Record&lt;CardType, string&gt;</code> — hook "Hook Card", role "Player Role", mechanic "Mechanic", resource "Resource", goal "Goal", conflict "Conflict", modifier "Modifier", setting "Setting", mood "Mood", twist "Twist", progression "Progression", constraint "Constraint"; <code>MOD_DECK_NAME: Record&lt;ModDeck, string&gt;</code> — "Player Role Modifier", "Resource Modifier", "Setting Modifier".</li>
+      <li><code>Ring</code> gains <code>modDeck?: ModDeck</code> (only on a merged adjective ring). <code>Card</code> gains <code>modDeck?: ModDeck</code> (required on a modifier card; enforced by Zod), <code>onTopOf: string | null</code>, <code>locked: boolean</code>; doc comments from <code>mvp-plan.html</code> Data model. A hook card has <code>rings: []</code>.</li>
+      <li><code>PoolCue</code> gains <code>targets?: ModDeck[]</code>; <code>Pool.type: Deck</code>; <code>Pools = Record&lt;Deck, Pool&gt;</code>.</li>
+      <li>Keep <code>FORMAT_VERSION = 1</code>; extend its comment: "Phase 2 added hook, 6 decks, modDeck, onTopOf and locked inside version 1 before any user board existed; from Phase 2 on, a shape change needs an upgrade step."</li>
+    </ul>
+  </li>
+  <li><strong>UPDATE (type ripple, behavior unchanged):</strong> every <code>Record&lt;CardType, …&gt;</code> and switch fixed so <code>tsc</code> passes — <code>TYPE_ICON</code> in <code>TypeDisc.tsx</code> (hook: <code>hook</code>, role: <code>user</code>, mechanic: <code>repeat</code>, resource: <code>battery</code>, goal: <code>flag</code>, conflict: <code>zap</code>, modifier: <code>user-plus</code>, setting: <code>map-pin</code>, mood: <code>smile</code>, twist: <code>rotate-ccw</code>, progression: <code>trending-up</code>, constraint: <code>shield-x</code>); <code>RING_RULES</code> in <code>schema.ts</code> (temporary: hook rings [0] cues 0, new decks rings [1] with their cue count; Task 7 rewrites the schema); <code>[data-type]</code> blocks in <code>CardView.module.css</code> for the 6 new decks; <code>drawCard</code> signature to <code>type: Deck</code> and the returned card gets <code>locked: false, onTopOf: null</code>; <code>splitCard</code> / every place that builds a Card adds <code>locked: false, onTopOf: null</code>; fixtures (<code>fixtureCard</code> adds <code>locked: false, onTopOf: null</code>; Modifier fixtures get <code>modDeck: 'role'</code>; <code>CUES</code> gains <code>mechanic, resource, mood, twist, progression, constraint</code> with made-up texts, and <code>hook: []</code>).</li>
+  <li><strong>UPDATE:</strong> <code>SideRail.tsx</code> iterates an explicit <code>PHASE1_RAIL: Deck[] = ['role', 'goal', 'conflict', 'modifier', 'setting']</code> so the rail is unchanged until Task 17; the Modifier button passes <code>modDeck: 'role'</code> (Task 6 adds the parameter; until then the draw sets <code>modDeck: 'role'</code> for a modifier).</li>
+  <li><strong>GOTCHA:</strong> <code>shared/model</code> holds types and constants only (plus allGenresOn and newId). Do not add logic.</li>
+  <li><strong>GOTCHA:</strong> <code>loadPools</code> still loops <code>CARD_TYPES</code> — change it in this task to loop the 5 Phase 1 decks explicitly (<code>['role','goal','conflict','modifier','setting']</code>) so it never requests <code>hook.json</code>; Task 5 switches it to <code>DECKS</code>.</li>
+  <li><strong>GOTCHA:</strong> no saved board can hold cards yet (Phase 1 shipped no pools), so <code>locked</code> and <code>onTopOf</code> are required in the type with no load-time default.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx tsc --noEmit &amp;&amp; npm run lint &amp;&amp; npx vitest run &amp;&amp; node -e "const s=require('fs').readFileSync('src/shared/model/index.ts','utf8');for(const w of ['onTopOf: string | null','locked: boolean','modDeck?: ModDeck','FORMAT_VERSION = 1'])if(!s.includes(w))process.exit(1)"</code></li>
+</ul>
+
+<h4 class="task" data-task="5">Task 5: Load and check all 11 pools, with the durable pool floor test and new fixture pools</h4>
+<ul>
+  <li><strong>UPDATE:</strong> <code>parsePool.ts</code>: <code>type: Deck</code>; Modifier cues need <code>targets</code> — a non-empty list of known <code>MOD_DECKS</code> with no repeats ("Cue X in the modifier pool needs a list of targets: role, resource or setting."); a <code>targets</code> key on any other deck throws; the parsed Modifier cue keeps <code>targets</code>. Genre rules unchanged.</li>
+  <li><strong>UPDATE:</strong> <code>loadPools.ts</code>: loop <code>DECKS</code> (11 files); doc comment says 11. <code>usePools</code> unchanged.</li>
+  <li><strong>CREATE:</strong> <code>src/shared/pools/poolFiles.test.ts</code> — reads every file in <code>public/pools/</code> with <code>node:fs</code>: <code>poolFiles_everyDeck_hasOneFileThatParses</code> (exactly the 11 <code>DECKS</code>, each through <code>parsePool</code>), <code>poolFiles_ids_areUniqueInEachPool</code>, <code>poolFiles_texts_areDistinctInEachPool</code> (case-insensitive), <code>poolFiles_everyGenre_hasAtLeast10CuesInEachTaggedDeck</code> (21 × 4, message names deck, genre and count), <code>poolFiles_eachModifierDeck_hasAtLeast20Cues</code>, <code>poolFiles_constraintCues_startLowercase</code>, <code>poolFiles_settingCues_haveNoLeadingArticle</code>.</li>
+  <li><strong>UPDATE:</strong> <code>loadPools.test.ts</code> for 11 files and the targets rules (missing, empty, unknown, repeated, targets on a non-Modifier pool).</li>
+  <li><strong>CREATE:</strong> <code>tests/e2e/fixtures/pools/{mechanic,resource,mood,twist,progression,constraint}.json</code> — 8 made-up cues each, ids <code>&lt;type&gt;-test-01..08</code>, cue forms per <code>mvp-plan.html</code> Decks (Mechanic verbs, Resource 1–2 words, Mood 1 word, Twist / Progression / Constraint up to 8 words, Constraint lowercase). Mechanic, Resource, Progression and Constraint cues list all 21 genres. <strong>UPDATE</strong> <code>tests/e2e/fixtures/pools/modifier.json</code> to 12 cues with <code>targets</code>: 4 role-only ("exiled", "orbital", "reanimated", "haunted"), 4 resource-only ("stolen", "borrowed", "rusty", "glowing") and 4 setting-only ("flooded", "frozen", "sunken", "silent"), so each Modifier deck has exactly 4 distinct cues and a test can tell the decks apart.</li>
+  <li><strong>UPDATE:</strong> <code>tests/e2e/test.ts</code> doc comment (pools now ship; the fixture route stays for fixed cue texts).</li>
+  <li><strong>GOTCHA:</strong> fixture cue texts must not contain the words banned by <code>storyNames.test.ts</code> if they are copied into src/ fixtures.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/shared/pools &amp;&amp; npx tsc --noEmit &amp;&amp; test "$(ls tests/e2e/fixtures/pools/*.json | wc -l)" -eq 11 &amp;&amp; npm run lint</code></li>
+</ul>
+
+<h4 class="task" data-task="6">Task 6: Draw with the genre filter on tagged decks and the target filter on the 3 Modifier decks</h4>
+<ul>
+  <li><strong>UPDATE:</strong> <code>drawCard.ts</code>: <code>drawCard(type: Deck, pool: Pool, filter: { genres?: readonly Genre[]; modDeck?: ModDeck }, options?)</code>. Genre-tagged deck: keep cues sharing a genre with <code>filter.genres</code> (required for those 4 decks; throw if missing). Modifier: <code>filter.modDeck</code> required; keep cues whose <code>targets</code> include it; the card gets <code>modDeck</code>. Other decks: full pool. Result card: <code>locked: false</code>, <code>onTopOf: null</code>. Cards copy only <code>text</code> (never genres or targets — CLAUDE.md "Cards do not store targets").</li>
+  <li><strong>ADD:</strong> <code>drawFor(card: Card, pools: Pools, genres: DeckGenres): Card</code> in <code>features/draw</code> (exported from its index) — draws a card like the given one (same deck, same <code>modDeck</code>, the board's genres for tagged decks); used by Redraw and later Redraw All.</li>
+  <li><strong>UPDATE:</strong> <code>BoardScreen.draw(type, from, modDeck?)</code> passes <code>{ genres: board.genres[type] }</code> for tagged decks and <code>{ modDeck }</code> for Modifier; <code>BoardCanvas</code> redraw uses <code>drawFor(card, pools, board.genres)</code>; remove the "none of the 5 Phase 1 decks is genre-tagged" comments.</li>
+  <li><strong>UPDATE:</strong> <code>redrawCard</code> in <code>boardActions.ts</code>: also require the same <code>modDeck</code> for a Modifier; keep <code>locked</code>, <code>onTopOf</code>, <code>connector</code>, id, place, z, tucks and <code>rings[1]</code> (with its <code>modDeck</code>).</li>
+  <li><strong>ADD tests</strong> (<code>drawCard.test.ts</code>, <code>boardActions.test.ts</code>): <code>drawCard_modifierRole_drawsOnlyRoleTargets</code> (one per modDeck), <code>drawCard_modifier_setsModDeck</code>, <code>drawCard_modifierWithoutModDeck_throws</code>, <code>drawCard_mechanicOneGenre_drawsOnlyThatGenre</code>, <code>drawCard_taggedDeckWithoutGenres_throws</code>, <code>drawCard_card_hasNoTargetsOrGenres</code>, <code>drawCard_newCard_isUnlockedAndNotOnTop</code>, <code>drawFor_modifier_keepsModDeck</code>, <code>redrawCard_lockedCard_staysLocked</code>, <code>redrawCard_differentModDeck_throws</code>. Plus one on the real pools: <code>drawCard_realModifierPool_eachDeckDraws4Distinct</code> (reads <code>public/pools/modifier.json</code> through parsePool, 200 seeded draws per modDeck, every cue's targets include it).</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/draw src/features/canvas/boardActions.test.ts &amp;&amp; npx tsc --noEmit &amp;&amp; npm run lint</code></li>
+</ul>
+
+<h4 class="task" data-task="7">Task 7: Rewrite the Zod import check for the new card shape</h4>
+<ul>
+  <li><strong>UPDATE:</strong> <code>src/features/export/schema.ts</code>: <code>type: z.enum(CARD_TYPES)</code>; ring <code>modDeck: z.enum(MOD_DECKS).optional()</code>; card <code>modDeck</code> optional enum, <code>onTopOf: z.string().nullable()</code>, <code>locked: z.boolean()</code>. Card rules (superRefine): hook — 0 rings, no modDeck, <code>tuckedUnder</code> null, <code>onTopOf</code> null, no connector; role / resource / setting — 1 or 2 rings of 4, <code>rings[1].modDeck</code> required, <code>rings[0].modDeck</code> absent; mechanic / mood — 1 ring of 4; goal / conflict / twist / progression / constraint — 1 ring of 2; modifier — 1 ring of 4 and <code>modDeck</code> required; <code>modDeck</code> on any non-modifier card is an issue; <code>onTopOf</code> non-null only on a modifier, and then <code>tuckedUnder</code> must be null. Board rules (add to the existing superRefine): an <code>onTopOf</code> that names a card must name a role / resource / setting card; at most 1 card on top of each base card; no card is tucked under a card that is on top of another; a <code>tuckedUnder</code> that names a hook is fine; an <code>onTopOf</code> that names no card is allowed (that card shows as a free card), mirroring dangling <code>tuckedUnder</code>.</li>
+  <li><strong>UPDATE:</strong> doc comment: the new fields went into format 1; no upgrade step (feature-modifier-decks.html "No migration"; board-file-format).</li>
+  <li><strong>ADD tests</strong> in <code>schema.test.ts</code>: <code>schema_everyCardType_roundTrips</code> (fixture board with all 12 types, a Modifier per modDeck, a combined Resource with <code>rings[1].modDeck</code>, an on-top Modifier, a locked card — <code>parseBoardFile(boardFileText(board))</code> deep-equals board), <code>schema_modifierWithoutModDeck_rejects</code>, <code>schema_mergedRingWithoutModDeck_rejects</code>, <code>schema_hookWithRings_rejects</code>, <code>schema_tuckedHook_rejects</code>, <code>schema_onTopOfNonBase_rejects</code>, <code>schema_twoOnTopOfOneBase_rejects</code>, <code>schema_onTopCardTucked_rejects</code>, <code>schema_missingLocked_rejects</code>, <code>schema_danglingOnTopOf_accepts</code>, <code>schema_mechanicWithTwoRings_rejects</code>.</li>
+  <li><strong>GOTCHA:</strong> <code>upgrade.test.ts</code> already fails if a version below FORMAT_VERSION has no step; FORMAT_VERSION stays 1, so it stays green.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/export &amp;&amp; npx tsc --noEmit &amp;&amp; npm run lint</code></li>
+</ul>
+
+<h3 class="milestone" data-milestone="4">Milestone 4: Cards</h3>
+<p>The design's 200 px card, the new deck faces and icons, and the lock.</p>
+<p><strong>Validation checkpoint:</strong> <code>npx playwright test tests/e2e/card-test.spec.ts tests/e2e/two-cue-fit.spec.ts tests/e2e/canvas-drop.spec.ts --project=chromium --project=firefox --project=webkit</code> passes on the 200 px card, and a locked, tucked Mechanic under a Player Role shows its active cue and lock icon in its 56 px strip.</p>
+
+<h4 class="task" data-task="8">Task 8: Move cards to 200 px with a 56 px tuck and the cream card face</h4>
+<ul>
+  <li><strong>UPDATE:</strong> <code>ringGeometry.ts</code> <code>CARD_SIZE = 200</code> (CENTER 100; arrows inner 66.5 / 133.5, outer 50.5 / 149.5); <code>placement.ts</code> <code>CARD_SIZE = 200</code> with doc "design 9.4"; <code>stack.ts</code> <code>TUCK_OFFSET = 56</code>; <code>CardView.tsx</code> <code>EDGE_OUTSIDE = 86</code> (14 px inset on a 200 px card) and doc comments; <code>dropZones.ts</code> swap radius placeholder kept until Task 12.</li>
+  <li><strong>UPDATE:</strong> <code>CardView.module.css</code>: <code>width/height: var(--card-size)</code>; center icon per design 9.4 (48 circle centered, i.e. at (76, 76)); cue sizes per 9.4 (active Display 14/700 line height 1.25, 12 from the bottom, padding 0 12; inactive Display 15/600 <code>--card-cue</code>; top cue 14 from the top; 2-cue cues 28 from top and bottom; divider 1 px at y 99, inset 20, <code>--card-divider</code>). Remove the TheForge tint: the face is <code>--card-face</code>; tucked faces by depth use <code>--card-tucked-1</code> … <code>-4</code> (deeper reuse -4) — <code>CardPaper</code> becomes <code>'top' | 'under-1' | 'under-2' | 'under-3' | 'under-4'</code> and <code>CardNode.paperFor</code> maps depth 1..4+. Re-fit the label boxes (<code>.wide</code>, <code>.side</code>) so <code>two-cue-fit.spec.ts</code> passes with 8-word cues.</li>
+  <li><strong>REMOVE:</strong> the carried-over <code>--card: 250px</code> token from <code>tokens.css</code> and from the <code>CARRIED_OVER</code> allow list in <code>tokens.test.ts</code>; every <code>var(--card)</code> becomes <code>var(--card-size)</code>; use <code>--tuck-offset</code> where CSS needs the tuck.</li>
+  <li><strong>UPDATE:</strong> <code>src/test/fixtures/boards.ts</code> <code>TUCK = 56</code>, <code>PITCH = 240</code> (a 200 px card plus more than the 24 px margin, and a multiple of the 24 px grid) and its comments; <code>tests/e2e/helpers.ts</code> <code>ARROW</code> to <code>{ innerLeft: {x: 66.5, y: 100}, innerRight: {x: 133.5, y: 100}, outerLeft: {x: 50.5, y: 100}, outerRight: {x: 149.5, y: 100} }</code> and its "250 × 250" comment; any spec that hard-codes 250 or 59 (grep <code>tests/e2e</code> and <code>src</code>).</li>
+  <li><strong>UPDATE:</strong> <code>stack11Board</code> view zoom stays 0.75 (200 + 10 × 56 = 760 → 570 px on screen).</li>
+  <li><strong>GOTCHA:</strong> <code>tokens_everyVarUsedInSrc_isDefined</code> fails on any leftover <code>var(--card)</code>.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>! grep -rnE "\b(250|59)\b" src/features/card/ringGeometry.ts src/features/canvas/placement.ts src/features/canvas/stack.ts src/test/fixtures/boards.ts &amp;&amp; ! grep -rn "var(--card)" src &amp;&amp; npx vitest run &amp;&amp; npx tsc --noEmit &amp;&amp; npm run lint &amp;&amp; npx playwright test tests/e2e/card-test.spec.ts tests/e2e/two-cue-fit.spec.ts tests/e2e/canvas-drop.spec.ts tests/e2e/long-stack.spec.ts --project=chromium</code></li>
+</ul>
+
+<h4 class="task" data-task="9">Task 9: Draw the 6 new deck faces and the Modifier icon by modDeck</h4>
+<ul>
+  <li><strong>ADD:</strong> <code>iconFor(card: Pick&lt;Card, 'type' | 'modDeck'&gt;): IconName</code> in <code>TypeDisc.tsx</code> (exported from <code>features/card</code>): modifier → <code>MOD_ICON[card.modDeck ?? 'role']</code> with <code>MOD_ICON = { role: 'user-plus', resource: 'battery-plus', setting: 'map-pin-plus' }</code>; else <code>TYPE_ICON[type]</code>. Use it in <code>TypeDisc</code> (pass the card or its icon), the tuck mark in <code>CardView</code>, and anywhere <code>TYPE_ICON[card.type]</code> was used for a card.</li>
+  <li><strong>UPDATE:</strong> <code>labelFit</code> in <code>CardView.tsx</code>: Modifier and Mood stay on one line (1-word decks); Mechanic, Resource, Player Role and Setting use the 4-cue frame (wide top/bottom, side frames); Goal, Conflict, Twist, Progression and Constraint use the 2-cue wide frame. <code>ringWord</code> in <code>rings.ts</code>: 2-cue decks → "Cues"; Modifier, Mood or ring 1 → "Adjectives" for Modifier and ring 1, "Cues" for Mood and Mechanic; Player Role, Resource, Setting ring 0 → "Nouns".</li>
+  <li><strong>UPDATE:</strong> <code>CardView</code> <code>aria-label</code>: a Modifier reads <code>MOD_DECK_NAME[modDeck] + ' Card'</code> ("Resource Modifier Card"); others <code>DECK_NAME[type] + ' Card'</code>. Add <code>data-mod-deck</code> on the article for Modifier cards (tests use it).</li>
+  <li><strong>UPDATE:</strong> <code>CardTestPage</code> (#/card-test) lists the 11 decks (Modifier as 3 buttons) so the fit specs can draw every deck.</li>
+  <li><strong>ADD tests:</strong> <code>CardView.test.tsx</code> — <code>cardView_modifierEachModDeck_showsItsIcon</code>, <code>cardView_mood_rendersFourCues</code>, <code>cardView_constraint_rendersTwoCuesAndRule</code>; <code>rings.test.ts</code> — <code>ringWord_eachDeck_namesItsCues</code>.</li>
+  <li><strong>UPDATE:</strong> <code>tests/e2e/two-cue-fit.spec.ts</code> / <code>card-test.spec.ts</code> tables to include the new decks (fixture pools from Task 5).</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/card src/app/card-test &amp;&amp; npx tsc --noEmit &amp;&amp; npm run lint &amp;&amp; npx playwright test tests/e2e/card-test.spec.ts tests/e2e/two-cue-fit.spec.ts --project=chromium</code></li>
+</ul>
+
+<h4 class="task" data-task="10">Task 10: Add the lock and the full card strip</h4>
+<ul>
+  <li><strong>CREATE:</strong> <code>src/features/card/lock.ts</code>: <code>toggleLock(card: Card): Card</code> (pure). <strong>ADD</strong> <code>lockCard(board, cardId)</code> recipe in <code>boardActions.ts</code> (one undo step per call; exported from canvas index).</li>
+  <li><strong>UPDATE:</strong> <code>CardStrip.tsx</code>: items in design order Split (combined only — Task 12 widens the rule), Redraw, Lock / Unlock (label by state, <code>aria-pressed</code>), Discard (<code>--danger-text</code>); 44 px buttons, padding 0 10–12, radius 7, 13/500; the strip's bottom sits 56 above the card top (NodeToolbar offset 56).</li>
+  <li><strong>UPDATE:</strong> <code>CardView</code>: when <code>card.locked</code>, a non-interactive lock mark — full card: 30 px circle 10 from the top and right, fill <code>--bg</code>, <code>lock</code> icon 15 (<code>data-testid="lock-mark"</code>); tucked paper: <code>lock</code> icon 13 in the deck card color, 12 from the right and 30 from the bottom of the visible strip. Rings still turn on a locked card.</li>
+  <li><strong>UPDATE:</strong> <code>CardNode</code> / <code>CardNodeActions</code>: <code>lock(id)</code> → <code>changeBoard(b =&gt; lockCard(b, id))</code>.</li>
+  <li><strong>ADD tests:</strong> <code>lock.test.ts</code> (<code>toggleLock_unlocked_locks</code>, <code>toggleLock_twice_unlocks</code>), <code>CardStrip.test.tsx</code> (<code>cardStrip_lockedCard_showsUnlock</code>, item order), <code>boardActions.test.ts</code> (<code>lockCard_keepsEverythingElse</code>), <code>undo.test.ts</code> (<code>undo_lockThenUndo_unlocks</code>).</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/card src/features/canvas src/app/undo.test.ts &amp;&amp; npx tsc --noEmit &amp;&amp; npm run lint</code></li>
+</ul>
+
+<h3 class="milestone" data-milestone="5">Milestone 5: Modifiers</h3>
+<p>Combine, swap and Split with modDeck on all 3 base cards, and On Top through onTopOf.</p>
+<p><strong>Validation checkpoint:</strong> a unit test walks the feature brief's example on one board: "frozen" (setting modDeck) merges into "pilot" → active text "frozen pilot"; "tall" (role modDeck) dropped in the top band → "tall frozen pilot"; Split → "tall pilot" with the split card's icon <code>map-pin-plus</code>; a third Modifier over the card gets only the swap zone (<code>feature_modifierExample_readsAsBrief</code> in <code>reading.test.ts</code>, Task 12).</p>
+
+<h4 class="task" data-task="11">Task 11: Carry modDeck through combine, swap and Split, and allow Resource as a base card</h4>
+<ul>
+  <li><strong>UPDATE:</strong> <code>rings.ts</code>: <code>combine</code> accepts role, resource and setting (<code>BASE_TYPES</code>); the new <code>rings[1]</code> copies the Modifier's ring with <code>modDeck: modifier.modDeck</code>. <code>swap</code>: the base's new <code>rings[1]</code> gets the incoming Modifier's <code>modDeck</code>; the returned Modifier gets the old ring's cues, active cue and <code>modDeck: oldRing.modDeck</code>. <code>split</code>: returns the ring with its <code>modDeck</code>. <code>copyRing</code> keeps <code>modDeck</code>.</li>
+  <li><strong>UPDATE:</strong> <code>boardActions.ts</code>: <code>splitCard</code> builds the new Modifier with <code>modDeck: ring.modDeck</code> (fallback <code>'role'</code> only if absent — cannot happen after Task 7), <code>locked: false</code>, <code>onTopOf: null</code>, and the ring stored without <code>modDeck</code> (a free Modifier's ring has none); <code>swapOnto</code> likewise. <code>dropZones.canCombine</code> uses <code>BASE_TYPES</code>.</li>
+  <li><strong>ADD tests</strong> (<code>rings.test.ts</code>, <code>boardActions.test.ts</code>): <code>combine_resource_merges</code>, <code>combine_mechanic_throws</code>, <code>combine_copiesModDeckToRing</code>, <code>swap_exchangesModDecks</code>, <code>splitCard_newModifier_takesRingModDeck</code>, <code>splitCard_newModifierRing_hasNoModDeck</code>, <code>combineThenSplit_iconSurvives</code> (via <code>iconFor</code>).</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/card src/features/canvas &amp;&amp; npx tsc --noEmit &amp;&amp; npm run lint</code></li>
+</ul>
+
+<h4 class="task" data-task="12">Task 12: Replace TheForge's On Top with the onTopOf link and the 2 drop zones</h4>
+<ul>
+  <li><strong>CREATE:</strong> <code>src/features/canvas/reading.ts</code> with <code>onTopCardOf(board, baseId): Card | null</code> (the modifier whose <code>onTopOf</code> is baseId), <code>isOnTop(board, card): boolean</code> (its <code>onTopOf</code> names an existing card) and <code>cardText(board, card): string</code> = on-top active adjective (if any) + merged active adjective (if any) + noun, single spaces ("tall frozen pilot"); for non-base cards it is <code>activeText(card)</code>.</li>
+  <li><strong>UPDATE:</strong> <code>rings.ts</code> <code>edgeCues(card, onTop?: Ring)</code> adds <code>onTopAdjective</code> per edge (<code>onTop.cues[(onTop.activeIndex + k) % 4]</code>); <code>CardView</code> takes an optional <code>onTop?: Ring</code> prop and renders each edge as on-top adjective, merged adjective, noun (adjectives in <code>--card-adjective</code>, active <code>--card-adjective-active</code>), including the case with an on-top card and no merged ring ("tall pilot"). <code>CardNode</code> passes <code>onTopCardOf(board, id)?.rings[0]</code> (selected from the store).</li>
+  <li><strong>UPDATE:</strong> <code>stack.ts</code>: <strong>REMOVE</strong> <code>putOnTop</code>; <code>childrenOf</code> unchanged. Everything that walks cards skips on-top cards: <code>toNodes</code> (no node), <code>paintOrder</code> / <code>dropTarget</code>, <code>boardRects</code> (the base covers it), roots in <code>textFile.ts</code>. An on-top card's x, y are not maintained while it is on top; they are set when it is released.</li>
+  <li><strong>UPDATE:</strong> <code>dropZones.ts</code> (design 9.8): over a base card with no merged ring → <code>combine</code> anywhere (also when an on-top card exists); over a merged base card with no on-top card → <code>onTop</code> when the pointer is in the top band (<code>y &lt; card.y + 52</code>), else <code>swap</code>; over a merged base card that has an on-top card → <code>swap</code> anywhere, hint <code>swapOnly</code>. Constants <code>TOP_BAND = 52</code>, swap circle (visual) 96 wide with top-left at (52, 70). A Modifier over any other deck tucks (no zone). <code>DropHints</code>: zone styles per 9.8 (dashed 2 <code>--deck-modifier</code>, 16% fill, top band at 32% fill, label "Drop to combine" / "Add on top" / "Swap" 12/700 <code>--zone-text</code>).</li>
+  <li><strong>ADD:</strong> <code>putOnTopOf(board, modifierId, baseId)</code> recipe: the Modifier leaves its stack (its own tucked cards re-tuck under the base, like <code>combineOnto</code>), gets <code>onTopOf: baseId</code>, <code>tuckedUnder: null</code>; throws if the base already has an on-top card or has no merged ring. <code>dropCard</code> case <code>onTop</code> calls it.</li>
+  <li><strong>UPDATE:</strong> <code>splitCard</code>: a merged ring → split it as before (the on-top card stays). No merged ring but an on-top card → release the on-top card beside the base (<code>besideSpot</code>, <code>onTopOf: null</code>, new z). <code>CardStrip</code> shows Split when <code>isCombined(card) || onTopCardOf(board, id)</code>.</li>
+  <li><strong>UPDATE:</strong> <code>discardCard</code>: an on-top card of the discarded base becomes a free root at the base's x, y (<code>onTopOf: null</code>, new z). <code>redrawCard</code> never touches the on-top card. <code>removeFromStacks</code> unchanged for tucked cards.</li>
+  <li><strong>ADD tests</strong> (<code>reading.test.ts</code>, <code>dropZones.test.ts</code>, <code>boardActions.test.ts</code>, <code>nodes.test.ts</code>): <code>feature_modifierExample_readsAsBrief</code> (see milestone), <code>dropAction_topBandOfMergedCard_isOnTop</code>, <code>dropAction_centerOfMergedCard_isSwap</code>, <code>dropAction_mergedCardWithOnTop_isSwapEverywhere</code>, <code>dropAction_baseWithOnTopNoMerge_combines</code>, <code>putOnTopOf_secondOnTop_throws</code>, <code>splitCard_onlyOnTop_releasesIt</code>, <code>discardCard_baseWithOnTop_freesIt</code>, <code>redrawCard_base_keepsOnTop</code>, <code>toNodes_onTopCard_hasNoNode</code>, <code>moveCard_base_onTopStaysLinked</code>.</li>
+  <li><strong>GOTCHA:</strong> the inner ring (Shift+R, inner ring halves) turns the merged ring only; the on-top ring keeps the active cue it had when dropped (the user turns a Modifier before dropping it, or Splits it off). See Notes.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>! grep -rn "putOnTop\b" src &amp;&amp; npx vitest run &amp;&amp; npx tsc --noEmit &amp;&amp; npm run lint</code></li>
+</ul>
+
+<h3 class="milestone" data-milestone="6">Milestone 6: Stack, badges and the Hook Card</h3>
+<p>Connector words for all 12 types, tuck hints, the pure sentence builder, and the Hook Card with its menu.</p>
+<p><strong>Validation checkpoint:</strong> <code>npx playwright test tests/e2e/long-stack.spec.ts --project=chromium-timing --no-deps</code> still reaches 50 fps with a Hook Card at the root, and on a fixture board with a Hook Card and Player Role, Mechanic, Resource, Goal and Conflict tucked in order the Hook Card shows exactly "You are a lighthouse keeper who must trade using memories to keep the light on, but the tide rises every night." (cue texts from the fixture).</p>
+
+<h4 class="task" data-task="13">Task 13: Connector words for the 12 types, tuck hints in the core order, and the Hook Card stack layout</h4>
+<ul>
+  <li><strong>UPDATE:</strong> <code>connector.ts</code> <code>connectorWords(upper, lower)</code>, default first, per <code>mvp-plan.html</code> Connector badges:
+    <table>
+      <tr><th>Lower card</th><th>Upper card</th><th>Words</th></tr>
+      <tr><td>modifier</td><td>any</td><td>null (no badge; Modifiers never get "and")</td></tr>
+      <tr><td>role</td><td>hook</td><td>You are a · You play a</td></tr>
+      <tr><td>role</td><td>role</td><td>and a · with a</td></tr>
+      <tr><td>role</td><td>any other</td><td>with a · and a (assumption, see Notes)</td></tr>
+      <tr><td>any other deck</td><td>same deck</td><td>and</td></tr>
+      <tr><td>mechanic</td><td>other / hook</td><td>who must · who can only · who learns to</td></tr>
+      <tr><td>goal</td><td>other / hook</td><td>to · until · so you can</td></tr>
+      <tr><td>conflict</td><td>other / hook</td><td>but · while · even though</td></tr>
+      <tr><td>resource</td><td>other / hook</td><td>using · while managing · spending</td></tr>
+      <tr><td>setting</td><td>other / hook</td><td>in the · aboard the · inside the</td></tr>
+      <tr><td>mood</td><td>other / hook</td><td>It feels · The tone is</td></tr>
+      <tr><td>twist</td><td>other / hook</td><td>Except · The catch:</td></tr>
+      <tr><td>progression</td><td>other / hook</td><td>As you play, · Over time,</td></tr>
+      <tr><td>constraint</td><td>other / hook</td><td>with · and</td></tr>
+    </table>
+    <code>showWord</code> and <code>connectorFor</code> unchanged ("a" / "an" by the next word). <code>Below.text</code> is <code>cardText</code> (on-top adjective included) — update <code>nodes.belowCard</code>.</li>
+  <li><strong>ADD:</strong> <code>cardSize(card): { width, height }</code> in <code>placement.ts</code> — hook 240 × 200, others 200 × 200; <code>HOOK_WIDTH = 240</code>, <code>HOOK_INSET = 20</code>. Use it in <code>boardRects</code>, <code>inCard</code>, <code>besideSpot</code>, <code>toNodes</code> (node width/height) and draw placement.</li>
+  <li><strong>UPDATE:</strong> <code>stack.layoutStack</code>: when the root is a hook, every stack card's x = root.x + 20 (design 9.5); y rule unchanged (each card 56 below the one before).</li>
+  <li><strong>UPDATE:</strong> <code>dropZones.isNormalPlace(board, dragged, target)</code>: the target has no tucked cards (bottom of its stack) and either target is a hook and dragged is a role, or both types are in <code>CORE_ORDER = ['role', 'mechanic', 'resource', 'goal', 'conflict']</code> with dragged after target. Slot band under that target as today. <code>DropHints</code> slot per 9.7: 200 × 72 starting 16 above the target's bottom, dashed 2 in the dragged deck color, no top border, radius 0 0 14 14, fill at <code>--slot-fill-alpha</code>, label "&lt;Deck&gt; goes here" 12/600 in <code>--rail-&lt;deck&gt;</code>. Dragged card look per 9.7 (rotate 3°, scale 1.04, <code>--shadow-drag</code>).</li>
+  <li><strong>UPDATE:</strong> <code>dropAction</code>: a dragged hook over any card → <code>{ kind: 'move', refused: 'hookCannotTuck' }</code> (the hook moves to the drop point, never tucks).</li>
+  <li><strong>UPDATE:</strong> <code>ConnectorBadge</code> placement per 9.6: centered on the lower card's left edge, top 11 above the seam; pill 22 tall, padding 0 9, radius 11, 11/600 white; menu 200 wide, items 44, check 16 in <code>--accent</code>.</li>
+  <li><strong>ADD tests</strong> (<code>connector.test.ts</code> with <code>test.each</code> over the whole table, <code>dropZones.test.ts</code>, <code>stack.test.ts</code>, <code>placement.test.ts</code>): <code>connectorWords_eachPair_matchesBadgeTable</code>, <code>connectorFor_roleUnderHookBeforeVowel_isYouAreAn</code>, <code>isNormalPlace_roleUnderEmptyHook_true</code>, <code>isNormalPlace_goalAfterMechanic_true</code>, <code>isNormalPlace_mechanicAfterGoal_false</code>, <code>isNormalPlace_targetWithChildren_false</code>, <code>layoutStack_hookRoot_insetsCards20</code>, <code>dropAction_hookOverCard_refusesTuck</code>, <code>cardSize_hook_is240Wide</code>.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/canvas &amp;&amp; npx tsc --noEmit &amp;&amp; npm run lint</code></li>
+</ul>
+
+<h4 class="task" data-task="14">Task 14: Build the pure hook sentence builder and the stack reading order</h4>
+<ul>
+  <li><strong>CREATE:</strong> <code>src/features/hook/buildHookSentence.ts</code> (no React, no React Flow, no I/O; <code>hook-sentence</code>): <code>export interface StackEntry { type: Deck; connector: string | null; activeText: string }</code> (connector = the shown word, "a" / "an" already resolved) and <code>buildHookSentence(stack: readonly StackEntry[]): string</code>. Rules (<code>mvp-plan.html</code> Hook sentence rules, design 9.5):
+    <ol>
+      <li>Skip entries whose <code>activeText</code> is blank and every <code>modifier</code> entry (a loose Modifier joins the sentence only through combine or On Top).</li>
+      <li>Mood, Twist and Progression start a new sentence (when one is already open).</li>
+      <li>Each entry adds <code>connector + ' ' + activeText</code>, or <code>activeText</code> when connector is null.</li>
+      <li>A Conflict entry with a connector is preceded by a comma ("… keep the light on, but the tide rises every night").</li>
+      <li>Each sentence's first letter is capitalized ("Who must build, but fuel runs out at sunset.") and ends with "." unless it already ends in ".", "!" or "?".</li>
+      <li>Sentences join with one space; an empty stack returns "".</li>
+    </ol>
+  </li>
+  <li><strong>CREATE:</strong> <code>src/features/hook/index.ts</code> exporting <code>buildHookSentence</code>, <code>type StackEntry</code> (more in Task 15).</li>
+  <li><strong>ADD:</strong> in <code>reading.ts</code> <code>stackEntries(board, hookId): StackEntry[]</code> — <code>stackOrder(board, hookId).slice(1)</code>; each card paired with the card just before it in stack order (the seam the badge sits on), connector = <code>connectorFor(prev.type, { type, text: cardText(board, card), saved: card.connector ?? null })?.text ?? null</code>, activeText = <code>cardText</code>. Canvas imports the type from <code>@/features/hook</code>.</li>
+  <li><strong>ADD tests</strong> <code>buildHookSentence.test.ts</code> (<code>test.each</code>): <code>buildHookSentence_fullCoreStack_readsPrdExample</code>, <code>buildHookSentence_topCardNotRole_startsWithCapitalBadge</code>, <code>buildHookSentence_missingDecks_noBlankSlot</code>, <code>buildHookSentence_mood_startsNewSentence</code>, <code>buildHookSentence_twistCatch_newSentenceKeepsColon</code>, <code>buildHookSentence_progression_newSentenceWithComma</code>, <code>buildHookSentence_constraint_appendsWith</code>, <code>buildHookSentence_looseModifier_isLeftOut</code>, <code>buildHookSentence_sameDeckAnd_readsAnd</code>, <code>buildHookSentence_empty_returnsEmpty</code>, <code>buildHookSentence_endsWithQuestion_noExtraPeriod</code>, <code>buildHookSentence_combinedText_tallFrozenPilot</code>, <code>buildHookSentence_purity_noReactImport</code> (reads the source file, asserts no <code>react</code> / <code>@xyflow</code> import). <code>reading.test.ts</code>: <code>stackEntries_siblings_readInStackOrder</code>, <code>stackEntries_roleUnderHookVowel_youAreAn</code>, <code>stackEntries_savedWordNotInList_usesDefault</code>.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/hook src/features/canvas/reading.test.ts &amp;&amp; npx tsc --noEmit &amp;&amp; npm run lint &amp;&amp; ! grep -nE "from '(react|@xyflow)" src/features/hook/buildHookSentence.ts</code></li>
+</ul>
+
+<h4 class="task" data-task="15">Task 15: Draw the Hook Card on the canvas, with its button and the cannot-tuck notice</h4>
+<ul>
+  <li><strong>CREATE:</strong> <code>src/features/hook/HookCard.tsx</code> (+ module CSS) per design 9.5: 240 × 200, radius 14, border 2 <code>--accent</code>, fill <code>--hook-bg</code>, padding 14 16 16, gap 10; header = 24 dot in <code>--accent</code> with <code>hook</code> icon 13 in <code>--on-accent</code> and label "Hook" (Display 12/600, 0.08em, uppercase, dark-mode <code>--accent-text</code>); sentence 14 / 1.45 <code>--hook-text</code> (<code>data-testid="hook-sentence"</code>). Props: <code>sentence: string</code>, <code>empty: boolean</code>. New state (<code>empty</code>): sentence area reads "Tuck a Player Role under this card. Then tuck a Mechanic, a Resource, a Goal and a Conflict." and a static slot under the card reads "Player Role goes here" (label in <code>--rail-role</code>, slot spec 9.7). <code>aria-label="Hook Card"</code>. Exported from <code>features/hook/index.ts</code>.</li>
+  <li><strong>UPDATE:</strong> <code>CardNode</code>: a hook card renders <code>HookCard</code> with <code>sentence = buildHookSentence(stackEntries(board, id))</code> (computed from the store on each change, never stored) and no strip; hook nodes are 240 wide. <code>onNodeClick</code> does not select a hook card.</li>
+  <li><strong>ADD:</strong> <code>placeHookCard(board, id, spot)</code> recipe (a hook card: <code>rings: []</code>, <code>locked: false</code>, <code>onTopOf: null</code>, <code>tuckedUnder: null</code>) and a "Hook Card" button at the top of <code>SideRail</code> (design 8.2 Hook Card button: border 1 <code>--accent</code>, fill <code>--accent-hook-button</code>, icon in <code>--accent</code> stroke 2.6; label "Hook Card"; aria-label "Draw A Hook Card"; enabled even when pools fail, because a Hook Card needs no pool). <code>BoardScreen.drawHook(from)</code> places it at the open 240 × 200 spot nearest the view center with the draw motion.</li>
+  <li><strong>ADD:</strong> the cannot-tuck notice: <code>CanvasProvider</code> gains <code>notice: 'hookCannotTuck' | null</code> and <code>setNotice</code>; <code>BoardCanvas.onNodeDragStop</code> sets it when <code>dropAction</code> returns <code>refused: 'hookCannotTuck'</code> (the move still commits). <code>BoardScreen</code> shows <code>Banner kind="warning"</code> with design 9.13 text "A Hook Card is always the head of its stack. It cannot tuck under a card." and action "Dismiss".</li>
+  <li><strong>UPDATE:</strong> <code>stack11Board()</code>: <code>long-0</code> becomes a hook card (<code>rings: []</code>), the other 10 cards keep cycling types and sit at x + 20; the board shows the computed sentence. Re-run the long-stack tests.</li>
+  <li><strong>ADD tests:</strong> <code>HookCard.test.tsx</code> (<code>hookCard_empty_showsNewStateAndSlot</code>, <code>hookCard_sentence_rendersText</code>), <code>boardActions.test.ts</code> (<code>placeHookCard_addsRootHook</code>, <code>dropCard_hookOnCard_movesNotTucks</code>), <code>BoardScreen.test.tsx</code> (<code>boardScreen_hookButton_enabledWhenPoolsFail</code>).</li>
+  <li><strong>GOTCHA:</strong> <code>features/hook</code> must not import <code>@/features/canvas</code>; the canvas passes the sentence in.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run &amp;&amp; npx tsc --noEmit &amp;&amp; npm run lint &amp;&amp; ! grep -rn "@/features/canvas" src/features/hook &amp;&amp; npx playwright test tests/e2e/long-stack.spec.ts --project=chromium &amp;&amp; npx playwright test tests/e2e/long-stack.spec.ts --project=chromium-timing --no-deps</code></li>
+</ul>
+
+<h4 class="task" data-task="16">Task 16: Add the Hook Card hover menu: Copy with its fallback dialog, Redraw All and Discard</h4>
+<ul>
+  <li><strong>CREATE:</strong> <code>src/features/hook/copyHook.ts</code>: <code>copyHook(text, clipboard = navigator.clipboard): Promise&lt;'copied' | 'blocked'&gt;</code> — <code>writeText</code> as plain text; a missing API or a rejection is <code>'blocked'</code> (the only Clipboard API call in the app, per import-rules and <code>clipboard</code>).</li>
+  <li><strong>CREATE:</strong> <code>HookMenu.tsx</code> (card strip menu spec 9.4: padding 4, radius 10, border 1, <code>--surface</code>, <code>--shadow-menu</code>, 44 px items, 13/500): items Copy, Redraw All, Discard (<code>--danger-text</code>). Copy and Redraw All are disabled until a card is tucked under the Hook Card; Redraw All is also disabled while pools are not ready. After a good copy, Copy reads "Copied" in <code>--success-text</code> for 2 seconds. <code>CopyFallbackDialog.tsx</code> on the shared <code>Dialog</code>: title "Copy The Hook" (design 9.5's "Copy the hook" in Title Case, per CLAUDE.md), body "The browser blocked the copy. The text is selected. Press Ctrl+C." (as written), a read-only field labelled "Hook Sentence" with the text pre-selected on open, and a Close button.</li>
+  <li><strong>UPDATE:</strong> <code>CardNode</code>: for a hook card, a <code>NodeToolbar</code> (position Top, offset 56) shows <code>HookMenu</code> while the pointer is over the Hook Card or the menu, and hides when it leaves both (hover state local to the node; a 150 ms hide delay so the pointer can cross the gap — design leaves the delay open, see Notes).</li>
+  <li><strong>ADD:</strong> <code>redrawAll(board, hookId, draw: (card: Card) =&gt; Card): { board: Board; redrawn: string[] }</code> in <code>boardActions.ts</code> — applies <code>redrawCard</code> to every unlocked card in <code>descendantsOf(board, hookId)</code> (on-top cards are not in the stack, so they are kept); one recipe, so one undo step. <code>BoardCanvas</code> commits it with <code>changeBoard</code> using <code>drawFor(card, pools, board.genres)</code>, then marks the redrawn ids with a 2 px <code>--new-card-outline</code> outline, offset −2, for 1 second (view state in the canvas, design 9.9 / §11).</li>
+  <li><strong>ADD:</strong> Discard in the menu → <code>discardCard(board, hookId)</code> (its tucked cards become roots where they sit; undo brings it back).</li>
+  <li><strong>ADD tests:</strong> <code>copyHook.test.ts</code> (<code>copyHook_writeResolves_copied</code>, <code>copyHook_writeRejects_blocked</code>, <code>copyHook_noClipboard_blocked</code>), <code>HookMenu</code> tests (<code>hookMenu_emptyHook_disablesCopyAndRedrawAll</code>, <code>hookMenu_afterCopy_showsCopiedFor2s</code> with fake timers, <code>hookMenu_blocked_opensFallbackWithTextSelected</code>), <code>boardActions.test.ts</code> (<code>redrawAll_skipsLockedCards</code>, <code>redrawAll_keepsTucksPlacesAndConnectors</code>, <code>redrawAll_combinedCard_keepsAdjectiveRing</code>, <code>redrawAll_keepsOnTopCard</code>), <code>undo.test.ts</code> (<code>undo_redrawAll_restoresEveryCardInOneStep</code>).</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run &amp;&amp; npx tsc --noEmit &amp;&amp; npm run lint &amp;&amp; test "$(grep -rln "navigator.clipboard" src --include=*.ts --include=*.tsx | grep -v '\.test\.' | grep -vc '^src/features/hook/')" -eq 0</code></li>
+</ul>
+
+<h3 class="milestone" data-milestone="7">Milestone 7: Rail, notices and the text file</h3>
+<p>The grouped rail of design 8.2 for the decks this phase ships, the 9.13 notices, and the text file for the new types.</p>
+<p><strong>Validation checkpoint:</strong> on <code>npm start</code> (real pools, no fixture route) every rail button draws a card of its deck and the 3 Modifier buttons draw cards whose <code>data-mod-deck</code> matches (covered by Task 20's real-pool smoke test); the text file of a board with a Hook Card stack and an on-top Modifier lists "Player Role: tall frozen pilot".</p>
+
+<h4 class="task" data-task="17">Task 17: Regroup the rail: Hook Card, Core, Modifiers row and Optional</h4>
+<ul>
+  <li><strong>UPDATE:</strong> <code>SideRail.tsx</code> + CSS per design 8.2: Hook Card button (Task 15) first; group label "CORE" (Display 11/600, 0.08em, uppercase, padding 8 4 2, <code>--text-muted</code>; text written "Core" and uppercased in CSS) with Player Role, Mechanic, Resource, Goal, Conflict; "MODIFIERS" with one 3-column row (gap 4) of icon-only deck buttons in the Modifier rail color: Player Role modifier (<code>user-plus</code>), Resource modifier (<code>battery-plus</code>), Setting modifier (<code>map-pin-plus</code>), each <code>aria-label="Draw A Player Role Modifier"</code> / "Draw A Resource Modifier" / "Draw A Setting Modifier" and a hover label through <code>title</code> ("Player Role Modifier" …); "OPTIONAL" with Setting only (the other 4 optional buttons are Phase 4). Add Note and the help panel stay as copied (Phase 5). Keep the landmark <code>aria-label="Decks"</code>. Remove <code>PHASE1_RAIL</code>. Deck buttons stay 36 px.</li>
+  <li><strong>UPDATE:</strong> <code>DeckButton</code>: optional <code>modDeck</code> and <code>iconOnly</code> props; label via <code>drawLabel(type, modDeck?)</code>.</li>
+  <li><strong>UPDATE:</strong> <code>EmptyBoardPanel</code> copy: the good first set is "a Hook Card, then a Player Role, a Mechanic, a Resource, a Goal and a Conflict tucked under it" (help text, sentence case); the primary button stays "Draw A Player Role".</li>
+  <li><strong>UPDATE:</strong> <code>tests/e2e/helpers.ts</code> <code>DeckName</code> to the rail labels ('Hook Card' | 'Player Role' | 'Mechanic' | 'Resource' | 'Goal' | 'Conflict' | 'Player Role Modifier' | 'Resource Modifier' | 'Setting Modifier' | 'Setting'); every spec using "Draw A Modifier" uses "Draw A Player Role Modifier"; <code>network.spec.ts</code> and <code>board.spec.ts</code> deck lists; <code>shell.spec.ts</code> checks the 3 group labels and the 36 px button height.</li>
+  <li><strong>ADD tests:</strong> <code>SideRail.test.tsx</code> (<code>sideRail_groups_inDesignOrder</code>, <code>sideRail_modifierButtons_drawWithModDeck</code>, <code>sideRail_poolsNotReady_disablesDecksButNotHookCard</code>).</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/app &amp;&amp; npx tsc --noEmit &amp;&amp; npm run lint &amp;&amp; npx playwright test tests/e2e/shell.spec.ts tests/e2e/network.spec.ts tests/e2e/board.spec.ts --project=chromium</code></li>
+</ul>
+
+<h4 class="task" data-task="18">Task 18: Align the notices with design 9.13 and update the text file for the new card types</h4>
+<ul>
+  <li><strong>UPDATE:</strong> <code>BoardScreen.tsx</code> <code>POOLS_FAILED_TEXT</code> to "The decks did not load. Saved cards still work. The deck buttons are off until the decks load." (design 9.13); confirm the save-failed and other-tab texts match 9.13 verbatim; the save mark keeps "Saved", "Saving", "Save Failed" (Title Case, Phase 1 decision). Update tests that assert the old text.</li>
+  <li><strong>UPDATE:</strong> <code>textFile.ts</code>: on-top cards are never listed as their own line (they read inside the base card's text through <code>cardText</code> from <code>@/features/canvas</code>); a Hook Card line reads <code>Hook Card</code> (the hook sentence in the text file is Phase 5); a loose Modifier joins its parent's line as today; deck names from <code>DECK_NAME</code> (a Modifier line uses <code>MOD_DECK_NAME</code>).</li>
+  <li><strong>UPDATE:</strong> <code>features/boards/summary.ts</code> (type strip) — no change needed beyond types; verify the board list renders hook cards (no deck color: use <code>--accent</code> for the hook dot).</li>
+  <li><strong>ADD tests:</strong> <code>textFile.test.ts</code> (<code>boardText_onTopModifier_readsInBaseLine</code>, <code>boardText_hookStack_listsHookCardThenStack</code>), <code>BoardScreen.test.tsx</code> (pools text).</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/export src/app src/features/boards &amp;&amp; npx tsc --noEmit &amp;&amp; npm run lint &amp;&amp; grep -q "The deck buttons are off until the decks load." src/app/board/BoardScreen.tsx</code></li>
+</ul>
+
+<h3 class="milestone" data-milestone="8">Milestone 8: Browser tests and handoff</h3>
+<p>End-to-end proof in 3 engines, the full suite, and the user's manual hook test handed over.</p>
+<p><strong>Validation checkpoint:</strong> the full suite — <code>npm run lint &amp;&amp; npm run format:check &amp;&amp; npm run typecheck &amp;&amp; npm test &amp;&amp; npm run build &amp;&amp; npm run size &amp;&amp; node scripts/check-port-lock.mjs &amp;&amp; npm run test:e2e</code> — passes.</p>
+
+<h4 class="task" data-task="19">Task 19: Browser tests for the 3 Modifier decks, combine, swap, On Top and Split</h4>
+<ul>
+  <li><strong>CREATE:</strong> <code>tests/e2e/modifier.spec.ts</code> (fixture pools; 3 engines):
+    <ul>
+      <li><code>modifier_eachButton_drawsOnlyItsTargets</code>: 6 draws per button; every cue on a card is in that deck's fixture set; <code>data-mod-deck</code> and the center icon match.</li>
+      <li><code>modifier_briefExample_readsTallFrozenPilot</code>: fixture board with a role "pilot", a setting-modDeck Modifier "frozen" and a role-modDeck Modifier "tall" (made-up fixture board); drag "frozen" onto "pilot" → active cue "frozen pilot", the Modifier card is gone; drag "tall" into the top band (zone label "Add on top" visible) → "tall frozen pilot"; strip Split → "tall pilot" and a new Modifier card beside it with the <code>map-pin-plus</code> icon; drag a third Modifier over the card → only the "Swap" zone shows.</li>
+      <li><code>modifier_swapCenter_returnsOldAdjectivesBeside</code>.</li>
+      <li><code>modifier_onTop_survivesRedrawReloadExportImport</code>: Redraw the base (on-top text stays), reload (stays), export the board file and import it (the imported board shows "tall …").</li>
+      <li><code>modifier_onMechanic_tucksWithoutZone</code>.</li>
+    </ul>
+  </li>
+  <li><strong>PATTERN:</strong> <code>tests/e2e/canvas-drop.spec.ts</code> (stepped drags), <code>tests/e2e/import.spec.ts</code> / <code>export-helpers.ts</code> (file round trip).</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx playwright test tests/e2e/modifier.spec.ts --project=chromium --project=firefox --project=webkit</code></li>
+</ul>
+
+<h4 class="task" data-task="20">Task 20: Browser tests for the Hook Card flow and a real-pool smoke test</h4>
+<ul>
+  <li><strong>CREATE:</strong> <code>tests/e2e/hook.spec.ts</code> (fixture pools; 3 engines; clipboard stubbed with <code>page.addInitScript</code> so <code>navigator.clipboard.writeText</code> stores the text on <code>window.__copied</code>, or rejects in the fallback test):
+    <ul>
+      <li><code>hook_fullCoreStack_showsSentenceAndHints</code>: draw a Hook Card ("Player Role goes here" slot shows), draw and tuck Player Role, Mechanic, Resource, Goal, Conflict, checking the "&lt;Deck&gt; goes here" slot while dragging each; the sentence starts "You are a" / "You are an" and contains each active cue in order; a ring turn on the Mechanic updates the sentence in under 100 ms (<code>@timing</code>-free functional assertion: text changes after the click).</li>
+      <li><code>hook_badgeWord_changesSentenceAndUndoes</code>: pick "who learns to" on the Mechanic badge → sentence updates; Ctrl+Z restores "who must".</li>
+      <li><code>hook_copy_putsPlainSentenceOnClipboard</code>: hover the Hook Card, Copy → <code>window.__copied</code> equals the shown sentence and the item reads "Copied", then "Copy" after 2 s.</li>
+      <li><code>hook_copyBlocked_showsSelectedFallback</code>: dialog "Copy The Hook" with the field selected (<code>selectionStart 0</code>, <code>selectionEnd = length</code>).</li>
+      <li><code>hook_redrawAll_skipsLockedAndUndoesInOneStep</code>: lock the Player Role, Redraw All → the role's cues unchanged, every other card shows the new-card outline then loses it after 1 s; one Ctrl+Z restores every card.</li>
+      <li><code>hook_dropOnCard_refusesTuckWithNotice</code>: drag the Hook Card onto a card → banner "A Hook Card is always the head of its stack…", the hook is not tucked; Dismiss hides it.</li>
+      <li><code>hook_discard_freesStackAndUndoes</code>.</li>
+    </ul>
+  </li>
+  <li><strong>ADD:</strong> a <code>@timing</code> test in <code>hook.spec.ts</code> (all 3 engines' timing projects, like the existing 100 ms checks): <code>perf_ringTurn_updatesHookUnder100ms</code>.</li>
+  <li><strong>CREATE:</strong> <code>tests/e2e/pools-real.spec.ts</code>: <code>context.unroute('**/pools/*.json')</code> before <code>openBoard</code>; click every rail deck button (Hook Card, 5 core, 3 Modifier, Setting) and assert a card of that deck appears with distinct cues; no pool request fails (<code>page.on('requestfailed')</code>).</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx playwright test tests/e2e/hook.spec.ts tests/e2e/pools-real.spec.ts --project=chromium --project=firefox --project=webkit &amp;&amp; npx playwright test tests/e2e/hook.spec.ts --project=chromium-timing --no-deps</code></li>
+</ul>
+
+<h4 class="task" data-task="21">Task 21: Run the full check suite in all 3 browsers and fix regressions</h4>
+<ul>
+  <li><strong>IMPLEMENT:</strong> run Level 1–4 below; fix every failure at its cause (no skipped or weakened tests; a copied test that no longer describes a GameIdea behavior is rewritten to the new behavior, not deleted, unless the behavior is gone — then record it in Notes). Check the import rules in <code>eslint.config.js</code> still hold for the new <code>features/hook</code> (add it to the feature list if the config enumerates features). Re-measure the long-stack and 200-card fps and record both in Notes.</li>
+  <li><strong>GOTCHA:</strong> the story-name test scans src/; new fixture texts and comments must not contain the banned words.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npm run lint &amp;&amp; npm run format:check &amp;&amp; npm run typecheck &amp;&amp; npm test &amp;&amp; npm run build &amp;&amp; npm run size &amp;&amp; node scripts/check-port-lock.mjs &amp;&amp; npm run test:e2e</code></li>
+</ul>
+
+<h4 class="task" data-task="22">Task 22: Update the README and hand over the manual M2 hook test</h4>
+<ul>
+  <li><strong>UPDATE:</strong> <code>README.md</code>: usage for the Hook Card, rings, lock, Modifier decks (combine, swap, On Top, Split), Redraw All and Copy; a "Pools" section (11 files in <code>public/pools/</code>, made once by <code>scripts/split-decks.mjs</code>, now the source; edit the JSON; floors enforced by <code>poolFiles.test.ts</code>; never rerun the split).</li>
+  <li><strong>ADD:</strong> a README section "M2 Hook Test (Manual)" — the user's non-blocking check, not an agent gate: on <code>npm start</code> (port 4174), draw 20 stacks (Hook Card + Player Role, Mechanic, Resource, Goal, Conflict, with Modifiers as wanted); pass bar: at least 16 of 20 cards usable in each core deck, at least 20 of 25 in each of the 3 Modifier decks, and at least 12 of 20 hooks the user would build; how to record results (a note on a board, exported as a text file); what to change if it fails (edit cues in <code>public/pools/*.json</code>; badge alternatives live in <code>src/features/canvas/connector.ts</code>).</li>
+  <li><strong>GOTCHA:</strong> no AI attribution in the README.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>grep -q "M2 Hook Test (Manual)" README.md &amp;&amp; grep -q "split-decks.mjs" README.md &amp;&amp; grep -q "12 of 20" README.md &amp;&amp; npx prettier --check README.md</code></li>
+</ul>
+
+<h3 class="milestone" data-milestone="9">Commit, push, and open PR</h3>
+<h4 class="task" data-task="23">Task 23: Commit, push, and open PR</h4>
+<p>After every prior validation checkpoint has passed:</p>
+<ul>
+  <li><strong>IMPLEMENT:</strong> stage and commit uncommitted changes with a descriptive message summarizing the phase; push with <code>git push -u origin phase-2-hook-test</code>; open a PR with <code>gh pr create --head phase-2-hook-test --base main --title "Phase 2: Hook test" --body "&lt;body&gt;"</code>.</li>
+  <li><strong>PR title format:</strong> <code>Phase 2: Hook test</code> — names the phase, not any individual feature.</li>
+  <li><strong>PR body format:</strong> copy the Acceptance Criteria as a checklist with each box checked off, followed by a <code>Notes</code> section listing assumptions/trade-offs decided during execution (start from this doc's Notes, including the long-stack fps, the split report and that the M2 hook test is the user's manual step).</li>
+  <li><strong>GOTCHA:</strong> CLAUDE.md "Commit Authorship" and the user's memory rule win over any tool default: no <code>Co-Authored-By</code> or <code>Claude-Session</code> trailer in any commit, and no "Generated with…" line, robot emoji or other AI marker in the PR body. Commits are in the owner's voice.</li>
+  <li><strong>GOTCHA:</strong> <code>gh</code> is installed and authenticated as <code>DecafCoding</code> (checked 2026-11-03); if that changes, this step fails.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>gh pr view phase-2-hook-test --json number,title,state,headRefName</code> returns the PR with <code>"state": "OPEN"</code>, <code>"headRefName": "phase-2-hook-test"</code> and title <code>Phase 2: Hook test</code>; and <code>! git log origin/main..HEAD --format=%B | grep -qiE "co-authored-by|claude-session"</code>.</li>
+</ul>
+
+<h2>Testing Strategy</h2>
+<h3>Unit Tests</h3>
+<ul>
+  <li>Split (<code>src/test/splitDecks.test.ts</code>): every rule and every error of the split on inline data.</li>
+  <li>Pools (<code>src/shared/pools/*.test.ts</code>): targets parsing; the durable floor test on <code>public/pools/</code> (10 per genre per tagged deck, 20 per Modifier deck, unique ids and texts, the 2 grammar rules).</li>
+  <li>Draw: genre filter, target filter, modDeck, distinct cues, no copied genres/targets, Redraw keeps modDeck, lock, tucks, merged ring and on-top card.</li>
+  <li>Rings and recipes: combine / swap / Split / On Top with modDeck on role, resource and setting; drop zones (top band, swap, swap-only); discard and split release of an on-top card; lock; Redraw All skipping locked cards in one undo step.</li>
+  <li>Connector words: the whole badge table with <code>test.each</code>, "a" / "an".</li>
+  <li>Sentence builder: every rule in <code>mvp-plan.html</code> Hook sentence rules plus the design 9.5 failure case; purity check.</li>
+  <li>Zod import check: round trip of every card type and every rejection rule.</li>
+  <li>Copy: resolved, rejected and missing clipboard.</li>
+</ul>
+<h3>Integration Tests</h3>
+<ul>
+  <li>Playwright in Chromium, Firefox and WebKit on fixture pools: long stack (Task 1), Modifier decks (Task 19), Hook Card flow (Task 20), the updated existing specs (card, canvas-drop, two-cue-fit, board, notes, persistence, import, export, tabs-undo, network, shell).</li>
+  <li><code>@timing</code>: long-stack ≥ 50 fps and 200-card ≥ 50 fps (Chromium), ring turn → Hook Card update &lt; 100 ms (all 3 engines' timing projects).</li>
+  <li>Real-pool smoke test: every rail button draws from the shipped files.</li>
+</ul>
+<h3>Edge Cases</h3>
+<ul>
+  <li>A Hook Card with no tucked card: New state, Copy and Redraw All disabled, sentence "".</li>
+  <li>Top card under the Hook Card is not a Player Role: sentence starts with that badge word, capitalized.</li>
+  <li>2 cards tucked under one card: read in stack order, matching the badges on the seams.</li>
+  <li>A loose Modifier tucked in a stack: no badge, left out of the sentence, listed on its parent's line in the text file.</li>
+  <li>Base card with an on-top card and no merged ring (after Split): edges read "tall pilot"; the next Modifier drop merges.</li>
+  <li>A third Modifier over a base with a merged ring and an on-top card: swap zone only.</li>
+  <li>Hook Card dropped on a card: moves, never tucks; notice shows.</li>
+  <li>Redraw All with every card locked: changes nothing (recipe returns the same board → no undo step, no save).</li>
+  <li>Pool load failure: deck buttons off, Hook Card button still on, saved cards and the sentence still show.</li>
+  <li>Clipboard blocked: fallback dialog with the text selected.</li>
+  <li>Import of a board file with a dangling <code>onTopOf</code>: accepted, the card shows as a free Modifier.</li>
+  <li>The split run a second time: refused, nothing written.</li>
+</ul>
+
+<h2>Validation Commands</h2>
+<h3>Level 1: Syntax &amp; Style</h3>
+<pre><code>npm run lint
+npm run format:check
+npm run typecheck</code></pre>
+<h3>Level 2: Unit Tests</h3>
+<pre><code>npm test</code></pre>
+<h3>Level 3: Integration Tests</h3>
+<pre><code>npm run build &amp;&amp; npm run size
+node scripts/check-port-lock.mjs
+npm run test:e2e</code></pre>
+<h3>Level 4: Manual Validation</h3>
+<pre><code># Built app at 4174 serves the 11 real pools and the hook feature files; no split rerun possible.
+set -e
+! curl -fsS http://localhost:4174 &gt;/dev/null 2&gt;&amp;1 || { echo "port 4174 busy"; exit 1; }
+npm run build &gt;/dev/null
+(npx vite preview --port 4174 --strictPort &gt;/tmp/gameidea-preview.log 2&gt;&amp;1 &amp;)
+for i in $(seq 1 60); do curl -fsS http://localhost:4174 &gt;/dev/null 2&gt;&amp;1 &amp;&amp; break; sleep 0.5; done
+ok=0
+for t in role mechanic goal conflict resource modifier setting mood twist progression constraint; do
+  curl -fsS "http://localhost:4174/pools/$t.json" | node -e "let s='';process.stdin.on('data',d=&gt;s+=d).on('end',()=&gt;{const p=JSON.parse(s);if(p.type!=='$t'||!p.cues.length)process.exit(1)})" || ok=1
+done
+node scripts/split-decks.mjs &gt;/dev/null 2&gt;&amp;1 &amp;&amp; ok=1
+pkill -f "vite preview --port 4174" || true
+exit $ok</code></pre>
+<p><strong>Manual, non-blocking (the user, after merge):</strong> the M2 hook test in the README section "M2 Hook Test (Manual)". It is the user's judgment of draw and hook quality and does not gate this phase's completion. If it fails, the user edits <code>public/pools/*.json</code> or the badge alternatives; a failed hook test is not an architecture misfit.</p>
+<h3>Level 5: Additional Validation (Optional)</h3>
+<pre><code>npx playwright test --project=chromium-timing --project=firefox-timing --project=webkit-timing --no-deps</code></pre>
+
+<h2>Acceptance Criteria</h2>
+<ul class="checklist">
+  <li data-checked="false">The 11-card stack drags at ≥ 50 fps in the Chromium timing test and moves as one stack in Chromium, Firefox and WebKit, with a Hook Card at its root; a drag is one undo step.</li>
+  <li data-checked="false"><code>public/pools/</code> holds exactly the 11 pool files made once by <code>scripts/split-decks.mjs</code>; each matches <code>decks.json</code> cue for cue after the 2 rules (and the recorded duplicate drop); a second split run is refused.</li>
+  <li data-checked="false">Every genre has ≥ 10 cues in Mechanic, Resource, Progression and Constraint, and each Modifier deck has ≥ 20 cues — checked by the split and by <code>poolFiles.test.ts</code>; pools are ≤ 100 KB gzip.</li>
+  <li data-checked="false">The model has the 12 card types, <code>modDeck</code>, ring <code>modDeck</code>, <code>onTopOf</code> and <code>locked</code> at <code>formatVersion</code> 1, and the Zod check accepts every valid shape and rejects each broken rule.</li>
+  <li data-checked="false">Each of the 3 Modifier buttons draws only cues whose targets include its deck and shows its icon; a merged ring and a Split or swapped card keep that icon through <code>modDeck</code>.</li>
+  <li data-checked="false">The feature brief example works: "frozen" → "frozen pilot"; "tall" in the top zone → "tall frozen pilot"; "tall" in the center swaps; Split leaves "tall pilot"; a third Modifier sees only the swap zone; the on-top card survives Redraw, reload, export and import.</li>
+  <li data-checked="false">Cards are 200 px with a 56 px tuck and the cream face; 4-cue and 2-cue decks render per design 9.4; rings turn by click, R and Shift+R; the strip shows Split, Redraw, Lock / Unlock and Discard; lock and unlock are each one undo step.</li>
+  <li data-checked="false">The Hook Card (240 × 200, dark in every theme) shows the computed sentence; the full core stack reads "You are a … who must … using … to …, but …."; the top-card-not-Role case starts with the capitalized badge word; missing decks never leave a blank slot.</li>
+  <li data-checked="false">Connector badges show the default word for every pair in the badge table; a badge word change is one undo step; "a" / "an" follows the next word.</li>
+  <li data-checked="false">Copy puts the sentence on the clipboard as plain text and shows "Copied" for 2 s; a blocked clipboard opens the "Copy the hook" dialog with the text selected.</li>
+  <li data-checked="false">Redraw All replaces every unlocked card in the stack in one undo step, keeps tucks, places, badge words, merged rings and on-top cards, skips locked cards, and outlines new cards for 1 s.</li>
+  <li data-checked="false">A Hook Card never tucks under a card; the drop shows the 9.13 notice.</li>
+  <li data-checked="false">The rail shows the Hook Card button, Core (5 decks), the Modifiers row (3 icon buttons with hover and aria labels) and Optional (Setting), at 36 px buttons.</li>
+  <li data-checked="false">Lint (including the color check), format check, typecheck, Vitest, build, size, port lock and Playwright in all 3 engines pass.</li>
+  <li data-checked="false">The README holds the "M2 Hook Test (Manual)" handoff; the hook test itself is the user's manual, non-blocking step.</li>
+</ul>
+
+<h2>Completion Checklist</h2>
+<ul class="checklist">
+  <li data-checked="false">Task 1 long-stack gate passed and its fps is recorded in Notes (or the phase stopped with BLOCKED: canvas-library).</li>
+  <li data-checked="false">All 23 tasks completed in order, each task's VALIDATE passed when the task finished.</li>
+  <li data-checked="false">Every milestone validation checkpoint passed.</li>
+  <li data-checked="false">Level 1: lint, format check and typecheck exit 0.</li>
+  <li data-checked="false">Level 2: <code>npm test</code> exits 0.</li>
+  <li data-checked="false">Level 3: build, size, port lock and <code>npm run test:e2e</code> exit 0.</li>
+  <li data-checked="false">Level 4: the manual validation snippet exits 0.</li>
+  <li data-checked="false">Notes updated with the long-stack result, the split report and any execution-time decisions.</li>
+  <li data-checked="false">PR open with title "Phase 2: Hook test", no AI attribution anywhere.</li>
+</ul>
+
+<h2>Notes</h2>
+
+<h3>Architecture decisions this phase conforms to</h3>
+<p><code>canvas-library</code> (Task 1 is its planned long-stack check; fail → BLOCKED, no redesign), <code>nfr-targets</code> (long stack, 50 fps, 100 ms, pools ≤ 100 KB), <code>test-data</code> (11-card stack fixture), <code>pool-files</code> (amended, settled: one split of decks.json into 11 files, 2 grammar rules, kebab genres, required targets, stable ids, floors 10 / 20), <code>pool-load-failure</code>, <code>schema-shape</code>, <code>board-file-format</code>, <code>schema-versions</code>, <code>import-checks</code>, <code>import-policy</code>, <code>hook-sentence</code>, <code>clipboard</code>, <code>outside-code</code>, <code>state-store</code>, <code>undo-history</code>, <code>save-transaction</code>, <code>architecture-pattern</code>, <code>module-layout</code> (new <code>features/hook/</code>), <code>import-rules</code>, <code>storage-seam</code> (unchanged), <code>test-tools</code>, <code>ci</code>, <code>local-run</code>. None of these is <code>data-status="open"</code>. The open question "Does an 11-card stack drag smoothly in React Flow?" is answered by Task 1; "Final badge word choices" is the user's M2 hook test and needs no task (words live in <code>connector.ts</code>). No architecture decision changes.</p>
+
+<h3>Long-stack result</h3>
+<p>To be filled in by the executor at Task 1 (engine, measured fps) and re-measured at Tasks 15 and 21.</p>
+
+<h3>Split report</h3>
+<p>To be filled in by the executor at Task 3 (paste the split's report lines).</p>
+
+<h3>Decisions and assumptions</h3>
+<ul>
+  <li>DECISION: Slug <code>hook-test</code>, branch <code>phase-2-hook-test</code>, 23 tasks under 9 milestones (the last is the commit-push-PR milestone).</li>
+  <li>ASSUMPTION: formatVersion 1 may still gain fields in Phase 2 without an upgrade step — confirmed. Phase 2 adds the hook type, 6 deck types, <code>modDeck</code>, ring <code>modDeck</code>, <code>onTopOf</code> and <code>locked</code> at version 1, because no user board with cards can exist before Phase 2 ships pools. From the merge of Phase 2 on, the format is frozen: any shape change raises FORMAT_VERSION and adds an upgrade step. Authority: feature-modifier-decks.html ("The new fields go into the first board format version. No migration."), architecture <code>board-file-format</code> ("stays cheap until the user keeps real boards"), Phase 1 Notes.</li>
+  <li>ASSUMPTION: The split makes all 11 pool files in Phase 2, not only the 5 core decks and the Modifier. Architecture <code>pool-files</code> defines one split of decks.json into the 11 files whose floor check covers Mechanic, Resource, Progression and Constraint, and CLAUDE.md says never to rerun the split over edited pools; decks.json already holds all 11 finished decks with every floor passing. The PRD's Phase 2/3/4 wording (core + Modifier now, "finished core libraries" in Phase 3, optional pools in Phase 4) is therefore stale: Phase 3 keeps the genre filter UI, Phase 4 keeps the optional deck buttons, badges are already in place. Authority: architecture (wins over PRD). The PRD and mvp-plan milestone text need a refresh.</li>
+  <li>ASSUMPTION: The app loads all 11 pools in Phase 2 (one failing file shows the pools banner, as <code>pool-load-failure</code> says), but the rail shows only the Hook Card, Core, the Modifiers row and Optional with Setting. Setting keeps its Phase 1 button (it is a Modifier target and already drawable); Mood, Twist, Progression and Constraint buttons stay for Phase 4 (design §16 M4). Authority: design-system §16 + PRD Phase 4 + smallest reversible option.</li>
+  <li>ASSUMPTION: A cue that repeats an earlier cue in the same deck after the 2 split rules is dropped, keeping the first, with a WARN line (today only Setting "the solar system" → "solar system", which already exists). This changes no cue text, keeps draws distinct, and the cue-for-cue check accounts for it. Authority: pool-files (text unchanged except 2 rules) + mvp-plan Rules (distinct cues) + smallest reversible option.</li>
+  <li>ASSUMPTION: Split details: ids are <code>&lt;type&gt;-NNNN</code> in decks.json order; genres in genres.json order; targets in role, resource, setting order; the Constraint rule lowercases the whole first word (all 222 start with "Only" or "No"); "any" and "generic" are unknown genres; the CLI refuses to write if any pool file exists. The one-time cue-for-cue check runs in Task 3's VALIDATE, not as a durable test, because the user edits the JSON afterwards. Authority: pool-files + CLAUDE.md "Pools".</li>
+  <li>ASSUMPTION: Browser tests keep the made-up fixture pools (now 11 files; the Modifier fixture gains targets) for fixed cue texts, plus one real-pool smoke test that removes the route. Authority: Phase 1 Notes (fixture pools) + test-data.</li>
+  <li>ASSUMPTION: The genre filter is wired into draws now with the board's genres (all 21 on for every board, so draws use the full tagged pool); the Genres panel, counts and count line stay Phase 3. Authority: CLAUDE.md "Draws" + existing drawCard + PRD Phase 3.</li>
+  <li>ASSUMPTION: Task 1 measures the existing flat-node canvas with Phase 1 card types (no Hook Card type exists yet) at zoom 0.75; Task 15 makes the root a Hook Card and re-runs it. The fail path stops the phase with <code>BLOCKED: canvas-library</code>; only memoization-level fixes inside features/canvas are allowed first. Authority: architecture risks ("If it fails, features/canvas lays out the stack itself, which is an amendment to canvas-library") + the brief.</li>
+  <li>ASSUMPTION: The 200 px card and 56 px tuck land in Phase 2 (Task 8), and the card face becomes the design's cream <code>--card-face</code> with <code>--card-tucked-1..4</code> by depth, dropping TheForge's 14% deck tint and the carried-over <code>--card: 250px</code> token. Authority: design-system §3, §4.5, §9.4, §9.7, §16 (M2) + Phase 1 Notes.</li>
+  <li>ASSUMPTION: An on-top Modifier is not drawn as its own canvas node: it is stored as a card with <code>onTopOf</code> and rendered as the first adjective on each edge of its base card (mockup C shows only the base card with 2 adjectives per edge). Its x, y are not kept in sync while it is on top and are set when it is released. Authority: design-system §9.4 / §9.8, Combine mockup C + smallest reversible option.</li>
+  <li>ASSUMPTION: The inner ring (Shift+R, inner ring halves) turns the merged adjective ring only; the on-top ring keeps the active cue it had when dropped. The user turns a Modifier before dropping it, or Splits it off. Authority: design §9.4 ("Shift+R turns the inner ring"; 2 rings drawn) + smallest reversible option.</li>
+  <li>ASSUMPTION: Split also releases an on-top card when the base has no merged ring (so an on-top card can always be removed); with a merged ring, Split behaves as the brief says and the on-top card stays. Authority: feature-modifier-decks Rules + design 9.4 strip (no new item) + smallest reversible option.</li>
+  <li>ASSUMPTION: Discarding a base card frees its on-top card as a free root at the base's place ("treats its on-top card the same as its tucked cards"; a root's tucked cards become roots where they sit). Redraw and Redraw All never redraw an on-top card: it is part of the base card's adjectives, like the merged ring, which Redraw keeps. Authority: feature-modifier-decks Rules + mvp-plan Rules (Redraw keeps the adjective ring).</li>
+  <li>ASSUMPTION: Over a merged base card, the top band (52 px) is the On Top zone and the rest of the card is the Swap zone (the 96 px circle is the drawn zone); with an on-top card, the whole card swaps. TheForge's "everything outside the circle is On Top" rule is replaced. Authority: design §9.8.</li>
+  <li>ASSUMPTION: The Zod import check accepts an <code>onTopOf</code> that names no card (that card shows as a free Modifier), mirroring the existing leniency for a dangling <code>tuckedUnder</code>; every other onTopOf rule (modifier only, base target, 1 per base, not tucked) is enforced. Authority: codebase dominant pattern (schema.ts doc comment).</li>
+  <li>ASSUMPTION: A Player Role tucked under a card that is neither the Hook Card nor a Player Role gets the badge words "with a · and a" (the badge table has no row for it, and no badge would read "who must trade pilot"). A loose Modifier tucked in a stack has no badge and is left out of the sentence; it joins its parent's line in the text file. A card directly under the Hook Card that is not a Player Role uses its own deck's word list. Authority: mvp-plan Connector badges (words reused from the table) + smallest reversible option; the user tunes words in the M2 hook test.</li>
+  <li>ASSUMPTION: Connector words and the sentence pair each card with the card just before it in stack order (the seam its badge sits on), so the sentence always matches the badges shown. Authority: codebase (nodes.ts <code>below</code>) + mvp-plan Hook sentence rules (siblings read top first).</li>
+  <li>ASSUMPTION: The sentence puts a comma before a Conflict badge word and ends each sentence with a period; both PRD/mvp examples ("…keep the light on, but the tide…", "Who must build, but fuel runs out at sunset.") show this. Mood, Twist and Progression start a new, capitalized sentence. Authority: PRD §4 example + design 9.5.</li>
+  <li>ASSUMPTION: A tuck hint (slot) shows only when the dragged card's normal place is the bottom card of a stack: a Player Role under an empty Hook Card, or a core card after any earlier core card in the order Player Role, Mechanic, Resource, Goal, Conflict (skipping is allowed). Authority: design §9.7 ("The slot follows the last card of that order in the stack").</li>
+  <li>ASSUMPTION: The lock mark on a card is a non-interactive indicator (lock and unlock go through the strip), because a 30 px button would break the 44 px hit-target rule. Single Redraw from the strip still works on a locked card; only Redraw All skips locked cards. Authority: CLAUDE.md hit targets + mvp-plan Scope ("Redraw All skips locked cards").</li>
+  <li>ASSUMPTION: The Redraw All board recipe lives in <code>features/canvas/boardActions.ts</code> beside <code>redrawCard</code>; <code>features/hook</code> owns the menu, Copy, the dialog and the sentence builder. The canvas imports <code>@/features/hook</code>; hook never imports canvas (no cycle). Authority: import-rules + module-layout + codebase pattern.</li>
+  <li>ASSUMPTION: Clicking a Hook Card selects nothing (it has a hover menu, not a strip); the menu hides 150 ms after the pointer leaves both the card and the menu (design §15 leaves the delay undesigned). Authority: design §9.5, §10 + smallest reversible option.</li>
+  <li>ASSUMPTION: The Modifier buttons' hover label is the native <code>title</code> ("Player Role Modifier", "Resource Modifier", "Setting Modifier") with <code>aria-label</code> "Draw A … Modifier"; the Hook Card button stays enabled when pools fail. Authority: design §8.2, §12 + smallest reversible option.</li>
+  <li>ASSUMPTION: The pools-failed banner text changes to design 9.13's "The deck buttons are off until the decks load."; the save mark keeps Title Case "Save Failed" (Phase 1 decision). The fallback dialog title becomes "Copy The Hook" and its field label "Hook Sentence" (CLAUDE.md Title Case for dialog titles and labels wins over design 9.5's sentence case, as Phase 1 did for "New Board"); the dialog body stays as written in the design. Authority: CLAUDE.md UI Conventions + Phase 1 Notes + design §9.5, §9.13.</li>
+  <li>ASSUMPTION: In the text file the Hook Card line reads "Hook Card" with its stack indented below; writing each hook sentence into the text file is Phase 5 ("Text export holds each hook"). On-top cards read inside their base card's line. Authority: PRD Phase 5 + smallest reversible option.</li>
+  <li>ASSUMPTION: A merged ring's <code>modDeck</code> has no extra visual on the combined card (the design's combined-card dot stays plain); it only brings the icon back on a Split or swapped card. Authority: design §9.4 + feature-modifier-decks.</li>
+  <li>ASSUMPTION: The rail help panel and Add Note stay as copied until Phase 5 (Phase 1 Notes). Authority: Phase 1 Notes + design §16.</li>
+  <li>ASSUMPTION: The M2 pass bar (20 stacks; 16 of 20 per core deck, 20 of 25 per Modifier deck, 12 of 20 hooks) is the user's manual, non-blocking check, handed over in the README (Task 22). The agent-checkable parts — pool floors, the 11-card stack drag test, unit and browser tests — are real tasks. Authority: the brief + mvp-plan M2.</li>
+</ul>
+
+<h3>Doc conflicts recorded (no stop needed)</h3>
+<ul>
+  <li>PRD Phase 2 lists the split for "the 5 core decks and the Modifier"; architecture <code>pool-files</code> defines a single one-time split of all 11 decks with floors over all 4 tagged decks. The architecture wins; the PRD Phase 2–4 bullets and mvp-plan M2–M4 conversion lines are stale.</li>
+  <li>PRD §11 Phase 2 says "if it fails, amend canvas-library before continuing"; this plan stops with BLOCKED and leaves the amendment to <code>/dev-architecture</code>, per the brief and the architecture's ownership rule.</li>
+  <li>Design 9.13 "Save failed" vs CLAUDE.md Title Case: "Save Failed" stays (Phase 1). Design 9.5 dialog title "Copy the hook" / field "Hook sentence" vs CLAUDE.md: "Copy The Hook" / "Hook Sentence".</li>
+</ul>
+
+<h3>Risks</h3>
+<ul>
+  <li>Long stack (Task 1): if the flat-node canvas drops below 50 fps, the phase stops; Milestone 2's split (pure script) stays valid for a re-plan.</li>
+  <li>Label fit at 200 px: 8-word Goal / Conflict / Twist / Progression / Constraint cues and 6-word Mechanic cues may wrap badly; <code>two-cue-fit.spec.ts</code> catches it in Task 8/9.</li>
+  <li>Long hooks: a full stack plus Modifiers is 7–10 cards; the Hook Card's 14 px sentence in a 240 × 200 card may overflow. If it does, the executor lets the sentence scroll inside the card body (no new token) and records it.</li>
+  <li>The Resource Modifier deck is the smallest (189); draws may repeat more — the M2 hook test judges it.</li>
+  <li>Sentence grammar for some cue/badge pairs ("who must" + a noun-like Mechanic cue) reads badly; that is the M2 hook test's job, not a gate.</li>
+</ul>
+
+</body>
+</html>
