@@ -28,7 +28,7 @@
 
 <h2>Summary and motivation</h2>
 <p>The one Modifier deck becomes 3 Modifier decks: Role, Resource and Setting. Each deck draws only modifiers whose <code>targets</code> list includes that deck. A modifier that fits more than one target is in more than one deck. For example, "cursed" is in all 3 decks.</p>
-<p>The user gets an adjective that suits the card they want to change. Today one deck mixes 391 modifiers. Of these, 300 fit a Player Role, 245 fit a Setting and only 74 fit a Resource. A random Modifier draw for a Resource card often gives words that do not fit.</p>
+<p>The user gets an adjective that suits the card they want to change. Today one deck mixes 503 modifiers. Of these, 300 fit a Player Role, 245 fit a Setting and 189 fit a Resource. A random Modifier draw for a Resource card often gives words that do not fit.</p>
 <p>The decks guide the draw only. For creative reasons, a modifier from any of the 3 decks can merge with any Player Role, Resource or Setting card.</p>
 <p>The feature also fixes the On Top rule. A base card holds at most 1 merged adjective ring. A second Modifier sits on top as its own card.</p>
 
@@ -151,7 +151,7 @@ Pool (modifier.json)
 </ol>
 
 <h3>Pool contract</h3>
-<p>The split writes <code>targets</code> on each Modifier cue as kebab-case values: <code>role</code>, <code>resource</code>, <code>setting</code>. Each value has at least 20 cues. Today the counts are Role 300, Setting 245 and Resource 74.</p>
+<p>The split writes <code>targets</code> on each Modifier cue as kebab-case values: <code>role</code>, <code>resource</code>, <code>setting</code>. Each value has at least 20 cues. Today the counts are Role 300, Setting 245 and Resource 189.</p>
 
 <h2>Architecture fit</h2>
 <p><b>Outcome 1: it fits.</b> The feature uses the existing pattern, layout, storage and boundaries.</p>
@@ -210,7 +210,7 @@ Pool (modifier.json)
 <h2>Open risks and assumptions</h2>
 <h3>Risks</h3>
 <ul>
-  <li>The Resource Modifier deck is small: 74 cues, and only 3 fit Resource alone. Its draws may repeat often. The M2 pass bar tests it.</li>
+  <li>The Resource Modifier deck is the smallest: 189 cues, 115 of them for Resource alone. Its draws may repeat more than the other decks. The M2 pass bar tests it.</li>
   <li>Hooks get longer. A full hook now takes 7 to 10 cards. The hook bar stays at 12 of 20 hooks the user would build.</li>
 </ul>
 <h3>Assumptions</h3>

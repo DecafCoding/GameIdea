@@ -1,8 +1,4 @@
-# Deck: Modifier (General)
-
-391 cards. Targets lists the card types each modifier fits.
-
-| # | Card | Targets | Count | Games |
+Player Role, Resource, Setting | # | Card | Targets | Count | Games |
 |---:|---|---|---:|---|
 | 1 | tiny | Player Role, Resource, Setting | 18 | Hollow Knight, Stray, Ori and the Will of the Wisps, Castle Crashers, VPet-Simulator, A Hat in Time, Little Nightmares, WorldBox - God Simulator, Just Shapes & Beats, Stacklands, Townscaper, It Takes Two, Outer Wilds, Kerbal Space Program, FTL: Faster Than Light, Among Us, Starbound, Life is Strange - Episode 1 |
 | 2 | cursed | Player Role, Resource, Setting | 16 | Black Myth: Wukong, Vampire Survivors, ELDEN RING, Slay the Spire, Tomb Raider, Inscryption, Resident Evil Village, Senren*Banka, Noita, What Remains of Edith Finch, Hand of Fate, Tekken 8, Skullgirls, Darkest Dungeon, DARK SOULS: REMASTERED, Dead Cells |
@@ -254,7 +250,7 @@
 | 248 | mirrored | Setting | 1 | Mirror |
 | 249 | modded | Resource, Setting | 1 | Assetto Corsa |
 | 250 | moldy | Resource, Setting | 1 | Resident Evil Village |
-| 251 | molten | Setting | 1 | The Powder Toy |
+| 251 | molten | Resource, Setting | 1 | The Powder Toy |
 | 252 | naked | Player Role | 1 | Rust |
 | 253 | nocturnal | Player Role, Setting | 1 | Touhou Mystia's Izakaya |
 | 254 | occult | Player Role, Setting | 1 | The Room |
@@ -287,7 +283,7 @@
 | 281 | sacrificed | Player Role | 1 | Nidhogg |
 | 282 | scarred | Player Role, Setting | 1 | Sally Face - Episode One |
 | 283 | scrap | Resource, Setting | 1 | Scrap Mechanic |
-| 284 | sentient | Player Role, Setting | 1 | Inscryption |
+| 284 | sentient | Player Role, Resource, Setting | 1 | Inscryption |
 | 285 | sharp-dressed | Player Role | 1 | Helltaker |
 | 286 | small-time | Player Role | 1 | Schedule I |
 | 287 | spotless | Setting | 1 | PowerWash Simulator |
@@ -296,7 +292,7 @@
 | 290 | stylish | Player Role, Setting | 1 | Devil May Cry 5 |
 | 291 | suburban | Player Role, Setting | 1 | Plants vs. Zombies |
 | 292 | summoned | Player Role | 1 | Persona 3 Reload |
-| 293 | sunken | Setting | 1 | ATRI -My Dear Moments- |
+| 293 | sunken | Resource, Setting | 1 | ATRI -My Dear Moments- |
 | 294 | sunless | Setting | 1 | OneShot |
 | 295 | superpowered | Player Role | 1 | Marvel Snap |
 | 296 | supersonic | Player Role | 1 | Redout |
@@ -395,3 +391,115 @@
 | 389 | musical | Player Role, Setting | 1 | Just Shapes & Beats |
 | 390 | victorian | Player Role, Setting | 1 | Grim Dawn |
 | 391 | unique | Resource | 0 |  |
+| 392 | rusted | Resource | 0 |  |
+| 393 | volatile | Resource | 0 |  |
+| 394 | counterfeit | Resource | 0 |  |
+| 395 | rationed | Resource | 0 |  |
+| 396 | salvaged | Resource | 0 |  |
+| 397 | brittle | Resource | 0 |  |
+| 398 | spoiled | Resource | 0 |  |
+| 399 | stolen | Resource | 0 |  |
+| 400 | contraband | Resource | 0 |  |
+| 401 | unstable | Resource | 0 |  |
+| 402 | radioactive | Resource | 0 |  |
+| 403 | scarce | Resource | 0 |  |
+| 404 | abundant | Resource | 0 |  |
+| 405 | perishable | Resource | 0 |  |
+| 406 | refined | Resource | 0 |  |
+| 407 | crude | Resource | 0 |  |
+| 408 | polished | Resource | 0 |  |
+| 409 | tarnished | Resource | 0 |  |
+| 410 | chipped | Resource | 0 |  |
+| 411 | cracked | Resource | 0 |  |
+| 412 | dented | Resource | 0 |  |
+| 413 | patched | Resource | 0 |  |
+| 414 | makeshift | Resource | 0 |  |
+| 415 | recycled | Resource | 0 |  |
+| 416 | reforged | Resource | 0 |  |
+| 417 | tempered | Resource | 0 |  |
+| 418 | blessed | Resource | 0 |  |
+| 419 | smuggled | Resource | 0 |  |
+| 420 | rented | Resource | 0 |  |
+| 421 | heirloom | Resource | 0 |  |
+| 422 | antique | Resource | 0 |  |
+| 423 | vintage | Resource | 0 |  |
+| 424 | prototype | Resource | 0 |  |
+| 425 | mass-produced | Resource | 0 |  |
+| 426 | handcrafted | Resource | 0 |  |
+| 427 | synthetic | Resource | 0 |  |
+| 428 | organic | Resource | 0 |  |
+| 429 | fermented | Resource | 0 |  |
+| 430 | preserved | Resource | 0 |  |
+| 431 | salted | Resource | 0 |  |
+| 432 | dried | Resource | 0 |  |
+| 433 | canned | Resource | 0 |  |
+| 434 | liquid | Resource | 0 |  |
+| 435 | crystalline | Resource | 0 |  |
+| 436 | magnetic | Resource | 0 |  |
+| 437 | flammable | Resource | 0 |  |
+| 438 | toxic | Resource | 0 |  |
+| 439 | sticky | Resource | 0 |  |
+| 440 | slippery | Resource | 0 |  |
+| 441 | weightless | Resource | 0 |  |
+| 442 | bottomless | Resource | 0 |  |
+| 443 | self-repairing | Resource | 0 |  |
+| 444 | self-replicating | Resource | 0 |  |
+| 445 | regenerating | Resource | 0 |  |
+| 446 | decaying | Resource | 0 |  |
+| 447 | expiring | Resource | 0 |  |
+| 448 | single-use | Resource | 0 |  |
+| 449 | rechargeable | Resource | 0 |  |
+| 450 | depleted | Resource | 0 |  |
+| 451 | overcharged | Resource | 0 |  |
+| 452 | leaking | Resource | 0 |  |
+| 453 | encrypted | Resource | 0 |  |
+| 454 | engraved | Resource | 0 |  |
+| 455 | mislabeled | Resource | 0 |  |
+| 456 | fake | Resource | 0 |  |
+| 457 | replica | Resource | 0 |  |
+| 458 | genuine | Resource | 0 |  |
+| 459 | legendary | Resource | 0 |  |
+| 460 | worthless | Resource | 0 |  |
+| 461 | priceless | Resource | 0 |  |
+| 462 | overpriced | Resource | 0 |  |
+| 463 | taxed | Resource | 0 |  |
+| 464 | pawned | Resource | 0 |  |
+| 465 | insured | Resource | 0 |  |
+| 466 | stockpiled | Resource | 0 |  |
+| 467 | hoarded | Resource | 0 |  |
+| 468 | scattered | Resource | 0 |  |
+| 469 | compressed | Resource | 0 |  |
+| 470 | diluted | Resource | 0 |  |
+| 471 | concentrated | Resource | 0 |  |
+| 472 | purified | Resource | 0 |  |
+| 473 | contaminated | Resource | 0 |  |
+| 474 | tainted | Resource | 0 |  |
+| 475 | spiked | Resource | 0 |  |
+| 476 | edible | Resource | 0 |  |
+| 477 | overripe | Resource | 0 |  |
+| 478 | stale | Resource | 0 |  |
+| 479 | fresh | Resource | 0 |  |
+| 480 | talking | Resource | 0 |  |
+| 481 | humming | Resource | 0 |  |
+| 482 | ticking | Resource | 0 |  |
+| 483 | pulsing | Resource | 0 |  |
+| 484 | scalding | Resource | 0 |  |
+| 485 | smoldering | Resource | 0 |  |
+| 486 | charred | Resource | 0 |  |
+| 487 | waterlogged | Resource | 0 |  |
+| 488 | dusty | Resource | 0 |  |
+| 489 | bloodstained | Resource | 0 |  |
+| 490 | gilded | Resource | 0 |  |
+| 491 | jeweled | Resource | 0 |  |
+| 492 | copper | Resource | 0 |  |
+| 493 | bone | Resource | 0 |  |
+| 494 | cardboard | Resource | 0 |  |
+| 495 | duct-taped | Resource | 0 |  |
+| 496 | gift-wrapped | Resource | 0 |  |
+| 497 | stamped | Resource | 0 |  |
+| 498 | numbered | Resource | 0 |  |
+| 499 | matched | Resource | 0 |  |
+| 500 | mismatched | Resource | 0 |  |
+| 501 | fused | Resource | 0 |  |
+| 502 | miniature | Resource | 0 |  |
+| 503 | oversized | Resource | 0 |  |

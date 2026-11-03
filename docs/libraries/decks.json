@@ -21068,6 +21068,7 @@
         "The Powder Toy"
       ],
       "targets": [
+        "Resource",
         "Setting"
       ]
     },
@@ -21386,6 +21387,7 @@
       ],
       "targets": [
         "Player Role",
+        "Resource",
         "Setting"
       ]
     },
@@ -21469,6 +21471,7 @@
         "ATRI -My Dear Moments-"
       ],
       "targets": [
+        "Resource",
         "Setting"
       ]
     },
@@ -22388,6 +22391,790 @@
     },
     {
       "card": "unique",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "rusted",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "volatile",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "counterfeit",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "rationed",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "salvaged",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "brittle",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "spoiled",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "stolen",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "contraband",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "unstable",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "radioactive",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "scarce",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "abundant",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "perishable",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "refined",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "crude",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "polished",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "tarnished",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "chipped",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "cracked",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "dented",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "patched",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "makeshift",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "recycled",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "reforged",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "tempered",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "blessed",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "smuggled",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "rented",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "heirloom",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "antique",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "vintage",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "prototype",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "mass-produced",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "handcrafted",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "synthetic",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "organic",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "fermented",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "preserved",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "salted",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "dried",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "canned",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "liquid",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "crystalline",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "magnetic",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "flammable",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "toxic",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "sticky",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "slippery",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "weightless",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "bottomless",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "self-repairing",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "self-replicating",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "regenerating",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "decaying",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "expiring",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "single-use",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "rechargeable",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "depleted",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "overcharged",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "leaking",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "encrypted",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "engraved",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "mislabeled",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "fake",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "replica",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "genuine",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "legendary",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "worthless",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "priceless",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "overpriced",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "taxed",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "pawned",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "insured",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "stockpiled",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "hoarded",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "scattered",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "compressed",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "diluted",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "concentrated",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "purified",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "contaminated",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "tainted",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "spiked",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "edible",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "overripe",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "stale",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "fresh",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "talking",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "humming",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "ticking",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "pulsing",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "scalding",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "smoldering",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "charred",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "waterlogged",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "dusty",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "bloodstained",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "gilded",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "jeweled",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "copper",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "bone",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "cardboard",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "duct-taped",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "gift-wrapped",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "stamped",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "numbered",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "matched",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "mismatched",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "fused",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "miniature",
+      "games": [],
+      "targets": [
+        "Resource"
+      ]
+    },
+    {
+      "card": "oversized",
       "games": [],
       "targets": [
         "Resource"
