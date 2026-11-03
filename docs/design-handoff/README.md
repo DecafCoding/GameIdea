@@ -2,8 +2,12 @@
 
 This folder holds the GameIdea mockups and design tokens. Use it as the input for `/dev-ui-update`.
 
+- Date: 2026-11-02
+- Version: 1
+- Supersedes: none. This is the first GameIdea handoff.
+
 - Live canvas: https://claude.ai/artifact/8Z27m7aYUEDgXcXVJ5Nx9D
-- `mockups/` holds the source of each artboard (`.dc.html`) and the canvas index (`canvas.json`). The files need the canvas runtime to render. Open the live canvas to see them.
+- `mockups/` holds the source of each artboard (`.dc.html`) and the canvas index (`canvas.json`). The canvas runtime (`support.js`) is not included. Each file renders on its own once `{{accent}}` is replaced with its default; `screenshots/` holds those renders. Open the live canvas to see them interactively.
 - `tokens.json` holds the colors, fonts and sizes.
 - `_ds/gameidea/styles.css` holds the same tokens as CSS variables. Where a value disagrees, `styles.css` wins.
 - `_ds/gameidea/readme.md` names the base design (TheForge) and the closed list of deliberate deviations.
@@ -44,7 +48,7 @@ These change or add to `docs/mvp-plan.html`.
 2. The Modifier is 3 decks: one for Player Role, one for Resource, one for Setting. The rail shows them as 3 icon buttons on 1 line under the header "MODIFIERS".
 3. Any Modifier can combine with any Player Role, Resource or Setting card.
 4. Rail buttons are 36 px tall. Icons have no circle. Each icon is drawn in its deck rail color.
-5. The 4 genre decks (Mechanic, Resource, Progression, Constraint) show a small orange count of the genres that are on.
+5. The 4 genre decks (Mechanic, Resource, Progression, Constraint) show a small count of the genres that are on, in the theme color (orange, blue or green).
 6. A Settings button with a gear icon sits at the bottom of the rail.
 7. Icons: Resource is a battery. Constraint is shield-x. The Modifiers are user-plus, battery-plus and map-pin-plus.
 
