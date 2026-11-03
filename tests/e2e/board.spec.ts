@@ -3,6 +3,7 @@
  * fixture boards, the pools banner, selection and the card strip, keys, and locked tokens.
  */
 import type { Route } from '@playwright/test';
+import type { Board } from '@/shared/model';
 import { expect, test } from './test';
 import {
   combinedCard,
@@ -63,15 +64,45 @@ test('board_drawFromPanel_hidesPanelAndCountsOne', async ({ page }) => {
 
 test('board_drawEachDeck_cardsDoNotOverlap', async ({ page }) => {
   await openBoard(page);
-  const decks: DeckName[] = ['Player Role', 'Goal', 'Conflict', 'Modifier', 'Setting'];
+  const decks: DeckName[] = [
+    'Hook Card',
+    'Player Role',
+    'Mechanic',
+    'Resource',
+    'Goal',
+    'Conflict',
+    'Player Role Modifier',
+    'Resource Modifier',
+    'Setting Modifier',
+    'Setting',
+  ];
   for (const deck of decks) await drawFromRail(page, deck);
-  await expect(canvasCards(page)).toHaveCount(5);
-  await expect(badge(page)).toHaveText('5 cards · 0 notes');
-  const boxes = await Promise.all((await canvasCards(page).all()).map((c) => boxOf(c)));
-  for (let i = 0; i < boxes.length; i++) {
-    for (let j = i + 1; j < boxes.length; j++) {
-      const a = boxes[i]!;
-      const b = boxes[j]!;
+  await expect(badge(page)).toHaveText('10 cards · 0 notes');
+  // The saved places, not the rendered nodes: the canvas renders only the cards in view.
+  await expect.poll(async () => (await storedBoards(page))[0]?.cards.length).toBe(10);
+  const cards = (await storedBoards(page))[0]!.cards;
+  expect(cards.map((c) => c.type).sort()).toEqual([
+    'conflict',
+    'goal',
+    'hook',
+    'mechanic',
+    'modifier',
+    'modifier',
+    'modifier',
+    'resource',
+    'role',
+    'setting',
+  ]);
+  const box = (c: Board['cards'][number]) => ({
+    x: c.x,
+    y: c.y,
+    width: c.type === 'hook' ? 240 : 200,
+    height: 200,
+  });
+  for (let i = 0; i < cards.length; i++) {
+    for (let j = i + 1; j < cards.length; j++) {
+      const a = box(cards[i]!);
+      const b = box(cards[j]!);
       const overlap =
         a.x < b.x + b.width && a.x + a.width > b.x && a.y < b.y + b.height && a.y + a.height > b.y;
       expect(overlap).toBe(false);

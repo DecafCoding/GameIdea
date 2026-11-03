@@ -70,11 +70,11 @@ describe('BoardScreen', () => {
     expect(screen.getByRole('button', { name: 'Undo' })).toHaveProperty('disabled', true);
     expect(screen.getByRole('button', { name: 'Redo' })).toHaveProperty('disabled', true);
     expect(screen.getByRole('button', { name: 'Add Note' })).toBeTruthy();
-    // 5 rail decks plus the empty board panel's button.
+    // 9 rail deck buttons (5 core, 3 Modifier, Setting) plus the empty board panel's button.
     await waitFor(() =>
       expect(decks().every((d) => !(d as HTMLButtonElement).disabled)).toBe(true),
     );
-    expect(decks()).toHaveLength(6);
+    expect(decks()).toHaveLength(10);
   });
 
   it('boardScreen_renameBlank_keepsOldName', () => {

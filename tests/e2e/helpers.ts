@@ -21,7 +21,6 @@ export type DeckName =
   | 'Resource'
   | 'Goal'
   | 'Conflict'
-  | 'Modifier'
   | 'Player Role Modifier'
   | 'Resource Modifier'
   | 'Setting Modifier'

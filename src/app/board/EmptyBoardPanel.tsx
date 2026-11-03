@@ -24,8 +24,8 @@ export function EmptyBoardPanel({ decksReady, onDraw }: EmptyBoardPanelProps) {
         ring arrow to pick the cue you like.
       </p>
       <p className={styles.text}>
-        A good first set is a Player Role, a Goal and a Conflict. Drag a card near another to tuck
-        them together.
+        A good first set is a Hook Card, then a Player Role, a Mechanic, a Resource, a Goal and a
+        Conflict tucked under it. Drag a card near another to tuck them together.
       </p>
       <Button
         variant="primary"

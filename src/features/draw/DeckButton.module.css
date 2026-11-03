@@ -52,3 +52,9 @@
   border-color: var(--accent);
   background: var(--accent-hook-button);
 }
+
+/* A Modifiers row button (design 8.2): the icon centered, padding 4, no label. */
+.iconOnly {
+  justify-content: center;
+  padding: 4px;
+}

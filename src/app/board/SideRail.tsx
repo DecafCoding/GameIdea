@@ -1,10 +1,11 @@
 /**
- * SideRail: the 232 px rail (design 8.2): the Decks group label, 5 deck buttons in rail
- * order, Add Note, and the help panel pinned to the bottom. The grouped rail (Hook Card,
- * Core, Modifiers, Optional, Genres) and Settings come in later phases.
+ * SideRail: the 232 px rail (design 8.2): the Hook Card button, then the Core group (Player
+ * Role, Mechanic, Resource, Goal, Conflict), the Modifiers row of 3 icon buttons and the
+ * Optional group (Setting; the other optional decks come in Phase 4), then Add Note and
+ * the help panel pinned to the bottom. Genres and Settings come in later phases.
  */
 import { DeckButton, HookButton } from '@/features/draw';
-import type { Deck, ModDeck } from '@/shared/model';
+import { MOD_DECKS, type Deck, type ModDeck } from '@/shared/model';
 import { Icon } from '@/shared/ui';
 import styles from './SideRail.module.css';
 
@@ -16,22 +17,35 @@ interface SideRailProps {
   onAddNote: () => void;
 }
 
-/** The Phase 1 rail, unchanged until the grouped rail lands. */
-const PHASE1_RAIL: Deck[] = ['role', 'goal', 'conflict', 'modifier', 'setting'];
+/** The Core group, in the design's order. */
+const CORE: Deck[] = ['role', 'mechanic', 'resource', 'goal', 'conflict'];
+/** The Optional group this phase ships. */
+const OPTIONAL: Deck[] = ['setting'];
 
 export function SideRail({ decksReady, onDraw, onDrawHook, onAddNote }: SideRailProps) {
+  const button = (type: Deck) => (
+    <DeckButton key={type} type={type} disabled={!decksReady} onDraw={onDraw} />
+  );
   return (
     <aside className={styles.rail} aria-label="Decks">
       <HookButton onDraw={onDrawHook} />
-      <h2 className={styles.label}>Decks</h2>
-      {PHASE1_RAIL.map((type) => (
-        <DeckButton
-          key={type}
-          type={type}
-          disabled={!decksReady}
-          onDraw={(deck, from) => onDraw(deck, from, deck === 'modifier' ? 'role' : undefined)}
-        />
-      ))}
+      <h2 className={styles.label}>Core</h2>
+      {CORE.map(button)}
+      <h2 className={styles.label}>Modifiers</h2>
+      <div className={styles.modifiers}>
+        {MOD_DECKS.map((modDeck) => (
+          <DeckButton
+            key={modDeck}
+            type="modifier"
+            modDeck={modDeck}
+            iconOnly
+            disabled={!decksReady}
+            onDraw={onDraw}
+          />
+        ))}
+      </div>
+      <h2 className={styles.label}>Optional</h2>
+      {OPTIONAL.map(button)}
       <button type="button" className={styles.addNote} onClick={onAddNote}>
         <span className={styles.noteIcon}>
           <Icon name="note" size={16} />
