@@ -3,24 +3,13 @@
  * Zod is reserved for features/export/, so the pool shape is checked by hand here.
  * Every cue needs a genres list: 1 or more known genres, none repeated.
  */
-import {
-  GENRES,
-  type CardType,
-  type CueKind,
-  type Genre,
-  type Pool,
-  type PoolCue,
-} from '@/shared/model';
-
-const KINDS: readonly CueKind[] = ['place', 'object', 'event'];
+import { GENRES, type CardType, type Genre, type Pool, type PoolCue } from '@/shared/model';
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null && !Array.isArray(value);
 
 const isNonEmptyString = (value: unknown): value is string =>
   typeof value === 'string' && value.trim().length > 0;
-
-const isKind = (value: unknown): value is CueKind => KINDS.includes(value as CueKind);
 
 /** A non-empty array of known genres with no repeats. */
 const isGenreList = (value: unknown): value is Genre[] =>
@@ -50,17 +39,8 @@ export function parsePool(type: CardType, data: unknown): Pool {
         `Cue ${raw.id} in the ${type} pool needs a genres list of generic, sci-fi, cyberpunk or space-opera.`,
       );
     }
-    const genres = [...raw.genres];
-    if (type === 'setting') {
-      if (!isKind(raw.kind)) {
-        throw new Error(`Setting cue ${raw.id} needs a kind of place, object or event.`);
-      }
-      return { id: raw.id, text: raw.text, kind: raw.kind, genres };
-    }
-    if (raw.kind !== undefined) {
-      throw new Error(`Cue ${raw.id} in the ${type} pool must not have a kind.`);
-    }
-    return { id: raw.id, text: raw.text, genres };
+    // Any other key on a cue is ignored, not copied.
+    return { id: raw.id, text: raw.text, genres: [...raw.genres] };
   });
 
   return { type, cues };

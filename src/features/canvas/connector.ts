@@ -4,19 +4,17 @@
  *
  * Each pair has a short word list, default first. The writer picks a word on the badge
  * and it is saved on the tucked card. The badge shows the saved word while it is in the
- * pair's current list, and the default otherwise, so turning a Setting to another kind or
- * re-tucking a card never needs a write, and turning back brings the saved word back.
+ * pair's current list, and the default otherwise, so re-tucking a card never needs a
+ * write, and tucking it back brings the saved word back.
  *
  * A word ending in " a" is written "a" or "an" by the first letter of the tucked card's
  * active text.
  */
-import type { CardType, CueKind } from '@/shared/model';
+import type { CardType } from '@/shared/model';
 
 /** The card tucked directly below another: what its connector depends on. */
 export interface Below {
   type: CardType;
-  /** Kind of its active noun (Setting only). */
-  kind: CueKind | null;
   /** Its active text, as the stack reads it: "exiled outpost". */
   text: string;
   /** The word saved on it, if any. */
@@ -44,24 +42,16 @@ export interface Connector {
 const GOAL = ['wants to', 'needs to', 'must', 'refuses to', 'swore to', 'is afraid to'];
 const CONFLICT = ['but', 'until', 'because', 'while', 'unless', 'even though'];
 const ROLE = ['and', 'against', 'hunted by', 'working for', 'owes', 'betrays'];
-const SETTING: Record<CueKind, string[]> = {
-  place: ['in the', 'in a', 'on the', 'aboard the', 'beneath the', 'outside the'],
-  object: ['with the', 'with a', 'for the', 'without the', 'hunting the', 'guarding the'],
-  event: ['from the', 'from a', 'after the', 'during the', 'before the', 'despite the'],
-};
+const SETTING = ['in the', 'in a', 'on the', 'aboard the', 'beneath the', 'outside the'];
 
 /** The word list for a pair, default first, or null when the pair has no connector. */
-export function connectorWords(
-  upper: CardType,
-  lower: CardType,
-  kind: CueKind | null,
-): string[] | null {
+export function connectorWords(upper: CardType, lower: CardType): string[] | null {
   switch (lower) {
     case 'conflict':
       return CONFLICT;
     case 'setting':
       // A Modifier over a Setting is its adjectives, not a new part of the sentence.
-      return upper === 'modifier' || !kind ? null : SETTING[kind];
+      return upper === 'modifier' ? null : SETTING;
     case 'goal':
       return upper === 'role' ? GOAL : null;
     case 'role':
@@ -78,7 +68,7 @@ export function showWord(word: string, next: string): string {
 
 /** The connector between a card and the card tucked directly below it, or null. */
 export function connectorFor(upper: CardType, below: Below): Connector | null {
-  const words = connectorWords(upper, below.type, below.kind);
+  const words = connectorWords(upper, below.type);
   if (!words) return null;
   const word = below.saved !== null && words.includes(below.saved) ? below.saved : words[0]!;
   return {

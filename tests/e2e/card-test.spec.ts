@@ -31,11 +31,6 @@ test.describe('with pools loaded', () => {
       const card = await draw(page, deck);
       await expect(card).toHaveAttribute('data-type', type);
       await expect(card.locator('[data-edge]')).toHaveCount(count);
-      if (deck === 'Setting') {
-        for (const label of await card.locator('[data-edge]').all()) {
-          await expect(label).toHaveAttribute('data-kind', /^(place|object|event)$/);
-        }
-      }
     }
   });
 

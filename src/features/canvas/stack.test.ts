@@ -26,7 +26,7 @@ const find = (board: Board, id: string): Card => board.cards.find((c) => c.id ==
 const ys = (board: Board, ids: string[]) => ids.map((id) => find(board, id).y);
 
 describe('stackOrder', () => {
-  it('stackOrder_chain_characterGoalConflictAt0And59And118', () => {
+  it('stackOrder_chain_roleGoalConflictAt0And59And118', () => {
     const board = tuckCard(
       tuckCard(
         fixtureBoard([
@@ -50,7 +50,7 @@ describe('stackOrder', () => {
     expect(stackDepth(board, 'conflict-1')).toBe(2);
   });
 
-  it('childrenOf_descriptionTuckedLater_sitsClosestToParent', () => {
+  it('childrenOf_modifierTuckedLater_sitsClosestToParent', () => {
     const board = fixtureBoard([
       fixtureCard('role', { z: 1 }),
       fixtureCard('goal', { z: 2, tuckedUnder: 'role-1' }),
@@ -114,7 +114,7 @@ describe('putOnTop', () => {
     expect(ys(next, ['modifier-2', 'role-1', 'goal-1'])).toEqual([96, 155, 214]);
   });
 
-  it('putOnTop_descriptionTuckedUnderTarget_movesToTop', () => {
+  it('putOnTop_modifierTuckedUnderTarget_movesToTop', () => {
     const board = tuckCard(story(), 'modifier-2', 'role-1');
     const next = putOnTop(board, 'modifier-2', 'role-1');
     expect(stackOrder(next, 'modifier-2').map((c) => c.id)).toEqual([

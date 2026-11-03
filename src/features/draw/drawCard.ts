@@ -62,11 +62,7 @@ export function drawCard(
     [distinct[i], distinct[j]] = [distinct[j]!, distinct[i]!];
   }
 
-  const cues = distinct
-    .slice(0, need)
-    .map((cue): Cue =>
-      type === 'setting' && cue.kind ? { text: cue.text, kind: cue.kind } : { text: cue.text },
-    );
+  const cues = distinct.slice(0, need).map((cue): Cue => ({ text: cue.text }));
 
   return {
     id: createId(),

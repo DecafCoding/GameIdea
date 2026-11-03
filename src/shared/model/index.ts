@@ -29,9 +29,6 @@ export function everyDeck(genres: readonly Genre[]): DeckGenres {
   };
 }
 
-/** Setting nouns carry a kind; no other cue does. */
-export type CueKind = 'place' | 'object' | 'event';
-
 /** Cues on one ring at draw time: 4 nouns / 2 cues / 4 adjectives. */
 export const CUES_PER_CARD: Record<CardType, 2 | 4> = {
   role: 4,
@@ -50,10 +47,9 @@ export const DECK_NAME: Record<CardType, string> = {
   setting: 'Setting',
 };
 
-/** A cue copied onto a card. kind is present on Setting nouns only. */
+/** A cue copied onto a card. */
 export interface Cue {
   text: string;
-  kind?: CueKind;
 }
 
 /** activeIndex is the cue at the bottom edge. */
@@ -124,7 +120,6 @@ export interface BoardIndexRow {
 export interface PoolCue {
   id: string;
   text: string;
-  kind?: CueKind;
   /** 1 or more; a cue in 2 genres is stored once. */
   genres: Genre[];
 }

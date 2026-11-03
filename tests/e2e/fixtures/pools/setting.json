@@ -4,50 +4,42 @@
     {
       "id": "setting-test-01",
       "text": "frozen prairie",
-      "genres": ["generic", "sci-fi", "cyberpunk", "space-opera"],
-      "kind": "place"
+      "genres": ["generic", "sci-fi", "cyberpunk", "space-opera"]
     },
     {
       "id": "setting-test-02",
       "text": "sunken city",
-      "genres": ["generic", "sci-fi", "cyberpunk", "space-opera"],
-      "kind": "place"
+      "genres": ["generic", "sci-fi", "cyberpunk", "space-opera"]
     },
     {
       "id": "setting-test-03",
       "text": "floating market",
-      "genres": ["generic", "sci-fi", "cyberpunk", "space-opera"],
-      "kind": "place"
+      "genres": ["generic", "sci-fi", "cyberpunk", "space-opera"]
     },
     {
       "id": "setting-test-04",
       "text": "abandoned mine",
-      "genres": ["generic", "sci-fi", "cyberpunk", "space-opera"],
-      "kind": "place"
+      "genres": ["generic", "sci-fi", "cyberpunk", "space-opera"]
     },
     {
       "id": "setting-test-05",
       "text": "neon arcade",
-      "genres": ["generic", "sci-fi", "cyberpunk", "space-opera"],
-      "kind": "place"
+      "genres": ["generic", "sci-fi", "cyberpunk", "space-opera"]
     },
     {
       "id": "setting-test-06",
       "text": "desert outpost",
-      "genres": ["generic", "sci-fi", "cyberpunk", "space-opera"],
-      "kind": "place"
+      "genres": ["generic", "sci-fi", "cyberpunk", "space-opera"]
     },
     {
       "id": "setting-test-07",
       "text": "moonlit harbor",
-      "genres": ["generic", "sci-fi", "cyberpunk", "space-opera"],
-      "kind": "place"
+      "genres": ["generic", "sci-fi", "cyberpunk", "space-opera"]
     },
     {
       "id": "setting-test-08",
       "text": "overgrown greenhouse",
-      "genres": ["generic", "sci-fi", "cyberpunk", "space-opera"],
-      "kind": "place"
+      "genres": ["generic", "sci-fi", "cyberpunk", "space-opera"]
     }
   ]
 }

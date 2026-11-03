@@ -10,7 +10,7 @@ import { GENRES, type Card, type CardType, type Pool } from '@/shared/model';
 import { CardView } from './CardView';
 import { combine, turnCard } from './rings';
 
-function card(type: CardType, rings: string[][], kinds = false): Card {
+function card(type: CardType, rings: string[][]): Card {
   return {
     id: `${type}-1`,
     type,
@@ -19,7 +19,7 @@ function card(type: CardType, rings: string[][], kinds = false): Card {
     z: 0,
     tuckedUnder: null,
     rings: rings.map((texts) => ({
-      cues: texts.map((text) => (kinds ? { text, kind: 'place' as const } : { text })),
+      cues: texts.map((text) => ({ text })),
       activeIndex: 0,
     })),
   };
@@ -38,13 +38,13 @@ function Harness({ initial }: { initial: Card }) {
 }
 
 describe('CardView', () => {
-  it('CardView_characterCard_rendersFourEdgesWithFirstCueActive', () => {
+  it('CardView_roleCard_rendersFourEdgesWithFirstCueActive', () => {
     const { container } = render(<CardView card={card('role', [NOUNS])} onTurn={noop} />);
     expect(edges(container)).toHaveLength(4);
     expect(screen.getByTestId('active-cue').textContent).toBe('navigator');
   });
 
-  it('CardView_motivationCard_rendersTwoCuesAndMiddleRule', () => {
+  it('CardView_goalCard_rendersTwoCuesAndMiddleRule', () => {
     const { container } = render(
       <CardView card={card('goal', [['find home', 'repay a debt']])} onTurn={noop} />,
     );
@@ -67,18 +67,16 @@ describe('CardView', () => {
     expect(screen.queryByTestId('combined-disc')).toBeNull();
   });
 
-  it('CardView_settingCard_discShowsBottomCueKindAndEdgesHaveNoIcon', () => {
-    const setting = card('setting', [NOUNS], true);
-    const kinds = ['place', 'object', 'event', 'place'] as const;
-    setting.rings[0]!.cues.forEach((cue, i) => (cue.kind = kinds[i]));
+  it('CardView_settingCard_discShowsTypeIconAndEdgesHaveNoIcon', () => {
+    const setting = card('setting', [NOUNS]);
     setting.rings[0]!.activeIndex = 1;
     const { container } = render(<CardView card={setting} onTurn={noop} />);
     const disc = screen.getByTestId('type-disc');
-    expect(disc.querySelector('[data-icon="cube"]')).toBeTruthy();
+    expect(disc.querySelector('[data-icon="pin"]')).toBeTruthy();
     for (const edge of edges(container)) expect(edge.querySelector('[data-icon]')).toBeNull();
   });
 
-  it('CardView_characterCard_discShowsTypeIcon', () => {
+  it('CardView_roleCard_discShowsTypeIcon', () => {
     render(<CardView card={card('role', [NOUNS])} onTurn={noop} />);
     expect(screen.getByTestId('type-disc').querySelector('[data-icon="person"]')).toBeTruthy();
   });

@@ -24,7 +24,6 @@ function pool(type: CardType, texts: string[], genres: Genre[] = ['generic']): P
     cues: texts.map((text, i) => ({
       id: `x-${i}`,
       text,
-      ...(type === 'setting' ? { kind: 'place' as const } : {}),
       genres: [...genres],
     })),
   };
@@ -38,7 +37,7 @@ const createId = () => `card-${++idCount}`;
 const texts = (card: ReturnType<typeof drawCard>) => card.rings[0]!.cues.map((cue) => cue.text);
 
 describe('drawCard', () => {
-  it('drawCard_character_returnsOneRingOfFourDistinctCues', () => {
+  it('drawCard_role_returnsOneRingOfFourDistinctCues', () => {
     const card = drawCard('role', pool('role', six), ALL, { createId });
     expect(card.rings).toHaveLength(1);
     expect(card.rings[0]!.activeIndex).toBe(0);
@@ -46,17 +45,12 @@ describe('drawCard', () => {
     expect(card).toMatchObject({ type: 'role', x: 0, y: 0, z: 0, tuckedUnder: null });
   });
 
-  it('drawCard_motivation_returnsTwoCues', () => {
+  it('drawCard_goal_returnsTwoCues', () => {
     const card = drawCard('goal', pool('goal', six), ALL);
     expect(texts(card)).toHaveLength(2);
   });
 
-  it('drawCard_setting_copiesKind', () => {
-    const card = drawCard('setting', pool('setting', six), ALL);
-    for (const cue of card.rings[0]!.cues) expect(cue.kind).toBe('place');
-  });
-
-  it('drawCard_characterPool_cuesHaveNoKindOrId', () => {
+  it('drawCard_rolePool_cuesHaveOnlyText', () => {
     const card = drawCard('role', pool('role', six), ALL);
     for (const cue of card.rings[0]!.cues) expect(Object.keys(cue)).toEqual(['text']);
   });

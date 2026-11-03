@@ -23,8 +23,6 @@ const ICONS: IconName[] = [
   'pin',
   'bolt',
   'tag',
-  'cube',
-  'burst',
   'alert-circle',
   'anvil',
   'undo',

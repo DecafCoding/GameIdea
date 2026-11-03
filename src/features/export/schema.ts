@@ -12,7 +12,6 @@ import { CARD_TYPES, FORMAT_VERSION, GENRES, type Board, type CardType } from '@
 
 const cueSchema = z.object({
   text: z.string().trim().min(1),
-  kind: z.enum(['place', 'object', 'event']).optional(),
 });
 
 const ringSchema = z.object({
@@ -52,10 +51,6 @@ const cardSchema = z
       }
       if (ring.activeIndex >= ring.cues.length) {
         ctx.addIssue({ code: 'custom', message: `Ring ${i} has activeIndex out of range.` });
-      }
-      const kindAllowed = card.type === 'setting' && i === 0;
-      if (!kindAllowed && ring.cues.some((cue) => cue.kind !== undefined)) {
-        ctx.addIssue({ code: 'custom', message: `Ring ${i} has a kind it may not have.` });
       }
     });
   });

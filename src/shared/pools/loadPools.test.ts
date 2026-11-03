@@ -9,7 +9,7 @@ import { loadPools, parsePool, poolUrl, usePools } from '.';
 function fixture(type: CardType) {
   const cue = (n: number) =>
     type === 'setting'
-      ? { id: `se-00${n}`, text: `place ${n}`, kind: 'place', genres: ['generic'] }
+      ? { id: `se-00${n}`, text: `place ${n}`, genres: ['generic'] }
       : { id: `${type}-${n}`, text: `${type} ${n}`, genres: ['generic'] };
   return { type, cues: [cue(1), cue(2), cue(3), cue(4)] };
 }
@@ -33,7 +33,6 @@ describe('loadPools', () => {
     expect(pools.setting.cues[0]).toEqual({
       id: 'se-001',
       text: 'place 1',
-      kind: 'place',
       genres: ['generic'],
     });
   });
@@ -52,15 +51,12 @@ describe('loadPools', () => {
 });
 
 describe('parsePool', () => {
-  it('parsePool_settingCueWithoutKind_throws', () => {
-    expect(() =>
-      parsePool('setting', { type: 'setting', cues: [{ id: 'a', text: 'b' }] }),
-    ).toThrow();
-  });
-
-  it('parsePool_characterCueWithKind_throws', () => {
-    const data = { type: 'role', cues: [{ id: 'a', text: 'b', kind: 'place' }] };
-    expect(() => parsePool('role', data)).toThrow();
+  it('parsePool_cueWithExtraKey_ignoresIt', () => {
+    const data = {
+      type: 'setting',
+      cues: [{ id: 'a', text: 'b', genres: ['generic'], kind: 'x' }],
+    };
+    expect(parsePool('setting', data).cues[0]).toEqual({ id: 'a', text: 'b', genres: ['generic'] });
   });
 
   it('parsePool_typeMismatch_throws', () => {

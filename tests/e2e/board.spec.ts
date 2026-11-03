@@ -333,31 +333,6 @@ test('connector_tuckedStack_badgesOnLeftSeam', async ({ page }) => {
   await page.screenshot({ path: process.env.SHOT ?? 'test-results/connector.png' });
 });
 
-test('connector_tuckedSetting_wordFollowsActiveNounKind', async ({ page }) => {
-  // Fixture Setting kinds by index: place, object, event, place.
-  const settingAt = (activeIndex: number, suffix: string, x: number) => {
-    const setting = fixtureCard('setting', {
-      id: `setting-${suffix}`,
-      x,
-      y: 155,
-      z: 2,
-      tuckedUnder: `role-${suffix}`,
-    });
-    setting.rings[0] = { ...setting.rings[0]!, activeIndex };
-    return [fixtureCard('role', { id: `role-${suffix}`, x, y: 96 }), setting];
-  };
-  await openBoard(
-    page,
-    fixtureBoard([...settingAt(0, '1', 96), ...settingAt(1, '2', 400), ...settingAt(2, '3', 704)]),
-  );
-  const badgeOf = (id: string) =>
-    page.locator(`.react-flow__node[data-id="${id}"]`).getByTestId('connector-badge');
-  await expect(badgeOf('role-1')).toHaveText('in the');
-  await expect(badgeOf('role-2')).toHaveText('with the');
-  await expect(badgeOf('role-3')).toHaveText('from the');
-  if (process.env.SHOT) await page.screenshot({ path: process.env.SHOT });
-});
-
 test('connector_conflictUnderRole_but', async ({ page }) => {
   await openBoard(
     page,

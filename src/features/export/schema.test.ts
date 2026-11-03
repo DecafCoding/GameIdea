@@ -105,12 +105,12 @@ describe('boardSchema', () => {
     rejects(withCard({ type: 'planet' as never }));
   });
 
-  it('boardSchema_characterThreeRings_rejected', () => {
+  it('boardSchema_roleThreeRings_rejected', () => {
     const card = combinedCard('role');
     rejects(withCard({ rings: [...card.rings, card.rings[1]!] }, card));
   });
 
-  it('boardSchema_motivationFourCues_rejected', () => {
+  it('boardSchema_goalFourCues_rejected', () => {
     const four = fixtureCard('role').rings[0]!.cues;
     rejects(withCard({ rings: [{ cues: four, activeIndex: 0 }] }, fixtureCard('goal')));
   });
@@ -118,12 +118,6 @@ describe('boardSchema', () => {
   it('boardSchema_activeIndexOutOfRange_rejected', () => {
     const card = fixtureCard('role');
     rejects(withCard({ rings: [{ ...card.rings[0]!, activeIndex: 4 }] }, card));
-  });
-
-  it('boardSchema_kindOnRole_rejected', () => {
-    const card = fixtureCard('role');
-    const cues = card.rings[0]!.cues.map((cue) => ({ ...cue, kind: 'place' as const }));
-    rejects(withCard({ rings: [{ cues, activeIndex: 0 }] }, card));
   });
 
   it('boardSchema_duplicateCardId_rejected', () => {

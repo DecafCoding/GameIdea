@@ -71,7 +71,7 @@ function poolByLength(type: Card['type']): Cue[] {
   const pool = JSON.parse(readFileSync(file, 'utf8')) as { cues: (Cue & { genres: string[] })[] };
   return pool.cues
     .filter((cue) => inFitClass(type, cue.text))
-    .map((cue): Cue => (cue.kind ? { text: cue.text, kind: cue.kind } : { text: cue.text }))
+    .map((cue): Cue => ({ text: cue.text }))
     .sort((a, b) => b.text.length - a.text.length);
 }
 

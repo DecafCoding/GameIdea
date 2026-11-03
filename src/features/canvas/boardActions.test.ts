@@ -102,7 +102,7 @@ describe('dropCard', () => {
 });
 
 describe('combineOnto', () => {
-  it('combineOnto_description_absorbsAndDeletesModifier', () => {
+  it('combineOnto_modifier_absorbsAndDeletesModifier', () => {
     const board = fixtureBoard([
       fixtureCard('role'),
       fixtureCard('modifier', {
@@ -130,7 +130,7 @@ describe('combineOnto', () => {
     expectStacksConsistent(next);
   });
 
-  it('combineOnto_descriptionWithTuckedCards_reTucksThemUnderTarget', () => {
+  it('combineOnto_modifierWithTuckedCards_reTucksThemUnderTarget', () => {
     const board = fixtureBoard([
       fixtureCard('modifier', { x: 0, y: 0, z: 1 }),
       fixtureCard('goal', { x: 0, y: 59, z: 2, tuckedUnder: 'modifier-1' }),

@@ -27,12 +27,7 @@ export const CUES = {
   setting: ['outpost', 'beacon', 'eclipse', 'harbor'],
 } as const;
 
-const SETTING_KINDS: Cue['kind'][] = ['place', 'object', 'event', 'place'];
-
 function cuesFor(type: CardType): Cue[] {
-  if (type === 'setting') {
-    return CUES.setting.map((text, i) => ({ text, kind: SETTING_KINDS[i] }));
-  }
   return CUES[type].map((text) => ({ text }));
 }
 

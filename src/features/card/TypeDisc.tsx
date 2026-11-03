@@ -1,8 +1,8 @@
 /**
  * TypeDisc: the round type-color disc with the white type glyph. It never turns.
- * Also holds the type and kind icon maps used across the card.
+ * Also holds the type icon map used across the card.
  */
-import type { CardType, CueKind } from '@/shared/model';
+import type { CardType } from '@/shared/model';
 import { Icon, type IconName } from '@/shared/ui';
 import styles from './TypeDisc.module.css';
 
@@ -14,17 +14,11 @@ export const TYPE_ICON: Record<CardType, IconName> = {
   modifier: 'tag',
 };
 
-export const KIND_ICON: Record<CueKind, IconName> = {
-  place: 'pin',
-  object: 'cube',
-  event: 'burst',
-};
-
 interface TypeDiscProps {
   type: CardType;
   /** 48 on the card, 36 on deck buttons, 28 in the New Board deck rows. The glyph is half the disc. */
   size: 48 | 36 | 28;
-  /** Replaces the type glyph. A Setting card passes the kind icon of its bottom cue. */
+  /** Replaces the type glyph. */
   icon?: IconName;
 }
 

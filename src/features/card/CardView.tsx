@@ -9,7 +9,7 @@ import { DECK_NAME, type Card, type Cue } from '@/shared/model';
 import { Icon } from '@/shared/ui';
 import { RingControl } from './RingControl';
 import { edgeCues, isCombined, type RingSlot, type TurnDirection } from './rings';
-import { KIND_ICON, TYPE_ICON, TypeDisc } from './TypeDisc';
+import { TYPE_ICON, TypeDisc } from './TypeDisc';
 import { useTurnAngle, type TurnState } from './useTurnAngle';
 import styles from './CardView.module.css';
 
@@ -112,7 +112,6 @@ function CueLabel({
       style={{ transform: slotTransform(slot, count) }}
       title={full}
       data-edge={edge}
-      data-kind={noun.kind}
       data-testid={active ? 'active-cue' : 'cue'}
     >
       {words}
@@ -128,8 +127,6 @@ export function CardView({ card, onTurn, ringClassName, paper = 'top' }: CardVie
   const nouns = card.rings[0];
   const count = nouns?.cues.length ?? 0;
   const combined = isCombined(card);
-  // A Setting card's disc shows the kind (place, object, event) of the cue on the bottom edge.
-  const activeKind = nouns?.cues[nouns.activeIndex]?.kind;
   const outerTurn = useTurnAngle(nouns?.activeIndex ?? 0, count, lastDirection);
   const innerTurn = useTurnAngle(card.rings[1]?.activeIndex ?? 0, 4, lastDirection);
   const tucked = paper !== 'top';
@@ -204,12 +201,12 @@ export function CardView({ card, onTurn, ringClassName, paper = 'top' }: CardVie
         className={[styles.disc, combined ? styles.combinedDisc : ''].filter(Boolean).join(' ')}
         data-testid={combined ? 'combined-disc' : undefined}
       >
-        <TypeDisc type={card.type} size={48} icon={activeKind && KIND_ICON[activeKind]} />
+        <TypeDisc type={card.type} size={48} />
       </span>
       {paper !== 'top' && (
         // A tucked card shows only its bottom edge, so the disc glyph repeats there, small.
         <span className={styles.tuckMark} data-testid="tuck-mark">
-          <Icon name={(activeKind && KIND_ICON[activeKind]) ?? TYPE_ICON[card.type]} size={14} />
+          <Icon name={TYPE_ICON[card.type]} size={14} />
         </span>
       )}
     </article>

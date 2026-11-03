@@ -93,7 +93,7 @@ describe('turnCard', () => {
 });
 
 describe('combine', () => {
-  it('combine_characterAndModifier_addsInnerRingKeepingActiveIndex', () => {
+  it('combine_roleAndModifier_addsInnerRingKeepingActiveIndex', () => {
     const target = card('role', [{ texts: NOUNS }]);
     const modifier = card('modifier', [{ texts: ADJS, activeIndex: 2 }]);
     const combined = combine(target, modifier);
@@ -115,7 +115,7 @@ describe('combine', () => {
     expect(() => combine(target, card('modifier', [{ texts: ADJS }]))).toThrow();
   });
 
-  it('combine_motivationTarget_throws', () => {
+  it('combine_goalTarget_throws', () => {
     const target = card('goal', [{ texts: ['a', 'b'] }]);
     expect(() => combine(target, card('modifier', [{ texts: ADJS }]))).toThrow();
   });

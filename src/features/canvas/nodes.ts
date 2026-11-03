@@ -42,11 +42,9 @@ export const STACK_RANK = 1000;
 /** What the connector badge needs from the card below. */
 function belowCard(card: Card | undefined): BelowCard | null {
   if (!card) return null;
-  const nouns = card.rings[0];
   return {
     id: card.id,
     type: card.type,
-    kind: nouns?.cues[nouns.activeIndex]?.kind ?? null,
     text: activeText(card),
     saved: card.connector ?? null,
   };
@@ -55,13 +53,7 @@ function belowCard(card: Card | undefined): BelowCard | null {
 /** True when 2 below values would draw the same badge. */
 export function sameBelow(a: BelowCard | null, b: BelowCard | null): boolean {
   if (a === null || b === null) return a === b;
-  return (
-    a.id === b.id &&
-    a.type === b.type &&
-    a.kind === b.kind &&
-    a.text === b.text &&
-    a.saved === b.saved
-  );
+  return a.id === b.id && a.type === b.type && a.text === b.text && a.saved === b.saved;
 }
 
 export function toNodes(board: Board, ui: NodeUi): BoardFlowNode[] {

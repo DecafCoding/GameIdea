@@ -56,7 +56,6 @@ describe('toNodes below', () => {
     expect(data('role-1').below).toEqual({
       id: 'setting-1',
       type: 'setting',
-      kind: 'event',
       text: 'eclipse',
       saved: 'after the',
     });

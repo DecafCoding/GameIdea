@@ -30,7 +30,7 @@ describe('dropTarget', () => {
     expect(dropTarget(board, 'role-1', { x: 100, y: 340 })).toBeNull();
   });
 
-  it('dropTarget_motivationInSlotBand_hitsRole', () => {
+  it('dropTarget_goalInSlotBand_hitsRole', () => {
     const board = fixtureBoard([
       fixtureCard('role', { x: 0, y: 0 }),
       fixtureCard('goal', { x: 900, y: 0, z: 2 }),
@@ -44,20 +44,20 @@ describe('dropAction', () => {
   const role = fixtureCard('role', { x: 0, y: 0 });
   const combined = combinedCard('role', { x: 0, y: 0 });
 
-  it('dropAction_descriptionOnUncombinedRole_combine', () => {
+  it('dropAction_modifierOnUncombinedRole_combine', () => {
     expect(dropAction(modifier, role, { x: 10, y: 10 })).toEqual({ kind: 'combine' });
   });
 
-  it('dropAction_descriptionOnCombinedCenter_swap', () => {
+  it('dropAction_modifierOnCombinedCenter_swap', () => {
     expect(dropAction(modifier, combined, { x: 140, y: 120 })).toEqual({ kind: 'swap' });
   });
 
-  it('dropAction_descriptionOnCombinedEdge_onTop', () => {
+  it('dropAction_modifierOnCombinedEdge_onTop', () => {
     expect(dropAction(modifier, combined, { x: 100, y: 190 })).toEqual({ kind: 'onTop' });
     expect(dropAction(modifier, combined, { x: 100, y: 20 })).toEqual({ kind: 'onTop' });
   });
 
-  it('dropAction_motivationOnSetting_tuck', () => {
+  it('dropAction_goalOnSetting_tuck', () => {
     const setting = fixtureCard('setting');
     expect(dropAction(fixtureCard('goal'), setting, { x: 5, y: 5 })).toEqual({
       kind: 'tuck',
@@ -72,7 +72,7 @@ describe('dropAction', () => {
 describe('hintFor', () => {
   const role = fixtureCard('role', { x: 0, y: 0 });
 
-  it('hintFor_motivationInSlotBandUnderRole_slot', () => {
+  it('hintFor_goalInSlotBandUnderRole_slot', () => {
     expect(hintFor(fixtureCard('goal'), role, { x: 100, y: 270 })).toBe('slot');
   });
 
@@ -80,11 +80,11 @@ describe('hintFor', () => {
     expect(hintFor(fixtureCard('conflict'), role, { x: 100, y: 100 })).toBeNull();
   });
 
-  it('hintFor_descriptionOverRole_combine', () => {
+  it('hintFor_modifierOverRole_combine', () => {
     expect(hintFor(modifier, role, { x: 100, y: 100 })).toBe('combine');
   });
 
-  it('hintFor_descriptionOverCombined_swapZones', () => {
+  it('hintFor_modifierOverCombined_swapZones', () => {
     const combined = combinedCard('setting');
     expect(hintFor(modifier, combined, { x: 10, y: 10 })).toBe('swapZones');
   });
