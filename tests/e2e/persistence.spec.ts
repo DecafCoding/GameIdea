@@ -2,7 +2,8 @@
  * Browser tests for saved boards (design 9.8 and 9.10): a board survives a reload, and the
  * board list shows, opens, renames and deletes boards.
  */
-import { expect, test, type Page } from '@playwright/test';
+import type { Page } from '@playwright/test';
+import { expect, test } from './test';
 import { fixtureBoard, fixtureCard } from '@/test/fixtures/boards';
 import { boxOf, canvasCards, drawFromRail, openBoard, rail } from './board-helpers';
 

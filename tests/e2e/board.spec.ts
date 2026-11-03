@@ -2,7 +2,8 @@
  * Browser tests for the board screen: the shell, the empty board, drawing onto the canvas,
  * fixture boards, the pools banner, selection and the card strip, keys, and locked tokens.
  */
-import { expect, test } from '@playwright/test';
+import type { Route } from '@playwright/test';
+import { expect, test } from './test';
 import {
   combinedCard,
   fixtureBoard,
@@ -93,7 +94,9 @@ test('board_fixture_rendersAllCards', async ({ page }) => {
 });
 
 test('board_poolsBlocked_bannerThenRetry', async ({ page }) => {
-  await page.route('**/pools/*.json', (route) => route.abort());
+  // Only this handler goes on unroute; the fixture pools route stays.
+  const block = (route: Route) => route.abort();
+  await page.route('**/pools/*.json', block);
   await page.goto('/');
   await createBoardWithGenres(page);
   const alert = page.getByRole('alert');
@@ -103,7 +106,7 @@ test('board_poolsBlocked_bannerThenRetry', async ({ page }) => {
     .all()) {
     await expect(button).toBeDisabled();
   }
-  await page.unroute('**/pools/*.json');
+  await page.unroute('**/pools/*.json', block);
   await page.getByRole('button', { name: 'Retry' }).click();
   await expect(alert).toHaveCount(0);
   await drawFromRail(page, 'Conflict');

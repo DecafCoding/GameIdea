@@ -3,7 +3,7 @@
  * at once with the right names and contents, and Esc closes the menu.
  */
 import { readFile } from 'node:fs/promises';
-import { expect, test } from '@playwright/test';
+import { expect, test } from './test';
 import { openBoard, storedBoards } from './board-helpers';
 import { exportButton, exportFile, salvageRun } from './export-helpers';
 

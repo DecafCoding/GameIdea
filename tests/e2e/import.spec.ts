@@ -4,7 +4,8 @@
  * banner and changes nothing.
  */
 import { readFile } from 'node:fs/promises';
-import { expect, test, type Page } from '@playwright/test';
+import type { Page } from '@playwright/test';
+import { expect, test } from './test';
 import type { Board } from '@/shared/model';
 import {
   combinedCard,

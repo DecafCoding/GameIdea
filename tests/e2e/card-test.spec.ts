@@ -2,7 +2,8 @@
  * Browser tests for the card test page, against the built app on port 4174:
  * draw, ring halves, hover, keys, combine, the pools banner, timing and locked tokens.
  */
-import { expect, test } from '@playwright/test';
+import type { Route } from '@playwright/test';
+import { expect, test } from './test';
 import { ARROW, activeCue, backgroundRgb, draw, edge, expectRgbNear } from './helpers';
 
 const POOLS_FAILED_TEXT =
@@ -20,15 +21,15 @@ test.describe('with pools loaded', () => {
 
   test('draw_eachDeck_showsCardWithRightCueCount', async ({ page }) => {
     const expected = [
-      ['Player Role', 4],
-      ['Goal', 2],
-      ['Setting', 4],
-      ['Conflict', 2],
-      ['Modifier', 4],
+      ['Player Role', 'role', 4],
+      ['Goal', 'goal', 2],
+      ['Conflict', 'conflict', 2],
+      ['Modifier', 'modifier', 4],
+      ['Setting', 'setting', 4],
     ] as const;
-    for (const [deck, count] of expected) {
+    for (const [deck, type, count] of expected) {
       const card = await draw(page, deck);
-      await expect(card).toHaveAttribute('data-type', deck.toLowerCase());
+      await expect(card).toHaveAttribute('data-type', type);
       await expect(card.locator('[data-edge]')).toHaveCount(count);
       if (deck === 'Setting') {
         for (const label of await card.locator('[data-edge]').all()) {
@@ -85,10 +86,11 @@ test.describe('with pools loaded', () => {
     await expect(activeCue(card)).toHaveText(`${adj3} ${noun3}`);
   });
 
-  for (const deck of ['Player Role', 'Setting'] as const) {
-    test(`combine_${deck.toLowerCase()}AndModifier_activeCueIsAdjectiveNounPair`, async ({
-      page,
-    }) => {
+  for (const [deck, type] of [
+    ['Player Role', 'role'],
+    ['Setting', 'setting'],
+  ] as const) {
+    test(`combine_${type}AndModifier_activeCueIsAdjectiveNounPair`, async ({ page }) => {
       const target = await draw(page, deck);
       const noun = await activeCue(target).textContent();
       const modifier = await draw(page, 'Modifier');
@@ -98,7 +100,7 @@ test.describe('with pools loaded', () => {
 
       await page.getByRole('button', { name: 'Combine' }).click();
       await expect(modifiers).toHaveCount(0);
-      const combined = page.locator(`[data-testid="card"][data-type="${deck.toLowerCase()}"]`);
+      const combined = page.locator(`[data-testid="card"][data-type="${type}"]`);
       await expect(combined.getByTestId('combined-disc')).toBeVisible();
       await expect(activeCue(combined)).toHaveText(`${adjective} ${noun}`);
     });
@@ -169,7 +171,9 @@ test.describe('with pools loaded', () => {
 });
 
 test('poolsBanner_poolsBlocked_showsBannerThenRetryRecovers', async ({ page }) => {
-  await page.route('**/pools/*.json', (route) => route.abort());
+  // Only this handler goes on unroute; the fixture pools route stays.
+  const block = (route: Route) => route.abort();
+  await page.route('**/pools/*.json', block);
   await page.goto('/#/card-test');
   const alert = page.getByRole('alert');
   await expect(alert).toContainText(POOLS_FAILED_TEXT);
@@ -177,7 +181,7 @@ test('poolsBanner_poolsBlocked_showsBannerThenRetryRecovers', async ({ page }) =
     await expect(button).toBeDisabled();
   }
 
-  await page.unroute('**/pools/*.json');
+  await page.unroute('**/pools/*.json', block);
   await page.getByRole('button', { name: 'Retry' }).click();
   await expect(alert).toHaveCount(0);
   const card = await draw(page, 'Conflict');

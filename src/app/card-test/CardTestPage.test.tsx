@@ -11,7 +11,7 @@ import { CardTestPage } from './CardTestPage';
 const POOL_FILES = Object.fromEntries(
   CARD_TYPES.map((type) => [
     type,
-    readFileSync(join(process.cwd(), 'public', 'pools', `${type}.json`), 'utf8'),
+    readFileSync(join(process.cwd(), 'tests', 'e2e', 'fixtures', 'pools', `${type}.json`), 'utf8'),
   ]),
 );
 

@@ -3,7 +3,8 @@
  * tuck, paint order, stack moves, untuck, the slot hint, combine, the swap and tuck zones,
  * swap, split and the combine timing.
  */
-import { expect, test, type Page } from '@playwright/test';
+import type { Page } from '@playwright/test';
+import { expect, test } from './test';
 import {
   combinedCard,
   fixtureBoard,

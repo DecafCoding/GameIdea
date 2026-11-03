@@ -1,0 +1,45 @@
+{
+  "type": "conflict",
+  "cues": [
+    {
+      "id": "conflict-test-01",
+      "text": "the tide rises every night",
+      "genres": ["generic", "sci-fi", "cyberpunk", "space-opera"]
+    },
+    {
+      "id": "conflict-test-02",
+      "text": "the map keeps changing",
+      "genres": ["generic", "sci-fi", "cyberpunk", "space-opera"]
+    },
+    {
+      "id": "conflict-test-03",
+      "text": "rivals sabotage the road",
+      "genres": ["generic", "sci-fi", "cyberpunk", "space-opera"]
+    },
+    {
+      "id": "conflict-test-04",
+      "text": "the lamp oil is running out",
+      "genres": ["generic", "sci-fi", "cyberpunk", "space-opera"]
+    },
+    {
+      "id": "conflict-test-05",
+      "text": "the guards are watching",
+      "genres": ["generic", "sci-fi", "cyberpunk", "space-opera"]
+    },
+    {
+      "id": "conflict-test-06",
+      "text": "the floor gives way",
+      "genres": ["generic", "sci-fi", "cyberpunk", "space-opera"]
+    },
+    {
+      "id": "conflict-test-07",
+      "text": "a storm cuts the power",
+      "genres": ["generic", "sci-fi", "cyberpunk", "space-opera"]
+    },
+    {
+      "id": "conflict-test-08",
+      "text": "the clock runs backward",
+      "genres": ["generic", "sci-fi", "cyberpunk", "space-opera"]
+    }
+  ]
+}

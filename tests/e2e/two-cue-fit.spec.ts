@@ -13,7 +13,8 @@
  */
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { expect, test, type Page } from '@playwright/test';
+import type { Page } from '@playwright/test';
+import { expect, test } from './test';
 import { fixtureBoard, fixtureCard } from '@/test/fixtures/boards';
 import type { Card, Cue } from '@/shared/model';
 import { cardById, openBoard } from './board-helpers';
@@ -64,9 +65,9 @@ function inFitClass(type: Card['type'], text: string): boolean {
   return !fourCue || text.split(/s+/).length <= 2;
 }
 
-/** The real pool file's cues inside the old fit class, longest text first. */
+/** The fixture pool file's cues inside the old fit class, longest text first. */
 function poolByLength(type: Card['type']): Cue[] {
-  const file = join(process.cwd(), 'public', 'pools', `${type}.json`);
+  const file = join(process.cwd(), 'tests', 'e2e', 'fixtures', 'pools', `${type}.json`);
   const pool = JSON.parse(readFileSync(file, 'utf8')) as { cues: (Cue & { genres: string[] })[] };
   return pool.cues
     .filter((cue) => inFitClass(type, cue.text))
@@ -74,7 +75,7 @@ function poolByLength(type: Card['type']): Cue[] {
     .sort((a, b) => b.text.length - a.text.length);
 }
 
-/** The 4 longest cues of the real pool file, as 2 pairs. */
+/** The 4 longest cues of the fixture pool file, as 2 pairs. */
 function longestPairs(type: TwoCueType): [string, string][] {
   const longest = poolByLength(type)
     .map((cue) => cue.text)

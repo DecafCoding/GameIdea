@@ -3,7 +3,8 @@
  * A ring-half button is 250 × 250 but clipped to its half, so clicks go to the arrow
  * point inside the half, never the box center (which sits over the type disc).
  */
-import { expect, type Locator, type Page } from '@playwright/test';
+import type { Locator, Page } from '@playwright/test';
+import { expect } from './test';
 
 export const ARROW = {
   innerLeft: { x: 91.5, y: 125 },

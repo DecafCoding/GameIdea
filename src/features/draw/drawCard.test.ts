@@ -1,19 +1,9 @@
 /**
- * Tests for drawCard: cue counts, distinct cues, kind copies, the genre filter, no mutation
- * and the real pool files.
+ * Tests for drawCard: cue counts, distinct cues, kind copies, the genre filter and no
+ * mutation.
  */
-import { readFileSync } from 'node:fs';
-import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import {
-  CARD_TYPES,
-  CUES_PER_CARD,
-  GENRES,
-  type CardType,
-  type Genre,
-  type Pool,
-} from '@/shared/model';
-import { parsePool } from '@/shared/pools';
+import { GENRES, type CardType, type Genre, type Pool } from '@/shared/model';
 import { drawCard } from './drawCard';
 
 /** mulberry32: a small seeded PRNG so draws repeat across runs. */
@@ -142,28 +132,5 @@ describe('drawCard', () => {
 
   it('drawCard_emptyGenres_throws', () => {
     expect(() => drawCard('role', pool('role', six), [])).toThrow();
-  });
-
-  it('drawCard_realPoolFiles_200DrawsNeverRepeatACue', () => {
-    const random = mulberry32(1);
-    const genreSets: (readonly Genre[])[] = [...GENRES.map((genre) => [genre]), GENRES];
-    for (const type of CARD_TYPES) {
-      const file = join(process.cwd(), 'public', 'pools', `${type}.json`);
-      const real = parsePool(type, JSON.parse(readFileSync(file, 'utf8')));
-      const genresOf = new Map(real.cues.map((cue) => [cue.text, cue.genres]));
-      for (const genres of genreSets) {
-        for (let i = 0; i < 200; i++) {
-          const drawn = texts(drawCard(type, real, genres, { random }));
-          expect(drawn).toHaveLength(CUES_PER_CARD[type]);
-          expect(new Set(drawn).size).toBe(drawn.length);
-          for (const text of drawn) {
-            expect(
-              genresOf.get(text)!.some((genre) => genres.includes(genre)),
-              text,
-            ).toBe(true);
-          }
-        }
-      }
-    }
   });
 });

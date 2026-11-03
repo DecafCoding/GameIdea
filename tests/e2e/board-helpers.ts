@@ -4,7 +4,8 @@
  * dialog, seed a database from an older schema version, draw from the rail, find cards,
  * and drag with stepped mouse moves.
  */
-import { expect, type Locator, type Page } from '@playwright/test';
+import type { Locator, Page } from '@playwright/test';
+import { expect } from './test';
 import { GENRES, type Board, type CardType, type Genre } from '@/shared/model';
 import type { DeckName } from './helpers';
 

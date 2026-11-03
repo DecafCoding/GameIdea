@@ -4,7 +4,7 @@
  * request to any address other than the app's own.
  */
 import { readFile } from 'node:fs/promises';
-import { expect, test } from '@playwright/test';
+import { expect, test } from './test';
 import { canvasCards, createBoardWithGenres, drawFromRail, rail } from './board-helpers';
 import { exportFile } from './export-helpers';
 import { draw, type DeckName } from './helpers';

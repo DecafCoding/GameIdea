@@ -2,7 +2,8 @@
  * Browser tests for premise notes on the canvas (design 9.6): add, edit, end editing,
  * resize, delete, drag, the count badge, and keys while typing.
  */
-import { expect, test, type Page } from '@playwright/test';
+import type { Page } from '@playwright/test';
+import { expect, test } from './test';
 import { fixtureBoard, fixtureCard, fixtureNote } from '@/test/fixtures/boards';
 import { boxOf, cardById, dragBy, openBoard, rail } from './board-helpers';
 import { backgroundRgb, expectRgbNear } from './helpers';

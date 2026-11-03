@@ -2,7 +2,8 @@
  * Browser tests for 2 tabs on one board (tab-sync) and for undo and redo with the buttons
  * and the keys (design 9.10 and 11).
  */
-import { expect, test, type Page } from '@playwright/test';
+import type { Page } from '@playwright/test';
+import { expect, test } from './test';
 import { fixtureBoard, fixtureCard, secondModifier } from '@/test/fixtures/boards';
 import {
   boxOf,

@@ -4,7 +4,8 @@
  * timing project, so it runs alone. Frames are counted with requestAnimationFrame while
  * paced mouse moves run.
  */
-import { expect, test, type Page } from '@playwright/test';
+import type { Page } from '@playwright/test';
+import { expect, test } from './test';
 import { board200 } from '@/test/fixtures/boards';
 import { boxOf, cardById, openBoard } from './board-helpers';
 

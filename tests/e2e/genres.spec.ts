@@ -6,7 +6,8 @@
  */
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { expect, test, type Page } from '@playwright/test';
+import type { Page } from '@playwright/test';
+import { expect, test } from './test';
 import {
   everyDeck,
   FORMAT_VERSION,
@@ -30,7 +31,7 @@ import {
 
 /** The real pool file's cues for a type. */
 function poolCues(type: CardType): PoolCue[] {
-  const file = join(process.cwd(), 'public', 'pools', `${type}.json`);
+  const file = join(process.cwd(), 'tests', 'e2e', 'fixtures', 'pools', `${type}.json`);
   return (JSON.parse(readFileSync(file, 'utf8')) as { cues: PoolCue[] }).cues;
 }
 
