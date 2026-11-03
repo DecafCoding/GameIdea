@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Phase 4: Optional decks</title>
+  <style>
+    :root { --fg:#1a1a1a; --muted:#666; --accent:#2563eb; --done:#16a34a; --warn:#dc2626; --rule:#e5e7eb; }
+    body { font:16px/1.6 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; color:var(--fg); max-width:62rem; margin:2rem auto; padding:0 1.25rem; }
+    h1 { font-size:2rem; border-bottom:2px solid var(--rule); padding-bottom:.3rem; }
+    h2 { font-size:1.5rem; margin-top:2.5rem; border-bottom:1px solid var(--rule); padding-bottom:.2rem; }
+    h3.milestone { font-size:1.25rem; margin-top:2rem; color:var(--accent); }
+    h4.task { font-size:1.1rem; margin-top:1.5rem; }
+    dl.phase-meta { display:grid; grid-template-columns:max-content 1fr; gap:.25rem 1rem; }
+    dl.phase-meta dt { font-weight:600; color:var(--muted); }
+    code, pre { font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+    pre { background:#f6f8fa; padding:1rem; border-radius:6px; overflow:auto; }
+    code { background:#f6f8fa; padding:.1rem .3rem; border-radius:4px; }
+    pre code { background:none; padding:0; }
+    ul.checklist { list-style:none; padding-left:0; }
+    ul.checklist > li::before { content:"☐ "; color:var(--muted); }
+    ul.checklist > li[data-checked="true"]::before { content:"☑ "; color:var(--done); }
+    .validate { color:var(--done); font-weight:600; }
+  </style>
+</head>
+<body>
+
+<h1 data-phase="4">Phase 4: Optional decks</h1>
+<p>The following plan should be complete, but validate documentation, codebase patterns, and task sanity before implementing. Pay special attention to naming of existing utils, types, and models — import from the right files.</p>
+
+<h2>Phase Description</h2>
+<p>Phase 4 makes all 11 decks drawable from the rail. It fills the rail's Optional group with the 4 missing deck buttons — Mood, Twist, Progression and Constraint — after the Setting button that has been there since Phase 1 (design 8.2: "OPTIONAL Setting, Mood, Twist, Progression count, Constraint count"; design §16 M4: "The 5 optional deck buttons fill the Optional group").</p>
+<p>Almost everything else the PRD lists for this phase already exists and is verified rather than rebuilt:</p>
+<ul>
+  <li><strong>Pools (done in Phase 2):</strong> all 11 pool files in <code>public/pools/</code> came from the single split of <code>docs/libraries/decks.json</code>; Progression and Constraint carry genre tags; the floor test covers them. Checked again at planning: <code>public/pools/</code> is unchanged since <code>db0d494</code> and the in-memory comparison reports MATCH for all 11 decks (setting 279, mood 145, twist 224, progression 352, constraint 222).</li>
+  <li><strong>Model (done in Phase 2):</strong> <code>DECKS</code>, <code>CUES_PER_CARD</code> (Mood 4; Twist, Progression, Constraint 2), <code>DECK_NAME</code>, <code>GENRE_DECKS</code> in <code>src/shared/model/index.ts</code>.</li>
+  <li><strong>Card faces and icons (done):</strong> <code>TYPE_ICON</code> (smile, rotate-ccw, trending-up, shield-x) in <code>src/features/card/TypeDisc.tsx</code>; the SVGs in <code>public/icons/</code>; deck, rail and ring-hover tokens in <code>src/shared/ui/tokens.css</code>; 1-line Mood labels and the 2-cue frame in <code>CardView.tsx</code>.</li>
+  <li><strong>Badges and sentence rules (done in Phase 2):</strong> <code>WORDS</code> in <code>src/features/canvas/connector.ts</code> (It feels / The tone is; Except / The catch:; As you play, / Over time,; with / and) and <code>NEW_SENTENCE = ['mood', 'twist', 'progression']</code> in <code>src/features/hook/buildHookSentence.ts</code>, with unit tests.</li>
+  <li><strong>Draw and genre filter (done):</strong> <code>BoardScreen.draw</code> passes the deck's genres for every <code>GENRE_DECKS</code> member, so Progression and Constraint draws are filtered with no change.</li>
+  <li><strong>Genre pills (done in Phase 3):</strong> <code>SideRail</code> adds a <code>GenreCount</code> pill to any genre-tagged deck it renders, so Progression and Constraint get theirs as soon as their buttons exist.</li>
+</ul>
+<p>So the real work is 1 constant in <code>SideRail.tsx</code>, plus the tests and docs that prove the 4 decks work end to end from the rail: drawn faces, genre pills, badges and the new-sentence rule inside a Hook Card stack.</p>
+
+<h2>User Stories</h2>
+<p><strong>Optional deck buttons.</strong> As a game jam entrant, I want to draw Mood, Twist, Progression and Constraint cards from the rail, so that I can push a hook past the core five with a tone, a catch, a sense of growth or a design limit.</p>
+<p><strong>Optional cards in the hook.</strong> As a solo developer, I want an optional card tucked into a Hook Card stack to add its badge word and (for Mood, Twist and Progression) a new sentence, so that the copied hook reads as natural sentences.</p>
+<p><strong>Genre counts on optional decks.</strong> As a user who narrowed genres, I want the Progression and Constraint buttons to show how many genres they draw from, so that I can see at a glance that those draws are filtered.</p>
+
+<h2>Problem Statement</h2>
+<p>The app loads all 11 pools and can render, tuck, badge and read all 12 card types, but the rail only offers 7 decks plus the 3 Modifier buttons. Mood, Twist, Progression and Constraint cards can only appear on a board through an import or the card test page, so the user cannot use 4 of the 11 decks and cannot see the Progression and Constraint genre filters in action.</p>
+
+<h2>Solution Statement</h2>
+<p>Extend the <code>OPTIONAL</code> list in <code>src/app/board/SideRail.tsx</code> to the design's order <code>['setting', 'mood', 'twist', 'progression', 'constraint']</code>. The existing <code>button()</code> helper already renders a plain <code>DeckButton</code> for Mood and Twist and a <code>DeckButton</code> with a <code>GenreCount</code> pill for Progression and Constraint. Then update the unit and browser tests that pin the rail at 10 deck buttons, add tests that prove the optional decks draw, pill, badge and read correctly, re-check the pools read-only (never rerunning the split), and update the README.</p>
+
+<h2>Phase Metadata</h2>
+<dl class="phase-meta">
+  <dt>Phase Type</dt><dd data-field="type">Enhancement</dd>
+  <dt>Estimated Complexity</dt><dd data-field="complexity">Low</dd>
+  <dt>Primary Systems Affected</dt><dd data-field="systems">app/board rail (SideRail), unit tests, Playwright browser tests, README</dd>
+  <dt>Dependencies</dt><dd data-field="dependencies">Phase 2 (hook test: 11 pools, card types, badges, sentence rules); Phase 3 (genres: GenreCount pills, genre filter); no new libraries</dd>
+</dl>
+
+<h2>Context References</h2>
+
+<h3>Relevant Codebase Files — READ THESE BEFORE IMPLEMENTING</h3>
+<ul>
+  <li><code>src/app/board/SideRail.tsx</code> (lines 1-8 doc comment, 34-37 <code>CORE</code>/<code>OPTIONAL</code>, 52-68 <code>button()</code>, 87-88 Optional group) — Why: the one production change; <code>button()</code> already picks the pill for genre decks.</li>
+  <li><code>src/app/board/SideRail.test.tsx</code> (lines 26-50 order test, 64-73 pools-off test, 75-102 pill test) — Why: pins the rail at 10 deck buttons; extend it.</li>
+  <li><code>src/features/draw/DeckButton.tsx</code> (lines 39-66) — Why: <code>aria-label</code> "Draw A …", icon via <code>iconFor</code> in <code>var(--rail-${type})</code>, <code>trailing</code>/<code>describedBy</code> slot.</li>
+  <li><code>src/features/genres/GenreCount.tsx</code> and <code>index.ts</code> (<code>showCount</code>) — Why: pill hidden at 21, aria-label "N genres on".</li>
+  <li><code>src/shared/model/index.ts</code> (lines 18-30 <code>DECKS</code>, 100-114 <code>GENRE_DECKS</code>/<code>allGenresOn</code>, 117-129 <code>CUES_PER_CARD</code>, 132-145 <code>DECK_NAME</code>) — Why: everything the buttons need already exists; do not change the model.</li>
+  <li><code>src/app/board/BoardScreen.tsx</code> (lines 82-98 <code>draw</code>) — Why: genre filter for any <code>GENRE_DECKS</code> member; no change needed.</li>
+  <li><code>src/features/card/TypeDisc.tsx</code> (lines 10-23 <code>TYPE_ICON</code>) and <code>src/shared/ui/Icon.tsx</code> (line 65 <code>data-icon</code>) — Why: icons to assert in browser tests.</li>
+  <li><code>src/features/card/CardView.tsx</code> (lines 54-60 label boxes, 233-241 <code>data-type</code>, <code>middle-rule</code>) — Why: card face selectors.</li>
+  <li><code>src/features/canvas/connector.ts</code> (lines 51-78) and <code>connector.test.ts</code> (lines 18-39) — Why: optional badge words and their existing coverage.</li>
+  <li><code>src/features/hook/buildHookSentence.ts</code> (lines 25-47) and <code>buildHookSentence.test.ts</code> (lines 51-89) — Why: new-sentence rule and existing coverage.</li>
+  <li><code>src/features/canvas/dropZones.ts</code> (lines 36-51 <code>CORE_ORDER</code>/<code>isNormalPlace</code>, 85-95 <code>dropTarget</code>) — Why: optional cards get no slot hint; they tuck when the pointer is inside the target card.</li>
+  <li><code>src/test/fixtures/boards.ts</code> (lines 20-34 <code>CUES</code>, 41+ <code>fixtureCard</code>, 90+ <code>fixtureBoard</code>) — Why: fixture cues for Mood (tense…), Twist (the map is alive…), Progression (new islands open…), Constraint (no jumping…).</li>
+  <li><code>tests/e2e/shell.spec.ts</code> (lines 24-29) — Why: counts 10 deck buttons at 36 px; becomes 14.</li>
+  <li><code>tests/e2e/board.spec.ts</code> (lines 65-111) — Why: draws every rail deck and checks no overlap; add the 4 decks.</li>
+  <li><code>tests/e2e/pools-real.spec.ts</code> (lines 10-21) — Why: real-pool smoke over every rail button; add the 4 rows.</li>
+  <li><code>tests/e2e/genres.spec.ts</code> (lines 27-31 <code>pill()</code>, 61-75 top-chip test) — Why: add pill assertions for Progression and Constraint.</li>
+  <li><code>tests/e2e/hook.spec.ts</code> (lines 21-60 helpers <code>sentence</code>, <code>hookCard</code>, <code>hookBoard</code>, <code>HOOK_TEXT</code>) — Why: pattern for a Hook Card fixture stack and sentence assertions to mirror.</li>
+  <li><code>tests/e2e/board-helpers.ts</code> (<code>openBoard</code>, <code>rail</code>, <code>drawFromRail</code>, <code>cardById</code>, <code>canvasCards</code>, <code>boxOf</code>, <code>dragTo</code>, <code>storedBoards</code>) and <code>tests/e2e/helpers.ts</code> (lines 17-31 <code>DeckName</code> already lists the 4 decks) — Why: helpers to reuse.</li>
+  <li><code>scripts/split-decks.mjs</code> (exports pure <code>splitDecks</code>) — Why: read-only cue-for-cue check; never run the CLI.</li>
+  <li><code>README.md</code> (line 7 status, line 98 Rail bullet) — Why: user-facing docs to update.</li>
+</ul>
+
+<h3>New Files to Create</h3>
+<ul>
+  <li><code>tests/e2e/optional-decks.spec.ts</code> — browser tests: each optional deck draws from the rail with the right face; optional cards tucked into a Hook Card stack show their badges and split the sentence; a rail-drawn Mood tucked under a stack reads as a new sentence and undoes in one step.</li>
+</ul>
+
+<h3>Relevant Documentation — READ BEFORE IMPLEMENTING</h3>
+<ul>
+  <li><code>docs/design-system.html</code> §8.2 Left rail — Why: Optional group order and which buttons carry a count pill.</li>
+  <li><code>docs/design-system.html</code> §9.6 Connector badges — Why: the badge table rows for Mood, Twist, Progression, Constraint and "Mood, Twist and Progression start a new sentence".</li>
+  <li><code>docs/design-system.html</code> §9.7 Tuck hint — Why: the slot follows only the core order; "any card can still tuck under any card".</li>
+  <li><code>docs/design-system.html</code> §9.14 Deck reference and §4.4 — Why: group, cue count, genre tag, colors and icon per deck.</li>
+  <li><code>docs/design-system.html</code> §16 (M4) — Why: the phase's only design work is filling the Optional group.</li>
+  <li><code>docs/mvp-plan.html</code> M4, Connector badges, Hook sentence rules — Why: milestone scope (its conversion line is stale; see Notes).</li>
+  <li><code>docs/architecture.html</code> <code>pool-files</code>, <code>module-layout</code>, <code>import-rules</code>, <code>hook-sentence</code>, <code>schema-versions</code>, <code>test-data</code> — Why: the decisions this phase conforms to.</li>
+  <li><a href="https://playwright.dev/docs/api/class-locator#locator-scroll-into-view-if-needed">Playwright: Locator auto-scrolling</a> — Why: the 14-button rail is taller than the default 1280 × 720 test viewport and scrolls; actions auto-scroll, but <code>boxOf</code> on an off-screen button needs <code>scrollIntoViewIfNeeded()</code> first.</li>
+  <li><a href="https://testing-library.com/docs/queries/byrole">Testing Library: ByRole queries</a> — Why: the rail tests query buttons and the pill by role and name.</li>
+</ul>
+
+<h3>Patterns to Follow</h3>
+<p><strong>The rail's deck lists and genre-aware button (SideRail.tsx lines 34-68):</strong></p>
+<pre><code>/** The Core group, in the design's order. */
+const CORE: Deck[] = ['role', 'mechanic', 'resource', 'goal', 'conflict'];
+/** The Optional group this phase ships. */
+const OPTIONAL: Deck[] = ['setting'];
+...
+const button = (type: Deck) =&gt; {
+  if (!isGenreDeck(type)) {
+    return &lt;DeckButton key={type} type={type} disabled={!decksReady} onDraw={onDraw} /&gt;;
+  }
+  const count = genres[type].length;
+  const pillId = `${idPrefix}-${type}-genres`;
+  return (
+    &lt;DeckButton ... trailing={&lt;GenreCount id={pillId} count={count} /&gt;}
+      describedBy={showCount(count) ? pillId : undefined} /&gt;
+  );
+};</code></pre>
+<p><strong>Hook Card fixture stack (hook.spec.ts lines 37-51):</strong></p>
+<pre><code>fixtureCard('hook', { x: 96, y: 144 }),
+fixtureCard('role', { x: 116, y: 200, z: 2, tuckedUnder: 'hook-1' }),
+fixtureCard('mechanic', { x: 116, y: 256, z: 3, tuckedUnder: 'role-1' }),
+fixtureCard('goal', { x: 116, y: 312, z: 4, tuckedUnder: 'mechanic-1' }),
+// reads: 'You are a navigator who must trade to keep the light on.'</code></pre>
+<p><strong>Badge assertion (board.spec.ts lines 410-421):</strong></p>
+<pre><code>await expect(
+  page.locator('.react-flow__node[data-id="role-1"]').getByTestId('connector-badge'),
+).toHaveText('but');</code></pre>
+<p><strong>Naming:</strong> tests are named <code>functionName_condition_expectedResult</code> (CLAUDE.md Testing), e.g. <code>sideRail_optionalGroup_showsFiveDecksInDesignOrder</code>, <code>optional_tuckedIntoHookStack_badgesAndSentences</code>. Each new module starts with a short doc comment. No <code>console.log</code>. Browser tests import <code>{ expect, test }</code> from <code>./test</code> (the fixture-pool route), not from <code>@playwright/test</code>.</p>
+
+<h2>Implementation Plan</h2>
+<p><strong>Rendering:</strong> Flat</p>
+<p><strong>Rationale:</strong> 8 small, independent tasks with no sub-layers: 1 production constant, test updates and new tests that each stand alone, a read-only pool check, docs, then the commit-push-PR task.</p>
+
+<h4 class="task" data-task="1">Task 1: Add Mood, Twist, Progression and Constraint to the rail's Optional group</h4>
+<p>The only production change: the Optional group shows all 5 optional decks in design 8.2 order, with genre pills on Progression and Constraint.</p>
+<ul>
+  <li><strong>UPDATE:</strong> <code>src/app/board/SideRail.tsx</code>: <code>const OPTIONAL: Deck[] = ['setting', 'mood', 'twist', 'progression', 'constraint'];</code> with the comment "The Optional group, in the design's order." Rewrite the module doc comment (lines 1-8) so it lists the Optional group as Setting, Mood, Twist, Progression, Constraint and says each genre-tagged deck button (Mechanic, Resource, Progression, Constraint) carries a count pill; drop "the other optional decks come in Phase 4". Keep "Settings comes in Phase 5".</li>
+  <li><strong>UPDATE:</strong> <code>src/app/board/SideRail.test.tsx</code>: extend the expected list in <code>sideRail_groups_inDesignOrder</code> with <code>'Draw A Mood', 'Draw A Twist', 'Draw A Progression', 'Draw A Constraint'</code> after <code>'Draw A Setting'</code> (14 entries). ADD <code>sideRail_optionalButtons_drawTheirDeck</code>: clicking each of the 4 new buttons calls <code>onDraw</code> with <code>('mood' | 'twist' | 'progression' | 'constraint', expect.anything(), undefined)</code>. ADD <code>sideRail_progressionAndConstraint_showPillsWhenNarrowed</code>: render with <code>progression: ['puzzle','rpg']</code> and <code>constraint: ['horror']</code>; the Progression button contains a pill named "2 genres on" and is described by it, the Constraint button contains "1 genre on", and the Mood and Twist buttons contain no <code>img</code> and have no <code>aria-describedby</code>. The existing pools-off test then covers the 4 new buttons automatically (all disabled except the Hook Card).</li>
+  <li><strong>PATTERN:</strong> <code>src/app/board/SideRail.test.tsx</code> lines 52-62 and 75-102.</li>
+  <li><strong>GOTCHA:</strong> do not touch <code>DeckButton</code>, <code>GenreCount</code>, the model or <code>BoardScreen</code> — they already handle these decks. Do not add Settings (Phase 5). The pill singular is "1 genre on" (Phase 3 Notes).</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/app/board/SideRail.test.tsx &amp;&amp; npm run typecheck &amp;&amp; npx eslint src/app/board</code></li>
+</ul>
+
+<h4 class="task" data-task="2">Task 2: Pin the optional decks' badge words and sentence breaks in the unit suite</h4>
+<p>Existing unit tests cover each optional deck alone. Add the two cases the rail now makes common: several optional cards in one stack, and an optional card right after another.</p>
+<ul>
+  <li><strong>ADD:</strong> in <code>src/features/hook/buildHookSentence.test.ts</code>, <code>buildHookSentence_allOptionalDecks_readsFourSentences</code>: stack <code>role "You are a" navigator</code>, <code>mechanic "who must" trade</code>, <code>goal "to" keep the light on</code>, <code>constraint "with" no jumping</code>, <code>mood "It feels" tense</code>, <code>twist "Except" the map is alive</code>, <code>progression "As you play," new islands open</code> → exactly <code>"You are a navigator who must trade to keep the light on with no jumping. It feels tense. Except the map is alive. As you play, new islands open."</code></li>
+  <li><strong>ADD:</strong> <code>buildHookSentence_optionalFirstInStack_noEmptySentence</code>: a stack that starts with <code>mood "It feels" eerie</code> then <code>twist "The catch:" your guide lies</code> → <code>"It feels eerie. The catch: your guide lies."</code> (no leading empty sentence, no ". ." artifacts).</li>
+  <li><strong>ADD:</strong> in <code>src/features/canvas/connector.test.ts</code>, an <code>it.each</code> named <code>connectorWords_optionalUnderEachCoreDeck_usesOwnWords</code> over upper ∈ <code>role, mechanic, resource, goal, conflict, setting</code> × lower ∈ <code>mood, twist, progression, constraint</code>, expecting <code>WORDS[lower]</code> literals (It feels/The tone is; Except/The catch:; As you play,/Over time,; with/and), plus same-deck pairs <code>mood/mood</code>, <code>twist/twist</code>, <code>progression/progression</code> → <code>['and']</code>.</li>
+  <li><strong>PATTERN:</strong> <code>buildHookSentence.test.ts</code> lines 51-89 (<code>e()</code> helper); <code>connector.test.ts</code> lines 18-39.</li>
+  <li><strong>GOTCHA:</strong> these pin current behavior; if one fails, the expected string comes from design 9.6 / mvp-plan, and a mismatch is a bug in the builder to fix, not a test to loosen. For same-deck optional pairs assert only the connector words: the builder starts a new sentence on every Mood/Twist/Progression entry, so a Mood under a Mood reads <code>"It feels tense. And cozy."</code> — today's behavior, left unchanged and unasserted (see Notes).</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/hook/buildHookSentence.test.ts src/features/canvas/connector.test.ts</code></li>
+</ul>
+
+<h4 class="task" data-task="3">Task 3: Update the browser tests that count the rail's deck buttons</h4>
+<p>Three specs pin the rail at 10 deck buttons; Task 1 made it 14.</p>
+<ul>
+  <li><strong>UPDATE:</strong> <code>tests/e2e/shell.spec.ts</code> <code>shell_deckButtons_are36Tall</code>: <code>toHaveCount(14)</code>; before <code>boxOf(button)</code> call <code>await button.scrollIntoViewIfNeeded()</code> (the rail scrolls at the 1280 × 720 test viewport).</li>
+  <li><strong>UPDATE:</strong> <code>tests/e2e/board.spec.ts</code> <code>board_drawEachDeck_cardsDoNotOverlap</code>: add <code>'Mood', 'Twist', 'Progression', 'Constraint'</code> to <code>decks</code>; expect <code>'14 cards · 0 notes'</code>, stored length 14, and the sorted type list including <code>constraint, mood, progression, twist</code>.</li>
+  <li><strong>UPDATE:</strong> <code>tests/e2e/pools-real.spec.ts</code> <code>RAIL</code>: add <code>['Mood', 'mood', null]</code>, <code>['Twist', 'twist', null]</code>, <code>['Progression', 'progression', null]</code>, <code>['Constraint', 'constraint', null]</code>. The loop's distinct-cue and no-failed-request checks then cover them with the shipped pools.</li>
+  <li><strong>IMPLEMENT:</strong> <code>grep -rn "toHaveCount(10)\|10 cards" tests/e2e</code> for any other spec pinned to the old rail and update it the same way.</li>
+  <li><strong>GOTCHA:</strong> the card count chip text uses "·" (U+00B7). 14 cards must still find open spots without overlap — <code>findOpenSpot</code> handles it; if the view runs out, that is a real bug to report, not a reason to cut decks from the test.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx playwright test tests/e2e/shell.spec.ts tests/e2e/board.spec.ts tests/e2e/pools-real.spec.ts --project=chromium</code></li>
+</ul>
+
+<h4 class="task" data-task="4">Task 4: Prove the Progression and Constraint genre pills in the browser</h4>
+<ul>
+  <li><strong>UPDATE:</strong> <code>tests/e2e/genres.spec.ts</code> <code>genres_panel_turnOffTopChip_updatesPillsAndLine</code>: after the existing Mechanic/Resource checks, assert <code>pill(page, 'Progression')</code> and <code>pill(page, 'Constraint')</code> have text <code>20</code> and accessible name <code>20 genres on</code>, and that <code>rail(page).getByRole('button', { name: 'Draw A Mood', exact: true }).getByRole('img')</code> and the Twist equivalent have count 0.</li>
+  <li><strong>ADD:</strong> <code>genres_deckRow_narrowsOnlyThatDecksPill</code>: open the panel, in the <code>group</code> named "Constraint" turn off one chip (e.g. "Roguelike"), Done; Constraint's pill reads <code>20</code>; Mechanic, Resource and Progression show no pill; the Genres line still reads "All genres" (the union is still 21).</li>
+  <li><strong>PATTERN:</strong> <code>genres.spec.ts</code> lines 27-31 and 61-75.</li>
+  <li><strong>GOTCHA:</strong> use <code>exact: true</code> on chip names ("Roguelike" vs nothing else today, but "Life Sim" / "Vehicle Sim &amp; Racing" style overlaps exist). The panel deck rows are <code>role="group"</code> named by the deck (Phase 3 Notes).</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx playwright test tests/e2e/genres.spec.ts --project=chromium</code></li>
+</ul>
+
+<h4 class="task" data-task="5">Task 5: Add the optional decks browser spec</h4>
+<p>End-to-end proof that the 4 decks draw from the rail with the right face, and read correctly inside a Hook Card stack.</p>
+<ul>
+  <li><strong>CREATE:</strong> <code>tests/e2e/optional-decks.spec.ts</code> with a doc comment (design 8.2, 9.6; Phase 4). <code>test.beforeEach</code>: <code>page.emulateMedia({ reducedMotion: 'reduce' })</code> as in <code>hook.spec.ts</code>.</li>
+  <li><strong>ADD</strong> <code>optional_drawFromRail_showsFaceIconAndCueCount</code>: on an empty board, for each <code>[deck, type, icon, cues]</code> of <code>['Mood','mood','smile',4]</code>, <code>['Twist','twist','rotate-ccw',2]</code>, <code>['Progression','progression','trending-up',2]</code>, <code>['Constraint','constraint','shield-x',2]</code>: <code>drawFromRail</code>, then the canvas card <code>[data-type=type]</code> has count 1, its <code>[data-edge]</code> count equals <code>cues</code>, its <code>type-disc</code> contains <code>[data-icon=icon]</code>, 2-cue decks show <code>middle-rule</code>, and its cue texts are distinct; undo with <code>Control+z</code> before the next deck (pattern: <code>pools-real.spec.ts</code> loop).</li>
+  <li><strong>ADD</strong> <code>optional_tuckedIntoHookStack_badgesAndSentences</code>: open a fixture board with hook-1 → role-1 → mechanic-1 → goal-1 (as <code>hookBoard</code> in <code>hook.spec.ts</code>) continued by <code>constraint-1</code> (y 368, z 5, under goal-1), <code>mood-1</code> (y 424, z 6, under constraint-1), <code>twist-1</code> (y 480, z 7, under mood-1), <code>progression-1</code> (y 536, z 8, under twist-1), and view zoom 0.6. Assert badges: the node of <code>goal-1</code> carries <code>with</code>, <code>constraint-1</code> carries <code>It feels</code>, <code>mood-1</code> carries <code>Except</code>, <code>twist-1</code> carries <code>As you play,</code> (each via <code>.react-flow__node[data-id="…"]</code> → <code>getByTestId('connector-badge')</code>: the upper card's node renders the badge for the card tucked under it, as in board.spec lines 410-421 where <code>role-1</code> carries "but" for its Conflict). Assert <code>getByTestId('hook-sentence')</code> has exactly <code>"You are a navigator who must trade to keep the light on with no jumping. It feels tense. Except the map is alive. As you play, new islands open."</code></li>
+  <li><strong>ADD</strong> <code>optional_drawMoodAndTuck_newSentenceAndOneUndo</code>: open the plain 4-card hook fixture (sentence <code>HOOK_TEXT</code>), draw Mood from the rail, drag it with <code>dragTo</code> so the pointer lands inside goal-1's lower half (optional cards get no slot hint; <code>dropTarget</code> needs the pointer inside the card), release; the sentence matches <code>/^You are a navigator who must trade to keep the light on\. It feels .+\.$/</code> and contains the Mood card's <code>active-cue</code> text; one <code>Control+z</code> restores <code>HOOK_TEXT</code> exactly (the tuck is one undo step); a second <code>Control+z</code> removes the drawn card.</li>
+  <li><strong>PATTERN:</strong> <code>tests/e2e/hook.spec.ts</code> lines 37-111; <code>tests/e2e/pools-real.spec.ts</code> lines 33-48; helpers from <code>tests/e2e/board-helpers.ts</code>; fixtures from <code>@/test/fixtures/boards</code>.</li>
+  <li><strong>GOTCHA:</strong> import <code>{ expect, test }</code> from <code>./test</code> so the fixture pools are routed (deterministic cue sets). <code>fixtureCard</code> makes the first cue active, so the fixture texts are tense, the map is alive, new islands open, no jumping. No hint slot shows for optional decks — do not wait for <code>hint-slot</code>. Do not change fixtures or <code>CUES</code>.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx playwright test tests/e2e/optional-decks.spec.ts</code> (all 3 engines)</li>
+</ul>
+
+<h4 class="task" data-task="6">Task 6: Verify the optional pools and floors without rerunning the split</h4>
+<p>The PRD's Phase 4 pass bar ("every converted pool matches its library cue for cue after the split rules; every genre has at least 10 cues in Progression and Constraint"), checked read-only.</p>
+<ul>
+  <li><strong>IMPLEMENT:</strong> run the comparison below (it imports the pure <code>splitDecks</code> and writes nothing). Record its output in this doc's Notes under "Pool check".</li>
+  <li><strong>IMPLEMENT:</strong> if a deck reports DIFF, do not rerun or "fix" anything: check <code>git log --oneline db0d494..HEAD -- public/pools</code>. A DIFF with commits there is a hand edit (allowed: the JSON is the source) and is recorded; with no commits there, the VALIDATE fails and the phase stops with <code>BLOCKED: pool-files</code>.</li>
+  <li><strong>GOTCHA:</strong> never run <code>node scripts/split-decks.mjs</code> as a CLI; compare parsed JSON, not file text (Prettier wraps arrays in <code>public/pools/</code>).</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span>
+<pre><code>npx vitest run src/shared/pools/poolFiles.test.ts src/test/splitDecks.test.ts &amp;&amp; STRICT=$(git diff --quiet db0d494 -- public/pools &amp;&amp; echo 1 || echo 0) node --input-type=module -e "
+import { readFileSync } from 'node:fs';
+import { splitDecks } from './scripts/split-decks.mjs';
+const read = (p) =&gt; JSON.parse(readFileSync(p, 'utf8'));
+const { pools } = splitDecks(read('docs/libraries/decks.json'), read('docs/libraries/genres.json'));
+let bad = 0;
+for (const p of Object.values(pools)) {
+  const same = JSON.stringify(read('public/pools/' + p.type + '.json')) === JSON.stringify(p);
+  console.log((same ? 'MATCH ' : 'DIFF ') + p.type + ' ' + p.cues.length);
+  if (!same &amp;&amp; process.env.STRICT === '1') bad++;
+}
+for (const t of ['progression', 'constraint']) {
+  const cues = read('public/pools/' + t + '.json').cues, counts = {};
+  for (const c of cues) for (const g of c.genres) counts[g] = (counts[g] || 0) + 1;
+  const [g, n] = Object.entries(counts).sort((a, b) =&gt; a[1] - b[1])[0];
+  console.log('min ' + t + ' ' + g + ' ' + n + ' over ' + Object.keys(counts).length + ' genres');
+  if (n &lt; 10 || Object.keys(counts).length !== 21) bad++;
+}
+process.exit(bad ? 1 : 0);
+"</code></pre>
+  STRICT is 1 when <code>public/pools/</code> is unchanged since the Phase 2 merge, so any DIFF fails; after a committed hand edit a DIFF is printed and recorded but does not fail, while the floors always do.</li>
+</ul>
+
+<h4 class="task" data-task="7">Task 7: Update the README and run the full validation suite</h4>
+<ul>
+  <li><strong>UPDATE:</strong> <code>README.md</code> line 7: status becomes Phase 4 (optional decks): the rail draws all 11 decks — the Hook Card, the 5 core decks, the 3 Modifier decks and the 5 optional decks; next: export, settings and theming (Phase 5).</li>
+  <li><strong>UPDATE:</strong> <code>README.md</code> line 98 Rail bullet: Optional (Setting, Mood, Twist, Progression, Constraint); genre count pills on Mechanic, Resource, Progression and Constraint. ADD one sentence to the hook usage text: a Mood, Twist or Progression card tucked into a stack starts a new sentence ("It feels…", "Except…", "As you play,…"); a Constraint adds "with …" to the current sentence.</li>
+  <li><strong>IMPLEMENT:</strong> run every Level 1–4 command below; fix any regression in code or tests this phase touched (e.g. a spec that scrolls or counts the rail).</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npm run lint &amp;&amp; npm run format:check &amp;&amp; npm run typecheck &amp;&amp; npm test &amp;&amp; npm run build &amp;&amp; npm run size &amp;&amp; npm run test:e2e</code></li>
+</ul>
+
+<h4 class="task" data-task="8">Task 8: Commit, push, and open PR</h4>
+<p>After every prior validation checkpoint has passed:</p>
+<ul>
+  <li><strong>IMPLEMENT:</strong> stage and commit uncommitted changes with a descriptive message summarizing the phase; push with <code>git push -u origin phase-4-optional-decks</code>; open a PR with <code>gh pr create --head phase-4-optional-decks --base main --title "Phase 4: Optional decks" --body "&lt;body&gt;"</code>.</li>
+  <li><strong>PR title format:</strong> <code>Phase 4: Optional decks</code> — names the phase, not any individual feature.</li>
+  <li><strong>PR body format:</strong> copy the Acceptance Criteria as a checklist with each box checked off, followed by a <code>Notes</code> section listing assumptions/trade-offs decided during execution (start from this doc's Notes, including the Pool check output and that the pool conversion, badges and sentence rules were done in Phase 2).</li>
+  <li><strong>GOTCHA:</strong> CLAUDE.md "Commit Authorship" and the user's memory rule win over any tool default: no <code>Co-Authored-By</code> or <code>Claude-Session</code> trailer in any commit, and no "Generated with…" line, robot emoji or other AI marker in the PR body. Commits are in the owner's voice.</li>
+  <li><strong>GOTCHA:</strong> <code>gh</code> must be installed and authenticated as <code>DecafCoding</code> (it was for Phase 3); if not, this step fails.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>gh pr view phase-4-optional-decks --json number,title,state,headRefName</code> returns the PR with <code>"state": "OPEN"</code>, <code>"headRefName": "phase-4-optional-decks"</code> and title <code>Phase 4: Optional decks</code>; and <code>! git log origin/main..HEAD --format=%B | grep -qiE "co-authored-by|claude-session"</code>.</li>
+</ul>
+
+<h2>Testing Strategy</h2>
+<h3>Unit Tests</h3>
+<ul>
+  <li><code>SideRail.test.tsx</code>: 14 deck buttons in design order; the 4 new buttons call <code>onDraw</code> with their deck; pills on Progression and Constraint only when narrowed ("1 genre on" / "N genres on"); Mood and Twist never get a pill; all deck buttons off when pools are not ready.</li>
+  <li><code>buildHookSentence.test.ts</code>: all 4 optional decks in one stack read as 4 sentences; an optional card first in the stack makes no empty sentence.</li>
+  <li><code>connector.test.ts</code>: each optional deck under each core deck uses its own words; same-deck optional pairs read "and".</li>
+  <li>Unchanged and still passing: <code>poolFiles.test.ts</code> (floors incl. Progression and Constraint, lowercase Constraint lead word), <code>drawCard.test.ts</code> (Progression genre filter), <code>CardView.test.tsx</code> (Mood 4 cues, Constraint 2 cues and rule), <code>CardTestPage.test.tsx</code>.</li>
+</ul>
+<h3>Integration Tests</h3>
+<ul>
+  <li><code>optional-decks.spec.ts</code>: draw face/icon/cue count per optional deck; a full optional stack's badges and exact sentence; a rail-drawn Mood tucked into a stack reads as a new sentence and undoes in one step.</li>
+  <li><code>genres.spec.ts</code>: Progression and Constraint pills after a top-chip change and a deck-row change.</li>
+  <li><code>shell.spec.ts</code>, <code>board.spec.ts</code>, <code>pools-real.spec.ts</code>: 14 rail deck buttons at 36 px; 14 drawn cards without overlap; every rail button draws from the real pools with distinct cues.</li>
+</ul>
+<h3>Edge Cases</h3>
+<ul>
+  <li>Pools fail to load: the 4 new buttons are disabled with the rest; the Hook Card stays on (existing pools-off unit test and <code>board_poolsBlocked_bannerThenRetry</code>).</li>
+  <li>An optional card is first under the Hook Card (no Player Role): its own deck's words show and the sentence starts with them, capitalized.</li>
+  <li>A Constraint directly after a Mood/Twist/Progression appends "with …" to that sentence (no new sentence).</li>
+  <li>The rail is taller than the 720 px test viewport: Playwright actions auto-scroll; geometry checks scroll first.</li>
+  <li>All 21 genres on: no pill on any button; one genre left in a deck: "1 genre on".</li>
+</ul>
+
+<h2>Validation Commands</h2>
+<h3>Level 1: Syntax &amp; Style</h3>
+<pre><code>npm run lint
+npm run format:check
+npm run typecheck</code></pre>
+<h3>Level 2: Unit Tests</h3>
+<pre><code>npm test</code></pre>
+<h3>Level 3: Integration Tests</h3>
+<pre><code>npm run test:e2e</code></pre>
+<h3>Level 4: Manual Validation</h3>
+<pre><code># Build, size budget, pool floors and the optional-deck browser specs, non-interactive
+npm run build &amp;&amp; npm run size &amp;&amp; npx vitest run src/shared/pools/poolFiles.test.ts src/app/board/SideRail.test.tsx &amp;&amp; npx playwright test tests/e2e/optional-decks.spec.ts tests/e2e/genres.spec.ts tests/e2e/pools-real.spec.ts --project=chromium</code></pre>
+<p>The Task 6 comparison command is the read-only cue-for-cue check; rerun it here if <code>public/pools/</code> changed during the phase.</p>
+<h3>Level 5: Additional Validation (Optional)</h3>
+<p>None required. Optionally open <code>npm run dev</code> at <code>http://localhost:5174</code> and compare the rail with <code>docs/design-handoff/</code>'s Main frame (Optional group: Setting, Mood, Twist, Progression, Constraint).</p>
+
+<h2>Acceptance Criteria</h2>
+<ul class="checklist">
+  <li data-checked="false">The rail's Optional group shows Setting, Mood, Twist, Progression and Constraint, in that order, each a 36 px deck button with its deck icon in its rail color and the label "Draw A &lt;Deck&gt;".</li>
+  <li data-checked="false">Each of the 4 new buttons draws a card of its deck: Mood with 4 distinct cues, Twist, Progression and Constraint with 2 distinct cues and the middle rule, each with its design 4.4 icon.</li>
+  <li data-checked="false">Progression and Constraint draws use only cues sharing a genre with the deck's current genres (existing filter, unchanged); their buttons show a genre count pill ("N genres on") when narrowed and none at all 21; Mood and Twist never show one.</li>
+  <li data-checked="false">Tucked into a Hook Card stack, the optional cards show their default badges (It feels, Except, As you play,, with) and the sentence starts a new sentence for Mood, Twist and Progression; a Constraint continues the current sentence.</li>
+  <li data-checked="false">When the pools fail to load, the 4 new buttons are disabled with the other deck buttons; the Hook Card button stays on.</li>
+  <li data-checked="false">No BoardRecord shape change; FORMAT_VERSION stays 1; no change to the model, draw, card, canvas or hook modules beyond tests.</li>
+  <li data-checked="false">The pools still match <code>docs/libraries/decks.json</code> cue for cue after the 2 split rules (in-memory check), every genre has at least 10 cues in Progression and Constraint, and the split CLI was not run.</li>
+  <li data-checked="false">Lint (including the color check), format check, typecheck, unit tests, build, size checks and the Playwright suite in 3 engines all pass.</li>
+</ul>
+
+<h2>Completion Checklist</h2>
+<ul class="checklist">
+  <li data-checked="false">All 8 tasks completed in order, each VALIDATE passing at completion</li>
+  <li data-checked="false">Level 1: lint, format check, typecheck pass</li>
+  <li data-checked="false">Level 2: <code>npm test</code> passes</li>
+  <li data-checked="false">Level 3: <code>npm run test:e2e</code> passes</li>
+  <li data-checked="false">Level 4: build, size, pool floors and optional-deck specs pass</li>
+  <li data-checked="false">Pool check output recorded in Notes</li>
+  <li data-checked="false">README updated</li>
+  <li data-checked="false">PR open with no AI attribution</li>
+</ul>
+
+<h2>Notes</h2>
+
+<h3>Architecture decisions this phase conforms to</h3>
+<p><code>module-layout</code> (the rail lives in <code>app/board/</code>; <code>features/draw</code> owns deck buttons, <code>features/genres</code> owns pills), <code>import-rules</code> (<code>app/</code> composes draw and genres; no new cross-feature import), <code>architecture-pattern</code>, <code>pool-files</code> (amended, settled: one split already done in Phase 2, JSON is the source, floors 10/20; no rerun), <code>pool-load-failure</code> (new buttons disabled with the rest), <code>hook-sentence</code> (pure builder unchanged; new tests only), <code>schema-shape</code>, <code>board-file-format</code> and <code>schema-versions</code> (no shape change; FORMAT_VERSION stays 1), <code>state-store</code> and <code>undo-history</code> (a draw and a tuck stay one step each; unchanged), <code>test-tools</code>, <code>test-data</code> (fixture pools plus the real-pool smoke test), <code>outside-code</code> (no new dependency), <code>nfr-targets</code>, <code>ci</code>. No decision is <code>data-status="open"</code> (30 settled, 1 amended-settled). No architecture decision changes.</p>
+
+<h3>Pool check</h3>
+<p>At planning (2026-11-03): <code>git diff --quiet db0d494 -- public/pools</code> → unchanged. In-memory comparison through the pure <code>splitDecks()</code>: MATCH for all 11 decks (role 467, mechanic 380, goal 314, conflict 351, resource 272, setting 279, mood 145, modifier 503, twist 224, progression 352, constraint 222). Phase 2/3 recorded the smallest genres as progression sandbox 28 and constraint fighting 42 (floor 10). Task 6 re-runs this and records the result here.</p>
+<p>At execution (2026-11-03, Task 6): <code>git diff --quiet db0d494 -- public/pools</code> → unchanged (STRICT=1). <code>poolFiles.test.ts</code> and <code>splitDecks.test.ts</code> pass (23 tests). In-memory comparison: MATCH for all 11 decks (role 467, mechanic 380, goal 314, conflict 351, resource 272, setting 279, mood 145, modifier 503, twist 224, progression 352, constraint 222). Floors: min progression sandbox 28 over 21 genres; min constraint fighting 42 over 21 genres. The split CLI was not run and <code>public/pools/</code> was not written.</p>
+
+<h3>Decisions and assumptions</h3>
+<ul>
+  <li>DECISION: Slug <code>optional-decks</code>, branch <code>phase-4-optional-decks</code>, 8 tasks rendered flat (the last is commit-push-PR). The phase name keeps the PRD's "Optional decks".</li>
+  <li>ASSUMPTION: The PRD Phase 4 bullet "Setting, Mood, Twist, Progression and Constraint pools converted to JSON; Progression and Constraint carry genre tags" and its "matches its library cue for cue" pass bar are already satisfied by the Phase 2 split of all 11 decks. Phase 4 converts nothing and never reruns the split; Task 6 re-checks read-only through <code>splitDecks()</code>. Authority: architecture <code>pool-files</code> (wins over PRD) + Phase 2 and Phase 3 Notes + CLAUDE.md "Pools". PRD §11 Phase 4 and mvp-plan M4 conversion lines are stale and need a refresh.</li>
+  <li>ASSUMPTION: The PRD bullet "their badges and sentence rules (Mood, Twist, Progression start a new sentence)" is already implemented (connector <code>WORDS</code>, <code>NEW_SENTENCE</code>, with unit tests since Phase 2). Phase 4 adds tests only and changes no word or rule. Authority: Phase 2 Notes + codebase.</li>
+  <li>ASSUMPTION: Setting stays in the Optional group exactly as shipped since Phase 1 (not re-added); the phase adds 4 buttons, not 5. The PRD's "The 5 optional deck buttons" counts Setting. Authority: Phase 2 Notes + design 8.2 / §16.</li>
+  <li>ASSUMPTION: The only production change is the <code>OPTIONAL</code> constant (plus its doc comment) in <code>SideRail.tsx</code>; DeckButton, GenreCount, the model, BoardScreen's draw and the card/canvas/hook modules already handle the 4 decks. Authority: codebase (verified at planning) + smallest reversible option.</li>
+  <li>ASSUMPTION: Optional cards get no tuck hint slot; they tuck when the pointer is inside the target card. Design 9.7's normal order covers only the core decks and says any card can still tuck under any card; <code>isNormalPlace</code> already implements this. Authority: design-system 9.7 + codebase.</li>
+  <li>ASSUMPTION: No change to the rail layout for height. With 14 deck buttons the rail is about 840 px tall, just inside the 844 px under the top bar at the 1440 × 900 reference viewport; below that the existing <code>overflow-y: auto</code> scrolls it, and Settings (Phase 5) is not added here. Browser tests at Playwright's 1280 × 720 default scroll before geometry checks. Authority: design §8 reference viewport + Phase 3 Notes ("the rail already scrolls") + smallest reversible option.</li>
+  <li>ASSUMPTION: Mood and Twist buttons have no pill and no <code>aria-describedby</code>; Progression and Constraint use the same pill as Mechanic/Resource ("N genres on", "1 genre on", hidden at 21). Authority: design 8.2 + Phase 3 Notes.</li>
+  <li>ASSUMPTION: Same-deck optional pairs (e.g. Mood under Mood) keep today's behavior — badge "and", and because the builder starts a new sentence on every Mood/Twist/Progression entry they read as a separate sentence ("It feels tense. And cozy."). The phase pins only the connector words for those pairs and does not change the builder; the user tunes this in use if it reads badly. Authority: design 9.6 (same-deck "and"; new-sentence rule) + smallest reversible option.</li>
+  <li>ASSUMPTION: Browser tests use the routed fixture pools for exact texts (tense, the map is alive, new islands open, no jumping) plus the existing real-pool smoke test extended to all 14 rail buttons; fixtures are not changed. Authority: Phase 2/3 Notes + architecture <code>test-data</code>.</li>
+  <li>ASSUMPTION: The README update (status line, Rail bullet, one hook sentence line) is in Task 7, as Phase 3 did. Authority: Phase 3 plan pattern.</li>
+  <li>ASSUMPTION: No commit or PR carries AI attribution (CLAUDE.md "Commit Authorship" and the user's memory rule win over tool defaults). Authority: CLAUDE.md.</li>
+</ul>
+
+<h3>Doc conflicts recorded (no stop needed)</h3>
+<ul>
+  <li>PRD §11 Phase 4 ("Setting, Mood, Twist, Progression and Constraint pools converted to JSON") and mvp-plan M4 vs architecture <code>pool-files</code> and Phase 2's executed split of all 11 decks: architecture wins; the conversion is done.</li>
+  <li>PRD §11 Phase 4 lists "their badges and sentence rules" as Phase 4 work; Phase 2 already built them for all 12 card types. Phase 4 verifies them with tests.</li>
+  <li>PRD Phase 4 says "The 5 optional deck buttons"; Setting's button already exists, so 4 are added.</li>
+</ul>
+
+<h3>Risks</h3>
+<ul>
+  <li>Specs elsewhere pinned to 10 rail buttons or to rail geometry — Task 3 greps for them; Task 7's full run catches the rest.</li>
+  <li>Badge ownership in the DOM: the upper card's node renders the badge (board.spec <code>connector_conflictUnderRole_but</code>); if that changes, Task 5's node-keyed badge assertions need the new owner.</li>
+  <li>A hand edit of a pool file between planning and execution makes Task 6 report DIFF; the task records it rather than regenerating.</li>
+</ul>
+
+</body>
+</html>

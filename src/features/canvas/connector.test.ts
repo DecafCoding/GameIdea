@@ -37,6 +37,30 @@ describe('connectorWords', () => {
     expect(connectorWords(upper, lower)).toEqual(words);
   });
 
+  const OPTIONAL_WORDS = {
+    mood: ['It feels', 'The tone is'],
+    twist: ['Except', 'The catch:'],
+    progression: ['As you play,', 'Over time,'],
+    constraint: ['with', 'and'],
+  } as const;
+  const OPTIONAL_PAIRS = OTHERS.flatMap((upper) =>
+    (Object.keys(OPTIONAL_WORDS) as (keyof typeof OPTIONAL_WORDS)[]).map(
+      (lower) => [upper, lower, OPTIONAL_WORDS[lower]] as const,
+    ),
+  );
+
+  it.each([
+    ...OPTIONAL_PAIRS,
+    ['mood', 'mood', ['and']],
+    ['twist', 'twist', ['and']],
+    ['progression', 'progression', ['and']],
+  ] as const)(
+    'connectorWords_optionalUnderEachCoreDeck_usesOwnWords (%s over %s)',
+    (upper, lower, words) => {
+      expect(connectorWords(upper, lower)).toEqual(words);
+    },
+  );
+
   it('connectorWords_lowerModifier_null', () => {
     for (const upper of [...OTHERS, 'hook', 'modifier'] as const) {
       expect(connectorWords(upper, 'modifier')).toBeNull();

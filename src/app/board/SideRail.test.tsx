@@ -46,7 +46,47 @@ describe('SideRail', () => {
       'Draw A Resource Modifier',
       'Draw A Setting Modifier',
       'Draw A Setting',
+      'Draw A Mood',
+      'Draw A Twist',
+      'Draw A Progression',
+      'Draw A Constraint',
     ]);
+  });
+
+  it('sideRail_optionalButtons_drawTheirDeck', () => {
+    const onDraw = vi.fn();
+    renderRail({ onDraw });
+    for (const [name, type] of [
+      ['Mood', 'mood'],
+      ['Twist', 'twist'],
+      ['Progression', 'progression'],
+      ['Constraint', 'constraint'],
+    ] as const) {
+      fireEvent.click(screen.getByRole('button', { name: `Draw A ${name}` }));
+      expect(onDraw).toHaveBeenLastCalledWith(type, expect.anything(), undefined);
+    }
+    expect(onDraw).toHaveBeenCalledTimes(4);
+  });
+
+  it('sideRail_progressionAndConstraint_showPillsWhenNarrowed', () => {
+    renderRail({
+      genres: {
+        ...allGenresOn(),
+        progression: ['puzzle', 'rpg'],
+        constraint: ['horror'],
+      },
+    });
+    const progression = screen.getByRole('button', { name: 'Draw A Progression' });
+    const two = within(progression).getByRole('img', { name: '2 genres on' });
+    expect(progression.getAttribute('aria-describedby')).toBe(two.id);
+    const constraint = screen.getByRole('button', { name: 'Draw A Constraint' });
+    const one = within(constraint).getByRole('img', { name: '1 genre on' });
+    expect(constraint.getAttribute('aria-describedby')).toBe(one.id);
+    for (const name of ['Draw A Mood', 'Draw A Twist']) {
+      const button = screen.getByRole('button', { name });
+      expect(within(button).queryByRole('img')).toBeNull();
+      expect(button.hasAttribute('aria-describedby')).toBe(false);
+    }
   });
 
   it('sideRail_modifierButtons_drawWithModDeck', () => {
