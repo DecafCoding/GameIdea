@@ -2,9 +2,10 @@
  * SideRail: the 232 px rail (design 8.2): the Hook Card button, then the Core group (Player
  * Role, Mechanic, Resource, Goal, Conflict), the Modifiers row of 3 icon buttons and the
  * Optional group (Setting, Mood, Twist, Progression, Constraint), the Genres group with the
- * Genres button and its count line, then Add Note and the help panel pinned to the bottom.
+ * Genres button and its count line, then Add Note and Settings at the bottom (margin-top
+ * auto; when the rail overflows and scrolls, Settings simply follows Add Note).
  * Each genre-tagged deck button (Mechanic, Resource, Progression, Constraint) carries a genre
- * count pill (design 8.2), hidden at all 21 genres. Settings comes in Phase 5.
+ * count pill (design 8.2), hidden at all 21 genres.
  */
 import { useId } from 'react';
 import { DeckButton, HookButton } from '@/features/draw';
@@ -29,6 +30,7 @@ interface SideRailProps {
   /** The open board's deck genres, for the count pills and the Genres line. */
   genres: DeckGenres;
   onOpenGenres: () => void;
+  onOpenSettings: () => void;
 }
 
 /** The Core group, in the design's order. */
@@ -47,6 +49,7 @@ export function SideRail({
   onAddNote,
   genres,
   onOpenGenres,
+  onOpenSettings,
 }: SideRailProps) {
   const idPrefix = useId();
   const button = (type: Deck) => {
@@ -89,19 +92,13 @@ export function SideRail({
       <h2 className={styles.label}>Genres</h2>
       <GenresButton genres={genres} onOpen={onOpenGenres} />
       <button type="button" className={styles.addNote} onClick={onAddNote}>
-        <span className={styles.noteIcon}>
-          <Icon name="note" size={16} />
-        </span>
+        <Icon name="note" size={18} className={styles.addNoteIcon} />
         Add Note
       </button>
-      <div className={styles.help}>
-        <p>Click a deck to draw one card.</p>
-        <p>Point at a card. Click an arrow on the ring to turn it.</p>
-        <p>
-          Press <kbd className={styles.key}>R</kbd> to turn one step.
-        </p>
-        <p>Drag a card under another to tuck it.</p>
-      </div>
+      <button type="button" className={styles.settings} onClick={onOpenSettings}>
+        <Icon name="settings" size={18} />
+        Settings
+      </button>
     </aside>
   );
 }

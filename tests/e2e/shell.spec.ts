@@ -1,8 +1,8 @@
 /**
  * Browser tests for the shell at its locked sizes (design 8.1 to 8.3): the 56 px top bar,
  * the 232 px rail, 36 px rail deck buttons, the default theme attributes, the bundled
- * fonts, and the token switch: a script that sets Light mode and the Green theme changes
- * the chrome but not the cards (the switch UI is Phase 5).
+ * fonts, the rail order ending in Add Note and Settings, and the token switch: Light mode
+ * and the Green theme chosen in the Settings dialog change the chrome but not the cards.
  */
 import { expect, test } from './test';
 import { fixtureBoard, fixtureCard } from '@/test/fixtures/boards';
@@ -46,6 +46,13 @@ test('shell_rail_showsGroupLabelsInOrder', async ({ page }) => {
   await expect(modifier).toHaveAttribute('title', 'Setting Modifier');
 });
 
+test('shell_rail_endsWithAddNoteThenSettings', async ({ page }) => {
+  await openBoard(page);
+  const labels = await rail(page).getByRole('button').allTextContents();
+  expect(labels.slice(-2)).toEqual(['Add Note', 'Settings']);
+  await expect(rail(page).getByText('Click a deck to draw one card.')).toHaveCount(0);
+});
+
 test('shell_html_defaultsToDarkOrange', async ({ page }) => {
   await openBoard(page);
   const html = page.locator('html');
@@ -70,10 +77,12 @@ test('shell_themeAttributes_changeChromeNotCards', async ({ page }) => {
   const logo = topBar(page).getByRole('link', { name: 'Board List' }).locator('span').first();
   const cardBefore = await backgroundRgb(card);
 
-  await page.evaluate(() => {
-    document.documentElement.dataset.mode = 'light';
-    document.documentElement.dataset.theme = 'green';
-  });
+  await rail(page).getByRole('button', { name: 'Settings' }).click();
+  const dialog = page.getByRole('dialog', { name: 'Settings' });
+  await dialog.getByRole('radio', { name: 'Light' }).click();
+  await dialog.getByRole('radio', { name: 'Green' }).click();
+  await dialog.getByRole('button', { name: 'Done' }).click();
+  await expect(dialog).toBeHidden();
 
   await expect(topBar(page)).toHaveCSS('background-color', 'rgb(255, 255, 255)');
   await expect(logo).toHaveCSS('background-color', 'rgb(63, 179, 127)');

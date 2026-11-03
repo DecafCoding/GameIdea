@@ -78,6 +78,16 @@ describe('BoardScreen', () => {
     expect(decks()).toHaveLength(14);
   });
 
+  it('boardScreen_settingsButton_opensDialog', () => {
+    servePools(false);
+    render(<BoardScreen />);
+    expect(screen.queryByRole('dialog', { name: 'Settings' })).toBeNull();
+    fireEvent.click(screen.getByRole('button', { name: 'Settings' }));
+    const dialog = screen.getByRole('dialog', { name: 'Settings' });
+    fireEvent.click(within(dialog).getByRole('button', { name: 'Done' }));
+    expect(screen.queryByRole('dialog', { name: 'Settings' })).toBeNull();
+  });
+
   it('boardScreen_genreChange_updatesRailCountsWithoutUndo', () => {
     servePools(false);
     render(<BoardScreen />);

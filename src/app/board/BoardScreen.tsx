@@ -5,7 +5,8 @@
  * motion, using only cues that share a genre with that deck's list on the board. The board
  * is the open board in the store, which the route loads from storage;
  * Ctrl+Z and Ctrl+Shift+Z undo and redo. The rail's Genres button opens the Genres panel;
- * a genre change saves but is never an undo step.
+ * a genre change saves but is never an undo step. The rail's Settings button opens the
+ * Settings dialog; a settings change is never part of the board or its undo history.
  */
 import { useState } from 'react';
 import {
@@ -23,6 +24,7 @@ import { drawCard } from '@/features/draw';
 import { downloadBoardFile } from '@/features/export';
 import { GenresPanel } from '@/features/genres';
 import { addNote, NOTE_SIZE } from '@/features/notes';
+import { SettingsDialog } from '@/features/settings';
 import { GENRE_DECKS, newId, type Deck, type GenreDeck, type ModDeck } from '@/shared/model';
 import { usePools } from '@/shared/pools';
 import { useBoardStore, useSaveStatus } from '@/shared/store';
@@ -74,6 +76,7 @@ function BoardScreenBody({
   const [startedOn, setStartedOn] = useState<string | null>(null);
   // The board id the Genres panel was opened on; it closes when another board opens.
   const [genresOpenOn, setGenresOpenOn] = useState<string | null>(null);
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   const ready = status === 'ready' && pools !== null;
   const empty = board.cards.length === 0 && board.notes.length === 0;
@@ -128,6 +131,7 @@ function BoardScreenBody({
         onAddNote={addNoteNow}
         genres={board.genres}
         onOpenGenres={() => setGenresOpenOn(board.id)}
+        onOpenSettings={() => setSettingsOpen(true)}
       />
       <div className={styles.region} data-testid="canvas-region">
         {(saveFailed || changedElsewhere || status === 'failed' || canvas.notice) && (
@@ -177,6 +181,7 @@ function BoardScreenBody({
           onClose={() => setGenresOpenOn(null)}
         />
       )}
+      <SettingsDialog open={settingsOpen} onClose={() => setSettingsOpen(false)} />
     </main>
   );
 }

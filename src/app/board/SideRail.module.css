@@ -1,4 +1,4 @@
-/* SideRail (design 8.2): 232 px, --surface, padding 10 12 12, gap 4; help panel at the bottom. */
+/* SideRail (design 8.2): 232 px, --surface, padding 10 12 12, gap 4; Settings at the bottom. */
 .rail {
   grid-area: rail;
   display: flex;
@@ -31,16 +31,18 @@
   gap: 4px;
 }
 
+/* Add Note (design 8.2): deck-button size, dashed border 1 --border-strong, margin-top 6. */
 .addNote {
   display: flex;
+  flex: none;
   align-items: center;
   gap: 10px;
   width: 100%;
-  height: 48px;
+  min-height: 36px;
   margin-top: 6px;
-  padding: 0 6px;
+  padding: 4px 10px;
   border: 1px dashed var(--border-strong);
-  border-radius: var(--radius-panel);
+  border-radius: var(--radius-button);
   background: transparent;
   color: var(--text);
   font-family: var(--font-body);
@@ -57,41 +59,32 @@
   transform: scale(0.97);
 }
 
-.noteIcon {
-  display: inline-flex;
+.addNoteIcon {
+  color: var(--text-muted);
+}
+
+/* Settings (design 8.2): transparent, no border, gear icon, --text-soft, at the bottom. */
+.settings {
+  display: flex;
+  flex: none;
   align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: var(--radius-button);
-  background: var(--bg);
-  color: var(--text-muted);
-}
-
-.help {
+  gap: 10px;
+  width: 100%;
+  min-height: 44px;
   margin-top: auto;
-  padding: 12px;
-  border-radius: var(--radius-panel);
-  background: var(--bg);
-  color: var(--text-muted);
-  font-size: 12px;
-  line-height: 1.5;
-}
-
-.help p {
-  margin: 0;
-}
-
-/* Key cap: Inter 12, 1 px --border-strong border, radius 5 (design 5, other radii). */
-.key {
-  display: inline-block;
-  min-width: 18px;
-  padding: 0 4px;
-  border: 1px solid var(--border-strong);
-  border-radius: 5px;
+  padding: 4px 10px;
+  border: 0;
+  border-radius: var(--radius-button);
+  background: transparent;
+  color: var(--text-soft);
   font-family: var(--font-body);
-  font-size: 12px;
-  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.settings:hover {
+  background: var(--surface-raised);
   color: var(--text);
 }
 
