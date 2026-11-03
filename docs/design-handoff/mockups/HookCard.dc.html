@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>GameIdea Hook Card</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
+<style>
+body{margin:0;background:#1B1E24}
+a{color:#ECEAE4}a:hover{color:#FFFFFF}
+button{font-family:inherit;cursor:pointer}
+.i{fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.hook{position:absolute;left:0;top:0;width:240px;height:200px;box-sizing:border-box;padding:14px 16px 16px;border-radius:14px;background:#2A2F38;box-shadow:0 10px 26px rgba(0,0,0,0.5);display:flex;flex-direction:column;gap:10px}
+.hd{display:flex;align-items:center;gap:8px}
+.hdot{width:24px;height:24px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:#1B1E24}
+.hl{font-family:'Space Grotesk',system-ui,sans-serif;font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#F6B08A}
+.sent{margin:0;flex:1 1 auto;font-size:14px;line-height:1.45;color:#ECEAE4}
+.btns{display:flex;gap:6px}
+.strip{position:absolute;left:0;top:0;display:flex;gap:2px;padding:4px;border-radius:10px;background:#23272F;border:1px solid #30353F;box-shadow:0 6px 18px rgba(0,0,0,0.35)}
+.sbtn{height:44px;padding:0 10px;border-radius:7px;border:none;background:transparent;color:#ECEAE4;font-size:13px;font-weight:500;display:inline-flex;align-items:center;gap:6px}
+.pri{flex:1 1 0;height:44px;border-radius:8px;border:none;color:#1B1E24;font-size:13px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.sec{flex:1 1 0;height:44px;border-radius:8px;border:1px solid #4A505C;background:#1B1E24;color:#ECEAE4;font-size:13px;font-weight:600}
+.card{position:absolute;width:200px;height:200px;border-radius:14px;background:#F4F0E6;box-shadow:0 6px 18px rgba(0,0,0,0.35)}
+.b{position:absolute;left:0;right:0;bottom:12px;padding:0 12px;text-align:center;font-family:'Space Grotesk',system-ui,sans-serif;font-weight:700;font-size:14px;line-height:1.25;color:#1B1E24}
+.badge{position:absolute;height:22px;padding:0 9px;border-radius:11px;color:#FFFFFF;font-size:11px;font-weight:600;line-height:22px;transform:translateX(-50%);box-shadow:0 2px 6px rgba(0,0,0,0.4);white-space:nowrap}
+.cap{font-family:'Space Grotesk',system-ui,sans-serif;font-weight:600;font-size:15px}
+.txt{color:#A9ADB6;line-height:1.5;font-size:13px}
+</style>
+</helmet>
+<div style="width: 1440px; height: 760px; box-sizing: border-box; padding: 48px 56px; color: #ECEAE4; font-family: Inter, system-ui, sans-serif; font-size: 14px; display: flex; flex-direction: column; gap: 28px; background-color: #1B1E24; background-image: radial-gradient(#33384280 1.2px, transparent 1.2px); background-size: 24px 24px; background-position: 12px 12px">
+
+  <div style="display: flex; flex-direction: column; gap: 6px">
+    <h1 style="margin: 0; font-family: 'Space Grotesk', system-ui, sans-serif; font-weight: 700; font-size: 28px">The Hook Card</h1>
+    <p style="margin: 0; color: #A9ADB6; max-width: 900px; line-height: 1.5">The Hook Card is the head of a stack. It is dark, so it stands apart from the cream cue cards. It reads the stack from top to bottom and shows the sentence. The sentence updates after each change and is never stored.</p>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; flex: 1 1 auto">
+
+    <div style="display: flex; flex-direction: column; gap: 14px">
+      <span class="cap">A. New Hook Card</span>
+      <div style="position: relative; height: 340px">
+        <div style="position: absolute; left: 20px; top: 168px; width: 200px; height: 88px; box-sizing: border-box; border-radius: 0 0 14px 14px; border: 2px dashed #2F5FB8; border-top: none; background: rgba(47,95,184,0.18); display: flex; align-items: flex-end; justify-content: center; padding-bottom: 12px; font-size: 12px; font-weight: 600; color: #A9C3F2">Player Role goes here</div>
+        <div class="hook" style="border: 2px solid {{accent}}">
+          <div class="hd"><span class="hdot" style="background: {{accent}}"><svg class="i" width="13" height="13" viewBox="0 0 24 24" style="stroke-width: 2.8" aria-hidden="true"><path d="M15 3v11a5 5 0 0 1-10 0v-3l3 3"/></svg></span><span class="hl">Hook</span></div>
+          <p class="sent" style="color: #A9ADB6">Tuck a Player Role under this card. Then tuck a Mechanic, a Resource, a Goal and a Conflict.</p>
+        </div>
+      </div>
+      <span class="txt">The user draws it from the top of the rail. Its menu holds Copy and Redraw All. They stay off until a card is tucked under it.</span>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 14px">
+      <span class="cap">B. Selected, after Copy</span>
+      <div style="position: relative; height: 340px">
+        <div class="strip">
+          <button type="button" class="sbtn" style="background: #343A45; color: #8FD6A4"><svg class="i" width="14" height="14" viewBox="0 0 24 24" style="stroke-width: 2.8" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>Copied</button>
+          <button type="button" class="sbtn">Redraw All</button>
+          <button type="button" class="sbtn" style="color: #F0A090">Discard</button>
+        </div>
+        <div class="hook" style="top: 60px; height: 230px; border: 2px solid {{accent}}; outline: 2px solid {{accent}}; outline-offset: 3px">
+          <div class="hd"><span class="hdot" style="background: {{accent}}"><svg class="i" width="13" height="13" viewBox="0 0 24 24" style="stroke-width: 2.8" aria-hidden="true"><path d="M15 3v11a5 5 0 0 1-10 0v-3l3 3"/></svg></span><span class="hl">Hook</span></div>
+          <p class="sent">You are a lonely ghost pilot who learns to fly to reach the last city, but fuel runs out at sunset. It feels hopeful. Except the city is empty.</p>
+        </div>
+      </div>
+      <span class="txt">The menu shows only when the user clicks the Hook Card. Copy puts the sentence on the clipboard as plain text and shows Copied for 2 seconds. Mood, Twist and Progression start a new sentence.</span>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 14px">
+      <span class="cap">C. Top card is not a Player Role</span>
+      <div style="position: relative; height: 340px">
+        <div class="card" style="left: 20px; top: 112px; background: #ECE6D8"><div class="b">fuel runs out at sunset</div></div>
+        <div class="card" style="left: 20px; top: 56px; background: #F1ECE0"><div class="b">build</div></div>
+        <div class="hook" style="border: 2px solid {{accent}}">
+          <div class="hd"><span class="hdot" style="background: {{accent}}"><svg class="i" width="13" height="13" viewBox="0 0 24 24" style="stroke-width: 2.8" aria-hidden="true"><path d="M15 3v11a5 5 0 0 1-10 0v-3l3 3"/></svg></span><span class="hl">Hook</span></div>
+          <p class="sent">Who must build, but fuel runs out at sunset.</p>
+        </div>
+        <span class="badge" style="left: 20px; top: 189px; background: #9A5C08">who must</span>
+        <span class="badge" style="left: 20px; top: 245px; background: #B53A23">but</span>
+      </div>
+      <span class="txt">The sentence starts with the badge word of the top card. A deck that is not in the stack is left out. The sentence never shows a blank slot.</span>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 14px">
+      <span class="cap">D. Clipboard did not work</span>
+      <div role="dialog" aria-labelledby="cbTitle" style="display: flex; flex-direction: column; gap: 14px; padding: 20px; border-radius: 12px; background: #23272F; border: 1px solid #30353F; box-shadow: 0 16px 40px rgba(0,0,0,0.5)">
+        <span id="cbTitle" style="font-family: 'Space Grotesk', system-ui, sans-serif; font-weight: 600; font-size: 17px">Copy the hook</span>
+        <span style="color: #A9ADB6; line-height: 1.4; font-size: 13px">The browser blocked the copy. The text is selected. Press Ctrl+C.</span>
+        <label for="cbText" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Hook sentence</label>
+        <textarea id="cbText" readonly rows="5" style="resize: none; box-sizing: border-box; padding: 10px 12px; border-radius: 8px; border: 1px solid {{accent}}; background: rgba(232,116,46,0.16); color: #ECEAE4; font-family: Inter, system-ui, sans-serif; font-size: 13px; line-height: 1.5">You are a reanimated lighthouse keeper who must trade to keep the light on, but the tide rises every night, using stolen memories.</textarea>
+        <div style="display: flex; justify-content: flex-end">
+          <button type="button" style="height: 44px; padding: 0 16px; border-radius: 8px; border: 1px solid #4A505C; background: transparent; color: #ECEAE4; font-size: 13px; font-weight: 600">Close</button>
+        </div>
+      </div>
+      <span class="txt">This shows only when the Clipboard API fails, for example on a page that is not secure.</span>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#E8742E","options":["#E8742E","#F2B134","#3B6FD1","#2F8F83"]},"$preview":{"width":1440,"height":760}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? '#E8742E' };
+  }
+}
+</script>
+</body>
+</html>

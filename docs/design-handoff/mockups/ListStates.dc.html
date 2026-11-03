@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>GameIdea board list states</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
+<style>
+body{margin:0;background:#1B1E24}
+a{color:#ECEAE4}a:hover{color:#FFFFFF}
+button{font-family:inherit;cursor:pointer}
+.i{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.cap{font-family:'Space Grotesk',system-ui,sans-serif;font-weight:600;font-size:15px}
+.txt{color:#A9ADB6;line-height:1.5;font-size:13px}
+.hk{margin:0;font-size:13px;line-height:1.5;color:#C9CCD2;padding:10px 12px;border-radius:8px;background:#1B1E24;border:1px solid #30353F}
+.meta{font-size:12px;color:#A9ADB6}
+.ghost{height:44px;padding:0 14px;border-radius:8px;border:1px solid #4A505C;background:transparent;color:#ECEAE4;font-size:14px;font-weight:500;display:inline-flex;align-items:center;gap:8px}
+</style>
+</helmet>
+<div style="width: 1200px; height: 620px; box-sizing: border-box; padding: 48px 56px; background: #1B1E24; color: #ECEAE4; font-family: Inter, system-ui, sans-serif; font-size: 14px; display: flex; flex-direction: column; gap: 28px">
+
+  <div style="display: flex; flex-direction: column; gap: 6px">
+    <h1 style="margin: 0; font-family: 'Space Grotesk', system-ui, sans-serif; font-weight: 700; font-size: 28px">Board list states</h1>
+    <p style="margin: 0; color: #A9ADB6; max-width: 760px; line-height: 1.5">The list with no boards, and a board name in rename mode.</p>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px">
+
+    <div style="display: flex; flex-direction: column; gap: 14px">
+      <span class="cap">A. No boards yet</span>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 40px 28px; border-radius: 12px; border: 1px dashed #4A505C; text-align: center">
+        <span style="width: 52px; height: 52px; border-radius: 12px; background: #23272F; border: 1px solid #30353F; display: inline-flex; align-items: center; justify-content: center; color: {{accent}}"><svg class="i" width="26" height="26" viewBox="0 0 24 24" style="stroke-width: 2.4" aria-hidden="true"><path d="M15 3v11a5 5 0 0 1-10 0v-3l3 3"/></svg></span>
+        <span style="font-family: 'Space Grotesk', system-ui, sans-serif; font-weight: 600; font-size: 18px">No boards yet</span>
+        <span class="txt" style="max-width: 340px">Make a board to start drawing cards. Or import a board file from another computer.</span>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: center">
+          <button type="button" class="ghost"><svg class="i" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3"/><path d="m7 8 5-5 5 5"/><path d="M4 21h16"/></svg>Import board file</button>
+          <button type="button" style="height: 44px; padding: 0 16px; border-radius: 8px; border: none; background: {{accent}}; color: #1B1E24; font-size: 14px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px"><svg class="i" width="16" height="16" viewBox="0 0 24 24" style="stroke-width: 2.6" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>New board</button>
+        </div>
+      </div>
+      <span class="txt">This replaces the board grid. The header buttons stay.</span>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 14px">
+      <span class="cap">B. Rename in place</span>
+      <div style="display: flex; flex-direction: column; gap: 12px; padding: 18px; border-radius: 12px; background: #23272F; border: 1px solid {{accent}}">
+        <div style="display: flex; flex-direction: column; gap: 6px">
+          <label for="rn" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Board name</label>
+          <input id="rn" type="text" value="Lighthouse jam, take 2" style="height: 44px; box-sizing: border-box; padding: 0 12px; border-radius: 8px; border: 2px solid {{accent}}; background: #1B1E24; color: #ECEAE4; font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 16px; font-weight: 600">
+          <span class="meta">Enter saves. Esc cancels.</span>
+        </div>
+        <p class="hk">You are a reanimated lighthouse keeper who must trade using stolen memories to keep the light on, but the tide rises every night.</p>
+        <span class="meta">Edited 10 minutes ago · 8 cards · 1 hook</span>
+      </div>
+      <span class="txt">Rename in the board's menu turns the name into a field. A click outside the card also saves. An empty name is not allowed.</span>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#E8742E","options":["#E8742E","#F2B134","#3B6FD1","#2F8F83"]},"$preview":{"width":1200,"height":620}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? '#E8742E' };
+  }
+}
+</script>
+</body>
+</html>

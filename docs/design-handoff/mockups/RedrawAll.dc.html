@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>GameIdea Redraw All with a locked card</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
+<style>
+body{margin:0;background:#1B1E24}
+a{color:#ECEAE4}a:hover{color:#FFFFFF}
+button{font-family:inherit;cursor:pointer}
+.i{fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.card{position:absolute;left:20px;width:200px;height:200px;border-radius:14px;background:#F4F0E6;box-shadow:0 6px 18px rgba(0,0,0,0.35)}
+.b{position:absolute;left:0;right:0;bottom:12px;padding:0 12px;text-align:center;font-family:'Space Grotesk',system-ui,sans-serif;font-weight:700;font-size:14px;line-height:1.25;color:#1B1E24}
+.adj{color:#5B3F99}
+.new{outline:2px solid #5DBB7A;outline-offset:-2px}
+.lock{position:absolute;right:12px;bottom:30px;color:#23766C;display:inline-flex}
+.hook{position:absolute;left:0;width:240px;height:200px;box-sizing:border-box;padding:14px 16px;border-radius:14px;background:#2A2F38;border:2px solid #E8742E;box-shadow:0 10px 26px rgba(0,0,0,0.5)}
+.hl{font-family:'Space Grotesk',system-ui,sans-serif;font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#F6B08A}
+.sent{margin:8px 0 0;font-size:14px;line-height:1.45;color:#ECEAE4}
+.badge{position:absolute;left:20px;height:22px;padding:0 9px;border-radius:11px;color:#FFFFFF;font-size:11px;font-weight:600;line-height:22px;transform:translateX(-50%);box-shadow:0 2px 6px rgba(0,0,0,0.4);white-space:nowrap}
+.strip{position:absolute;left:0;top:0;display:flex;gap:2px;padding:4px;border-radius:10px;background:#23272F;border:1px solid #30353F;box-shadow:0 6px 18px rgba(0,0,0,0.35)}
+.sbtn{height:44px;padding:0 10px;border-radius:7px;border:none;background:transparent;color:#ECEAE4;font-size:13px;font-weight:500}
+.cap{font-family:'Space Grotesk',system-ui,sans-serif;font-weight:600;font-size:15px}
+.txt{color:#A9ADB6;line-height:1.5;font-size:13px}
+</style>
+</helmet>
+<div style="width: 1200px; height: 820px; box-sizing: border-box; padding: 48px 56px; color: #ECEAE4; font-family: Inter, system-ui, sans-serif; font-size: 14px; display: flex; flex-direction: column; gap: 24px; background-color: #1B1E24; background-image: radial-gradient(#33384280 1.2px, transparent 1.2px); background-size: 24px 24px; background-position: 12px 12px">
+
+  <div style="display: flex; flex-direction: column; gap: 6px">
+    <h1 style="margin: 0; font-family: 'Space Grotesk', system-ui, sans-serif; font-weight: 700; font-size: 28px">Redraw All with a locked card</h1>
+    <p style="margin: 0; color: #A9ADB6; max-width: 860px; line-height: 1.5">Redraw All replaces every unlocked card in the stack. Locked cards stay as they are. A combined card keeps its adjective ring. Redraw All is one undo step.</p>
+  </div>
+
+  <div style="display: flex; gap: 40px; align-items: flex-start">
+
+    <div style="display: flex; flex-direction: column; gap: 12px; width: 440px">
+      <span class="cap">A. Before: the user clicks Redraw All</span>
+      <div style="position: relative; height: 560px">
+        <div class="strip">
+          <button type="button" class="sbtn">Copy</button>
+          <button type="button" class="sbtn" style="background: #343A45; font-weight: 600">Redraw All</button>
+          <button type="button" class="sbtn" style="color: #F0A090">Discard</button>
+        </div>
+        <div class="card" style="top: 340px; background: #E9E3D4"><div class="b">the tide rises every night</div></div>
+        <div class="card" style="top: 284px; background: #ECE6D8"><div class="b">keep the light on</div><span class="lock" aria-label="Locked"><svg class="i" width="13" height="13" viewBox="0 0 24 24" style="stroke-width: 2.4" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span></div>
+        <div class="card" style="top: 228px; background: #EFE9DC"><div class="b"><span class="adj">stolen</span> memories</div></div>
+        <div class="card" style="top: 172px; background: #F1ECE0"><div class="b">trade</div></div>
+        <div class="card" style="top: 116px"><div class="b"><span class="adj">reanimated</span> lighthouse keeper</div></div>
+        <div class="hook" style="top: 60px; outline: 2px solid #E8742E; outline-offset: 3px"><span class="hl">Hook</span><p class="sent">You are a reanimated lighthouse keeper who must trade using stolen memories to keep the light on, but the tide rises every night.</p></div>
+        <span class="badge" style="top: 249px; background: #2F5FB8">You are a</span>
+        <span class="badge" style="top: 305px; background: #9A5C08">who must</span>
+        <span class="badge" style="top: 361px; background: #3A7226">using</span>
+        <span class="badge" style="top: 417px; background: #23766C">to</span>
+        <span class="badge" style="top: 473px; background: #B53A23">but</span>
+      </div>
+    </div>
+
+    <div style="align-self: center; display: flex; flex-direction: column; align-items: center; gap: 8px; color: #A9ADB6; font-size: 12px; margin-top: -60px">
+      <svg class="i" width="36" height="36" viewBox="0 0 24 24" style="color: #E8742E" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+      <span>1 undo step</span>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 12px; width: 440px">
+      <span class="cap">B. After</span>
+      <div style="position: relative; height: 560px">
+        <div class="card new" style="top: 340px; background: #E9E3D4"><div class="b">the well is drying up</div></div>
+        <div class="card" style="top: 284px; background: #ECE6D8"><div class="b">keep the light on</div><span class="lock" aria-label="Locked"><svg class="i" width="13" height="13" viewBox="0 0 24 24" style="stroke-width: 2.4" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span></div>
+        <div class="card new" style="top: 228px; background: #EFE9DC"><div class="b"><span class="adj">stolen</span> batteries</div></div>
+        <div class="card new" style="top: 172px; background: #F1ECE0"><div class="b">dig</div></div>
+        <div class="card new" style="top: 116px"><div class="b"><span class="adj">reanimated</span> mail carrier</div></div>
+        <div class="hook" style="top: 60px"><span class="hl">Hook</span><p class="sent">You are a reanimated mail carrier who must dig using stolen batteries to keep the light on, but the well is drying up.</p></div>
+        <span class="badge" style="top: 249px; background: #2F5FB8">You are a</span>
+        <span class="badge" style="top: 305px; background: #9A5C08">who must</span>
+        <span class="badge" style="top: 361px; background: #3A7226">using</span>
+        <span class="badge" style="top: 417px; background: #23766C">to</span>
+        <span class="badge" style="top: 473px; background: #B53A23">but</span>
+      </div>
+    </div>
+  </div>
+
+  <span class="txt" style="max-width: 900px; margin-top: -24px">The green outline marks a new card for 1 second after the redraw. The locked Goal keeps "keep the light on". The Player Role and the Resource get new nouns but keep their adjectives "reanimated" and "stolen". Each card keeps its tuck and its badge word.</span>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1200,"height":820}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>
