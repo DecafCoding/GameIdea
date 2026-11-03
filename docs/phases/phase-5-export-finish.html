@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Phase 5: Export and finish</title>
+  <style>
+    :root { --fg:#1a1a1a; --muted:#666; --accent:#2563eb; --done:#16a34a; --warn:#dc2626; --rule:#e5e7eb; }
+    body { font:16px/1.6 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; color:var(--fg); max-width:62rem; margin:2rem auto; padding:0 1.25rem; }
+    h1 { font-size:2rem; border-bottom:2px solid var(--rule); padding-bottom:.3rem; }
+    h2 { font-size:1.5rem; margin-top:2.5rem; border-bottom:1px solid var(--rule); padding-bottom:.2rem; }
+    h3.milestone { font-size:1.25rem; margin-top:2rem; color:var(--accent); }
+    h4.task { font-size:1.1rem; margin-top:1.5rem; }
+    dl.phase-meta { display:grid; grid-template-columns:max-content 1fr; gap:.25rem 1rem; }
+    dl.phase-meta dt { font-weight:600; color:var(--muted); }
+    code, pre { font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+    pre { background:#f6f8fa; padding:1rem; border-radius:6px; overflow:auto; }
+    code { background:#f6f8fa; padding:.1rem .3rem; border-radius:4px; }
+    pre code { background:none; padding:0; }
+    ul.checklist { list-style:none; padding-left:0; }
+    ul.checklist > li::before { content:"☐ "; color:var(--muted); }
+    ul.checklist > li[data-checked="true"]::before { content:"☑ "; color:var(--done); }
+    .validate { color:var(--done); font-weight:600; }
+  </style>
+</head>
+<body>
+
+<h1 data-phase="5">Phase 5: Export and finish</h1>
+<p>The following plan should be complete, but validate documentation, codebase patterns, and task sanity before implementing. Pay special attention to naming of existing utils, types, and models — import from the right files.</p>
+
+<h2>Phase Description</h2>
+<p>Phase 5 is the last MVP milestone (M5). It makes export complete, turns on Settings and theming, adds snap to grid, restyles the two screens to the design, and checks every done criterion in <code>docs/mvp-plan.html</code>, <code>docs/feature-modifier-decks.html</code> and <code>docs/feature-settings-and-theme.html</code>, plus the speed, size, privacy and first-load targets in <code>docs/architecture.html</code> (<code>nfr-targets</code>).</p>
+<p>Checked against the code at planning (2026-11-03). Much of the work surface already exists, so this plan covers only the gap:</p>
+<ul>
+  <li><strong>Already there:</strong> text file and board file export (<code>src/features/export/textFile.ts</code>, <code>boardFile.ts</code>, <code>ExportButton.tsx</code>), import with Zod checks and the "(imported)" rule (<code>importBoard.ts</code>, <code>schema.ts</code>), the browser test <code>import_exportedBoardFile_roundTripsAsNewBoard</code>; the full token set for 2 modes and 3 themes, selected by <code>[data-mode]</code> / <code>[data-theme]</code> (<code>src/shared/ui/tokens.css</code> lines 144–191); static <code>data-mode="dark" data-theme="orange"</code> on <code>&lt;html&gt;</code> in <code>index.html</code>; the color lint (<code>scripts/check-css-colors.mjs</code>); the rail's Add Note button, which already puts a note at the free grid spot nearest the view center, opens it for typing and is one <code>changeBoard</code> (one undo step) (<code>BoardScreen.tsx</code> lines 112–119); <code>GRID = 24</code> and <code>findOpenSpot</code> (<code>src/features/canvas/placement.ts</code>); HTTPS preview at 4444 with mkcert certificates in <code>.certs/</code> (<code>vite.config.ts</code>); the persistent storage request; the 100 ms, 50 fps, save-under-50 ms, size and network tests.</li>
+  <li><strong>Missing:</strong> hook sentences in the text file; menu captions from design 9.13; a full-fidelity round-trip test; the Settings record and the 3 settings actions on the storage seam; a no-flash start-up; the Settings dialog, Keyboard list, version footer and blocked-storage note; the Settings button in the rail (the TheForge help panel is still there); snap on drop with the Alt bypass; the board list (still the TheForge row list with story copy, "Each board holds one story idea") and the empty board panel (still "Start With One Card") restyled to design 9.3 / 9.2; Light mode and Blue / Green fixes: outlines in light mode use <code>--accent</code> (design 4.2 says <code>--accent-text</code>), the warning banner text is <code>--text</code> on the fixed dark <code>--warn-bg</code> (unreadable in light mode), the banner icon and "Save Failed" use <code>--accent-text</code> (they change with the theme color), and the Hook label uses the current-mode <code>--accent-text</code> (design: always the dark-mode value); a first-load check; a LAN HTTPS check; a full check of carried-over features.</li>
+  <li><strong>Known flaky test:</strong> <code>modifier_onTop_survivesRedrawReloadExportImport</code> failed once in Phase 4 CI. It reloads right after Redraw, before the save lands, so the reload can show the seeded fixture board. This phase touches export and import, so it fixes the test (wait for the stored record before reloading).</li>
+</ul>
+<p>The board format does not change. <code>FORMAT_VERSION</code> stays 1, and settings never go into a BoardRecord, a board file, the text file or the undo history. The storage seam grows by exactly the 3 settings actions — the exception recorded in <code>docs/feature-settings-and-theme.html</code> ("Architecture fit").</p>
+
+<h2>User Stories</h2>
+<ul>
+  <li>As a game developer, I want the text file to hold each hook sentence, so that my notebook copy has the hooks and not only the cards.</li>
+  <li>As a user with boards in the browser, I want a board file that imports again with nothing lost, so that it is a real backup.</li>
+  <li>As a user who works in daylight, I want Light mode and a theme color I like, applied before the first frame, so that the app never flashes dark at me.</li>
+  <li>As a new user, I want a Settings dialog with the keyboard shortcuts and the app version, so that I can learn the ring keys and know which build I run.</li>
+  <li>As a user who likes a tidy board, I want dropped cards and notes to snap to the dot grid, with Alt to place one freely, so that stacks line up without effort.</li>
+  <li>As a user, I want the board list and the empty board to match the design in every mode and theme color, so that the app feels finished.</li>
+  <li>As the owner, I want every done criterion and target checked, and the LAN build at 4444 confirmed, so that I can hand the app to other people on my network.</li>
+</ul>
+
+<h2>Problem Statement</h2>
+<p>The app works end to end in dark orange only. The text file leaves out the hooks, which are the product's main output. Users cannot change mode or color, cards drop wherever the pointer lets go, the board list still carries TheForge copy, and no check proves the first-load, LAN and full-feature done criteria. One browser test is flaky on the export and import path.</p>
+
+<h2>Solution Statement</h2>
+<p>Add hook sentences to the text file through one new pure reader in <code>features/canvas</code> (<code>hookSentences</code>), which the board list also uses for its hook preview. Add a <code>Settings</code> type and parser in <code>shared/model</code>, the 3 local storage actions in <code>shared/storage</code>, and an inline boot script (source in <code>shared/storage/themeBoot.ts</code>, inlined into <code>index.html</code> by a small Vite plugin) that sets <code>data-mode</code> and <code>data-theme</code> before the stylesheet paints. Add <code>features/settings/</code> with its own Zustand store (no zundo), the dialog, the Keyboard list and the footer; <code>app/</code> keeps the page root in sync. Snap is a pure function in <code>features/canvas/placement.ts</code> applied only to the "move" outcome of a card drop and to note drops, skipped when Alt is held. Restyle the board list and empty board to design 9.3 / 9.2, fix the light-mode and fixed-warning color rules, and add browser tests for all 6 mode × color combinations on both screens. Finish with first-load, privacy, size and LAN checks and an audit of every carried-over feature.</p>
+
+<h2>Phase Metadata</h2>
+<dl class="phase-meta">
+  <dt>Phase Type</dt><dd data-field="type">Mixed (New Capability, Enhancement, Bug Fix)</dd>
+  <dt>Estimated Complexity</dt><dd data-field="complexity">High</dd>
+  <dt>Primary Systems Affected</dt><dd data-field="systems">features/export, features/canvas, features/settings (new), features/boards, shared/model, shared/storage, shared/ui, app (start-up, rail, screens), vite.config.ts, index.html, eslint.config.js, tests/e2e</dd>
+  <dt>Dependencies</dt><dd data-field="dependencies">Phase 1 (tokens for both modes and 3 themes, color lint, LAN preview), Phase 2 (hook sentence builder, export, import, notes), Phase 3 (shared Dialog sizes, genre counts), Phase 4 (all 14 rail buttons); no new npm dependency; mkcert certificate in .certs/ (local only); gh CLI authenticated</dd>
+</dl>
+
+<h2>Context References</h2>
+
+<h3>Relevant Codebase Files — READ THESE BEFORE IMPLEMENTING</h3>
+<ul>
+  <li><code>CLAUDE.md</code> — import rules, Title Case UI rule, commit authorship (no AI attribution), test naming <code>functionName_condition_expectedResult</code>.</li>
+  <li><code>docs/feature-settings-and-theme.html</code> — the main spec: Settings record, rules, the 3 seam actions, theme contract, snap contract, dialog rows, done criteria.</li>
+  <li><code>docs/design-system.html</code> §4 (tokens, accent text rule, outline rule, fixed colors), §8.2 (rail: Add note, Settings), §9.2 (empty board), §9.3 (board list), §9.11 (Settings dialog), §9.12 (Add note), §9.13 (banners, export menu text), §10 (snap, undo), §16 (M5 work).</li>
+  <li><code>src/features/export/textFile.ts</code> (lines 36–80) — <code>cardLines</code> root order (y, x, z) and <code>boardText</code> section joining; the Hooks section goes between the name and Cards.</li>
+  <li><code>src/features/export/ExportButton.tsx</code> (lines 35–50) — the menu rows; captions change to design 9.13.</li>
+  <li><code>src/features/export/importBoard.ts</code> (lines 47–62) — <code>importedBoard</code> keeps everything but <code>id</code>, <code>name</code> (when taken) and <code>updatedAt</code>; the round-trip test compares on that basis.</li>
+  <li><code>src/features/canvas/reading.ts</code> (lines 30–56) — <code>stackEntries(board, hookId)</code>; <code>hookSentences</code> goes beside it.</li>
+  <li><code>src/features/canvas/index.ts</code> — the canvas public surface; add <code>hookSentences</code> and <code>snapToGrid</code>.</li>
+  <li><code>src/features/canvas/placement.ts</code> (lines 16, 36) — <code>GRID</code> and the private <code>snap</code>; export a <code>snapToGrid(point)</code> built on it.</li>
+  <li><code>src/features/canvas/boardActions.ts</code> (lines 71–89) — <code>dropCard</code>; only its <code>'move'</code> case gets snap.</li>
+  <li><code>src/features/canvas/BoardCanvas.tsx</code> (lines 295–322 <code>onNodeDragStop</code>, 379–384 <code>Background</code>) — where the drop position, <code>event.altKey</code> and the note move are handled.</li>
+  <li><code>src/app/board/BoardScreen.tsx</code> (lines 112–131) — <code>addNoteNow</code> and the <code>SideRail</code> props; the Settings dialog open state goes here.</li>
+  <li><code>src/app/board/SideRail.tsx</code> (lines 95–108) and <code>SideRail.module.css</code> (lines 34–95) — Add Note button and the help panel that Settings replaces.</li>
+  <li><code>src/app/board/EmptyBoardPanel.tsx</code> — the TheForge panel to restyle (design 9.2).</li>
+  <li><code>src/features/boards/BoardList.tsx</code>, <code>BoardRow.tsx</code>, <code>summary.ts</code>, <code>BoardList.module.css</code>, <code>BoardRow.module.css</code> — the board list to restyle (design 9.3).</li>
+  <li><code>src/app/list/ListScreen.tsx</code> — list header (app mark and name).</li>
+  <li><code>src/main.tsx</code> — start-up order: fixture seed, autosave, render. Settings start-up goes before render.</li>
+  <li><code>index.html</code> — static theme attributes; the Vite plugin injects the boot script into <code>&lt;head&gt;</code>.</li>
+  <li><code>vite.config.ts</code> — config shape, LAN preview (lines 18–33); add the boot-script plugin and <code>define: { __APP_VERSION__ }</code>.</li>
+  <li><code>eslint.config.js</code> (lines 16–22 and the zustand restriction) — Zustand is limited to <code>src/shared/store/</code>; allow <code>src/features/settings/</code> too.</li>
+  <li><code>src/shared/storage/index.ts</code>, <code>boardStorage.ts</code> — seam style: doc comment, small functions, try/catch for browser features that may be missing.</li>
+  <li><code>src/shared/store/saveStatus.ts</code> — the smallest Zustand store in the repo; mirror it for the settings store.</li>
+  <li><code>src/shared/ui/Dialog.tsx</code> (lines 6–30) and <code>Dialog.module.css</code> (lines 95–150) — sizes <code>default | wide | panel</code>, <code>showClose</code>, <code>caption</code>, <code>footerNote</code>; add a <code>settings</code> size (760).</li>
+  <li><code>src/shared/ui/tokens.css</code> — never edit (verbatim handoff, pinned by <code>tokens.test.ts</code>).</li>
+  <li><code>src/app/global.css</code> (lines 17–20), <code>src/features/canvas/CardNode.module.css</code> (13–16), <code>src/features/notes/NoteView.module.css</code> (17–20), <code>src/features/boards/BoardRow.module.css</code> (11–16), <code>src/features/canvas/ConnectorBadge.module.css</code> (36–39) — the outlines that need the light-mode rule.</li>
+  <li><code>src/shared/ui/Banner.module.css</code> (lines 12–30), <code>src/app/board/SaveMark.module.css</code> (25–27), <code>src/features/hook/HookCard.module.css</code> (39–47) — the fixed-color fixes.</li>
+  <li><code>tests/e2e/test.ts</code> — the auto fixture for fixture pools; the settings option fixture goes here.</li>
+  <li><code>tests/e2e/board-helpers.ts</code> (lines 16–35 <code>openBoard</code>, 129–145 <code>storedBoards</code>) — add <code>waitForStoredCard</code>.</li>
+  <li><code>tests/e2e/modifier.spec.ts</code> (lines 167–207) — the flaky test.</li>
+  <li><code>tests/e2e/shell.spec.ts</code> (lines 49–86) — theme attribute tests to extend; heading order test.</li>
+  <li><code>tests/e2e/network.spec.ts</code>, <code>tests/e2e/export.spec.ts</code>, <code>tests/e2e/import.spec.ts</code>, <code>tests/e2e/persistence.spec.ts</code>, <code>tests/e2e/tabs-undo.spec.ts</code>, <code>tests/e2e/canvas-drop.spec.ts</code>, <code>tests/e2e/notes.spec.ts</code>, <code>tests/e2e/board.spec.ts</code> — specs this phase extends or must keep green.</li>
+  <li><code>src/test/fixtures/boards.ts</code> — <code>fixtureBoard</code>, <code>fixtureCard</code>, <code>combinedCard</code>, <code>secondModifier</code>, <code>fixtureStack</code>, <code>fixtureNote</code>, <code>stack11Board</code>.</li>
+  <li><code>playwright.config.ts</code> — <code>@timing</code> projects; <code>reuseExistingServer</code> outside CI.</li>
+</ul>
+
+<h3>New Files to Create</h3>
+<ul>
+  <li><code>src/shared/model/settings.ts</code> (+ <code>settings.test.ts</code>) — <code>Settings</code> type, <code>DEFAULT_SETTINGS</code>, <code>SETTINGS_KEY</code>, <code>parseSettings</code>.</li>
+  <li><code>src/shared/storage/settingsStorage.ts</code> (+ test) — <code>loadSettings</code>, <code>saveSettings</code>, <code>onSettingsChangedElsewhere</code>.</li>
+  <li><code>src/shared/storage/themeBoot.ts</code> (+ test) — <code>THEME_BOOT_SCRIPT</code>, the inline pre-render script source.</li>
+  <li><code>src/features/settings/index.ts</code>, <code>settingsStore.ts</code> (+ test), <code>SettingsDialog.tsx</code> (+ <code>.module.css</code>, test), <code>Segmented.tsx</code>, <code>Switch.tsx</code>, <code>KeyboardList.tsx</code> (+ css), <code>keys.ts</code>.</li>
+  <li><code>src/app/theme.ts</code> (+ <code>theme.test.ts</code>) — applies settings to <code>&lt;html&gt;</code>; start-up wiring.</li>
+  <li><code>src/types/app-version.d.ts</code> — <code>declare const __APP_VERSION__: string</code>.</li>
+  <li><code>src/features/boards/BoardCard.tsx</code> (+ css), <code>BoardMenu.tsx</code> — the design 9.3 board card and its More menu (replace <code>BoardRow</code>).</li>
+  <li><code>tests/e2e/settings.spec.ts</code>, <code>tests/e2e/snap.spec.ts</code>, <code>tests/e2e/theme.spec.ts</code>, <code>tests/e2e/first-load.spec.ts</code>.</li>
+  <li><code>scripts/check-lan.mjs</code> — local-only HTTPS smoke check for port 4444.</li>
+</ul>
+
+<h3>Relevant Documentation — READ BEFORE IMPLEMENTING</h3>
+<ul>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/storage_event">MDN: Window storage event</a> — fires only in other tabs of the same origin; <code>event.key</code>, <code>event.newValue</code>; <code>key === null</code> on <code>clear()</code>. Basis of <code>onSettingsChangedElsewhere</code>.</li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API#testing_for_availability">MDN: Testing for Web Storage availability</a> — accessing <code>localStorage</code> or <code>setItem</code> can throw (SecurityError, QuotaExceeded); how to detect "blocked".</li>
+  <li><a href="https://vite.dev/guide/api-plugin.html#transformindexhtml">Vite: transformIndexHtml</a> — inject a tag with <code>injectTo: 'head-prepend'</code>; runs in dev and build.</li>
+  <li><a href="https://vite.dev/config/shared-options.html#define">Vite: define</a> — compile-time constants; values must be JSON strings. Vitest applies it too.</li>
+  <li><a href="https://reactflow.dev/api-reference/react-flow#onnodedragstop">React Flow: onNodeDragStop</a> — handler gets the mouse event (<code>altKey</code>) and the node with its final position.</li>
+  <li><a href="https://playwright.dev/docs/test-fixtures#fixtures-options">Playwright: fixture options</a> — <code>test.use({ settings: … })</code> per describe block.</li>
+  <li><a href="https://playwright.dev/docs/api/class-cdpsession">Playwright: CDPSession</a> and <a href="https://chromedevtools.github.io/devtools-protocol/tot/Network/#method-emulateNetworkConditions">CDP Network.emulateNetworkConditions</a> — throttle Chromium to 25 Mbps for the first-load check.</li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:focus-visible">MDN: :focus-visible</a> — the global focus outline the light-mode rule overrides.</li>
+</ul>
+
+<h3>Patterns to Follow</h3>
+<p><strong>Module doc comment and seam style</strong> (<code>src/shared/storage/boardStorage.ts</code>):</p>
+<pre><code>/**
+ * The storage seam (storage-seam in docs/architecture.html): the 5 actions the rest of the
+ * app uses to read and write boards. ...
+ */
+function requestPersistence(): void {
+  if (persistenceRequested) return;
+  persistenceRequested = true;
+  try {
+    void navigator.storage?.persist?.().catch(() =&gt; undefined);
+  } catch {
+    // Some engines throw synchronously outside a secure context; nothing to do.
+  }
+}</code></pre>
+<p><strong>Small Zustand store</strong> (<code>src/shared/store/saveStatus.ts</code>):</p>
+<pre><code>export const useSaveStatus = create&lt;SaveStatusState&gt;()((set) =&gt; ({
+  status: 'saved',
+  setStatus: (status) =&gt; set({ status }),
+}));</code></pre>
+<p><strong>Pure Board → Board recipe, one <code>changeBoard</code> per user action</strong> (<code>BoardCanvas.tsx</code> onNodeDragStop):</p>
+<pre><code>if (state.kind === 'note') {
+  changeBoard((b) =&gt; moveNote(b, node.id, x, y));
+  return;
+}
+...
+changeBoard((b) =&gt; dropCard(b, node.id, point, { x, y }));</code></pre>
+<p><strong>Accent tint without a color literal</strong> (Phase 3 Notes): <code>color-mix(in srgb, var(--accent) 18%, transparent)</code>.</p>
+<p><strong>Fixed literal allowed by the color lint</strong> (README): a hex on a line that ends in <code>/* fixed: &lt;reason&gt; */</code>.</p>
+<p><strong>Browser test naming and helpers</strong>: <code>test('export_textFile_downloadsPlainWords', …)</code>, <code>openBoard(page, fixtureBoard([...]))</code>, <code>storedBoards(page)</code>, <code>exportFile(page, 'Text File')</code>.</p>
+<p><strong>Error handling</strong>: browser features that may be missing are wrapped in try/catch inside <code>shared/storage</code>; the rest of the app gets a plain value (here <code>canSave</code> / <code>'blocked'</code>), never an exception. No <code>console.log</code>.</p>
+
+<h2>Implementation Plan</h2>
+<p><strong>Rendering:</strong> Milestones</p>
+<p><strong>Rationale:</strong> 25 tasks in 6 natural layers (export, settings foundation, settings UI and rail, snap, themes on both screens, full check). Tasks are tightly coupled inside each layer and loosely across layers, and each layer has an integration check worth running once.</p>
+<p><strong>Preconditions:</strong> no server is running on port 4174 before a Playwright VALIDATE (outside CI, <code>reuseExistingServer</code> would test a stale build): run <code>fuser -k 4174/tcp 2&gt;/dev/null || true</code> first. <code>gh</code> is installed and authenticated. <code>.certs/lan.pem</code> and <code>.certs/lan-key.pem</code> exist locally (they do at planning).</p>
+
+<h3 class="milestone" data-milestone="1">Milestone 1: Export holds each hook; round trip proven</h3>
+<p>The text file gains a Hooks section; the board file round trip is proven field by field; the flaky test is fixed.</p>
+<p><strong>Validation checkpoint:</strong> a downloaded text file of a board with 2 Hook Cards lists both sentences in reading order and matches what each Hook Card shows on screen, and the exported board file of the same board imports as a new board whose record equals the original except <code>id</code>, <code>name</code> and <code>updatedAt</code>: <code>fuser -k 4174/tcp 2&gt;/dev/null || true; npx playwright test tests/e2e/export.spec.ts tests/e2e/import.spec.ts tests/e2e/modifier.spec.ts --project=chromium</code>.</p>
+
+<h4 class="task" data-task="1">Task 1: Add hookSentences reader to features/canvas</h4>
+<p>One pure reader that returns every Hook Card's sentence in reading order, for the text file and the board list.</p>
+<ul>
+  <li><strong>ADD:</strong> in <code>src/features/canvas/reading.ts</code>, <code>export function hookSentences(board: Board): string[]</code>: Hook Cards that are stack roots (<code>isRoot</code>), sorted by <code>y</code>, then <code>x</code>, then <code>z</code> (the text file's root order), mapped to <code>buildHookSentence(stackEntries(board, hook.id))</code>, dropping empty strings (an empty Hook Card has no sentence). Import <code>buildHookSentence</code> from <code>@/features/hook</code> (canvas already imports hook; hook never imports canvas).</li>
+  <li><strong>UPDATE:</strong> <code>src/features/canvas/index.ts</code> — export <code>hookSentences</code>. Update the <code>reading.ts</code> doc comment.</li>
+  <li><strong>ADD:</strong> tests in <code>src/features/canvas/reading.test.ts</code>: <code>hookSentences_noHookCard_empty</code>, <code>hookSentences_emptyHookCard_skipped</code>, <code>hookSentences_twoHooks_readingOrderTopThenLeft</code>, <code>hookSentences_matchesHookCardSentence</code> (same string as <code>buildHookSentence(stackEntries(...))</code>).</li>
+  <li><strong>GOTCHA:</strong> a Hook Card is always a root (it cannot tuck), but filter with <code>isRoot</code> anyway so a malformed import cannot list a stack twice.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/canvas/reading.test.ts &amp;&amp; npm run typecheck</code></li>
+</ul>
+
+<h4 class="task" data-task="2">Task 2: Write each hook sentence into the text file and update the export menu text</h4>
+<p>"Each hook on this board, then the cards and notes in plain words" (design 9.13).</p>
+<ul>
+  <li><strong>UPDATE:</strong> <code>src/features/export/textFile.ts</code> — after the board name, when <code>hookSentences(board)</code> is not empty, add a section <code>['Hooks', '', sentences.join('\n\n')].join('\n')</code> before Cards (one paragraph per hook, a blank line between, so a 2-sentence hook stays one paragraph). Cards and Notes stay as they are; the Hook Card line in Cards still reads "Hook Card". Rewrite the doc comment (drop "joins the text file in Phase 5").</li>
+  <li><strong>UPDATE:</strong> <code>src/features/export/ExportButton.tsx</code> captions to design 9.13: Text File "Each hook on this board, then the cards and notes in plain words."; Board File "All data of this board. Import it again on any computer. This is your only backup." Row titles stay "Text File" / "Board File" (Title Case).</li>
+  <li><strong>ADD:</strong> unit tests in <code>textFile.test.ts</code>: <code>boardText_hookStack_hooksSectionBeforeCards</code> (exact full text), <code>boardText_twoHooks_oneParagraphEach</code>, <code>boardText_emptyHookCard_noHooksSection</code>, <code>boardText_noHookCard_noHooksSection</code>. Update <code>ExportButton.test.tsx</code> captions.</li>
+  <li><strong>UPDATE:</strong> <code>tests/e2e/export.spec.ts</code> — add <code>export_textFile_holdsEachHookSentence</code>: a fixture board with a Hook Card stack; the downloaded text contains the exact sentence read from the Hook Card on screen (<code>[data-testid="hook-sentence"]</code>, <code>HookCard.tsx</code> line 29).</li>
+  <li><strong>GOTCHA:</strong> keep LF line ends and the single final newline. File names stay <code>&lt;board-name&gt;.txt</code> / <code>&lt;board-name&gt;.gameidea.json</code> (architecture <code>board-file-format</code>; design 9.13's "board-slug" loses).</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/export &amp;&amp; fuser -k 4174/tcp 2&gt;/dev/null || true; npx playwright test tests/e2e/export.spec.ts --project=chromium</code></li>
+</ul>
+
+<h4 class="task" data-task="3">Task 3: Prove the board file round trip with no data lost</h4>
+<p>The done criterion "An exported board file imports again with no data lost" needs a check on every field, not only the cards shown.</p>
+<ul>
+  <li><strong>ADD:</strong> a rich fixture <code>roundTripBoard()</code> in <code>src/test/fixtures/boards.ts</code>: a Hook Card stack with all 11 deck types, a combined Player Role with a merged ring and an On Top Modifier, a locked card, a saved <code>connector</code> word, turned rings (non-zero <code>activeIndex</code>), a Split-able Setting combine, 2 notes with titles and multi-line text, narrowed genres on 2 decks, a non-default <code>view</code>.</li>
+  <li><strong>ADD:</strong> unit test in <code>src/features/export/importBoard.test.ts</code>: <code>parseBoardFile_exportedRoundTripBoard_deepEqualsOriginal</code> (<code>parseBoardFile(boardFileJson(b))</code> deep-equals <code>b</code>) and <code>importedBoard_roundTrip_changesOnlyIdNameUpdatedAt</code>.</li>
+  <li><strong>ADD:</strong> browser test in <code>tests/e2e/import.spec.ts</code>: <code>import_richBoard_roundTripsEveryField</code> — open <code>roundTripBoard()</code>, export the board file, import it on <code>#/</code>, read both records with <code>storedBoards(page)</code>, and assert equality after deleting <code>id</code>, <code>name</code>, <code>updatedAt</code>. Then open the import and check the Hook Card sentence equals the original's.</li>
+  <li><strong>GOTCHA:</strong> if any field is dropped, fix the Zod schema in <code>schema.ts</code> (do not change the board shape; <code>FORMAT_VERSION</code> stays 1). Record any fix in Notes.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/export &amp;&amp; fuser -k 4174/tcp 2&gt;/dev/null || true; npx playwright test tests/e2e/import.spec.ts --project=chromium --project=firefox --project=webkit</code></li>
+</ul>
+
+<h4 class="task" data-task="4">Task 4: Stabilise the flaky On Top reload/export/import test</h4>
+<p><code>modifier_onTop_survivesRedrawReloadExportImport</code> reloads right after Redraw. If the save has not landed, the boot seeds the fixture again and the reload shows the pre-Redraw nouns.</p>
+<ul>
+  <li><strong>ADD:</strong> in <code>tests/e2e/board-helpers.ts</code>, <code>waitForStoredCard(page, boardId, cardId, predicate)</code>: <code>expect.poll</code> over <code>storedBoards(page)</code> until the stored card satisfies <code>predicate</code> (default timeout 5 s).</li>
+  <li><strong>UPDATE:</strong> <code>tests/e2e/modifier.spec.ts</code> lines 184–191 — after reading <code>redrawn</code>, wait for the stored <code>role-1</code> ring 0 active cue to differ from the fixture's (<code>exiled</code> stays, the noun changes) and for the save mark <code>data-state="saved"</code>, then reload.</li>
+  <li><strong>UPDATE:</strong> grep the other specs for <code>page.reload()</code> right after a change with no save wait (<code>grep -n "reload()" tests/e2e/*.ts</code>) and add the same wait where it is missing; list them in Notes.</li>
+  <li><strong>GOTCHA:</strong> the save mark can already read "saved" before the Redraw save starts, so the mark alone is not enough; the stored-record poll is the real gate.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>fuser -k 4174/tcp 2&gt;/dev/null || true; npx playwright test tests/e2e/modifier.spec.ts -g "survivesRedrawReloadExportImport" --repeat-each=15 --project=chromium --project=firefox --project=webkit</code> — 45 of 45 pass.</li>
+</ul>
+
+<h3 class="milestone" data-milestone="2">Milestone 2: Settings record, storage actions and no-flash start-up</h3>
+<p>The riskiest part of the feature first (settings brief, Build plan M5): a Light setting is on the page root before the first frame.</p>
+<p><strong>Validation checkpoint:</strong> with <code>{"version":1,"mode":"light","accent":"green","snap":true}</code> in local storage, the built page's first animation frame already has <code>data-mode="light"</code>, <code>data-theme="green"</code> and the light <code>--bg</code> on <code>body</code>; a storage event from another tab changes the attributes. Run: <code>npm run build &amp;&amp; grep -q "gameidea.settings" dist/index.html &amp;&amp; npx vitest run src/shared/model/settings.test.ts src/shared/storage src/features/settings src/app/theme.test.ts</code>.</p>
+
+<h4 class="task" data-task="5">Task 5: Add the Settings type, defaults and field-by-field parser</h4>
+<ul>
+  <li><strong>CREATE:</strong> <code>src/shared/model/settings.ts</code>: <code>SETTINGS_KEY = 'gameidea.settings'</code>; <code>MODES = ['dark','light'] as const</code>; <code>ACCENTS = ['orange','blue','green'] as const</code>; <code>interface Settings { version: 1; mode: Mode; accent: Accent; snap: boolean }</code>; <code>DEFAULT_SETTINGS = { version: 1, mode: 'dark', accent: 'orange', snap: true }</code>; <code>parseSettings(raw: string | null): Settings</code> — <code>null</code>, bad JSON or a non-object gives the defaults; otherwise each field is kept only when valid (mode/accent in their lists, snap a boolean), else its default; <code>version</code> is always written as 1 (an unknown version is read field by field). Export from <code>src/shared/model/index.ts</code>.</li>
+  <li><strong>CREATE:</strong> <code>src/shared/model/settings.test.ts</code>: <code>parseSettings_null_defaults</code>, <code>parseSettings_badJson_defaults</code>, <code>parseSettings_array_defaults</code>, <code>parseSettings_unknownMode_defaultModeOthersKept</code>, <code>parseSettings_snapString_defaultSnap</code>, <code>parseSettings_unknownVersion_readsFieldByField</code>, <code>parseSettings_valid_roundTrips</code>.</li>
+  <li><strong>GOTCHA:</strong> no Zod here — only <code>features/export</code> may import Zod; hand-written checks.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/shared/model/settings.test.ts &amp;&amp; npm run typecheck</code></li>
+</ul>
+
+<h4 class="task" data-task="6">Task 6: Add loadSettings, saveSettings and onSettingsChangedElsewhere to the storage seam</h4>
+<ul>
+  <li><strong>CREATE:</strong> <code>src/shared/storage/settingsStorage.ts</code>:
+    <ul>
+      <li><code>loadSettings(): { settings: Settings; canSave: boolean }</code> — synchronous. Reads <code>localStorage.getItem(SETTINGS_KEY)</code> and parses; <code>canSave</code> comes from a probe (<code>setItem</code> then <code>removeItem</code> of <code>'gameidea.settings.probe'</code>). Any throw (getter, getItem, setItem) gives <code>{ settings: DEFAULT_SETTINGS, canSave: false }</code> or keeps the parsed value with <code>canSave: false</code> when only the write fails.</li>
+      <li><code>saveSettings(settings): 'done' | 'blocked'</code> — writes the whole record as JSON; a throw returns <code>'blocked'</code>.</li>
+      <li><code>onSettingsChangedElsewhere(handler: (s: Settings) =&gt; void): () =&gt; void</code> — <code>window</code> <code>'storage'</code> listener; calls <code>handler(parseSettings(event.newValue))</code> when <code>event.key === SETTINGS_KEY</code> or <code>event.key === null</code> (clear); returns the unsubscribe.</li>
+    </ul>
+  </li>
+  <li><strong>UPDATE:</strong> <code>src/shared/storage/index.ts</code> — export the 3 actions; doc comment: "the 5 board actions plus the 3 settings actions (the recorded exception in docs/feature-settings-and-theme.html) are the data seam"; it is the only folder that touches IndexedDB, Dexie or local storage.</li>
+  <li><strong>CREATE:</strong> <code>settingsStorage.test.ts</code>: <code>loadSettings_empty_defaultsAndCanSave</code>, <code>loadSettings_storedLight_returnsIt</code>, <code>loadSettings_getterThrows_defaultsCannotSave</code> (redefine <code>window.localStorage</code> with a throwing getter, restore after), <code>saveSettings_setItemThrows_blocked</code>, <code>saveSettings_writesWholeRecord</code>, <code>onSettingsChangedElsewhere_matchingKey_callsHandlerWithParsed</code>, <code>onSettingsChangedElsewhere_otherKey_ignored</code>, <code>onSettingsChangedElsewhere_unsubscribe_stops</code> (dispatch <code>new StorageEvent('storage', { key, newValue })</code>).</li>
+  <li><strong>GOTCHA:</strong> the storage event never fires in the tab that wrote; that tab updates its own store directly (Task 8).</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/shared/storage &amp;&amp; npm run lint</code></li>
+</ul>
+
+<h4 class="task" data-task="7">Task 7: Set mode and theme before the first render with an inline boot script</h4>
+<p>Module scripts run after the stylesheet can paint, so setting the attributes from <code>main.tsx</code> could show one dark frame. A classic inline script in <code>&lt;head&gt;</code> runs before the first paint.</p>
+<ul>
+  <li><strong>CREATE:</strong> <code>src/shared/storage/themeBoot.ts</code>: <code>export const THEME_BOOT_SCRIPT: string</code> — plain ES5-safe JavaScript in a string, wrapped in an IIFE and <code>try/catch</code>: read <code>localStorage.getItem('gameidea.settings')</code>, <code>JSON.parse</code>, set <code>document.documentElement.dataset.mode</code> only to <code>'light'</code> or <code>'dark'</code> and <code>dataset.theme</code> only to <code>'orange' | 'blue' | 'green'</code>; anything else leaves the static <code>index.html</code> defaults. The file has no imports (vite.config.ts imports it). Doc comment: part of the storage module; mirrors <code>parseSettings</code> for the 2 theme fields.</li>
+  <li><strong>UPDATE:</strong> <code>vite.config.ts</code> — a plugin <code>{ name: 'gameidea-theme-boot', transformIndexHtml: () =&gt; [{ tag: 'script', children: THEME_BOOT_SCRIPT, injectTo: 'head-prepend' }] }</code>; import with a relative path <code>./src/shared/storage/themeBoot</code> (the <code>@</code> alias does not exist while the config loads). Update the config doc comment.</li>
+  <li><strong>CREATE:</strong> <code>themeBoot.test.ts</code>: for a table of stored values (none, bad JSON, light/green, dark/blue, unknown mode, unknown accent, getter throws) run <code>new Function(THEME_BOOT_SCRIPT)()</code> in jsdom with attributes reset to dark/orange and assert the attributes equal <code>parseSettings(raw).mode / .accent</code>; <code>themeBoot_key_matchesSettingsKey</code> (the literal key in the script equals <code>SETTINGS_KEY</code>).</li>
+  <li><strong>GOTCHA:</strong> keep <code>data-mode="dark" data-theme="orange"</code> on <code>&lt;html&gt;</code> in <code>index.html</code> as the fallback. The inline script makes no request, so the network test is unaffected. Do not use <code>localStorage</code> anywhere else outside <code>shared/storage</code>.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/shared/storage/themeBoot.test.ts &amp;&amp; npm run build &amp;&amp; node -e "const h=require('fs').readFileSync('dist/index.html','utf8'); const i=h.indexOf('gameidea.settings'), j=h.indexOf('stylesheet'); if(i&lt;0) process.exit(1); if(j&gt;=0 &amp;&amp; i&gt;j) process.exit(2)"</code> (the boot script comes before the stylesheet link).</li>
+</ul>
+
+<h4 class="task" data-task="8">Task 8: Create features/settings with its Zustand settings store</h4>
+<ul>
+  <li><strong>CREATE:</strong> <code>src/features/settings/settingsStore.ts</code> — <code>create</code> from <code>zustand</code> (no zundo): state <code>{ settings: Settings; canSave: boolean }</code>; actions <code>init()</code> (from <code>loadSettings()</code>), <code>change(patch: Partial&lt;Omit&lt;Settings,'version'&gt;&gt;)</code> (merge, set state at once, then <code>saveSettings(next)</code>; <code>'blocked'</code> sets <code>canSave: false</code> and keeps the change for this page), <code>replace(settings)</code> (for other-tab changes, no write). <code>startSettingsSync()</code> subscribes <code>onSettingsChangedElsewhere</code> to <code>replace</code> and returns the stop.</li>
+  <li><strong>CREATE:</strong> <code>src/features/settings/index.ts</code> — exports <code>useSettings</code> (selector hook), <code>getSettings</code>, <code>changeSettings</code>, <code>initSettings</code>, <code>startSettingsSync</code>, <code>subscribeSettings</code>. Doc comment: other features and app/ reach settings only through this file.</li>
+  <li><strong>UPDATE:</strong> <code>eslint.config.js</code> — let <code>src/features/settings/**</code> import <code>zustand</code> (still not <code>zundo</code>); update the rule message ("Only src/shared/store/ and src/features/settings/ may use Zustand"). Update <code>src/shared/store/index.ts</code> doc comment only if it claims to be the only Zustand folder.</li>
+  <li><strong>CREATE:</strong> <code>settingsStore.test.ts</code>: <code>change_writesWholeRecord</code>, <code>change_blocked_keepsChangeAndCanSaveFalse</code>, <code>startSettingsSync_storageEvent_replacesSettings</code>, <code>change_neverTouchesBoardStoreOrUndo</code> (board store <code>pastStates</code> length unchanged).</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/settings &amp;&amp; npm run lint &amp;&amp; npm run typecheck</code></li>
+</ul>
+
+<h4 class="task" data-task="9">Task 9: Keep the page root in sync with settings at start-up and on change</h4>
+<ul>
+  <li><strong>CREATE:</strong> <code>src/app/theme.ts</code>: <code>applyTheme(settings, root = document.documentElement)</code> sets <code>root.dataset.mode</code> and <code>root.dataset.theme</code>; <code>startTheme()</code> calls <code>initSettings()</code>, applies once, subscribes <code>subscribeSettings(applyTheme)</code> and calls <code>startSettingsSync()</code>.</li>
+  <li><strong>UPDATE:</strong> <code>src/main.tsx</code> — call <code>startTheme()</code> before <code>seedTestBoard()</code> and before render (synchronous); update the doc comment.</li>
+  <li><strong>CREATE:</strong> <code>src/app/theme.test.ts</code>: <code>applyTheme_lightBlue_setsAttributes</code>, <code>startTheme_storedGreen_appliesAtOnce</code>, <code>startTheme_changeSettings_updatesRoot</code>, <code>startTheme_storageEventFromOtherTab_updatesRoot</code>.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/app/theme.test.ts &amp;&amp; npm run typecheck &amp;&amp; npm run build</code></li>
+</ul>
+
+<h3 class="milestone" data-milestone="3">Milestone 3: Settings dialog, Keyboard list, footer and the rail</h3>
+<p>Settings opens from the bottom of the rail; Add note matches design 8.2.</p>
+<p><strong>Validation checkpoint:</strong> in the built app, Settings → Light → Green turns the top bar white and the logo green at once, Done closes, reload keeps it, and the footer shows the <code>package.json</code> version: <code>fuser -k 4174/tcp 2&gt;/dev/null || true; npx playwright test tests/e2e/settings.spec.ts tests/e2e/shell.spec.ts tests/e2e/notes.spec.ts --project=chromium</code>.</p>
+
+<h4 class="task" data-task="10">Task 10: Put the package.json version into the app</h4>
+<ul>
+  <li><strong>UPDATE:</strong> <code>vite.config.ts</code> — read <code>package.json</code> with <code>readFileSync</code> and add <code>define: { __APP_VERSION__: JSON.stringify(pkg.version) }</code> (applies to dev, build and Vitest).</li>
+  <li><strong>CREATE:</strong> <code>src/types/app-version.d.ts</code> — <code>declare const __APP_VERSION__: string;</code></li>
+  <li><strong>ADD:</strong> <code>src/features/settings/keys.ts</code> — <code>APP_VERSION = __APP_VERSION__</code> and <code>FOOTER_TEXT = \`GameIdea ${APP_VERSION} · No account. No data leaves this computer.\`</code>; test <code>footerText_usesPackageVersion</code> reads <code>package.json</code> and compares.</li>
+  <li><strong>GOTCHA:</strong> the version is shown as it is (<code>0.0.0</code> today; the brief: no build number). Do not bump it in this phase.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/settings &amp;&amp; npm run typecheck &amp;&amp; npm run build &amp;&amp; V=$(node -p "require('./package.json').version") &amp;&amp; grep -rqF "$V" dist/assets/ &amp;&amp; grep -rq "No data leaves this computer" dist/assets/ &amp;&amp; ! grep -rq "__APP_VERSION__" dist/assets/</code> (the define replaced the constant with the package.json version)</li>
+</ul>
+
+<h4 class="task" data-task="11">Task 11: Build the Settings dialog with the Keyboard list, footer and blocked-storage note</h4>
+<ul>
+  <li><strong>UPDATE:</strong> <code>src/shared/ui/Dialog.tsx</code> / <code>Dialog.module.css</code> — add size <code>'settings'</code>: width <code>min(760px, calc(100% - 32px))</code>, padding 24 28 22, radius <code>--radius-dialog</code> (design 9.11).</li>
+  <li><strong>CREATE:</strong> <code>src/features/settings/Segmented.tsx</code> — a <code>role="radiogroup"</code> with <code>role="radio"</code> buttons (<code>aria-checked</code>), arrow keys move the choice; design 9.11 sizes (padding 3, radius 9, <code>--bg</code> fill, <code>--border</code>; buttons 36 tall with a transparent 4 px hit extension to 44, 13/500 <code>--text-muted</code>; selected <code>--surface-selected</code>, <code>--text</code>, 600). Optional 14 px color dot per option, filled with the option's accent: use <code>[data-theme]</code>-independent fills via the fixed-literal rule (<code>/* fixed: theme color swatch */</code>) with the design 4.2 values.</li>
+  <li><strong>CREATE:</strong> <code>src/features/settings/Switch.tsx</code> — <code>role="switch"</code> button, 44 × 26, radius 13, knob 20, on track <code>--accent</code>.</li>
+  <li><strong>CREATE:</strong> <code>src/features/settings/KeyboardList.tsx</code> + <code>keys.ts</code> <code>KEYBOARD_SHORTCUTS</code>: R — "Turn the outer ring, or the only ring, one step"; Shift+R — "Turn the inner ring of a combined card"; Ctrl+Z — "Undo"; Ctrl+Shift+Z — "Redo". A <code>&lt;dl&gt;</code>, 2 columns, first 150 wide; key caps 12, padding 2 7, radius 5, border 1.</li>
+  <li><strong>CREATE:</strong> <code>src/features/settings/SettingsDialog.tsx</code> (+ css): <code>Dialog</code> size settings, title "Settings", <code>showClose</code>, caption "These settings apply to every board in this browser. A change applies at once."; sections Appearance (Mode: Dark · Light — "Dark or light screens. The cards look the same in both."; Theme Color: Orange · Blue · Green — "The color of buttons, selection, the Hook Card border and the genre counts."), Canvas (Snap To Grid switch — "Cards and notes line up with the dot grid when you drop them. Hold Alt while you drag to place freely."), Keyboard (the list). Footer: <code>FOOTER_TEXT</code> as <code>footerNote</code>, a primary Done button. When <code>canSave</code> is false, a one-line note "This browser does not save settings. They reset when the page reloads." under the caption. No Cancel. Every control calls <code>changeSettings</code> at once. Export from <code>index.ts</code>.</li>
+  <li><strong>CREATE:</strong> <code>SettingsDialog.test.tsx</code>: <code>settingsDialog_clickLight_changesSettingAtOnce</code>, <code>settingsDialog_switch_togglesSnap</code>, <code>settingsDialog_cannotSave_showsNote</code>, <code>settingsDialog_footer_showsVersion</code>, <code>settingsDialog_keyboardList_fourKeys</code>, <code>settingsDialog_done_callsOnClose</code>, <code>settingsDialog_noCancelButton</code>.</li>
+  <li><strong>GOTCHA:</strong> Title Case for title, section and setting names and buttons (CLAUDE.md); help text and the footer stay as written. Section rows: padding 18 0, top border 1, min 52 tall; names 14/600; descriptions 13/1.4 <code>--text-muted</code>.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/settings src/shared/ui &amp;&amp; npm run lint &amp;&amp; npm run typecheck</code></li>
+</ul>
+
+<h4 class="task" data-task="12">Task 12: Put Settings at the bottom of the rail, restyle Add Note and remove the help panel</h4>
+<ul>
+  <li><strong>UPDATE:</strong> <code>src/app/board/SideRail.tsx</code> — remove the help panel; Add Note at deck-button size (min 36 tall, full width, padding 4 10, radius 8, gap 10, dashed 1 <code>--border-strong</code>, margin-top 6, note icon 18, label 14/600); new prop <code>onOpenSettings</code> and a Settings button at the bottom (transparent, no border, <code>settings</code> gear icon 18, label "Settings" in <code>--text-soft</code>, <code>margin-top: auto</code>, 44 tall). Update the doc comment (drop "Settings comes in Phase 5").</li>
+  <li><strong>UPDATE:</strong> <code>SideRail.module.css</code> — drop <code>.help</code>, <code>.key</code>, <code>.noteIcon</code>; add <code>.settings</code>.</li>
+  <li><strong>UPDATE:</strong> <code>src/app/board/BoardScreen.tsx</code> — <code>settingsOpen</code> state; render <code>&lt;SettingsDialog open onClose /&gt;</code> from <code>@/features/settings</code>. Keep <code>addNoteNow</code> (it already meets design 9.12).</li>
+  <li><strong>UPDATE:</strong> <code>SideRail.test.tsx</code> (Settings last, calls <code>onOpenSettings</code>; no help text), <code>BoardScreen.test.tsx</code> (Settings opens the dialog), <code>tests/e2e/shell.spec.ts</code> (rail order ends Add Note, Settings).</li>
+  <li><strong>GOTCHA:</strong> with 14 deck buttons the rail is about 840 px tall (Phase 4 Notes); Settings with <code>margin-top: auto</code> inside the scrolling rail ends up after Add Note when the rail overflows. That is acceptable; keep <code>overflow-y: auto</code>.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/app &amp;&amp; npm run lint &amp;&amp; fuser -k 4174/tcp 2&gt;/dev/null || true; npx playwright test tests/e2e/shell.spec.ts --project=chromium</code></li>
+</ul>
+
+<h4 class="task" data-task="13">Task 13: Browser tests for the Settings dialog, the Keyboard list and Add Note</h4>
+<ul>
+  <li><strong>CREATE:</strong> <code>tests/e2e/settings.spec.ts</code>: <code>settings_openFromRail_showsRowsAndVersion</code> (version read from <code>package.json</code> in the test); <code>settings_lightGreen_appliesAtOnceAndNotInUndo</code> (Undo stays disabled); <code>settings_doneAndClose_closeDialog</code>; <code>settings_keyboardList_eachKeyDoesWhatItSays</code> — read the 4 listed keys from the dialog, close it, then on a fixture board with a combined card: R turns the outer ring, Shift+R the inner ring, Ctrl+Z undoes, Ctrl+Shift+Z redoes (active-cue text checks).</li>
+  <li><strong>UPDATE:</strong> <code>tests/e2e/notes.spec.ts</code> — <code>notes_addNote_freeGridSpotNearCenter</code> (x and y multiples of 24, no overlap with a card placed at the center); <code>notes_addNote_opensReadyToType</code> (type at once without a click, text lands in the note); <code>notes_addNote_oneUndoStep</code> (one Ctrl+Z outside the note removes it).</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>fuser -k 4174/tcp 2&gt;/dev/null || true; npx playwright test tests/e2e/settings.spec.ts tests/e2e/notes.spec.ts --project=chromium --project=firefox --project=webkit</code></li>
+</ul>
+
+<h3 class="milestone" data-milestone="4">Milestone 4: Snap to grid with Alt bypass</h3>
+<p>With snap on, a dropped free card or note lands on a 24 px dot; Alt places it freely; tuck, combine and On Top ignore snap.</p>
+<p><strong>Validation checkpoint:</strong> the whole drag suite passes with snap on and with snap off: <code>fuser -k 4174/tcp 2&gt;/dev/null || true; npx playwright test tests/e2e/snap.spec.ts tests/e2e/canvas-drop.spec.ts tests/e2e/long-stack.spec.ts tests/e2e/modifier.spec.ts tests/e2e/tabs-undo.spec.ts tests/e2e/notes.spec.ts --project=chromium --project=firefox --project=webkit</code>.</p>
+
+<h4 class="task" data-task="14">Task 14: Snap free-card and note drops to the 24 px grid, skipped with Alt</h4>
+<ul>
+  <li><strong>ADD:</strong> <code>src/features/canvas/placement.ts</code> — <code>export function snapToGrid(point: Point): Point</code> using the existing <code>snap</code> (<code>Math.round(v / GRID) * GRID</code>); normalise <code>-0</code> to <code>0</code>. Export from <code>index.ts</code>.</li>
+  <li><strong>UPDATE:</strong> <code>src/features/canvas/boardActions.ts</code> <code>dropCard(board, draggedId, point, dropAt, options: { snap?: boolean } = {})</code> — in the <code>'move'</code> case only, use <code>snapToGrid(dropAt)</code> when <code>options.snap</code>; tuck, combine, swap and On Top ignore it. A dragged root moves its tucked cards by the same delta (existing <code>moveCard</code>), so the stack stays together.</li>
+  <li><strong>UPDATE:</strong> <code>src/features/canvas/BoardCanvas.tsx</code> <code>onNodeDragStop</code> — <code>const snap = getSettings().snap &amp;&amp; !event.altKey</code> (import from <code>@/features/settings</code>); notes: <code>moveNote(b, id, ...(snap ? snapToGrid({x, y}) : {x, y}))</code>; cards: pass <code>{ snap }</code> to <code>dropCard</code>. Still one <code>changeBoard</code> per drop. Note resize stays free. Update the doc comment.</li>
+  <li><strong>ADD:</strong> unit tests in <code>placement.test.ts</code> (<code>snapToGrid_nearestPoint</code>, <code>snapToGrid_negativeCoordinates</code>, <code>snapToGrid_halfwayRoundsUp</code>) and <code>boardActions.test.ts</code> (<code>dropCard_moveWithSnap_landsOnGrid</code>, <code>dropCard_moveWithoutSnap_staysFree</code>, <code>dropCard_untuckWithSnap_landsOnGrid</code>, <code>dropCard_tuckWithSnap_keepsTuckPlace</code>, <code>dropCard_combineWithSnap_ignoresSnap</code>, <code>dropCard_onTopWithSnap_ignoresSnap</code>, <code>dropCard_rootWithStack_stackMovesByDelta</code>).</li>
+  <li><strong>GOTCHA:</strong> <code>features/canvas</code> imports <code>features/settings</code> through its index only (import-rules). On Linux desktops Alt+drag may be taken by the window manager, and Firefox shows its menu bar on a lone Alt release; Playwright's <code>keyboard.down('Alt')</code> still sets <code>altKey</code> on the mouse events. Turning snap on never moves cards already on the board.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/canvas &amp;&amp; npm run lint &amp;&amp; npm run typecheck</code></li>
+</ul>
+
+<h4 class="task" data-task="15">Task 15: Settings option fixture, snap browser tests and the drag suite in both snap modes</h4>
+<ul>
+  <li><strong>UPDATE:</strong> <code>tests/e2e/test.ts</code> — add an option fixture <code>settings: Partial&lt;Settings&gt; | null</code> (default <code>null</code>) and an auto fixture that, when set, adds <code>context.addInitScript</code> writing <code>gameidea.settings</code> <em>only if the key is absent</em> (so a reload or a change made in the test is not overwritten).</li>
+  <li><strong>CREATE:</strong> <code>tests/e2e/snap.spec.ts</code>: <code>snap_on_freeCardDropSitsOnGridDot</code> (stored x, y multiples of 24); <code>snap_altHeld_dropSitsWherePlaced</code> (stored x or y not a multiple of 24 for an off-grid drag); <code>snap_on_noteDropSitsOnGridDot</code>; <code>snap_on_tuckKeepsTuckPlace</code> (56 px under its parent); <code>snap_off_everyDropFree</code>; <code>snap_drop_isOneUndoStep</code>; <code>snap_turnOn_movesNothing</code>.</li>
+  <li><strong>UPDATE:</strong> <code>tests/e2e/canvas-drop.spec.ts</code> — run its tuck, combine, swap, On Top and untuck tests twice: <code>for (const snap of [true, false]) test.describe(\`snap ${snap ? 'on' : 'off'}\`, () =&gt; { test.use({ settings: { snap } }); ... })</code> (settings brief, Regression).</li>
+  <li><strong>UPDATE:</strong> any other spec whose exact-position assertion breaks with snap on by default (likely <code>notes_drag_moves</code>, <code>tuck_dragTuckedCardToPane_untucks</code>, <code>longStack_*</code>, <code>undo_ctrlZ_reversesDragAndRedoReapplies</code>) — either assert the snapped position or <code>test.use({ settings: { snap: false } })</code>; list each in Notes.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>fuser -k 4174/tcp 2&gt;/dev/null || true; npx playwright test tests/e2e/snap.spec.ts tests/e2e/canvas-drop.spec.ts --project=chromium --project=firefox --project=webkit</code></li>
+</ul>
+
+<h3 class="milestone" data-milestone="5">Milestone 5: Light mode and Blue / Green live on both screens</h3>
+<p>The color rules of design 4.2 / 4.3 hold, and the board list and empty board match design 9.3 / 9.2 in every mode and theme color.</p>
+<p><strong>Validation checkpoint:</strong> all 6 mode × color combinations render both screens with token chrome, identical cards, notes, badges, deck colors and Hook Card, fixed warning colors, no dark frame on a Light reload, a second tab updated in under 1 s and defaults plus the note with blocked storage: <code>npm run lint &amp;&amp; fuser -k 4174/tcp 2&gt;/dev/null || true; npx playwright test tests/e2e/theme.spec.ts tests/e2e/settings.spec.ts tests/e2e/persistence.spec.ts tests/e2e/board.spec.ts --project=chromium --project=firefox --project=webkit</code>.</p>
+
+<h4 class="task" data-task="16">Task 16: Apply the light-mode outline rule and the fixed warning colors</h4>
+<ul>
+  <li><strong>UPDATE (outline rule, design 4.2):</strong> in light mode, selection and focus outlines use <code>--accent-text</code>. <code>src/app/global.css</code>: <code>[data-mode='light'] :focus-visible { outline-color: var(--accent-text); }</code>; and <code>:global([data-mode='light']) .x { outline-color: var(--accent-text); }</code> beside each accent outline in <code>CardNode.module.css</code>, <code>NoteView.module.css</code>, <code>BoardRow.module.css</code> (or its Task 19 replacement), <code>ConnectorBadge.module.css</code>, and the focus stroke in <code>RingControl.module.css</code> (line 58, <code>stroke: var(--accent)</code>). Fills, toggles, borders and the Hook Card border keep <code>--accent</code>.</li>
+  <li><strong>UPDATE (fixed warning colors, design 4.3 / 9.13):</strong> <code>Banner.module.css</code> — <code>.warning .icon</code> and <code>.warning .text</code> use <code>--warn-text</code> (the banner fill stays the dark <code>--warn-bg</code> in both modes); <code>SaveMark.module.css</code> <code>.failed</code> uses <code>--danger-text</code>; Discard and Delete already use <code>--danger-text</code>.</li>
+  <li><strong>UPDATE (Hook label, design 4.2):</strong> <code>HookCard.module.css</code> — keep <code>color: var(--accent-text)</code> and add light-mode overrides with the dark-mode values on fixed-literal lines: <code>:global([data-mode='light']) .label { color: #F6B08A; } /* fixed: Hook label keeps dark-mode accent text */</code>, and the Blue <code>#A9C8FF</code> / Green <code>#8FDDB5</code> variants under <code>[data-mode='light'][data-theme='blue'|'green']</code>.</li>
+  <li><strong>ADD:</strong> a grep check in this task's VALIDATE that no <code>outline</code> rule outside the light overrides uses <code>--accent-text</code> in dark mode, and the lint still passes.</li>
+  <li><strong>GOTCHA:</strong> never edit <code>tokens.css</code> (verbatim handoff, pinned by <code>tokens.test.ts</code>). Card faces, notes, badges, deck colors and the Hook Card fill do not change.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npm run lint &amp;&amp; npx vitest run src/shared/ui &amp;&amp; grep -q "warn-text" src/shared/ui/Banner.module.css &amp;&amp; ! grep -q "accent-text" src/app/board/SaveMark.module.css &amp;&amp; grep -q "data-mode='light'" src/app/global.css</code></li>
+</ul>
+
+<h4 class="task" data-task="17">Task 17: Restyle the empty board guide to design 9.2</h4>
+<ul>
+  <li><strong>UPDATE:</strong> <code>src/app/board/EmptyBoardPanel.tsx</code> (+ css): centered panel max 460 wide, padding 28, radius 14, gap 18, <code>--surface</code>; title "Build Your First Hook" (Display 22/700); the line "A hook is one or two sentences that make a person want to play your game."; an ordered list of 3 steps with 26 px <code>--accent</code> circles and 13/700 <code>--on-accent</code> numbers: "Draw a Hook Card from the top of the rail.", "Draw a Player Role and tuck it under the Hook Card.", "Add a Mechanic, a Resource, a Goal and a Conflict. Turn the rings until the sentence reads well."; a "Start Here" tag 16 from the canvas left and 14 from the top, pointing at the Hook Card button (padding 8 12, radius 8, 13/600). Remove the Draw A Player Role button and the <code>decksReady</code> / <code>onDraw</code> props.</li>
+  <li><strong>UPDATE:</strong> <code>BoardScreen.tsx</code> (props), <code>BoardScreen.test.tsx</code>, <code>tests/e2e/board.spec.ts</code> (<code>board_emptyBoard_showsPanelAndZeroCounts</code> checks the new title, 3 steps, "0 cards", "All genres"; replace <code>board_drawFromPanel_hidesPanelAndCountsOne</code> with <code>board_firstCardFromRail_hidesGuide</code>).</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/app &amp;&amp; fuser -k 4174/tcp 2&gt;/dev/null || true; npx playwright test tests/e2e/board.spec.ts --project=chromium</code></li>
+</ul>
+
+<h4 class="task" data-task="18">Task 18: Extend the board summary with hook count, first hook and deck dots</h4>
+<ul>
+  <li><strong>UPDATE:</strong> <code>src/features/boards/summary.ts</code> — <code>BoardSummary</code> gains <code>hookCardCount</code> (Hook Cards on the board), <code>hooks</code> (from <code>hookSentences(board)</code>, imported from <code>@/features/canvas</code>), <code>firstHook: string | null</code>, and <code>deckTypes: CardType[]</code> (distinct types on the board, Hook Card first, then <code>DECKS</code> order); drop <code>typeStrip</code>. New <code>metaLine(summary, now, verb)</code>: "Edited 10 minutes ago · 8 cards · 1 hook" — "1 hook" / "N hooks" counting non-empty sentences, "no hook yet" when 0; verb "Imported" for a just-imported board; <code>editedAgo</code> unchanged. Doc comment to design 9.3.</li>
+  <li><strong>UPDATE:</strong> <code>summary.test.ts</code>: <code>summarize_hookStack_firstHookIsSentence</code>, <code>summarize_noHookCard_firstHookNull</code>, <code>summarize_deckTypes_distinctInDeckOrder</code>, <code>metaLine_oneHook_singular</code>, <code>metaLine_noHook_noHookYet</code>, <code>metaLine_imported_verb</code>.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/boards/summary.test.ts &amp;&amp; npm run lint &amp;&amp; npm run typecheck</code></li>
+</ul>
+
+<h4 class="task" data-task="19">Task 19: Restyle the board list to design 9.3 with board cards and the board menu</h4>
+<ul>
+  <li><strong>UPDATE:</strong> <code>src/app/list/ListScreen.tsx</code> — header with the app mark and "GameIdea" only, as in the top bar (drop the "Runs on your computer" caption).</li>
+  <li><strong>UPDATE:</strong> <code>src/features/boards/BoardList.tsx</code> (+ css) — content max 1180 wide, centered, padding 40 24 64, gap 28; title "Boards" (Display 28/700); the line "Each board is one place to draw cards and build hooks. Boards stay in this browser."; actions right: Import Board File (secondary), New Board (primary); grid <code>repeat(auto-fill, minmax(300px, 1fr))</code>, gap 16, a <code>list</code> named "Saved Boards". Drop the TheForge footer line. "No boards yet" state replaces the grid: dashed box, padding 40 28, radius 12, a 52 px icon tile, title "No Boards Yet", the line "Make a board to start drawing cards. Or import a board file from another computer.", and Import Board File and New Board buttons (the header buttons stay).</li>
+  <li><strong>CREATE:</strong> <code>BoardCard.tsx</code> (+ css), replacing <code>BoardRow.tsx</code>: padding 18, radius 12, gap 12, <code>--surface</code>, border 1; the name as the link (Display 17/600); meta line 12 <code>--text-muted</code>; hook preview box (13/1.5, padding 10 12, radius 8, <code>--bg</code>, <code>--text-soft</code>) with <code>firstHook</code>, or "No Hook Card on this board." when there is no Hook Card, or no box when Hook Cards exist but are all empty; a row of 10 px deck dots, gap 4, in <code>--deck-&lt;type&gt;</code> (Hook Card dot <code>--accent</code>); a 44 px More button (<code>ellipsis</code> icon, <code>aria-label="More For &lt;name&gt;"</code>). Keep the just-imported highlight.</li>
+  <li><strong>CREATE:</strong> <code>BoardMenu.tsx</code> — 200 wide, padding 6, radius 10, items 44: Rename, Export Board File (loads the board through the seam, then <code>downloadBoardFile</code> from <code>@/features/export</code>), Delete (<code>--danger-text</code>). Esc and a click outside close it; arrow keys move between items (mirror <code>ExportButton.tsx</code>). Rename in place: the name becomes a field with the hint "Enter saves. Esc cancels."; a click outside also saves; an empty name keeps the old one.</li>
+  <li><strong>UPDATE:</strong> <code>BoardList.test.tsx</code>, <code>tests/e2e/persistence.spec.ts</code> (boardList_* tests open the More menu instead of the old Rename/Delete icon buttons; add <code>boardList_card_showsFirstHookAndMeta</code>, <code>boardList_menuExport_downloadsBoardFile</code>, <code>boardList_renameClickOutside_saves</code>), <code>tests/e2e/tabs-undo.spec.ts</code> and <code>tests/e2e/import.spec.ts</code> where they use the old row buttons.</li>
+  <li><strong>GOTCHA:</strong> <code>features/boards</code> uses <code>features/canvas</code> and <code>features/export</code> only through their <code>index.ts</code>. Title Case for buttons, menu items and titles ("No Boards Yet", "Export Board File"); body lines as the design writes them.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/boards &amp;&amp; npm run lint &amp;&amp; fuser -k 4174/tcp 2&gt;/dev/null || true; npx playwright test tests/e2e/persistence.spec.ts tests/e2e/import.spec.ts tests/e2e/tabs-undo.spec.ts --project=chromium</code></li>
+</ul>
+
+<h4 class="task" data-task="20">Task 20: Browser tests for all 6 mode and theme color combinations on both screens</h4>
+<ul>
+  <li><strong>CREATE:</strong> <code>tests/e2e/theme.spec.ts</code>, parameterised over <code>dark|light × orange|blue|green</code> with <code>test.use({ settings: { mode, accent } })</code>:
+    <ul>
+      <li><code>theme_&lt;mode&gt;_&lt;accent&gt;_boardScreenChromeFromTokens</code>: top bar and rail background equal <code>--surface</code>, canvas equals <code>--canvas</code>, logo tile equals <code>--accent</code> for that combination (expected RGB from design 4.1 / 4.2 tables in the spec).</li>
+      <li><code>theme_&lt;mode&gt;_&lt;accent&gt;_boardListChromeFromTokens</code>: page <code>--bg</code>, board card <code>--surface</code>, New Board fill <code>--accent</code> with <code>--on-accent</code> text.</li>
+      <li><code>theme_&lt;mode&gt;_&lt;accent&gt;_cardsNotesBadgesHookUnchanged</code>: a fixture board with a stack, a badge and a note; card face, note paper, badge fill and Hook Card fill match the dark-orange baseline values.</li>
+      <li><code>theme_blueGreen_warningColorsFixed</code>: the save-failed banner (force with a failing <code>saveBoard</code> via the existing storage-full approach in <code>board.spec.ts</code> or a Dexie block) shows <code>--warn-text</code> text and icon, "Save Failed" in <code>--danger-text</code>, Discard in <code>--danger-text</code>, identical in Blue and Green.</li>
+      <li><code>theme_light_outlinesUseAccentText</code>: selected card outline color equals the light <code>--accent-text</code>.</li>
+    </ul>
+  </li>
+  <li><strong>UPDATE:</strong> <code>tests/e2e/shell.spec.ts</code> <code>shell_themeAttributes_changeChromeNotCards</code> — drive it through the Settings dialog instead of setting attributes by hand.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>fuser -k 4174/tcp 2&gt;/dev/null || true; npx playwright test tests/e2e/theme.spec.ts tests/e2e/shell.spec.ts --project=chromium --project=firefox --project=webkit</code></li>
+</ul>
+
+<h4 class="task" data-task="21">Task 21: Browser tests for reload, no dark frame, the second tab and blocked storage</h4>
+<ul>
+  <li><strong>UPDATE:</strong> <code>tests/e2e/settings.spec.ts</code>:
+    <ul>
+      <li><code>settings_reload_keepsSettings</code> (Light, Blue, snap off survive a reload, on both screens).</li>
+      <li><code>settings_lightReload_noDarkFrame</code>: an init script records, in the first <code>requestAnimationFrame</code> callback, <code>document.documentElement.dataset.mode</code> and <code>getComputedStyle(document.body).backgroundColor</code> into <code>window.__firstFrame</code>; after a Light reload it is <code>light</code> and <code>rgb(245, 243, 238)</code> (<code>#F5F3EE</code>).</li>
+      <li><code>settings_secondTab_updatesUnderOneSecond</code>: 2 pages in one context; change to Light in page A; page B's <code>html[data-mode="light"]</code> appears within 1000 ms (<code>expect(...).toHaveAttribute(..., { timeout: 1000 })</code>).</li>
+      <li><code>settings_blockedStorage_defaultsAndNote</code>: init script <code>Object.defineProperty(window, 'localStorage', { get() { throw new DOMException('blocked', 'SecurityError'); } })</code>; the app runs on dark/orange/snap on, boards still load (IndexedDB unaffected), and the dialog shows "This browser does not save settings. They reset when the page reloads."; a change still applies for the page.</li>
+    </ul>
+  </li>
+  <li><strong>GOTCHA:</strong> for these tests do not use the <code>settings</code> option fixture (it would seed the key); seed through the dialog or an explicit init script.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>fuser -k 4174/tcp 2&gt;/dev/null || true; npx playwright test tests/e2e/settings.spec.ts --project=chromium --project=firefox --project=webkit</code></li>
+</ul>
+
+<h3 class="milestone" data-milestone="6">Milestone 6: Full check of done criteria and targets</h3>
+<p>Every done criterion in mvp-plan and both feature briefs, and every nfr-target, is shown by a test or a recorded check.</p>
+<p><strong>Validation checkpoint:</strong> the full CI sequence passes locally and the LAN check passes: <code>npm run lint &amp;&amp; npm run format:check &amp;&amp; npm run typecheck &amp;&amp; npm test &amp;&amp; npm run build &amp;&amp; npm run size &amp;&amp; node scripts/check-port-lock.mjs &amp;&amp; fuser -k 4174/tcp 2&gt;/dev/null || true; npm run test:e2e &amp;&amp; node scripts/check-lan.mjs</code>.</p>
+
+<h4 class="task" data-task="22">Task 22: Check first load, privacy and size targets</h4>
+<ul>
+  <li><strong>CREATE:</strong> <code>tests/e2e/first-load.spec.ts</code>, tagged <code>@timing</code>, Chromium only (<code>test.skip(browserName !== 'chromium')</code>): open a CDP session, <code>Network.enable</code>, <code>Network.emulateNetworkConditions({ offline: false, latency: 40, downloadThroughput: 25e6 / 8, uploadThroughput: 5e6 / 8 })</code>, <code>Network.setCacheDisabled({ cacheDisabled: true })</code>; time <code>page.goto('/')</code> until the "Boards" heading is visible and, separately, a fixture board until the deck buttons are enabled (pools loaded); both under 2000 ms. Name: <code>firstLoad_25Mbps_under2s</code>. Record the measured times in Notes.</li>
+  <li><strong>UPDATE:</strong> <code>tests/e2e/network.spec.ts</code> <code>network_fullSession_onlyOwnAddress</code> — also open Settings, switch to Light and Green, toggle snap, Add Note, export both files and import one; still only the app's own address.</li>
+  <li><strong>RUN:</strong> <code>npm run build &amp;&amp; npm run size</code> and the existing <code>@timing</code> tests (draw/turn/hook &lt; 100 ms, 200-card pan and drag ≥ 50 fps, long stack) and <code>saveBoard_200Cards_under50ms</code>; record the numbers in Notes.</li>
+  <li><strong>GOTCHA:</strong> Lighthouse (the architecture's named tool) is not a dependency and needs a remote-capable Chrome install; the CDP-throttled Playwright check measures the same 25 Mbps target with no new package. If it fails, fix the cause (bundle size, font preload), not the threshold.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npm run build &amp;&amp; npm run size &amp;&amp; fuser -k 4174/tcp 2&gt;/dev/null || true; npx playwright test tests/e2e/first-load.spec.ts tests/e2e/network.spec.ts tests/e2e/canvas-perf.spec.ts tests/e2e/board.spec.ts --project=chromium --project=chromium-timing</code></li>
+</ul>
+
+<h4 class="task" data-task="23">Task 23: Confirm HTTPS on the local network at port 4444</h4>
+<ul>
+  <li><strong>CREATE:</strong> <code>scripts/check-lan.mjs</code> — local-only check (not in CI, which has no certificate): exits 0 with "SKIP no certificate in .certs/" when the certificate is missing; else runs <code>npx vite preview --mode lan</code> after a build (spawned, as <code>check-port-lock.mjs</code> does), polls <code>https://localhost:4444/</code> with TLS checking off for this request only until it answers (30 s timeout), asserts status 200 and that the body has <code>&lt;title&gt;GameIdea&lt;/title&gt;</code> and the boot script, asserts it listens on all interfaces (the server log names a Network address), then stops the server. Also asserts that a second start on a busy 4444 exits non-zero (strictPort). Doc comment at the top.</li>
+  <li><strong>UPDATE:</strong> <code>README.md</code> Local Network section — mention <code>node scripts/check-lan.mjs</code>.</li>
+  <li><strong>GOTCHA:</strong> do not commit <code>.certs/</code>; do not change port 4174 to HTTPS (a different origin would hide the user's boards).</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npm run build &amp;&amp; node scripts/check-lan.mjs</code> (exits 0 and prints PASS locally, where the certificate exists)</li>
+</ul>
+
+<h4 class="task" data-task="24">Task 24: Audit carried-over features against the done criteria and update the README</h4>
+<ul>
+  <li><strong>IMPLEMENT:</strong> walk <code>docs/mvp-plan.html</code> Scope ("In the MVP") and Done criteria, <code>docs/feature-modifier-decks.html</code> done criteria and <code>docs/feature-settings-and-theme.html</code> done criteria; for each, name the unit or browser test that proves it in a table in this doc's Notes ("Done criteria map"). Where a criterion has no automated check (board make/open/rename/delete, Copy fallback dialog, Redraw All skipping locked cards, lock and unlock as one undo step, genre change affecting the next draw only, 2-tab reload notice, pool load failure and Retry), add the missing browser test to the matching spec. The M2 pass bar stays the user's manual check (Phase 2 Notes).</li>
+  <li><strong>REMOVE:</strong> stale "Phase 5" comments in <code>src/</code> and <code>tests/</code> (<code>grep -rn "Phase 5" src tests</code> must print nothing) and any leftover TheForge story copy (<code>grep -rni "story idea\|premise" src</code> must print nothing).</li>
+  <li><strong>UPDATE:</strong> <code>README.md</code> — status line ("Phase 5: export and finish — the MVP is complete"), a Settings section (Mode, Theme Color, Snap To Grid with Alt, Keyboard list, where settings live and that they are per address and port), Export And Import (the text file now starts with each hook), Board List (cards, More menu), Use The Board (Add Note, snap), Project Layout (<code>features/settings/</code>), the LAN check script.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>! grep -rn "Phase 5" src tests &amp;&amp; ! grep -rni "story idea" src &amp;&amp; grep -q "Snap" README.md &amp;&amp; npm run lint &amp;&amp; npm run format:check &amp;&amp; npm run typecheck &amp;&amp; npm test &amp;&amp; npm run build &amp;&amp; npm run size &amp;&amp; fuser -k 4174/tcp 2&gt;/dev/null || true; npm run test:e2e</code></li>
+</ul>
+
+<h3 class="milestone" data-milestone="7">Commit, push, and open PR</h3>
+
+<h4 class="task" data-task="25">Task 25: Commit, push, and open PR</h4>
+<p>After every prior validation checkpoint has passed:</p>
+<ul>
+  <li><strong>IMPLEMENT:</strong> stage and commit uncommitted changes with a descriptive message summarizing the phase; push with <code>git push -u origin phase-5-export-finish</code>; open a PR with <code>gh pr create --head phase-5-export-finish --base main --title "Phase 5: Export and finish" --body "&lt;body&gt;"</code>.</li>
+  <li><strong>PR title format:</strong> <code>Phase 5: Export and finish</code> — names the phase, not any individual feature.</li>
+  <li><strong>PR body format:</strong> copy the Acceptance Criteria as a checklist with each box checked off, followed by a <code>Notes</code> section listing assumptions/trade-offs decided during execution (start from this doc's Notes: the done criteria map, the measured first-load, size and timing numbers, the LAN check result, and the specs changed for snap).</li>
+  <li><strong>GOTCHA:</strong> CLAUDE.md "Commit Authorship" and the user's memory rule win over any tool default: no <code>Co-Authored-By</code> or <code>Claude-Session</code> trailer in any commit, and no "Generated with…" line, robot emoji or other AI marker in the PR body. Commits are in the owner's voice.</li>
+  <li><strong>GOTCHA:</strong> <code>gh</code> must be installed and authenticated as <code>DecafCoding</code>; if not, this step fails.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>gh pr view phase-5-export-finish --json number,title,state,headRefName</code> returns the PR with <code>"state": "OPEN"</code>, <code>"headRefName": "phase-5-export-finish"</code> and title <code>Phase 5: Export and finish</code>; and <code>! git log origin/main..HEAD --format=%B | grep -qiE "co-authored-by|claude-session"</code>.</li>
+</ul>
+
+<h2>Testing Strategy</h2>
+<h3>Unit Tests</h3>
+<ul>
+  <li><code>reading.test.ts</code>: <code>hookSentences</code> order, empty Hook Card, no Hook Card.</li>
+  <li><code>textFile.test.ts</code>: Hooks section placement and paragraphs; no section without sentences.</li>
+  <li><code>importBoard.test.ts</code>: rich-board round trip deep-equals; import changes only id, name, updatedAt.</li>
+  <li><code>settings.test.ts</code>: every defaults rule, field by field.</li>
+  <li><code>settingsStorage.test.ts</code>: load/save/blocked/storage event.</li>
+  <li><code>themeBoot.test.ts</code>: boot script agrees with <code>parseSettings</code> for the 2 theme fields; same key.</li>
+  <li><code>settingsStore.test.ts</code>, <code>theme.test.ts</code>: change writes the whole record; blocked keeps the change; other-tab changes apply; never in undo.</li>
+  <li><code>SettingsDialog.test.tsx</code>: rows, immediate apply, note, footer, no Cancel.</li>
+  <li><code>placement.test.ts</code>, <code>boardActions.test.ts</code>: snap math including negatives; snap only on move/untuck.</li>
+  <li><code>summary.test.ts</code>: first hook, hook count words, deck dots.</li>
+  <li><code>SideRail.test.tsx</code>, <code>BoardScreen.test.tsx</code>, <code>BoardList.test.tsx</code>: Settings button, empty guide, board cards and menu.</li>
+</ul>
+<h3>Integration Tests</h3>
+<ul>
+  <li>Playwright in Chromium, Firefox and WebKit: <code>export.spec.ts</code>, <code>import.spec.ts</code>, <code>settings.spec.ts</code>, <code>snap.spec.ts</code>, <code>theme.spec.ts</code>, <code>canvas-drop.spec.ts</code> (snap on and off), <code>notes.spec.ts</code>, <code>persistence.spec.ts</code>, <code>network.spec.ts</code>, <code>first-load.spec.ts</code> (Chromium timing project).</li>
+  <li><code>scripts/check-lan.mjs</code> locally for port 4444.</li>
+</ul>
+<h3>Edge Cases</h3>
+<ul>
+  <li>Local storage blocked (getter throws), full (setItem throws), cleared in another tab (<code>key === null</code>).</li>
+  <li>Settings JSON from a future version, with extra fields, or with one bad field.</li>
+  <li>Snap of negative canvas coordinates and exact half-steps; a stack root dropped with snap moves its tucked cards by the same delta; untuck with snap; Alt released before the mouse.</li>
+  <li>Board with Hook Cards but no non-empty sentence (text file has no Hooks section; board card shows no preview box, meta "no hook yet").</li>
+  <li>2-sentence hooks (Mood/Twist/Progression) in the text file stay one paragraph.</li>
+  <li>Board name with characters Windows forbids (existing <code>safeFileBase</code>).</li>
+  <li>Rail overflow at small heights with Settings at the bottom.</li>
+</ul>
+
+<h2>Validation Commands</h2>
+<h3>Level 1: Syntax &amp; Style</h3>
+<pre><code>npm run lint
+npm run format:check
+npm run typecheck</code></pre>
+<h3>Level 2: Unit Tests</h3>
+<pre><code>npm test</code></pre>
+<h3>Level 3: Integration Tests</h3>
+<pre><code>npm run build
+npm run size
+node scripts/check-port-lock.mjs
+fuser -k 4174/tcp 2&gt;/dev/null || true
+npm run test:e2e</code></pre>
+<h3>Level 4: Manual Validation</h3>
+<pre><code># Built app serves, carries the boot script and the version; LAN HTTPS works where the certificate exists.
+set -e
+npm run build
+grep -q "gameidea.settings" dist/index.html
+grep -rq "No data leaves this computer" dist/assets/
+fuser -k 4174/tcp 2&gt;/dev/null || true
+(npx vite preview --port 4174 --strictPort &gt; /tmp/gi-preview.log 2&gt;&amp;1 &amp;)
+for i in $(seq 1 60); do curl -fsS http://localhost:4174/ &gt;/dev/null 2&gt;&amp;1 &amp;&amp; break; sleep 0.5; done
+curl -fsS http://localhost:4174/ | grep -q "&lt;title&gt;GameIdea&lt;/title&gt;"
+curl -fsS http://localhost:4174/pools/role.json &gt;/dev/null
+fuser -k 4174/tcp 2&gt;/dev/null || true
+node scripts/check-lan.mjs</code></pre>
+<h3>Level 5: Additional Validation (Optional)</h3>
+<pre><code># Chromium-only timing projects, including the first-load check
+fuser -k 4174/tcp 2&gt;/dev/null || true
+npx playwright test --project=chromium-timing</code></pre>
+
+<h2>Acceptance Criteria</h2>
+<ul class="checklist">
+  <li data-checked="false">The text file holds each non-empty hook sentence, in reading order, in a Hooks section before Cards; each matches the Hook Card on screen.</li>
+  <li data-checked="false">An exported board file of a board using every card feature imports as a new board whose record equals the original except id, name and updatedAt; FORMAT_VERSION stays 1.</li>
+  <li data-checked="false">The export menu captions match design 9.13.</li>
+  <li data-checked="false"><code>modifier_onTop_survivesRedrawReloadExportImport</code> passes 15 repeats in each of the 3 engines.</li>
+  <li data-checked="false">Settings live only in local storage key <code>gameidea.settings</code> (version 1; mode, accent, snap); a missing record, bad JSON or unknown value gives the default for that field; settings never appear in a BoardRecord, board file, text file or undo history.</li>
+  <li data-checked="false">The storage seam exports exactly the 5 board actions plus <code>loadSettings</code>, <code>saveSettings</code>, <code>onSettingsChangedElsewhere</code>; only <code>shared/storage</code> touches local storage.</li>
+  <li data-checked="false">A Light reload never shows a dark frame (first animation frame already light).</li>
+  <li data-checked="false">Settings opens from the bottom of the rail and has Mode, Theme Color, Snap To Grid, the Keyboard list and a footer with the real package.json version; a change applies at once; there is no Cancel.</li>
+  <li data-checked="false">Each key in the Keyboard list does what the list says (browser test).</li>
+  <li data-checked="false">Settings survive a reload; a second open tab updates in less than 1 second.</li>
+  <li data-checked="false">With local storage blocked, the app runs on the defaults and the dialog shows "This browser does not save settings. They reset when the page reloads."</li>
+  <li data-checked="false">All 6 mode × color combinations render the board screen and the board list with token chrome; cards, notes, badges, deck colors and the Hook Card look the same in every combination; the color lint passes.</li>
+  <li data-checked="false">In Blue and Green, warning text and icon, "Save Failed" and Discard keep their fixed colors; light-mode outlines use <code>--accent-text</code>; the Hook label keeps the dark-mode accent text in light mode.</li>
+  <li data-checked="false">With snap on, a dropped free card or note sits on a 24 px dot; with Alt held it sits where dropped; a tucked card keeps its tuck place; combine and On Top ignore snap; with snap off every drop is free; a drop is one undo step.</li>
+  <li data-checked="false">The drag, tuck, combine and On Top browser tests pass with snap on and with snap off.</li>
+  <li data-checked="false">Add Note places a note at the free 24 px grid spot nearest the view center, opens it ready to type, and is one undo step; the rail order is Hook Card, Core, Modifiers, Optional, Genres, Add Note, Settings; the help panel is gone.</li>
+  <li data-checked="false">The empty board shows the design 9.2 guide; the board list matches design 9.3 (board cards with meta line, first hook preview, deck dots and a More menu with Rename, Export Board File and Delete; "No Boards Yet" state).</li>
+  <li data-checked="false">First load is under 2 s at 25 Mbps (Chromium, throttled); JavaScript ≤ 250 KB gzip and pools ≤ 100 KB gzip; draw/turn/hook under 100 ms; 200-card pan and drag ≥ 50 fps; save under 50 ms; no request to any other address.</li>
+  <li data-checked="false"><code>npm run start:lan</code> serves the app over HTTPS at port 4444 (<code>scripts/check-lan.mjs</code> passes locally); 4174 stays plain HTTP.</li>
+  <li data-checked="false">Every done criterion in mvp-plan.html and both feature briefs maps to a passing test or recorded check (Notes, "Done criteria map").</li>
+  <li data-checked="false">CI passes: lint, format, typecheck, unit tests, build, size, port lock, Playwright in 3 engines.</li>
+</ul>
+
+<h2>Completion Checklist</h2>
+<ul class="checklist">
+  <li data-checked="false">Tasks 1–24 done in order, each VALIDATE passed at the moment its task finished.</li>
+  <li data-checked="false">Milestone 1–6 validation checkpoints passed.</li>
+  <li data-checked="false">Level 1: <code>npm run lint</code>, <code>npm run format:check</code>, <code>npm run typecheck</code> exit 0.</li>
+  <li data-checked="false">Level 2: <code>npm test</code> exits 0.</li>
+  <li data-checked="false">Level 3: build, size, port-lock and <code>npm run test:e2e</code> exit 0.</li>
+  <li data-checked="false">Level 4: manual snippet exits 0.</li>
+  <li data-checked="false">Notes updated with the done criteria map, measured numbers and any execution decisions.</li>
+  <li data-checked="false">README updated.</li>
+  <li data-checked="false">Task 25: PR open, no AI attribution anywhere.</li>
+</ul>
+
+<h2>Notes</h2>
+
+<h3>Architecture decisions this phase conforms to</h3>
+<p><code>storage-seam</code> (moderate; grows from 5 to 8 actions — the local exception recorded in <code>docs/feature-settings-and-theme.html</code>, "Architecture fit"; <code>docs/architecture.html</code> is not edited), <code>import-rules</code> (only <code>shared/storage</code> touches local storage; canvas and the rail reach settings through <code>features/settings/index.ts</code>; boards reaches canvas and export through their index files), <code>module-layout</code> and <code>architecture-pattern</code> (new <code>features/settings/</code>), <code>state-store</code> (a second Zustand store, no zundo), <code>undo-history</code> (settings never in undo; a drop with or without snap is one step; Add Note one step), <code>save-transaction</code> (unchanged), <code>board-file-format</code>, <code>schema-shape</code>, <code>schema-versions</code> (no shape change; <code>FORMAT_VERSION</code> stays 1), <code>import-checks</code> and <code>import-policy</code> (unchanged; round trip proven), <code>hook-sentence</code> (pure builder reused for the text file and the board list), <code>canvas-library</code> (snap inside <code>features/canvas</code>), <code>tab-sync</code> (boards unchanged; settings use the storage event), <code>outside-code</code> (local storage wrapped in <code>shared/storage</code>; blocked → defaults), <code>persistent-storage</code> (unchanged), <code>routing</code>, <code>fonts</code>, <code>test-tools</code>, <code>test-data</code> (new rich round-trip fixture), <code>nfr-targets</code> (first load, size, speed, privacy checked), <code>local-run</code> (4444 HTTPS confirmed, 4174 plain HTTP), <code>ci</code>, <code>source-control</code>. No decision is <code>data-status="open"</code> (30 settled, 1 amended-settled). No architecture decision changes.</p>
+
+<h3>Decisions and assumptions</h3>
+<ul>
+  <li>DECISION: Slug <code>export-finish</code>, branch <code>phase-5-export-finish</code>, 25 tasks under 7 milestones (the last is the commit-push-PR milestone). The phase name keeps the PRD's "Export and finish".</li>
+  <li>ASSUMPTION: The text file adds a "Hooks" section after the board name and before Cards, one paragraph per non-empty hook sentence in reading order (Hook Card roots by y, then x, then z), separated by a blank line; empty Hook Cards add nothing there, and the Cards section still lists them as "Hook Card". Authority: design 9.13 ("Each hook on this board, then the cards and notes in plain words") + mvp-plan Outputs + existing textFile layout.</li>
+  <li>ASSUMPTION: Export file names stay <code>&lt;board-name&gt;.txt</code> and <code>&lt;board-name&gt;.gameidea.json</code> (with forbidden characters replaced), not design 9.13's <code>&lt;board-slug&gt;</code>. Authority: architecture <code>board-file-format</code> (wins over design).</li>
+  <li>ASSUMPTION: <code>hookSentences(board)</code> lives in <code>features/canvas/reading.ts</code> beside <code>stackEntries</code> and is exported through the canvas index; the export and boards features use it from there. Authority: import-rules + codebase pattern (canvas owns stack reading; hook never imports canvas).</li>
+  <li>ASSUMPTION: The no-flash start-up uses a classic inline script in <code>&lt;head&gt;</code> whose source lives in <code>src/shared/storage/themeBoot.ts</code> and is injected by a Vite <code>transformIndexHtml</code> plugin. It reads only the 2 theme fields and is unit-tested to agree with <code>parseSettings</code>. Setting the attributes from <code>main.tsx</code> alone could paint one dark frame, because module scripts run after the stylesheet. Authority: feature brief ("sets these 2 attributes before the first render"; local storage chosen "because it reads at once") + import-rules (local storage only inside <code>shared/storage</code>) + smallest reversible option.</li>
+  <li>ASSUMPTION: The settings Zustand store lives in <code>features/settings/settingsStore.ts</code>, and ESLint's Zustand restriction is widened to <code>src/features/settings/</code> (still no zundo). Authority: <code>CLAUDE.md</code> layout ("settings/ … settings store (no zundo)") and the feature brief (Blast radius), which rank above the codebase's lint pattern; <code>state-store</code> allows a second store.</li>
+  <li>ASSUMPTION: The <code>Settings</code> type, defaults, key and <code>parseSettings</code> live in <code>shared/model/settings.ts</code> (types and pure rules), used by <code>shared/storage</code> and <code>features/settings</code>. No Zod (only <code>features/export</code> may import it). Authority: module-layout (model holds types) + import-rules.</li>
+  <li>ASSUMPTION: <code>loadSettings()</code> returns <code>{ settings, canSave }</code>, with <code>canSave</code> from a write probe; <code>saveSettings</code> returns <code>'done' | 'blocked'</code>; a blocked save keeps the change for the page. <code>onSettingsChangedElsewhere</code> also fires on <code>key === null</code> (storage cleared), giving the defaults. Authority: feature brief seam contract ("and whether the browser can save settings"; "done or blocked") + MDN storage event.</li>
+  <li>ASSUMPTION: The footer shows <code>package.json</code>'s version as it is (<code>0.0.0</code> at planning) through a Vite <code>define</code> constant <code>__APP_VERSION__</code>; this phase does not bump the version. Authority: feature brief assumptions ("the package.json version as it is, with no build number") + smallest reversible option.</li>
+  <li>ASSUMPTION: "Save Failed" text uses <code>--danger-text</code>, and the warning banner's text and icon use <code>--warn-text</code>. Design 4.3 colors only the save mark dot, and <code>--warn-text</code> (#F6B08A) is unreadable on the white light-mode top bar. <code>--danger-text</code> does not change with the theme color, which is the brief's intent ("keep the fixed warning color in Blue and Green"). Authority: design-system §4.1/§4.3/§9.13 (design wins over the brief on visual detail) + accessibility §12.</li>
+  <li>ASSUMPTION: The Hook label's dark-mode accent text in light mode is set with 3 fixed-literal lines in <code>HookCard.module.css</code> (design 4.2 values, <code>/* fixed: … */</code> marker), because <code>tokens.css</code> is the verbatim handoff pinned by <code>tokens.test.ts</code> and has no token for it. Authority: design 4.2 accent text rule + README color-lint rule + smallest reversible option.</li>
+  <li>ASSUMPTION: The light-mode outline rule is applied with <code>[data-mode='light']</code> overrides beside each accent outline (global focus, card selection, note, board card highlight, connector badge), not a new token. Authority: design 4.2 outline rule + no-invented-tokens rule.</li>
+  <li>ASSUMPTION: The theme color swatches (14 px dots) in the Settings dialog use fixed literals of the 3 <code>--accent</code> values, because the swatch must show each color whatever theme is on. Authority: design 9.11 + color-lint fixed rule.</li>
+  <li>ASSUMPTION: Snap is applied in <code>dropCard</code>'s <code>'move'</code> outcome (root move and untuck, which leave a free card) and to note drops, when <code>settings.snap &amp;&amp; !event.altKey</code> at drop; tuck, combine, swap and On Top ignore it; note resize stays free. Snap does not change placement of new cards (they already use the free-grid-spot rule). Authority: feature brief Snap contract + design §10.</li>
+  <li>ASSUMPTION: Add Note needs no behavior change: it already places the note at the free 24 px grid spot nearest the view center, opens it ready to type, and is one <code>changeBoard</code>. Phase 5 restyles the button to design 8.2 and adds browser tests. Authority: codebase (verified at planning) + design 9.12.</li>
+  <li>ASSUMPTION: The rail help panel copied from TheForge is removed; Settings takes the bottom slot (design 8.2 lists no help panel; the Keyboard list in Settings replaces its key hint). Authority: design-system §8.2 + Phase 1/2 Notes ("help panel stays as copied until Phase 5").</li>
+  <li>ASSUMPTION: The empty board guide drops the TheForge "Draw A Player Role" button; design 9.2 points at the rail with a "Start Here" tag instead. Visibility logic stays as it is (empty board and nothing added this session). Authority: design-system §9.2.</li>
+  <li>ASSUMPTION: The board list's TheForge header caption ("Runs on your computer. Nothing leaves it.") and footer line are dropped, because design 9.3 does not list them; the Settings footer carries the privacy line. Authority: design-system §9.3 + CLAUDE.md ("Do not invent … copy outside it").</li>
+  <li>ASSUMPTION: Board card meta counts non-empty hook sentences ("1 hook", "N hooks", "no hook yet"); the preview shows the first sentence, "No Hook Card on this board." when there is no Hook Card, and no preview box when Hook Cards exist but are all empty (no new copy invented). Deck dots are the distinct card types on the board, Hook Card first, then deck order. Authority: design 9.3 + smallest reversible option.</li>
+  <li>ASSUMPTION: The board menu's Export Board File loads the board through the seam (<code>loadBoard</code>) and calls <code>downloadBoardFile</code> from <code>@/features/export</code>. Authority: design 9.3 + import-rules.</li>
+  <li>ASSUMPTION: UI labels follow CLAUDE.md Title Case where the design writes sentence case ("Build Your First Hook", "Start Here", "No Boards Yet", "Theme Color", "Snap To Grid", "Export Board File", "Add Note"); help text, notices, step lines and the footer stay as the design writes them. Authority: CLAUDE.md UI Conventions + Phase 1/2 Notes precedent.</li>
+  <li>ASSUMPTION: The first-load target is checked with a Playwright test in the Chromium timing project, throttled through CDP to 25 Mbps with the cache off (board list ready, and a board with pools loaded, both under 2 s), instead of Lighthouse, which is not a dependency. Authority: <code>nfr-targets</code> (the target) + CLAUDE.md (no new tools without need) + smallest reversible option. Lighthouse can still be run by hand.</li>
+  <li>ASSUMPTION: The LAN check is a local-only script (<code>scripts/check-lan.mjs</code>) that skips without a certificate; CI does not run it because CI has no mkcert certificate and needs no secrets. Authority: <code>local-run</code> + <code>ci</code> ("CI needs no secrets").</li>
+  <li>ASSUMPTION: The flaky <code>modifier_onTop_survivesRedrawReloadExportImport</code> is fixed in the test (wait for the stored record to change before reload), not in the app: the seed-once boot and autosave behave as designed. Authority: the brief + test-data + codebase.</li>
+  <li>ASSUMPTION: Specs whose exact-position checks break with snap on by default are either changed to assert the snapped place or pinned to <code>snap: false</code> through the new option fixture; <code>canvas-drop.spec.ts</code> runs in both modes (brief: regression with snap on and off). Authority: feature brief Regression + smallest reversible option.</li>
+  <li>ASSUMPTION: No commit or PR carries AI attribution. CLAUDE.md "Commit Authorship" and the user's memory rule win over tool defaults. Authority: CLAUDE.md.</li>
+</ul>
+
+<h3>Doc conflicts recorded (no stop needed)</h3>
+<ul>
+  <li>Design 9.13 file names (<code>&lt;board-slug&gt;</code>) vs architecture <code>board-file-format</code> (<code>&lt;board-name&gt;.gameidea.json</code>): architecture wins.</li>
+  <li>The feature brief says "Save failed" uses the fixed warning color; design 4.3 defines only the dot color and <code>--warn-text</code> fails contrast on the light top bar. This plan uses <code>--danger-text</code> (theme-independent).</li>
+  <li><code>CLAUDE.md</code> places the settings store in <code>features/settings/</code>; the Phase 1 ESLint rule limits Zustand to <code>shared/store/</code>. CLAUDE.md wins; the lint rule is widened.</li>
+  <li>The PRD names Lighthouse for first load; a throttled Playwright check is used instead (same target).</li>
+  <li>PRD §11 Phase 2–4 conversion bullets remain stale (recorded in Phase 2–4 Notes).</li>
+</ul>
+
+<h3>Risks</h3>
+<ul>
+  <li>Snap on by default changes many drag positions; expect test churn in Task 15. Keep app logic fixed and adjust tests per the Notes rule.</li>
+  <li>The board list restyle replaces the row UI that several specs use (Rename/Delete icon buttons); Task 19 updates them, and Task 24's full run catches the rest.</li>
+  <li>The inline boot script must stay in step with <code>parseSettings</code>; <code>themeBoot.test.ts</code> guards it.</li>
+  <li>The first-load check depends on CI machine speed; it runs in the timing project (one browser at a time). If it is flaky in CI, record the numbers and raise it as a follow-up rather than loosening the 2 s target.</li>
+  <li>Alt+drag on Linux desktops may be taken by the window manager for real users; the test uses Playwright's synthetic Alt.</li>
+</ul>
+
+<h3>Done criteria map</h3>
+<p>Filled in by Task 24 at execution: one row per done criterion in mvp-plan.html, feature-modifier-decks.html and feature-settings-and-theme.html, naming the proving test or recorded check.</p>
+
+<h3>Measured results</h3>
+<p>Filled in by Tasks 22–23 at execution: first-load times, JS and pool gzip sizes, timing-test numbers, save time, LAN check output.</p>
+
+</body>
+</html>
