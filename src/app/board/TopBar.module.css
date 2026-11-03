@@ -1,0 +1,97 @@
+/*
+ * TopBar (design 8.1): 56 px, --surface, app mark link, divider, board name, Undo, Redo and
+ * Export. Raw sizes come from design 8.1.
+ */
+.bar {
+  grid-area: top;
+  /* Above the canvas region and its banners, so the Export menu opens over them. */
+  position: relative;
+  z-index: 8;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: var(--top-bar-h);
+  padding: 0 16px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.home {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: var(--button-h);
+  border-radius: var(--radius-button);
+  color: var(--text);
+  text-decoration: none;
+}
+
+.mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.divider {
+  width: 1px;
+  height: 24px;
+  background: var(--border);
+}
+
+.name {
+  width: 220px;
+  min-height: var(--button-h);
+  padding: 8px 10px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.name:focus {
+  background: var(--bg);
+  border-color: var(--border);
+}
+
+.gap {
+  flex: 1;
+}
+
+/* Undo and Redo sit 4 apart; the bar's 16 px gap minus 12. */
+.history + .history {
+  margin-left: -12px;
+}
+
+.history {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--button-h);
+  height: var(--button-h);
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-button);
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.history:disabled {
+  color: var(--text-disabled);
+  cursor: default;
+}

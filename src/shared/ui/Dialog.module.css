@@ -1,0 +1,96 @@
+/* Dialog: --panel, 1 px --line border, radius 12, --shadow-menu, 400 px max width. */
+.dialog {
+  max-width: 400px;
+  width: calc(100% - 32px);
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-dialog);
+  background: var(--surface);
+  box-shadow: var(--shadow-menu);
+  color: var(--text);
+}
+
+.dialog[open] {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* The backdrop dims the page with the --scrim token (design 9.3). */
+.dialog::backdrop {
+  background: var(--scrim);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.body {
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.body p {
+  margin: 0;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.caption {
+  margin: -10px 0 0; /* 4 px under the title, against the 14 px column gap */
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* Wide: the New Board dialog (design 9.8). */
+.wide {
+  max-width: 640px; /* design 9.8; no token */
+  padding: 24px 28px; /* design 9.8; no token */
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-dialog);
+}
+
+.wide::backdrop {
+  background: var(--scrim);
+}
+
+.wide .title {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.wide .body {
+  color: var(--text);
+}
+
+.wide .actions {
+  align-items: center;
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+}
+
+/* Open: fade in with a 0.98 to 1.0 scale (design 9.8; no token for 150 ms ease-out). */
+.wide[open] {
+  animation: dialogIn 150ms ease-out;
+}
+
+@keyframes dialogIn {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wide[open] {
+    animation: none;
+  }
+}

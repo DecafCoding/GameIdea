@@ -1,0 +1,37 @@
+{
+  "type": "role",
+  "cues": [
+    {
+      "id": "role-test-01",
+      "text": "lighthouse keeper"
+    },
+    {
+      "id": "role-test-02",
+      "text": "salvage diver"
+    },
+    {
+      "id": "role-test-03",
+      "text": "tower archer"
+    },
+    {
+      "id": "role-test-04",
+      "text": "night courier"
+    },
+    {
+      "id": "role-test-05",
+      "text": "river smuggler"
+    },
+    {
+      "id": "role-test-06",
+      "text": "clockwork knight"
+    },
+    {
+      "id": "role-test-07",
+      "text": "cave cartographer"
+    },
+    {
+      "id": "role-test-08",
+      "text": "rogue beekeeper"
+    }
+  ]
+}

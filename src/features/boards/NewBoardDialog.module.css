@@ -1,0 +1,37 @@
+/* New Board dialog body (design 9.3): the Name label, the 44 px Name field and the help line. */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Section label role: Space Grotesk 12 / 600, uppercase, 0.08em. */
+.label {
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.name {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: var(--button-h);
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-button);
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.help {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-muted);
+}

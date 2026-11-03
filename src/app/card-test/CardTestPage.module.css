@@ -1,0 +1,65 @@
+/* Card test page: title, caption, the pools banner, the deck toolbar and the card grid. */
+.page {
+  padding: 32px;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.caption {
+  margin: 8px 0 24px;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.banner {
+  margin-bottom: 24px;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 32px;
+}
+
+.deck {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: var(--button-h);
+  padding: 4px 14px 4px 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-panel);
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.deck:hover:not(:disabled) {
+  background: var(--surface-raised);
+}
+
+.deck:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.deck:disabled {
+  color: var(--text-disabled);
+  cursor: default;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+}

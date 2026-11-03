@@ -1,0 +1,65 @@
+/* RingControl: clipped ring-half buttons over the card face, under the type disc. */
+.layer {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--t-fade) linear;
+}
+
+/* The card root carries data-card; hover or keyboard focus inside it shows the rings. */
+:global([data-card]):hover > .layer,
+:global([data-card]):focus-within > .layer {
+  opacity: 1;
+}
+
+.half {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--card);
+  height: var(--card);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: var(--ring-color);
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.half:hover,
+.half:focus-visible {
+  background: var(--ring-dark);
+}
+
+/* clip-path also clips outlines, so focus is drawn as a stroke in the button's SVG. */
+.half:focus-visible {
+  outline: none;
+}
+
+.marks {
+  position: absolute;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+}
+
+.arrow {
+  fill: var(--card-face);
+  stroke: var(--card-face);
+  stroke-width: 2.2;
+  stroke-linejoin: round;
+}
+
+/* The stroke is centered on the clip edge, so 4 px shows 2 px inside the half. */
+.focus {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 4;
+  opacity: 0;
+}
+
+.half:focus-visible .focus {
+  opacity: 1;
+}

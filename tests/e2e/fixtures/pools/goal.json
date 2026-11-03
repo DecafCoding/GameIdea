@@ -1,0 +1,37 @@
+{
+  "type": "goal",
+  "cues": [
+    {
+      "id": "goal-test-01",
+      "text": "keep the light on"
+    },
+    {
+      "id": "goal-test-02",
+      "text": "map the lost caves"
+    },
+    {
+      "id": "goal-test-03",
+      "text": "escort the caravan home"
+    },
+    {
+      "id": "goal-test-04",
+      "text": "win the harvest race"
+    },
+    {
+      "id": "goal-test-05",
+      "text": "rescue the stranded crew"
+    },
+    {
+      "id": "goal-test-06",
+      "text": "rebuild the broken bridge"
+    },
+    {
+      "id": "goal-test-07",
+      "text": "outlast the long winter"
+    },
+    {
+      "id": "goal-test-08",
+      "text": "deliver the last letter"
+    }
+  ]
+}

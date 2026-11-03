@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Phase 1: Copy and rename</title>
+  <style>
+    :root { --fg:#1a1a1a; --muted:#666; --accent:#2563eb; --done:#16a34a; --warn:#dc2626; --rule:#e5e7eb; }
+    body { font:16px/1.6 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; color:var(--fg); max-width:62rem; margin:2rem auto; padding:0 1.25rem; }
+    h1 { font-size:2rem; border-bottom:2px solid var(--rule); padding-bottom:.3rem; }
+    h2 { font-size:1.5rem; margin-top:2.5rem; border-bottom:1px solid var(--rule); padding-bottom:.2rem; }
+    h3.milestone { font-size:1.25rem; margin-top:2rem; color:var(--accent); }
+    h4.task { font-size:1.1rem; margin-top:1.5rem; }
+    dl.phase-meta { display:grid; grid-template-columns:max-content 1fr; gap:.25rem 1rem; }
+    dl.phase-meta dt { font-weight:600; color:var(--muted); }
+    code, pre { font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+    pre { background:#f6f8fa; padding:1rem; border-radius:6px; overflow:auto; }
+    code { background:#f6f8fa; padding:.1rem .3rem; border-radius:4px; }
+    pre code { background:none; padding:0; }
+    table { border-collapse:collapse; margin:.5rem 0; }
+    th, td { border:1px solid var(--rule); padding:.25rem .5rem; text-align:left; vertical-align:top; font-size:.9rem; }
+    ul.checklist { list-style:none; padding-left:0; }
+    ul.checklist > li::before { content:"☐ "; color:var(--muted); }
+    ul.checklist > li[data-checked="true"]::before { content:"☑ "; color:var(--done); }
+    .validate { color:var(--done); font-weight:600; }
+  </style>
+</head>
+<body>
+
+<h1 data-phase="1">Phase 1: Copy and rename</h1>
+<p>The following plan should be complete, but validate documentation, codebase patterns, and task sanity before implementing. Pay special attention to naming of existing utils, types, and models — import from the right files.</p>
+<p><strong>Preconditions (all checked on 2026-11-03):</strong> Node.js 24 (<code>node -v</code> → v24.x), npm 11, the TheForge source at <code>~/repos/theforge</code> (HEAD <code>3daebf9</code>, 370 Vitest tests green), Playwright browsers in <code>~/.cache/ms-playwright</code> (Chromium, Firefox, WebKit), <code>gh</code> authenticated as <code>DecafCoding</code>, <code>origin</code> = <code>git@github.com:DecafCoding/GameIdea.git</code>, <code>mkcert</code> at <code>/usr/bin/mkcert</code> (only for <code>npm run start:lan</code>).</p>
+
+<h2>Phase Description</h2>
+<p>Phase 1 (milestone M1 in <code>docs/mvp-plan.html</code>) turns the empty GameIdea repository into a renamed, story-free copy of TheForge that builds, tests and runs at the GameIdea ports, with the GameIdea design tokens, fonts, icons and shell in place. It writes no new product feature: every later phase builds on this copy.</p>
+<p>It bundles five work items:</p>
+<ol>
+  <li><strong>Copy</strong> the TheForge app, tooling, tests and CI into this repository.</li>
+  <li><strong>Rename</strong> app, database (<code>gameidea</code>), page title, board file extension and ports (5174 / 4174 / 4444).</li>
+  <li><strong>Strip story code</strong>: story card types, story pools, Setting kinds, kind-based connector rules, story genres and the 2-step genre New Board dialog; restart the board format at <code>formatVersion</code> 1 with no upgrade steps.</li>
+  <li><strong>Tokens</strong>: the full GameIdea token set (2 modes, 3 theme colors, no switch yet), every hard-coded chrome color moved into a token, and a lint check that fails hex and rgba in CSS modules.</li>
+  <li><strong>Shell and assets</strong>: bundled fonts, the Lucide icon set and the Hook Card icon in <code>public/icons/</code>, the top bar and rail at their locked sizes, and CI on GitHub Actions.</li>
+</ol>
+
+<h2>User Stories</h2>
+<p>As the developer of GameIdea<br>I want to start from a working copy of TheForge with every story name gone<br>So that Phase 2 builds game decks on a proven canvas, storage and test suite without odd bugs from left-over story code.</p>
+<p>As the developer<br>I want GameIdea on its own ports and its own database<br>So that TheForge and GameIdea run side by side and never touch each other's boards.</p>
+<p>As the developer<br>I want every chrome color behind a design token, with a lint check<br>So that Light mode and the Blue and Green themes in Phase 5 are a token job, not a hunt through CSS.</p>
+<p>As the pool author and reviewer<br>I want CI to run lint, type checks, unit tests, Playwright and the size checks on every pull request<br>So that a broken change cannot merge.</p>
+
+<h2>Problem Statement</h2>
+<p>The repository holds only planning docs. The architecture (<code>docs/architecture.html</code>) fixes GameIdea's stack, storage, layout and tooling as a copy of TheForge, but TheForge names 5 story types (Character, Motivation, Setting, Conflict, Description), Setting kinds (place, object, event), kind-based connector words, 4 story genres and 5 board-format upgrade steps throughout its code and tests. Its tokens use TheForge names and values, it hard-codes a handful of colors, and it runs on TheForge's ports and database. Left as is, the copy would collide with TheForge and leak story behavior into every later phase (the architecture's top-listed risk).</p>
+
+<h2>Solution Statement</h2>
+<p>Copy TheForge file for file (minus its docs, build output and secrets), then change it in small, always-green steps: rename identity and ports; map the 5 story types one-to-one onto the 5 GameIdea types with the same ring shapes (<code>character→role</code>, <code>motivation→goal</code>, <code>setting→setting</code>, <code>conflict→conflict</code>, <code>description→modifier</code>); remove the story pools and serve fixture pools to the browser tests; remove Setting kinds; replace the connector words with the GameIdea badge table for these 5 types; replace story genres with the 21 GameIdea genres on the 4 genre-tagged decks; restart the format at version 1. A Vitest check then fails on any story type or Setting kind name in <code>src/</code>. Finally, replace <code>tokens.css</code> with the handoff token set, migrate every <code>var(--…)</code>, add the color lint, vendor the icons and restyle the top bar and rail to the locked sizes. The other 7 GameIdea card types, <code>hook</code>, <code>modDeck</code>, <code>onTopOf</code>, <code>locked</code>, the pool split and the 200 px card are Phase 2.</p>
+
+<h2>Phase Metadata</h2>
+<dl class="phase-meta">
+  <dt>Phase Type</dt><dd data-field="type">Mixed (copy + refactor + new tooling)</dd>
+  <dt>Estimated Complexity</dt><dd data-field="complexity">High</dd>
+  <dt>Primary Systems Affected</dt><dd data-field="systems">Whole repo: build and tooling, shared/model, shared/pools, shared/storage, shared/ui tokens and icons, features (draw, card, canvas, boards, export, notes), app shell, tests/e2e, CI</dd>
+  <dt>Dependencies</dt><dd data-field="dependencies">None (first phase); TheForge source at ~/repos/theforge (HEAD 3daebf9); Node.js 24 + npm; Playwright browsers (Chromium, Firefox, WebKit); gh CLI authenticated; mkcert (optional, start:lan only); library versions pinned exactly as in TheForge package.json</dd>
+</dl>
+
+<h2>Context References</h2>
+
+<h3>Relevant Codebase Files — READ THESE BEFORE IMPLEMENTING</h3>
+<p>All TheForge paths are relative to <code>~/repos/theforge</code>; after Task 1 the same paths exist in <code>~/repos/gameidea</code>.</p>
+<ul>
+  <li><code>CLAUDE.md</code> (GameIdea, whole file) — Why: build scripts, ports, import rules, Key Patterns, Title Case UI rule, no AI attribution in commits/PRs.</li>
+  <li><code>docs/architecture.html</code> — Why: the authority; decisions <code>local-run</code>, <code>storage-engine</code>, <code>schema-shape</code>, <code>board-file-format</code>, <code>schema-versions</code>, <code>pool-files</code>, <code>import-rules</code>, <code>ci</code>, <code>nfr-targets</code>.</li>
+  <li><code>docs/design-system.html</code> §4–§8.1, §8.2 (deck button spec), §8.3, §14, §16 — Why: the M1 design work (tokens, fonts, icons, shell sizes).</li>
+  <li><code>docs/design-handoff/_ds/gameidea/styles.css</code> (193 lines) — Why: the authoritative token values; copied verbatim into <code>tokens.css</code>.</li>
+  <li><code>docs/design-handoff/mockups/Decks.dc.html</code>, <code>Main.dc.html</code>, <code>Settings.dc.html</code>, <code>States.dc.html</code>, <code>BoardList.dc.html</code> — Why: inline Lucide SVG paths for the deck and UI icons, and the hook path <code>M15 3v11a5 5 0 0 1-10 0v-3l3 3</code>.</li>
+  <li><code>docs/libraries/genres.json</code> — Why: the 21 genre names, in order; GENRES is derived from them.</li>
+  <li><code>package.json</code> (TheForge, lines 1-53) — Why: scripts and exact pinned versions to keep.</li>
+  <li><code>vite.config.ts</code> (lines 1-50) — Why: ports 5173/4173/4443 at lines 27, 41, 42; strictPort; the LAN HTTPS preview.</li>
+  <li><code>playwright.config.ts</code> (lines 22, 37) — Why: baseURL and webServer url on 4173; timing projects.</li>
+  <li><code>scripts/check-port-lock.mjs</code> (lines 68-72) — Why: the port pairs to change.</li>
+  <li><code>scripts/check-size.mjs</code> — Why: already tolerates a missing <code>public/pools/</code> (counts 0 bytes); keep as is.</li>
+  <li><code>.github/workflows/ci.yml</code> — Why: CI already runs lint, format:check, typecheck, test, build, size, port lock, Playwright; copy unchanged.</li>
+  <li><code>eslint.config.js</code> (lines 14-121) — Why: the import-rules enforcement with <code>no-restricted-imports</code>; keep unchanged.</li>
+  <li><code>src/shared/model/index.ts</code> (lines 8-136) — Why: FORMAT_VERSION 5, CARD_TYPES, GENRES, everyDeck, CueKind, CUES_PER_CARD, Cue, Card, Board, PoolCue — the root of every type change.</li>
+  <li><code>src/shared/pools/parsePool.ts</code> (lines 15-67), <code>loadPools.ts</code> — Why: kind and genre checks on pool files; loads one file per CARD_TYPES entry.</li>
+  <li><code>src/features/draw/drawCard.ts</code> (lines 30-80) — Why: genre filter and kind copy on draw.</li>
+  <li><code>src/features/canvas/connector.ts</code> (lines 44-90) — Why: the story connector tables and the kind-based Setting rule to replace; keep <code>showWord</code> and <code>connectorFor</code>.</li>
+  <li><code>src/features/canvas/dropZones.ts</code> (lines 17-98), <code>stack.ts</code> (lines 45-55, 115-125), <code>boardActions.ts</code> (lines 65-115) — Why: story-typed tuck hints, combine/swap/split/on-top, sibling ordering.</li>
+  <li><code>src/features/card/rings.ts</code> (lines 70-137), <code>CardView.tsx</code> (lines 30-60, 120-140, 210-222), <code>TypeDisc.tsx</code>, <code>CardView.module.css</code> (lines 5-25, 190-196) — Why: combine rules, type labels, kind icons, <code>--type-*</code> tokens.</li>
+  <li><code>src/features/export/schema.ts</code> (lines 14-43, 96-106), <code>upgrade.ts</code> (lines 10-64), <code>textFile.ts</code>, <code>boardFile.ts</code> (line 11), <code>importBoard.ts</code> (line 17) — Why: Zod ring rules and genres, upgrade steps, file names and the bad-import text.</li>
+  <li><code>src/shared/storage/db.ts</code> (lines 1-103), <code>boardStorage.ts</code> (line 11) — Why: Dexie name, class name, 5 schema versions with story upgrades, channel name.</li>
+  <li><code>src/shared/store/newBoard.ts</code> — Why: builds the board with deck genres.</li>
+  <li><code>src/features/boards/BoardList.tsx</code> (lines 1-10, 140-170, 260-280), <code>GenreDialog.tsx</code>, <code>genreChoice.ts</code> — Why: the 2-step New Board flow to reduce to a name-only dialog.</li>
+  <li><code>src/app/board/SideRail.tsx</code>, <code>SideRail.module.css</code>, <code>TopBar.tsx</code> (line 28), <code>TopBar.module.css</code>, <code>EmptyBoardPanel.tsx</code>, <code>src/app/list/ListScreen.tsx</code> (line 21), <code>src/features/draw/DeckButton.tsx</code>, <code>DeckButton.module.css</code> — Why: the shell and rail to rename and resize.</li>
+  <li><code>src/shared/ui/tokens.css</code>, <code>tokens.test.ts</code> (lines 1-84), <code>Icon.tsx</code> — Why: the token parity test pattern and the icon name union to mirror.</li>
+  <li><code>src/main.tsx</code> (lines 6-14, 26-35), <code>src/types/e2e.d.ts</code> — Why: bundled font imports and the <code>__THEFORGE_E2E_BOARD__</code> test seam.</li>
+  <li><code>src/features/canvas/BoardCanvas.tsx</code> (lines 336-344) — Why: the React Flow dot grid color uses <code>--grid-dot</code>.</li>
+  <li><code>src/test/fixtures/boards.ts</code> — Why: fixture boards (story keys, TUCK 59, SETTING_KINDS) used by Vitest and Playwright.</li>
+  <li><code>tests/e2e/helpers.ts</code>, <code>board-helpers.ts</code> (lines 1-60, 95-130, 220-239), <code>network.spec.ts</code> — Why: DeckName union, <code>createBoardWithGenres</code>, IndexedDB name, app origin; every spec imports <code>test</code> from <code>@playwright/test</code>.</li>
+</ul>
+
+<h3>New Files to Create</h3>
+<ul>
+  <li>Everything copied from TheForge in Task 1 (see that task's list).</li>
+  <li><code>tests/e2e/test.ts</code> — Playwright <code>test</code>/<code>expect</code> re-export with an auto fixture that serves <code>tests/e2e/fixtures/pools/*.json</code> for <code>**/pools/*.json</code>.</li>
+  <li><code>tests/e2e/fixtures/pools/{role,goal,conflict,setting,modifier}.json</code> — browser-test pools (8 cues each, game-flavored, made up for tests).</li>
+  <li><code>src/features/boards/NewBoardDialog.tsx</code> (+ <code>.module.css</code>, <code>.test.tsx</code>) — name-only New Board dialog.</li>
+  <li><code>src/shared/model/genres.test.ts</code> — GENRES equals the kebab-case of <code>docs/libraries/genres.json</code> names.</li>
+  <li><code>src/test/storyNames.test.ts</code> — fails on any TheForge story type or Setting kind name under <code>src/</code>.</li>
+  <li><code>scripts/check-css-colors.mjs</code> — the hard-coded color lint for CSS under <code>src/</code>.</li>
+  <li><code>public/icons/*.svg</code> — the GameIdea deck icons, UI icons and <code>hook.svg</code>.</li>
+  <li><code>tests/e2e/shell.spec.ts</code> — browser check of the locked shell sizes and the default theme attributes.</li>
+  <li><code>README.md</code> — replaced (it holds only a title today).</li>
+</ul>
+
+<h3>Relevant Documentation — READ BEFORE IMPLEMENTING</h3>
+<ul>
+  <li><a href="https://playwright.dev/docs/test-fixtures#automatic-fixtures">Playwright: automatic fixtures</a> — Why: the auto pool-routing fixture in <code>tests/e2e/test.ts</code>.</li>
+  <li><a href="https://playwright.dev/docs/api/class-route#route-fulfill">Playwright: route.fulfill({ path })</a> — Why: serving fixture pool files; later-registered routes win, so a spec that aborts pools still can.</li>
+  <li><a href="https://playwright.dev/docs/network#modify-requests">Playwright: network routing</a> — Why: routed requests still fire <code>page.on('request')</code>, so <code>network.spec.ts</code> keeps seeing <code>/pools/*.json</code>.</li>
+  <li><a href="https://vite.dev/config/server-options#server-strictport">Vite: server.strictPort</a> and <a href="https://vite.dev/config/preview-options#preview-port">preview.port</a> — Why: locked ports.</li>
+  <li><a href="https://vitest.dev/guide/cli">Vitest CLI (<code>--exclude</code>)</a> — Why: Task 1 and 2 run the suite without the token test until Task 10 replaces it.</li>
+  <li><a href="https://dexie.org/docs/Tutorial/Design#database-versioning">Dexie: database versioning</a> — Why: the new <code>gameidea</code> database starts at <code>version(1)</code> only.</li>
+  <li><a href="https://zod.dev/api#enums">Zod 4: z.enum</a> — Why: schema genres and card types.</li>
+  <li><a href="https://lucide.dev/icons/">Lucide icons</a> — Why: icon names (<code>user</code>, <code>flag</code>, <code>zap</code>, <code>map-pin</code>, <code>user-plus</code>, …) and their source paths.</li>
+  <li><a href="https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#onpull_request">GitHub Actions: on.pull_request</a> — Why: the copied CI trigger.</li>
+</ul>
+
+<h3>Patterns to Follow</h3>
+<p><strong>Module doc comment</strong> (every module starts with one; keep and update them when renaming):</p>
+<pre><code>/**
+ * Pool loading: fetches the 5 cue pool files from public/pools/ by web address,
+ * so a later server can serve them with no app change.
+ */</code></pre>
+<p><strong>Naming:</strong> camelCase functions, PascalCase components, kebab-case CSS module files beside components (<code>DeckButton.module.css</code>), tests beside code named <code>functionName_condition_expectedResult</code>:</p>
+<pre><code>it('tokens_everyHandoffToken_hasSameValue', () =&gt; { … });</code></pre>
+<p><strong>Error handling:</strong> plain <code>Error</code> with a sentence a person can read; pools are checked by hand (Zod is only for <code>features/export/</code>):</p>
+<pre><code>if (data.type !== type) {
+  throw new Error(`The ${type} pool file says its type is ${String(data.type)}.`);
+}</code></pre>
+<p><strong>Logging:</strong> none. <code>no-console</code> is an ESLint error; user-facing failures go through <code>Banner</code> (<code>src/shared/ui/Banner.tsx</code>).</p>
+<p><strong>Imports:</strong> leave a feature with the <code>@/</code> alias, never <code>../</code>; use another feature only through its <code>index.ts</code> (<code>eslint.config.js</code> lines 26-45).</p>
+<p><strong>Inline type colors</strong> (TSX passes a token, never a value) — <code>src/features/card/TypeDisc.tsx</code>:</p>
+<pre><code>style={{ width: size, height: size, background: `var(--type-${type})` }}   // becomes var(--deck-${type})</code></pre>
+<p><strong>Script style</strong> — <code>scripts/check-size.mjs</code>: ESM, a doc comment naming the architecture decision, <code>process.stdout.write</code> of PASS/FAIL lines, <code>process.exit(failed ? 1 : 0)</code>.</p>
+
+<h2>Implementation Plan</h2>
+<p><strong>Rendering:</strong> Milestones</p>
+<p><strong>Rationale:</strong> 16 tasks with clear sub-layers (copy and rename → story removal → tokens, icons and shell → full check). Tasks inside a layer are coupled (each story-removal step changes model, features and tests together); layers are loosely coupled. Every task leaves typecheck, lint and Vitest green.</p>
+
+<h3 class="milestone" data-milestone="1">Milestone 1: Copy and rename</h3>
+<p>A byte-for-byte TheForge copy that builds, then the same copy under the GameIdea name and ports.</p>
+<p><strong>Validation checkpoint:</strong> <code>npm run build &amp;&amp; node scripts/check-port-lock.mjs</code> passes for 5174 and 4174, and the built app answers on 4174 with title GameIdea (TheForge may be running on 4173 at the same time; that must not matter):</p>
+<pre><code>npm run build &gt;/dev/null &amp;&amp; node scripts/check-port-lock.mjs &amp;&amp; (npx vite preview &gt;/tmp/gi-preview.log 2&gt;&amp;1 &amp; echo $! &gt; /tmp/gi-preview.pid; for i in $(seq 1 30); do curl -fsS http://localhost:4174/ &gt;/dev/null 2&gt;&amp;1 &amp;&amp; break; sleep 1; done; curl -fsS http://localhost:4174/ | grep -q '&lt;title&gt;GameIdea&lt;/title&gt;'; rc=$?; kill $(cat /tmp/gi-preview.pid); exit $rc)</code></pre>
+
+<h4 class="task" data-task="1">Task 1: Copy the TheForge source into the repository</h4>
+<p>Bring over the app, tooling, tests and CI exactly as they are, so later tasks change a known-good baseline.</p>
+<ul>
+  <li><strong>IMPLEMENT:</strong> from the repo root run <code>rsync -a --exclude .git --exclude node_modules --exclude dist --exclude docs --exclude test-results --exclude playwright-report --exclude .certs --exclude README.md --exclude CLAUDE.md ~/repos/theforge/ ./</code>. That copies <code>.gitattributes</code>, <code>.github/</code>, <code>.gitignore</code>, <code>.npmrc</code>, <code>.nvmrc</code>, <code>.prettierignore</code>, <code>.prettierrc.json</code>, <code>eslint.config.js</code>, <code>index.html</code>, <code>package.json</code>, <code>package-lock.json</code>, <code>playwright.config.ts</code>, <code>public/</code>, <code>scripts/</code>, <code>src/</code>, <code>tests/</code>, <code>tsconfig.json</code>, <code>vite.config.ts</code>. Then <code>npm ci</code>. Do not touch <code>docs/</code>, <code>CLAUDE.md</code> or <code>concept.md</code>.</li>
+  <li><strong>GOTCHA:</strong> <code>src/shared/ui/tokens.test.ts</code> reads <code>docs/handoff/_ds/theforge-dark-table/styles.css</code>, which is not copied, so that one test file fails until Task 10 rewrites it. Every other test must pass. Do not edit versions in <code>package.json</code>: they are pinned exactly and must match TheForge (<code>stack-language</code>).</li>
+  <li><strong>GOTCHA:</strong> <code>.prettierignore</code> already ignores <code>docs/</code> and <code>src/shared/ui/tokens.css</code>; keep both lines.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npm ci &amp;&amp; npm run typecheck &amp;&amp; npm run lint &amp;&amp; npm run format:check &amp;&amp; npx vitest run --exclude src/shared/ui/tokens.test.ts &amp;&amp; npm run build &amp;&amp; test -f .github/workflows/ci.yml &amp;&amp; test ! -d docs/handoff</code></li>
+</ul>
+
+<h4 class="task" data-task="2">Task 2: Rename the app to GameIdea and move it to ports 5174, 4174 and 4444</h4>
+<p>Give the copy its own identity and storage so it never collides with TheForge (<code>local-run</code>, <code>storage-engine</code>, <code>board-file-format</code>).</p>
+<ul>
+  <li><strong>IMPLEMENT:</strong> <code>package.json</code> <code>"name": "gameidea"</code> (regenerate the lock file's name with <code>npm install --package-lock-only</code>; no version changes). <code>index.html</code> <code>&lt;title&gt;GameIdea&lt;/title&gt;</code>. Wordmarks "TheForge" → "GameIdea" in <code>TopBar.tsx</code> and <code>ListScreen.tsx</code>. <code>db.ts</code>: <code>DB_NAME = 'gameidea'</code>, class <code>TheForgeDb</code> → <code>GameIdeaDb</code>. <code>boardStorage.ts</code>: <code>CHANNEL_NAME = 'gameidea-boards'</code>. <code>boardFile.ts</code>: <code>&lt;name&gt;.gameidea.json</code>. <code>importBoard.ts</code>: <code>BAD_IMPORT_TEXT = 'This file is not a GameIdea board file. Nothing changed.'</code> (design §9.13). Test seam <code>__THEFORGE_E2E_BOARD__</code> → <code>__GAMEIDEA_E2E_BOARD__</code> in <code>src/types/e2e.d.ts</code>, <code>src/main.tsx</code>, <code>tests/e2e/board-helpers.ts</code> and every doc comment. Ports: <code>vite.config.ts</code> dev 5174, preview 4174, LAN preview 4444 (update the doc comment); <code>playwright.config.ts</code> baseURL and webServer url <code>http://localhost:4174</code>; <code>scripts/check-port-lock.mjs</code> pairs <code>['dev', 5174, []]</code>, <code>['preview', 4174, ['preview']]</code> and its comment; <code>tests/e2e/network.spec.ts</code> <code>APP_ORIGIN = 'http://localhost:4174'</code>; <code>indexedDB.open('theforge'…)</code> → <code>'gameidea'</code> in e2e helpers and specs; file names <code>*.forge.json</code> → <code>*.gameidea.json</code> in e2e specs and unit tests.</li>
+  <li><strong>IMPLEMENT:</strong> replace <code>README.md</code> with a GameIdea README adapted from TheForge's (<code>~/repos/theforge/README.md</code> sections Requirements, Setup, Scripts, Ports, Local Network, Board List, Export And Import, Project Layout, CI). Use the GameIdea ports, <code>.gameidea.json</code>, the mkcert command <code>mkcert -cert-file .certs/lan.pem -key-file .certs/lan-key.pem &lt;LAN address&gt; localhost</code>, and state that decks stay off until the Phase 2 pools ship. Drop the story-specific sections (deck descriptions, genre dialog). Title Case headings.</li>
+  <li><strong>IMPLEMENT (local only, not committed):</strong> if <code>~/repos/theforge/.certs/</code> exists, copy its 2 files into <code>.certs/</code> so <code>npm run start:lan</code> works; <code>.certs/</code> is git-ignored.</li>
+  <li><strong>GOTCHA:</strong> "forget"/"forgets" are English words in comments (<code>boardStorage.ts</code> line 104); grep for the exact TheForge identifiers, not the substring "forge".</li>
+  <li><strong>GOTCHA:</strong> the error text in <code>vite.config.ts</code> <code>lanPreview()</code> names <code>.certs/</code>; keep it, it is GameIdea's own folder.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>! grep -rnE "theforge|TheForge|THEFORGE|\.forge\.json" src tests scripts index.html package.json vite.config.ts playwright.config.ts eslint.config.js &amp;&amp; ! grep -n "\.forge\.json" README.md &amp;&amp; ! grep -rnwE "5173|4173|4443" src tests scripts vite.config.ts playwright.config.ts &amp;&amp; grep -q '"name": "gameidea"' package.json &amp;&amp; npm run typecheck &amp;&amp; npm run lint &amp;&amp; npx vitest run --exclude src/shared/ui/tokens.test.ts &amp;&amp; npm run build &amp;&amp; node scripts/check-port-lock.mjs</code></li>
+</ul>
+
+<h3 class="milestone" data-milestone="2">Milestone 2: Remove story code</h3>
+<p>Every story type, story pool, Setting kind, kind-based connector rule, story genre and old format step is gone; the 5 surviving types carry GameIdea names.</p>
+<p><strong>Validation checkpoint:</strong> the copied browser suite passes in Chromium against fixture pools, and the story-name test passes: <code>npx vitest run src/test/storyNames.test.ts &amp;&amp; npx playwright test --project=chromium</code>. This proves the renamed types, fixture pools, name-only New Board, new connectors and format 1 work together end to end (draw → tuck → badge → export → import).</p>
+
+<h4 class="task" data-task="3">Task 3: Rename the 5 story card types to role, goal, conflict, setting and modifier</h4>
+<p>Map each story type onto the GameIdea type with the same ring shape, so all copied card machinery keeps working: <code>character→role</code> (4 cues, can combine), <code>motivation→goal</code> (2), <code>setting→setting</code> (4, can combine), <code>conflict→conflict</code> (2), <code>description→modifier</code> (4 adjectives).</p>
+<ul>
+  <li><strong>IMPLEMENT:</strong> <code>src/shared/model/index.ts</code>: <code>CARD_TYPES = ['role', 'goal', 'conflict', 'modifier', 'setting'] as const</code> (GameIdea rail order: core, then modifiers, then optional); <code>CUES_PER_CARD = { role: 4, goal: 2, conflict: 2, modifier: 4, setting: 4 }</code>; add <code>DECK_NAME: Record&lt;CardType, string&gt; = { role: 'Player Role', goal: 'Goal', conflict: 'Conflict', modifier: 'Modifier', setting: 'Setting' }</code> and use it instead of the duplicated <code>NAME</code> maps in <code>CardView.tsx</code>, <code>DeckButton.tsx</code>, <code>textFile.ts</code>, <code>CardTestPage.tsx</code>. <code>DeckButton</code> captions become <code>role: '4 cues · who you play'</code>, <code>goal: '2 cues · what you must do'</code>, <code>conflict: '2 cues · what stands in the way'</code>, <code>modifier: '4 cues · an adjective'</code>, <code>setting: '4 cues · where it happens'</code> (temporary; Task 13 removes captions). Rename through every module, test, fixture, CSS module selector, <code>data-*</code> value and doc comment: combine bases are <code>role</code> and <code>setting</code> (<code>rings.ts</code>, <code>dropZones.ts</code>, <code>boardActions.ts</code>), sibling ordering puts <code>modifier</code> first (<code>stack.ts</code>), the normal tuck place is a Goal under a Player Role and a Conflict under a Goal (<code>dropZones.ts</code>), <code>EmptyBoardPanel</code> draws a Player Role ("Draw A Player Role"; body "A good first set is a Player Role, a Goal and a Conflict."). Rename the 5 type tokens in <code>tokens.css</code> keeping values (<code>--type-character</code>→<code>--type-role</code>, <code>--type-motivation</code>→<code>--type-goal</code>, <code>--type-description</code>→<code>--type-modifier</code>, and their <code>-dark</code> pairs); Task 10 replaces the file. Rename <code>public/pools/character.json</code>→<code>role.json</code>, <code>motivation.json</code>→<code>goal.json</code>, <code>description.json</code>→<code>modifier.json</code> with <code>git mv</code> and set each file's <code>"type"</code> (temporary; Task 4 deletes them). Fixture keys in <code>src/test/fixtures/boards.ts</code> become <code>role</code>, <code>modifier</code>, <code>modifier2</code>, <code>goal</code>, <code>conflict</code>, <code>setting</code>. E2E: <code>DeckName = 'Player Role' | 'Goal' | 'Conflict' | 'Modifier' | 'Setting'</code>; locators "Draw A Player Role" etc.; rename the e2e <code>DECK_LABEL</code> map.</li>
+  <li><strong>IMPLEMENT:</strong> reword English uses of the 3 words in comments and UI copy too (for example "A Description with no cards…" → "A Modifier with no cards…"), because Task 9 fails on any whole-word match in <code>src/</code>.</li>
+  <li><strong>PATTERN:</strong> <code>CUES_PER_CARD</code> drives ring size (<code>drawCard.ts</code> line 59); <code>RING_RULES</code> in <code>schema.ts</code> lines 24-30 — keep the same shape per renamed type.</li>
+  <li><strong>GOTCHA:</strong> <code>DeckGenres</code> is still <code>Record&lt;CardType, Genre[]&gt;</code> here, so <code>everyDeck</code>, <code>deckGenresSchema</code> and the Dexie upgrade steps rename their keys too; Tasks 7 and 8 replace them. Keep <code>kind</code> handling unchanged in this task (Task 5).</li>
+  <li><strong>GOTCHA:</strong> <code>"characters"</code> (plural English, <code>textFile.ts</code> line 22) is not a whole-word match and may stay.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>! grep -rniwE "character|motivation|description" src --include=*.ts --include=*.tsx --include=*.css &amp;&amp; ! grep -rnE "'(Character|Motivation|Description)'|Draw A (Character|Motivation|Description)" tests &amp;&amp; npm run typecheck &amp;&amp; npm run lint &amp;&amp; npx vitest run --exclude src/shared/ui/tokens.test.ts</code></li>
+</ul>
+
+<h4 class="task" data-task="4">Task 4: Remove the story pools and serve fixture pools to the browser tests</h4>
+<p>The story cue text must not ship (<code>pool-files</code>: the GameIdea pools come from the Phase 2 split). The app then shows the pool-load error with Retry and keeps boards working (<code>pool-load-failure</code>); browser tests get their own pools.</p>
+<ul>
+  <li><strong>IMPLEMENT:</strong> <code>git rm -r public/pools scripts/convert-pools.mjs src/shared/pools/poolFiles.test.ts</code> (the floor test on <code>public/pools/</code> returns in Phase 2 with the new floors). Keep <code>loadPools.ts</code> (it fetches <code>pools/&lt;type&gt;.json</code> for each <code>CARD_TYPES</code> entry) and its fetch-mocked tests.</li>
+  <li><strong>IMPLEMENT:</strong> create <code>tests/e2e/fixtures/pools/role.json</code>, <code>goal.json</code>, <code>conflict.json</code>, <code>modifier.json</code>, <code>setting.json</code>: each <code>{ "type": "&lt;type&gt;", "cues": [8 cues] }</code> with ids <code>&lt;type&gt;-test-01…08</code>, made-up game-flavored text (role "lighthouse keeper", goal "keep the light on", conflict "the tide rises every night", modifier "stolen", setting "frozen prairie" and similar), every cue <code>"genres": ["generic"]</code> and setting cues <code>"kind": "place"</code> so the current <code>parsePool</code> accepts them (Tasks 5 and 7 strip both fields).</li>
+  <li><strong>IMPLEMENT:</strong> create <code>tests/e2e/test.ts</code>: <code>export const test = base.extend&lt;{ fixturePools: void }&gt;({ fixturePools: [async ({ page }, use) =&gt; { await page.route('**/pools/*.json', (route) =&gt; route.fulfill({ path: join(FIXTURE_DIR, basename(new URL(route.request().url()).pathname)) })); await use(); }, { auto: true }] }); export { expect } from '@playwright/test';</code>. Change every spec and helper that imports <code>test</code> from <code>@playwright/test</code> to import <code>test</code>/<code>expect</code> from <code>./test</code> (types like <code>Page</code>, <code>Locator</code> may still come from <code>@playwright/test</code>). A spec that tests the pool failure banner registers its own <code>page.route</code> after the fixture, which wins.</li>
+  <li><strong>GOTCHA:</strong> routed requests still fire <code>page.on('request')</code> with the app's own URL, so <code>network.spec.ts</code>'s <code>/pools/\w+\.json$/</code> assertion still holds. <code>scripts/check-size.mjs</code> already counts a missing <code>public/pools/</code> as 0 bytes.</li>
+  <li><strong>GOTCHA:</strong> a missing fixture file makes <code>route.fulfill({ path })</code> throw; all 5 <code>CARD_TYPES</code> need a file.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>test ! -d public/pools &amp;&amp; test ! -f scripts/convert-pools.mjs &amp;&amp; for t in role goal conflict modifier setting; do node -e "const p=require('./tests/e2e/fixtures/pools/$t.json'); if(p.type!=='$t'||p.cues.length&lt;8) process.exit(1)" || exit 1; done &amp;&amp; ! grep -rnE "import \{[^}]*\btest\b[^}]*\} from '@playwright/test'" tests/e2e &amp;&amp; npm run typecheck &amp;&amp; npm run lint &amp;&amp; npx vitest run --exclude src/shared/ui/tokens.test.ts &amp;&amp; npx playwright test --project=chromium</code></li>
+</ul>
+
+<h4 class="task" data-task="5">Task 5: Remove Setting kinds</h4>
+<p>GameIdea Setting cues are places only and carry no kind (<code>module-layout</code>: card/ loses the Setting kinds and their icons).</p>
+<ul>
+  <li><strong>IMPLEMENT:</strong> remove <code>CueKind</code> and <code>Cue.kind</code>/<code>PoolCue.kind</code> from <code>shared/model</code>; remove <code>KINDS</code>/<code>isKind</code> and both kind branches from <code>parsePool.ts</code> (a <code>kind</code> key on any cue is now simply ignored—do not copy it); remove the kind copy from <code>drawCard.ts</code> (cues are <code>{ text }</code>); remove <code>KIND_ICON</code> from <code>TypeDisc.tsx</code> and the kind disc/strip icon and <code>data-kind</code> from <code>CardView.tsx</code> (the disc always shows <code>TYPE_ICON[card.type]</code>); remove the <code>kind</code> field and the "kind it may not have" refinement from <code>export/schema.ts</code>; remove <code>Below.kind</code> from <code>connector.ts</code> and its caller in <code>ConnectorBadge.tsx</code>/<code>stack.ts</code> (Task 6 rewrites the word table; for now the Setting list is the old <code>place</code> list); remove <code>SETTING_KINDS</code> from fixtures; delete the <code>cube</code> and <code>burst</code> icon files and names (<code>Icon.tsx</code>, <code>tokens.test.ts</code> ICONS list). Strip <code>"kind"</code> from <code>tests/e2e/fixtures/pools/setting.json</code>. Update or delete unit and e2e assertions about kinds (for example kind-icon tests in <code>CardView.test.tsx</code>, kind connector tests, the kind case in <code>schema.test.ts</code>).</li>
+  <li><strong>GOTCHA:</strong> <code>kind</code> is also a normal identifier in TheForge (<code>dropAction(...).kind</code>, <code>Banner kind="warning"</code>, drag <code>kind: 'card' | 'note'</code>). Leave those; only Setting kinds go. <code>typeof value === 'object'</code> checks are not Setting kinds either.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>! grep -rnE "CueKind|KIND_ICON|\bKINDS\b|SETTING_KINDS|data-kind|'place'|'event'|\"place\"|\"event\"" src tests &amp;&amp; ! grep -rn "\"kind\"" tests/e2e/fixtures &amp;&amp; npm run typecheck &amp;&amp; npm run lint &amp;&amp; npx vitest run --exclude src/shared/ui/tokens.test.ts</code></li>
+</ul>
+
+<h4 class="task" data-task="6">Task 6: Replace the story connector words with the GameIdea badge table for the 5 types</h4>
+<p>Kind-based and story connector rules go; the badges between the 5 present types use the GameIdea words from <code>docs/mvp-plan.html</code> (Connector badges) and design §9.6. Phase 2 adds the Hook Card pair and the other decks.</p>
+<ul>
+  <li><strong>IMPLEMENT:</strong> rewrite the tables and <code>connectorWords(upper, lower)</code> in <code>src/features/canvas/connector.ts</code> (2 parameters, keyed by the lower card):
+    <table>
+      <tr><th>Pair</th><th>Words, default first</th></tr>
+      <tr><td>upper and lower both <code>role</code></td><td><code>['and a', 'with a']</code></td></tr>
+      <tr><td>same deck, not <code>role</code>, not <code>modifier</code></td><td><code>['and']</code></td></tr>
+      <tr><td>lower <code>goal</code></td><td><code>['to', 'until', 'so you can']</code></td></tr>
+      <tr><td>lower <code>conflict</code></td><td><code>['but', 'while', 'even though']</code></td></tr>
+      <tr><td>lower <code>setting</code></td><td><code>['in the', 'aboard the', 'inside the']</code></td></tr>
+      <tr><td>lower <code>role</code> under a non-role; lower <code>modifier</code></td><td><code>null</code> (no badge)</td></tr>
+    </table>
+    The same-deck rule is checked first. Keep <code>showWord</code> ("a" → "an" before a vowel), <code>connectorFor</code>, the saved-word rule and the <code>Connector</code>/<code>ConnectorOption</code> shapes. Update the module doc comment with a GameIdea example ("lighthouse keeper to keep the light on but the tide rises every night"). Rewrite <code>connector.test.ts</code> for every row above, plus <code>showWord('and a', 'archer') === 'and an'</code>, a saved word kept while in the list, and a saved word dropped when the pair changes. Update the <code>ConnectorBadge</code>/e2e expectations that name story words.</li>
+  <li><strong>GOTCHA:</strong> "You are a / an" belongs to a Player Role under a Hook Card, which does not exist until Phase 2; do not add it here.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>! grep -rnE "wants to|hunted by|working for|swore to|aboard the', 'beneath|from the', 'from a" src &amp;&amp; npx vitest run src/features/canvas/connector.test.ts &amp;&amp; npm run typecheck &amp;&amp; npm run lint &amp;&amp; npx vitest run --exclude src/shared/ui/tokens.test.ts</code></li>
+</ul>
+
+<h4 class="task" data-task="7">Task 7: Replace story genres with the 21 GameIdea genres and make New Board ask only for a name</h4>
+<p>The board's <code>genres</code> field takes its final v1 shape (<code>schema-shape</code>): one list for each of the 4 genre-tagged decks, all 21 genres on for a new board. The story genre picker goes; the Genres panel is Phase 3.</p>
+<ul>
+  <li><strong>IMPLEMENT:</strong> <code>shared/model</code>: <code>GENRES</code> = the 21 kebab-case ids in <code>docs/libraries/genres.json</code> order: <code>roguelike, metroidvania, platformer, puzzle, shooter, melee-action, fighting, rpg, open-world, survival-craft, horror, builder-management, life-sim, vehicle-sim-racing, strategy, deckbuilder-cards, narrative, stealth-immersive-sim, sandbox, party-multiplayer, rhythm-arcade</code> (rule: lowercase, drop <code>&amp;</code>, runs of spaces and punctuation become one <code>-</code>). Add <code>GENRE_DECKS = ['mechanic', 'resource', 'progression', 'constraint'] as const</code>, <code>type GenreDeck</code>, <code>DeckGenres = Record&lt;GenreDeck, Genre[]&gt;</code>, and <code>allGenresOn(): DeckGenres</code> replacing <code>everyDeck</code>. <code>PoolCue.genres</code> becomes optional. Create <code>src/shared/model/genres.test.ts</code>: reads <code>docs/libraries/genres.json</code> keys, applies the rule, expects <code>GENRES</code> exactly, and checks length 21 with no <code>generic</code>.</li>
+  <li><strong>IMPLEMENT:</strong> <code>parsePool.ts</code>: a cue's <code>genres</code> is required (non-empty, known, no repeats) when the pool type is in <code>GENRE_DECKS</code> and must be absent otherwise (none of the 5 Phase 1 types is genre-tagged). <code>drawCard(type, pool, genres: readonly Genre[] | null, options)</code>: <code>null</code> draws from the full pool; a list keeps only cues sharing a genre (keep the filter and its unit tests, using pools whose cues carry genres). The board screen passes <code>null</code> for every Phase 1 type. <code>newBoard.ts</code>: <code>genres: allGenresOn()</code>, options keep only <code>id</code>, <code>now</code>, <code>name</code>. <code>export/schema.ts</code>: <code>deckGenresSchema</code> has the 4 <code>GENRE_DECKS</code> keys. Strip <code>"genres"</code> from all 5 fixture pool files; fixture boards use <code>allGenresOn()</code>.</li>
+  <li><strong>IMPLEMENT:</strong> delete <code>src/features/boards/GenreDialog.tsx</code>, <code>GenreDialog.module.css</code>, <code>GenreDialog.test.tsx</code>, <code>genreChoice.ts</code>, <code>genreChoice.test.ts</code> and <code>tests/e2e/genres.spec.ts</code>. Create <code>NewBoardDialog.tsx</code> (+ CSS module, test) on <code>shared/ui</code> <code>Dialog</code>: title "New Board", a Name field 44 tall, help line "All 21 genres start on. Change them in the Genres panel.", buttons "Cancel" and "Make Board" (primary); Make Board is disabled until the trimmed name has text; Enter submits, Esc cancels and returns focus to New Board. <code>BoardList.tsx</code> uses it and calls <code>createBoard(name)</code>. E2E: replace <code>createBoardWithGenres</code> with <code>createBoard(page, name = 'Test Board')</code> and update callers.</li>
+  <li><strong>GOTCHA:</strong> import keeps the file's genres (no dialog), as today. Genre changes are never in undo (CLAUDE.md); nothing here changes that.</li>
+  <li><strong>GOTCHA:</strong> UI copy follows CLAUDE.md Title Case for titles and buttons ("New Board", "Make Board"); the help line stays in sentence case as written in design §9.3.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>! grep -rnE "'generic'|'sci-fi'|'cyberpunk'|'space-opera'|everyDeck|GenreDialog|genreChoice|createBoardWithGenres" src tests &amp;&amp; ! grep -rn "\"genres\"" tests/e2e/fixtures &amp;&amp; npx vitest run src/shared/model/genres.test.ts src/features/boards &amp;&amp; npm run typecheck &amp;&amp; npm run lint &amp;&amp; npx vitest run --exclude src/shared/ui/tokens.test.ts</code></li>
+</ul>
+
+<h4 class="task" data-task="8">Task 8: Restart the board format at version 1 with no upgrade steps</h4>
+<p>The copied upgrade steps (versions 1 to 5) upgrade story boards and are removed; the upgrade mechanism stays (<code>board-file-format</code>, <code>schema-versions</code>).</p>
+<ul>
+  <li><strong>IMPLEMENT:</strong> <code>FORMAT_VERSION = 1</code> in <code>shared/model</code>. <code>export/upgrade.ts</code>: <code>UPGRADES = {}</code>, remove <code>OLD_NOTE_TITLE</code> and <code>withNoteTitle</code>, keep <code>upgradeBoardFile</code> and the doc comment on how to add a step. <code>upgrade.test.ts</code>: keep the runner tests that pass their own <code>steps</code>/<code>target</code>, keep "every version below FORMAT_VERSION has a step" (true with none), add <code>upgradeBoardFile_version1File_returnsSameFile</code> and <code>upgradeBoardFile_version2File_returnsNull</code>; drop the story step tests. <code>shared/storage/db.ts</code>: only <code>this.version(1).stores({ boards: 'id', boardIndex: 'id, updatedAt' })</code>; rewrite the doc comment; remove the Dexie upgrade tests from <code>db.test.ts</code> and the older-schema seeding (<code>seedOldDatabase</code> or similar) from <code>tests/e2e/board-helpers.ts</code> and its specs. Fixtures and every test file that hard-codes <code>formatVersion: 5</code> or older versions use <code>FORMAT_VERSION</code> or <code>1</code>. Remove import tests of version 1–4 story files in <code>importBoard.test.ts</code>, <code>schema.test.ts</code> and <code>tests/e2e/import.spec.ts</code>.</li>
+  <li><strong>GOTCHA:</strong> the v1 Card shape here is <code>{ id, type, x, y, z, tuckedUnder, rings, connector? }</code>. Phase 2 adds <code>modDeck</code>, <code>onTopOf</code>, <code>locked</code> and the other card types; see Notes for why it may do so at version 1.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>grep -q "FORMAT_VERSION = 1;" src/shared/model/index.ts &amp;&amp; ! grep -rnE "OLD_NOTE_TITLE|Premise|version\((2|3|4|5)\)|formatVersion: [2-5]\b" src tests &amp;&amp; npx vitest run src/features/export src/shared/storage &amp;&amp; npm run typecheck &amp;&amp; npm run lint &amp;&amp; npx vitest run --exclude src/shared/ui/tokens.test.ts</code></li>
+</ul>
+
+<h4 class="task" data-task="9">Task 9: Add the story-name check on src/</h4>
+<p>The M1 pass bar search becomes a durable unit test, so CI fails if story code ever comes back (architecture risk "Story code left in the copy").</p>
+<ul>
+  <li><strong>IMPLEMENT:</strong> <code>src/test/storyNames.test.ts</code> walks every <code>.ts</code>, <code>.tsx</code>, <code>.css</code> and <code>.json</code> file under <code>src/</code> except itself and reports <code>file:line</code> for: (1) whole-word, case-insensitive <code>character|motivation|description</code>; (2) <code>CueKind</code>, <code>KIND_ICON</code>, <code>SETTING_KINDS</code>, <code>data-kind</code>; (3) the string literals <code>'place'</code>, <code>'event'</code>, <code>'object'</code> (single or double quotes), skipping lines that match <code>/typeof\s+[\w.]+\s*[!=]==\s*['"]object['"]/</code>. Build the word list from fragments (<code>['char' + 'acter', …]</code>) so the file does not match itself even if the self-exclusion breaks. Test names: <code>storyNames_srcFiles_haveNoStoryTypeNames</code>, <code>storyNames_srcFiles_haveNoSettingKindNames</code>. The failure message lists every hit.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/test/storyNames.test.ts &amp;&amp; printf '// a character\n' &gt; src/zz-probe.ts &amp;&amp; (npx vitest run src/test/storyNames.test.ts &gt;/dev/null 2&gt;&amp;1; rc=$?; rm -f src/zz-probe.ts; test $rc -ne 0)</code></li>
+</ul>
+
+<h3 class="milestone" data-milestone="3">Milestone 3: Tokens, colors, icons and shell</h3>
+<p>The GameIdea token set, no hard-coded chrome colors, the GameIdea icons and the shell at its locked sizes.</p>
+<p><strong>Validation checkpoint:</strong> in a built app, switching <code>&lt;html data-mode="light" data-theme="green"&gt;</code> by script changes the top bar fill to <code>#FFFFFF</code> and the logo tile to <code>#3FB37F</code> while a card face stays <code>#F4F0E6</code> — proof that tokens, the lint-cleaned CSS and the shell compose (the switch UI is Phase 5). This is a step in <code>tests/e2e/shell.spec.ts</code> from Task 13: <code>npx playwright test tests/e2e/shell.spec.ts</code> in all 3 browsers.</p>
+
+<h4 class="task" data-task="10">Task 10: Replace tokens.css with the GameIdea token set and migrate every token use</h4>
+<p>Install the full token set from design §4–§6 (both modes and all 3 theme colors as data, no switch) and move every CSS and TSX token use to the GameIdea names (<code>fonts</code>; design §16 M1).</p>
+<ul>
+  <li><strong>IMPLEMENT:</strong> <code>src/shared/ui/tokens.css</code> = a 3-line header comment (source and authority), then the body of <code>docs/design-handoff/_ds/gameidea/styles.css</code> from its first <code>:root {</code> to the end, verbatim, then one more <code>:root</code> block headed <code>/* Carried over from TheForge: card geometry and motion, not colors. Phase 2 moves cards to --card-size. */</code> holding only the non-color tokens the copied CSS still uses: <code>--card: 250px</code>, the ring geometry tokens (<code>--ring-width</code>, <code>--ring-gap</code>, <code>--ring-inner-r</code>, <code>--ring-outer-r</code>, <code>--ring-split</code>) if used, and the motion tokens <code>--t-turn-90</code>, <code>--t-turn-180</code>, <code>--t-draw</code>, <code>--t-fade</code>, <code>--t-banner</code> with TheForge's reduced-motion media block. Set <code>&lt;html lang="en" data-mode="dark" data-theme="orange"&gt;</code> in <code>index.html</code>.</li>
+  <li><strong>IMPLEMENT:</strong> migrate every <code>var(--…)</code> in <code>src/**/*.css</code> and <code>src/**/*.tsx</code>:
+    <table>
+      <tr><th>TheForge</th><th>GameIdea</th></tr>
+      <tr><td><code>--ground</code></td><td><code>--bg</code> (page, buttons); <code>--canvas</code> on the canvas ground</td></tr>
+      <tr><td><code>--panel</code> / <code>--panel-hover</code></td><td><code>--surface</code> / <code>--surface-raised</code></td></tr>
+      <tr><td><code>--line</code> / <code>--line-strong</code></td><td><code>--border</code> / <code>--border-strong</code></td></tr>
+      <tr><td><code>--text-dim</code></td><td><code>--text-disabled</code></td></tr>
+      <tr><td><code>--paper</code>, <code>--paper-under-1</code>, <code>--paper-under-2</code>, <code>--paper-note</code>, <code>--paper-line</code></td><td><code>--card-face</code>, <code>--card-tucked-1</code>, <code>--card-tucked-2</code>, <code>--note-bg</code>, <code>--card-divider</code></td></tr>
+      <tr><td><code>--ink</code> / <code>--ink-muted</code> / <code>--ink-caption</code></td><td><code>--card-cue-active</code> (on cards), <code>--note-text</code> (on notes) / <code>--card-cue</code> / <code>--note-label</code></td></tr>
+      <tr><td><code>--adj</code> / <code>--adj-muted</code></td><td><code>--card-adjective-active</code> / <code>--card-adjective</code></td></tr>
+      <tr><td><code>--note-delete</code></td><td><code>--note-label</code></td></tr>
+      <tr><td><code>--type-&lt;t&gt;</code> / <code>--type-&lt;t&gt;-dark</code></td><td><code>--deck-&lt;t&gt;</code> / <code>--ring-hover-&lt;t&gt;</code></td></tr>
+      <tr><td><code>--ok</code>, <code>--wait</code>, <code>--fail</code>, <code>--warn-fill</code>, <code>--warn-line</code></td><td><code>--status-saved</code>, <code>--status-saving</code>, <code>--status-failed</code>, <code>--warn-bg</code>, <code>--warn-border</code></td></tr>
+      <tr><td><code>--shadow-card</code>, <code>--shadow-card-under</code>, <code>--shadow-card-drag</code>, <code>--shadow-strip</code></td><td><code>--shadow-card-raised</code>, <code>--shadow-card</code>, <code>--shadow-drag</code>, <code>--shadow-menu</code></td></tr>
+      <tr><td><code>--radius-button-inner</code> (7) / <code>--radius-key</code> (4)</td><td>literal <code>7px</code> / <code>5px</code> (design §5 "other radii")</td></tr>
+      <tr><td><code>--card-disc</code>, <code>--topbar-h</code>, <code>--hit-min</code>, <code>--font-ui</code>, <code>--grid-pitch</code></td><td><code>--card-center-icon</code>, <code>--top-bar-h</code>, <code>--button-h</code>, <code>--font-body</code>, <code>--grid-dot</code> (24px)</td></tr>
+      <tr><td><code>--grid-dot</code> (a color, <code>BoardCanvas.tsx</code> line 342)</td><td><code>color="var(--canvas-dot)"</code>, <code>gap={24}</code>, <code>size={1.2}</code> (design §8.3)</td></tr>
+    </table>
+    <code>--radius-panel</code> (10→12), <code>--radius-dialog</code> (12→14) and <code>--rail-w</code> (240→232) keep their names and take the new values. Local custom properties (<code>--card-type</code>, <code>--card-tint</code>, <code>--ring-color</code>, <code>--ring-dark</code>, <code>--slide-from</code>) stay. <code>global.css</code>: <code>background: var(--bg)</code>, <code>font-family: var(--font-body)</code>, focus outline <code>var(--accent)</code>.</li>
+  <li><strong>IMPLEMENT:</strong> rewrite <code>tokens.test.ts</code>: <code>tokens_handoffBody_isCopiedVerbatim</code> (the styles.css body from the first <code>:root {</code> appears unchanged in tokens.css); <code>tokens_carriedOverTokens_areAllowedAndNotColors</code> (every token defined outside that body is in a fixed <code>CARRIED_OVER</code> list and its value holds no <code>#</code>, <code>rgb</code> or <code>hsl</code>); <code>tokens_everyVarUsedInSrc_isDefined</code> (each <code>var(--name)</code> in <code>src/**/*.{css,tsx,ts}</code> is defined in tokens.css or as a local <code>--name:</code> / <code>'--name'</code> in <code>src/</code>, and template uses like <code>var(--deck-${type})</code> resolve for every <code>CARD_TYPES</code> entry). Keep the 2 icon tests as they are (Task 12 changes the list).</li>
+  <li><strong>GOTCHA:</strong> TheForge's <code>--tuck-offset: 59px</code> is not used in CSS; GameIdea's tokens.css defines <code>--tuck-offset: 56px</code> for Phase 2. TS keeps <code>CARD_SIZE = 250</code> and the 59 px tuck until Phase 2 (design §9.4 and §9.7 are M2 work).</li>
+  <li><strong>GOTCHA:</strong> the handoff file ends with a comment and no rule after it; copy it as is. Do not run Prettier on tokens.css (already in <code>.prettierignore</code>).</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>! grep -rnoE "var\(--(ground|panel|panel-hover|line|line-strong|text-dim|paper[a-z0-9-]*|ink[a-z-]*|adj[a-z-]*|type-[a-z-]+|ok|wait|fail|warn-fill|warn-line|topbar-h|hit-min|font-ui|grid-pitch|shadow-card-under|shadow-card-drag|shadow-strip|card-disc|radius-button-inner|radius-key|note-delete)\)" src &amp;&amp; grep -q 'data-mode="dark" data-theme="orange"' index.html &amp;&amp; npx vitest run src/shared/ui/tokens.test.ts &amp;&amp; npm run typecheck &amp;&amp; npm run lint &amp;&amp; npm test &amp;&amp; npm run build</code></li>
+</ul>
+
+<h4 class="task" data-task="11">Task 11: Remove hard-coded chrome colors and add the color lint check</h4>
+<p>Every chrome color comes from a token, and <code>npm run lint</code> fails on a hex, rgb(a) or hsl(a) value in CSS under <code>src/</code> (mvp-plan M1; CLAUDE.md Conventions).</p>
+<ul>
+  <li><strong>IMPLEMENT:</strong> fix the known literals: <code>shared/ui/Dialog.module.css</code> lines 21 and 62 → <code>var(--scrim)</code>, line 58 → <code>var(--shadow-dialog)</code>; <code>features/notes/NoteView.module.css</code> line 10 <code>#fff</code> → <code>var(--note-bg)</code> (design §9.12 note paper); <code>features/card/RingControl.module.css</code> lines 49-50 → <code>var(--card-face)</code> (design §9.4 arrows and dividers); keep white text on deck colors and on the danger fill as fixed card/deck colors with an allow marker: <code>color: #fff; /* fixed: white on deck color */</code> in <code>TypeDisc.module.css</code> and <code>ConnectorBadge.module.css</code>, <code>/* fixed: white on --danger */</code> in <code>Button.module.css</code>. Search again with the script below for anything else.</li>
+  <li><strong>IMPLEMENT:</strong> <code>scripts/check-css-colors.mjs</code>: walks <code>src/**/*.css</code> except <code>src/shared/ui/tokens.css</code>; for each line, a declaration ending in a <code>/* fixed: &lt;reason&gt; */</code> comment is allowed; otherwise strip <code>/* … */</code> comments and fail on <code>/#[0-9a-fA-F]{3,8}\b|\b(rgba?|hsla?)\(/</code>; prints <code>FAIL path:line: text</code> per hit and a final PASS/FAIL line; exits 1 on any hit. Doc comment cites mvp-plan M1 and design §4. <code>package.json</code>: <code>"lint": "eslint . &amp;&amp; node scripts/check-css-colors.mjs"</code> (CI already runs <code>npm run lint</code>).</li>
+  <li><strong>GOTCHA:</strong> multi-line comments — strip comments over the whole file text first, keeping line numbers (replace comment characters with spaces, keep newlines), and detect the allow marker on the original line.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npm run lint &amp;&amp; printf '.x { color: #123456; }\n.y { background: rgba(0, 0, 0, 0.5); }\n' &gt; src/zz-probe.module.css &amp;&amp; (node scripts/check-css-colors.mjs &gt;/tmp/gi-colors.log 2&gt;&amp;1; rc=$?; rm -f src/zz-probe.module.css; test $rc -ne 0 &amp;&amp; grep -q "zz-probe.module.css:1" /tmp/gi-colors.log &amp;&amp; grep -q "zz-probe.module.css:2" /tmp/gi-colors.log)</code></li>
+</ul>
+
+<h4 class="task" data-task="12">Task 12: Vendor the GameIdea icon set and the Hook Card icon</h4>
+<p>Ship the deck icons, the UI icons and the custom hook icon in <code>public/icons/</code> (design §7, §14); remove the story icons.</p>
+<ul>
+  <li><strong>IMPLEMENT:</strong> add SVGs in TheForge's wrapper (<code>&lt;svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"&gt;</code>, see <code>public/icons/undo.svg</code>), named by Lucide name. Deck icons (design §4.4): <code>user</code>, <code>repeat</code>, <code>battery</code>, <code>flag</code>, <code>zap</code>, <code>user-plus</code>, <code>battery-plus</code>, <code>map-pin-plus</code>, <code>map-pin</code>, <code>smile</code>, <code>rotate-ccw</code>, <code>trending-up</code>, <code>shield-x</code>; custom <code>hook</code> with path <code>M15 3v11a5 5 0 0 1-10 0v-3l3 3</code>. UI icons (design §7): <code>settings</code>, <code>sliders-horizontal</code>, <code>align-left</code> (Add note "lines"), <code>lock</code>, <code>x</code>, <code>minus</code>, <code>ellipsis</code>, <code>triangle-alert</code>, <code>refresh-cw</code>. Take paths from the inline SVGs in <code>docs/design-handoff/mockups/*.dc.html</code> (Decks.dc.html draws every deck icon); for any icon the mockups lack, unpack the Lucide source into the scratch directory with <code>npm pack lucide-static@$(npm view lucide-static version)</code> (not a dependency) and copy its paths, recording the version in the commit message. Keep TheForge's non-story UI icons (<code>undo</code>, <code>redo</code>, <code>note</code>, <code>trash</code>, <code>pencil</code>, <code>plus</code>, <code>download</code>, <code>chevron-down</code>, <code>file-text</code>, <code>board-file</code>, <code>upload</code>, <code>file-x</code>, <code>alert-circle</code>, <code>check</code>). Delete <code>person</code>, <code>target</code>, <code>pin</code>, <code>bolt</code>, <code>tag</code>, <code>anvil</code>.</li>
+  <li><strong>IMPLEMENT:</strong> update the <code>IconName</code> union in <code>Icon.tsx</code>; <code>TYPE_ICON = { role: 'user', goal: 'flag', conflict: 'zap', modifier: 'user-plus', setting: 'map-pin' }</code> in <code>TypeDisc.tsx</code> (Phase 2 picks the Modifier icon by <code>modDeck</code>); replace every other use of a deleted icon (for example the <code>anvil</code> logo becomes <code>hook</code>). Update <code>tokens.test.ts</code> ICONS to the full list and add <code>icons_everyIconFile_isUsedOrListed</code>: every <code>public/icons/*.svg</code> is in ICONS (no stray files).</li>
+  <li><strong>GOTCHA:</strong> icons render through a CSS mask in <code>currentColor</code>, so stroke color in the file does not matter but the stroke width does; <code>check.svg</code> stays at 2.6 (existing test).</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>for n in hook user repeat battery flag zap user-plus battery-plus map-pin-plus map-pin smile rotate-ccw trending-up shield-x settings sliders-horizontal align-left lock x minus ellipsis triangle-alert refresh-cw; do grep -q 'stroke-width="2.2"' public/icons/$n.svg || exit 1; done &amp;&amp; for n in person target pin bolt tag anvil cube burst; do test ! -f public/icons/$n.svg || exit 1; done &amp;&amp; npx vitest run src/shared/ui &amp;&amp; npm run typecheck &amp;&amp; npm run lint</code></li>
+</ul>
+
+<h4 class="task" data-task="13">Task 13: Build the shell at its locked sizes</h4>
+<p>Top bar, rail and canvas chrome to design §8.1, §8.2 (deck button spec) and §8.3. The grouped rail, Hook Card button, genre counts, Add note restyle and Settings are later phases.</p>
+<ul>
+  <li><strong>IMPLEMENT:</strong> <code>TopBar</code> (and the <code>ListScreen</code> header): height <code>var(--top-bar-h)</code>, padding 0 16, gap 16, fill <code>--surface</code>, bottom border 1 <code>--border</code>; logo tile 28 × 28, radius 6, fill <code>--accent</code>, <code>hook</code> icon 16 in <code>--on-accent</code>; "GameIdea" Display 17/700; divider 1 × 24; Undo/Redo 44 × 44 radius 8 border 1, icon 18; Export 44 tall. <code>SideRail</code>: width <code>var(--rail-w)</code> (232), padding 10 12 12, gap 4, fill <code>--surface</code>, right border 1 <code>--border</code>; the "Decks" heading takes the group label style (Display 11/600, 0.08em, uppercase, padding 8 4 2, <code>--text-muted</code>). <code>DeckButton</code>: no <code>TypeDisc</code> circle and no caption; min height <code>var(--rail-button-h)</code> (36), full width, padding 4 10, radius 8, border 1 <code>--border</code>, fill <code>--bg</code>, gap 10; <code>Icon</code> 18 colored <code>var(--rail-${type})</code>; label <code>DECK_NAME[type]</code> 14/600 <code>--text</code>; keep <code>aria-label</code> "Draw A …". Canvas: ground <code>--canvas</code>, zoom control and card count chip positions per §8.3 (16 from the edges). Keep the rail help panel and Add Note button (restyled in Phase 5).</li>
+  <li><strong>IMPLEMENT:</strong> <code>tests/e2e/shell.spec.ts</code> (imports from <code>./test</code>): <code>shell_topBar_is56Tall</code>, <code>shell_rail_is232Wide</code>, <code>shell_deckButtons_are36Tall</code> (each rail deck button's bounding box height is 36), <code>shell_html_defaultsToDarkOrange</code> (<code>data-mode="dark"</code>, <code>data-theme="orange"</code>, top bar background <code>rgb(35, 39, 47)</code>), <code>shell_fonts_areBundled</code> (<code>document.fonts.check('700 17px "Space Grotesk"')</code> after <code>document.fonts.ready</code>), and the milestone step <code>shell_themeAttributes_changeChromeNotCards</code> (open a fixture board with a card, set <code>data-mode="light"</code> and <code>data-theme="green"</code> by script, expect top bar <code>rgb(255, 255, 255)</code>, logo tile <code>rgb(63, 179, 127)</code>, card face <code>rgb(244, 240, 230)</code>). Update unit tests for <code>DeckButton</code>/<code>SideRail</code> that asserted the disc or caption.</li>
+  <li><strong>GOTCHA:</strong> rail buttons at 36 px are a recorded design deviation from the 44 px hit target (CLAUDE.md Conventions); do not "fix" them to 44.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npm run typecheck &amp;&amp; npm run lint &amp;&amp; npm test &amp;&amp; npx playwright test tests/e2e/shell.spec.ts --project=chromium</code></li>
+</ul>
+
+<h3 class="milestone" data-milestone="4">Milestone 4: Full check</h3>
+<p>The whole pass bar in all 3 browsers, exactly as CI will run it.</p>
+<p><strong>Validation checkpoint:</strong> every CI step passes locally in order (lint, format check, typecheck, unit tests, build, size, port lock, Playwright in Chromium, Firefox and WebKit including the timing projects), and the built app serves at 4174 with the story-name test green.</p>
+
+<h4 class="task" data-task="14">Task 14: Run the full check suite in all 3 browsers and fix regressions</h4>
+<p>"The copied tests pass" is the M1 pass bar; this task runs the CI sequence and fixes what the earlier Chromium-only runs missed.</p>
+<ul>
+  <li><strong>IMPLEMENT:</strong> run the CI steps from <code>.github/workflows/ci.yml</code> in order; fix every failure in the code (never by deleting a test that still describes a GameIdea behavior; a test that only describes removed story behavior may go, and the commit message says which). Check the timing projects (<code>@timing</code>) and <code>canvas-perf.spec.ts</code> still pass. Confirm <code>npm run format</code> leaves no diff. Confirm no <code>console.log</code> in <code>src/</code>.</li>
+  <li><strong>GOTCHA:</strong> WebKit and Firefox differ on downloads and color formats; the TheForge helpers (<code>downloadedName</code>, <code>backgroundRgb</code>) already handle that—reuse them.</li>
+  <li><strong>GOTCHA:</strong> <code>reuseExistingServer</code> is on outside CI; stop any server already on 4174 first so the run tests a fresh build.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npm run lint &amp;&amp; npm run format:check &amp;&amp; npm run typecheck &amp;&amp; npm test &amp;&amp; npm run build &amp;&amp; npm run size &amp;&amp; node scripts/check-port-lock.mjs &amp;&amp; npm run test:e2e &amp;&amp; ! grep -rn "console\.log" src</code></li>
+</ul>
+
+<h4 class="task" data-task="15">Task 15: Update README and progress for the finished phase</h4>
+<p>Leave the docs matching the code before the PR.</p>
+<ul>
+  <li><strong>IMPLEMENT:</strong> re-read <code>README.md</code> against the final scripts, ports, project layout (<code>src/</code> tree as it now exists, <code>tests/e2e/fixtures/pools/</code>, <code>scripts/check-css-colors.mjs</code>) and the "decks stay off until Phase 2 ships pools" note; fix drift. Confirm <code>docs/progress.html</code> marks every Phase 1 task done (the executor's per-task updates). Do not edit <code>CLAUDE.md</code> unless a script name changed (none should).</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>grep -q "5174" README.md &amp;&amp; grep -q "4174" README.md &amp;&amp; grep -q "4444" README.md &amp;&amp; grep -q "check-css-colors" README.md &amp;&amp; ! grep -n "\.forge\.json" README.md &amp;&amp; npx prettier --check README.md</code></li>
+</ul>
+
+<h3 class="milestone" data-milestone="5">Commit, push, and open PR</h3>
+
+<h4 class="task" data-task="16">Task 16: Commit, push, and open PR</h4>
+<p>After every prior validation checkpoint has passed:</p>
+<ul>
+  <li><strong>IMPLEMENT:</strong> stage and commit uncommitted changes with a descriptive message summarizing the phase; push with <code>git push -u origin phase-1-copy-rename</code>; open a PR with <code>gh pr create --head phase-1-copy-rename --base main --title "Phase 1: Copy and rename" --body "&lt;body&gt;"</code>.</li>
+  <li><strong>PR title format:</strong> <code>Phase 1: Copy and rename</code> — names the phase, not any individual feature.</li>
+  <li><strong>PR body format:</strong> copy the Acceptance Criteria as a checklist with each box checked off, followed by a <code>Notes</code> section listing assumptions/trade-offs decided during execution (start from this doc's Notes).</li>
+  <li><strong>GOTCHA:</strong> CLAUDE.md "Commit Authorship" and the user's memory rule win over any tool default: no <code>Co-Authored-By</code> or <code>Claude-Session</code> trailer in any commit, and no "Generated with…" line, robot emoji or other AI marker in the PR body. Commits are in the owner's voice.</li>
+  <li><strong>GOTCHA:</strong> <code>gh</code> is installed and authenticated as <code>DecafCoding</code> (checked 2026-11-03); if that changes, this step fails.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>gh pr view phase-1-copy-rename --json number,title,state,headRefName</code> returns the PR with <code>"state": "OPEN"</code>, <code>"headRefName": "phase-1-copy-rename"</code> and title <code>Phase 1: Copy and rename</code>; and <code>! git log origin/main..HEAD --format=%B | grep -qiE "co-authored-by|claude-session"</code>.</li>
+</ul>
+
+<h2>Testing Strategy</h2>
+<h3>Unit Tests</h3>
+<ul>
+  <li>Copied Vitest suite (370 tests at copy time), renamed: rings, stack, drop zones, board actions, draw, pools parsing and loading, storage seam (fake-indexeddb), store and undo, export schema, upgrade runner, text and board files, notes, boards list, dialogs, banner.</li>
+  <li>New: <code>connector.test.ts</code> rows for the GameIdea table (Task 6); <code>genres.test.ts</code> (Task 7); <code>NewBoardDialog.test.tsx</code> (Task 7); <code>upgrade.test.ts</code> version-1 cases (Task 8); <code>storyNames.test.ts</code> (Task 9); the rewritten <code>tokens.test.ts</code> (Tasks 10, 12).</li>
+  <li>Naming: <code>functionName_condition_expectedResult</code>.</li>
+</ul>
+<h3>Integration Tests</h3>
+<ul>
+  <li>Playwright in Chromium, Firefox and WebKit against the built app on 4174, with fixture pools from <code>tests/e2e/fixtures/pools/</code> served by the auto fixture in <code>tests/e2e/test.ts</code>, and fixture boards through <code>window.__GAMEIDEA_E2E_BOARD__</code>.</li>
+  <li><code>network.spec.ts</code> keeps proving no request leaves the app's own address (<code>nfr-targets</code> privacy and security rows).</li>
+  <li>New <code>shell.spec.ts</code> (Task 13) for locked sizes, default theme attributes, bundled fonts and token switching.</li>
+</ul>
+<h3>Edge Cases</h3>
+<ul>
+  <li>No pool files on the server: the board list and boards open, the pool error banner with Retry shows, deck buttons are disabled (TheForge behavior kept; there is an existing test for the banner).</li>
+  <li>Import of a version 2+ or story-shaped file: rejected with "This file is not a GameIdea board file. Nothing changed."; nothing changes.</li>
+  <li>A pool file for a non-tagged type that carries <code>genres</code>: rejected by <code>parsePool</code>.</li>
+  <li>New Board with only spaces: Make Board stays disabled.</li>
+  <li>Busy port 5174 or 4174: the command exits with an error naming the port (<code>check-port-lock.mjs</code>).</li>
+  <li>A <code>typeof x === 'object'</code> line does not trip the story-name test; a stray <code>'object'</code> literal does.</li>
+</ul>
+
+<h2>Validation Commands</h2>
+<h3>Level 1: Syntax &amp; Style</h3>
+<pre><code>npm run lint          # ESLint + scripts/check-css-colors.mjs, exit 0
+npm run format:check  # Prettier, exit 0
+npm run typecheck     # tsc --noEmit, exit 0</code></pre>
+<h3>Level 2: Unit Tests</h3>
+<pre><code>npm test
+npx vitest run src/test/storyNames.test.ts src/shared/ui/tokens.test.ts src/shared/model/genres.test.ts</code></pre>
+<h3>Level 3: Integration Tests</h3>
+<pre><code>npm run build &amp;&amp; npm run size &amp;&amp; node scripts/check-port-lock.mjs
+npm run test:e2e</code></pre>
+<h3>Level 4: Manual Validation</h3>
+<pre><code># Built app answers on 4174 with the GameIdea title, the empty pool state is handled, and no story names remain.
+set -e
+! grep -rniwE "character|motivation|description" src --include=*.ts --include=*.tsx --include=*.css
+! grep -rnE "CueKind|KIND_ICON|SETTING_KINDS|data-kind" src
+npm run build &gt;/dev/null
+npx vite preview &gt;/tmp/gi-preview.log 2&gt;&amp;1 &amp;
+PID=$!
+trap 'kill $PID 2&gt;/dev/null || true' EXIT
+for i in $(seq 1 30); do curl -fsS http://localhost:4174/ &gt;/dev/null 2&gt;&amp;1 &amp;&amp; break; sleep 1; done
+curl -fsS http://localhost:4174/ | grep -q '&lt;title&gt;GameIdea&lt;/title&gt;'
+curl -fsS http://localhost:4174/icons/hook.svg | grep -q 'M15 3v11'
+echo OK</code></pre>
+<h3>Level 5: Additional Validation (Optional)</h3>
+<ul>
+  <li>After the PR opens: <code>gh pr checks phase-1-copy-rename --watch</code> shows the CI job green.</li>
+  <li>With certificates in <code>.certs/</code>: <code>npm run start:lan</code> serves HTTPS on 4444 (full check is Phase 5).</li>
+</ul>
+
+<h2>Acceptance Criteria</h2>
+<ul class="checklist">
+  <li data-checked="false">The TheForge app, tooling, tests and CI are copied; library versions in <code>package.json</code> match TheForge exactly.</li>
+  <li data-checked="false">App name, page title, wordmarks, Dexie database (<code>gameidea</code>), tab channel, board file extension (<code>.gameidea.json</code>) and test seam are renamed; no TheForge identifier remains in src, tests, scripts or config.</li>
+  <li data-checked="false"><code>npm run dev</code> uses 5174, <code>npm start</code> 4174 and <code>npm run start:lan</code> 4444, all with <code>strictPort</code>; the port lock check passes.</li>
+  <li data-checked="false">A search of <code>src/</code> finds no story type names (character, motivation, description) and no Setting kind names; <code>storyNames.test.ts</code> enforces it.</li>
+  <li data-checked="false">Story pools, the pool converter and Setting kinds are removed; kind-based connector rules are replaced by the GameIdea badge words for the 5 present types.</li>
+  <li data-checked="false">Boards hold genres for the 4 genre-tagged decks only, with the 21 GameIdea genres all on for a new board; New Board asks only for a name.</li>
+  <li data-checked="false"><code>FORMAT_VERSION</code> is 1, there are no upgrade steps, the upgrade mechanism remains, and the Dexie database has schema version 1 only.</li>
+  <li data-checked="false"><code>tokens.css</code> holds the handoff token set verbatim (2 modes, 3 theme colors) plus only non-color carried-over tokens; every <code>var(--…)</code> in src resolves.</li>
+  <li data-checked="false">No hard-coded chrome color remains in CSS; <code>npm run lint</code> fails on a hex or rgba value in a CSS module.</li>
+  <li data-checked="false">Fonts are bundled; the GameIdea deck and UI icons and the Hook Card icon are in <code>public/icons/</code>; story icons are gone.</li>
+  <li data-checked="false">Top bar 56 px, rail 232 px, rail deck buttons 36 px with the icon in the deck rail color and no circle; <code>&lt;html&gt;</code> defaults to <code>data-mode="dark" data-theme="orange"</code>.</li>
+  <li data-checked="false">The copied and new tests pass: lint, format check, typecheck, Vitest, build, size, port lock and Playwright in Chromium, Firefox and WebKit.</li>
+  <li data-checked="false">The built app runs at http://localhost:4174.</li>
+  <li data-checked="false">CI on GitHub Actions runs lint, type check, unit tests, Playwright and the size checks on the pull request.</li>
+</ul>
+
+<h2>Completion Checklist</h2>
+<ul class="checklist">
+  <li data-checked="false">All 16 tasks done in order, each task's VALIDATE passed when it finished.</li>
+  <li data-checked="false">Each milestone checkpoint passed.</li>
+  <li data-checked="false">Level 1: lint (with the color check), format check and typecheck exit 0.</li>
+  <li data-checked="false">Level 2: <code>npm test</code> green, including storyNames, tokens and genres tests.</li>
+  <li data-checked="false">Level 3: build, size, port lock and <code>npm run test:e2e</code> green in 3 browsers.</li>
+  <li data-checked="false">Level 4: manual snippet prints OK.</li>
+  <li data-checked="false">README matches scripts, ports and layout.</li>
+  <li data-checked="false">PR open with title "Phase 1: Copy and rename", no AI attribution in commits or PR body.</li>
+</ul>
+
+<h2>Notes</h2>
+<h3>Architecture decisions this phase conforms to</h3>
+<p><code>stack-language</code>, <code>ui-framework</code>, <code>canvas-library</code>, <code>state-store</code>, <code>test-tools</code>, <code>import-checks</code>, <code>fonts</code>, <code>routing</code>, <code>storage-engine</code>, <code>persistent-storage</code>, <code>schema-shape</code>, <code>board-file-format</code>, <code>schema-versions</code>, <code>pool-files</code>, <code>pool-load-failure</code>, <code>test-data</code>, <code>architecture-pattern</code>, <code>module-layout</code>, <code>import-rules</code>, <code>storage-seam</code>, <code>outside-code</code>, <code>tab-sync</code>, <code>nfr-targets</code>, <code>local-run</code>, <code>source-control</code>, <code>ci</code>. None is <code>data-status="open"</code>; <code>pool-files</code> is <code>amended</code> (settled). No architecture decision changes. The phase creates no <code>features/hook/</code>, <code>features/genres/</code> or <code>features/settings/</code> folders; later phases add them.</p>
+
+<h3>Decisions and assumptions</h3>
+<ul>
+  <li>ASSUMPTION: The 5 story types are renamed one-to-one onto the 5 GameIdea types with identical ring shapes (character→role, motivation→goal, setting→setting, conflict→conflict, description→modifier) instead of being deleted, so the copied card, ring, tuck, combine and export code and their tests keep working. The other 6 deck types, <code>hook</code>, <code>modDeck</code>, <code>onTopOf</code> and <code>locked</code> are Phase 2 ("New card types and data model"). Authority: PRD Phase 1/2 split + smallest reversible option.</li>
+  <li>ASSUMPTION: Phase 1 ships no pool files. The story pools must go (PRD Phase 1) and the GameIdea pools come from the Phase 2 split, so the built app at 4174 shows the existing "decks did not load" banner with Retry and disabled deck buttons until Phase 2; boards, notes, export and import work. Browser tests get made-up fixture pools through Playwright routing. Authority: <code>pool-files</code>, <code>pool-load-failure</code>, mvp-plan Cue rules (no copied cue lists).</li>
+  <li>ASSUMPTION: The board's <code>genres</code> field takes its final v1 shape now (4 genre-tagged decks, 21 kebab-case genres, all on for a new board), and New Board asks only for a name; the TheForge genre dialog and story genres are removed. Kebab rule: lowercase, drop <code>&amp;</code>, runs of non-alphanumerics become one <code>-</code> ("Builder &amp; Management" → <code>builder-management</code>). The Phase 2 split must use the same ids; <code>genres.test.ts</code> pins them. Authority: <code>schema-shape</code>, <code>pool-files</code>, mvp-plan Data model, PRD §6.8.</li>
+  <li>ASSUMPTION: <code>formatVersion</code> 1 with the Phase 1 card shape is not yet frozen. No user board can exist before Phase 2 ships pools (no deck draws), so Phase 2 may add <code>modDeck</code>, <code>onTopOf</code>, <code>locked</code> and the new types at version 1 without an upgrade step; from the end of Phase 2, any shape change needs an upgrade step. Authority: <code>board-file-format</code> ("stays cheap until the user keeps real boards") + smallest reversible option. Phase 2's planner should confirm.</li>
+  <li>ASSUMPTION: Connector words for the 5 present types use the GameIdea badge table now (same-deck "and"/"and a, with a"; Goal "to"; Conflict "but"; Setting "in the"), because the kind-based Setting rule had to go and the story words are story code. "You are a / an" (Player Role under a Hook Card) and the other decks are Phase 2. Authority: mvp-plan Connector badges, design §9.6.</li>
+  <li>ASSUMPTION: Card geometry stays at TheForge's 250 px card and 59 px tuck in Phase 1 (TS <code>CARD_SIZE</code>, ring geometry, carried-over <code>--card</code> token). The 200 px card and 56 px tuck are design §9.4/§9.7, which design §16 places in M2. <code>tokens.css</code> already holds <code>--card-size: 200px</code> and <code>--tuck-offset: 56px</code> unused. Authority: design-system §16.</li>
+  <li>ASSUMPTION: Tokens: <code>tokens.css</code> is the handoff <code>styles.css</code> body verbatim plus one carried-over <code>:root</code> block of non-color tokens (card size, ring geometry, motion). These are not new design tokens (no chrome color is invented); they keep copied behavior until Phase 2 and are pinned by an allow list in the test. TheForge names map to GameIdea names per the Task 10 table; <code>--note-delete</code> (not in the design) maps to <code>--note-label</code>; the note body uses <code>--note-bg</code> instead of white (design §9.12). Authority: design-system §1 (styles.css wins for values), §4–§6.</li>
+  <li>ASSUMPTION: The color lint is <code>scripts/check-css-colors.mjs</code> chained into <code>npm run lint</code> (ESLint does not read CSS). White on a deck color or on <code>--danger</code> stays as a literal with a <code>/* fixed: … */</code> marker, matching CLAUDE.md "fails hex and rgba in CSS modules outside card and deck tokens"; no new token is invented for it. Authority: mvp-plan M1, CLAUDE.md Conventions.</li>
+  <li>ASSUMPTION: The theme attributes are set statically in <code>index.html</code> (<code>data-mode="dark" data-theme="orange"</code>); the pre-render script from local storage and the switch are Phase 5. Authority: design §16 ("no switch yet").</li>
+  <li>ASSUMPTION: Icons are vendored by copying paths from the handoff mockups' inline Lucide SVGs, falling back to an unpacked <code>lucide-static</code> package (not a dependency); file names are Lucide names; the custom hook uses the mockup path. The Phase 1 single Modifier deck uses <code>user-plus</code> until Phase 2 adds icons by <code>modDeck</code>. Authority: design §7, §14.</li>
+  <li>ASSUMPTION: <code>DECK_NAME</code> lives in <code>shared/model</code> (a constant, allowed there) to replace 4 duplicated label maps; display name of <code>role</code> is "Player Role". Authority: codebase dominant pattern (CARD_TYPES/CUES_PER_CARD constants live there) + mvp-plan deck names.</li>
+  <li>ASSUMPTION: The rail in Phase 1 lists the 5 types under a "Decks" label with 36 px deck buttons; the grouped rail (Hook Card, Core, Modifiers, Optional, Genres) is Phase 2/3/4, and the help panel and Add Note button stay as copied until Phase 5. Authority: design §16.</li>
+  <li>ASSUMPTION: The <code>#/card-test</code> page and its tests are kept (renamed); it is a TheForge development page with no story logic of its own beyond the renamed types. Authority: smallest reversible option.</li>
+  <li>ASSUMPTION: TheForge's <code>.certs/</code> files are copied locally (git-ignored) so <code>start:lan</code> works; architecture says GameIdea keeps its own copy. Nothing secret is committed. Authority: <code>local-run</code>.</li>
+  <li>ASSUMPTION: CI keeps TheForge's <code>format:check</code> step and the port-lock step in addition to the 5 checks the architecture names; both are carried-over tooling. Authority: <code>ci</code> + codebase pattern.</li>
+  <li>DECISION: Slug <code>copy-rename</code>, branch <code>phase-1-copy-rename</code>, 16 tasks under 5 milestones.</li>
+</ul>
+
+<h3>Doc conflicts recorded (no stop needed)</h3>
+<ul>
+  <li>Design §9.3 writes button and title text in sentence case ("New board", "Make board"); CLAUDE.md UI Conventions require Title Case for titles and buttons. This plan uses "New Board" / "Make Board" (CLAUDE.md wins for UI labels; help text stays as the design writes it).</li>
+  <li>CLAUDE.md lists <code>npm run format</code> but not <code>format:check</code>; the copied CI uses <code>format:check</code>. Both scripts stay.</li>
+</ul>
+
+<h3>Risks</h3>
+<ul>
+  <li>The rename touches nearly every file; the per-task greps and the always-green rule catch misses early. Expect most effort in Tasks 3 and 14.</li>
+  <li>E2E specs written around story behavior (genre dialog, kind icons, version upgrades, story connector words) are removed or rewritten; keep every test that still describes a GameIdea behavior.</li>
+  <li>The empty-pools state at 4174 is intentional and temporary; do not ship placeholder pools to "fix" it.</li>
+</ul>
+
+</body>
+</html>

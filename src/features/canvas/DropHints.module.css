@@ -1,0 +1,97 @@
+/* DropHints: drawn above every card (cards stay under 2 million in zIndex). */
+.combine,
+.zones,
+.slot {
+  position: absolute;
+  z-index: 3000000;
+  width: var(--card);
+  pointer-events: none;
+  animation: fadeIn var(--t-fade) linear;
+}
+
+.combine {
+  height: var(--card);
+  border-radius: var(--radius-card);
+  outline: 3px solid var(--deck-modifier);
+  outline-offset: 4px;
+}
+
+.pill {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 14px);
+  transform: translateX(-50%);
+  padding: 4px 10px;
+  border-radius: var(--radius-button);
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.zones {
+  height: var(--card);
+}
+
+.zone {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed color-mix(in srgb, var(--deck-modifier) 50%, transparent);
+  background: color-mix(in srgb, var(--deck-modifier) 16%, transparent);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.active {
+  border-color: var(--deck-modifier);
+}
+
+/* The 120 px swap circle, centered on the card (dropZones SWAP_RADIUS). */
+.circle {
+  left: calc(50% - 60px);
+  top: calc(50% - 60px);
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+/* The 64 px "Add On Top" band across the card's top: the Modifier goes on top of the card. */
+.band {
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 64px;
+  border-radius: var(--radius-card) var(--radius-card) 0 0;
+}
+
+/* The slot: 72 px under the target's bottom edge. */
+.slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 72px;
+  margin-top: var(--card);
+  border: 2px dashed var(--accent);
+  border-radius: var(--radius-panel);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  color: var(--accent-text);
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

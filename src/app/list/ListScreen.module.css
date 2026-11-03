@@ -1,0 +1,39 @@
+/* ListScreen: 56 px header bar on --panel, then the scrolling board list. */
+.screen {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.bar {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 10px;
+  height: var(--top-bar-h);
+  padding: 0 16px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.gap {
+  flex: 1;
+}
+
+.caption {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.main {
+  flex: 1;
+  overflow: auto;
+}

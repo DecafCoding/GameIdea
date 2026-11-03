@@ -1,0 +1,37 @@
+{
+  "type": "modifier",
+  "cues": [
+    {
+      "id": "modifier-test-01",
+      "text": "stolen"
+    },
+    {
+      "id": "modifier-test-02",
+      "text": "haunted"
+    },
+    {
+      "id": "modifier-test-03",
+      "text": "tiny"
+    },
+    {
+      "id": "modifier-test-04",
+      "text": "clockwork"
+    },
+    {
+      "id": "modifier-test-05",
+      "text": "frozen"
+    },
+    {
+      "id": "modifier-test-06",
+      "text": "burning"
+    },
+    {
+      "id": "modifier-test-07",
+      "text": "forgotten"
+    },
+    {
+      "id": "modifier-test-08",
+      "text": "giant"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+node_modules/
+dist/
+coverage/
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+.vite/
+*.log
+.env
+.env.*
+.DS_Store
+Thumbs.db
+.certs/

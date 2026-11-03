@@ -1,0 +1,213 @@
+/* Design tokens: the body below is copied verbatim from docs/design-handoff/_ds/gameidea/styles.css.
+   docs/design-system.html is the authority for every value. Keep this file out of Prettier
+   so the values stay byte-for-byte the same as the handoff. */
+:root {
+  /* Fonts (bundle with @fontsource, no remote fonts) */
+  --font-display: 'Space Grotesk', system-ui, sans-serif; /* 500, 600, 700 */
+  --font-body: 'Inter', system-ui, sans-serif;            /* 400, 500, 600 */
+
+  /* Dark mode base (default) */
+  --bg: #1B1E24;
+  --canvas: #1B1E24;
+  --surface: #23272F;
+  --surface-raised: #2B303A;
+  --surface-selected: #343A45;
+  --border: #30353F;
+  --border-strong: #4A505C;
+  --text: #ECEAE4;
+  --text-muted: #A9ADB6;
+  --text-disabled: #6B707B;
+  --canvas-dot: #33384280;
+
+  /* Theme color: orange (default) */
+  --accent: #E8742E;
+  --accent-rgb: 232, 116, 46;
+  --accent-text: #F6B08A;
+  --accent-hook-button: #2A2620;
+  --on-accent: #1B1E24;
+
+  /* Deck card colors: center icon, ring, connector badge. White text passes 4.5:1. */
+  --deck-role: #2F5FB8;
+  --deck-mechanic: #9A5C08;
+  --deck-resource: #3A7226;
+  --deck-goal: #23766C;
+  --deck-conflict: #B53A23;
+  --deck-modifier: #6E48B5;
+  --deck-setting: #7A5A3A;
+  --deck-mood: #A63D72;
+  --deck-twist: #66691A;
+  --deck-progression: #1D6F93;
+  --deck-constraint: #555B66;
+
+  /* Deck rail colors: icon on the dark rail and panels */
+  --rail-role: #6F9BEA;
+  --rail-mechanic: #E0A040;
+  --rail-resource: #79B85E;
+  --rail-goal: #4FB3A6;
+  --rail-conflict: #EE7A5E;
+  --rail-modifier: #A88BE6;
+  --rail-setting: #C49A6C;
+  --rail-mood: #E07AAE;
+  --rail-twist: #B8BC4A;
+  --rail-progression: #4FAED6;
+  --rail-constraint: #A3AAB6;
+
+  /* Cards (same in every mode and theme) */
+  --card-face: #F4F0E6;
+  --card-tucked-1: #F1ECE0;
+  --card-tucked-2: #EFE9DC;
+  --card-tucked-3: #ECE6D8;
+  --card-tucked-4: #E9E3D4;
+  --card-cue: #5A5E68;
+  --card-cue-active: #1B1E24;
+  --card-adjective: #6E48B5;
+  --card-adjective-active: #5B3F99;
+  --card-divider: #D5CFC0;
+
+  /* Hook Card (stays dark in every mode) */
+  --hook-bg: #2A2F38;
+  --hook-text: #ECEAE4;
+
+  /* Note */
+  --note-bg: #FBF6E4;
+  --note-label: #6B6355;
+  --note-text: #1B1E24;
+
+  /* Status */
+  --status-saved: #5DBB7A;
+  --status-saving: #F2B134;
+  --status-failed: #E0563A;
+  --warn-bg: #2B2320;
+  --warn-border: #6A3A2A;
+  --warn-text: #F6B08A;
+  --danger: #C8452C;
+  --danger-text: #F0A090;
+  --new-card-outline: #5DBB7A;
+
+  /* Sizes (px) */
+  --top-bar-h: 56px;
+  --rail-w: 232px;
+  --rail-button-h: 36px;
+  --rail-icon: 18px;
+  --button-h: 44px;
+  --card-size: 200px;
+  --card-center-icon: 48px;
+  --tuck-offset: 56px;
+  --hook-w: 240px;
+  --hook-h: 200px;
+  --note-w: 300px;
+  --badge-h: 22px;
+  --badge-font: 11px;
+  --genre-count-h: 15px;
+  --genre-count-font: 9px;
+  --grid-dot: 24px;
+
+  /* Radius (px) */
+  --radius-button: 8px;
+  --radius-pill: 11px;
+  --radius-panel: 12px;
+  --radius-card: 14px;
+  --radius-dialog: 14px;
+
+  /* Elevation */
+  --shadow-card: 0 6px 18px rgba(0, 0, 0, 0.35);
+  --shadow-card-raised: 0 8px 22px rgba(0, 0, 0, 0.4);
+  --shadow-drag: 0 22px 44px rgba(0, 0, 0, 0.55);
+  --shadow-menu: 0 16px 40px rgba(0, 0, 0, 0.5);
+  --shadow-dialog: 0 24px 60px rgba(0, 0, 0, 0.6);
+  --scrim: rgba(10, 12, 16, 0.62);
+
+  /* Added for colors drawn in the mockups */
+  --text-soft: #C9CCD2;          /* secondary text a step above muted: hook previews, deck meanings, Settings label */
+  --link-hover: #FFFFFF;
+  --success-text: #8FD6A4;       /* "Copied" label on a dark menu */
+  --zone-text: #4A2E86;          /* label inside a Modifier drop zone, on the cream card */
+
+  /* Ring half under the pointer: card color mixed with 30% black */
+  --ring-hover-role: #214281;
+  --ring-hover-mechanic: #6C4006;
+  --ring-hover-resource: #29501B;
+  --ring-hover-goal: #18534C;
+  --ring-hover-conflict: #7F2918;
+  --ring-hover-modifier: #4D327F;
+  --ring-hover-setting: #553F29;
+  --ring-hover-mood: #742B50;
+  --ring-hover-twist: #474A12;
+  --ring-hover-progression: #144E67;
+  --ring-hover-constraint: #3B4047;
+
+  /* Tuck slot: border = deck card color, fill = card color at 18%, label = deck rail color */
+  --slot-fill-alpha: 0.18;
+}
+
+/* Light mode base */
+[data-mode="light"] {
+  --bg: #F5F3EE;
+  --canvas: #ECE9E2;
+  --surface: #FFFFFF;
+  --surface-raised: #EFEBE3;
+  --surface-selected: #E6E1D6;
+  --border: #DDD8CE;
+  --border-strong: #BDB7AB;
+  --text: #1B1E24;
+  --text-muted: #5E636D;
+  --text-disabled: #8A8F99;
+  --canvas-dot: #C9C4B880;
+  --danger-text: #B53A23;
+  --text-soft: #3A3F49;
+  --link-hover: #000000;
+  --success-text: #1F7A4F;
+
+  /* Rail icons use the darker card colors on the white rail */
+  --rail-role: var(--deck-role);
+  --rail-mechanic: var(--deck-mechanic);
+  --rail-resource: var(--deck-resource);
+  --rail-goal: var(--deck-goal);
+  --rail-conflict: var(--deck-conflict);
+  --rail-modifier: var(--deck-modifier);
+  --rail-setting: var(--deck-setting);
+  --rail-mood: var(--deck-mood);
+  --rail-twist: var(--deck-twist);
+  --rail-progression: var(--deck-progression);
+  --rail-constraint: var(--deck-constraint);
+}
+
+/* Theme colors */
+[data-theme="blue"] {
+  --accent: #4C8DF6;
+  --accent-rgb: 76, 141, 246;
+  --accent-text: #A9C8FF;
+  --accent-hook-button: #1F2533;
+}
+[data-theme="green"] {
+  --accent: #3FB37F;
+  --accent-rgb: 63, 179, 127;
+  --accent-text: #8FDDB5;
+  --accent-hook-button: #1F2A24;
+}
+[data-mode="light"] { --accent-text: #B4531A; --accent-hook-button: #FBE9DD; }
+[data-mode="light"][data-theme="blue"] { --accent-text: #2B5FB8; --accent-hook-button: #E2ECFD; }
+[data-mode="light"][data-theme="green"] { --accent-text: #1F7A4F; --accent-hook-button: #E0F3E9; }
+
+/* The Hook label sits on the dark Hook Card in every mode, so it keeps the dark-mode accent text. */
+
+/* Carried over from TheForge: card geometry and motion, not colors. Phase 2 moves cards to --card-size. */
+:root {
+  --card: 250px;
+  --t-turn-90: 180ms;
+  --t-turn-180: 260ms;
+  --t-draw: 250ms;
+  --t-fade: 100ms;
+  --t-banner: 150ms;
+}
+
+/* Reduced motion: every duration goes to 0 (design section 11). The change is instant. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --t-turn-90: 0ms;
+    --t-turn-180: 0ms;
+    --t-draw: 0ms;
+    --t-fade: 0ms;
+    --t-banner: 0ms;
+  }
+}

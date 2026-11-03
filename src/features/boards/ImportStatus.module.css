@@ -1,0 +1,19 @@
+/* ImportStatus: --bg text on the --text fill (an inverted chip), right aligned. */
+.status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  align-self: flex-end;
+  padding: 10px 14px;
+  border-radius: var(--radius-panel);
+  background: var(--text);
+  color: var(--bg);
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: var(--shadow-card-raised);
+}
+
+.check {
+  /* The Goal deck color. */
+  color: var(--deck-goal);
+}

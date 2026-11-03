@@ -1,0 +1,31 @@
+/* CardNode: the selection outline, the drag look and the hidden state during the draw motion. */
+.node {
+  width: var(--card);
+  height: var(--card);
+  border-radius: var(--radius-card);
+}
+
+.selected {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* The drag look goes on the inner element; React Flow's wrapper transform is the position. */
+.inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-card);
+}
+
+.lifted .inner {
+  transform: scale(1.04) rotate(3deg);
+}
+
+.lifted :global([data-card]) {
+  box-shadow: var(--shadow-drag);
+}
+
+.hidden {
+  visibility: hidden;
+}

@@ -1,0 +1,41 @@
+/* ZoomStrip (design 8.3): 16 from the bottom and right, padding 4, radius 10, --surface, border 1, 44 px buttons. */
+.strip {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  z-index: 5;
+  display: flex;
+  gap: 2px;
+  padding: 4px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  box-shadow: var(--shadow-menu);
+}
+
+.button {
+  min-width: var(--button-h);
+  height: var(--button-h);
+  padding: 0 10px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.button:hover {
+  background: var(--surface-raised);
+}
+
+.button:active {
+  transform: scale(0.97);
+}
+
+.percent {
+  min-width: 64px;
+  font-variant-numeric: tabular-nums;
+}

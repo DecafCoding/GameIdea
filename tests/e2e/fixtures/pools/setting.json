@@ -1,0 +1,37 @@
+{
+  "type": "setting",
+  "cues": [
+    {
+      "id": "setting-test-01",
+      "text": "frozen prairie"
+    },
+    {
+      "id": "setting-test-02",
+      "text": "sunken city"
+    },
+    {
+      "id": "setting-test-03",
+      "text": "floating market"
+    },
+    {
+      "id": "setting-test-04",
+      "text": "abandoned mine"
+    },
+    {
+      "id": "setting-test-05",
+      "text": "neon arcade"
+    },
+    {
+      "id": "setting-test-06",
+      "text": "desert outpost"
+    },
+    {
+      "id": "setting-test-07",
+      "text": "moonlit harbor"
+    },
+    {
+      "id": "setting-test-08",
+      "text": "overgrown greenhouse"
+    }
+  ]
+}

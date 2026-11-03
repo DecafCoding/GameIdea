@@ -1,0 +1,42 @@
+/* Banner: 14 × 16 px padding, radius 10, one line of text, one action, slides down. */
+.banner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: var(--radius-panel);
+  border: 1px solid;
+  animation: slideDown var(--t-banner) ease-out;
+}
+
+.warning {
+  background: var(--warn-bg);
+  border-color: var(--warn-border);
+}
+
+.status {
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+.icon {
+  color: var(--accent-text);
+}
+
+.text {
+  flex: 1;
+  margin: 0;
+  line-height: 1.4;
+  color: var(--text);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
