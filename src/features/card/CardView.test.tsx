@@ -6,7 +6,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { useState } from 'react';
 import { describe, expect, it } from 'vitest';
 import { drawCard } from '@/features/draw';
-import { GENRES, type Card, type CardType, type Deck, type Pool } from '@/shared/model';
+import type { Card, CardType, Deck, Pool } from '@/shared/model';
 import { CardView } from './CardView';
 import { combine, turnCard } from './rings';
 
@@ -91,10 +91,10 @@ describe('CardView', () => {
   it('CardView_combinedInnerRightClick_changesOnlyBottomAdjective', () => {
     const pool = (type: Deck, texts: string[]): Pool => ({
       type,
-      cues: texts.map((text, i) => ({ id: `${type}-${i}`, text, genres: ['roguelike'] })),
+      cues: texts.map((text, i) => ({ id: `${type}-${i}`, text, targets: ['role'] })),
     });
-    const role = drawCard('role', pool('role', NOUNS), GENRES);
-    const modifier = drawCard('modifier', pool('modifier', ADJS), GENRES);
+    const role = drawCard('role', pool('role', NOUNS));
+    const modifier = drawCard('modifier', pool('modifier', ADJS), { modDeck: 'role' });
     const combined = combine(role, modifier);
     const [noun, adjective] = [combined.rings[0]!.cues[0]!.text, combined.rings[1]!.cues[0]!.text];
 

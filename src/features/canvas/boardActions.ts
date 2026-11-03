@@ -116,14 +116,18 @@ export function splitCard(board: Board, cardId: string, createId: () => string =
 }
 
 /**
- * Redraw: the card keeps its id, place, z and tucks, and takes the drawn card's one ring. A
- * combined card keeps its adjective ring, so only the nouns change. The caller draws, because
+ * Redraw: the card keeps its id, place, z, tucks, lock, badge word and on-top card, and takes
+ * the drawn card's one ring. A combined card keeps its adjective ring (with its modDeck), so
+ * only the nouns change. A Modifier must be redrawn from its own Modifier deck. The caller draws, because
  * drawing needs pools.
  */
 export function redrawCard(board: Board, cardId: string, drawn: Card): Board {
   const card = cardAt(board, cardId);
   if (drawn.type !== card.type) {
     throw new Error(`A ${card.type} card cannot be redrawn as a ${drawn.type}.`);
+  }
+  if (drawn.modDeck !== card.modDeck) {
+    throw new Error(`A ${card.modDeck ?? 'plain'} Modifier cannot be redrawn from another deck.`);
   }
   return replaceCard(board, {
     ...card,

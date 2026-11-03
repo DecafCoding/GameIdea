@@ -1,10 +1,23 @@
 /**
- * Tests for drawCard: cue counts, distinct cues, kind copies, the genre filter and no
- * mutation.
+ * Tests for drawCard and drawFor: cue counts, distinct cues, text-only copies, the genre
+ * filter on tagged decks, the target filter on the Modifier decks and no mutation.
  */
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { GENRES, type Deck, type Genre, type Pool } from '@/shared/model';
-import { drawCard } from './drawCard';
+import { parsePool } from '@/shared/pools';
+import {
+  allGenresOn,
+  GENRES,
+  MOD_DECKS,
+  type Deck,
+  type Genre,
+  type ModDeck,
+  type Pool,
+  type PoolCue,
+  type Pools,
+} from '@/shared/model';
+import { drawCard, drawFor } from './drawCard';
 
 /** mulberry32: a small seeded PRNG so draws repeat across runs. */
 function mulberry32(seed: number): () => number {
@@ -30,7 +43,7 @@ function pool(type: Deck, texts: string[], genres: Genre[] = ['roguelike']): Poo
 }
 
 const six = ['navigator', 'diplomat', 'gardener', 'captain', 'medic', 'pilot'];
-const ALL = GENRES;
+const ALL = { genres: GENRES };
 let idCount = 0;
 const createId = () => `card-${++idCount}`;
 
@@ -90,37 +103,40 @@ describe('drawCard', () => {
 
   it('drawCard_genres_onlyMatchingCues', () => {
     const mixed: Pool = {
-      type: 'role',
+      type: 'mechanic',
       cues: [
-        ...pool('role', ['a', 'b', 'c', 'd'], ['horror']).cues,
-        ...pool('role', ['e', 'f', 'g', 'h'], ['puzzle']).cues,
+        ...pool('mechanic', ['a', 'b', 'c', 'd'], ['horror']).cues,
+        ...pool('mechanic', ['e', 'f', 'g', 'h'], ['puzzle']).cues,
       ],
     };
     const random = mulberry32(3);
     for (let i = 0; i < 50; i++) {
-      expect(texts(drawCard('role', mixed, ['horror'], { random })).sort()).toEqual([
-        'a',
-        'b',
-        'c',
-        'd',
-      ]);
+      expect(texts(drawCard('mechanic', mixed, { genres: ['horror'] }, { random })).sort()).toEqual(
+        ['a', 'b', 'c', 'd'],
+      );
     }
   });
 
   it('drawCard_cueInTwoGenres_drawnForEither', () => {
     const p: Pool = {
-      type: 'goal',
+      type: 'progression',
       cues: [
         { id: 'm-1', text: 'shared', genres: ['horror', 'puzzle'] },
         { id: 'm-2', text: 'cyber', genres: ['horror'] },
         { id: 'm-3', text: 'opera', genres: ['puzzle'] },
       ],
     };
-    expect(texts(drawCard('goal', p, ['horror'])).sort()).toEqual(['cyber', 'shared']);
-    expect(texts(drawCard('goal', p, ['puzzle'])).sort()).toEqual(['opera', 'shared']);
+    expect(texts(drawCard('progression', p, { genres: ['horror'] })).sort()).toEqual([
+      'cyber',
+      'shared',
+    ]);
+    expect(texts(drawCard('progression', p, { genres: ['puzzle'] })).sort()).toEqual([
+      'opera',
+      'shared',
+    ]);
   });
 
-  it('drawCard_nullGenres_drawsFromFullPoolWithoutGenres', () => {
+  it('drawCard_untaggedDeck_drawsFromFullPoolIgnoringGenres', () => {
     const plain: Pool = {
       type: 'goal',
       cues: [
@@ -128,14 +144,135 @@ describe('drawCard', () => {
         { id: 'g-2', text: 'b' },
       ],
     };
-    expect(texts(drawCard('goal', plain, null)).sort()).toEqual(['a', 'b']);
+    expect(texts(drawCard('goal', plain)).sort()).toEqual(['a', 'b']);
+    expect(texts(drawCard('goal', plain, { genres: ['horror'] })).sort()).toEqual(['a', 'b']);
   });
 
   it('drawCard_noMatchingCues_throws', () => {
-    expect(() => drawCard('role', pool('role', six), ['horror'])).toThrow();
+    expect(() => drawCard('mechanic', pool('mechanic', six), { genres: ['horror'] })).toThrow();
   });
 
   it('drawCard_emptyGenres_throws', () => {
-    expect(() => drawCard('role', pool('role', six), [])).toThrow();
+    expect(() => drawCard('mechanic', pool('mechanic', six), { genres: [] })).toThrow();
+  });
+
+  it('drawCard_mechanicOneGenre_drawsOnlyThatGenre', () => {
+    const p: Pool = {
+      type: 'mechanic',
+      cues: [
+        ...pool('mechanic', ['dig', 'sail', 'hide', 'trade'], ['rpg']).cues,
+        ...pool('mechanic', ['shoot', 'dash', 'aim', 'reload'], ['shooter']).cues,
+      ],
+    };
+    const random = mulberry32(11);
+    for (let i = 0; i < 50; i++) {
+      expect(texts(drawCard('mechanic', p, { genres: ['shooter'] }, { random })).sort()).toEqual([
+        'aim',
+        'dash',
+        'reload',
+        'shoot',
+      ]);
+    }
+  });
+
+  it('drawCard_taggedDeckWithoutGenres_throws', () => {
+    expect(() => drawCard('resource', pool('resource', six))).toThrow(/genres/);
+  });
+
+  /** 4 Modifier cues for one deck. */
+  const modCues = (modDeck: ModDeck, words: string[]): PoolCue[] =>
+    words.map((text, i) => ({ id: `${modDeck}-${i}`, text, targets: [modDeck] }));
+  const modifierPool: Pool = {
+    type: 'modifier',
+    cues: [
+      ...modCues('role', ['tall', 'brave', 'old', 'quiet']),
+      ...modCues('resource', ['rusty', 'stolen', 'spare', 'shiny']),
+      ...modCues('setting', ['frozen', 'sunken', 'silent', 'flooded']),
+    ],
+  };
+  const MOD_TEXTS: Record<ModDeck, string[]> = {
+    role: ['brave', 'old', 'quiet', 'tall'],
+    resource: ['rusty', 'shiny', 'spare', 'stolen'],
+    setting: ['flooded', 'frozen', 'silent', 'sunken'],
+  };
+
+  it.each(MOD_DECKS)('drawCard_modifier%s_drawsOnlyItsTargets', (modDeck) => {
+    const random = mulberry32(5);
+    for (let i = 0; i < 20; i++) {
+      const card = drawCard('modifier', modifierPool, { modDeck }, { random });
+      expect(texts(card).sort()).toEqual(MOD_TEXTS[modDeck]);
+    }
+  });
+
+  it('drawCard_modifierRole_drawsOnlyRoleTargets', () => {
+    expect(texts(drawCard('modifier', modifierPool, { modDeck: 'role' })).sort()).toEqual(
+      MOD_TEXTS.role,
+    );
+  });
+
+  it('drawCard_modifier_setsModDeck', () => {
+    expect(drawCard('modifier', modifierPool, { modDeck: 'setting' }).modDeck).toBe('setting');
+    expect(drawCard('role', pool('role', six)).modDeck).toBeUndefined();
+  });
+
+  it('drawCard_modifierWithoutModDeck_throws', () => {
+    expect(() => drawCard('modifier', modifierPool)).toThrow(/Modifier deck/);
+  });
+
+  it('drawCard_card_hasNoTargetsOrGenres', () => {
+    const mod = drawCard('modifier', modifierPool, { modDeck: 'resource' });
+    const mech = drawCard('mechanic', pool('mechanic', six), ALL);
+    for (const card of [mod, mech]) {
+      for (const cue of card.rings[0]!.cues) expect(Object.keys(cue)).toEqual(['text']);
+      expect('targets' in card).toBe(false);
+      expect('genres' in card).toBe(false);
+    }
+  });
+
+  it('drawCard_newCard_isUnlockedAndNotOnTop', () => {
+    const card = drawCard('role', pool('role', six));
+    expect(card.locked).toBe(false);
+    expect(card.onTopOf).toBeNull();
+  });
+
+  it('drawCard_realModifierPool_eachDeckDraws4Distinct', () => {
+    const file = join(process.cwd(), 'public', 'pools', 'modifier.json');
+    const real = parsePool('modifier', JSON.parse(readFileSync(file, 'utf8')));
+    const byText = new Map(real.cues.map((cue) => [cue.text, cue]));
+    const random = mulberry32(99);
+    for (const modDeck of MOD_DECKS) {
+      for (let i = 0; i < 200; i++) {
+        const drawn = texts(drawCard('modifier', real, { modDeck }, { random }));
+        expect(new Set(drawn).size).toBe(4);
+        for (const text of drawn) expect(byText.get(text)?.targets).toContain(modDeck);
+      }
+    }
+  });
+});
+
+describe('drawFor', () => {
+  const pools = {
+    modifier: {
+      type: 'modifier',
+      cues: ['a', 'b', 'c', 'd', 'e'].map((text, i) => ({
+        id: `m-${i}`,
+        text,
+        targets: i < 4 ? ['setting'] : ['role'],
+      })),
+    },
+    mechanic: pool('mechanic', six, ['horror']),
+  } as unknown as Pools;
+
+  it('drawFor_modifier_keepsModDeck', () => {
+    const like = drawCard('modifier', pools.modifier, { modDeck: 'setting' });
+    const drawn = drawFor(like, pools, allGenresOn());
+    expect(drawn.modDeck).toBe('setting');
+    expect(texts(drawn).sort()).toEqual(['a', 'b', 'c', 'd']);
+  });
+
+  it('drawFor_taggedDeck_usesBoardGenres', () => {
+    const like = drawCard('mechanic', pools.mechanic, ALL);
+    expect(() => drawFor(like, pools, { ...allGenresOn(), mechanic: ['puzzle'] })).toThrow();
+    expect(texts(drawFor(like, pools, allGenresOn()))).toHaveLength(4);
   });
 });

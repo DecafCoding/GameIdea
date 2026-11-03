@@ -210,6 +210,20 @@ describe('redrawCard', () => {
     const board = fixtureBoard([fixtureCard('role')]);
     expect(() => redrawCard(board, 'role-1', fixtureCard('setting'))).toThrow();
   });
+
+  it('redrawCard_lockedCard_staysLocked', () => {
+    const board = fixtureBoard([fixtureCard('role', { locked: true, connector: 'with a' })]);
+    const next = redrawCard(board, 'role-1', fixtureCard('role', { id: 'drawn' }));
+    expect(get(next, 'role-1')).toMatchObject({ locked: true, connector: 'with a', onTopOf: null });
+  });
+
+  it('redrawCard_differentModDeck_throws', () => {
+    const board = fixtureBoard([fixtureCard('modifier', { modDeck: 'setting' })]);
+    const drawn = fixtureCard('modifier', { id: 'drawn', modDeck: 'role' });
+    expect(() => redrawCard(board, 'modifier-1', drawn)).toThrow();
+    const same = fixtureCard('modifier', { id: 'drawn', modDeck: 'setting' });
+    expect(get(redrawCard(board, 'modifier-1', same), 'modifier-1').modDeck).toBe('setting');
+  });
 });
 
 describe('discardCard', () => {

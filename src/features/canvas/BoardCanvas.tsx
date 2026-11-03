@@ -19,7 +19,7 @@ import {
 } from '@xyflow/react';
 import { useCallback, useEffect, useMemo, useRef, useState, type MouseEvent } from 'react';
 import { useRingKeys, type RingSlot, type TurnDirection } from '@/features/card';
-import { drawCard } from '@/features/draw';
+import { drawFor } from '@/features/draw';
 import { moveNote } from '@/features/notes';
 import type { Pools } from '@/shared/model';
 import { useBoardStore } from '@/shared/store';
@@ -122,8 +122,8 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
         const board = useBoardStore.getState().board;
         const card = board.cards.find((c) => c.id === id);
         if (!current || !card || card.type === 'hook') return;
-        // Redraw draws like a deck draw; none of the 5 Phase 1 decks is genre-tagged.
-        const drawn = drawCard(card.type, current[card.type], null);
+        // Redraw draws like a deck draw: same deck, same Modifier deck, the board's genres.
+        const drawn = drawFor(card, current, board.genres);
         changeBoard((b) => redrawCard(b, id, drawn));
       },
       discard: (id: string) => {

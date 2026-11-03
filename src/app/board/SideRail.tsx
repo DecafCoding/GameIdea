@@ -4,13 +4,13 @@
  * Core, Modifiers, Optional, Genres) and Settings come in later phases.
  */
 import { DeckButton } from '@/features/draw';
-import type { Deck } from '@/shared/model';
+import type { Deck, ModDeck } from '@/shared/model';
 import { Icon } from '@/shared/ui';
 import styles from './SideRail.module.css';
 
 interface SideRailProps {
   decksReady: boolean;
-  onDraw: (type: Deck, from: DOMRect) => void;
+  onDraw: (type: Deck, from: DOMRect, modDeck?: ModDeck) => void;
   onAddNote: () => void;
 }
 
@@ -22,7 +22,12 @@ export function SideRail({ decksReady, onDraw, onAddNote }: SideRailProps) {
     <aside className={styles.rail} aria-label="Decks">
       <h2 className={styles.label}>Decks</h2>
       {PHASE1_RAIL.map((type) => (
-        <DeckButton key={type} type={type} disabled={!decksReady} onDraw={onDraw} />
+        <DeckButton
+          key={type}
+          type={type}
+          disabled={!decksReady}
+          onDraw={(deck, from) => onDraw(deck, from, deck === 'modifier' ? 'role' : undefined)}
+        />
       ))}
       <button type="button" className={styles.addNote} onClick={onAddNote}>
         <span className={styles.noteIcon}>

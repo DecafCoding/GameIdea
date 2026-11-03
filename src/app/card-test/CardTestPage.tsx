@@ -2,12 +2,12 @@
  * Card test page (milestone M1): 5 deck buttons, a "Combine" button that stands in for
  * the drop, and the drawn cards in a plain grid. No canvas, no storage. It lets the user
  * judge random cards and adjective-and-noun pairs before the rest of the app is built.
- * It has no board; none of its 5 decks is genre-tagged, so it draws from the full pools.
+ * It has no board, so a genre-tagged deck draws with every genre on.
  */
 import { useRef, useState } from 'react';
 import { CardView, combine, isCombined, TypeDisc, turnCard, useRingKeys } from '@/features/card';
 import { drawCard } from '@/features/draw';
-import { DECK_NAME, type Card, type Deck } from '@/shared/model';
+import { GENRES, DECK_NAME, type Card, type Deck, type ModDeck } from '@/shared/model';
 import { usePools } from '@/shared/pools';
 import { Banner, Button } from '@/shared/ui';
 import styles from './CardTestPage.module.css';
@@ -41,9 +41,10 @@ export function CardTestPage() {
     setCards((list) => list.map((c) => (c.id === id ? change(c) : c)));
   }
 
-  function draw(type: Deck) {
+  function draw(type: Deck, modDeck: ModDeck = 'role') {
     if (!pools) return;
-    const card = drawCard(type, pools[type], null);
+    // Every genre on; the genres filter applies only to genre-tagged decks.
+    const card = drawCard(type, pools[type], { genres: GENRES, modDeck });
     setCards((list) => [card, ...list]);
   }
 

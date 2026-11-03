@@ -19,7 +19,7 @@ import {
 import { drawCard } from '@/features/draw';
 import { downloadBoardFile } from '@/features/export';
 import { addNote, NOTE_SIZE } from '@/features/notes';
-import { newId, type Deck } from '@/shared/model';
+import { GENRE_DECKS, newId, type Deck, type GenreDeck, type ModDeck } from '@/shared/model';
 import { usePools } from '@/shared/pools';
 import { useBoardStore, useSaveStatus } from '@/shared/store';
 import { Banner } from '@/shared/ui';
@@ -69,10 +69,14 @@ function BoardScreenBody({
   const empty = board.cards.length === 0 && board.notes.length === 0;
   const showPanel = empty && startedOn !== board.id;
 
-  function draw(type: Deck, from: DOMRect) {
+  function draw(type: Deck, from: DOMRect, modDeck?: ModDeck) {
     if (!pools) return;
-    // None of the 5 Phase 1 decks is genre-tagged, so every draw uses the full pool.
-    const card = drawCard(type, pools[type], null);
+    const filter = (GENRE_DECKS as readonly Deck[]).includes(type)
+      ? { genres: board.genres[type as GenreDeck] }
+      : type === 'modifier'
+        ? { modDeck: modDeck ?? 'role' }
+        : {};
+    const card = drawCard(type, pools[type], filter);
     const center = canvas.viewCenter();
     const half = CARD_SIZE / 2;
     const spot = findOpenSpot({ x: center.x - half, y: center.y - half }, boardRects(board), {
