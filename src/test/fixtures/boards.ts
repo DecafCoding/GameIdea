@@ -5,9 +5,8 @@
  * board to the app through window.__GAMEIDEA_E2E_BOARD__.
  */
 import {
-  everyDeck,
+  allGenresOn,
   FORMAT_VERSION,
-  GENRES,
   type Board,
   type Card,
   type CardType,
@@ -86,7 +85,7 @@ export function fixtureBoard(cards: Card[], notes: Note[] = []): Board {
     name: 'Fixture Board',
     createdAt: now,
     updatedAt: now,
-    genres: everyDeck(GENRES),
+    genres: allGenresOn(),
     view: { panX: 0, panY: 0, zoom: 1 },
     cards,
     notes,

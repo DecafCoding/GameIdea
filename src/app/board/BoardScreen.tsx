@@ -71,7 +71,8 @@ function BoardScreenBody({
 
   function draw(type: CardType, from: DOMRect) {
     if (!pools) return;
-    const card = drawCard(type, pools[type], board.genres[type]);
+    // None of the 5 Phase 1 decks is genre-tagged, so every draw uses the full pool.
+    const card = drawCard(type, pools[type], null);
     const center = canvas.viewCenter();
     const half = CARD_SIZE / 2;
     const spot = findOpenSpot({ x: center.x - half, y: center.y - half }, boardRects(board), {

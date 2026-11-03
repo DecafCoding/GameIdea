@@ -5,7 +5,7 @@
  */
 import { readFile } from 'node:fs/promises';
 import { expect, test } from './test';
-import { canvasCards, createBoardWithGenres, drawFromRail, rail } from './board-helpers';
+import { canvasCards, createBoard, drawFromRail, rail } from './board-helpers';
 import { exportFile } from './export-helpers';
 import { draw, type DeckName } from './helpers';
 
@@ -19,7 +19,7 @@ test('network_fullSession_onlyOwnAddress', async ({ page }) => {
 
   // The board list, then New Board.
   await page.goto('/');
-  await createBoardWithGenres(page);
+  await createBoard(page);
   await page.waitForURL(/#\/board\//);
   const boardUrl = page.url();
   await expect(rail(page).getByRole('button', { name: 'Draw A Player Role' })).toBeEnabled();

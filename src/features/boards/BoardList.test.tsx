@@ -1,5 +1,5 @@
 /**
- * Tests for the board list, the 2-step New Board dialog (name, deck genres, Cancel and focus
+ * Tests for the board list, the name-only New Board dialog (Make Board, Cancel and focus
  * return), rename, the delete dialog and import on fake-indexeddb.
  */
 import 'fake-indexeddb/auto';
@@ -11,7 +11,7 @@ import {
   IMPORTED_RENAMED_TEXT,
   IMPORTED_TEXT,
 } from '@/features/export';
-import { everyDeck, GENRES } from '@/shared/model';
+import { allGenresOn } from '@/shared/model';
 import { listBoards, loadBoard, saveBoard } from '@/shared/storage';
 import { resetDbForTests } from '@/shared/storage/db';
 import { fixtureBoard, fixtureCard, fixtureNote } from '@/test/fixtures/boards';
@@ -61,16 +61,8 @@ afterEach(() => {
 
 const fileInput = () => screen.getByTestId('import-file');
 
-/** The open New Board dialog; its title changes per step. */
+/** The open New Board dialog. */
 const newBoardDialog = () => within(screen.getByRole('dialog'));
-
-/** Clicks a chip in 1 deck row of step 2. */
-const clickChip = (deck: string, genre: string) =>
-  fireEvent.click(
-    within(newBoardDialog().getByRole('group', { name: deck })).getByRole('button', {
-      name: genre,
-    }),
-  );
 
 /** Chooses a file in the hidden import input. */
 function chooseFile(contents: string) {
@@ -105,36 +97,17 @@ describe('BoardList', () => {
     );
   });
 
-  it('boardList_newBoard_savesAndOpens', async () => {
+  it('boardList_newBoard_savesNameWithAllGenresAndOpens', async () => {
     const onOpen = renderList();
     fireEvent.click(screen.getByRole('button', { name: 'New Board' }));
-    fireEvent.click(newBoardDialog().getByRole('button', { name: 'Next' }));
-    fireEvent.click(newBoardDialog().getByRole('button', { name: 'Create Board' }));
-    await waitFor(() => expect(onOpen).toHaveBeenCalledTimes(1));
-    const id = onOpen.mock.calls[0]![0] as string;
-    const board = await loadBoard(id);
-    expect(board?.name).toBe('Untitled Board');
-    expect(board?.genres).toEqual(everyDeck(GENRES));
-  });
-
-  it('boardList_newBoardDeckGenres_savesNameAndDeckLists', async () => {
-    const onOpen = renderList();
-    fireEvent.click(screen.getByRole('button', { name: 'New Board' }));
-    fireEvent.change(newBoardDialog().getByRole('textbox', { name: 'Board Name' }), {
-      target: { value: 'Two Captains' },
+    fireEvent.change(newBoardDialog().getByRole('textbox', { name: 'Name' }), {
+      target: { value: '  Two Captains  ' },
     });
-    fireEvent.click(newBoardDialog().getByRole('button', { name: 'Next' }));
-    for (const genre of ['Generic', 'Sci-Fi', 'Space Opera']) clickChip('Player Role', genre);
-    for (const genre of ['Generic', 'Sci-Fi', 'Cyberpunk']) clickChip('Setting', genre);
-    fireEvent.click(newBoardDialog().getByRole('button', { name: 'Create Board' }));
+    fireEvent.click(newBoardDialog().getByRole('button', { name: 'Make Board' }));
     await waitFor(() => expect(onOpen).toHaveBeenCalledTimes(1));
     const board = await loadBoard(onOpen.mock.calls[0]![0] as string);
     expect(board?.name).toBe('Two Captains');
-    expect(board?.genres).toEqual({
-      ...everyDeck(GENRES),
-      role: ['cyberpunk'],
-      setting: ['space-opera'],
-    });
+    expect(board?.genres).toEqual(allGenresOn());
   });
 
   it('boardList_newBoardCancel_savesNothing', async () => {

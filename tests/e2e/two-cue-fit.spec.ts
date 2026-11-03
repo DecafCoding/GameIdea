@@ -99,8 +99,8 @@ async function expectPairFits(
       json: {
         type,
         cues: [
-          { id: `${prefix}-001`, text: pair[0], genres: ['generic'] },
-          { id: `${prefix}-002`, text: pair[1], genres: ['generic'] },
+          { id: `${prefix}-001`, text: pair[0] },
+          { id: `${prefix}-002`, text: pair[1] },
         ],
       },
     }),

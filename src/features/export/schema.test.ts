@@ -5,9 +5,8 @@
 import { describe, expect, it } from 'vitest';
 import {
   CARD_TYPES,
-  everyDeck,
+  allGenresOn,
   FORMAT_VERSION,
-  GENRES,
   type Board,
   type Card,
   type DeckGenres,
@@ -77,28 +76,28 @@ describe('boardSchema', () => {
   });
 
   it('boardSchema_emptyDeckList_rejected', () => {
-    rejects({ ...fixtureBoard([]), genres: { ...everyDeck(GENRES), setting: [] } });
+    rejects({ ...fixtureBoard([]), genres: { ...allGenresOn(), resource: [] } });
   });
 
   it('boardSchema_unknownGenreInDeck_rejected', () => {
-    rejects({ ...fixtureBoard([]), genres: { ...everyDeck(GENRES), conflict: ['steampunk'] } });
+    rejects({ ...fixtureBoard([]), genres: { ...allGenresOn(), progression: ['steampunk'] } });
   });
 
   it('boardSchema_repeatedGenreInDeck_rejected', () => {
     rejects({
       ...fixtureBoard([]),
-      genres: { ...everyDeck(GENRES), role: ['cyberpunk', 'cyberpunk'] },
+      genres: { ...allGenresOn(), mechanic: ['horror', 'horror'] },
     });
   });
 
   it('boardSchema_missingDeck_rejected', () => {
-    const genres: Partial<DeckGenres> = everyDeck(GENRES);
-    delete genres.modifier;
+    const genres: Partial<DeckGenres> = allGenresOn();
+    delete genres.constraint;
     rejects({ ...fixtureBoard([]), genres });
   });
 
   it('boardSchema_flatGenresList_rejected', () => {
-    rejects({ ...fixtureBoard([]), genres: ['generic'] });
+    rejects({ ...fixtureBoard([]), genres: ['roguelike'] });
   });
 
   it('boardSchema_unknownCardType_rejected', () => {

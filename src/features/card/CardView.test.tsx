@@ -89,7 +89,7 @@ describe('CardView', () => {
   it('CardView_combinedInnerRightClick_changesOnlyBottomAdjective', () => {
     const pool = (type: CardType, texts: string[]): Pool => ({
       type,
-      cues: texts.map((text, i) => ({ id: `${type}-${i}`, text, genres: ['generic'] })),
+      cues: texts.map((text, i) => ({ id: `${type}-${i}`, text, genres: ['roguelike'] })),
     });
     const role = drawCard('role', pool('role', NOUNS), GENRES);
     const modifier = drawCard('modifier', pool('modifier', ADJS), GENRES);

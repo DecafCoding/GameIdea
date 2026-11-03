@@ -1,31 +1,60 @@
 /**
  * Shared model types: boards, cards with rings, cues, notes, pools and genres.
- * Types and constants, plus everyDeck and newId, no other logic. See docs/architecture.html (schema-shape)
+ * Types and constants, plus allGenresOn and newId, no other logic. See docs/architecture.html (schema-shape)
  * and docs/feature-dual-ring-cards.html for the ring rules.
  */
 
 /** Board file and record format version. A shape change needs an upgrade step. */
-export const FORMAT_VERSION = 5;
+export const FORMAT_VERSION = 1;
 
 /** The 5 decks, in rail order: core, then modifiers, then optional. */
 export const CARD_TYPES = ['role', 'goal', 'conflict', 'modifier', 'setting'] as const;
 export type CardType = (typeof CARD_TYPES)[number];
 
-/** The 4 genres, in dialog order. Cyberpunk and Space Opera are sub-genres of Sci-Fi. */
-export const GENRES = ['generic', 'sci-fi', 'cyberpunk', 'space-opera'] as const;
+/**
+ * The 21 genres, in docs/libraries/genres.json order: each name lowercased, "&" dropped and
+ * every run of spaces and punctuation made one "-" ("Builder & Management" is
+ * builder-management). genres.test.ts pins the list to the file.
+ */
+export const GENRES = [
+  'roguelike',
+  'metroidvania',
+  'platformer',
+  'puzzle',
+  'shooter',
+  'melee-action',
+  'fighting',
+  'rpg',
+  'open-world',
+  'survival-craft',
+  'horror',
+  'builder-management',
+  'life-sim',
+  'vehicle-sim-racing',
+  'strategy',
+  'deckbuilder-cards',
+  'narrative',
+  'stealth-immersive-sim',
+  'sandbox',
+  'party-multiplayer',
+  'rhythm-arcade',
+] as const;
 export type Genre = (typeof GENRES)[number];
 
-/** 1 genre list for each deck. Each list has 1 or more genres, in GENRES order, no repeats. */
-export type DeckGenres = Record<CardType, Genre[]>;
+/** The 4 genre-tagged decks. Their cues carry genres; every other deck ignores genre. */
+export const GENRE_DECKS = ['mechanic', 'resource', 'progression', 'constraint'] as const;
+export type GenreDeck = (typeof GENRE_DECKS)[number];
 
-/** The same list copied into every deck: the default for a new board and the upgrade from version 2. */
-export function everyDeck(genres: readonly Genre[]): DeckGenres {
+/** 1 genre list for each genre-tagged deck. Each list has 1 or more genres, no repeats. */
+export type DeckGenres = Record<GenreDeck, Genre[]>;
+
+/** Every genre on in every genre-tagged deck: the genres of a new board. */
+export function allGenresOn(): DeckGenres {
   return {
-    role: [...genres],
-    goal: [...genres],
-    setting: [...genres],
-    conflict: [...genres],
-    modifier: [...genres],
+    mechanic: [...GENRES],
+    resource: [...GENRES],
+    progression: [...GENRES],
+    constraint: [...GENRES],
   };
 }
 
@@ -70,14 +99,14 @@ export interface Card {
   /**
    * The connector word chosen on the badge above this card while it was tucked, such as
    * "aboard the". Shown only while it fits the pair; otherwise the pair's default shows.
-   * Absent until the writer picks one. Added in format version 5.
+   * Absent until the user picks one.
    */
   connector?: string;
 }
 
 export interface Note {
   id: string;
-  /** The header line. New notes start as "Note". Added in format version 4. */
+  /** The header line. New notes start as "Note". */
   title: string;
   text: string;
   x: number;
@@ -99,7 +128,10 @@ export interface Board {
   name: string;
   createdAt: string;
   updatedAt: string;
-  /** Set at creation, never changed. A draw from a deck uses only cues sharing 1 of that deck's genres. */
+  /**
+   * The genres of the 4 genre-tagged decks, all on for a new board. A draw from one of
+   * those decks uses only cues sharing 1 of its genres.
+   */
   genres: DeckGenres;
   view: BoardView;
   cards: Card[];
@@ -120,8 +152,8 @@ export interface BoardIndexRow {
 export interface PoolCue {
   id: string;
   text: string;
-  /** 1 or more; a cue in 2 genres is stored once. */
-  genres: Genre[];
+  /** Genre-tagged decks only: 1 or more; a cue in 2 genres is stored once. */
+  genres?: Genre[];
 }
 
 export interface Pool {

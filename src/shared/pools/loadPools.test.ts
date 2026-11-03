@@ -9,8 +9,8 @@ import { loadPools, parsePool, poolUrl, usePools } from '.';
 function fixture(type: CardType) {
   const cue = (n: number) =>
     type === 'setting'
-      ? { id: `se-00${n}`, text: `place ${n}`, genres: ['generic'] }
-      : { id: `${type}-${n}`, text: `${type} ${n}`, genres: ['generic'] };
+      ? { id: `se-00${n}`, text: `place ${n}` }
+      : { id: `${type}-${n}`, text: `${type} ${n}` };
   return { type, cues: [cue(1), cue(2), cue(3), cue(4)] };
 }
 
@@ -33,7 +33,6 @@ describe('loadPools', () => {
     expect(pools.setting.cues[0]).toEqual({
       id: 'se-001',
       text: 'place 1',
-      genres: ['generic'],
     });
   });
 
@@ -54,40 +53,48 @@ describe('parsePool', () => {
   it('parsePool_cueWithExtraKey_ignoresIt', () => {
     const data = {
       type: 'setting',
-      cues: [{ id: 'a', text: 'b', genres: ['generic'], kind: 'x' }],
+      cues: [{ id: 'a', text: 'b', kind: 'x' }],
     };
-    expect(parsePool('setting', data).cues[0]).toEqual({ id: 'a', text: 'b', genres: ['generic'] });
+    expect(parsePool('setting', data).cues[0]).toEqual({ id: 'a', text: 'b' });
   });
 
   it('parsePool_typeMismatch_throws', () => {
     expect(() => parsePool('role', fixture('goal'))).toThrow();
   });
 
-  /** A one-cue role pool whose cue has the given genres value. */
+  it('parsePool_untaggedCueWithGenres_throws', () => {
+    const data = { type: 'role', cues: [{ id: 'a', text: 'b', genres: ['horror'] }] };
+    expect(() => parsePool('role', data)).toThrow(/genres/);
+  });
+
+  // A genre-tagged deck. Phase 2 adds it to CARD_TYPES; until then the cast stands in.
+  const TAGGED = 'mechanic' as unknown as CardType;
+
+  /** A one-cue tagged pool whose cue has the given genres value. */
   const withGenres = (genres: unknown) => ({
-    type: 'role',
-    cues: [{ id: 'ch-0001', text: 'pilot', ...(genres === undefined ? {} : { genres }) }],
+    type: TAGGED,
+    cues: [{ id: 'me-0001', text: 'dash', ...(genres === undefined ? {} : { genres }) }],
   });
 
   it('parsePool_missingGenres_throws', () => {
-    expect(() => parsePool('role', withGenres(undefined))).toThrow(/genres/);
+    expect(() => parsePool(TAGGED, withGenres(undefined))).toThrow(/genres/);
   });
 
   it('parsePool_emptyGenres_throws', () => {
-    expect(() => parsePool('role', withGenres([]))).toThrow(/genres/);
+    expect(() => parsePool(TAGGED, withGenres([]))).toThrow(/genres/);
   });
 
   it('parsePool_unknownGenre_throws', () => {
-    expect(() => parsePool('role', withGenres(['steampunk']))).toThrow(/genres/);
+    expect(() => parsePool(TAGGED, withGenres(['steampunk']))).toThrow(/genres/);
   });
 
   it('parsePool_repeatedGenre_throws', () => {
-    expect(() => parsePool('role', withGenres(['cyberpunk', 'cyberpunk']))).toThrow(/genres/);
+    expect(() => parsePool(TAGGED, withGenres(['horror', 'horror']))).toThrow(/genres/);
   });
 
   it('parsePool_twoGenres_keepsBoth', () => {
-    const genres: Genre[] = ['sci-fi', 'cyberpunk'];
-    const pool = parsePool('role', withGenres(genres));
+    const genres: Genre[] = ['rpg', 'horror'];
+    const pool = parsePool(TAGGED, withGenres(genres));
     expect(pool.cues[0]!.genres).toEqual(genres);
     expect(pool.cues[0]!.genres).not.toBe(genres);
   });

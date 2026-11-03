@@ -122,8 +122,8 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
         const board = useBoardStore.getState().board;
         const card = board.cards.find((c) => c.id === id);
         if (!current || !card) return;
-        // Redraw uses the genres of the card's deck, like a deck draw.
-        const drawn = drawCard(card.type, current[card.type], board.genres[card.type]);
+        // Redraw draws like a deck draw; none of the 5 Phase 1 decks is genre-tagged.
+        const drawn = drawCard(card.type, current[card.type], null);
         changeBoard((b) => redrawCard(b, id, drawn));
       },
       discard: (id: string) => {

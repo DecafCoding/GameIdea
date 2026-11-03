@@ -2,7 +2,7 @@
  * Tests for the board store and newBoard.
  */
 import { beforeEach, describe, expect, it } from 'vitest';
-import { everyDeck, FORMAT_VERSION, GENRES, type DeckGenres } from '@/shared/model';
+import { allGenresOn, FORMAT_VERSION, GENRE_DECKS, GENRES } from '@/shared/model';
 import { UNDO_LIMIT, useBoardStore } from './boardStore';
 import { newBoard } from './newBoard';
 
@@ -131,24 +131,21 @@ describe('newBoard', () => {
       name: 'Untitled Board',
       createdAt: OLD,
       updatedAt: OLD,
-      genres: everyDeck(GENRES),
+      genres: allGenresOn(),
       view: { panX: 0, panY: 0, zoom: 1 },
       cards: [],
       notes: [],
     });
   });
 
-  it('newBoard_noOptions_untitledBoardWithAllGenresInEveryDeck', () => {
+  it('newBoard_noOptions_untitledBoardWithAll21GenresInEachGenreDeck', () => {
     const board = newBoard();
     expect(board.name).toBe('Untitled Board');
-    expect(board.genres).toEqual(everyDeck(GENRES));
+    expect(Object.keys(board.genres).sort()).toEqual([...GENRE_DECKS].sort());
+    for (const deck of GENRE_DECKS) expect(board.genres[deck]).toEqual([...GENRES]);
   });
 
-  it('newBoard_nameAndDeckGenres_keepsThemAsCopies', () => {
-    const chosen: DeckGenres = { ...everyDeck(GENRES), role: ['cyberpunk'] };
-    const board = newBoard({ name: 'Salvage Run', genres: chosen });
-    expect(board.name).toBe('Salvage Run');
-    expect(board.genres).toEqual(chosen);
-    expect(board.genres.role).not.toBe(chosen.role);
+  it('newBoard_name_keepsIt', () => {
+    expect(newBoard({ name: 'Salvage Run' }).name).toBe('Salvage Run');
   });
 });

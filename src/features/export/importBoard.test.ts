@@ -2,7 +2,7 @@
  * Tests for the import parser (round trip, bad files) and the new-board rule.
  */
 import { describe, expect, it } from 'vitest';
-import { everyDeck, FORMAT_VERSION, GENRES, type Board } from '@/shared/model';
+import { allGenresOn, FORMAT_VERSION } from '@/shared/model';
 import { board200, fixtureBoard, fixtureCard, fixtureNote } from '@/test/fixtures/boards';
 import { boardFileJson } from './boardFile';
 import { importedBoard, MAX_BOARD_FILE_BYTES, parseBoardFile, readBoardFile } from './importBoard';
@@ -29,28 +29,8 @@ describe('parseBoardFile', () => {
     ).toBeNull();
   });
 
-  it('parseBoardFile_version1File_importsWithAllGenresInEveryDeck', () => {
-    const rest: Partial<Board> = fixtureBoard([fixtureCard('role')]);
-    delete rest.genres;
-    const parsed = parseBoardFile(JSON.stringify({ ...rest, formatVersion: 1 }));
-    expect(parsed).toEqual({ ...rest, formatVersion: FORMAT_VERSION, genres: everyDeck(GENRES) });
-  });
-
-  it('parseBoardFile_version2File_importsWithItsGenresInEveryDeck', () => {
-    const board = fixtureBoard([fixtureCard('setting')]);
-    const parsed = parseBoardFile(
-      JSON.stringify({ ...board, formatVersion: 2, genres: ['space-opera'] }),
-    );
-    expect(parsed).toEqual({ ...board, genres: everyDeck(['space-opera']) });
-  });
-
-  it('parseBoardFile_version2FileWithEmptyGenres_returnsNull', () => {
-    const board = fixtureBoard([]);
-    expect(parseBoardFile(JSON.stringify({ ...board, formatVersion: 2, genres: [] }))).toBeNull();
-  });
-
-  it('parseBoardFile_cyberpunkRoleBoard_keepsGenres', () => {
-    const genres = { ...everyDeck(GENRES), role: ['cyberpunk' as const] };
+  it('parseBoardFile_horrorMechanicBoard_keepsGenres', () => {
+    const genres = { ...allGenresOn(), mechanic: ['horror' as const] };
     const board = { ...fixtureBoard([]), genres };
     expect(parseBoardFile(boardFileJson(board))?.genres).toEqual(genres);
   });

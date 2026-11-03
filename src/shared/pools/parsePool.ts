@@ -1,9 +1,17 @@
 /**
  * Pool file parsing: a hand-written type guard that turns fetched JSON into a Pool.
  * Zod is reserved for features/export/, so the pool shape is checked by hand here.
- * Every cue needs a genres list: 1 or more known genres, none repeated.
+ * A cue of a genre-tagged deck (GENRE_DECKS) needs a genres list: 1 or more known genres,
+ * none repeated. A cue of any other deck must have no genres key.
  */
-import { GENRES, type CardType, type Genre, type Pool, type PoolCue } from '@/shared/model';
+import {
+  GENRE_DECKS,
+  GENRES,
+  type CardType,
+  type Genre,
+  type Pool,
+  type PoolCue,
+} from '@/shared/model';
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null && !Array.isArray(value);
@@ -30,16 +38,21 @@ export function parsePool(type: CardType, data: unknown): Pool {
     throw new Error(`The ${type} pool file has no cues.`);
   }
 
+  const tagged = (GENRE_DECKS as readonly string[]).includes(type);
   const cues = data.cues.map((raw: unknown, index): PoolCue => {
     if (!isRecord(raw) || !isNonEmptyString(raw.id) || !isNonEmptyString(raw.text)) {
       throw new Error(`Cue ${index} in the ${type} pool needs an id and a text.`);
     }
-    if (!isGenreList(raw.genres)) {
-      throw new Error(
-        `Cue ${raw.id} in the ${type} pool needs a genres list of generic, sci-fi, cyberpunk or space-opera.`,
-      );
+    if (!tagged) {
+      if (raw.genres !== undefined) {
+        throw new Error(`Cue ${raw.id} in the ${type} pool must not have genres.`);
+      }
+      // Any other key on a cue is ignored, not copied.
+      return { id: raw.id, text: raw.text };
     }
-    // Any other key on a cue is ignored, not copied.
+    if (!isGenreList(raw.genres)) {
+      throw new Error(`Cue ${raw.id} in the ${type} pool needs a list of known genres.`);
+    }
     return { id: raw.id, text: raw.text, genres: [...raw.genres] };
   });
 

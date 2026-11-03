@@ -1,8 +1,8 @@
 /**
  * BoardList: the board list page body at #/ (design 9.8): the "Boards" header with Import
  * Board File and New Board, one row per saved board newest first, and the footer line.
- * New Board opens the 2-step New Board dialog; Create Board saves a board with the chosen
- * name and deck genres and opens it; Cancel and Esc create nothing and return focus to New
+ * New Board opens the name-only New Board dialog; Make Board saves a board with that name
+ * and all 21 genres on and opens it; Cancel and Esc create nothing and return focus to New
  * Board. Import keeps the file's genres and skips the dialog.
  * Import reads a board file through the export feature and saves it as a new board; the new
  * row is highlighted with a status message for a short time, and a bad file shows the
@@ -26,12 +26,12 @@ import {
   saveBoard,
   whenSaved,
 } from '@/shared/storage';
-import { newId, type DeckGenres } from '@/shared/model';
+import { newId } from '@/shared/model';
 import { newBoard } from '@/shared/store';
 import { Banner, Button, Icon } from '@/shared/ui';
 import { BoardRow } from './BoardRow';
 import { DeleteBoardDialog } from './DeleteBoardDialog';
-import { GenreDialog } from './GenreDialog';
+import { NewBoardDialog } from './NewBoardDialog';
 import { ImportStatus } from './ImportStatus';
 import { summarize, type BoardSummary } from './summary';
 import styles from './BoardList.module.css';
@@ -157,11 +157,11 @@ export function BoardList({ boardHref, onOpen }: BoardListProps) {
     newBoardButton.current?.focus();
   }, [choosing]);
 
-  async function createBoard(name: string, genres: DeckGenres) {
+  async function createBoard(name: string) {
     setChoosing(false);
     clearNotice();
     setCreating(true);
-    const board = newBoard({ name, genres });
+    const board = newBoard({ name });
     try {
       await saveBoard(board);
     } catch {
@@ -265,10 +265,10 @@ export function BoardList({ boardHref, onOpen }: BoardListProps) {
         the browser.
       </p>
       {choosing && (
-        <GenreDialog
+        <NewBoardDialog
           open
           onCancel={cancelNewBoard}
-          onCreate={(name, genres) => void createBoard(name, genres)}
+          onCreate={(name) => void createBoard(name)}
         />
       )}
       <DeleteBoardDialog

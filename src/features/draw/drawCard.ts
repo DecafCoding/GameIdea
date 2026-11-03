@@ -1,7 +1,7 @@
 /**
- * Draw logic: builds one new card of a type from its pool, with distinct cues. Only cues that
- * share a genre with the card's deck on the board are drawn (docs/feature-genre-pools.html,
- * docs/feature-deck-genres.html).
+ * Draw logic: builds one new card of a type from its pool, with distinct cues. For a
+ * genre-tagged deck, only cues that share a genre with the deck's genres on the board are
+ * drawn; every other deck draws from its full pool (CLAUDE.md "Draws").
  * Used by the deck buttons and Redraw; the caller places the returned card.
  */
 import {
@@ -23,12 +23,13 @@ export interface DrawOptions {
 
 /**
  * Draws one card: one ring of distinct cues (4 or 2 by type), first cue active, at 0,0.
- * genres are the genres of the card's deck; a cue is drawn only when it shares at least 1 of them.
+ * genres are the genres of the card's deck; a cue is drawn only when it shares at least 1 of
+ * them. null draws from the full pool (the decks that ignore genre).
  */
 export function drawCard(
   type: CardType,
   pool: Pool,
-  genres: readonly Genre[],
+  genres: readonly Genre[] | null,
   options: DrawOptions = {},
 ): Card {
   const random = options.random ?? Math.random;
@@ -38,9 +39,11 @@ export function drawCard(
     throw new Error(`A ${type} card cannot be drawn from the ${pool.type} pool.`);
   }
 
-  // 1. Keep cues that share a genre with the board.
-  const wanted = new Set<Genre>(genres);
-  const matching = pool.cues.filter((cue) => cue.genres.some((genre) => wanted.has(genre)));
+  // 1. Keep cues that share a genre with the deck, or every cue when the deck ignores genre.
+  const wanted = genres && new Set<Genre>(genres);
+  const matching = wanted
+    ? pool.cues.filter((cue) => cue.genres?.some((genre) => wanted.has(genre)))
+    : pool.cues;
 
   // 2. Distinct by trimmed, lowercase text; the first cue with a text wins.
   const seen = new Set<string>();

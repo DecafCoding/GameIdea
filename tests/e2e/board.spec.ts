@@ -15,7 +15,7 @@ import {
   boxOf,
   canvasCards,
   cardById,
-  createBoardWithGenres,
+  createBoard,
   drawFromRail,
   openBoard,
   rail,
@@ -38,7 +38,7 @@ test('board_emptyBoard_showsPanelAndZeroCounts', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Start With One Card' })).toBeVisible();
   await expect(badge(page)).toHaveText('0 cards · 0 notes');
   await expect(page.getByRole('link', { name: 'Board List' })).toBeVisible();
-  await expect(page.getByRole('textbox', { name: 'Board Name' })).toHaveValue('Untitled Board');
+  await expect(page.getByRole('textbox', { name: 'Board Name' })).toHaveValue('Test Board');
   await expect(page.getByRole('button', { name: 'Undo' })).toBeDisabled();
   await expect(page.getByTestId('zoom-strip')).toBeVisible();
 });
@@ -98,7 +98,7 @@ test('board_poolsBlocked_bannerThenRetry', async ({ page }) => {
   const block = (route: Route) => route.abort();
   await page.route('**/pools/*.json', block);
   await page.goto('/');
-  await createBoardWithGenres(page);
+  await createBoard(page);
   const alert = page.getByRole('alert');
   await expect(alert).toContainText(POOLS_FAILED_TEXT);
   for (const button of await rail(page)
@@ -296,7 +296,7 @@ test.describe('selection', () => {
 test('tokens_shell_rendersAtLockedValues', async ({ page }) => {
   await openBoard(
     page,
-    fixtureBoard(fixtureStack(96, 96), [fixtureNote({ x: 480, y: 96, text: 'Premise text' })]),
+    fixtureBoard(fixtureStack(96, 96), [fixtureNote({ x: 480, y: 96, text: 'Pitch text' })]),
   );
   const topBar = page.locator('header');
   expect((await boxOf(topBar)).height).toBe(56);

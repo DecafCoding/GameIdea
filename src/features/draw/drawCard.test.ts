@@ -18,7 +18,7 @@ function mulberry32(seed: number): () => number {
   };
 }
 
-function pool(type: CardType, texts: string[], genres: Genre[] = ['generic']): Pool {
+function pool(type: CardType, texts: string[], genres: Genre[] = ['roguelike']): Pool {
   return {
     type,
     cues: texts.map((text, i) => ({
@@ -92,13 +92,13 @@ describe('drawCard', () => {
     const mixed: Pool = {
       type: 'role',
       cues: [
-        ...pool('role', ['a', 'b', 'c', 'd'], ['cyberpunk']).cues,
-        ...pool('role', ['e', 'f', 'g', 'h'], ['space-opera']).cues,
+        ...pool('role', ['a', 'b', 'c', 'd'], ['horror']).cues,
+        ...pool('role', ['e', 'f', 'g', 'h'], ['puzzle']).cues,
       ],
     };
     const random = mulberry32(3);
     for (let i = 0; i < 50; i++) {
-      expect(texts(drawCard('role', mixed, ['cyberpunk'], { random })).sort()).toEqual([
+      expect(texts(drawCard('role', mixed, ['horror'], { random })).sort()).toEqual([
         'a',
         'b',
         'c',
@@ -111,17 +111,28 @@ describe('drawCard', () => {
     const p: Pool = {
       type: 'goal',
       cues: [
-        { id: 'm-1', text: 'shared', genres: ['cyberpunk', 'space-opera'] },
-        { id: 'm-2', text: 'cyber', genres: ['cyberpunk'] },
-        { id: 'm-3', text: 'opera', genres: ['space-opera'] },
+        { id: 'm-1', text: 'shared', genres: ['horror', 'puzzle'] },
+        { id: 'm-2', text: 'cyber', genres: ['horror'] },
+        { id: 'm-3', text: 'opera', genres: ['puzzle'] },
       ],
     };
-    expect(texts(drawCard('goal', p, ['cyberpunk'])).sort()).toEqual(['cyber', 'shared']);
-    expect(texts(drawCard('goal', p, ['space-opera'])).sort()).toEqual(['opera', 'shared']);
+    expect(texts(drawCard('goal', p, ['horror'])).sort()).toEqual(['cyber', 'shared']);
+    expect(texts(drawCard('goal', p, ['puzzle'])).sort()).toEqual(['opera', 'shared']);
+  });
+
+  it('drawCard_nullGenres_drawsFromFullPoolWithoutGenres', () => {
+    const plain: Pool = {
+      type: 'goal',
+      cues: [
+        { id: 'g-1', text: 'a' },
+        { id: 'g-2', text: 'b' },
+      ],
+    };
+    expect(texts(drawCard('goal', plain, null)).sort()).toEqual(['a', 'b']);
   });
 
   it('drawCard_noMatchingCues_throws', () => {
-    expect(() => drawCard('role', pool('role', six), ['cyberpunk'])).toThrow();
+    expect(() => drawCard('role', pool('role', six), ['horror'])).toThrow();
   });
 
   it('drawCard_emptyGenres_throws', () => {

@@ -45,11 +45,11 @@ describe('NoteView', () => {
     const { onEndEdit } = setup(true);
     const title = screen.getByRole('textbox', { name: 'Note Title' });
     const text = screen.getByRole('textbox', { name: 'Note Text' });
-    fireEvent.change(title, { target: { value: 'Premise' } });
+    fireEvent.change(title, { target: { value: 'Pitch' } });
     fireEvent.blur(title, { relatedTarget: text });
     expect(onEndEdit).not.toHaveBeenCalled();
     fireEvent.blur(text);
-    expect(onEndEdit).toHaveBeenCalledWith({ title: 'Premise', text: 'A ship' });
+    expect(onEndEdit).toHaveBeenCalledWith({ title: 'Pitch', text: 'A ship' });
   });
 
   it('noteView_trash_callsDelete', () => {

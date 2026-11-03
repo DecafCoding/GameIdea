@@ -2,7 +2,7 @@
  * Tests for the format upgrade runner with injected steps, and the step registry.
  */
 import { describe, expect, it } from 'vitest';
-import { everyDeck, FORMAT_VERSION, GENRES } from '@/shared/model';
+import { FORMAT_VERSION } from '@/shared/model';
 import { UPGRADES, upgradeBoardFile, type UpgradeStep } from './upgrade';
 
 describe('upgradeBoardFile', () => {
@@ -20,9 +20,10 @@ describe('upgradeBoardFile', () => {
         expect(file.formatVersion).toBe(n);
         return { ...file, [`step${n}`]: true };
       };
-    const result = upgradeBoardFile({ formatVersion: 1 }, { 1: step(1), 2: step(2) }, 3);
+    const target = 3;
+    const result = upgradeBoardFile({ formatVersion: 1 }, { 1: step(1), 2: step(2) }, target);
     expect(calls).toEqual([1, 2]);
-    expect(result).toEqual({ formatVersion: 3, step1: true, step2: true });
+    expect(result).toEqual({ formatVersion: target, step1: true, step2: true });
   });
 
   it('upgradeBoardFile_newerVersion_null', () => {
@@ -46,43 +47,18 @@ describe('upgradeBoardFile', () => {
     expect(upgradeBoardFile('board')).toBeNull();
   });
 
-  it('UPGRADES1_version1File_getsAllGenres', () => {
-    const file = { formatVersion: 1, name: 'Old', genres: ['cyberpunk'] };
-    expect(UPGRADES[1]!(file)).toEqual({ formatVersion: 1, name: 'Old', genres: [...GENRES] });
+  it('upgradeBoardFile_version1File_returnsSameFile', () => {
+    const file = { formatVersion: 1, name: 'A', cards: [{ id: 'a' }] };
+    expect(upgradeBoardFile(file)).toEqual(file);
   });
 
-  it('upgrade_version1File_getsAllGenresInEveryDeck', () => {
-    expect(upgradeBoardFile({ formatVersion: 1, name: 'Old' })).toEqual({
-      formatVersion: FORMAT_VERSION,
-      name: 'Old',
-      genres: everyDeck(GENRES),
-    });
+  it('upgradeBoardFile_version2File_returnsNull', () => {
+    // FORMAT_VERSION is 1, so version 2 is a newer format.
+    expect(upgradeBoardFile({ formatVersion: FORMAT_VERSION + 1, name: 'A' })).toBeNull();
   });
 
-  it('upgrade_version2File_copiesGenresToEveryDeck', () => {
-    expect(upgradeBoardFile({ formatVersion: 2, genres: ['cyberpunk'] })).toEqual({
-      formatVersion: FORMAT_VERSION,
-      genres: everyDeck(['cyberpunk']),
-    });
-  });
-
-  it('upgrade_version2FileWithoutGenresArray_leavesGenres', () => {
-    expect(upgradeBoardFile({ formatVersion: 2, genres: 'cyberpunk' })).toEqual({
-      formatVersion: FORMAT_VERSION,
-      genres: 'cyberpunk',
-    });
-  });
-
-  it('upgrade_version3File_notesGetPremiseTitle', () => {
-    expect(upgradeBoardFile({ formatVersion: 3, notes: [{ id: 'n', text: 'A' }] })).toEqual({
-      formatVersion: FORMAT_VERSION,
-      notes: [{ id: 'n', text: 'A', title: 'Premise' }],
-    });
-  });
-
-  it('UPGRADES4_version4File_unchanged', () => {
-    const file = { formatVersion: 4, name: 'Old', cards: [{ id: 'a' }] };
-    expect(UPGRADES[4]!(file)).toEqual(file);
+  it('UPGRADES_formatVersion1_hasNoSteps', () => {
+    expect(Object.keys(UPGRADES)).toEqual([]);
   });
 
   it('UPGRADES_everyOldVersion_hasStep', () => {

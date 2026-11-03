@@ -1,12 +1,11 @@
 /**
  * Helpers for the board screen browser tests: open the board (a new one, or a fixture
- * board set before the app starts), create a board through both steps of the New Board
- * dialog, seed a database from an older schema version, draw from the rail, find cards,
- * and drag with stepped mouse moves.
+ * board set before the app starts), create a board through the New Board dialog, draw from
+ * the rail, find cards, and drag with stepped mouse moves.
  */
 import type { Locator, Page } from '@playwright/test';
 import { expect } from './test';
-import { GENRES, type Board, type CardType, type Genre } from '@/shared/model';
+import type { Board } from '@/shared/model';
 import type { DeckName } from './helpers';
 
 /**
@@ -22,121 +21,24 @@ export async function openBoard(page: Page, board?: Board): Promise<void> {
     await page.goto(`/#/board/${encodeURIComponent(board.id)}`);
   } else {
     await page.goto('/');
-    await createBoardWithGenres(page);
+    await createBoard(page);
     await page.waitForURL(/#\/board\//);
   }
   await expect(page.locator('main[aria-label="Board"]')).toBeVisible();
   await expect(rail(page).getByRole('button', { name: 'Draw A Player Role' })).toBeEnabled();
 }
 
-const GENRE_LABEL: Record<Genre, string> = {
-  generic: 'Generic',
-  'sci-fi': 'Sci-Fi',
-  cyberpunk: 'Cyberpunk',
-  'space-opera': 'Space Opera',
-};
-
-const DECK_LABEL: Record<CardType, string> = {
-  role: 'Player Role',
-  goal: 'Goal',
-  setting: 'Setting',
-  conflict: 'Conflict',
-  modifier: 'Modifier',
-};
-
-/** The open New Board dialog, on either step (the title changes per step). */
+/** The open New Board dialog. */
 export function newBoardDialog(page: Page): Locator {
-  return page.getByRole('dialog', { name: /^(New Board|Decks For ")/ });
+  return page.getByRole('dialog', { name: 'New Board' });
 }
 
-/**
- * On the board list: clicks New Board and walks both dialog steps.
- * Step 1: fills the "Board Name" field when name is given, then leaves exactly the given
- * genres on (default all 4). Tiles are set last to first, so a sub-genre's Sci-Fi side
- * effect is fixed by Sci-Fi's own later click. Then Next.
- * Step 2: for each deck in decks, in its row clicks the wanted chips that are off, then the
- * unwanted chips that are on (on before off, so the last-chip rule never blocks). Decks not
- * named keep every step 1 genre. Then Create Board.
- */
-export async function createBoardWithGenres(
-  page: Page,
-  options: {
-    name?: string;
-    genres?: readonly Genre[];
-    decks?: Partial<Record<CardType, readonly Genre[]>>;
-  } = {},
-): Promise<void> {
-  const genres = options.genres ?? GENRES;
+/** On the board list: clicks New Board, types the name and clicks Make Board. */
+export async function createBoard(page: Page, name = 'Test Board'): Promise<void> {
   await page.getByRole('button', { name: 'New Board' }).click();
   const dialog = newBoardDialog(page);
-  if (options.name !== undefined) {
-    await dialog.getByRole('textbox', { name: 'Board Name' }).fill(options.name);
-  }
-  const tiles = dialog.getByRole('group', { name: 'Genres' });
-  for (const genre of [...GENRES].reverse()) {
-    const tile = tiles.getByRole('button', { name: GENRE_LABEL[genre], exact: true });
-    const on = (await tile.getAttribute('aria-pressed')) === 'true';
-    if (on !== genres.includes(genre)) await tile.click();
-  }
-  await dialog.getByRole('button', { name: 'Next' }).click();
-  for (const [deck, wanted] of Object.entries(options.decks ?? {}) as [
-    CardType,
-    readonly Genre[],
-  ][]) {
-    const row = dialog.getByRole('group', { name: DECK_LABEL[deck] });
-    const chip = (genre: Genre) =>
-      row.getByRole('button', { name: GENRE_LABEL[genre], exact: true });
-    for (const turnOn of [true, false]) {
-      for (const genre of genres) {
-        if (wanted.includes(genre) !== turnOn) continue;
-        const on = (await chip(genre).getAttribute('aria-pressed')) === 'true';
-        if (on !== turnOn) await chip(genre).click();
-      }
-    }
-  }
-  await dialog.getByRole('button', { name: 'Create Board' }).click();
-}
-
-/**
- * Seeds IndexedDB "gameidea" as an older Dexie schema version left it, with one board record
- * and its index row, so the app runs the upgrades on open. Dexie multiplies its version by 10
- * for the native IndexedDB version (schema 1 is native 10, schema 2 is native 20). Call it on
- * a same-origin page that has not opened the database.
- */
-export async function seedOldBoard(
-  page: Page,
-  board: Record<string, unknown>,
-  schemaVersion: 1 | 2,
-) {
-  await page.evaluate(
-    async ([record, version]) => {
-      const db = await new Promise<IDBDatabase>((resolve, reject) => {
-        const request = indexedDB.open('gameidea', version * 10);
-        request.onupgradeneeded = () => {
-          const upgrading = request.result;
-          upgrading.createObjectStore('boards', { keyPath: 'id' });
-          const index = upgrading.createObjectStore('boardIndex', { keyPath: 'id' });
-          index.createIndex('updatedAt', 'updatedAt');
-        };
-        request.onsuccess = () => resolve(request.result);
-        request.onerror = () => reject(new Error('open failed'));
-      });
-      await new Promise<void>((resolve, reject) => {
-        const tx = db.transaction(['boards', 'boardIndex'], 'readwrite');
-        tx.objectStore('boards').put(record);
-        tx.objectStore('boardIndex').put({
-          id: record.id,
-          name: record.name,
-          createdAt: record.createdAt,
-          updatedAt: record.updatedAt,
-        });
-        tx.oncomplete = () => resolve();
-        tx.onerror = () => reject(new Error('write failed'));
-      });
-      db.close();
-    },
-    [board, schemaVersion] as const,
-  );
+  await dialog.getByRole('textbox', { name: 'Name' }).fill(name);
+  await dialog.getByRole('button', { name: 'Make Board' }).click();
 }
 
 export function rail(page: Page): Locator {

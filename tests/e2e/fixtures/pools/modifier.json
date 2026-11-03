@@ -3,43 +3,35 @@
   "cues": [
     {
       "id": "modifier-test-01",
-      "text": "stolen",
-      "genres": ["generic", "sci-fi", "cyberpunk", "space-opera"]
+      "text": "stolen"
     },
     {
       "id": "modifier-test-02",
-      "text": "haunted",
-      "genres": ["generic", "sci-fi", "cyberpunk", "space-opera"]
+      "text": "haunted"
     },
     {
       "id": "modifier-test-03",
-      "text": "tiny",
-      "genres": ["generic", "sci-fi", "cyberpunk", "space-opera"]
+      "text": "tiny"
     },
     {
       "id": "modifier-test-04",
-      "text": "clockwork",
-      "genres": ["generic", "sci-fi", "cyberpunk", "space-opera"]
+      "text": "clockwork"
     },
     {
       "id": "modifier-test-05",
-      "text": "frozen",
-      "genres": ["generic", "sci-fi", "cyberpunk", "space-opera"]
+      "text": "frozen"
     },
     {
       "id": "modifier-test-06",
-      "text": "burning",
-      "genres": ["generic", "sci-fi", "cyberpunk", "space-opera"]
+      "text": "burning"
     },
     {
       "id": "modifier-test-07",
-      "text": "forgotten",
-      "genres": ["generic", "sci-fi", "cyberpunk", "space-opera"]
+      "text": "forgotten"
     },
     {
       "id": "modifier-test-08",
-      "text": "giant",
-      "genres": ["generic", "sci-fi", "cyberpunk", "space-opera"]
+      "text": "giant"
     }
   ]
 }

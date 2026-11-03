@@ -3,8 +3,8 @@
  * imported file is a BoardRecord of the current format, with the ring rules (CLAUDE.md
  * "Rings"), unique card and note ids and no tuck cycle. Unknown keys are dropped. Typed as
  * z.ZodType<Board>, so a drift between this schema and shared/model is a type error.
- * genres: 1 list for each of the 5 decks, each 1 or more known genres, none repeated
- * (version 3 and up).
+ * genres: 1 list for each of the 4 genre-tagged decks, each 1 or more known genres, none
+ * repeated.
  * A tuckedUnder that names no card is allowed: the stack rules treat that card as a root.
  */
 import { z } from 'zod';
@@ -84,13 +84,12 @@ const deckGenreList = z
   .min(1)
   .refine((list) => new Set(list).size === list.length, 'A genre is listed twice.');
 
-/** All 5 decks are required; an unknown key is dropped like any other. */
+/** All 4 genre-tagged decks are required; an unknown key is dropped like any other. */
 const deckGenresSchema = z.object({
-  role: deckGenreList,
-  goal: deckGenreList,
-  setting: deckGenreList,
-  conflict: deckGenreList,
-  modifier: deckGenreList,
+  mechanic: deckGenreList,
+  resource: deckGenreList,
+  progression: deckGenreList,
+  constraint: deckGenreList,
 });
 
 export const boardSchema: z.ZodType<Board> = z
