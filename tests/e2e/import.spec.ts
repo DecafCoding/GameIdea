@@ -13,6 +13,7 @@ import {
   fixtureCard,
   fixtureNote,
   fixtureStack,
+  roundTripBoard,
   secondModifier,
 } from '@/test/fixtures/boards';
 import { canvasCards, openBoard, storedBoards } from './board-helpers';
@@ -100,6 +101,30 @@ test('import_exportedBoardFile_roundTripsAsNewBoard', async ({ page }) => {
   expect(original).toEqual(exported);
   expect(imported.name).toBe('Salvage Run (imported)');
   expect(kept(imported)).toEqual(kept(exported));
+});
+
+test('import_richBoard_roundTripsEveryField', async ({ page }) => {
+  const board = roundTripBoard();
+  await openBoard(page, board);
+  const sentence = (await page.getByTestId('hook-sentence').textContent())!.trim();
+  expect(sentence).not.toBe('');
+  const download = await exportFile(page, 'Board File');
+  const buffer = await readFile(await download.path());
+
+  await page.goto('/#/');
+  await importThrough(page, importButton(page), { name: 'Round Trip.gameidea.json', buffer });
+  await expect(page.getByRole('status')).toContainText('Board imported.');
+
+  const stored = await storedBoards(page);
+  expect(stored).toHaveLength(2);
+  const original = stored.find((b) => b.id === board.id)!;
+  const imported = stored.find((b) => b.id !== board.id)!;
+  expect(kept(original)).toEqual(kept(board));
+  expect(kept(imported)).toEqual(kept(original));
+
+  await page.goto(`/#/board/${encodeURIComponent(imported.id)}`);
+  await expect(page.locator('main[aria-label="Board"]')).toBeVisible();
+  await expect(page.getByTestId('hook-sentence')).toHaveText(sentence);
 });
 
 test('import_freeName_keepsName', async ({ page }) => {

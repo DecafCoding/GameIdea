@@ -17,6 +17,7 @@ import {
   drawFromRail,
   openBoard,
   rail,
+  waitForStoredCard,
 } from './board-helpers';
 import { exportFile } from './export-helpers';
 import type { DeckName } from './helpers';
@@ -187,7 +188,14 @@ test('modifier_onTop_survivesRedrawReloadExportImport', async ({ page }) => {
   await expect(active(page, 'role-1')).toHaveText(/^tall exiled /);
   const redrawn = (await active(page, 'role-1').textContent())!;
 
-  // Reload.
+  // Reload only once the Redraw is stored (the stored noun is the one on screen) and the
+  // save mark is back to saved.
+  const noun = redrawn.replace(/^tall exiled /, '');
+  await waitForStoredCard(page, board.id, 'role-1', (card) => {
+    const ring = card.rings[0]!;
+    return ring.cues[ring.activeIndex]!.text === noun;
+  });
+  await expect(page.getByTestId('save-mark')).toHaveAttribute('data-state', 'saved');
   await page.reload();
   await expect(active(page, 'role-1')).toHaveText(redrawn);
 

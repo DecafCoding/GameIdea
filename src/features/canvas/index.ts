@@ -20,5 +20,5 @@ export {
 } from './boardActions';
 export { CanvasProvider, useCanvasApi, type CanvasApi, type CanvasNotice } from './CanvasProvider';
 export { boardRects, CARD_SIZE, cardSize, findOpenSpot, HOOK_WIDTH } from './placement';
-export { cardText, isOnTop, onTopCardOf } from './reading';
+export { cardText, hookSentences, isOnTop, onTopCardOf } from './reading';
 export { childrenOf, isRoot } from './stack';

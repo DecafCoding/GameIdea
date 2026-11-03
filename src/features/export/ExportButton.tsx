@@ -36,14 +36,14 @@ export function ExportButton({ name, getBoard }: ExportButtonProps) {
     {
       icon: 'file-text',
       title: 'Text File',
-      caption: 'The cards and notes of this board in plain words. For your notebook or your draft.',
+      caption: 'Each hook on this board, then the cards and notes in plain words.',
       fileName: textFileName(name),
       download: downloadTextFile,
     },
     {
       icon: 'board-file',
       title: 'Board File',
-      caption: 'All data of this board. Import it again on any computer. This is your backup.',
+      caption: 'All data of this board. Import it again on any computer. This is your only backup.',
       fileName: boardFileName(name),
       download: downloadBoardFile,
     },

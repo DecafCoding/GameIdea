@@ -9,7 +9,7 @@ import { fixtureBoard, fixtureCard } from '@/test/fixtures/boards';
 import type { Board, Card } from '@/shared/model';
 import { dropCard, splitCard } from './boardActions';
 import { hintFor } from './dropZones';
-import { cardText, isOnTop, onTopCardOf, stackEntries } from './reading';
+import { cardText, hookSentences, isOnTop, onTopCardOf, stackEntries } from './reading';
 
 const cue = (texts: string[]) => ({ cues: texts.map((text) => ({ text })), activeIndex: 0 });
 const get = (board: Board, id: string): Card => board.cards.find((c) => c.id === id)!;
@@ -129,5 +129,40 @@ describe('stackEntries', () => {
     expect(buildHookSentence(stackEntries(board, 'hook-1'))).toBe(
       'You are a lighthouse keeper who must trade using memories to keep the light on, but the tide rises every night.',
     );
+  });
+});
+
+describe('hookSentences', () => {
+  it('hookSentences_noHookCard_empty', () => {
+    expect(hookSentences(fixtureBoard([fixtureCard('role')]))).toEqual([]);
+  });
+
+  it('hookSentences_emptyHookCard_skipped', () => {
+    expect(hookSentences(fixtureBoard([fixtureCard('hook')]))).toEqual([]);
+  });
+
+  it('hookSentences_twoHooks_readingOrderTopThenLeft', () => {
+    const board = fixtureBoard([
+      fixtureCard('hook', { id: 'low', x: 0, y: 600 }),
+      fixtureCard('goal', { id: 'g-low', z: 2, tuckedUnder: 'low' }),
+      fixtureCard('hook', { id: 'right', x: 900, y: 0 }),
+      fixtureCard('conflict', { id: 'c-right', z: 3, tuckedUnder: 'right' }),
+      fixtureCard('hook', { id: 'left', x: 0, y: 0 }),
+      fixtureCard('role', { id: 'r-left', z: 4, tuckedUnder: 'left' }),
+    ]);
+    expect(hookSentences(board)).toEqual([
+      'You are a navigator.',
+      'But the tide rises every night.',
+      'To keep the light on.',
+    ]);
+  });
+
+  it('hookSentences_matchesHookCardSentence', () => {
+    const board = fixtureBoard([
+      fixtureCard('hook'),
+      fixtureCard('role', { z: 2, tuckedUnder: 'hook-1' }),
+      fixtureCard('goal', { z: 3, tuckedUnder: 'role-1' }),
+    ]);
+    expect(hookSentences(board)).toEqual([buildHookSentence(stackEntries(board, 'hook-1'))]);
   });
 });

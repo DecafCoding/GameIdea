@@ -3,7 +3,13 @@
  */
 import { describe, expect, it } from 'vitest';
 import { allGenresOn, FORMAT_VERSION } from '@/shared/model';
-import { board200, fixtureBoard, fixtureCard, fixtureNote } from '@/test/fixtures/boards';
+import {
+  board200,
+  fixtureBoard,
+  fixtureCard,
+  fixtureNote,
+  roundTripBoard,
+} from '@/test/fixtures/boards';
 import { boardFileJson } from './boardFile';
 import { importedBoard, MAX_BOARD_FILE_BYTES, parseBoardFile, readBoardFile } from './importBoard';
 
@@ -12,6 +18,10 @@ const options = { id: 'new-id', now: '2026-10-29T12:00:00.000Z' };
 describe('parseBoardFile', () => {
   it('parseBoardFile_exportedBoard200_roundTripsExactly', () => {
     expect(parseBoardFile(boardFileJson(board200()))).toEqual(board200());
+  });
+
+  it('parseBoardFile_exportedRoundTripBoard_deepEqualsOriginal', () => {
+    expect(parseBoardFile(boardFileJson(roundTripBoard()))).toEqual(roundTripBoard());
   });
 
   it('parseBoardFile_notJson_null', () => {
@@ -68,6 +78,16 @@ describe('importedBoard', () => {
     const result = importedBoard(board, ['Salvage Run'], options);
     expect(result.renamed).toBe(true);
     expect(result.board.name).toBe('Salvage Run (imported)');
+  });
+
+  it('importedBoard_roundTrip_changesOnlyIdNameUpdatedAt', () => {
+    const original = roundTripBoard();
+    const parsed = parseBoardFile(boardFileJson(original))!;
+    const { board: result } = importedBoard(parsed, [original.name], options);
+    const strip = (board: typeof original) => ({ ...board, id: '', name: '', updatedAt: '' });
+    expect(strip(result)).toEqual(strip(original));
+    expect(result.id).toBe('new-id');
+    expect(result.name).toBe('Round Trip (imported)');
   });
 
   it('importedBoard_keepsCardsNotesViewCreatedAt', () => {

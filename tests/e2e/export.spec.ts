@@ -5,6 +5,7 @@
 import { readFile } from 'node:fs/promises';
 import { expect, test } from './test';
 import { openBoard, storedBoards } from './board-helpers';
+import { fixtureBoard, fixtureCard } from '@/test/fixtures/boards';
 import { exportButton, exportFile, salvageRun } from './export-helpers';
 
 test.beforeEach(async ({ page }) => {
@@ -33,6 +34,24 @@ test('export_textFile_downloadsPlainWords', async ({ page, browserName }) => {
       'Notes\n\nNote\nThe fleet left without her.\n',
   );
   await expect(page.getByRole('menu')).toBeHidden();
+});
+
+test('export_textFile_holdsEachHookSentence', async ({ page }) => {
+  const board = {
+    ...fixtureBoard([
+      fixtureCard('hook', { x: 200, y: 120 }),
+      fixtureCard('role', { x: 220, y: 176, z: 2, tuckedUnder: 'hook-1' }),
+      fixtureCard('goal', { x: 220, y: 232, z: 3, tuckedUnder: 'role-1' }),
+    ]),
+    id: 'hook-export',
+    name: 'Hook Export',
+  };
+  await openBoard(page, board);
+  const sentence = (await page.getByTestId('hook-sentence').textContent())!.trim();
+  expect(sentence).not.toBe('');
+  const download = await exportFile(page, 'Text File');
+  const text = await readFile(await download.path(), 'utf8');
+  expect(text.startsWith(`Hook Export\n\nHooks\n\n${sentence}\n\nCards\n\n`)).toBe(true);
 });
 
 test('export_boardFile_matchesStoredRecord', async ({ page, browserName }) => {
