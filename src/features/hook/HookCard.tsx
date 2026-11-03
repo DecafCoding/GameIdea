@@ -26,7 +26,7 @@ export function HookCard({ sentence, empty }: HookCardProps) {
         </span>
         <span className={styles.label}>Hook</span>
       </header>
-      <p className={styles.sentence} data-testid="hook-sentence">
+      <p className={styles.sentence} data-testid="hook-sentence" data-hook-text="">
         {empty ? HOOK_NEW_TEXT : sentence}
       </p>
       {empty && (

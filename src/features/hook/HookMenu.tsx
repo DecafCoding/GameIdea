@@ -1,6 +1,6 @@
 /**
  * HookMenu: the Hook Card's hover menu (design 9.5, on the card strip menu spec of 9.4):
- * Copy, Redraw All and Discard. Copy and Redraw All are off until a card is tucked under
+ * Copy, Redraw All, Duplicate (the whole stack) and Discard. Copy and Redraw All are off until a card is tucked under
  * the Hook Card; Redraw All is also off while the pools are not ready. After a good copy,
  * Copy reads "Copied" for 2 seconds; a blocked copy opens the fallback dialog.
  * The canvas shows the menu while the pointer is over the Hook Card or the menu. The menu
@@ -23,6 +23,7 @@ interface HookMenuProps {
   /** The pointer is over the Hook Card or the menu. */
   visible: boolean;
   onRedrawAll: () => void;
+  onDuplicate: () => void;
   onDiscard: () => void;
   onPointerEnter?: () => void;
   onPointerLeave?: () => void;
@@ -36,6 +37,7 @@ export function HookMenu({
   poolsReady,
   visible,
   onRedrawAll,
+  onDuplicate,
   onDiscard,
   onPointerEnter,
   onPointerLeave,
@@ -98,6 +100,14 @@ export function HookMenu({
           onClick={onRedrawAll}
         >
           Redraw All
+        </button>
+        <button
+          type="button"
+          className={styles.button}
+          tabIndex={shown ? undefined : -1}
+          onClick={onDuplicate}
+        >
+          Duplicate
         </button>
         <button
           type="button"

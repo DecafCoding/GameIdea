@@ -104,6 +104,12 @@
         <li>Card strip menus (plain cards and the Hook Card) sit 4 above the card's top, not 56.</li>
         <li>Plain cards show their strip menu on hover, like the Hook Card. A click still selects the card (outline, Delete, Esc).</li>
         <li>A strip menu hides as soon as the pointer leaves both the card and the menu. The dragged card shows no menu.</li>
+        <li>Later the same day: a strip menu stays 1 second after the pointer leaves card and menu. Only one is open at a time: hovering another card, or pressing anywhere outside the card and menu, closes it at once.</li>
+        <li>Later the same day: a card tucked under another card shows no strip menu. The head of a stack and the Hook Card still show theirs.</li>
+        <li>Later the same day: the mouse wheel over the Hook Card scrolls its sentence instead of zooming the canvas.</li>
+        <li>Later the same day: the card strip menu gains Duplicate (copies the card beside it), and Lock / Unlock becomes a 44 px lock icon button, pressed while locked. The Hook Card menu gains Duplicate, which copies the whole stack. A tucked card's type glyph and lock move just outside its right edge.</li>
+        <li>A click anywhere on a board card opens the board (the More button still opens its menu).</li>
+        <li>With Snap to grid on, a dragged card or note moves dot to dot during the drag, not only at the drop.</li>
       </ul></td>
     <td><ul>
         <li>9.4 "It shows on a selected card. Its bottom sits 56 above the card's top." Now: it shows on hover, 4 above.</li>
@@ -381,7 +387,7 @@
     </ul>
   </li>
   <li>Grid: auto-fill columns at least 300 wide, gap 16.</li>
-  <li><strong>Board card:</strong> padding 18, radius 12, gap 12, fill <code>--surface</code>, border 1.
+  <li><strong>Board card:</strong> padding 18, radius 12, gap 12, fill <code>--surface</code>, border 1. A click anywhere on the card opens the board, except on the More button; on hover the border turns <code>--border-strong</code> and the name underlines <span class="tag">user 2026-11-03</span>.
     <ul>
       <li>Name, Display 17/600.</li>
       <li>Meta line, 12 <code>--text-muted</code>: "Edited 10 minutes ago · 8 cards · 1 hook".</li>
@@ -420,9 +426,9 @@
   <tr><td>Rings (hover)</td><td>They show while the pointer is on the card. Inner radius 33.5, outer radius 49.5, stroke 13, in the deck card color. Divider lines 2 in <code>--card-face</code> split each ring into left and right halves. Arrow triangles about 6 wide, in <code>--card-face</code>. The half under the pointer fills with the deck's <code>--ring-hover-*</code>. A click turns that ring one step. The card body and center icon never turn.</td></tr>
   <tr><td>Combined card</td><td>A Player Role, Resource or Setting card that holds a Modifier ring. The outer ring holds the nouns (deck color), and the inner ring holds the adjectives (<code>--deck-modifier</code>). Each edge reads "adjective noun": the adjective in <code>--card-adjective</code> (active: <code>--card-adjective-active</code>), then the noun. With an On Top Modifier, each edge reads 2 adjectives, then the noun ("haunted reanimated keeper"). A combined-card dot marks it: 16 circle at (92, 130), <code>--deck-modifier</code>, border 2 <code>--card-face</code>. R turns the outer ring; Shift+R turns the inner ring.</td></tr>
   <tr><td>Lock, full card</td><td>30 circle, 10 from the top and right, fill <code>--bg</code>, lock icon 15. The rings still turn on a locked card.</td></tr>
-  <tr><td>Lock, tucked strip</td><td>Icon 13, 12 from the right, 30 from the bottom of the visible strip, in the deck card color.</td></tr>
+  <tr><td>Lock, tucked strip</td><td>Icon 13, 8 outside the card's right edge, 30 from the bottom of the visible strip, in the deck card color. The type glyph (14) sits below it, 8 from the bottom <span class="tag">user 2026-11-03</span>.</td></tr>
   <tr><td>Selected</td><td>Outline 2, offset 3, <code>--shadow-card-raised</code>. Outline color per the outline rule in 4.2.</td></tr>
-  <tr><td>Card strip menu</td><td>It shows while the pointer is over the card or the menu, and hides when the pointer leaves both; the dragged card shows none <span class="tag">user 2026-11-03</span>. Its bottom sits 4 above the card's top, and a transparent 4 px bridge fills the gap so the pointer can reach it. Padding 4, radius 10, border 1, fill <code>--surface</code>, <code>--shadow-menu</code>, gap 2–4. Buttons 44 tall, padding 0 10–12, radius 7, 13/500. Items: Split (combined card only), Redraw, Lock / Unlock, Discard (<code>--danger-text</code>).</td></tr>
+  <tr><td>Card strip menu</td><td>It shows while the pointer is over the card or the menu, and hides 1 s after the pointer leaves both; the dragged card and any card tucked under another card show none. One menu is open at a time: hovering another card or pressing outside the card and menu closes it at once <span class="tag">user 2026-11-03</span>. Its bottom sits 4 above the card's top, and a transparent 4 px bridge fills the gap so the pointer can reach it. Padding 4, radius 10, border 1, fill <code>--surface</code>, <code>--shadow-menu</code>, gap 2–4. Buttons 44 tall, padding 0 10–12, radius 7, 13/500. Items: Split (combined card only), Redraw, Duplicate, Lock (a 44 px lock icon button, aria-label Lock / Unlock, pressed with <code>--surface-raised</code> and <code>--accent-text</code> while locked), Discard (<code>--danger-text</code>). Duplicate copies the card, with its On Top Modifier, to the free spot beside it <span class="tag">user 2026-11-03</span>.</td></tr>
 </table>
 
 <h3 id="s-hook">9.5 Hook Card <span class="tag">HookCard</span> <span class="tag">Decks</span></h3>
@@ -432,7 +438,7 @@
   <tr><td>Header</td><td>A 24 dot in <code>--accent</code> with the hook icon 13 in <code>--on-accent</code>. The label "Hook", Display 12/600, 0.08em, uppercase, in the dark-mode <code>--accent-text</code>.</td></tr>
   <tr><td>Sentence</td><td>14, line height 1.45, <code>--hook-text</code>. Computed from the stack on each change.</td></tr>
   <tr><td>Stack</td><td>Stack cards sit 20 in from the Hook Card's left edge, and tuck below it by the standard tuck rule (9.7).</td></tr>
-  <tr><td>Hover menu <span class="tag">user 2026-11-02</span></td><td>It uses the card strip menu spec (9.4). It shows while the pointer is over the Hook Card or the menu, and hides when the pointer leaves both. Items: Copy, Redraw All, Discard (<code>--danger-text</code>). Copy and Redraw All are disabled until a card is tucked under the Hook Card.</td></tr>
+  <tr><td>Hover menu <span class="tag">user 2026-11-02</span></td><td>It uses the card strip menu spec (9.4). It shows while the pointer is over the Hook Card or the menu, and hides when the pointer leaves both. Items: Copy, Redraw All, Duplicate (copies the whole stack beside it, <span class="tag">user 2026-11-03</span>), Discard (<code>--danger-text</code>). Copy and Redraw All are disabled until a card is tucked under the Hook Card.</td></tr>
 </table>
 <p>States:</p>
 <ol type="A">
@@ -687,7 +693,7 @@ Settings      open
   <li>Hover and focus fills for buttons and menu items. Focus ring width and offset.</li>
   <li>Motion: ring turn, menu and dialog transitions, and reduced-motion behavior.</li>
   <li>Keyboard access to the card hover menus and to ring halves.</li>
-  <li>The strip menus' show delay. Hide is immediate when the pointer leaves card and menu <span class="tag">user 2026-11-03</span>.</li>
+  <li>The strip menus' show delay. Hide is 1 s after the pointer leaves card and menu <span class="tag">user 2026-11-03</span>.</li>
   <li>The import flow before a bad-file error (the file picker is the browser's).</li>
 </ol>
 <h3>Open questions</h3>

@@ -181,6 +181,36 @@ test('hook_redrawAll_skipsLockedAndUndoesInOneStep', async ({ page }) => {
   await expect.poll(async () => (await storedBoards(page))[0]!.cards).toEqual(before);
 });
 
+test('hook_duplicate_copiesWholeStackWithSameSentence', async ({ page }) => {
+  await openBoard(page, hookBoard());
+  await openMenu(page);
+  await menu(page).getByRole('button', { name: 'Duplicate' }).click();
+  await expect(hookCard(page)).toHaveCount(2);
+  await expect(sentence(page)).toHaveText([HOOK_TEXT, HOOK_TEXT]);
+  await expect.poll(async () => (await storedBoards(page))[0]!.cards.length).toBe(8);
+  await page.keyboard.press('Control+z');
+  await expect(hookCard(page)).toHaveCount(1);
+});
+
+test('hook_wheelOverCard_scrollsTextNotZoom', async ({ page }) => {
+  await openBoard(page, hookBoard());
+  const viewport = page.locator('.react-flow__viewport');
+  const before = await viewport.getAttribute('style');
+  // Make the sentence long enough to scroll.
+  await sentence(page).evaluate((el) => {
+    el.textContent = 'You are a navigator who must trade to keep the light on. '.repeat(12);
+  });
+  const header = await boxOf(hookCard(page).locator('header'));
+  await page.mouse.move(header.x + header.width / 2, header.y + header.height / 2);
+  await page.mouse.wheel(0, 120);
+  await expect.poll(() => sentence(page).evaluate((el) => el.scrollTop)).toBeGreaterThan(0);
+  const text = await boxOf(sentence(page));
+  await page.mouse.move(text.x + text.width / 2, text.y + text.height / 2);
+  await page.mouse.wheel(0, -120);
+  await page.waitForTimeout(300);
+  expect(await viewport.getAttribute('style')).toBe(before);
+});
+
 test('hook_dropOnCard_refusesTuckWithNotice', async ({ page }) => {
   await openBoard(page, {
     ...fixtureBoard([

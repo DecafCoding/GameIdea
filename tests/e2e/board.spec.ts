@@ -213,7 +213,8 @@ test.describe('selection', () => {
     await cardById(page, 'setting-1').click({ position: { x: 30, y: 30 } });
     const strip = page.getByTestId('card-strip');
     await expect(strip).toBeVisible();
-    await expect(strip.getByRole('button')).toHaveText(['Redraw', 'Lock', 'Discard']);
+    await expect(strip.getByRole('button')).toHaveText(['Redraw', 'Duplicate', '', 'Discard']);
+    await expect(strip.getByRole('button', { name: 'Lock' })).toBeVisible();
     const wrapper = page.locator('.react-flow__node[data-id="setting-1"] [data-selected]');
     await expect(wrapper).toHaveCSS('outline-width', '2px');
     await expect(wrapper).toHaveCSS('outline-color', 'rgb(232, 116, 46)');
@@ -249,10 +250,16 @@ test.describe('selection', () => {
     const role = await boxOf(cardById(page, 'role-1'));
     // The visible strip is the part below the Player Role.
     const stripTop = role.y + role.height;
-    for (const part of [mechanic.getByTestId('active-cue'), mechanic.getByTestId('lock-mark')]) {
+    const cue = await boxOf(mechanic.getByTestId('active-cue'));
+    expect(cue.y).toBeGreaterThanOrEqual(stripTop);
+    expect(cue.y + cue.height).toBeLessThanOrEqual(card.y + card.height);
+    // The lock and type marks sit in the strip's band, just outside the card's right edge.
+    for (const part of [mechanic.getByTestId('lock-mark'), mechanic.getByTestId('tuck-mark')]) {
       const box = await boxOf(part);
       expect(box.y).toBeGreaterThanOrEqual(stripTop);
       expect(box.y + box.height).toBeLessThanOrEqual(card.y + card.height);
+      expect(box.x).toBeGreaterThanOrEqual(card.x + card.width);
+      expect(box.x).toBeLessThanOrEqual(card.x + card.width + 16);
     }
     expect((await boxOf(mechanic.getByTestId('lock-mark'))).width).toBe(13);
   });
@@ -263,7 +270,8 @@ test.describe('selection', () => {
     await expect(page.getByTestId('card-strip').getByRole('button')).toHaveText([
       'Split',
       'Redraw',
-      'Lock',
+      'Duplicate',
+      '',
       'Discard',
     ]);
   });
@@ -275,13 +283,66 @@ test.describe('selection', () => {
     await expect(page.getByTestId('card-strip')).toBeVisible();
   });
 
-  test('strip_pointerLeaves_hidesStrip', async ({ page }) => {
+  test('strip_duplicate_copiesCardBesideAndUndoes', async ({ page }) => {
+    await openBoard(page, stack());
+    await cardById(page, 'setting-1').hover({ position: { x: 30, y: 30 } });
+    await page.getByTestId('card-strip').getByRole('button', { name: 'Duplicate' }).click();
+    await expect(page.locator('.react-flow__node [data-card][data-type="setting"]')).toHaveCount(2);
+    await expect.poll(async () => (await storedBoards(page))[0]!.cards.length).toBe(5);
+    await page.keyboard.press('Control+z');
+    await expect(page.locator('.react-flow__node [data-card][data-type="setting"]')).toHaveCount(1);
+  });
+
+  test('strip_hoverTuckedCard_showsNoStrip', async ({ page }) => {
+    await openBoard(page, stack());
+    // The head of the stack shows its strip; the tucked cards below it show none.
+    await cardById(page, 'role-1').hover({ position: { x: 100, y: 20 } });
+    await expect(page.getByTestId('card-strip')).toBeVisible();
+    for (const id of ['goal-1', 'conflict-1']) {
+      const card = await boxOf(cardById(page, id));
+      await page.mouse.move(card.x + card.width / 2, card.y + card.height - 20);
+      await page.waitForTimeout(200);
+      await expect(page.getByTestId('card-strip')).toHaveCount(0);
+    }
+  });
+
+  test('strip_pointerLeaves_hidesStripAfter1s', async ({ page }) => {
     await openBoard(page, stack());
     await cardById(page, 'setting-1').hover({ position: { x: 30, y: 30 } });
     await expect(page.getByTestId('card-strip')).toBeVisible();
     const canvas = await boxOf(page.getByTestId('canvas'));
     await page.mouse.move(canvas.x + canvas.width - 100, canvas.y + canvas.height - 150);
-    await expect(page.getByTestId('card-strip')).toHaveCount(0);
+    await page.waitForTimeout(500);
+    await expect(page.getByTestId('card-strip')).toBeVisible();
+    await expect(page.getByTestId('card-strip')).toHaveCount(0, { timeout: 2000 });
+  });
+
+  test('strip_pointerReturnsWithin1s_keepsStrip', async ({ page }) => {
+    await openBoard(page, stack());
+    await cardById(page, 'setting-1').hover({ position: { x: 30, y: 30 } });
+    const canvas = await boxOf(page.getByTestId('canvas'));
+    await page.mouse.move(canvas.x + canvas.width - 100, canvas.y + canvas.height - 150);
+    await page.waitForTimeout(500);
+    await page.getByTestId('card-strip').getByRole('button', { name: 'Lock' }).hover();
+    await page.waitForTimeout(1200);
+    await expect(page.getByTestId('card-strip')).toBeVisible();
+  });
+
+  test('strip_hoverOtherCard_closesFirstAtOnce', async ({ page }) => {
+    await openBoard(page, stack());
+    await cardById(page, 'setting-1').hover({ position: { x: 30, y: 30 } });
+    await expect(page.getByTestId('card-strip')).toHaveCount(1);
+    await cardById(page, 'role-1').hover({ position: { x: 100, y: 20 } });
+    await expect(page.getByTestId('card-strip')).toHaveCount(1, { timeout: 1000 });
+  });
+
+  test('strip_pressElsewhere_closesAtOnce', async ({ page }) => {
+    await openBoard(page, stack());
+    await cardById(page, 'setting-1').hover({ position: { x: 30, y: 30 } });
+    await expect(page.getByTestId('card-strip')).toBeVisible();
+    const canvas = await boxOf(page.getByTestId('canvas'));
+    await page.mouse.click(canvas.x + canvas.width - 100, canvas.y + canvas.height - 150);
+    await expect(page.getByTestId('card-strip')).toHaveCount(0, { timeout: 1000 });
   });
 
   test('strip_redraw_keepsPlaceAndTucks', async ({ page }) => {
@@ -324,7 +385,7 @@ test.describe('selection', () => {
     await expect(role.getByTestId('combined-disc')).toBeVisible();
   });
 
-  test('tuckedCard_typeMark_visibleAndClearOfCue', async ({ page }) => {
+  test('tuckedCard_typeMark_besideCardAndUncovered', async ({ page }) => {
     await openBoard(page, stack());
     await expect(cardById(page, 'role-1').getByTestId('tuck-mark')).toHaveCount(0);
     for (const id of ['goal-1', 'conflict-1']) {
@@ -333,23 +394,18 @@ test.describe('selection', () => {
       const m = await boxOf(mark);
       const c = await boxOf(card);
       expect(m.width).toBe(14);
-      expect(m.x + m.width).toBeLessThanOrEqual(c.x + c.width);
+      // Just outside the card's right edge, level with its bottom band (user 2026-11-03).
+      expect(m.x).toBeGreaterThanOrEqual(c.x + c.width);
+      expect(m.x).toBeLessThanOrEqual(c.x + c.width + 16);
       expect(m.y + m.height).toBeLessThanOrEqual(c.y + c.height);
-      // No other card covers the mark (it ignores the pointer, so the hit lands on its own
-      // card), and it does not touch the bottom cue.
+      expect(m.y).toBeGreaterThanOrEqual(c.y + c.height - 56);
+      // No card covers the mark (it ignores the pointer, so the hit lands on what is below).
       const covered = await mark.evaluate((el) => {
         const r = el.getBoundingClientRect();
         const hit = document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2);
-        return !el.closest('[data-card]')!.contains(hit);
+        return hit?.closest('[data-card]') != null;
       });
       expect(covered, `${id} mark is covered`).toBe(false);
-      const cue = await boxOf(card.getByTestId('active-cue'));
-      const touch =
-        m.x < cue.x + cue.width &&
-        cue.x < m.x + m.width &&
-        m.y < cue.y + cue.height &&
-        cue.y < m.y + m.height;
-      expect(touch, `${id} mark touches its cue`).toBe(false);
     }
   });
 
