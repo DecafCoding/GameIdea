@@ -131,6 +131,22 @@ test('boardList_twoBoards_newestFirstWithCaption', async ({ page }) => {
   await expect(canvasCards(page)).toHaveCount(1);
 });
 
+test('boardList_clickAnywhereOnCard_opensBoard', async ({ page }) => {
+  await makeBoard(page, 'Salvage Run', true);
+  const card = boardList(page).getByRole('listitem').first();
+  const box = await boxOf(card);
+  // The bottom-left corner: away from the name link and the More button.
+  await page.mouse.click(box.x + 12, box.y + box.height - 12);
+  await expect(nameField(page)).toHaveValue('Salvage Run');
+});
+
+test('boardList_moreButton_opensMenuNotBoard', async ({ page }) => {
+  await makeBoard(page, 'Salvage Run');
+  await page.getByRole('button', { name: 'More For Salvage Run' }).click();
+  await expect(page.getByRole('menu', { name: 'More For Salvage Run' })).toBeVisible();
+  await expect(boardList(page)).toBeVisible();
+});
+
 test('boardList_rename_enterSaves', async ({ page }) => {
   await makeBoard(page, 'Salvage Run');
   await menuItem(page, 'Salvage Run', 'Rename');

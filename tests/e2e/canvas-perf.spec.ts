@@ -33,9 +33,15 @@ test.describe('200-card frame rate', { tag: '@timing' }, () => {
 
   test('perf_drag200Cards_atLeast50Fps', async ({ page }) => {
     const root = await boxOf(cardById(page, 'role-stack-1'));
+    const rootNode = await boxOf(page.locator('.react-flow__node[data-id="role-stack-1"]'));
+    const tailNode = page.locator('.react-flow__node[data-id="conflict-stack-1"]');
+    const tail = await boxOf(tailNode);
     const fps = await pacedDrag(page, { x: root.x + 10, y: root.y + 10 }, 200, -150);
-    // The stack moves with its top card during the drag.
-    expect((await boxOf(cardById(page, 'conflict-stack-1'))).x - root.x).toBeCloseTo(200, 0);
+    // The stack moves with its top card during the drag (snap may put it a few px off 200).
+    const moved =
+      (await boxOf(page.locator('.react-flow__node[data-id="role-stack-1"]'))).x - rootNode.x;
+    expect(Math.abs(moved - 200)).toBeLessThanOrEqual(24);
+    expect((await boxOf(tailNode)).x - tail.x).toBeCloseTo(moved, 0);
     await page.mouse.up();
     expect(fps).toBeGreaterThanOrEqual(50);
   });

@@ -2,12 +2,22 @@
  * CardNode: one card as a React Flow node. Node data holds ids and view flags only; the
  * card itself comes from the store with a per-card selector, so a turn re-renders one node.
  * Each card shows its strip menu in a NodeToolbar (which paints above every node) while the
- * pointer is over the card or the menu, the same way the Hook Card shows its menu.
+ * pointer is over the card or the menu, the same way the Hook Card shows its menu. A card
+ * tucked under another card shows no strip menu; the Hook Card always shows its menu.
  * A card with a tucked card below it may show the connector badge on the seam: this node
  * paints above the tucked one, so the badge sits on top of both cards.
  */
 import { NodeToolbar, Position, type NodeProps } from '@xyflow/react';
-import { createContext, memo, useContext, useRef, useState, type MouseEvent } from 'react';
+import {
+  createContext,
+  memo,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  type MouseEvent,
+  type WheelEvent,
+} from 'react';
 import {
   CardStrip,
   CardView,
@@ -36,6 +46,8 @@ export interface CardNodeActions {
   split: (cardId: string) => void;
   redraw: (cardId: string) => void;
   lock: (cardId: string) => void;
+  /** Copies the card beside it; a Hook Card copies its whole stack. */
+  duplicate: (cardId: string) => void;
   discard: (cardId: string) => void;
   /** Redraws every unlocked card in the Hook Card's stack (one undo step). */
   redrawAll: (hookId: string) => void;
@@ -61,32 +73,98 @@ function stopRingClick(event: MouseEvent) {
   }
 }
 
+/** A menu stays this long after the pointer leaves both the card and the menu (user 2026-11-03). */
+const MENU_HIDE_MS = 1000;
+
+/** Closes the one hover menu now open, so a lingering menu never covers another card. */
+let closeOpenMenu: (() => void) | null = null;
+
 /**
- * Hover state for a card's menu: on while the pointer is over the card or the menu, off as
- * soon as it leaves both. Cards also call enter on pointer move, because a browser may not
- * send pointerenter to a card that ends up under a still pointer after a drop. The menu sits on a transparent bridge (STRIP_GAP tall) that
- * reaches down to the card, so the pointer never crosses empty canvas between the two.
+ * Hover state for a card's menu: on while the pointer is over the card or the menu, off
+ * MENU_HIDE_MS after it leaves both. Only one menu is open at a time: entering another card
+ * closes the last one at once, and so does a press anywhere outside the card and its menu.
+ * The menu sits on a transparent bridge (STRIP_GAP tall) that reaches down to the card.
+ * Cards also call enter on pointer move, because a browser may not send pointerenter to a
+ * card that ends up under a still pointer after a drop.
  */
 function useHoverMenu() {
   const [hover, setHover] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+  const hideTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const close = useRef<() => void>(() => {});
 
-  const enter = () => setHover(true);
+  const clearTimer = () => {
+    if (hideTimer.current) clearTimeout(hideTimer.current);
+    hideTimer.current = null;
+  };
+  // eslint-disable-next-line react-hooks/refs -- set once; read only from event handlers
+  close.current = () => {
+    clearTimer();
+    setHover(false);
+    if (closeOpenMenu === close.current) closeOpenMenu = null;
+  };
+
+  useEffect(() => {
+    if (!hover) return;
+    const onPointerDown = (event: PointerEvent) => {
+      const at = event.target;
+      if (at instanceof Node && (cardRef.current?.contains(at) || menuRef.current?.contains(at))) {
+        return;
+      }
+      close.current();
+    };
+    document.addEventListener('pointerdown', onPointerDown, true);
+    return () => document.removeEventListener('pointerdown', onPointerDown, true);
+  }, [hover]);
+
+  useEffect(
+    () => () => {
+      clearTimer();
+      if (closeOpenMenu === close.current) closeOpenMenu = null;
+    },
+    [],
+  );
+
+  const enter = () => {
+    clearTimer();
+    if (closeOpenMenu !== close.current) {
+      closeOpenMenu?.();
+      closeOpenMenu = close.current;
+    }
+    setHover(true);
+  };
   const leave = (event: PointerEvent) => {
     const to = event.relatedTarget;
     if (to instanceof Node && (cardRef.current?.contains(to) || menuRef.current?.contains(to))) {
       return;
     }
-    setHover(false);
+    clearTimer();
+    hideTimer.current = setTimeout(() => close.current(), MENU_HIDE_MS);
   };
   return { hover, cardRef, menuRef, enter, leave };
+}
+
+/** Pixels per wheel line, for browsers that report wheel steps in lines (Firefox). */
+const WHEEL_LINE_PX = 16;
+
+/**
+ * The wheel over the Hook Card scrolls its sentence, not the canvas zoom (user 2026-11-03).
+ * The card carries React Flow's nowheel class; over the text the browser scrolls it, and
+ * anywhere else on the card this handler scrolls the text by the same amount.
+ */
+function scrollHookText(event: WheelEvent<HTMLDivElement>) {
+  const text = event.currentTarget.querySelector<HTMLElement>('[data-hook-text]');
+  if (!text || (event.target instanceof Node && text.contains(event.target))) return;
+  const step = event.deltaMode === 1 ? WHEEL_LINE_PX : 1;
+  text.scrollTop += event.deltaY * step;
 }
 
 /**
  * The Hook Card's face and hover menu: the sentence is computed from the store on each
  * change (a string, so the node re-renders only when the words change) and never stored.
- * The menu shows while the pointer is over the Hook Card or the menu.
+ * The menu shows while the pointer is over the Hook Card or the menu. The wheel over the
+ * card scrolls the sentence instead of zooming the canvas.
  */
 function HookBody({ hookId, actions }: { hookId: string; actions: CardNodeActions }) {
   const sentence = useBoardStore((state) => buildHookSentence(stackEntries(state.board, hookId)));
@@ -96,7 +174,8 @@ function HookBody({ hookId, actions }: { hookId: string; actions: CardNodeAction
   return (
     <div
       ref={cardRef}
-      className={styles.hookBody}
+      className={`${styles.hookBody} nowheel`}
+      onWheel={scrollHookText}
       onPointerEnter={enter}
       onPointerMove={enter}
       onPointerLeave={(event) => leave(event.nativeEvent)}
@@ -115,6 +194,7 @@ function HookBody({ hookId, actions }: { hookId: string; actions: CardNodeAction
             poolsReady={actions.canRedraw}
             visible={hover}
             onRedrawAll={() => actions.redrawAll(hookId)}
+            onDuplicate={() => actions.duplicate(hookId)}
             onDiscard={() => actions.discard(hookId)}
           />
         </div>
@@ -137,6 +217,8 @@ function CardNodeView({ data }: NodeProps<CardFlowNode>) {
   const id = card.id;
   const below = data.below;
   const connector = below ? connectorFor(card.type, below) : null;
+  // A tucked card shows no strip menu (user 2026-11-03).
+  const tucked = card.tuckedUnder != null;
 
   const classes = [
     styles.node,
@@ -199,7 +281,7 @@ function CardNodeView({ data }: NodeProps<CardFlowNode>) {
         )}
       </div>
       <NodeToolbar
-        isVisible={(menuHover && !data.lifted) || stripFocused}
+        isVisible={!tucked && ((menuHover && !data.lifted) || stripFocused)}
         position={Position.Top}
         offset={0}
       >
@@ -219,6 +301,7 @@ function CardNodeView({ data }: NodeProps<CardFlowNode>) {
             redrawDisabled={!actions.canRedraw}
             onSplit={() => actions.split(id)}
             onRedraw={() => actions.redraw(id)}
+            onDuplicate={() => actions.duplicate(id)}
             onLock={() => actions.lock(id)}
             onDiscard={() => actions.discard(id)}
           />

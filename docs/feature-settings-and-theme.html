@@ -80,7 +80,7 @@
   <tr><td><code>features/settings/</code> (new)</td><td>The Settings dialog, the Keyboard list, the footer and the blocked-storage note. A small Zustand settings store, separate from the board store, with no zundo.</td></tr>
   <tr><td><code>shared/storage/</code></td><td>3 new actions: <code>loadSettings()</code>, <code>saveSettings(settings)</code> and <code>onSettingsChangedElsewhere(handler)</code>. The listener uses the browser's storage change event.</td></tr>
   <tr><td><code>app/</code></td><td>Reads the settings at start-up and sets the mode and color on the page root before the first render. Both screens follow them.</td></tr>
-  <tr><td><code>features/canvas/</code></td><td>Snap on drop for free cards and notes, with the Alt bypass. The dot grid takes its color from the mode tokens.</td></tr>
+  <tr><td><code>features/canvas/</code></td><td>Snap during the drag and on drop for free cards and notes, with the Alt bypass. The dot grid takes its color from the mode tokens.</td></tr>
   <tr><td><code>features/draw/</code> (rail)</td><td>Settings button at the bottom. Add note button. Genre counts on the 4 genre-tagged deck buttons.</td></tr>
   <tr><td><code>features/genres/</code></td><td>The genre count line under the Genres button</td></tr>
   <tr><td><code>features/notes/</code></td><td>A "new note at a spot" action for Add note. It opens the note ready to type.</td></tr>
@@ -122,9 +122,10 @@
 
 <h3>Snap contract</h3>
 <ul>
-  <li>Snap runs only on the drop of a free card or a note. A free card is a card that is not tucked and not on top of another card.</li>
+  <li>Snap places the drop of a free card or a note. A free card is a card that is not tucked and not on top of another card.</li>
+  <li>During a drag, the dragged card or note also moves dot to dot on the grid, so the user sees the snap (user 2026-11-03). Alt held during the drag moves it freely.</li>
   <li>The top-left corner goes to the nearest multiple of 24 on each axis, in canvas coordinates. It uses the existing <code>GRID</code> constant in <code>features/canvas/</code>.</li>
-  <li>Alt held at the drop skips snap.</li>
+  <li>Alt held at the drop skips snap; the drop then follows the pointer even if the drag snapped before Alt went down.</li>
   <li>A drop that makes a tuck, a combine or an On Top uses those rules, and snap does not apply.</li>
   <li>A drop is one undo step, with or without snap.</li>
 </ul>

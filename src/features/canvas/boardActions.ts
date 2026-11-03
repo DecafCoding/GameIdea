@@ -15,7 +15,15 @@ import {
 } from '@/features/card';
 import { newId, type Board, type Card } from '@/shared/model';
 import { dropAction, dropTarget } from './dropZones';
-import { besideSpot, snapToGrid, type Point } from './placement';
+import {
+  besideSpot,
+  boardRects,
+  cardSize,
+  findOpenSpot,
+  GRID,
+  snapToGrid,
+  type Point,
+} from './placement';
 import { onTopCardOf } from './reading';
 import {
   childrenOf,
@@ -26,6 +34,7 @@ import {
   nextZ,
   removeFromStacks,
   rootOf,
+  stackOrder,
   tuckCard,
   untuckCard,
 } from './stack';
@@ -241,6 +250,47 @@ export function discardCard(board: Board, cardId: string): Board {
     next = replaceCard(next, { ...onTop, onTopOf: null, x: card.x, y: card.y, z: nextZ(next) });
   }
   return { ...next, cards: next.cards.filter((c) => c.id !== cardId) };
+}
+
+/**
+ * Duplicate: a copy of the card on a free spot beside it, on top of every other card. A
+ * Hook Card copies its whole stack, so the copy shows the same hook; any other card copies
+ * only itself. On Top Modifiers come along with their base cards. Each copy gets a new id
+ * and keeps its rings, active cues, lock and badge word.
+ */
+export function duplicateCard(board: Board, cardId: string, createId: () => string = newId): Board {
+  const card = cardAt(board, cardId);
+  const stack = card.type === 'hook' ? stackOrder(board, cardId) : [card];
+  const onTops = stack.map((c) => onTopCardOf(board, c.id)).filter((c): c is Card => c !== null);
+  const ids = new Map([...stack, ...onTops].map((c) => [c.id, createId()]));
+
+  // The free spot nearest one grid step right of the stack, sized to the whole stack.
+  const left = Math.min(...stack.map((c) => c.x));
+  const top = Math.min(...stack.map((c) => c.y));
+  const right = Math.max(...stack.map((c) => c.x + cardSize(c).width));
+  const bottom = Math.max(...stack.map((c) => c.y + cardSize(c).height));
+  const spot = findOpenSpot({ x: right + GRID, y: top }, boardRects(board), {
+    width: right - left,
+    height: bottom - top,
+  });
+  const dx = spot.x - left;
+  const dy = spot.y - top;
+
+  // The copies keep their paint order, above every card on the board.
+  const z0 = nextZ(board);
+  const byZ = [...stack, ...onTops].sort((a, b) => a.z - b.z);
+  const copies = byZ.map((c, i): Card => ({
+    ...c,
+    id: ids.get(c.id)!,
+    x: c.x + dx,
+    y: c.y + dy,
+    z: z0 + i,
+    tuckedUnder:
+      c.id === cardId || c.tuckedUnder === null ? null : (ids.get(c.tuckedUnder) ?? null),
+    onTopOf: c.onTopOf === null ? null : (ids.get(c.onTopOf) ?? null),
+    rings: c.rings.map((r) => ({ ...r, cues: [...r.cues] })),
+  }));
+  return { ...board, cards: [...board.cards, ...copies] };
 }
 
 /** Saves the connector word chosen on the badge above the card. */

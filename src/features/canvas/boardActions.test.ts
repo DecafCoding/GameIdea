@@ -17,6 +17,7 @@ import {
   combineOnto,
   discardCard,
   dropCard,
+  duplicateCard,
   lockCard,
   placeHookCard,
   placeNewCard,
@@ -248,6 +249,56 @@ describe('splitCard', () => {
     expect(isCombined(get(next, 'role-1'))).toBe(false);
     expect(get(next, 'goal-1')).toMatchObject({ tuckedUnder: 'role-1', y: 56 });
     expect(overlaps(get(next, 'role-1'), modifier)).toBe(false);
+  });
+});
+
+describe('duplicateCard', () => {
+  const counter = () => {
+    let n = 0;
+    return () => `copy-${++n}`;
+  };
+
+  it('duplicateCard_plainCard_copiesOnlyItselfBesideIt', () => {
+    const card = combinedCard('role', { x: 0, y: 0, locked: true });
+    card.rings[0] = { ...card.rings[0]!, activeIndex: 2 };
+    const board = fixtureBoard([card, fixtureCard('goal', { y: 56, z: 2, tuckedUnder: 'role-1' })]);
+    const next = duplicateCard(board, 'role-1', counter());
+    expect(next.cards).toHaveLength(3);
+    const copy = get(next, 'copy-1');
+    expect(copy).toMatchObject({ type: 'role', tuckedUnder: null, locked: true, z: 3 });
+    expect(copy.rings).toEqual(card.rings);
+    expect(copy.rings[0]).not.toBe(card.rings[0]);
+    expect(overlaps(copy, get(next, 'role-1'))).toBe(false);
+    expect(overlaps(copy, get(next, 'goal-1'))).toBe(false);
+    expect(board.cards).toHaveLength(2);
+  });
+
+  it('duplicateCard_cardWithOnTop_copiesOnTopModifier', () => {
+    const board = fixtureBoard([
+      combinedCard('role', { x: 0, y: 0 }),
+      secondModifier({ onTopOf: 'role-1', z: 2 }),
+    ]);
+    const next = duplicateCard(board, 'role-1', counter());
+    expect(get(next, 'copy-2')).toMatchObject({ type: 'modifier', onTopOf: 'copy-1' });
+    expect(cardText(next, get(next, 'copy-1'))).toBe(cardText(board, get(board, 'role-1')));
+  });
+
+  it('duplicateCard_hookCard_copiesWholeStackInOrder', () => {
+    const board = fixtureBoard([
+      fixtureCard('hook', { x: 0, y: 0 }),
+      fixtureCard('role', { x: 20, y: 56, z: 2, tuckedUnder: 'hook-1' }),
+      fixtureCard('goal', { x: 20, y: 112, z: 3, tuckedUnder: 'role-1', connector: 'so' }),
+    ]);
+    const next = duplicateCard(board, 'hook-1', counter());
+    expect(next.cards).toHaveLength(6);
+    const hook = get(next, 'copy-1');
+    expect(hook.type).toBe('hook');
+    expect(stackOrder(next, 'copy-1').map((c) => c.type)).toEqual(['hook', 'role', 'goal']);
+    expect(get(next, 'copy-3')).toMatchObject({ tuckedUnder: 'copy-2', connector: 'so' });
+    // The copy keeps the stack's layout, clear of the original stack.
+    expect(get(next, 'copy-2')).toMatchObject({ x: hook.x + 20, y: hook.y + 56 });
+    expect(hook.x).toBeGreaterThanOrEqual(240 + 24);
+    expect(get(next, 'copy-3').z).toBeGreaterThan(get(next, 'copy-2').z);
   });
 });
 

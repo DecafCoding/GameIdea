@@ -4,8 +4,9 @@
  * a tucked stack moves with its top card through our own code (the Phase 3 tuck spike).
  * View state (selection, hover, drag and its hint) stays here, never in the board store.
  * During a drag, positions live only in the local drag nodes; the store gets one change on
- * drop, so a drag is one undo step and one save. With Snap To Grid on, a free card or note
- * dropped on empty canvas lands on the 24 px grid; Alt held at the drop places it freely.
+ * drop, so a drag is one undo step and one save. With Snap To Grid on, a dragged card or
+ * note moves dot to dot on the 24 px grid, and a free card or note dropped on empty canvas
+ * lands on it; Alt held places it freely.
  */
 import '@xyflow/react/dist/base.css';
 import {
@@ -22,13 +23,14 @@ import { useCallback, useEffect, useMemo, useRef, useState, type MouseEvent } fr
 import { useRingKeys, type RingSlot, type TurnDirection } from '@/features/card';
 import { drawFor } from '@/features/draw';
 import { moveNote } from '@/features/notes';
-import { getSettings } from '@/features/settings';
+import { getSettings, useSettings } from '@/features/settings';
 import type { Pools } from '@/shared/model';
 import { useBoardStore } from '@/shared/store';
 import {
   chooseConnector,
   discardCard,
   dropCard,
+  duplicateCard,
   lockCard,
   redrawAll,
   redrawCard,
@@ -61,6 +63,9 @@ interface DragState {
   kind: 'card' | 'note';
   startX: number;
   startY: number;
+  /** The node's top-left at drag start, for a free (Alt) drop after a snapped drag. */
+  nodeX: number;
+  nodeY: number;
 }
 
 function isTextEntry(target: EventTarget | null): boolean {
@@ -85,6 +90,27 @@ interface BoardCanvasProps {
   pools: Pools | null;
 }
 
+/** The snap grid while dragging: the 24 px dot grid (docs/feature-settings-and-theme.html). */
+const SNAP_GRID: [number, number] = [24, 24];
+
+/** True while the Alt key is down, so a drag can skip snap. */
+function useAltHeld(): boolean {
+  const [held, setHeld] = useState(false);
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => setHeld(event.altKey);
+    const onBlur = () => setHeld(false);
+    window.addEventListener('keydown', onKey);
+    window.addEventListener('keyup', onKey);
+    window.addEventListener('blur', onBlur);
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      window.removeEventListener('keyup', onKey);
+      window.removeEventListener('blur', onBlur);
+    };
+  }, []);
+  return held;
+}
+
 export function BoardCanvas({ pools }: BoardCanvasProps) {
   const board = useBoardStore((state) => state.board);
   const changeBoard = useBoardStore((state) => state.changeBoard);
@@ -95,6 +121,8 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [dragNodes, setDragNodes] = useState<BoardFlowNode[] | null>(null);
   const [hint, setHint] = useState<DragHint | null>(null);
+  const snapOn = useSettings().snap;
+  const altHeld = useAltHeld();
   const drag = useRef<DragState | null>(null);
   const hoverRef = useRef<string | null>(null);
 
@@ -144,6 +172,7 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
         changeBoard((b) => redrawCard(b, id, drawn));
       },
       lock: (id: string) => changeBoard((b) => lockCard(b, id)),
+      duplicate: (id: string) => changeBoard((b) => duplicateCard(b, id)),
       redrawAll: (hookId: string) => {
         const current = latest.current.pools;
         if (!current) return;
@@ -236,7 +265,14 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
   const onNodeDragStart: OnNodeDrag<BoardFlowNode> = useCallback(
     (event, node) => {
       const start = pointerOf(event);
-      drag.current = { id: node.id, kind: node.type, startX: start.x, startY: start.y };
+      drag.current = {
+        id: node.id,
+        kind: node.type,
+        startX: start.x,
+        startY: start.y,
+        nodeX: node.position.x,
+        nodeY: node.position.y,
+      };
       hoverRef.current = null;
       if (node.type !== 'card') {
         setDragNodes(derived);
@@ -304,8 +340,15 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
       if (!state) return;
       const p = pointerOf(event);
       if (Math.hypot(p.x - state.startX, p.y - state.startY) < CLICK_DISTANCE) return;
-      const { x, y } = node.position;
       const snap = getSettings().snap && !event.altKey;
+      // Live snap may have moved the node onto the grid; a free drop follows the pointer.
+      const zoom = flow.getZoom();
+      const { x, y } = snap
+        ? node.position
+        : {
+            x: state.nodeX + (p.x - state.startX) / zoom,
+            y: state.nodeY + (p.y - state.startY) / zoom,
+          };
       if (state.kind === 'note') {
         const at = snap ? snapToGrid({ x, y }) : { x, y };
         changeBoard((b) => moveNote(b, node.id, at.x, at.y));
@@ -373,6 +416,8 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
           multiSelectionKeyCode={null}
           selectionKeyCode={null}
           onlyRenderVisibleElements
+          snapToGrid={snapOn && !altHeld}
+          snapGrid={SNAP_GRID}
           defaultViewport={defaultViewport}
           onMoveEnd={onMoveEnd}
           onNodeDragStart={onNodeDragStart}

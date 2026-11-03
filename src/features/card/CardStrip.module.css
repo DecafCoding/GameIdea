@@ -43,3 +43,17 @@
 .discard {
   color: var(--danger-text);
 }
+
+/* The Lock icon button: a 44 px square; pressed (locked) it takes the raised fill. */
+.lock {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--button-h);
+  padding: 0;
+}
+
+.lock[aria-pressed='true'] {
+  background: var(--surface-raised);
+  color: var(--accent-text);
+}

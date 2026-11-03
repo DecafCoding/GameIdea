@@ -49,6 +49,23 @@ test.describe('snap on (default)', () => {
     expect(card).toMatchObject({ x: 240, y: 144 });
   });
 
+  test('snap_on_cardMovesDotToDotWhileDragging', async ({ page }) => {
+    await openBoard(page, single());
+    // The node wrapper: the lifted card inside it is scaled and turned while dragged.
+    const card = page.locator('.react-flow__node[data-id="goal-1"]');
+    const before = await boxOf(card);
+    await page.mouse.move(before.x + 30, before.y + 30);
+    await page.mouse.down();
+    await page.mouse.move(before.x + 30 + 137, before.y + 30 + 53, { steps: 12 });
+    // Mid-drag, before the drop, the card already sits on the grid.
+    const during = await boxOf(card);
+    // In flow units (the card is 200 wide), whatever the zoom: 137 x 53 snaps to 144 x 48.
+    const zoom = before.width / 200;
+    expect(Math.round((during.x - before.x) / zoom)).toBe(144);
+    expect(Math.round((during.y - before.y) / zoom)).toBe(48);
+    await page.mouse.up();
+  });
+
   test('snap_altHeld_dropSitsWherePlaced', async ({ page }) => {
     const board = single();
     await openBoard(page, board);

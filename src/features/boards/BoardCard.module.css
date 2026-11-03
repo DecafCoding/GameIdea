@@ -53,6 +53,18 @@
   text-decoration: underline;
 }
 
+/* The name link covers the whole card, so a click anywhere on it opens the board. */
+.name::after {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  content: '';
+}
+
+.card:has(.name:hover) {
+  border-color: var(--border-strong);
+}
+
 .meta {
   margin: 0;
   color: var(--text-muted);
@@ -83,6 +95,7 @@
 
 .moreWrap {
   position: relative;
+  z-index: 1; /* above the name link's whole-card cover */
   flex: none;
 }
 

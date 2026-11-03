@@ -1,5 +1,6 @@
 /**
- * BoardCard: one board on the board list (design 9.3): the name as the link to the board,
+ * BoardCard: one board on the board list (design 9.3): the name as the link to the board
+ * (its hit area covers the whole card, except the More button),
  * the meta line, the first hook preview, a row of deck dots and a More button with the
  * board menu (Rename, Export Board File, Delete). Rename turns the name into a field in
  * place: Enter saves, Esc cancels, a click outside the card also saves, and an empty name

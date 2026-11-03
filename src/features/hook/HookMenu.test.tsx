@@ -21,6 +21,7 @@ function renderMenu(props: Partial<Parameters<typeof HookMenu>[0]> = {}) {
       poolsReady
       visible
       onRedrawAll={noop}
+      onDuplicate={noop}
       onDiscard={noop}
       {...props}
     />,
@@ -33,6 +34,7 @@ describe('HookMenu', () => {
     expect(screen.getAllByRole('button').map((b) => b.textContent)).toEqual([
       'Copy',
       'Redraw All',
+      'Duplicate',
       'Discard',
     ]);
   });

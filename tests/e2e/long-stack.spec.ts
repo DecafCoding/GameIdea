@@ -71,10 +71,14 @@ test.describe('Long stack frame rate', { tag: '@timing' }, () => {
 
   test('perf_dragLongStack_atLeast50Fps', async ({ page }) => {
     const root = await boxOf(cardById(page, 'long-0'));
+    const rootNode = await boxOf(nodeById(page, 'long-0'));
     const tail = await boxOf(nodeById(page, 'long-10'));
     const fps = await pacedDrag(page, { x: root.x + 12, y: root.y + 12 }, 200, -40);
+    const movedRoot = await boxOf(nodeById(page, 'long-0'));
     const movedTail = await boxOf(nodeById(page, 'long-10'));
-    expect(movedTail.x - tail.x).toBeCloseTo(200, 0);
+    // The tail moves with the root (snap may put the root a few px off the pointer's 200).
+    expect(Math.abs(movedRoot.x - rootNode.x - 200)).toBeLessThanOrEqual(24);
+    expect(movedTail.x - tail.x).toBeCloseTo(movedRoot.x - rootNode.x, 0);
     await page.mouse.up();
     expect(fps).toBeGreaterThanOrEqual(50);
   });
