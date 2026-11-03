@@ -16,7 +16,9 @@ describe('boardFile', () => {
   });
 
   it('boardFileName_badCharacters_replaced', () => {
-    expect(boardFileName('a/b\\c:d*e?f"g<h>i|j\u0001k')).toBe('a-b-c-d-e-f-g-h-i-j-k.gameidea.json');
+    expect(boardFileName('a/b\\c:d*e?f"g<h>i|j\u0001k')).toBe(
+      'a-b-c-d-e-f-g-h-i-j-k.gameidea.json',
+    );
   });
 
   it('boardFileName_blank_untitled', () => {
