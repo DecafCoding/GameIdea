@@ -25,7 +25,7 @@ void Promise.all([
 
 /** Browser tests only: saves the fixture board once, so a reload keeps its saved changes. */
 async function seedTestBoard(): Promise<void> {
-  const fixture = window.__THEFORGE_E2E_BOARD__;
+  const fixture = window.__GAMEIDEA_E2E_BOARD__;
   if (!fixture) return;
   try {
     if ((await loadBoard(fixture.id)) === null) await saveBoard(fixture);

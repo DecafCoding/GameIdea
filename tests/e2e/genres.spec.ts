@@ -68,7 +68,7 @@ async function importFile(page: Page, body: Record<string, unknown>) {
   await page.getByRole('button', { name: 'Import Board File' }).click();
   const chooser = await choosing;
   await chooser.setFiles({
-    name: 'Old.forge.json',
+    name: 'Old.gameidea.json',
     mimeType: 'application/json',
     buffer: Buffer.from(JSON.stringify(body)),
   });

@@ -2,8 +2,8 @@
  * Vite build, dev server and Vitest config.
  * All ports are locked with strictPort: the browser stores boards per address and port,
  * so a busy port must fail the command rather than move it.
- * `vite preview --mode lan` (npm run start:lan) serves the built app over HTTPS on port 4443
- * to the local network, with the mkcert certificate in .certs/. Port 4173 stays plain
+ * `vite preview --mode lan` (npm run start:lan) serves the built app over HTTPS on port 4444
+ * to the local network, with the mkcert certificate in .certs/. Port 4174 stays plain
  * localhost, so its boards are never touched.
  */
 /// <reference types="vitest/config" />
@@ -24,7 +24,7 @@ function lanPreview(): PreviewOptions {
     );
   }
   return {
-    port: 4443,
+    port: 4444,
     strictPort: true,
     host: true,
     https: { cert: readFileSync(CERT_FILE), key: readFileSync(KEY_FILE) },
@@ -38,8 +38,8 @@ export default defineConfig(({ mode }) => ({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
-  server: { port: 5173, strictPort: true },
-  preview: mode === 'lan' ? lanPreview() : { port: 4173, strictPort: true },
+  server: { port: 5174, strictPort: true },
+  preview: mode === 'lan' ? lanPreview() : { port: 4174, strictPort: true },
   test: {
     environment: 'jsdom',
     include: ['src/**/*.test.{ts,tsx}'],

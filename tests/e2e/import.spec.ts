@@ -21,7 +21,7 @@ test.beforeEach(async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
 });
 
-const BAD_IMPORT_TEXT = 'This file is not a TheForge board file. Nothing changed.';
+const BAD_IMPORT_TEXT = 'This file is not a GameIdea board file. Nothing changed.';
 
 /** A combined Character stack with a Description tucked under it, a Setting and 2 notes. */
 function fullBoard(): Board {
@@ -82,7 +82,7 @@ test('import_exportedBoardFile_roundTripsAsNewBoard', async ({ page }) => {
 
   await page.goto('/#/');
   await expect(rows(page)).toHaveCount(1);
-  await importThrough(page, importButton(page), { name: 'Salvage Run.forge.json', buffer });
+  await importThrough(page, importButton(page), { name: 'Salvage Run.gameidea.json', buffer });
 
   await expect(page.getByRole('status')).toHaveText(
     'Board imported. The name was taken, so "(imported)" was added.',
@@ -105,7 +105,7 @@ test('import_freeName_keepsName', async ({ page }) => {
   await page.goto('/#/');
   const board = { ...fixtureBoard([fixtureCard('character')]), name: 'Drift' };
   await importThrough(page, importButton(page), {
-    name: 'Drift.forge.json',
+    name: 'Drift.gameidea.json',
     buffer: Buffer.from(JSON.stringify(board)),
   });
   await expect(page.getByRole('status')).toHaveText('Board imported.');
@@ -129,7 +129,7 @@ test('import_badFile_bannerAndNothingChanged', async ({ page }) => {
 
   const good = { ...fixtureBoard([]), name: 'Drift' };
   await importThrough(page, page.getByRole('button', { name: 'Choose Another File' }), {
-    name: 'Drift.forge.json',
+    name: 'Drift.gameidea.json',
     buffer: Buffer.from(JSON.stringify(good)),
   });
   await expect(page.getByRole('alert')).toBeHidden();
@@ -140,7 +140,7 @@ test('import_importedBoard_opensAndShowsCards', async ({ page }) => {
   const board = fullBoard();
   await page.goto('/#/');
   await importThrough(page, importButton(page), {
-    name: 'Salvage Run.forge.json',
+    name: 'Salvage Run.gameidea.json',
     buffer: Buffer.from(JSON.stringify(board)),
   });
   await rows(page).first().getByRole('link', { name: 'Salvage Run' }).click();

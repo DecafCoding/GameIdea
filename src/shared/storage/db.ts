@@ -1,5 +1,5 @@
 /**
- * The Dexie database "theforge" (schema-shape in docs/architecture.html): the boards table
+ * The Dexie database "gameidea" (schema-shape in docs/architecture.html): the boards table
  * holds each full BoardRecord by id, and boardIndex holds the list rows by id with an
  * updatedAt index. Only indexed fields are declared; the record is stored whole.
  * Schema version 2 (schema-versions): same stores; its upgrade gives every stored version 1
@@ -21,9 +21,9 @@ import {
   type Genre,
 } from '@/shared/model';
 
-export const DB_NAME = 'theforge';
+export const DB_NAME = 'gameidea';
 
-export class TheForgeDb extends Dexie {
+export class GameIdeaDb extends Dexie {
   boards!: EntityTable<BoardRecord, 'id'>;
   boardIndex!: EntityTable<BoardIndexRow, 'id'>;
 
@@ -83,14 +83,14 @@ export class TheForgeDb extends Dexie {
 }
 
 /** Opens a new handle on the database. */
-export function openDb(): TheForgeDb {
-  return new TheForgeDb();
+export function openDb(): GameIdeaDb {
+  return new GameIdeaDb();
 }
 
-let instance: TheForgeDb | null = null;
+let instance: GameIdeaDb | null = null;
 
 /** The module's one database handle, created on first use. */
-export function db(): TheForgeDb {
+export function db(): GameIdeaDb {
   instance ??= openDb();
   return instance;
 }

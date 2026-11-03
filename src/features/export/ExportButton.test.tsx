@@ -42,7 +42,7 @@ describe('ExportButton', () => {
     expect(button.getAttribute('aria-expanded')).toBe('true');
     const menu = screen.getByRole('menu', { name: 'Export' });
     expect(menu.textContent).toContain('Salvage Run.txt');
-    expect(menu.textContent).toContain('Salvage Run.forge.json');
+    expect(menu.textContent).toContain('Salvage Run.gameidea.json');
     expect(screen.getAllByRole('menuitem')).toHaveLength(2);
     expect(document.activeElement).toBe(screen.getAllByRole('menuitem')[0]);
   });
@@ -60,7 +60,7 @@ describe('ExportButton', () => {
     const button = renderButton();
     fireEvent.click(button);
     fireEvent.click(screen.getByRole('menuitem', { name: /Board File/ }));
-    expect(downloads).toEqual(['Salvage Run.forge.json']);
+    expect(downloads).toEqual(['Salvage Run.gameidea.json']);
     expect(screen.queryByRole('menu')).toBeNull();
     expect(document.activeElement).toBe(button);
   });

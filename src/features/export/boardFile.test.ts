@@ -11,16 +11,16 @@ afterEach(() => {
 });
 
 describe('boardFile', () => {
-  it('boardFileName_plainName_addsForgeJson', () => {
-    expect(boardFileName('Salvage Run')).toBe('Salvage Run.forge.json');
+  it('boardFileName_plainName_addsGameIdeaJson', () => {
+    expect(boardFileName('Salvage Run')).toBe('Salvage Run.gameidea.json');
   });
 
   it('boardFileName_badCharacters_replaced', () => {
-    expect(boardFileName('a/b\\c:d*e?f"g<h>i|j\u0001k')).toBe('a-b-c-d-e-f-g-h-i-j-k.forge.json');
+    expect(boardFileName('a/b\\c:d*e?f"g<h>i|j\u0001k')).toBe('a-b-c-d-e-f-g-h-i-j-k.gameidea.json');
   });
 
   it('boardFileName_blank_untitled', () => {
-    expect(boardFileName('   ')).toBe('Untitled Board.forge.json');
+    expect(boardFileName('   ')).toBe('Untitled Board.gameidea.json');
   });
 
   it('boardFileJson_board_roundTripsWithFormatVersion', () => {
@@ -37,7 +37,7 @@ describe('boardFile', () => {
     const click = vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(function (
       this: HTMLAnchorElement,
     ) {
-      expect(this.download).toBe('Fixture Board.forge.json');
+      expect(this.download).toBe('Fixture Board.gameidea.json');
       expect(this.href).toBe('blob:board');
     });
     downloadBoardFile(fixtureBoard([]));

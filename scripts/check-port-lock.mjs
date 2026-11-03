@@ -1,6 +1,6 @@
 /**
  * Port lock check for CI (local-run in docs/architecture.html): the browser stores boards
- * per address and port, so `npm run dev` (5173) and `npm start`'s preview (4173) must exit
+ * per address and port, so `npm run dev` (5174) and `npm start`'s preview (4174) must exit
  * with an error on a busy port, never move to another one. For each port this script holds
  * the port, starts Vite on it and expects a non-zero exit that names the port within 30 s.
  * The port is held on the loopback addresses, where Vite listens for "localhost": Windows
@@ -67,8 +67,8 @@ function problem({ code, output }, port) {
 
 let failed = false;
 for (const [name, port, args] of [
-  ['dev', 5173, []],
-  ['preview', 4173, ['preview']],
+  ['dev', 5174, []],
+  ['preview', 4174, ['preview']],
 ]) {
   const servers = await holdPort(port);
   const result = await runVite(args);

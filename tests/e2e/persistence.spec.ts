@@ -23,7 +23,7 @@ async function storedView(page: Page): Promise<{ panX: number; panY: number } | 
   return page.evaluate(async () => {
     const id = decodeURIComponent(location.hash.replace('#/board/', ''));
     const db = await new Promise<IDBDatabase>((resolve, reject) => {
-      const request = indexedDB.open('theforge');
+      const request = indexedDB.open('gameidea');
       request.onsuccess = () => resolve(request.result);
       request.onerror = () => reject(new Error('open failed'));
     });

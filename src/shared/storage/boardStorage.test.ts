@@ -18,7 +18,7 @@ const channels: BroadcastChannel[] = [];
 
 /** A second channel object, as another tab would hold. */
 function otherTab(): BroadcastChannel {
-  const ch = new BroadcastChannel('theforge-boards');
+  const ch = new BroadcastChannel('gameidea-boards');
   channels.push(ch);
   return ch;
 }

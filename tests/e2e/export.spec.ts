@@ -38,7 +38,7 @@ test('export_textFile_downloadsPlainWords', async ({ page, browserName }) => {
 test('export_boardFile_matchesStoredRecord', async ({ page, browserName }) => {
   await openBoard(page, salvageRun());
   const download = await exportFile(page, 'Board File');
-  expect(downloadedName(download, browserName)).toBe('Salvage Run.forge.json');
+  expect(downloadedName(download, browserName)).toBe('Salvage Run.gameidea.json');
   const parsed: unknown = JSON.parse(await readFile(await download.path(), 'utf8'));
   const stored = (await storedBoards(page)).find((board) => board.id === 'salvage-run');
   expect(parsed).toEqual(stored);

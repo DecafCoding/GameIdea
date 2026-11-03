@@ -2,7 +2,7 @@
  * Fixture boards for Vitest and Playwright (test-fixtures in docs/architecture.html):
  * cards with known cue texts, small boards built from them, and the 200-card board for
  * the speed checks. Plain data with no feature imports, so the browser tests can pass a
- * board to the app through window.__THEFORGE_E2E_BOARD__.
+ * board to the app through window.__GAMEIDEA_E2E_BOARD__.
  */
 import {
   everyDeck,

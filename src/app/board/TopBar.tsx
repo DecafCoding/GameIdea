@@ -25,7 +25,7 @@ export function TopBar() {
     <header className={styles.bar}>
       <a href="#/" className={styles.home} aria-label="Board List">
         <AppMark />
-        <span className={styles.wordmark}>TheForge</span>
+        <span className={styles.wordmark}>GameIdea</span>
       </a>
       <span className={styles.divider} aria-hidden="true" />
       <BoardNameField />

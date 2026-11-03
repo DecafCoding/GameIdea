@@ -9,7 +9,7 @@ import { canvasCards, createBoardWithGenres, drawFromRail, rail } from './board-
 import { exportFile } from './export-helpers';
 import { draw, type DeckName } from './helpers';
 
-const APP_ORIGIN = 'http://localhost:4173';
+const APP_ORIGIN = 'http://localhost:4174';
 const DECKS: DeckName[] = ['Character', 'Motivation', 'Setting', 'Conflict', 'Description'];
 
 test('network_fullSession_onlyOwnAddress', async ({ page }) => {
@@ -52,7 +52,7 @@ test('network_fullSession_onlyOwnAddress', async ({ page }) => {
   await page.getByRole('button', { name: 'Import Board File' }).click();
   await (
     await choosing
-  ).setFiles({ name: 'board.forge.json', mimeType: 'application/json', buffer });
+  ).setFiles({ name: 'board.gameidea.json', mimeType: 'application/json', buffer });
   await expect(page.getByRole('status')).toContainText('Board imported.');
   await page.evaluate(() => document.fonts.ready.then(() => undefined));
 

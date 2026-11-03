@@ -170,7 +170,7 @@ describe('banners', () => {
     render(<BoardScreen />);
     expect(screen.getByRole('alert').textContent).toContain(SAVE_FAILED_TEXT);
     fireEvent.click(screen.getByRole('button', { name: 'Export Board File' }));
-    expect(downloads).toEqual(['Untitled Board.forge.json']);
+    expect(downloads).toEqual(['Untitled Board.gameidea.json']);
     click.mockRestore();
   });
 

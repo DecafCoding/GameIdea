@@ -1,5 +1,5 @@
 /**
- * Browser tests for the card test page, against the built app on port 4173:
+ * Browser tests for the card test page, against the built app on port 4174:
  * draw, ring halves, hover, keys, combine, the pools banner, timing and locked tokens.
  */
 import { expect, test } from '@playwright/test';

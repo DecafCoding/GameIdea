@@ -18,7 +18,7 @@ export function ListScreen() {
     <div className={styles.screen}>
       <header className={styles.bar}>
         <AppMark />
-        <span className={styles.wordmark}>TheForge</span>
+        <span className={styles.wordmark}>GameIdea</span>
         <span className={styles.gap} />
         <span className={styles.caption}>Runs on your computer. Nothing leaves it.</span>
       </header>

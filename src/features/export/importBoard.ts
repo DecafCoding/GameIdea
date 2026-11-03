@@ -14,7 +14,7 @@ export const MAX_BOARD_FILE_BYTES = 5 * 1024 * 1024;
 export const IMPORTED_TEXT = 'Board imported.';
 export const IMPORTED_RENAMED_TEXT =
   'Board imported. The name was taken, so "(imported)" was added.';
-export const BAD_IMPORT_TEXT = 'This file is not a TheForge board file. Nothing changed.';
+export const BAD_IMPORT_TEXT = 'This file is not a GameIdea board file. Nothing changed.';
 
 /** The board in a board file's text, or null when the file is not a good board file. */
 export function parseBoardFile(text: string): Board | null {

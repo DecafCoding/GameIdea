@@ -1,6 +1,6 @@
 /**
  * Playwright config: browser tests in Chromium, Firefox and WebKit against the built app
- * served by `npm start` on the locked port 4173.
+ * served by `npm start` on the locked port 4174.
  * Tests tagged @timing run in their own projects, one browser at a time, after the rest,
  * so the 100 ms checks measure the app and not a CPU shared with other browser workers.
  */
@@ -19,7 +19,7 @@ export default defineConfig({
   retries: process.env.CI ? 1 : 0,
   reporter: process.env.CI ? [['github'], ['html', { open: 'never' }]] : 'list',
   use: {
-    baseURL: 'http://localhost:4173',
+    baseURL: 'http://localhost:4174',
     trace: 'on-first-retry',
   },
   projects: [
@@ -34,7 +34,7 @@ export default defineConfig({
   ],
   webServer: {
     command: 'npm start',
-    url: 'http://localhost:4173',
+    url: 'http://localhost:4174',
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
   },

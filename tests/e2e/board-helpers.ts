@@ -16,7 +16,7 @@ import type { DeckName } from './helpers';
 export async function openBoard(page: Page, board?: Board): Promise<void> {
   if (board) {
     await page.addInitScript((b) => {
-      window.__THEFORGE_E2E_BOARD__ = b;
+      window.__GAMEIDEA_E2E_BOARD__ = b;
     }, board);
     await page.goto(`/#/board/${encodeURIComponent(board.id)}`);
   } else {
@@ -97,7 +97,7 @@ export async function createBoardWithGenres(
 }
 
 /**
- * Seeds IndexedDB "theforge" as an older Dexie schema version left it, with one board record
+ * Seeds IndexedDB "gameidea" as an older Dexie schema version left it, with one board record
  * and its index row, so the app runs the upgrades on open. Dexie multiplies its version by 10
  * for the native IndexedDB version (schema 1 is native 10, schema 2 is native 20). Call it on
  * a same-origin page that has not opened the database.
@@ -110,7 +110,7 @@ export async function seedOldBoard(
   await page.evaluate(
     async ([record, version]) => {
       const db = await new Promise<IDBDatabase>((resolve, reject) => {
-        const request = indexedDB.open('theforge', version * 10);
+        const request = indexedDB.open('gameidea', version * 10);
         request.onupgradeneeded = () => {
           const upgrading = request.result;
           upgrading.createObjectStore('boards', { keyPath: 'id' });
@@ -224,7 +224,7 @@ export async function nodeIdAt(page: Page, x: number, y: number): Promise<string
 export async function storedBoards(page: Page): Promise<Board[]> {
   return page.evaluate(async () => {
     const db = await new Promise<IDBDatabase>((resolve, reject) => {
-      const request = indexedDB.open('theforge');
+      const request = indexedDB.open('gameidea');
       request.onsuccess = () => resolve(request.result);
       request.onerror = () => reject(new Error('open failed'));
     });

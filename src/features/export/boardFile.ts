@@ -1,14 +1,14 @@
 /**
  * The board file (board-file-format in docs/architecture.html): the BoardRecord with its
- * formatVersion as JSON, downloaded as <board-name>.forge.json. The save-failed banner and
+ * formatVersion as JSON, downloaded as <board-name>.gameidea.json. The save-failed banner and
  * the Export menu both use it; import reads it back through importBoard.ts.
  */
 import type { BoardRecord } from '@/shared/model';
 import { downloadFile, safeFileBase } from './download';
 
-/** "<name>.forge.json", with characters Windows does not allow in a file name replaced. */
+/** "<name>.gameidea.json", with characters Windows does not allow in a file name replaced. */
 export function boardFileName(name: string): string {
-  return `${safeFileBase(name)}.forge.json`;
+  return `${safeFileBase(name)}.gameidea.json`;
 }
 
 /** The board file contents. */

@@ -8,7 +8,7 @@
 import type { BoardIndexRow, BoardRecord } from '@/shared/model';
 import { db } from './db';
 
-const CHANNEL_NAME = 'theforge-boards';
+const CHANNEL_NAME = 'gameidea-boards';
 
 interface BoardMessage {
   boardId: string;

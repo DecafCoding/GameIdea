@@ -75,7 +75,7 @@ const clickChip = (deck: string, genre: string) =>
 /** Chooses a file in the hidden import input. */
 function chooseFile(contents: string) {
   fireEvent.change(fileInput(), {
-    target: { files: [new File([contents], 'x.forge.json', { type: 'application/json' })] },
+    target: { files: [new File([contents], 'x.gameidea.json', { type: 'application/json' })] },
   });
 }
 

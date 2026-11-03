@@ -61,7 +61,7 @@ const LATER_DECISIONS: Record<string, string> = {
 
 describe('design tokens', () => {
   it('tokens_everyHandoffToken_hasSameValue', () => {
-    const handoff = rootTokens('docs/handoff/_ds/theforge-dark-table/styles.css');
+    const handoff = rootTokens('docs/design-handoff/_ds/gameidea/styles.css');
     const app = rootTokens('src/shared/ui/tokens.css');
     expect(handoff.size).toBeGreaterThan(50);
     expect(Object.fromEntries(app)).toEqual({ ...Object.fromEntries(handoff), ...LATER_DECISIONS });

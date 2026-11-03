@@ -7,7 +7,7 @@ import type { Board } from '@/shared/model';
 
 declare global {
   interface Window {
-    __THEFORGE_E2E_BOARD__?: Board;
+    __GAMEIDEA_E2E_BOARD__?: Board;
   }
 }
 
