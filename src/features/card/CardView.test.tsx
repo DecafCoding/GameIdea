@@ -72,13 +72,13 @@ describe('CardView', () => {
     setting.rings[0]!.activeIndex = 1;
     const { container } = render(<CardView card={setting} onTurn={noop} />);
     const disc = screen.getByTestId('type-disc');
-    expect(disc.querySelector('[data-icon="pin"]')).toBeTruthy();
+    expect(disc.querySelector('[data-icon="map-pin"]')).toBeTruthy();
     for (const edge of edges(container)) expect(edge.querySelector('[data-icon]')).toBeNull();
   });
 
   it('CardView_roleCard_discShowsTypeIcon', () => {
     render(<CardView card={card('role', [NOUNS])} onTurn={noop} />);
-    expect(screen.getByTestId('type-disc').querySelector('[data-icon="person"]')).toBeTruthy();
+    expect(screen.getByTestId('type-disc').querySelector('[data-icon="user"]')).toBeTruthy();
   });
 
   it('CardView_card_hasTitleCaseAriaLabel', () => {
@@ -120,7 +120,7 @@ describe('CardView', () => {
     expect(screen.queryByTestId('tuck-mark')).toBeNull();
     rerender(<CardView card={card('role', [NOUNS])} onTurn={noop} paper="under-2" />);
     const icon = screen.getByTestId('tuck-mark').querySelector('[data-icon]');
-    expect(icon?.getAttribute('data-icon')).toBe('person');
+    expect(icon?.getAttribute('data-icon')).toBe('user');
   });
 
   it('cardView_ringClassName_onEveryRingHalf', () => {

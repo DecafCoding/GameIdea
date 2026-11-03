@@ -40,14 +40,32 @@ function sourceFiles(dir: string): string[] {
   });
 }
 
+/** Every icon drawn at stroke 2.2 (check.svg is the one at 2.6). */
 const ICONS: IconName[] = [
-  'person',
-  'target',
-  'pin',
-  'bolt',
-  'tag',
+  'hook',
+  'user',
+  'repeat',
+  'battery',
+  'flag',
+  'zap',
+  'user-plus',
+  'battery-plus',
+  'map-pin-plus',
+  'map-pin',
+  'smile',
+  'rotate-ccw',
+  'trending-up',
+  'shield-x',
+  'settings',
+  'sliders-horizontal',
+  'align-left',
+  'lock',
+  'x',
+  'minus',
+  'ellipsis',
+  'triangle-alert',
+  'refresh-cw',
   'alert-circle',
-  'anvil',
   'undo',
   'redo',
   'note',
@@ -109,6 +127,13 @@ describe('design tokens', () => {
       expect(existsSync(path)).toBe(true);
       expect(readFileSync(path, 'utf8')).toContain('stroke-width="2.2"');
     }
+  });
+
+  it('icons_everyIconFile_isUsedOrListed', () => {
+    const files = readdirSync(join(process.cwd(), 'public', 'icons'))
+      .filter((name) => name.endsWith('.svg'))
+      .map((name) => name.slice(0, -'.svg'.length));
+    expect(files.sort()).toEqual([...ICONS, 'check'].sort());
   });
 
   it('icons_checkIcon_existsAndUsesStroke26', () => {

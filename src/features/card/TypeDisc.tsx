@@ -7,11 +7,12 @@ import { Icon, type IconName } from '@/shared/ui';
 import styles from './TypeDisc.module.css';
 
 export const TYPE_ICON: Record<CardType, IconName> = {
-  role: 'person',
-  goal: 'target',
-  setting: 'pin',
-  conflict: 'bolt',
-  modifier: 'tag',
+  role: 'user',
+  goal: 'flag',
+  conflict: 'zap',
+  // Phase 2 picks the Modifier icon by modDeck; until then the single deck uses user-plus.
+  modifier: 'user-plus',
+  setting: 'map-pin',
 };
 
 interface TypeDiscProps {

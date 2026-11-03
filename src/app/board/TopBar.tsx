@@ -13,7 +13,7 @@ import styles from './TopBar.module.css';
 export function AppMark() {
   return (
     <span className={styles.mark}>
-      <Icon name="anvil" size={16} />
+      <Icon name="hook" size={16} />
     </span>
   );
 }

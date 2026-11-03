@@ -6,13 +6,30 @@ import type { CSSProperties } from 'react';
 import styles from './Icon.module.css';
 
 export type IconName =
-  | 'person'
-  | 'target'
-  | 'pin'
-  | 'bolt'
-  | 'tag'
+  | 'hook'
+  | 'user'
+  | 'repeat'
+  | 'battery'
+  | 'flag'
+  | 'zap'
+  | 'user-plus'
+  | 'battery-plus'
+  | 'map-pin-plus'
+  | 'map-pin'
+  | 'smile'
+  | 'rotate-ccw'
+  | 'trending-up'
+  | 'shield-x'
+  | 'settings'
+  | 'sliders-horizontal'
+  | 'align-left'
+  | 'lock'
+  | 'x'
+  | 'minus'
+  | 'ellipsis'
+  | 'triangle-alert'
+  | 'refresh-cw'
   | 'alert-circle'
-  | 'anvil'
   | 'undo'
   | 'redo'
   | 'note'
@@ -24,8 +41,8 @@ export type IconName =
   | 'file-text'
   | 'board-file'
   | 'upload'
-  | 'check'
-  | 'file-x';
+  | 'file-x'
+  | 'check';
 
 interface IconProps {
   name: IconName;
