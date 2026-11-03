@@ -1,0 +1,47 @@
+/* HookMenu (design 9.4 strip menu): padding 4, radius 10, border 1, --surface, 44 px items, 13/500. */
+.menu {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  box-shadow: var(--shadow-menu);
+}
+
+/* Hidden but mounted, so "Copied" and the fallback dialog outlive the pointer leaving. */
+.hidden {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.button {
+  min-height: var(--button-h);
+  padding: 0 12px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.button:hover:not(:disabled) {
+  background: var(--surface-raised);
+}
+
+.button:disabled {
+  color: var(--text-disabled);
+  cursor: default;
+}
+
+.copied {
+  color: var(--success-text);
+}
+
+.discard {
+  color: var(--danger-text);
+}

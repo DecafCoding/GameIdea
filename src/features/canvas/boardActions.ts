@@ -191,6 +191,28 @@ export function redrawCard(board: Board, cardId: string, drawn: Card): Board {
   });
 }
 
+/**
+ * Redraw All (design 9.9): redraws every unlocked card in the Hook Card's stack with
+ * redrawCard, so each keeps its place, tucks, badge word, merged ring and On Top card.
+ * Locked cards and On Top cards (not in the stack) stay as they are. One recipe, so one
+ * undo step; with nothing to redraw it returns the same board (no step, no save).
+ * draw draws a new card like the given one; the caller has the pools.
+ */
+export function redrawAll(
+  board: Board,
+  hookId: string,
+  draw: (card: Card) => Card,
+): { board: Board; redrawn: string[] } {
+  let next = board;
+  const redrawn: string[] = [];
+  for (const card of descendantsOf(board, hookId)) {
+    if (card.locked || card.type === 'hook') continue;
+    next = redrawCard(next, card.id, draw(card));
+    redrawn.push(card.id);
+  }
+  return { board: next, redrawn };
+}
+
 /** Lock or unlock: flips the card's lock and keeps everything else. One undo step. */
 export function lockCard(board: Board, cardId: string): Board {
   return replaceCard(board, toggleLock(cardAt(board, cardId)));

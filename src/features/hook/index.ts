@@ -5,3 +5,6 @@
  */
 export { buildHookSentence, type StackEntry } from './buildHookSentence';
 export { HookCard, HOOK_NEW_TEXT } from './HookCard';
+export { copyHook, type ClipboardLike } from './copyHook';
+export { CopyFallbackDialog, COPY_BLOCKED_TEXT } from './CopyFallbackDialog';
+export { COPIED_MS, HookMenu } from './HookMenu';

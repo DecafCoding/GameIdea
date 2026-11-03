@@ -31,6 +31,16 @@
   box-shadow: var(--shadow-drag);
 }
 
+/* A card Redraw All just replaced: a 2 px outline for 1 second (design 9.9). */
+.fresh :global([data-card]) {
+  outline: 2px solid var(--new-card-outline);
+  outline-offset: -2px;
+}
+
+.hookBody {
+  position: relative;
+}
+
 .hidden {
   visibility: hidden;
 }

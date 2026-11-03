@@ -12,6 +12,7 @@ export {
   placeHookCard,
   placeNewCard,
   putOnTopOf,
+  redrawAll,
   redrawCard,
   splitCard,
   swapOnto,

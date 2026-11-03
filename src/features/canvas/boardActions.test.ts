@@ -21,6 +21,7 @@ import {
   placeHookCard,
   placeNewCard,
   putOnTopOf,
+  redrawAll,
   redrawCard,
   splitCard,
   swapOnto,
@@ -365,6 +366,61 @@ describe('Hook Card', () => {
     ]);
     const next = dropCard(board, 'role-1', { x: 100, y: 100 }, { x: 20, y: 20 });
     expect(get(next, 'role-1')).toMatchObject({ tuckedUnder: 'hook-1', x: 20, y: 56 });
+  });
+});
+
+describe('redrawAll', () => {
+  /** A Hook Card stack: Hook, combined Player Role (with an On Top card), Goal, Conflict. */
+  function hookBoard(): Board {
+    return fixtureBoard([
+      fixtureCard('hook', { x: 0, y: 0 }),
+      combinedCard('role', { x: 20, y: 56, z: 2, tuckedUnder: 'hook-1', connector: 'You play a' }),
+      fixtureCard('goal', { x: 20, y: 112, z: 3, tuckedUnder: 'role-1', connector: 'until' }),
+      fixtureCard('conflict', { x: 20, y: 168, z: 4, tuckedUnder: 'goal-1', locked: true }),
+      secondModifier({ onTopOf: 'role-1' }),
+    ]);
+  }
+  const fresh = (card: Card): Card => ({
+    ...card,
+    rings: [{ cues: card.rings[0]!.cues.map((c) => ({ text: `new ${c.text}` })), activeIndex: 0 }],
+  });
+
+  it('redrawAll_skipsLockedCards', () => {
+    const board = hookBoard();
+    const { board: next, redrawn } = redrawAll(board, 'hook-1', fresh);
+    expect(redrawn).toEqual(['role-1', 'goal-1']);
+    expect(get(next, 'conflict-1')).toBe(get(board, 'conflict-1'));
+  });
+
+  it('redrawAll_keepsTucksPlacesAndConnectors', () => {
+    const board = hookBoard();
+    const { board: next } = redrawAll(board, 'hook-1', fresh);
+    for (const id of ['role-1', 'goal-1']) {
+      const { rings: _before, ...rest } = get(board, id);
+      const { rings: after, ...restAfter } = get(next, id);
+      void _before;
+      expect(restAfter).toEqual(rest);
+      expect(after[0]!.cues[0]!.text).toMatch(/^new /);
+    }
+  });
+
+  it('redrawAll_combinedCard_keepsAdjectiveRing', () => {
+    const board = hookBoard();
+    const { board: next } = redrawAll(board, 'hook-1', fresh);
+    expect(get(next, 'role-1').rings[1]).toEqual(get(board, 'role-1').rings[1]);
+  });
+
+  it('redrawAll_keepsOnTopCard', () => {
+    const board = hookBoard();
+    const { board: next } = redrawAll(board, 'hook-1', fresh);
+    expect(get(next, 'modifier-2')).toBe(get(board, 'modifier-2'));
+  });
+
+  it('redrawAll_everyCardLocked_returnsSameBoard', () => {
+    // The Conflict is already locked; lock the other 2 stack cards.
+    const locked = lockCard(lockCard(hookBoard(), 'role-1'), 'goal-1');
+    expect(redrawAll(locked, 'hook-1', fresh)).toEqual({ board: locked, redrawn: [] });
+    expect(redrawAll(locked, 'hook-1', fresh).board).toBe(locked);
   });
 });
 

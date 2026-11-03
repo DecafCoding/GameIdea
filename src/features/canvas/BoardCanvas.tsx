@@ -28,6 +28,7 @@ import {
   discardCard,
   dropCard,
   lockCard,
+  redrawAll,
   redrawCard,
   splitCard,
   turnCardOnBoard,
@@ -47,6 +48,8 @@ const nodeTypes = { card: CardNode, note: NoteNode };
 
 /** A drag shorter than this, in screen pixels, is a click and commits nothing. */
 const CLICK_DISTANCE = 4;
+/** How long the new-card outline shows after Redraw All (design 9.9). */
+const FRESH_MS = 1000;
 /** Added to the dragged stack's zIndex so it paints above every other card. */
 const DRAG_RAISE = 1_000_000;
 
@@ -92,11 +95,21 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
   const drag = useRef<DragState | null>(null);
   const hoverRef = useRef<string | null>(null);
 
+  // Cards Redraw All just replaced: the new-card outline for 1 second (design 9.9).
+  const [freshIds, setFreshIds] = useState<ReadonlySet<string>>(() => new Set());
+  const freshTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(
+    () => () => {
+      if (freshTimer.current) clearTimeout(freshTimer.current);
+    },
+    [],
+  );
+
   const selected = selectedId && board.cards.some((c) => c.id === selectedId) ? selectedId : null;
   const hiddenIds = useMemo(() => new Set(flights.map((f) => f.card.id)), [flights]);
   const derived = useMemo(
-    () => toNodes(board, { selectedId: selected, hiddenIds }),
-    [board, selected, hiddenIds],
+    () => toNodes(board, { selectedId: selected, hiddenIds, freshIds }),
+    [board, selected, hiddenIds, freshIds],
   );
   const nodes = dragNodes ?? derived;
 
@@ -128,6 +141,20 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
         changeBoard((b) => redrawCard(b, id, drawn));
       },
       lock: (id: string) => changeBoard((b) => lockCard(b, id)),
+      redrawAll: (hookId: string) => {
+        const current = latest.current.pools;
+        if (!current) return;
+        let redrawn: string[] = [];
+        changeBoard((b) => {
+          const result = redrawAll(b, hookId, (card) => drawFor(card, current, b.genres));
+          redrawn = result.redrawn;
+          return result.board;
+        });
+        if (redrawn.length === 0) return;
+        setFreshIds(new Set(redrawn));
+        if (freshTimer.current) clearTimeout(freshTimer.current);
+        freshTimer.current = setTimeout(() => setFreshIds(new Set()), FRESH_MS);
+      },
       discard: (id: string) => {
         changeBoard((b) => discardCard(b, id));
         setSelectedId(null);

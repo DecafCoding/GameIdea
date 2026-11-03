@@ -23,6 +23,8 @@ export type CardNodeData = {
   below: BelowCard | null;
   /** The dragged card: the drag look. Set only in the canvas's local drag nodes. */
   lifted?: boolean;
+  /** Just replaced by Redraw All: the new-card outline for 1 second. */
+  fresh: boolean;
 };
 export type BelowCard = Below & { id: string };
 
@@ -35,6 +37,8 @@ export type BoardFlowNode = CardFlowNode | NoteFlowNode;
 export interface NodeUi {
   selectedId: string | null;
   hiddenIds: ReadonlySet<string>;
+  /** Cards Redraw All just replaced. */
+  freshIds?: ReadonlySet<string>;
 }
 
 export const STACK_RANK = 1000;
@@ -75,6 +79,7 @@ export function toNodes(board: Board, ui: NodeUi): BoardFlowNode[] {
         below: belowCard(board, order[i + 1]),
         selected: ui.selectedId === card.id,
         hidden: ui.hiddenIds.has(card.id),
+        fresh: ui.freshIds?.has(card.id) ?? false,
       },
     })),
   );

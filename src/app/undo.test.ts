@@ -10,6 +10,7 @@ import {
   dropCard,
   lockCard,
   placeNewCard,
+  redrawAll,
   redrawCard,
   splitCard,
   swapOnto,
@@ -107,6 +108,19 @@ describe('undo', () => {
     expectUndoable(fixtureBoard([role()]), (b) => lockCard(b, 'role-1'));
     store().undo();
     expect(store().board.cards[0]!.locked).toBe(false);
+  });
+
+  it('undo_redrawAll_restoresEveryCardInOneStep', () => {
+    const start = fixtureBoard([
+      fixtureCard('hook', { x: 0, y: 0 }),
+      fixtureCard('role', { x: 20, y: 56, z: 2, tuckedUnder: 'hook-1' }),
+      fixtureCard('goal', { x: 20, y: 112, z: 3, tuckedUnder: 'role-1' }),
+    ]);
+    const draw = (card: Board['cards'][number]) => ({
+      ...card,
+      rings: [{ cues: card.rings[0]!.cues.map((c) => ({ text: `x ${c.text}` })), activeIndex: 0 }],
+    });
+    expectUndoable(start, (b) => redrawAll(b, 'hook-1', draw).board);
   });
 
   it('undo_discard_restoresBoard', () => {
