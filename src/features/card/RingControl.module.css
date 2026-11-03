@@ -46,8 +46,8 @@
 }
 
 .arrow {
-  fill: #fff;
-  stroke: #fff;
+  fill: var(--card-face);
+  stroke: var(--card-face);
   stroke-width: 2.2;
   stroke-linejoin: round;
 }

@@ -37,5 +37,5 @@
 /* Delete Board: --danger fill with white text, as in the delete dialog. */
 .danger {
   background: var(--danger);
-  color: #fff;
+  color: #fff; /* fixed: white on --danger */
 }

@@ -16,9 +16,9 @@
   gap: 14px;
 }
 
-/* No token covers the backdrop; the design's dialog dims the board at 50 percent. */
+/* The backdrop dims the page with the --scrim token (design 9.3). */
 .dialog::backdrop {
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--scrim);
 }
 
 .title {
@@ -55,11 +55,11 @@
   max-width: 640px; /* design 9.8; no token */
   padding: 24px 28px; /* design 9.8; no token */
   border-radius: var(--radius-card);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6); /* design 9.8; no token */
+  box-shadow: var(--shadow-dialog);
 }
 
 .wide::backdrop {
-  background: rgba(10, 12, 16, 0.62); /* design 9.8; no token */
+  background: var(--scrim);
 }
 
 .wide .title {

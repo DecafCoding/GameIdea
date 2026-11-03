@@ -13,7 +13,7 @@
     "build": "vite build",
     "test": "vitest run",
     "test:e2e": "playwright test",
-    "lint": "eslint .",
+    "lint": "eslint . && node scripts/check-css-colors.mjs",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
