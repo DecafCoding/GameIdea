@@ -176,7 +176,7 @@ describe('splitCard', () => {
     const next = splitCard(board, 'role-1', () => 'new-modifier');
     const modifier = get(next, 'new-modifier');
     // A free Modifier's ring has no modDeck; the card carries it.
-    expect(modifier.rings).toEqual([{ cues: card.rings[1]!.cues, activeIndex: 2 }]);
+    expect(modifier.rings).toEqual([{ cues: card.rings[1].cues, activeIndex: 2 }]);
     expect(activeText(modifier)).toBe('clone');
     expect(isCombined(get(next, 'role-1'))).toBe(false);
     expect(get(next, 'goal-1')).toMatchObject({ tuckedUnder: 'role-1', y: 59 });
