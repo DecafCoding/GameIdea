@@ -42,6 +42,9 @@ export function HookMenu({
   clipboard,
 }: HookMenuProps) {
   const [copied, setCopied] = useState(false);
+  // The menu also stays while focus is in it (after a click, or from the keyboard).
+  const [focused, setFocused] = useState(false);
+  const shown = visible || focused;
   const [fallback, setFallback] = useState<string | null>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -66,19 +69,23 @@ export function HookMenu({
   return (
     <>
       <div
-        className={`${styles.menu} ${visible ? '' : styles.hidden}`}
+        className={`${styles.menu} ${shown ? '' : styles.hidden}`}
         role="toolbar"
         aria-label="Hook Card Actions"
-        aria-hidden={!visible}
+        aria-hidden={!shown}
         data-testid="hook-menu"
         onPointerEnter={onPointerEnter}
         onPointerLeave={onPointerLeave}
+        onFocus={() => setFocused(true)}
+        onBlur={(event) => {
+          if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false);
+        }}
       >
         <button
           type="button"
           className={`${styles.button} ${copied ? styles.copied : ''}`}
           disabled={!hasStack}
-          tabIndex={visible ? undefined : -1}
+          tabIndex={shown ? undefined : -1}
           onClick={() => void copy()}
         >
           {copied ? 'Copied' : 'Copy'}
@@ -87,7 +94,7 @@ export function HookMenu({
           type="button"
           className={styles.button}
           disabled={!hasStack || !poolsReady}
-          tabIndex={visible ? undefined : -1}
+          tabIndex={shown ? undefined : -1}
           onClick={onRedrawAll}
         >
           Redraw All
@@ -95,7 +102,7 @@ export function HookMenu({
         <button
           type="button"
           className={`${styles.button} ${styles.discard}`}
-          tabIndex={visible ? undefined : -1}
+          tabIndex={shown ? undefined : -1}
           onClick={onDiscard}
         >
           Discard
