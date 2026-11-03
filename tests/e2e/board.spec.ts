@@ -217,11 +217,11 @@ test.describe('selection', () => {
     const wrapper = page.locator('.react-flow__node[data-id="setting-1"] [data-selected]');
     await expect(wrapper).toHaveCSS('outline-width', '2px');
     await expect(wrapper).toHaveCSS('outline-color', 'rgb(232, 116, 46)');
-    // The strip's bottom sits 56 px above the card (design 9.4).
+    // The strip's bottom sits 4 px above the card (user 2026-11-03).
     const gap =
       (await boxOf(cardById(page, 'setting-1'))).y -
       ((await boxOf(strip)).y + (await boxOf(strip)).height);
-    expect(Math.abs(gap - 56)).toBeLessThanOrEqual(1);
+    expect(Math.abs(gap - 4)).toBeLessThanOrEqual(1);
   });
 
   test('strip_lock_marksCardAndUndoes', async ({ page }) => {
@@ -268,20 +268,19 @@ test.describe('selection', () => {
     ]);
   });
 
-  test('select_clickPane_hidesStrip', async ({ page }) => {
+  test('strip_hoverCard_showsStripWithoutClick', async ({ page }) => {
     await openBoard(page, stack());
-    await cardById(page, 'setting-1').click({ position: { x: 30, y: 30 } });
-    await expect(page.getByTestId('card-strip')).toBeVisible();
-    const canvas = await boxOf(page.getByTestId('canvas'));
-    await page.mouse.click(canvas.x + canvas.width - 100, canvas.y + canvas.height - 150);
     await expect(page.getByTestId('card-strip')).toHaveCount(0);
+    await cardById(page, 'setting-1').hover({ position: { x: 30, y: 30 } });
+    await expect(page.getByTestId('card-strip')).toBeVisible();
   });
 
-  test('select_escape_hidesStrip', async ({ page }) => {
+  test('strip_pointerLeaves_hidesStrip', async ({ page }) => {
     await openBoard(page, stack());
-    await cardById(page, 'setting-1').click({ position: { x: 30, y: 30 } });
+    await cardById(page, 'setting-1').hover({ position: { x: 30, y: 30 } });
     await expect(page.getByTestId('card-strip')).toBeVisible();
-    await page.keyboard.press('Escape');
+    const canvas = await boxOf(page.getByTestId('canvas'));
+    await page.mouse.move(canvas.x + canvas.width - 100, canvas.y + canvas.height - 150);
     await expect(page.getByTestId('card-strip')).toHaveCount(0);
   });
 
@@ -461,7 +460,7 @@ test('connector_chooseFromList_savesWordAndUndoRestores', async ({ page }) => {
   await expect(menu).toHaveCount(0);
   await expect(badge).toHaveText('until');
   // The click chose a word: it did not select or move the card.
-  await expect(page.getByRole('button', { name: 'Discard' })).toHaveCount(0);
+  await expect(page.locator('.react-flow__node [data-selected]')).toHaveCount(0);
   await expect
     .poll(
       async () => (await storedBoards(page))[0]?.cards.find((c) => c.id === 'goal-1')?.connector,
