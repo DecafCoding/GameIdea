@@ -96,6 +96,20 @@
       <p>Drawn values the bundle itself replaces with a token: the Modifier inner-ring hover <code>#4A2E86</code> → <code>--ring-hover-modifier</code>; the Player Role outer-ring hover <code>#1E428A</code> → <code>--ring-hover-role</code>; the slot label <code>#A9C3F2</code> → <code>--rail-role</code>.</p>
     </td>
   </tr>
+  <tr>
+    <td>2026-11-03</td>
+    <td>None (user request after Phase 5)</td>
+    <td>A 4 px transparent hover bridge under each strip menu, so the pointer can reach the menu from the card.</td>
+    <td><ul>
+        <li>Card strip menus (plain cards and the Hook Card) sit 4 above the card's top, not 56.</li>
+        <li>Plain cards show their strip menu on hover, like the Hook Card. A click still selects the card (outline, Delete, Esc).</li>
+        <li>A strip menu hides as soon as the pointer leaves both the card and the menu. The dragged card shows no menu.</li>
+      </ul></td>
+    <td><ul>
+        <li>9.4 "It shows on a selected card. Its bottom sits 56 above the card's top." Now: it shows on hover, 4 above.</li>
+        <li>Plain cards show their strip menu when selected (click). Now: on hover.</li>
+      </ul></td>
+  </tr>
 </table>
 
 <!-- ============================================================ -->
@@ -109,7 +123,7 @@
   <li>A ring control around the center icon. It shows on hover, and a click on a ring half turns it one step.</li>
   <li>Tuck: a lower card shows a 56 px strip below the card above it.</li>
   <li>Free-text notes on cream paper.</li>
-  <li>A card strip menu above a selected card.</li>
+  <li>A card strip menu above a card. In GameIdea it shows on hover, 4 px above the card <span class="tag">user 2026-11-03</span>.</li>
   <li>Buttons 44 px tall.</li>
 </ul>
 <p><strong>Deliberate deviations.</strong> This list is closed: keep all of them, and add none.</p>
@@ -408,7 +422,7 @@
   <tr><td>Lock, full card</td><td>30 circle, 10 from the top and right, fill <code>--bg</code>, lock icon 15. The rings still turn on a locked card.</td></tr>
   <tr><td>Lock, tucked strip</td><td>Icon 13, 12 from the right, 30 from the bottom of the visible strip, in the deck card color.</td></tr>
   <tr><td>Selected</td><td>Outline 2, offset 3, <code>--shadow-card-raised</code>. Outline color per the outline rule in 4.2.</td></tr>
-  <tr><td>Card strip menu</td><td>It shows on a selected card. Its bottom sits 56 above the card's top. Padding 4, radius 10, border 1, fill <code>--surface</code>, <code>--shadow-menu</code>, gap 2–4. Buttons 44 tall, padding 0 10–12, radius 7, 13/500. Items: Split (combined card only), Redraw, Lock / Unlock, Discard (<code>--danger-text</code>).</td></tr>
+  <tr><td>Card strip menu</td><td>It shows while the pointer is over the card or the menu, and hides when the pointer leaves both; the dragged card shows none <span class="tag">user 2026-11-03</span>. Its bottom sits 4 above the card's top, and a transparent 4 px bridge fills the gap so the pointer can reach it. Padding 4, radius 10, border 1, fill <code>--surface</code>, <code>--shadow-menu</code>, gap 2–4. Buttons 44 tall, padding 0 10–12, radius 7, 13/500. Items: Split (combined card only), Redraw, Lock / Unlock, Discard (<code>--danger-text</code>).</td></tr>
 </table>
 
 <h3 id="s-hook">9.5 Hook Card <span class="tag">HookCard</span> <span class="tag">Decks</span></h3>
@@ -584,7 +598,7 @@
 <h2 id="contracts">10. Cross-cutting interaction contracts</h2>
 <ol>
   <li><strong>Rings show on hover only.</strong> The card body and center icon never rotate. A click on a ring half turns that ring one step; R turns the outer or only ring, and Shift+R turns the inner ring.</li>
-  <li><strong>Plain cards show their strip menu when selected</strong> (click). <strong>The Hook Card shows its menu on hover</strong> <span class="tag">user 2026-11-02</span>.</li>
+  <li><strong>Every card shows its strip menu on hover</strong>, plain cards and the Hook Card alike <span class="tag">user 2026-11-03</span>. A click selects a plain card (outline, Delete, Esc).</li>
   <li><strong>Every user action is one undo step:</strong> draw, rotate, tuck, combine, swap, On Top, split, redraw, Redraw All, lock and unlock, discard, a badge word change, a drop with or without snap, and Add note. Settings and genre changes are not in the undo history.</li>
   <li><strong>Nothing changes cards already on the board</strong> except a direct action on them. A genre change affects the next draw only.</li>
   <li><strong>The Hook sentence is computed, never stored,</strong> and never shows a blank slot.</li>
@@ -605,7 +619,7 @@
 </table>
 <p><strong>States.</strong></p>
 <ul>
-  <li><strong>Hover:</strong> rings on cards, ring-half darkening, and the Hook Card menu. Other hover fills are not specified.</li>
+  <li><strong>Hover:</strong> rings on cards, ring-half darkening, and the strip menus on every card. Other hover fills are not specified.</li>
   <li><strong>Selected:</strong> outline 2, offset 3, color per the outline rule in 4.2.</li>
   <li><strong>Focus:</strong> color per the outline rule in 4.2. Width and offset are not specified.</li>
   <li><strong>Disabled:</strong> <code>--text-disabled</code>.</li>
@@ -642,7 +656,7 @@ Board         saveState: saved|saving|failed · canUndo · canRedo · exportMenu
               rail: { genreCount: {mechanic,resource,progression,constraint}, boardGenreCount | all }
               showGuide = cards.length === 0
               selectedCardId? · hoveredCard?: { id, ring: outer|inner, half: left|right }
-              hookMenuFor?: hookId (hover) · copiedUntil?: timestamp
+              stripMenuFor?: cardId (hover) · copiedUntil?: timestamp
               drag?: { cardId, slot?: { parentId, deck }, zone?: combine|swap|onTop }
               newCardOutlineUntil?: { [cardId]: timestamp }
               badgeMenu?: { cardId } · clipboardFallback?: { text }
@@ -672,8 +686,8 @@ Settings      open
   <li>The Board list screen in light mode and in the Blue and Green themes. Only the Board screen has theme frames.</li>
   <li>Hover and focus fills for buttons and menu items. Focus ring width and offset.</li>
   <li>Motion: ring turn, menu and dialog transitions, and reduced-motion behavior.</li>
-  <li>Keyboard access to the Hook Card hover menu and to ring halves.</li>
-  <li>The Hook Card hover menu's show and hide delay.</li>
+  <li>Keyboard access to the card hover menus and to ring halves.</li>
+  <li>The strip menus' show delay. Hide is immediate when the pointer leaves card and menu <span class="tag">user 2026-11-03</span>.</li>
   <li>The import flow before a bad-file error (the file picker is the browser's).</li>
 </ol>
 <h3>Open questions</h3>

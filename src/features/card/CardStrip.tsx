@@ -1,6 +1,6 @@
 /**
- * CardStrip: the selected card's strip menu (design 9.4): Split (combined cards, or a card
- * with an On Top Modifier), Redraw, Lock / Unlock and Discard. The canvas places it 56 px
+ * CardStrip: a card's strip menu (design 9.4): Split (combined cards, or a card with an
+ * On Top Modifier), Redraw, Lock / Unlock and Discard. The canvas shows it on hover, 4 px
  * above the card.
  */
 import styles from './CardStrip.module.css';

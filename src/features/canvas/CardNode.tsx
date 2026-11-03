@@ -1,20 +1,13 @@
 /**
  * CardNode: one card as a React Flow node. Node data holds ids and view flags only; the
  * card itself comes from the store with a per-card selector, so a turn re-renders one node.
- * The selected card shows the strip in a NodeToolbar, which paints above every node.
+ * Each card shows its strip menu in a NodeToolbar (which paints above every node) while the
+ * pointer is over the card or the menu, the same way the Hook Card shows its menu.
  * A card with a tucked card below it may show the connector badge on the seam: this node
  * paints above the tucked one, so the badge sits on top of both cards.
  */
 import { NodeToolbar, Position, type NodeProps } from '@xyflow/react';
-import {
-  createContext,
-  memo,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-  type MouseEvent,
-} from 'react';
+import { createContext, memo, useContext, useRef, useState, type MouseEvent } from 'react';
 import {
   CardStrip,
   CardView,
@@ -52,8 +45,8 @@ export interface CardNodeActions {
 
 export const CardNodeContext = createContext<CardNodeActions | null>(null);
 
-/** The strip's bottom sits 56 px above the card's top (design 9.4). */
-const STRIP_OFFSET = 56;
+/** The strip's bottom sits 4 px above the card's top (user 2026-11-03; design 9.4 said 56). */
+const STRIP_GAP = 4;
 
 /** The paper step for a stack depth: deeper than 4 reuses the 4th step (design 9.7). */
 function paperFor(depth: number): CardPaper {
@@ -68,8 +61,27 @@ function stopRingClick(event: MouseEvent) {
   }
 }
 
-/** The hover menu hides this long after the pointer leaves both the card and the menu. */
-const MENU_HIDE_MS = 150;
+/**
+ * Hover state for a card's menu: on while the pointer is over the card or the menu, off as
+ * soon as it leaves both. Cards also call enter on pointer move, because a browser may not
+ * send pointerenter to a card that ends up under a still pointer after a drop. The menu sits on a transparent bridge (STRIP_GAP tall) that
+ * reaches down to the card, so the pointer never crosses empty canvas between the two.
+ */
+function useHoverMenu() {
+  const [hover, setHover] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  const enter = () => setHover(true);
+  const leave = (event: PointerEvent) => {
+    const to = event.relatedTarget;
+    if (to instanceof Node && (cardRef.current?.contains(to) || menuRef.current?.contains(to))) {
+      return;
+    }
+    setHover(false);
+  };
+  return { hover, cardRef, menuRef, enter, leave };
+}
 
 /**
  * The Hook Card's face and hover menu: the sentence is computed from the store on each
@@ -79,40 +91,33 @@ const MENU_HIDE_MS = 150;
 function HookBody({ hookId, actions }: { hookId: string; actions: CardNodeActions }) {
   const sentence = useBoardStore((state) => buildHookSentence(stackEntries(state.board, hookId)));
   const empty = useBoardStore((state) => childrenOf(state.board, hookId).length === 0);
-  const [hover, setHover] = useState(false);
-  const hideTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  useEffect(
-    () => () => {
-      if (hideTimer.current) clearTimeout(hideTimer.current);
-    },
-    [],
-  );
-
-  const enter = () => {
-    if (hideTimer.current) clearTimeout(hideTimer.current);
-    hideTimer.current = null;
-    setHover(true);
-  };
-  const leave = () => {
-    if (hideTimer.current) clearTimeout(hideTimer.current);
-    hideTimer.current = setTimeout(() => setHover(false), MENU_HIDE_MS);
-  };
+  const { hover, cardRef, menuRef, enter, leave } = useHoverMenu();
 
   return (
-    <div className={styles.hookBody} onPointerEnter={enter} onPointerLeave={leave}>
+    <div
+      ref={cardRef}
+      className={styles.hookBody}
+      onPointerEnter={enter}
+      onPointerMove={enter}
+      onPointerLeave={(event) => leave(event.nativeEvent)}
+    >
       <HookCard sentence={sentence} empty={empty} />
-      <NodeToolbar isVisible position={Position.Top} offset={STRIP_OFFSET}>
-        <HookMenu
-          sentence={sentence}
-          hasStack={!empty}
-          poolsReady={actions.canRedraw}
-          visible={hover}
-          onRedrawAll={() => actions.redrawAll(hookId)}
-          onDiscard={() => actions.discard(hookId)}
+      <NodeToolbar isVisible position={Position.Top} offset={0}>
+        <div
+          ref={menuRef}
+          style={{ paddingBottom: STRIP_GAP, pointerEvents: hover ? undefined : 'none' }}
           onPointerEnter={enter}
-          onPointerLeave={leave}
-        />
+          onPointerLeave={(event) => leave(event.nativeEvent)}
+        >
+          <HookMenu
+            sentence={sentence}
+            hasStack={!empty}
+            poolsReady={actions.canRedraw}
+            visible={hover}
+            onRedrawAll={() => actions.redrawAll(hookId)}
+            onDiscard={() => actions.discard(hookId)}
+          />
+        </div>
       </NodeToolbar>
     </div>
   );
@@ -125,6 +130,9 @@ function CardNodeView({ data }: NodeProps<CardFlowNode>) {
     (state) => state.board.cards.find((c) => c.onTopOf === data.cardId)?.rings[0],
   );
   const actions = useContext(CardNodeContext);
+  const { hover: menuHover, cardRef, menuRef, enter: menuEnter, leave: menuLeave } = useHoverMenu();
+  // Focus in the strip keeps it open (after a click, or from the keyboard).
+  const [stripFocused, setStripFocused] = useState(false);
   if (!card || !actions) return null;
   const id = card.id;
   const below = data.below;
@@ -160,10 +168,18 @@ function CardNodeView({ data }: NodeProps<CardFlowNode>) {
 
   return (
     <div
+      ref={cardRef}
       className={classes}
       data-selected={data.selected || undefined}
-      onPointerEnter={() => actions.hoverStart(id)}
-      onPointerLeave={() => actions.hoverEnd(id)}
+      onPointerEnter={() => {
+        actions.hoverStart(id);
+        menuEnter();
+      }}
+      onPointerMove={menuEnter}
+      onPointerLeave={(event) => {
+        actions.hoverEnd(id);
+        menuLeave(event.nativeEvent);
+      }}
       onClick={stopRingClick}
     >
       <div className={styles.inner}>
@@ -182,16 +198,31 @@ function CardNodeView({ data }: NodeProps<CardFlowNode>) {
           />
         )}
       </div>
-      <NodeToolbar isVisible={data.selected} position={Position.Top} offset={STRIP_OFFSET}>
-        <CardStrip
-          canSplit={isCombined(card) || onTop !== undefined}
-          locked={card.locked}
-          redrawDisabled={!actions.canRedraw}
-          onSplit={() => actions.split(id)}
-          onRedraw={() => actions.redraw(id)}
-          onLock={() => actions.lock(id)}
-          onDiscard={() => actions.discard(id)}
-        />
+      <NodeToolbar
+        isVisible={(menuHover && !data.lifted) || stripFocused}
+        position={Position.Top}
+        offset={0}
+      >
+        <div
+          ref={menuRef}
+          style={{ paddingBottom: STRIP_GAP }}
+          onPointerEnter={menuEnter}
+          onPointerLeave={(event) => menuLeave(event.nativeEvent)}
+          onFocus={() => setStripFocused(true)}
+          onBlur={(event) => {
+            if (!event.currentTarget.contains(event.relatedTarget)) setStripFocused(false);
+          }}
+        >
+          <CardStrip
+            canSplit={isCombined(card) || onTop !== undefined}
+            locked={card.locked}
+            redrawDisabled={!actions.canRedraw}
+            onSplit={() => actions.split(id)}
+            onRedraw={() => actions.redraw(id)}
+            onLock={() => actions.lock(id)}
+            onDiscard={() => actions.discard(id)}
+          />
+        </div>
       </NodeToolbar>
     </div>
   );
