@@ -18,6 +18,7 @@ import {
   discardCard,
   dropCard,
   lockCard,
+  placeHookCard,
   placeNewCard,
   putOnTopOf,
   redrawCard,
@@ -328,6 +329,42 @@ describe('redrawCard', () => {
     expect(() => redrawCard(board, 'modifier-1', drawn)).toThrow();
     const same = fixtureCard('modifier', { id: 'drawn', modDeck: 'setting' });
     expect(get(redrawCard(board, 'modifier-1', same), 'modifier-1').modDeck).toBe('setting');
+  });
+});
+
+describe('Hook Card', () => {
+  it('placeHookCard_addsRootHook', () => {
+    const board = fixtureBoard([fixtureCard('role', { z: 4 })]);
+    const next = placeHookCard(board, 'hook-new', { x: 480, y: 48 });
+    expect(get(next, 'hook-new')).toEqual({
+      id: 'hook-new',
+      type: 'hook',
+      x: 480,
+      y: 48,
+      z: 5,
+      tuckedUnder: null,
+      rings: [],
+      onTopOf: null,
+      locked: false,
+    });
+  });
+
+  it('dropCard_hookOnCard_movesNotTucks', () => {
+    const board = fixtureBoard([
+      fixtureCard('role', { x: 0, y: 0 }),
+      fixtureCard('hook', { x: 600, y: 0, z: 2 }),
+    ]);
+    const next = dropCard(board, 'hook-1', { x: 100, y: 100 }, { x: 20, y: 20 });
+    expect(get(next, 'hook-1')).toMatchObject({ tuckedUnder: null, x: 20, y: 20 });
+  });
+
+  it('dropCard_roleOnHook_tucksInset20', () => {
+    const board = fixtureBoard([
+      fixtureCard('hook', { x: 0, y: 0 }),
+      fixtureCard('role', { x: 600, y: 0, z: 2 }),
+    ]);
+    const next = dropCard(board, 'role-1', { x: 100, y: 100 }, { x: 20, y: 20 });
+    expect(get(next, 'role-1')).toMatchObject({ tuckedUnder: 'hook-1', x: 20, y: 56 });
   });
 });
 

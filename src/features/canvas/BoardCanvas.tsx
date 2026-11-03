@@ -83,7 +83,7 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
   const board = useBoardStore((state) => state.board);
   const changeBoard = useBoardStore((state) => state.changeBoard);
   const setView = useBoardStore((state) => state.setView);
-  const { canvasRef, flights, setEditingNoteId } = useCanvasUi();
+  const { canvasRef, flights, setEditingNoteId, setNotice } = useCanvasUi();
   const flow = useReactFlow();
 
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -280,13 +280,23 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
         return;
       }
       const point = flow.screenToFlowPosition(p);
+      // A Hook Card dropped on a card only moves; the notice says why (design 9.13).
+      const b = useBoardStore.getState().board;
+      const dragged = b.cards.find((c) => c.id === node.id);
+      if (dragged) {
+        const action = dropAction(b, dragged, dropTarget(b, node.id, point), point);
+        if (action.kind === 'move' && action.refused) setNotice(action.refused);
+      }
       changeBoard((b) => dropCard(b, node.id, point, { x, y }));
     },
-    [changeBoard, flow],
+    [changeBoard, flow, setNotice],
   );
 
+  // A Hook Card has a hover menu, not a strip: a click selects nothing.
   const onNodeClick = useCallback((_: MouseEvent, node: BoardFlowNode) => {
-    if (node.type === 'card') setSelectedId(node.id);
+    if (node.type !== 'card') return;
+    const card = useBoardStore.getState().board.cards.find((c) => c.id === node.id);
+    setSelectedId(card?.type === 'hook' ? null : node.id);
   }, []);
 
   const onPaneClick = useCallback(() => {

@@ -35,3 +35,27 @@ export function DeckButton({ type, disabled, onDraw }: DeckButtonProps) {
     </button>
   );
 }
+
+interface HookButtonProps {
+  onDraw: (from: DOMRect) => void;
+}
+
+/**
+ * The Hook Card button at the top of the rail (design 8.2): a deck button with an accent
+ * border and fill. It needs no pool, so it stays on when the pools fail.
+ */
+export function HookButton({ onDraw }: HookButtonProps) {
+  return (
+    <button
+      type="button"
+      className={`${styles.deck} ${styles.hook}`}
+      aria-label="Draw A Hook Card"
+      onClick={(event) => onDraw(event.currentTarget.getBoundingClientRect())}
+    >
+      <span className={styles.icon} style={{ color: 'var(--accent)' }}>
+        <Icon name="hook" size={18} />
+      </span>
+      <span className={styles.name}>{DECK_NAME.hook}</span>
+    </button>
+  );
+}

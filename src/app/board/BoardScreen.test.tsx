@@ -34,7 +34,11 @@ function servePools(failing: boolean) {
   });
 }
 
-const decks = () => screen.getAllByRole('button', { name: /^Draw A / });
+/** The pool deck buttons (every "Draw A" button but the Hook Card, which needs no pool). */
+const decks = () =>
+  screen
+    .getAllByRole('button', { name: /^Draw A / })
+    .filter((button) => button.getAttribute('aria-label') !== 'Draw A Hook Card');
 
 beforeEach(() => {
   useBoardStore.getState().openBoard(newBoard());
@@ -101,6 +105,16 @@ describe('BoardScreen', () => {
     await waitFor(() => expect(screen.getByRole('alert').textContent).toContain(POOLS_FAILED_TEXT));
     expect(decks().every((d) => (d as HTMLButtonElement).disabled)).toBe(true);
     expect(screen.getByRole('button', { name: 'Retry' })).toBeTruthy();
+  });
+
+  it('boardScreen_hookButton_enabledWhenPoolsFail', async () => {
+    servePools(true);
+    render(<BoardScreen />);
+    await screen.findByRole('alert');
+    const hook = screen.getByRole('button', { name: 'Draw A Hook Card' });
+    expect((hook as HTMLButtonElement).disabled).toBe(false);
+    fireEvent.click(hook);
+    expect(useBoardStore.getState().board.cards.map((c) => c.type)).toEqual(['hook']);
   });
 });
 

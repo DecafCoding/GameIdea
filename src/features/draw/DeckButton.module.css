@@ -45,3 +45,10 @@
   font-size: 14px;
   font-weight: 600;
 }
+
+/* The Hook Card button (design 8.2): border 1 --accent, fill --accent-hook-button, margin-top 4. */
+.hook {
+  margin-top: 4px;
+  border-color: var(--accent);
+  background: var(--accent-hook-button);
+}

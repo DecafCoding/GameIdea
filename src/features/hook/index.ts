@@ -4,3 +4,4 @@
  * the stack in.
  */
 export { buildHookSentence, type StackEntry } from './buildHookSentence';
+export { HookCard, HOOK_NEW_TEXT } from './HookCard';

@@ -104,7 +104,12 @@ test('board_poolsBlocked_bannerThenRetry', async ({ page }) => {
   for (const button of await rail(page)
     .getByRole('button', { name: /^Draw A / })
     .all()) {
-    await expect(button).toBeDisabled();
+    // The Hook Card needs no pool, so its button stays on.
+    if ((await button.getAttribute('aria-label')) === 'Draw A Hook Card') {
+      await expect(button).toBeEnabled();
+    } else {
+      await expect(button).toBeDisabled();
+    }
   }
   await page.unroute('**/pools/*.json', block);
   await page.getByRole('button', { name: 'Retry' }).click();

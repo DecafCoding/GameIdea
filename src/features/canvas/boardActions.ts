@@ -48,6 +48,22 @@ export function placeNewCard(board: Board, card: Card, spot: Point): Board {
   };
 }
 
+/** Adds a new Hook Card as a root at the spot, on top of every other card. */
+export function placeHookCard(board: Board, id: string, spot: Point): Board {
+  const hook: Card = {
+    id,
+    type: 'hook',
+    x: spot.x,
+    y: spot.y,
+    z: nextZ(board),
+    tuckedUnder: null,
+    rings: [],
+    onTopOf: null,
+    locked: false,
+  };
+  return { ...board, cards: [...board.cards, hook] };
+}
+
 /**
  * Ends a drag. point is the pointer in flow coordinates (it picks the target and zone);
  * dropAt is the card's new top-left, used when the drop lands on empty canvas.

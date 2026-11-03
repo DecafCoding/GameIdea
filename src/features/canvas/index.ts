@@ -9,6 +9,7 @@ export {
   discardCard,
   dropCard,
   lockCard,
+  placeHookCard,
   placeNewCard,
   putOnTopOf,
   redrawCard,
@@ -16,7 +17,7 @@ export {
   swapOnto,
   turnCardOnBoard,
 } from './boardActions';
-export { CanvasProvider, useCanvasApi, type CanvasApi } from './CanvasProvider';
-export { boardRects, CARD_SIZE, findOpenSpot } from './placement';
+export { CanvasProvider, useCanvasApi, type CanvasApi, type CanvasNotice } from './CanvasProvider';
+export { boardRects, CARD_SIZE, cardSize, findOpenSpot, HOOK_WIDTH } from './placement';
 export { cardText, isOnTop, onTopCardOf } from './reading';
 export { childrenOf, isRoot } from './stack';

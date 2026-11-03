@@ -161,23 +161,27 @@ export function board200(): Board {
   return { ...fixtureBoard(cards), id: 'board-200', name: 'Board 200' };
 }
 
+/** Stack cards sit this far in from a Hook Card root's left edge (design 9.5). */
+export const HOOK_INSET = 20;
+
 /**
  * The long-stack fixture (test-data in docs/architecture.html): one chain of 11 cards,
  * long-0 to long-10, each tucked under the one before, for the 11-card stack drag test.
- * Modifiers sit tucked, never combined, because only a drop combines.
+ * long-0 is a Hook Card; the 10 cards under it cycle 5 decks and sit 20 px in from its
+ * left edge. Modifiers sit tucked, never combined, because only a drop combines.
  */
 export function stack11Board(): Board {
   const cycle: CardType[] = ['role', 'goal', 'conflict', 'setting', 'modifier'];
-  const cards: Card[] = [];
-  for (let i = 0; i < 11; i++) {
-    const type = cycle[i % cycle.length]!;
+  const cards: Card[] = [fixtureCard('hook', { id: 'long-0', x: 240, y: 48, z: 1 })];
+  for (let i = 1; i < 11; i++) {
+    const type = cycle[(i - 1) % cycle.length]!;
     cards.push(
       fixtureCard(type, {
         id: `long-${i}`,
-        x: 240,
+        x: 240 + HOOK_INSET,
         y: 48 + i * TUCK,
         z: i + 1,
-        tuckedUnder: i === 0 ? null : `long-${i - 1}`,
+        tuckedUnder: `long-${i - 1}`,
       }),
     );
   }

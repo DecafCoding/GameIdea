@@ -15,10 +15,14 @@ import {
   type RingSlot,
   type TurnDirection,
 } from '@/features/card';
+import { buildHookSentence, HookCard } from '@/features/hook';
 import { useBoardStore } from '@/shared/store';
 import { connectorFor } from './connector';
 import { ConnectorBadge } from './ConnectorBadge';
 import { sameBelow, type CardFlowNode } from './nodes';
+import { HOOK_INSET } from './placement';
+import { stackEntries } from './reading';
+import { childrenOf } from './stack';
 import styles from './CardNode.module.css';
 
 /** Stable callbacks from the canvas to its card nodes. */
@@ -54,6 +58,16 @@ function stopRingClick(event: MouseEvent) {
   }
 }
 
+/**
+ * The Hook Card's face: the sentence is computed from the store on each change (a string,
+ * so the node re-renders only when the words change) and never stored.
+ */
+function HookBody({ hookId }: { hookId: string }) {
+  const sentence = useBoardStore((state) => buildHookSentence(stackEntries(state.board, hookId)));
+  const empty = useBoardStore((state) => childrenOf(state.board, hookId).length === 0);
+  return <HookCard sentence={sentence} empty={empty} />;
+}
+
 function CardNodeView({ data }: NodeProps<CardFlowNode>) {
   const card = useBoardStore((state) => state.board.cards.find((c) => c.id === data.cardId));
   // The ring of the Modifier on top of this card: the same object until that card changes.
@@ -74,6 +88,24 @@ function CardNodeView({ data }: NodeProps<CardFlowNode>) {
   ]
     .filter(Boolean)
     .join(' ');
+
+  if (card.type === 'hook') {
+    return (
+      <div className={`${classes} ${styles.hookNode}`}>
+        <div className={styles.inner}>
+          <HookBody hookId={id} />
+          {below && connector && (
+            <ConnectorBadge
+              connector={connector}
+              nextText={below.text}
+              left={HOOK_INSET}
+              onChoose={(word) => actions.chooseConnector(below.id, word)}
+            />
+          )}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div

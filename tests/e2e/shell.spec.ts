@@ -24,7 +24,7 @@ test('shell_rail_is232Wide', async ({ page }) => {
 test('shell_deckButtons_are36Tall', async ({ page }) => {
   await openBoard(page);
   const buttons = rail(page).getByRole('button', { name: /^Draw A / });
-  await expect(buttons).toHaveCount(5);
+  await expect(buttons).toHaveCount(6);
   for (const button of await buttons.all()) expect((await boxOf(button)).height).toBe(36);
 });
 

@@ -13,6 +13,8 @@ import {
   CanvasProvider,
   CARD_SIZE,
   findOpenSpot,
+  HOOK_WIDTH,
+  placeHookCard,
   placeNewCard,
   useCanvasApi,
 } from '@/features/canvas';
@@ -34,6 +36,9 @@ export const POOLS_FAILED_TEXT =
 
 export const SAVE_FAILED_TEXT =
   'The board did not save. The browser storage may be full. Export a board file to keep your work.';
+
+export const HOOK_CANNOT_TUCK_TEXT =
+  'A Hook Card is always the head of its stack. It cannot tuck under a card.';
 
 export const CHANGED_ELSEWHERE_TEXT =
   'This board changed in another tab. It reloaded here. Undo history was cleared.';
@@ -88,6 +93,17 @@ function BoardScreenBody({
     canvas.flyIn(card.id, from);
   }
 
+  /** Places a new Hook Card at the open 240 × 200 spot nearest the view center. */
+  function drawHook(from: DOMRect) {
+    const id = newId();
+    const center = canvas.viewCenter();
+    const start = { x: center.x - HOOK_WIDTH / 2, y: center.y - CARD_SIZE / 2 };
+    const spot = findOpenSpot(start, boardRects(board), { width: HOOK_WIDTH, height: CARD_SIZE });
+    changeBoard((b) => placeHookCard(b, id, spot));
+    setStartedOn(board.id);
+    canvas.flyIn(id, from);
+  }
+
   function addNoteNow() {
     const id = newId();
     const center = canvas.viewCenter();
@@ -100,9 +116,9 @@ function BoardScreenBody({
   return (
     <main className={styles.screen} aria-label="Board">
       <TopBar />
-      <SideRail decksReady={ready} onDraw={draw} onAddNote={addNoteNow} />
+      <SideRail decksReady={ready} onDraw={draw} onDrawHook={drawHook} onAddNote={addNoteNow} />
       <div className={styles.region} data-testid="canvas-region">
-        {(saveFailed || changedElsewhere || status === 'failed') && (
+        {(saveFailed || changedElsewhere || status === 'failed' || canvas.notice) && (
           <div className={styles.banners}>
             {saveFailed && (
               <Banner
@@ -119,6 +135,14 @@ function BoardScreenBody({
                 text={CHANGED_ELSEWHERE_TEXT}
                 actionLabel="Dismiss"
                 onAction={onDismissChangedElsewhere}
+              />
+            )}
+            {canvas.notice === 'hookCannotTuck' && (
+              <Banner
+                kind="warning"
+                text={HOOK_CANNOT_TUCK_TEXT}
+                actionLabel="Dismiss"
+                onAction={canvas.dismissNotice}
               />
             )}
             {status === 'failed' && (

@@ -3,7 +3,7 @@
  * order, Add Note, and the help panel pinned to the bottom. The grouped rail (Hook Card,
  * Core, Modifiers, Optional, Genres) and Settings come in later phases.
  */
-import { DeckButton } from '@/features/draw';
+import { DeckButton, HookButton } from '@/features/draw';
 import type { Deck, ModDeck } from '@/shared/model';
 import { Icon } from '@/shared/ui';
 import styles from './SideRail.module.css';
@@ -11,15 +11,18 @@ import styles from './SideRail.module.css';
 interface SideRailProps {
   decksReady: boolean;
   onDraw: (type: Deck, from: DOMRect, modDeck?: ModDeck) => void;
+  /** Draws a Hook Card; it needs no pool, so it is never off. */
+  onDrawHook: (from: DOMRect) => void;
   onAddNote: () => void;
 }
 
 /** The Phase 1 rail, unchanged until the grouped rail lands. */
 const PHASE1_RAIL: Deck[] = ['role', 'goal', 'conflict', 'modifier', 'setting'];
 
-export function SideRail({ decksReady, onDraw, onAddNote }: SideRailProps) {
+export function SideRail({ decksReady, onDraw, onDrawHook, onAddNote }: SideRailProps) {
   return (
     <aside className={styles.rail} aria-label="Decks">
+      <HookButton onDraw={onDrawHook} />
       <h2 className={styles.label}>Decks</h2>
       {PHASE1_RAIL.map((type) => (
         <DeckButton

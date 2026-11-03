@@ -5,6 +5,11 @@
   border-radius: var(--radius-card);
 }
 
+/* The Hook Card node is 240 wide (design 9.5). */
+.hookNode {
+  width: var(--hook-w);
+}
+
 .selected {
   outline: 2px solid var(--accent);
   outline-offset: 3px;

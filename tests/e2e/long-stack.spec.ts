@@ -1,11 +1,12 @@
 /**
  * The long-stack check (canvas-library and nfr-targets in docs/architecture.html): an
- * 11-card stack in one parent chain moves as one stack in every engine, a drag is one
- * undo step, and in Chromium the drag runs at 50 frames per second or more.
+ * 11-card stack in one parent chain, with a Hook Card at its root, moves as one stack in
+ * every engine, a drag is one undo step, and in Chromium the drag runs at 50 frames per
+ * second or more.
  */
 import type { Page } from '@playwright/test';
 import { expect, test } from './test';
-import { stack11Board, TUCK } from '@/test/fixtures/boards';
+import { HOOK_INSET, stack11Board, TUCK } from '@/test/fixtures/boards';
 import { boxOf, cardById, openBoard } from './board-helpers';
 import { pacedDrag } from './frames';
 
@@ -44,7 +45,8 @@ test.describe('Long stack', () => {
     const dropped = await boxOf(cardById(page, 'long-0'));
     for (let i = 1; i <= 10; i++) {
       const box = await boxOf(cardById(page, `long-${i}`));
-      expect(Math.abs(box.x - dropped.x)).toBeLessThanOrEqual(1);
+      // Under the Hook Card every stack card sits 20 px in from its left edge.
+      expect(Math.abs(box.x - dropped.x - HOOK_INSET * ZOOM)).toBeLessThanOrEqual(1);
       expect(Math.abs(box.y - dropped.y - i * tuck)).toBeLessThanOrEqual(1);
     }
     expect(dropped.x - start.x).toBeGreaterThan(100);

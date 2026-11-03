@@ -600,6 +600,7 @@ exit $ok</code></pre>
 <h3>Long-stack result</h3>
 <ul id="long-stack-result">
   <li><strong>Task 1 (2026-11-03, Phase 1 card types, flat-node canvas, no fixes needed):</strong> Chromium timing project, <code>perf_dragLongStack_atLeast50Fps</code> 60.1 fps (pass). The functional test <code>longStack_dragRoot_wholeStackMovesAndDropsOnce</code> passes in Chromium, Firefox and WebKit. The 200-card checks in the same run: pan 59.8 fps, drag 59.8 fps. Note: the during-drag comparison measures the React Flow node wrappers, because the lifted card is scaled and turned by the drag look (design 9.7) and its card box is not its position.</li>
+  <li><strong>Task 15 (Hook Card at the root, 200 px cards, 56 px tuck):</strong> Chromium timing project, <code>perf_dragLongStack_atLeast50Fps</code> 60.1 fps (pass); the functional test passes in Chromium.</li>
 </ul>
 
 <h3>Split report</h3>

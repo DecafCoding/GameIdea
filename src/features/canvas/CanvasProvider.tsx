@@ -1,6 +1,7 @@
 /**
  * CanvasProvider: wraps React Flow's provider and holds the canvas UI state that the
- * board screen shares with the canvas: the note being edited and the draw-motion flights.
+ * board screen shares with the canvas: the note being edited, the draw-motion flights and
+ * the canvas notice.
  * useCanvasApi gives app/ the canvas functions without importing React Flow.
  * None of this state enters the board store (it is never an undo step or a save).
  */
@@ -22,8 +23,13 @@ import { useBoardStore } from '@/shared/store';
 import { DrawFlight, type Flight } from './DrawFlight';
 import type { Point } from './placement';
 
+/** A canvas notice the board screen shows as a banner (design 9.13). */
+export type CanvasNotice = 'hookCannotTuck';
+
 interface CanvasUi {
   canvasRef: RefObject<HTMLDivElement | null>;
+  notice: CanvasNotice | null;
+  setNotice: Dispatch<SetStateAction<CanvasNotice | null>>;
   editingNoteId: string | null;
   setEditingNoteId: Dispatch<SetStateAction<string | null>>;
   flights: Flight[];
@@ -51,14 +57,24 @@ function CanvasUiProvider({ children }: { children: ReactNode }) {
   const canvasRef = useRef<HTMLDivElement | null>(null);
   const [editingNoteId, setEditingNoteId] = useState<string | null>(null);
   const [flights, setFlights] = useState<Flight[]>([]);
+  const [notice, setNotice] = useState<CanvasNotice | null>(null);
   const addFlight = useCallback((flight: Flight) => setFlights((list) => [...list, flight]), []);
   const endFlight = useCallback(
     (key: number) => setFlights((list) => list.filter((f) => f.key !== key)),
     [],
   );
   const ui = useMemo(
-    () => ({ canvasRef, editingNoteId, setEditingNoteId, flights, addFlight, endFlight }),
-    [editingNoteId, flights, addFlight, endFlight],
+    () => ({
+      canvasRef,
+      notice,
+      setNotice,
+      editingNoteId,
+      setEditingNoteId,
+      flights,
+      addFlight,
+      endFlight,
+    }),
+    [notice, editingNoteId, flights, addFlight, endFlight],
   );
   return (
     <CanvasUiContext.Provider value={ui}>
@@ -85,11 +101,14 @@ export interface CanvasApi {
   flyIn: (cardId: string, from: DOMRect) => void;
   /** Opens a note in edit mode. */
   editNote: (id: string) => void;
+  /** The current canvas notice, and a way to clear it (Dismiss). */
+  notice: CanvasNotice | null;
+  dismissNotice: () => void;
 }
 
 export function useCanvasApi(): CanvasApi {
   const flow = useReactFlow();
-  const { canvasRef, addFlight, setEditingNoteId } = useCanvasUi();
+  const { canvasRef, addFlight, setEditingNoteId, notice, setNotice } = useCanvasUi();
   return useMemo(
     () => ({
       viewCenter: () => {
@@ -118,7 +137,9 @@ export function useCanvasApi(): CanvasApi {
         });
       },
       editNote: (id) => setEditingNoteId(id),
+      notice,
+      dismissNotice: () => setNotice(null),
     }),
-    [flow, canvasRef, addFlight, setEditingNoteId],
+    [flow, canvasRef, addFlight, setEditingNoteId, notice, setNotice],
   );
 }
