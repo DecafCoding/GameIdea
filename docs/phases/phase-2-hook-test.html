@@ -647,6 +647,23 @@ exit $ok</code></pre>
   <li>ASSUMPTION: The M2 pass bar (20 stacks; 16 of 20 per core deck, 20 of 25 per Modifier deck, 12 of 20 hooks) is the user's manual, non-blocking check, handed over in the README (Task 22). The agent-checkable parts — pool floors, the 11-card stack drag test, unit and browser tests — are real tasks. Authority: the brief + mvp-plan M2.</li>
 </ul>
 
+<h3>Execution decisions (2026-11-03)</h3>
+<ul id="execution-decisions">
+  <li>DECISION: The long-stack test compares React Flow node wrappers during the drag, because the lifted card's drag look (rotate 3°, scale 1.04) moves its own box. The gate passed with no canvas change.</li>
+  <li>DECISION: 4-cue cards (Player Role, Mechanic, Resource, Setting) use 14 px text on 16 px lines with the labels on a 12 px inset (88 px from the center, the design's active-cue distance) instead of the planned 86, so 2 lines end at the outer ring in Firefox and WebKit too. 2-cue cards keep the 14 px inset. Side labels are 2 lines up to 108 px; on a combined card a side label may end in an ellipsis (the full text is its title), and two-cue-fit.spec.ts was rewritten to that behavior.</li>
+  <li>DECISION: A tucked card's bottom label narrows to 140 px so the type mark and the tucked lock mark at the right of the 56 px strip never touch it. A long cue on a tucked strip may clamp.</li>
+  <li>DECISION: The active cue is Display 14/700 per design 9.4 (the card token test now checks 14 px).</li>
+  <li>ASSUMPTION: The two-cue fit tests keep the old fit class (38 characters). The real Goal (36 cues) and Conflict (53 cues) pools hold cues over 38 characters, up to 50, which can clamp at 2 lines on the 200 px card. The user's M2 hook test judges them; shorten cues in the pool files if they read badly.</li>
+  <li>DECISION: Modifier drop zone labels are sentence case ("Drop to combine", "Add on top", "Swap") and the slot reads "&lt;Deck&gt; goes here", as this plan specifies (phase doc before CLAUDE.md in the unattended decision order).</li>
+  <li>DECISION: The Hook Card button's icon keeps the vendored stroke (icons are CSS masks, so stroke 2.6 cannot be set). The Hook label uses --accent-text, which is the dark-mode value until Light mode ships in Phase 5.</li>
+  <li>DECISION: The Hook Card menu also stays shown while focus is inside it (Firefox dropped the hover after a click); hidden menu items leave the tab order.</li>
+  <li>DECISION: Browser checks that count many drawn cards read the count chip or storage, because the canvas renders only the cards in view (onlyRenderVisibleElements).</li>
+  <li>DECISION: In modifier.spec.ts the third-Modifier swap-only check runs before Split, because after Split the card has no merged ring and the next Modifier combines (as the plan's edge cases say).</li>
+  <li>DECISION: ESLint now forbids features/hook from importing features/canvas.</li>
+  <li>DECISION: The connector badge keeps --shadow-menu (no token exists for the design's 0 2 6 shadow, and a literal would fail the color lint).</li>
+  <li>DECISION: The session had no task-list tool, so docs/progress.html was the task record.</li>
+</ul>
+
 <h3>Doc conflicts recorded (no stop needed)</h3>
 <ul>
   <li>PRD Phase 2 lists the split for "the 5 core decks and the Modifier"; architecture <code>pool-files</code> defines a single one-time split of all 11 decks with floors over all 4 tagged decks. The architecture wins; the PRD Phase 2–4 bullets and mvp-plan M2–M4 conversion lines are stale.</li>
