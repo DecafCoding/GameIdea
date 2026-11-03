@@ -1,6 +1,6 @@
 # Deck: Mood (General)
 
-73 cards.
+145 cards.
 
 | # | Card | Count | Games |
 |---:|---|---:|---|
@@ -77,3 +77,75 @@
 | 71 | thoughtful | 1 | Sid Meier's Civilization V |
 | 72 | torn | 1 | Sleeping Dogs: Definitive Edition |
 | 73 | whimsical | 1 | OMORI |
+| 74 | serene | 0 |  |
+| 75 | tender | 0 |  |
+| 76 | gentle | 0 |  |
+| 77 | intimate | 0 |  |
+| 78 | wistful | 0 |  |
+| 79 | hushed | 0 |  |
+| 80 | sleepy | 0 |  |
+| 81 | soothing | 0 |  |
+| 82 | airy | 0 |  |
+| 83 | peaceful | 0 |  |
+| 84 | uneasy | 0 |  |
+| 85 | anxious | 0 |  |
+| 86 | uncanny | 0 |  |
+| 87 | ominous | 0 |  |
+| 88 | haunting | 0 |  |
+| 89 | suspicious | 0 |  |
+| 90 | sinister | 0 |  |
+| 91 | feverish | 0 |  |
+| 92 | hostile | 0 |  |
+| 93 | cold | 0 |  |
+| 94 | tragic | 0 |  |
+| 95 | mournful | 0 |  |
+| 96 | despairing | 0 |  |
+| 97 | cruel | 0 |  |
+| 98 | vengeful | 0 |  |
+| 99 | sickly | 0 |  |
+| 100 | apocalyptic | 0 |  |
+| 101 | hollow | 0 |  |
+| 102 | numb | 0 |  |
+| 103 | joyful | 0 |  |
+| 104 | triumphant | 0 |  |
+| 105 | giddy | 0 |  |
+| 106 | festive | 0 |  |
+| 107 | sunny | 0 |  |
+| 108 | bouncy | 0 |  |
+| 109 | euphoric | 0 |  |
+| 110 | sweet | 0 |  |
+| 111 | proud | 0 |  |
+| 112 | awkward | 0 |  |
+| 113 | flirty | 0 |  |
+| 114 | petty | 0 |  |
+| 115 | competitive | 0 |  |
+| 116 | smug | 0 |  |
+| 117 | defiant | 0 |  |
+| 118 | jealous | 0 |  |
+| 119 | embarrassing | 0 |  |
+| 120 | cosmic | 0 |  |
+| 121 | enchanted | 0 |  |
+| 122 | psychedelic | 0 |  |
+| 123 | otherworldly | 0 |  |
+| 124 | sacred | 0 |  |
+| 125 | mythic | 0 |  |
+| 126 | majestic | 0 |  |
+| 127 | eldritch | 0 |  |
+| 128 | relentless | 0 |  |
+| 129 | breathless | 0 |  |
+| 130 | urgent | 0 |  |
+| 131 | lazy | 0 |  |
+| 132 | chill | 0 |  |
+| 133 | rhythmic | 0 |  |
+| 134 | wild | 0 |  |
+| 135 | restless | 0 |  |
+| 136 | campy | 0 |  |
+| 137 | deadpan | 0 |  |
+| 138 | satirical | 0 |  |
+| 139 | retro | 0 |  |
+| 140 | gritty | 0 |  |
+| 141 | sleek | 0 |  |
+| 142 | kitschy | 0 |  |
+| 143 | theatrical | 0 |  |
+| 144 | pulpy | 0 |  |
+| 145 | lo-fi | 0 |  |

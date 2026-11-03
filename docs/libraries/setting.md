@@ -1,6 +1,6 @@
 # Deck: Setting (General)
 
-208 cards.
+280 cards.
 
 | # | Card | Count | Games |
 |---:|---|---:|---|
@@ -212,3 +212,75 @@
 | 206 | world of clones | 1 | Dragon Ball FighterZ |
 | 207 | tracks | 1 | Redout |
 | 208 | yokai realm | 1 | Touhou Mystia's Izakaya |
+| 209 | laundromat | 0 |  |
+| 210 | office cubicles | 0 |  |
+| 211 | public library | 0 |  |
+| 212 | shopping mall | 0 |  |
+| 213 | parking garage | 0 |  |
+| 214 | elevator | 0 |  |
+| 215 | hotel | 0 |  |
+| 216 | kitchen | 0 |  |
+| 217 | motel | 0 |  |
+| 218 | gas station | 0 |  |
+| 219 | waiting room | 0 |  |
+| 220 | hair salon | 0 |  |
+| 221 | city bus | 0 |  |
+| 222 | cruise ship | 0 |  |
+| 223 | submarine | 0 |  |
+| 224 | river barge | 0 |  |
+| 225 | caravan | 0 |  |
+| 226 | ice cream truck | 0 |  |
+| 227 | ferris wheel | 0 |  |
+| 228 | generation ship | 0 |  |
+| 229 | inside a body | 0 |  |
+| 230 | ant colony | 0 |  |
+| 231 | dollhouse | 0 |  |
+| 232 | terrarium | 0 |  |
+| 233 | a coat pocket | 0 |  |
+| 234 | under the bed | 0 |  |
+| 235 | fishbowl | 0 |  |
+| 236 | sock drawer | 0 |  |
+| 237 | stone age | 0 |  |
+| 238 | ancient Egypt | 0 |  |
+| 239 | Roman empire | 0 |  |
+| 240 | Viking age | 0 |  |
+| 241 | medieval monastery | 0 |  |
+| 242 | pirate age | 0 |  |
+| 243 | Victorian city | 0 |  |
+| 244 | roaring twenties | 0 |  |
+| 245 | cold war bunker | 0 |  |
+| 246 | 1980s arcade | 0 |  |
+| 247 | arctic station | 0 |  |
+| 248 | savanna | 0 |  |
+| 249 | steppe | 0 |  |
+| 250 | rainforest | 0 |  |
+| 251 | bayou | 0 |  |
+| 252 | fjord | 0 |  |
+| 253 | monsoon city | 0 |  |
+| 254 | salt flats | 0 |  |
+| 255 | tundra | 0 |  |
+| 256 | glacier | 0 |  |
+| 257 | server farm | 0 |  |
+| 258 | virtual world | 0 |  |
+| 259 | black hole edge | 0 |  |
+| 260 | dyson sphere | 0 |  |
+| 261 | cloning vats | 0 |  |
+| 262 | terraformed moon | 0 |  |
+| 263 | space junkyard | 0 |  |
+| 264 | colony dome | 0 |  |
+| 265 | giant's back | 0 |  |
+| 266 | fairy court | 0 |  |
+| 267 | dragon's hoard | 0 |  |
+| 268 | sky city | 0 |  |
+| 269 | crossroads inn | 0 |  |
+| 270 | witch's hut | 0 |  |
+| 271 | enchanted library | 0 |  |
+| 272 | labyrinth | 0 |  |
+| 273 | wedding | 0 |  |
+| 274 | funeral | 0 |  |
+| 275 | birthday party | 0 |  |
+| 276 | night market | 0 |  |
+| 277 | festival | 0 |  |
+| 278 | game show | 0 |  |
+| 279 | school dance | 0 |  |
+| 280 | family reunion | 0 |  |

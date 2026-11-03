@@ -1,6 +1,6 @@
 # Deck: Resource (General)
 
-201 cards.
+272 cards.
 
 | # | Card | Genres | Count | Games |
 |---:|---|---|---:|---|
@@ -205,3 +205,74 @@
 | 199 | views | Life Sim, Narrative, Roguelike | 1 | Content Warning |
 | 200 | weapon slots | Shooter, Roguelike, RPG | 1 | Halo: The Master Chief Collection |
 | 201 | your weapon | Fighting, Melee Action | 1 | Nidhogg |
+| 202 | breath | Metroidvania, Platformer, Survival Craft, Horror, Stealth & Immersive Sim, Rhythm & Arcade | 0 |  |
+| 203 | heartbeat | Horror, Narrative, Stealth & Immersive Sim, Rhythm & Arcade | 0 |  |
+| 204 | adrenaline | Roguelike, Shooter, Melee Action, Fighting, Vehicle Sim & Racing | 0 |  |
+| 205 | courage | RPG, Horror, Strategy, Deckbuilder & Cards, Narrative | 0 |  |
+| 206 | eyesight | Puzzle, Survival Craft, Horror, Stealth & Immersive Sim | 0 |  |
+| 207 | voice | Narrative, Stealth & Immersive Sim, Party & Multiplayer, Rhythm & Arcade | 0 |  |
+| 208 | pain | Roguelike, Melee Action, Horror, Deckbuilder & Cards | 0 |  |
+| 209 | dreams | Puzzle, RPG, Horror, Life Sim, Narrative | 0 |  |
+| 210 | tears | Puzzle, Horror, Life Sim, Narrative | 0 |  |
+| 211 | favors | RPG, Life Sim, Strategy, Narrative, Stealth & Immersive Sim, Party & Multiplayer | 0 |  |
+| 212 | secrets | RPG, Horror, Deckbuilder & Cards, Narrative, Stealth & Immersive Sim, Party & Multiplayer | 0 |  |
+| 213 | lies | Deckbuilder & Cards, Narrative, Stealth & Immersive Sim, Party & Multiplayer | 0 |  |
+| 214 | goodwill | RPG, Builder & Management, Life Sim, Strategy, Narrative | 0 |  |
+| 215 | debts | Roguelike, RPG, Builder & Management, Life Sim, Narrative | 0 |  |
+| 216 | promises | RPG, Life Sim, Narrative | 0 |  |
+| 217 | fans | Builder & Management, Life Sim, Vehicle Sim & Racing, Party & Multiplayer, Rhythm & Arcade | 0 |  |
+| 218 | crowd hype | Melee Action, Fighting, Vehicle Sim & Racing, Party & Multiplayer, Rhythm & Arcade | 0 |  |
+| 219 | invitations | Life Sim, Narrative, Party & Multiplayer | 0 |  |
+| 220 | grapple charges | Metroidvania, Platformer, Shooter, Open World, Rhythm & Arcade | 0 |  |
+| 221 | glide time | Metroidvania, Platformer, Open World, Vehicle Sim & Racing | 0 |  |
+| 222 | placeable platforms | Metroidvania, Platformer, Puzzle, Sandbox | 0 |  |
+| 223 | height | Platformer, Open World, Vehicle Sim & Racing, Sandbox | 0 |  |
+| 224 | speed | Roguelike, Platformer, Vehicle Sim & Racing, Rhythm & Arcade | 0 |  |
+| 225 | gravity flips | Metroidvania, Platformer, Puzzle, Rhythm & Arcade | 0 |  |
+| 226 | teleports | Roguelike, Metroidvania, Platformer, Puzzle, Shooter | 0 |  |
+| 227 | stage edge | Platformer, Fighting, Party & Multiplayer | 0 |  |
+| 228 | footing | Platformer, Melee Action, Fighting, Survival Craft | 0 |  |
+| 229 | guard meter | Melee Action, Fighting, RPG | 0 |  |
+| 230 | stagger | Shooter, Melee Action, Fighting | 0 |  |
+| 231 | burst | Melee Action, Fighting, Party & Multiplayer | 0 |  |
+| 232 | parries | Roguelike, Melee Action, Fighting, Rhythm & Arcade | 0 |  |
+| 233 | counters | Melee Action, Fighting, Strategy, Deckbuilder & Cards | 0 |  |
+| 234 | beat streak | Fighting, Party & Multiplayer, Rhythm & Arcade | 0 |  |
+| 235 | accuracy | Shooter, Fighting, Vehicle Sim & Racing, Rhythm & Arcade | 0 |  |
+| 236 | tempo | Fighting, Strategy, Deckbuilder & Cards, Rhythm & Arcade | 0 |  |
+| 237 | groove | Life Sim, Party & Multiplayer, Rhythm & Arcade | 0 |  |
+| 238 | volume | Horror, Stealth & Immersive Sim, Party & Multiplayer, Rhythm & Arcade | 0 |  |
+| 239 | pieces | Puzzle, Builder & Management, Deckbuilder & Cards, Sandbox | 0 |  |
+| 240 | mirrors | Platformer, Puzzle, Horror, Stealth & Immersive Sim | 0 |  |
+| 241 | switches | Metroidvania, Platformer, Puzzle | 0 |  |
+| 242 | tiles | Puzzle, Builder & Management, Strategy, Deckbuilder & Cards | 0 |  |
+| 243 | matches | Puzzle, Survival Craft, Horror | 0 |  |
+| 244 | ink | Puzzle, RPG, Deckbuilder & Cards, Narrative, Sandbox | 0 |  |
+| 245 | paint | Platformer, Puzzle, Builder & Management, Life Sim, Sandbox | 0 |  |
+| 246 | thread | Puzzle, Survival Craft, Life Sim, Narrative | 0 |  |
+| 247 | glass | Puzzle, Survival Craft, Builder & Management, Sandbox | 0 |  |
+| 248 | wax | Puzzle, Survival Craft, Horror, Life Sim | 0 |  |
+| 249 | salt | Survival Craft, Horror, Builder & Management, Life Sim | 0 |  |
+| 250 | glue | Puzzle, Builder & Management, Sandbox | 0 |  |
+| 251 | brakes | Vehicle Sim & Racing, Sandbox, Rhythm & Arcade | 0 |  |
+| 252 | engine heat | Shooter, Vehicle Sim & Racing, Sandbox | 0 |  |
+| 253 | passengers | Horror, Builder & Management, Life Sim, Vehicle Sim & Racing | 0 |  |
+| 254 | altitude | Open World, Vehicle Sim & Racing, Sandbox | 0 |  |
+| 255 | lift | Vehicle Sim & Racing, Sandbox | 0 |  |
+| 256 | tailwind | Platformer, Vehicle Sim & Racing, Sandbox | 0 |  |
+| 257 | spare parts | Survival Craft, Builder & Management, Vehicle Sim & Racing, Sandbox | 0 |  |
+| 258 | words | Puzzle, Deckbuilder & Cards, Narrative, Rhythm & Arcade | 0 |  |
+| 259 | questions | Puzzle, Narrative, Party & Multiplayer | 0 |  |
+| 260 | answers | Puzzle, Horror, Narrative, Party & Multiplayer | 0 |  |
+| 261 | photos | Open World, Horror, Life Sim, Narrative | 0 |  |
+| 262 | letters | Horror, Life Sim, Narrative | 0 |  |
+| 263 | pages | Puzzle, RPG, Horror, Narrative | 0 |  |
+| 264 | evidence | Puzzle, Narrative, Stealth & Immersive Sim, Party & Multiplayer | 0 |  |
+| 265 | shadows | Metroidvania, Platformer, Puzzle, Horror, Stealth & Immersive Sim | 0 |  |
+| 266 | silence | Horror, Narrative, Stealth & Immersive Sim, Rhythm & Arcade | 0 |  |
+| 267 | songs | RPG, Life Sim, Narrative, Rhythm & Arcade | 0 |  |
+| 268 | wishes | Puzzle, RPG, Life Sim, Deckbuilder & Cards, Narrative | 0 |  |
+| 269 | dice | Roguelike, RPG, Strategy, Deckbuilder & Cards, Party & Multiplayer | 0 |  |
+| 270 | stars | Platformer, Puzzle, Open World, Rhythm & Arcade | 0 |  |
+| 271 | fog | Survival Craft, Horror, Strategy, Stealth & Immersive Sim | 0 |  |
+| 272 | bees | Survival Craft, Builder & Management, Life Sim, Sandbox | 0 |  |

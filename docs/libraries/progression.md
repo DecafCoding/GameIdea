@@ -1,6 +1,6 @@
 # Deck: Progression (General)
 
-292 cards.
+352 cards.
 
 | # | Card | Genres | Count | Games |
 |---:|---|---|---:|---|
@@ -296,3 +296,63 @@
 | 290 | your deck gets stronger | Deckbuilder & Cards, Roguelike | 1 | Hand of Fate |
 | 291 | your politics form from your choices | Narrative, RPG | 1 | Disco Elysium - The Final Cut |
 | 292 | your tool gets supercharged | Shooter, Sandbox | 1 | Half-Life 2 |
+| 293 | move list grows | Platformer, Melee Action, Fighting, RPG | 0 |  |
+| 294 | new fighting styles | Melee Action, Fighting, RPG, Open World | 0 |  |
+| 295 | character endings unlock | Fighting, Narrative, Party & Multiplayer | 0 |  |
+| 296 | rival roster grows | Melee Action, Fighting, Vehicle Sim & Racing, Party & Multiplayer | 0 |  |
+| 297 | training ranks | Shooter, Melee Action, Fighting, Rhythm & Arcade | 0 |  |
+| 298 | signature moves unlock | Shooter, Melee Action, Fighting, Party & Multiplayer | 0 |  |
+| 299 | new materials unlock | Puzzle, Survival Craft, Builder & Management, Sandbox | 0 |  |
+| 300 | physics tools unlock | Puzzle, Vehicle Sim & Racing, Sandbox | 0 |  |
+| 301 | creations get remixed by others | Platformer, Puzzle, Sandbox, Party & Multiplayer | 0 |  |
+| 302 | world size grows | Open World, Survival Craft, Builder & Management, Sandbox | 0 |  |
+| 303 | build limits rise | Builder & Management, Vehicle Sim & Racing, Strategy, Sandbox | 0 |  |
+| 304 | spawn menu grows | Shooter, Sandbox, Party & Multiplayer | 0 |  |
+| 305 | team rank rises | Shooter, Fighting, Vehicle Sim & Racing, Strategy, Party & Multiplayer | 0 |  |
+| 306 | group trophies | Platformer, Puzzle, Party & Multiplayer, Rhythm & Arcade | 0 |  |
+| 307 | mini-games rotate | Life Sim, Party & Multiplayer, Rhythm & Arcade | 0 |  |
+| 308 | shared village grows | Survival Craft, Builder & Management, Life Sim, Party & Multiplayer | 0 |  |
+| 309 | emotes unlock | Shooter, Fighting, Party & Multiplayer, Rhythm & Arcade | 0 |  |
+| 310 | house rules unlock | Puzzle, Strategy, Deckbuilder & Cards, Party & Multiplayer | 0 |  |
+| 311 | new difficulty charts | Platformer, Fighting, Rhythm & Arcade | 0 |  |
+| 312 | combo multiplier tiers | Platformer, Shooter, Melee Action, Fighting, Rhythm & Arcade | 0 |  |
+| 313 | new instruments | Life Sim, Sandbox, Rhythm & Arcade | 0 |  |
+| 314 | song packs unlock | Party & Multiplayer, Rhythm & Arcade | 0 |  |
+| 315 | venues get bigger | Builder & Management, Life Sim, Party & Multiplayer, Rhythm & Arcade | 0 |  |
+| 316 | tempo speeds up | Roguelike, Platformer, Puzzle, Rhythm & Arcade | 0 |  |
+| 317 | map fills in | Metroidvania, RPG, Open World, Horror, Stealth & Immersive Sim | 0 |  |
+| 318 | health fragments | Roguelike, Metroidvania, Platformer, Melee Action, RPG | 0 |  |
+| 319 | lore rooms | Metroidvania, RPG, Horror, Narrative | 0 |  |
+| 320 | fast travel points unlock | Metroidvania, RPG, Open World, Survival Craft | 0 |  |
+| 321 | the world flips upside down | Metroidvania, Platformer, Puzzle, Horror | 0 |  |
+| 322 | sealed doors remember you | Metroidvania, Puzzle, RPG, Horror | 0 |  |
+| 323 | relics pile up | Roguelike, RPG, Deckbuilder & Cards | 0 |  |
+| 324 | deck size cap rises | Strategy, Deckbuilder & Cards | 0 |  |
+| 325 | cards evolve after use | Roguelike, RPG, Deckbuilder & Cards | 0 |  |
+| 326 | new card types | Puzzle, Strategy, Deckbuilder & Cards | 0 |  |
+| 327 | card rarities rise | Roguelike, Deckbuilder & Cards, Party & Multiplayer | 0 |  |
+| 328 | draft new cards each fight | Roguelike, Strategy, Deckbuilder & Cards | 0 |  |
+| 329 | star ratings | Platformer, Puzzle, Vehicle Sim & Racing, Rhythm & Arcade | 0 |  |
+| 330 | puzzles combine earlier rules | Metroidvania, Platformer, Puzzle, Narrative | 0 |  |
+| 331 | a hidden layer of puzzles | Metroidvania, Puzzle, Open World, Narrative | 0 |  |
+| 332 | optional brain-busters | Platformer, Puzzle, RPG | 0 |  |
+| 333 | hints unlock over time | Puzzle, Horror, Narrative | 0 |  |
+| 334 | solved rooms change shape | Metroidvania, Puzzle, Horror, Narrative | 0 |  |
+| 335 | tuning parts | Vehicle Sim & Racing, Sandbox | 0 |  |
+| 336 | sponsors join | Fighting, Builder & Management, Life Sim, Vehicle Sim & Racing | 0 |  |
+| 337 | faster classes unlock | Vehicle Sim & Racing, Rhythm & Arcade | 0 |  |
+| 338 | new routes | Open World, Survival Craft, Builder & Management, Vehicle Sim & Racing | 0 |  |
+| 339 | pit crew improves | Builder & Management, Vehicle Sim & Racing, Strategy | 0 |  |
+| 340 | new gadgets | Metroidvania, Platformer, Shooter, Stealth & Immersive Sim | 0 |  |
+| 341 | disguises unlock | Open World, Narrative, Stealth & Immersive Sim, Party & Multiplayer | 0 |  |
+| 342 | more approaches open | Puzzle, Shooter, Open World, Stealth & Immersive Sim | 0 |  |
+| 343 | alert levels persist | Shooter, Horror, Strategy, Stealth & Immersive Sim | 0 |  |
+| 344 | intel reveals routes | Puzzle, Shooter, Strategy, Stealth & Immersive Sim | 0 |  |
+| 345 | you grow older | RPG, Builder & Management, Life Sim, Narrative | 0 |  |
+| 346 | powers fade with age | Melee Action, RPG, Open World, Narrative | 0 |  |
+| 347 | you forget skills | Roguelike, RPG, Horror, Narrative | 0 |  |
+| 348 | your home fills with keepsakes | Roguelike, Survival Craft, Life Sim, Narrative | 0 |  |
+| 349 | friendships fade if ignored | RPG, Life Sim, Narrative | 0 |  |
+| 350 | the music evolves | Platformer, Life Sim, Narrative, Rhythm & Arcade | 0 |  |
+| 351 | a diary fills in | Survival Craft, Horror, Life Sim, Narrative | 0 |  |
+| 352 | the title screen changes | Roguelike, Puzzle, Horror, Narrative | 0 |  |

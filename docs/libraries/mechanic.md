@@ -1,6 +1,6 @@
 # Deck: Mechanic (General)
 
-316 cards.
+380 cards.
 
 | # | Card | Genres | Count | Games |
 |---:|---|---|---:|---|
@@ -320,3 +320,67 @@
 | 314 | watch cameras | Horror | 1 | Ultimate Custom Night |
 | 315 | winch | Vehicle Sim & Racing, Sandbox | 1 | SnowRunner |
 | 316 | write code | Sandbox, Puzzle | 1 | Stormworks: Build and Rescue |
+| 317 | double jump | Metroidvania, Platformer, Melee Action, Rhythm & Arcade | 0 |  |
+| 318 | swim | Metroidvania, Platformer, Open World, Survival Craft | 0 |  |
+| 319 | bounce | Platformer, Puzzle, Sandbox, Rhythm & Arcade | 0 |  |
+| 320 | burrow | Metroidvania, Platformer, Survival Craft, Sandbox | 0 |  |
+| 321 | shrink and grow | Metroidvania, Platformer, Puzzle, Sandbox | 0 |  |
+| 322 | flip gravity | Metroidvania, Platformer, Puzzle, Rhythm & Arcade | 0 |  |
+| 323 | swing on ropes | Metroidvania, Platformer, Open World, Rhythm & Arcade | 0 |  |
+| 324 | wall run | Metroidvania, Platformer, Shooter, Rhythm & Arcade | 0 |  |
+| 325 | backtrack | Metroidvania, RPG, Open World, Horror | 0 |  |
+| 326 | echolocate | Metroidvania, Puzzle, Horror, Stealth & Immersive Sim | 0 |  |
+| 327 | disguise | Open World, Narrative, Stealth & Immersive Sim, Party & Multiplayer | 0 |  |
+| 328 | distract | Puzzle, Horror, Strategy, Stealth & Immersive Sim | 0 |  |
+| 329 | lure | Puzzle, Survival Craft, Horror, Stealth & Immersive Sim | 0 |  |
+| 330 | eavesdrop | RPG, Narrative, Stealth & Immersive Sim | 0 |  |
+| 331 | pickpocket | RPG, Open World, Stealth & Immersive Sim | 0 |  |
+| 332 | pick locks | Puzzle, RPG, Horror, Stealth & Immersive Sim | 0 |  |
+| 333 | tail a target | Open World, Narrative, Stealth & Immersive Sim | 0 |  |
+| 334 | mark targets | Shooter, Strategy, Stealth & Immersive Sim | 0 |  |
+| 335 | smuggle | Builder & Management, Vehicle Sim & Racing, Narrative, Stealth & Immersive Sim | 0 |  |
+| 336 | negotiate | RPG, Builder & Management, Strategy, Narrative | 0 |  |
+| 337 | haggle | RPG, Builder & Management, Life Sim, Narrative | 0 |  |
+| 338 | bluff | Strategy, Deckbuilder & Cards, Narrative, Party & Multiplayer | 0 |  |
+| 339 | translate | Puzzle, RPG, Narrative | 0 |  |
+| 340 | comfort | RPG, Life Sim, Narrative | 0 |  |
+| 341 | apologize | Life Sim, Narrative | 0 |  |
+| 342 | write letters | Life Sim, Narrative | 0 |  |
+| 343 | forge documents | Puzzle, Narrative, Stealth & Immersive Sim | 0 |  |
+| 344 | gossip | Life Sim, Narrative, Party & Multiplayer | 0 |  |
+| 345 | draft cards | Roguelike, Strategy, Deckbuilder & Cards, Party & Multiplayer | 0 |  |
+| 346 | discard | Roguelike, Puzzle, Deckbuilder & Cards | 0 |  |
+| 347 | bid | Builder & Management, Strategy, Deckbuilder & Cards, Party & Multiplayer | 0 |  |
+| 348 | combo cards | Roguelike, Fighting, Deckbuilder & Cards | 0 |  |
+| 349 | exhaust cards | Roguelike, Deckbuilder & Cards | 0 |  |
+| 350 | shuffle | Roguelike, Deckbuilder & Cards, Party & Multiplayer | 0 |  |
+| 351 | sing | Life Sim, Narrative, Party & Multiplayer, Rhythm & Arcade | 0 |  |
+| 352 | dance | Life Sim, Party & Multiplayer, Rhythm & Arcade | 0 |  |
+| 353 | conduct | Strategy, Rhythm & Arcade | 0 |  |
+| 354 | freestyle | Sandbox, Party & Multiplayer, Rhythm & Arcade | 0 |  |
+| 355 | tap in rhythm | Platformer, Fighting, Party & Multiplayer, Rhythm & Arcade | 0 |  |
+| 356 | compose music | Life Sim, Sandbox, Rhythm & Arcade | 0 |  |
+| 357 | DJ | Sandbox, Party & Multiplayer, Rhythm & Arcade | 0 |  |
+| 358 | perform | Life Sim, Narrative, Party & Multiplayer, Rhythm & Arcade | 0 |  |
+| 359 | water plants | Survival Craft, Builder & Management, Life Sim | 0 |  |
+| 360 | prune | Puzzle, Builder & Management, Life Sim | 0 |  |
+| 361 | knit | Life Sim, Sandbox | 0 |  |
+| 362 | bake | Puzzle, Builder & Management, Life Sim | 0 |  |
+| 363 | babysit | Horror, Life Sim, Narrative | 0 |  |
+| 364 | teach | RPG, Builder & Management, Life Sim, Narrative | 0 |  |
+| 365 | sort | Puzzle, Builder & Management, Life Sim | 0 |  |
+| 366 | bury the dead | Survival Craft, Horror, Life Sim, Narrative | 0 |  |
+| 367 | pray | RPG, Horror, Strategy, Narrative | 0 |  |
+| 368 | memorize | Puzzle, Horror, Narrative, Rhythm & Arcade | 0 |  |
+| 369 | swap bodies | Platformer, Puzzle, Narrative, Stealth & Immersive Sim | 0 |  |
+| 370 | mimic | Puzzle, Fighting, Stealth & Immersive Sim, Rhythm & Arcade | 0 |  |
+| 371 | copy powers | Roguelike, Metroidvania, Platformer, Fighting | 0 |  |
+| 372 | track footprints | Open World, Survival Craft, Horror, Stealth & Immersive Sim | 0 |  |
+| 373 | bait | Survival Craft, Horror, Life Sim, Stealth & Immersive Sim | 0 |  |
+| 374 | herd | Survival Craft, Life Sim, Strategy, Party & Multiplayer | 0 |  |
+| 375 | sort mail | Puzzle, Builder & Management, Life Sim | 0 |  |
+| 376 | inflate | Platformer, Puzzle, Sandbox, Rhythm & Arcade | 0 |  |
+| 377 | melt | Platformer, Puzzle, Sandbox | 0 |  |
+| 378 | magnetize | Platformer, Puzzle, Shooter, Sandbox | 0 |  |
+| 379 | echo | Puzzle, Horror, Rhythm & Arcade | 0 |  |
+| 380 | dream | Platformer, Puzzle, Horror, Narrative | 0 |  |

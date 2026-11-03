@@ -189,7 +189,7 @@
       ]
     },
     {
-      "card": "secret agent",
+      "card": "secret agent (spy)",
       "games": [
         "Resident Evil 4",
         "Resident Evil 4 (2005)",
@@ -1726,7 +1726,7 @@
       ]
     },
     {
-      "card": "crook",
+      "card": "crook / thief",
       "games": [
         "The Henry Stickmin Collection"
       ]
@@ -2113,6 +2113,554 @@
     },
     {
       "card": "fruit",
+      "games": []
+    },
+    {
+      "card": "nurse",
+      "games": []
+    },
+    {
+      "card": "doctor",
+      "games": []
+    },
+    {
+      "card": "teacher",
+      "games": []
+    },
+    {
+      "card": "librarian",
+      "games": []
+    },
+    {
+      "card": "mail carrier",
+      "games": []
+    },
+    {
+      "card": "lighthouse keeper",
+      "games": []
+    },
+    {
+      "card": "night janitor",
+      "games": []
+    },
+    {
+      "card": "gravedigger",
+      "games": []
+    },
+    {
+      "card": "undertaker",
+      "games": []
+    },
+    {
+      "card": "tax collector",
+      "games": []
+    },
+    {
+      "card": "translator",
+      "games": []
+    },
+    {
+      "card": "cartographer",
+      "games": []
+    },
+    {
+      "card": "beekeeper",
+      "games": []
+    },
+    {
+      "card": "zookeeper",
+      "games": []
+    },
+    {
+      "card": "park ranger",
+      "games": []
+    },
+    {
+      "card": "lifeguard",
+      "games": []
+    },
+    {
+      "card": "firefighter",
+      "games": []
+    },
+    {
+      "card": "tailor",
+      "games": []
+    },
+    {
+      "card": "clockmaker",
+      "games": []
+    },
+    {
+      "card": "locksmith",
+      "games": []
+    },
+    {
+      "card": "florist",
+      "games": []
+    },
+    {
+      "card": "street sweeper",
+      "games": []
+    },
+    {
+      "card": "babysitter",
+      "games": []
+    },
+    {
+      "card": "nanny",
+      "games": []
+    },
+    {
+      "card": "midwife",
+      "games": []
+    },
+    {
+      "card": "caretaker",
+      "games": []
+    },
+    {
+      "card": "hospice worker",
+      "games": []
+    },
+    {
+      "card": "foster parent",
+      "games": []
+    },
+    {
+      "card": "grandparent",
+      "games": []
+    },
+    {
+      "card": "older sister",
+      "games": []
+    },
+    {
+      "card": "pet sitter",
+      "games": []
+    },
+    {
+      "card": "shepherd",
+      "games": []
+    },
+    {
+      "card": "villain",
+      "games": []
+    },
+    {
+      "card": "henchman",
+      "games": []
+    },
+    {
+      "card": "dark lord",
+      "games": []
+    },
+    {
+      "card": "evil overlord",
+      "games": []
+    },
+    {
+      "card": "minion",
+      "games": []
+    },
+    {
+      "card": "tyrant",
+      "games": []
+    },
+    {
+      "card": "saboteur",
+      "games": []
+    },
+    {
+      "card": "smuggler",
+      "games": []
+    },
+    {
+      "card": "pirate",
+      "games": []
+    },
+    {
+      "card": "con artist",
+      "games": []
+    },
+    {
+      "card": "ghost",
+      "games": []
+    },
+    {
+      "card": "robot",
+      "games": []
+    },
+    {
+      "card": "AI",
+      "games": []
+    },
+    {
+      "card": "sentient AI",
+      "games": []
+    },
+    {
+      "card": "vampire",
+      "games": []
+    },
+    {
+      "card": "werewolf",
+      "games": []
+    },
+    {
+      "card": "dragon",
+      "games": []
+    },
+    {
+      "card": "golem",
+      "games": []
+    },
+    {
+      "card": "slime",
+      "games": []
+    },
+    {
+      "card": "alien",
+      "games": []
+    },
+    {
+      "card": "mermaid",
+      "games": []
+    },
+    {
+      "card": "fairy",
+      "games": []
+    },
+    {
+      "card": "imp",
+      "games": []
+    },
+    {
+      "card": "scarecrow",
+      "games": []
+    },
+    {
+      "card": "zombie dog",
+      "games": []
+    },
+    {
+      "card": "living doll",
+      "games": []
+    },
+    {
+      "card": "puppet",
+      "games": []
+    },
+    {
+      "card": "reanimated corpse",
+      "games": []
+    },
+    {
+      "card": "house",
+      "games": []
+    },
+    {
+      "card": "ship",
+      "games": []
+    },
+    {
+      "card": "sword",
+      "games": []
+    },
+    {
+      "card": "lantern",
+      "games": []
+    },
+    {
+      "card": "tree",
+      "games": []
+    },
+    {
+      "card": "planet",
+      "games": []
+    },
+    {
+      "card": "storm",
+      "games": []
+    },
+    {
+      "card": "river",
+      "games": []
+    },
+    {
+      "card": "virus",
+      "games": []
+    },
+    {
+      "card": "computer program",
+      "games": []
+    },
+    {
+      "card": "haunted painting",
+      "games": []
+    },
+    {
+      "card": "vending machine",
+      "games": []
+    },
+    {
+      "card": "swarm",
+      "games": []
+    },
+    {
+      "card": "hive mind",
+      "games": []
+    },
+    {
+      "card": "colony",
+      "games": []
+    },
+    {
+      "card": "family",
+      "games": []
+    },
+    {
+      "card": "band",
+      "games": []
+    },
+    {
+      "card": "crew",
+      "games": []
+    },
+    {
+      "card": "village",
+      "games": []
+    },
+    {
+      "card": "school of fish",
+      "games": []
+    },
+    {
+      "card": "oracle",
+      "games": []
+    },
+    {
+      "card": "prophet",
+      "games": []
+    },
+    {
+      "card": "angel",
+      "games": []
+    },
+    {
+      "card": "demon",
+      "games": []
+    },
+    {
+      "card": "reaper",
+      "games": []
+    },
+    {
+      "card": "trickster spirit",
+      "games": []
+    },
+    {
+      "card": "river spirit",
+      "games": []
+    },
+    {
+      "card": "chosen one",
+      "games": []
+    },
+    {
+      "card": "wish-granter",
+      "games": []
+    },
+    {
+      "card": "fortune teller",
+      "games": []
+    },
+    {
+      "card": "amnesiac",
+      "games": []
+    },
+    {
+      "card": "clone",
+      "games": []
+    },
+    {
+      "card": "twin",
+      "games": []
+    },
+    {
+      "card": "impersonator",
+      "games": []
+    },
+    {
+      "card": "sleepwalker",
+      "games": []
+    },
+    {
+      "card": "dreamer's double",
+      "games": []
+    },
+    {
+      "card": "possessed host",
+      "games": []
+    },
+    {
+      "card": "body swapper",
+      "games": []
+    },
+    {
+      "card": "painter",
+      "games": []
+    },
+    {
+      "card": "sculptor",
+      "games": []
+    },
+    {
+      "card": "musician",
+      "games": []
+    },
+    {
+      "card": "composer",
+      "games": []
+    },
+    {
+      "card": "puppeteer",
+      "games": []
+    },
+    {
+      "card": "magician",
+      "games": []
+    },
+    {
+      "card": "clown",
+      "games": []
+    },
+    {
+      "card": "chef",
+      "games": []
+    },
+    {
+      "card": "potter",
+      "games": []
+    },
+    {
+      "card": "inventor",
+      "games": []
+    },
+    {
+      "card": "merchant",
+      "games": []
+    },
+    {
+      "card": "innkeeper",
+      "games": []
+    },
+    {
+      "card": "matchmaker",
+      "games": []
+    },
+    {
+      "card": "diplomat",
+      "games": []
+    },
+    {
+      "card": "negotiator",
+      "games": []
+    },
+    {
+      "card": "auctioneer",
+      "games": []
+    },
+    {
+      "card": "landlord",
+      "games": []
+    },
+    {
+      "card": "pawnbroker",
+      "games": []
+    },
+    {
+      "card": "fixer",
+      "games": []
+    },
+    {
+      "card": "debt collector",
+      "games": []
+    },
+    {
+      "card": "child courier",
+      "games": []
+    },
+    {
+      "card": "nomad",
+      "games": []
+    },
+    {
+      "card": "refugee",
+      "games": []
+    },
+    {
+      "card": "pilgrim",
+      "games": []
+    },
+    {
+      "card": "stowaway",
+      "games": []
+    },
+    {
+      "card": "hitchhiker",
+      "games": []
+    },
+    {
+      "card": "smuggler pilot",
+      "games": []
+    },
+    {
+      "card": "cave diver",
+      "games": []
+    },
+    {
+      "card": "storm chaser",
+      "games": []
+    },
+    {
+      "card": "treasure hunter",
+      "games": []
+    },
+    {
+      "card": "toddler",
+      "games": []
+    },
+    {
+      "card": "baby",
+      "games": []
+    },
+    {
+      "card": "retiree",
+      "games": []
+    },
+    {
+      "card": "great-grandmother",
+      "games": []
+    },
+    {
+      "card": "ghost child",
+      "games": []
+    },
+    {
+      "card": "newborn god",
+      "games": []
+    },
+    {
+      "card": "last elder",
+      "games": []
+    },
+    {
+      "card": "apprentice",
+      "games": []
+    },
+    {
+      "card": "intern",
       "games": []
     }
   ],
@@ -6294,6 +6842,613 @@
         "Sandbox",
         "Puzzle"
       ]
+    },
+    {
+      "card": "double jump",
+      "games": [],
+      "genres": [
+        "Metroidvania",
+        "Platformer",
+        "Melee Action",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "swim",
+      "games": [],
+      "genres": [
+        "Metroidvania",
+        "Platformer",
+        "Open World",
+        "Survival Craft"
+      ]
+    },
+    {
+      "card": "bounce",
+      "games": [],
+      "genres": [
+        "Platformer",
+        "Puzzle",
+        "Sandbox",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "burrow",
+      "games": [],
+      "genres": [
+        "Metroidvania",
+        "Platformer",
+        "Survival Craft",
+        "Sandbox"
+      ]
+    },
+    {
+      "card": "shrink and grow",
+      "games": [],
+      "genres": [
+        "Metroidvania",
+        "Platformer",
+        "Puzzle",
+        "Sandbox"
+      ]
+    },
+    {
+      "card": "flip gravity",
+      "games": [],
+      "genres": [
+        "Metroidvania",
+        "Platformer",
+        "Puzzle",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "swing on ropes",
+      "games": [],
+      "genres": [
+        "Metroidvania",
+        "Platformer",
+        "Open World",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "wall run",
+      "games": [],
+      "genres": [
+        "Metroidvania",
+        "Platformer",
+        "Shooter",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "backtrack",
+      "games": [],
+      "genres": [
+        "Metroidvania",
+        "RPG",
+        "Open World",
+        "Horror"
+      ]
+    },
+    {
+      "card": "echolocate",
+      "games": [],
+      "genres": [
+        "Metroidvania",
+        "Puzzle",
+        "Horror",
+        "Stealth & Immersive Sim"
+      ]
+    },
+    {
+      "card": "disguise",
+      "games": [],
+      "genres": [
+        "Open World",
+        "Narrative",
+        "Stealth & Immersive Sim",
+        "Party & Multiplayer"
+      ]
+    },
+    {
+      "card": "distract",
+      "games": [],
+      "genres": [
+        "Puzzle",
+        "Horror",
+        "Strategy",
+        "Stealth & Immersive Sim"
+      ]
+    },
+    {
+      "card": "lure",
+      "games": [],
+      "genres": [
+        "Puzzle",
+        "Survival Craft",
+        "Horror",
+        "Stealth & Immersive Sim"
+      ]
+    },
+    {
+      "card": "eavesdrop",
+      "games": [],
+      "genres": [
+        "RPG",
+        "Narrative",
+        "Stealth & Immersive Sim"
+      ]
+    },
+    {
+      "card": "pickpocket",
+      "games": [],
+      "genres": [
+        "RPG",
+        "Open World",
+        "Stealth & Immersive Sim"
+      ]
+    },
+    {
+      "card": "pick locks",
+      "games": [],
+      "genres": [
+        "Puzzle",
+        "RPG",
+        "Horror",
+        "Stealth & Immersive Sim"
+      ]
+    },
+    {
+      "card": "tail a target",
+      "games": [],
+      "genres": [
+        "Open World",
+        "Narrative",
+        "Stealth & Immersive Sim"
+      ]
+    },
+    {
+      "card": "mark targets",
+      "games": [],
+      "genres": [
+        "Shooter",
+        "Strategy",
+        "Stealth & Immersive Sim"
+      ]
+    },
+    {
+      "card": "smuggle",
+      "games": [],
+      "genres": [
+        "Builder & Management",
+        "Vehicle Sim & Racing",
+        "Narrative",
+        "Stealth & Immersive Sim"
+      ]
+    },
+    {
+      "card": "negotiate",
+      "games": [],
+      "genres": [
+        "RPG",
+        "Builder & Management",
+        "Strategy",
+        "Narrative"
+      ]
+    },
+    {
+      "card": "haggle",
+      "games": [],
+      "genres": [
+        "RPG",
+        "Builder & Management",
+        "Life Sim",
+        "Narrative"
+      ]
+    },
+    {
+      "card": "bluff",
+      "games": [],
+      "genres": [
+        "Strategy",
+        "Deckbuilder & Cards",
+        "Narrative",
+        "Party & Multiplayer"
+      ]
+    },
+    {
+      "card": "translate",
+      "games": [],
+      "genres": [
+        "Puzzle",
+        "RPG",
+        "Narrative"
+      ]
+    },
+    {
+      "card": "comfort",
+      "games": [],
+      "genres": [
+        "RPG",
+        "Life Sim",
+        "Narrative"
+      ]
+    },
+    {
+      "card": "apologize",
+      "games": [],
+      "genres": [
+        "Life Sim",
+        "Narrative"
+      ]
+    },
+    {
+      "card": "write letters",
+      "games": [],
+      "genres": [
+        "Life Sim",
+        "Narrative"
+      ]
+    },
+    {
+      "card": "forge documents",
+      "games": [],
+      "genres": [
+        "Puzzle",
+        "Narrative",
+        "Stealth & Immersive Sim"
+      ]
+    },
+    {
+      "card": "gossip",
+      "games": [],
+      "genres": [
+        "Life Sim",
+        "Narrative",
+        "Party & Multiplayer"
+      ]
+    },
+    {
+      "card": "draft cards",
+      "games": [],
+      "genres": [
+        "Roguelike",
+        "Strategy",
+        "Deckbuilder & Cards",
+        "Party & Multiplayer"
+      ]
+    },
+    {
+      "card": "discard",
+      "games": [],
+      "genres": [
+        "Roguelike",
+        "Puzzle",
+        "Deckbuilder & Cards"
+      ]
+    },
+    {
+      "card": "bid",
+      "games": [],
+      "genres": [
+        "Builder & Management",
+        "Strategy",
+        "Deckbuilder & Cards",
+        "Party & Multiplayer"
+      ]
+    },
+    {
+      "card": "combo cards",
+      "games": [],
+      "genres": [
+        "Roguelike",
+        "Fighting",
+        "Deckbuilder & Cards"
+      ]
+    },
+    {
+      "card": "exhaust cards",
+      "games": [],
+      "genres": [
+        "Roguelike",
+        "Deckbuilder & Cards"
+      ]
+    },
+    {
+      "card": "shuffle",
+      "games": [],
+      "genres": [
+        "Roguelike",
+        "Deckbuilder & Cards",
+        "Party & Multiplayer"
+      ]
+    },
+    {
+      "card": "sing",
+      "games": [],
+      "genres": [
+        "Life Sim",
+        "Narrative",
+        "Party & Multiplayer",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "dance",
+      "games": [],
+      "genres": [
+        "Life Sim",
+        "Party & Multiplayer",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "conduct",
+      "games": [],
+      "genres": [
+        "Strategy",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "freestyle",
+      "games": [],
+      "genres": [
+        "Sandbox",
+        "Party & Multiplayer",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "tap in rhythm",
+      "games": [],
+      "genres": [
+        "Platformer",
+        "Fighting",
+        "Party & Multiplayer",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "compose music",
+      "games": [],
+      "genres": [
+        "Life Sim",
+        "Sandbox",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "DJ",
+      "games": [],
+      "genres": [
+        "Sandbox",
+        "Party & Multiplayer",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "perform",
+      "games": [],
+      "genres": [
+        "Life Sim",
+        "Narrative",
+        "Party & Multiplayer",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "water plants",
+      "games": [],
+      "genres": [
+        "Survival Craft",
+        "Builder & Management",
+        "Life Sim"
+      ]
+    },
+    {
+      "card": "prune",
+      "games": [],
+      "genres": [
+        "Puzzle",
+        "Builder & Management",
+        "Life Sim"
+      ]
+    },
+    {
+      "card": "knit",
+      "games": [],
+      "genres": [
+        "Life Sim",
+        "Sandbox"
+      ]
+    },
+    {
+      "card": "bake",
+      "games": [],
+      "genres": [
+        "Puzzle",
+        "Builder & Management",
+        "Life Sim"
+      ]
+    },
+    {
+      "card": "babysit",
+      "games": [],
+      "genres": [
+        "Horror",
+        "Life Sim",
+        "Narrative"
+      ]
+    },
+    {
+      "card": "teach",
+      "games": [],
+      "genres": [
+        "RPG",
+        "Builder & Management",
+        "Life Sim",
+        "Narrative"
+      ]
+    },
+    {
+      "card": "sort",
+      "games": [],
+      "genres": [
+        "Puzzle",
+        "Builder & Management",
+        "Life Sim"
+      ]
+    },
+    {
+      "card": "bury the dead",
+      "games": [],
+      "genres": [
+        "Survival Craft",
+        "Horror",
+        "Life Sim",
+        "Narrative"
+      ]
+    },
+    {
+      "card": "pray",
+      "games": [],
+      "genres": [
+        "RPG",
+        "Horror",
+        "Strategy",
+        "Narrative"
+      ]
+    },
+    {
+      "card": "memorize",
+      "games": [],
+      "genres": [
+        "Puzzle",
+        "Horror",
+        "Narrative",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "swap bodies",
+      "games": [],
+      "genres": [
+        "Platformer",
+        "Puzzle",
+        "Narrative",
+        "Stealth & Immersive Sim"
+      ]
+    },
+    {
+      "card": "mimic",
+      "games": [],
+      "genres": [
+        "Puzzle",
+        "Fighting",
+        "Stealth & Immersive Sim",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "copy powers",
+      "games": [],
+      "genres": [
+        "Roguelike",
+        "Metroidvania",
+        "Platformer",
+        "Fighting"
+      ]
+    },
+    {
+      "card": "track footprints",
+      "games": [],
+      "genres": [
+        "Open World",
+        "Survival Craft",
+        "Horror",
+        "Stealth & Immersive Sim"
+      ]
+    },
+    {
+      "card": "bait",
+      "games": [],
+      "genres": [
+        "Survival Craft",
+        "Horror",
+        "Life Sim",
+        "Stealth & Immersive Sim"
+      ]
+    },
+    {
+      "card": "herd",
+      "games": [],
+      "genres": [
+        "Survival Craft",
+        "Life Sim",
+        "Strategy",
+        "Party & Multiplayer"
+      ]
+    },
+    {
+      "card": "sort mail",
+      "games": [],
+      "genres": [
+        "Puzzle",
+        "Builder & Management",
+        "Life Sim"
+      ]
+    },
+    {
+      "card": "inflate",
+      "games": [],
+      "genres": [
+        "Platformer",
+        "Puzzle",
+        "Sandbox",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "melt",
+      "games": [],
+      "genres": [
+        "Platformer",
+        "Puzzle",
+        "Sandbox"
+      ]
+    },
+    {
+      "card": "magnetize",
+      "games": [],
+      "genres": [
+        "Platformer",
+        "Puzzle",
+        "Shooter",
+        "Sandbox"
+      ]
+    },
+    {
+      "card": "echo",
+      "games": [],
+      "genres": [
+        "Puzzle",
+        "Horror",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "dream",
+      "games": [],
+      "genres": [
+        "Platformer",
+        "Puzzle",
+        "Horror",
+        "Narrative"
+      ]
     }
   ],
   "Goal": [
@@ -7828,6 +8983,286 @@
       "games": [
         "Tekken 8"
       ]
+    },
+    {
+      "card": "write the song everyone sings",
+      "games": []
+    },
+    {
+      "card": "finish your masterpiece before you die",
+      "games": []
+    },
+    {
+      "card": "build a home from nothing",
+      "games": []
+    },
+    {
+      "card": "open the restaurant of your dreams",
+      "games": []
+    },
+    {
+      "card": "design a city that runs itself",
+      "games": []
+    },
+    {
+      "card": "make a game someone loves",
+      "games": []
+    },
+    {
+      "card": "grow the tallest tree in the world",
+      "games": []
+    },
+    {
+      "card": "invent something that changes everything",
+      "games": []
+    },
+    {
+      "card": "make one true friend",
+      "games": []
+    },
+    {
+      "card": "get the old band back together",
+      "games": []
+    },
+    {
+      "card": "get everyone to the party on time",
+      "games": []
+    },
+    {
+      "card": "reunite the family for one dinner",
+      "games": []
+    },
+    {
+      "card": "earn your rival's respect",
+      "games": []
+    },
+    {
+      "card": "become your hero's partner",
+      "games": []
+    },
+    {
+      "card": "get the whole town to like you",
+      "games": []
+    },
+    {
+      "card": "find a home for every stray",
+      "games": []
+    },
+    {
+      "card": "say goodbye properly",
+      "games": []
+    },
+    {
+      "card": "map the whole world",
+      "games": []
+    },
+    {
+      "card": "name every creature on the island",
+      "games": []
+    },
+    {
+      "card": "fill every page of the field guide",
+      "games": []
+    },
+    {
+      "card": "read every book in the library",
+      "games": []
+    },
+    {
+      "card": "find where the river ends",
+      "games": []
+    },
+    {
+      "card": "learn the lost language",
+      "games": []
+    },
+    {
+      "card": "photograph the creature no one believes in",
+      "games": []
+    },
+    {
+      "card": "answer the question no one can",
+      "games": []
+    },
+    {
+      "card": "collect one of everything",
+      "games": []
+    },
+    {
+      "card": "own every house on the street",
+      "games": []
+    },
+    {
+      "card": "complete the set",
+      "games": []
+    },
+    {
+      "card": "buy back the family farm",
+      "games": []
+    },
+    {
+      "card": "fill the museum",
+      "games": []
+    },
+    {
+      "card": "hold every title at once",
+      "games": []
+    },
+    {
+      "card": "win the pie contest",
+      "games": []
+    },
+    {
+      "card": "get the cat down from the tree",
+      "games": []
+    },
+    {
+      "card": "grow a perfect pumpkin",
+      "games": []
+    },
+    {
+      "card": "make it through the first day of school",
+      "games": []
+    },
+    {
+      "card": "keep your houseplant alive for a year",
+      "games": []
+    },
+    {
+      "card": "finish the puzzle before the guests arrive",
+      "games": []
+    },
+    {
+      "card": "have the best garden on the block",
+      "games": []
+    },
+    {
+      "card": "get a good night's sleep",
+      "games": []
+    },
+    {
+      "card": "learn to walk again",
+      "games": []
+    },
+    {
+      "card": "face your fear of the dark",
+      "games": []
+    },
+    {
+      "card": "become the person your dog thinks you are",
+      "games": []
+    },
+    {
+      "card": "master the craft your father failed at",
+      "games": []
+    },
+    {
+      "card": "forgive the one who hurt you",
+      "games": []
+    },
+    {
+      "card": "remember who you were",
+      "games": []
+    },
+    {
+      "card": "choose your own name",
+      "games": []
+    },
+    {
+      "card": "steal the crown without being seen",
+      "games": []
+    },
+    {
+      "card": "swap the painting before the auction",
+      "games": []
+    },
+    {
+      "card": "keep your secret until the end",
+      "games": []
+    },
+    {
+      "card": "fake your own death",
+      "games": []
+    },
+    {
+      "card": "break out of prison",
+      "games": []
+    },
+    {
+      "card": "frame the real villain",
+      "games": []
+    },
+    {
+      "card": "leave no trace you were there",
+      "games": []
+    },
+    {
+      "card": "pull off the perfect con",
+      "games": []
+    },
+    {
+      "card": "get fired on purpose",
+      "games": []
+    },
+    {
+      "card": "lose the game without anyone noticing",
+      "games": []
+    },
+    {
+      "card": "ruin the wedding",
+      "games": []
+    },
+    {
+      "card": "be forgotten by everyone",
+      "games": []
+    },
+    {
+      "card": "become the villain the hero needs",
+      "games": []
+    },
+    {
+      "card": "get the most boring job done perfectly",
+      "games": []
+    },
+    {
+      "card": "convince everyone you are human",
+      "games": []
+    },
+    {
+      "card": "bring the animals back",
+      "games": []
+    },
+    {
+      "card": "clean the whole ocean",
+      "games": []
+    },
+    {
+      "card": "wake the sleeping forest",
+      "games": []
+    },
+    {
+      "card": "turn the desert green",
+      "games": []
+    },
+    {
+      "card": "return every stolen thing",
+      "games": []
+    },
+    {
+      "card": "land the perfect trick",
+      "games": []
+    },
+    {
+      "card": "win the crowd, not the match",
+      "games": []
+    },
+    {
+      "card": "play the perfect show",
+      "games": []
+    },
+    {
+      "card": "go from last place to champion",
+      "games": []
     }
   ],
   "Conflict": [
@@ -9599,6 +11034,270 @@
       "games": [
         "Plants vs. Zombies"
       ]
+    },
+    {
+      "card": "your body is failing",
+      "games": []
+    },
+    {
+      "card": "you are afraid of everything",
+      "games": []
+    },
+    {
+      "card": "your hands shake when it matters",
+      "games": []
+    },
+    {
+      "card": "you cannot stay awake",
+      "games": []
+    },
+    {
+      "card": "your memory resets every night",
+      "games": []
+    },
+    {
+      "card": "you are allergic to the main thing",
+      "games": []
+    },
+    {
+      "card": "an old injury slows you down",
+      "games": []
+    },
+    {
+      "card": "you hear voices no one else hears",
+      "games": []
+    },
+    {
+      "card": "you are far too small",
+      "games": []
+    },
+    {
+      "card": "every step needs a signed form",
+      "games": []
+    },
+    {
+      "card": "the office closes in five minutes",
+      "games": []
+    },
+    {
+      "card": "your boss changes the plan daily",
+      "games": []
+    },
+    {
+      "card": "the rent is due tomorrow",
+      "games": []
+    },
+    {
+      "card": "your debts grow faster than you earn",
+      "games": []
+    },
+    {
+      "card": "the tools keep breaking",
+      "games": []
+    },
+    {
+      "card": "the instructions are in the wrong language",
+      "games": []
+    },
+    {
+      "card": "the paperwork is lost again",
+      "games": []
+    },
+    {
+      "card": "everyone is gossiping about you",
+      "games": []
+    },
+    {
+      "card": "your family disapproves",
+      "games": []
+    },
+    {
+      "card": "one mistake ruins your name",
+      "games": []
+    },
+    {
+      "card": "the town hates newcomers",
+      "games": []
+    },
+    {
+      "card": "your fans demand more every day",
+      "games": []
+    },
+    {
+      "card": "your best friend is your rival",
+      "games": []
+    },
+    {
+      "card": "no one shows up",
+      "games": []
+    },
+    {
+      "card": "your ex is in charge",
+      "games": []
+    },
+    {
+      "card": "nobody believes you",
+      "games": []
+    },
+    {
+      "card": "the evidence keeps disappearing",
+      "games": []
+    },
+    {
+      "card": "you are the main suspect",
+      "games": []
+    },
+    {
+      "card": "the truth sounds like a lie",
+      "games": []
+    },
+    {
+      "card": "the only witness is a child",
+      "games": []
+    },
+    {
+      "card": "the records have been erased",
+      "games": []
+    },
+    {
+      "card": "every win hurts someone innocent",
+      "games": []
+    },
+    {
+      "card": "helping one side betrays the other",
+      "games": []
+    },
+    {
+      "card": "the cure needs a life",
+      "games": []
+    },
+    {
+      "card": "the people you save hate you",
+      "games": []
+    },
+    {
+      "card": "you cannot save them all",
+      "games": []
+    },
+    {
+      "card": "the easy way is the cruel way",
+      "games": []
+    },
+    {
+      "card": "your orders are wrong",
+      "games": []
+    },
+    {
+      "card": "it will not stop raining",
+      "games": []
+    },
+    {
+      "card": "the river floods each spring",
+      "games": []
+    },
+    {
+      "card": "the wind always blows against you",
+      "games": []
+    },
+    {
+      "card": "fog hides everything",
+      "games": []
+    },
+    {
+      "card": "the ground keeps shaking",
+      "games": []
+    },
+    {
+      "card": "the bees are dying",
+      "games": []
+    },
+    {
+      "card": "the forest grows back overnight",
+      "games": []
+    },
+    {
+      "card": "the tide cuts off the way home",
+      "games": []
+    },
+    {
+      "card": "you age a year each day",
+      "games": []
+    },
+    {
+      "card": "there is never enough daylight",
+      "games": []
+    },
+    {
+      "card": "the clock runs faster when you rush",
+      "games": []
+    },
+    {
+      "card": "everyone you love grows old",
+      "games": []
+    },
+    {
+      "card": "the past keeps catching up",
+      "games": []
+    },
+    {
+      "card": "your time is borrowed",
+      "games": []
+    },
+    {
+      "card": "everyone is too busy to help",
+      "games": []
+    },
+    {
+      "card": "the cat keeps knocking things over",
+      "games": []
+    },
+    {
+      "card": "the neighbors are very loud",
+      "games": []
+    },
+    {
+      "card": "your guests arrive early",
+      "games": []
+    },
+    {
+      "card": "the oven is unreliable",
+      "games": []
+    },
+    {
+      "card": "the kids want attention",
+      "games": []
+    },
+    {
+      "card": "the shop is too quiet",
+      "games": []
+    },
+    {
+      "card": "you are terrible at this",
+      "games": []
+    },
+    {
+      "card": "your partner is an idiot",
+      "games": []
+    },
+    {
+      "card": "the costume is too small",
+      "games": []
+    },
+    {
+      "card": "you sneeze at the worst moments",
+      "games": []
+    },
+    {
+      "card": "the goose is chasing you",
+      "games": []
+    },
+    {
+      "card": "everything you touch gets sticky",
+      "games": []
+    },
+    {
+      "card": "you lied on your résumé",
+      "games": []
     }
   ],
   "Resource": [
@@ -12769,6 +14468,717 @@
         "Fighting",
         "Melee Action"
       ]
+    },
+    {
+      "card": "breath",
+      "games": [],
+      "genres": [
+        "Metroidvania",
+        "Platformer",
+        "Survival Craft",
+        "Horror",
+        "Stealth & Immersive Sim",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "heartbeat",
+      "games": [],
+      "genres": [
+        "Horror",
+        "Narrative",
+        "Stealth & Immersive Sim",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "adrenaline",
+      "games": [],
+      "genres": [
+        "Roguelike",
+        "Shooter",
+        "Melee Action",
+        "Fighting",
+        "Vehicle Sim & Racing"
+      ]
+    },
+    {
+      "card": "courage",
+      "games": [],
+      "genres": [
+        "RPG",
+        "Horror",
+        "Strategy",
+        "Deckbuilder & Cards",
+        "Narrative"
+      ]
+    },
+    {
+      "card": "eyesight",
+      "games": [],
+      "genres": [
+        "Puzzle",
+        "Survival Craft",
+        "Horror",
+        "Stealth & Immersive Sim"
+      ]
+    },
+    {
+      "card": "voice",
+      "games": [],
+      "genres": [
+        "Narrative",
+        "Stealth & Immersive Sim",
+        "Party & Multiplayer",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "pain",
+      "games": [],
+      "genres": [
+        "Roguelike",
+        "Melee Action",
+        "Horror",
+        "Deckbuilder & Cards"
+      ]
+    },
+    {
+      "card": "dreams",
+      "games": [],
+      "genres": [
+        "Puzzle",
+        "RPG",
+        "Horror",
+        "Life Sim",
+        "Narrative"
+      ]
+    },
+    {
+      "card": "tears",
+      "games": [],
+      "genres": [
+        "Puzzle",
+        "Horror",
+        "Life Sim",
+        "Narrative"
+      ]
+    },
+    {
+      "card": "favors",
+      "games": [],
+      "genres": [
+        "RPG",
+        "Life Sim",
+        "Strategy",
+        "Narrative",
+        "Stealth & Immersive Sim",
+        "Party & Multiplayer"
+      ]
+    },
+    {
+      "card": "secrets",
+      "games": [],
+      "genres": [
+        "RPG",
+        "Horror",
+        "Deckbuilder & Cards",
+        "Narrative",
+        "Stealth & Immersive Sim",
+        "Party & Multiplayer"
+      ]
+    },
+    {
+      "card": "lies",
+      "games": [],
+      "genres": [
+        "Deckbuilder & Cards",
+        "Narrative",
+        "Stealth & Immersive Sim",
+        "Party & Multiplayer"
+      ]
+    },
+    {
+      "card": "goodwill",
+      "games": [],
+      "genres": [
+        "RPG",
+        "Builder & Management",
+        "Life Sim",
+        "Strategy",
+        "Narrative"
+      ]
+    },
+    {
+      "card": "debts",
+      "games": [],
+      "genres": [
+        "Roguelike",
+        "RPG",
+        "Builder & Management",
+        "Life Sim",
+        "Narrative"
+      ]
+    },
+    {
+      "card": "promises",
+      "games": [],
+      "genres": [
+        "RPG",
+        "Life Sim",
+        "Narrative"
+      ]
+    },
+    {
+      "card": "fans",
+      "games": [],
+      "genres": [
+        "Builder & Management",
+        "Life Sim",
+        "Vehicle Sim & Racing",
+        "Party & Multiplayer",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "crowd hype",
+      "games": [],
+      "genres": [
+        "Melee Action",
+        "Fighting",
+        "Vehicle Sim & Racing",
+        "Party & Multiplayer",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "invitations",
+      "games": [],
+      "genres": [
+        "Life Sim",
+        "Narrative",
+        "Party & Multiplayer"
+      ]
+    },
+    {
+      "card": "grapple charges",
+      "games": [],
+      "genres": [
+        "Metroidvania",
+        "Platformer",
+        "Shooter",
+        "Open World",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "glide time",
+      "games": [],
+      "genres": [
+        "Metroidvania",
+        "Platformer",
+        "Open World",
+        "Vehicle Sim & Racing"
+      ]
+    },
+    {
+      "card": "placeable platforms",
+      "games": [],
+      "genres": [
+        "Metroidvania",
+        "Platformer",
+        "Puzzle",
+        "Sandbox"
+      ]
+    },
+    {
+      "card": "height",
+      "games": [],
+      "genres": [
+        "Platformer",
+        "Open World",
+        "Vehicle Sim & Racing",
+        "Sandbox"
+      ]
+    },
+    {
+      "card": "speed",
+      "games": [],
+      "genres": [
+        "Roguelike",
+        "Platformer",
+        "Vehicle Sim & Racing",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "gravity flips",
+      "games": [],
+      "genres": [
+        "Metroidvania",
+        "Platformer",
+        "Puzzle",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "teleports",
+      "games": [],
+      "genres": [
+        "Roguelike",
+        "Metroidvania",
+        "Platformer",
+        "Puzzle",
+        "Shooter"
+      ]
+    },
+    {
+      "card": "stage edge",
+      "games": [],
+      "genres": [
+        "Platformer",
+        "Fighting",
+        "Party & Multiplayer"
+      ]
+    },
+    {
+      "card": "footing",
+      "games": [],
+      "genres": [
+        "Platformer",
+        "Melee Action",
+        "Fighting",
+        "Survival Craft"
+      ]
+    },
+    {
+      "card": "guard meter",
+      "games": [],
+      "genres": [
+        "Melee Action",
+        "Fighting",
+        "RPG"
+      ]
+    },
+    {
+      "card": "stagger",
+      "games": [],
+      "genres": [
+        "Shooter",
+        "Melee Action",
+        "Fighting"
+      ]
+    },
+    {
+      "card": "burst",
+      "games": [],
+      "genres": [
+        "Melee Action",
+        "Fighting",
+        "Party & Multiplayer"
+      ]
+    },
+    {
+      "card": "parries",
+      "games": [],
+      "genres": [
+        "Roguelike",
+        "Melee Action",
+        "Fighting",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "counters",
+      "games": [],
+      "genres": [
+        "Melee Action",
+        "Fighting",
+        "Strategy",
+        "Deckbuilder & Cards"
+      ]
+    },
+    {
+      "card": "beat streak",
+      "games": [],
+      "genres": [
+        "Fighting",
+        "Party & Multiplayer",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "accuracy",
+      "games": [],
+      "genres": [
+        "Shooter",
+        "Fighting",
+        "Vehicle Sim & Racing",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "tempo",
+      "games": [],
+      "genres": [
+        "Fighting",
+        "Strategy",
+        "Deckbuilder & Cards",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "groove",
+      "games": [],
+      "genres": [
+        "Life Sim",
+        "Party & Multiplayer",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "volume",
+      "games": [],
+      "genres": [
+        "Horror",
+        "Stealth & Immersive Sim",
+        "Party & Multiplayer",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "pieces",
+      "games": [],
+      "genres": [
+        "Puzzle",
+        "Builder & Management",
+        "Deckbuilder & Cards",
+        "Sandbox"
+      ]
+    },
+    {
+      "card": "mirrors",
+      "games": [],
+      "genres": [
+        "Platformer",
+        "Puzzle",
+        "Horror",
+        "Stealth & Immersive Sim"
+      ]
+    },
+    {
+      "card": "switches",
+      "games": [],
+      "genres": [
+        "Metroidvania",
+        "Platformer",
+        "Puzzle"
+      ]
+    },
+    {
+      "card": "tiles",
+      "games": [],
+      "genres": [
+        "Puzzle",
+        "Builder & Management",
+        "Strategy",
+        "Deckbuilder & Cards"
+      ]
+    },
+    {
+      "card": "matches",
+      "games": [],
+      "genres": [
+        "Puzzle",
+        "Survival Craft",
+        "Horror"
+      ]
+    },
+    {
+      "card": "ink",
+      "games": [],
+      "genres": [
+        "Puzzle",
+        "RPG",
+        "Deckbuilder & Cards",
+        "Narrative",
+        "Sandbox"
+      ]
+    },
+    {
+      "card": "paint",
+      "games": [],
+      "genres": [
+        "Platformer",
+        "Puzzle",
+        "Builder & Management",
+        "Life Sim",
+        "Sandbox"
+      ]
+    },
+    {
+      "card": "thread",
+      "games": [],
+      "genres": [
+        "Puzzle",
+        "Survival Craft",
+        "Life Sim",
+        "Narrative"
+      ]
+    },
+    {
+      "card": "glass",
+      "games": [],
+      "genres": [
+        "Puzzle",
+        "Survival Craft",
+        "Builder & Management",
+        "Sandbox"
+      ]
+    },
+    {
+      "card": "wax",
+      "games": [],
+      "genres": [
+        "Puzzle",
+        "Survival Craft",
+        "Horror",
+        "Life Sim"
+      ]
+    },
+    {
+      "card": "salt",
+      "games": [],
+      "genres": [
+        "Survival Craft",
+        "Horror",
+        "Builder & Management",
+        "Life Sim"
+      ]
+    },
+    {
+      "card": "glue",
+      "games": [],
+      "genres": [
+        "Puzzle",
+        "Builder & Management",
+        "Sandbox"
+      ]
+    },
+    {
+      "card": "brakes",
+      "games": [],
+      "genres": [
+        "Vehicle Sim & Racing",
+        "Sandbox",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "engine heat",
+      "games": [],
+      "genres": [
+        "Shooter",
+        "Vehicle Sim & Racing",
+        "Sandbox"
+      ]
+    },
+    {
+      "card": "passengers",
+      "games": [],
+      "genres": [
+        "Horror",
+        "Builder & Management",
+        "Life Sim",
+        "Vehicle Sim & Racing"
+      ]
+    },
+    {
+      "card": "altitude",
+      "games": [],
+      "genres": [
+        "Open World",
+        "Vehicle Sim & Racing",
+        "Sandbox"
+      ]
+    },
+    {
+      "card": "lift",
+      "games": [],
+      "genres": [
+        "Vehicle Sim & Racing",
+        "Sandbox"
+      ]
+    },
+    {
+      "card": "tailwind",
+      "games": [],
+      "genres": [
+        "Platformer",
+        "Vehicle Sim & Racing",
+        "Sandbox"
+      ]
+    },
+    {
+      "card": "spare parts",
+      "games": [],
+      "genres": [
+        "Survival Craft",
+        "Builder & Management",
+        "Vehicle Sim & Racing",
+        "Sandbox"
+      ]
+    },
+    {
+      "card": "words",
+      "games": [],
+      "genres": [
+        "Puzzle",
+        "Deckbuilder & Cards",
+        "Narrative",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "questions",
+      "games": [],
+      "genres": [
+        "Puzzle",
+        "Narrative",
+        "Party & Multiplayer"
+      ]
+    },
+    {
+      "card": "answers",
+      "games": [],
+      "genres": [
+        "Puzzle",
+        "Horror",
+        "Narrative",
+        "Party & Multiplayer"
+      ]
+    },
+    {
+      "card": "photos",
+      "games": [],
+      "genres": [
+        "Open World",
+        "Horror",
+        "Life Sim",
+        "Narrative"
+      ]
+    },
+    {
+      "card": "letters",
+      "games": [],
+      "genres": [
+        "Horror",
+        "Life Sim",
+        "Narrative"
+      ]
+    },
+    {
+      "card": "pages",
+      "games": [],
+      "genres": [
+        "Puzzle",
+        "RPG",
+        "Horror",
+        "Narrative"
+      ]
+    },
+    {
+      "card": "evidence",
+      "games": [],
+      "genres": [
+        "Puzzle",
+        "Narrative",
+        "Stealth & Immersive Sim",
+        "Party & Multiplayer"
+      ]
+    },
+    {
+      "card": "shadows",
+      "games": [],
+      "genres": [
+        "Metroidvania",
+        "Platformer",
+        "Puzzle",
+        "Horror",
+        "Stealth & Immersive Sim"
+      ]
+    },
+    {
+      "card": "silence",
+      "games": [],
+      "genres": [
+        "Horror",
+        "Narrative",
+        "Stealth & Immersive Sim",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "songs",
+      "games": [],
+      "genres": [
+        "RPG",
+        "Life Sim",
+        "Narrative",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "wishes",
+      "games": [],
+      "genres": [
+        "Puzzle",
+        "RPG",
+        "Life Sim",
+        "Deckbuilder & Cards",
+        "Narrative"
+      ]
+    },
+    {
+      "card": "dice",
+      "games": [],
+      "genres": [
+        "Roguelike",
+        "RPG",
+        "Strategy",
+        "Deckbuilder & Cards",
+        "Party & Multiplayer"
+      ]
+    },
+    {
+      "card": "stars",
+      "games": [],
+      "genres": [
+        "Platformer",
+        "Puzzle",
+        "Open World",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "fog",
+      "games": [],
+      "genres": [
+        "Survival Craft",
+        "Horror",
+        "Strategy",
+        "Stealth & Immersive Sim"
+      ]
+    },
+    {
+      "card": "bees",
+      "games": [],
+      "genres": [
+        "Survival Craft",
+        "Builder & Management",
+        "Life Sim",
+        "Sandbox"
+      ]
     }
   ],
   "Setting": [
@@ -14190,6 +16600,294 @@
       "games": [
         "Touhou Mystia's Izakaya"
       ]
+    },
+    {
+      "card": "laundromat",
+      "games": []
+    },
+    {
+      "card": "office cubicles",
+      "games": []
+    },
+    {
+      "card": "public library",
+      "games": []
+    },
+    {
+      "card": "shopping mall",
+      "games": []
+    },
+    {
+      "card": "parking garage",
+      "games": []
+    },
+    {
+      "card": "elevator",
+      "games": []
+    },
+    {
+      "card": "hotel",
+      "games": []
+    },
+    {
+      "card": "kitchen",
+      "games": []
+    },
+    {
+      "card": "motel",
+      "games": []
+    },
+    {
+      "card": "gas station",
+      "games": []
+    },
+    {
+      "card": "waiting room",
+      "games": []
+    },
+    {
+      "card": "hair salon",
+      "games": []
+    },
+    {
+      "card": "city bus",
+      "games": []
+    },
+    {
+      "card": "cruise ship",
+      "games": []
+    },
+    {
+      "card": "submarine",
+      "games": []
+    },
+    {
+      "card": "river barge",
+      "games": []
+    },
+    {
+      "card": "caravan",
+      "games": []
+    },
+    {
+      "card": "ice cream truck",
+      "games": []
+    },
+    {
+      "card": "ferris wheel",
+      "games": []
+    },
+    {
+      "card": "generation ship",
+      "games": []
+    },
+    {
+      "card": "inside a body",
+      "games": []
+    },
+    {
+      "card": "ant colony",
+      "games": []
+    },
+    {
+      "card": "dollhouse",
+      "games": []
+    },
+    {
+      "card": "terrarium",
+      "games": []
+    },
+    {
+      "card": "a coat pocket",
+      "games": []
+    },
+    {
+      "card": "under the bed",
+      "games": []
+    },
+    {
+      "card": "fishbowl",
+      "games": []
+    },
+    {
+      "card": "sock drawer",
+      "games": []
+    },
+    {
+      "card": "stone age",
+      "games": []
+    },
+    {
+      "card": "ancient Egypt",
+      "games": []
+    },
+    {
+      "card": "Roman empire",
+      "games": []
+    },
+    {
+      "card": "Viking age",
+      "games": []
+    },
+    {
+      "card": "medieval monastery",
+      "games": []
+    },
+    {
+      "card": "pirate age",
+      "games": []
+    },
+    {
+      "card": "Victorian city",
+      "games": []
+    },
+    {
+      "card": "roaring twenties",
+      "games": []
+    },
+    {
+      "card": "cold war bunker",
+      "games": []
+    },
+    {
+      "card": "1980s arcade",
+      "games": []
+    },
+    {
+      "card": "arctic station",
+      "games": []
+    },
+    {
+      "card": "savanna",
+      "games": []
+    },
+    {
+      "card": "steppe",
+      "games": []
+    },
+    {
+      "card": "rainforest",
+      "games": []
+    },
+    {
+      "card": "bayou",
+      "games": []
+    },
+    {
+      "card": "fjord",
+      "games": []
+    },
+    {
+      "card": "monsoon city",
+      "games": []
+    },
+    {
+      "card": "salt flats",
+      "games": []
+    },
+    {
+      "card": "tundra",
+      "games": []
+    },
+    {
+      "card": "glacier",
+      "games": []
+    },
+    {
+      "card": "server farm",
+      "games": []
+    },
+    {
+      "card": "virtual world",
+      "games": []
+    },
+    {
+      "card": "black hole edge",
+      "games": []
+    },
+    {
+      "card": "dyson sphere",
+      "games": []
+    },
+    {
+      "card": "cloning vats",
+      "games": []
+    },
+    {
+      "card": "terraformed moon",
+      "games": []
+    },
+    {
+      "card": "space junkyard",
+      "games": []
+    },
+    {
+      "card": "colony dome",
+      "games": []
+    },
+    {
+      "card": "giant's back",
+      "games": []
+    },
+    {
+      "card": "fairy court",
+      "games": []
+    },
+    {
+      "card": "dragon's hoard",
+      "games": []
+    },
+    {
+      "card": "sky city",
+      "games": []
+    },
+    {
+      "card": "crossroads inn",
+      "games": []
+    },
+    {
+      "card": "witch's hut",
+      "games": []
+    },
+    {
+      "card": "enchanted library",
+      "games": []
+    },
+    {
+      "card": "labyrinth",
+      "games": []
+    },
+    {
+      "card": "wedding",
+      "games": []
+    },
+    {
+      "card": "funeral",
+      "games": []
+    },
+    {
+      "card": "birthday party",
+      "games": []
+    },
+    {
+      "card": "night market",
+      "games": []
+    },
+    {
+      "card": "festival",
+      "games": []
+    },
+    {
+      "card": "game show",
+      "games": []
+    },
+    {
+      "card": "school dance",
+      "games": []
+    },
+    {
+      "card": "family reunion",
+      "games": []
     }
   ],
   "Mood": [
@@ -15187,6 +17885,294 @@
       "games": [
         "OMORI"
       ]
+    },
+    {
+      "card": "serene",
+      "games": []
+    },
+    {
+      "card": "tender",
+      "games": []
+    },
+    {
+      "card": "gentle",
+      "games": []
+    },
+    {
+      "card": "intimate",
+      "games": []
+    },
+    {
+      "card": "wistful",
+      "games": []
+    },
+    {
+      "card": "hushed",
+      "games": []
+    },
+    {
+      "card": "sleepy",
+      "games": []
+    },
+    {
+      "card": "soothing",
+      "games": []
+    },
+    {
+      "card": "airy",
+      "games": []
+    },
+    {
+      "card": "peaceful",
+      "games": []
+    },
+    {
+      "card": "uneasy",
+      "games": []
+    },
+    {
+      "card": "anxious",
+      "games": []
+    },
+    {
+      "card": "uncanny",
+      "games": []
+    },
+    {
+      "card": "ominous",
+      "games": []
+    },
+    {
+      "card": "haunting",
+      "games": []
+    },
+    {
+      "card": "suspicious",
+      "games": []
+    },
+    {
+      "card": "sinister",
+      "games": []
+    },
+    {
+      "card": "feverish",
+      "games": []
+    },
+    {
+      "card": "hostile",
+      "games": []
+    },
+    {
+      "card": "cold",
+      "games": []
+    },
+    {
+      "card": "tragic",
+      "games": []
+    },
+    {
+      "card": "mournful",
+      "games": []
+    },
+    {
+      "card": "despairing",
+      "games": []
+    },
+    {
+      "card": "cruel",
+      "games": []
+    },
+    {
+      "card": "vengeful",
+      "games": []
+    },
+    {
+      "card": "sickly",
+      "games": []
+    },
+    {
+      "card": "apocalyptic",
+      "games": []
+    },
+    {
+      "card": "hollow",
+      "games": []
+    },
+    {
+      "card": "numb",
+      "games": []
+    },
+    {
+      "card": "joyful",
+      "games": []
+    },
+    {
+      "card": "triumphant",
+      "games": []
+    },
+    {
+      "card": "giddy",
+      "games": []
+    },
+    {
+      "card": "festive",
+      "games": []
+    },
+    {
+      "card": "sunny",
+      "games": []
+    },
+    {
+      "card": "bouncy",
+      "games": []
+    },
+    {
+      "card": "euphoric",
+      "games": []
+    },
+    {
+      "card": "sweet",
+      "games": []
+    },
+    {
+      "card": "proud",
+      "games": []
+    },
+    {
+      "card": "awkward",
+      "games": []
+    },
+    {
+      "card": "flirty",
+      "games": []
+    },
+    {
+      "card": "petty",
+      "games": []
+    },
+    {
+      "card": "competitive",
+      "games": []
+    },
+    {
+      "card": "smug",
+      "games": []
+    },
+    {
+      "card": "defiant",
+      "games": []
+    },
+    {
+      "card": "jealous",
+      "games": []
+    },
+    {
+      "card": "embarrassing",
+      "games": []
+    },
+    {
+      "card": "cosmic",
+      "games": []
+    },
+    {
+      "card": "enchanted",
+      "games": []
+    },
+    {
+      "card": "psychedelic",
+      "games": []
+    },
+    {
+      "card": "otherworldly",
+      "games": []
+    },
+    {
+      "card": "sacred",
+      "games": []
+    },
+    {
+      "card": "mythic",
+      "games": []
+    },
+    {
+      "card": "majestic",
+      "games": []
+    },
+    {
+      "card": "eldritch",
+      "games": []
+    },
+    {
+      "card": "relentless",
+      "games": []
+    },
+    {
+      "card": "breathless",
+      "games": []
+    },
+    {
+      "card": "urgent",
+      "games": []
+    },
+    {
+      "card": "lazy",
+      "games": []
+    },
+    {
+      "card": "chill",
+      "games": []
+    },
+    {
+      "card": "rhythmic",
+      "games": []
+    },
+    {
+      "card": "wild",
+      "games": []
+    },
+    {
+      "card": "restless",
+      "games": []
+    },
+    {
+      "card": "campy",
+      "games": []
+    },
+    {
+      "card": "deadpan",
+      "games": []
+    },
+    {
+      "card": "satirical",
+      "games": []
+    },
+    {
+      "card": "retro",
+      "games": []
+    },
+    {
+      "card": "gritty",
+      "games": []
+    },
+    {
+      "card": "sleek",
+      "games": []
+    },
+    {
+      "card": "kitschy",
+      "games": []
+    },
+    {
+      "card": "theatrical",
+      "games": []
+    },
+    {
+      "card": "pulpy",
+      "games": []
+    },
+    {
+      "card": "lo-fi",
+      "games": []
     }
   ],
   "Modifier": [
@@ -20455,6 +23441,270 @@
       "games": [
         "The Binding of Isaac"
       ]
+    },
+    {
+      "card": "time only moves when you move",
+      "games": []
+    },
+    {
+      "card": "the same day restarts each morning",
+      "games": []
+    },
+    {
+      "card": "you live your life backwards",
+      "games": []
+    },
+    {
+      "card": "the past changes when you leave it",
+      "games": []
+    },
+    {
+      "card": "the future is already written down",
+      "games": []
+    },
+    {
+      "card": "only you remember each loop",
+      "games": []
+    },
+    {
+      "card": "every choice ages the world ten years",
+      "games": []
+    },
+    {
+      "card": "the map is alive",
+      "games": []
+    },
+    {
+      "card": "the world is tiny and you are huge",
+      "games": []
+    },
+    {
+      "card": "you only see through others' eyes",
+      "games": []
+    },
+    {
+      "card": "the rooms are bigger inside",
+      "games": []
+    },
+    {
+      "card": "the map lies to you",
+      "games": []
+    },
+    {
+      "card": "the camera is a character",
+      "games": []
+    },
+    {
+      "card": "the epic war is between ants",
+      "games": []
+    },
+    {
+      "card": "you are the side character",
+      "games": []
+    },
+    {
+      "card": "you run the shop heroes visit",
+      "games": []
+    },
+    {
+      "card": "you are the final boss",
+      "games": []
+    },
+    {
+      "card": "you are the dungeon",
+      "games": []
+    },
+    {
+      "card": "you are the weather",
+      "games": []
+    },
+    {
+      "card": "the townsfolk know they are in a game",
+      "games": []
+    },
+    {
+      "card": "the hero is a fraud",
+      "games": []
+    },
+    {
+      "card": "you are the villain's minion",
+      "games": []
+    },
+    {
+      "card": "kindness is your strongest weapon",
+      "games": []
+    },
+    {
+      "card": "the villain only needs a friend",
+      "games": []
+    },
+    {
+      "card": "the monsters are lonely",
+      "games": []
+    },
+    {
+      "card": "everyone you help helps you back",
+      "games": []
+    },
+    {
+      "card": "the end of the world is cozy",
+      "games": []
+    },
+    {
+      "card": "the haunted house wants guests",
+      "games": []
+    },
+    {
+      "card": "the enemies just want to go home",
+      "games": []
+    },
+    {
+      "card": "money is worthless",
+      "games": []
+    },
+    {
+      "card": "your health is your money",
+      "games": []
+    },
+    {
+      "card": "you pay with memories",
+      "games": []
+    },
+    {
+      "card": "the cheapest item is the best",
+      "games": []
+    },
+    {
+      "card": "everything you own is borrowed",
+      "games": []
+    },
+    {
+      "card": "you win by giving everything away",
+      "games": []
+    },
+    {
+      "card": "enemies follow the same rules you do",
+      "games": []
+    },
+    {
+      "card": "the tutorial never ends",
+      "games": []
+    },
+    {
+      "card": "the instructions are wrong",
+      "games": []
+    },
+    {
+      "card": "the save point is the danger",
+      "games": []
+    },
+    {
+      "card": "pausing has a price",
+      "games": []
+    },
+    {
+      "card": "the menu is part of the world",
+      "games": []
+    },
+    {
+      "card": "one rule is a lie",
+      "games": []
+    },
+    {
+      "card": "the last level is the first",
+      "games": []
+    },
+    {
+      "card": "you can only talk to the enemy",
+      "games": []
+    },
+    {
+      "card": "your rival is your only ally",
+      "games": []
+    },
+    {
+      "card": "all players share one body",
+      "games": []
+    },
+    {
+      "card": "the loser picks the next rule",
+      "games": []
+    },
+    {
+      "card": "each player sees a different game",
+      "games": []
+    },
+    {
+      "card": "the audience controls the enemies",
+      "games": []
+    },
+    {
+      "card": "the villain tells the story",
+      "games": []
+    },
+    {
+      "card": "the ending was the beginning",
+      "games": []
+    },
+    {
+      "card": "you are reading your own diary",
+      "games": []
+    },
+    {
+      "card": "every ending is the true one",
+      "games": []
+    },
+    {
+      "card": "the credits roll halfway through",
+      "games": []
+    },
+    {
+      "card": "the story is a lie told to you",
+      "games": []
+    },
+    {
+      "card": "the land fights back",
+      "games": []
+    },
+    {
+      "card": "the sun is the enemy",
+      "games": []
+    },
+    {
+      "card": "the sea rises because of you",
+      "games": []
+    },
+    {
+      "card": "the city is one creature",
+      "games": []
+    },
+    {
+      "card": "nature wants you gone",
+      "games": []
+    },
+    {
+      "card": "the rescued do not want rescuing",
+      "games": []
+    },
+    {
+      "card": "the prisoner is the guard",
+      "games": []
+    },
+    {
+      "card": "the cure is worse than the plague",
+      "games": []
+    },
+    {
+      "card": "everyone is lying, including you",
+      "games": []
+    },
+    {
+      "card": "doing right breaks the law",
+      "games": []
+    },
+    {
+      "card": "the reward is for the wrong side",
+      "games": []
     }
   ],
   "Progression": [
@@ -24193,6 +27443,587 @@
         "Shooter",
         "Sandbox"
       ]
+    },
+    {
+      "card": "move list grows",
+      "games": [],
+      "genres": [
+        "Platformer",
+        "Melee Action",
+        "Fighting",
+        "RPG"
+      ]
+    },
+    {
+      "card": "new fighting styles",
+      "games": [],
+      "genres": [
+        "Melee Action",
+        "Fighting",
+        "RPG",
+        "Open World"
+      ]
+    },
+    {
+      "card": "character endings unlock",
+      "games": [],
+      "genres": [
+        "Fighting",
+        "Narrative",
+        "Party & Multiplayer"
+      ]
+    },
+    {
+      "card": "rival roster grows",
+      "games": [],
+      "genres": [
+        "Melee Action",
+        "Fighting",
+        "Vehicle Sim & Racing",
+        "Party & Multiplayer"
+      ]
+    },
+    {
+      "card": "training ranks",
+      "games": [],
+      "genres": [
+        "Shooter",
+        "Melee Action",
+        "Fighting",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "signature moves unlock",
+      "games": [],
+      "genres": [
+        "Shooter",
+        "Melee Action",
+        "Fighting",
+        "Party & Multiplayer"
+      ]
+    },
+    {
+      "card": "new materials unlock",
+      "games": [],
+      "genres": [
+        "Puzzle",
+        "Survival Craft",
+        "Builder & Management",
+        "Sandbox"
+      ]
+    },
+    {
+      "card": "physics tools unlock",
+      "games": [],
+      "genres": [
+        "Puzzle",
+        "Vehicle Sim & Racing",
+        "Sandbox"
+      ]
+    },
+    {
+      "card": "creations get remixed by others",
+      "games": [],
+      "genres": [
+        "Platformer",
+        "Puzzle",
+        "Sandbox",
+        "Party & Multiplayer"
+      ]
+    },
+    {
+      "card": "world size grows",
+      "games": [],
+      "genres": [
+        "Open World",
+        "Survival Craft",
+        "Builder & Management",
+        "Sandbox"
+      ]
+    },
+    {
+      "card": "build limits rise",
+      "games": [],
+      "genres": [
+        "Builder & Management",
+        "Vehicle Sim & Racing",
+        "Strategy",
+        "Sandbox"
+      ]
+    },
+    {
+      "card": "spawn menu grows",
+      "games": [],
+      "genres": [
+        "Shooter",
+        "Sandbox",
+        "Party & Multiplayer"
+      ]
+    },
+    {
+      "card": "team rank rises",
+      "games": [],
+      "genres": [
+        "Shooter",
+        "Fighting",
+        "Vehicle Sim & Racing",
+        "Strategy",
+        "Party & Multiplayer"
+      ]
+    },
+    {
+      "card": "group trophies",
+      "games": [],
+      "genres": [
+        "Platformer",
+        "Puzzle",
+        "Party & Multiplayer",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "mini-games rotate",
+      "games": [],
+      "genres": [
+        "Life Sim",
+        "Party & Multiplayer",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "shared village grows",
+      "games": [],
+      "genres": [
+        "Survival Craft",
+        "Builder & Management",
+        "Life Sim",
+        "Party & Multiplayer"
+      ]
+    },
+    {
+      "card": "emotes unlock",
+      "games": [],
+      "genres": [
+        "Shooter",
+        "Fighting",
+        "Party & Multiplayer",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "house rules unlock",
+      "games": [],
+      "genres": [
+        "Puzzle",
+        "Strategy",
+        "Deckbuilder & Cards",
+        "Party & Multiplayer"
+      ]
+    },
+    {
+      "card": "new difficulty charts",
+      "games": [],
+      "genres": [
+        "Platformer",
+        "Fighting",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "combo multiplier tiers",
+      "games": [],
+      "genres": [
+        "Platformer",
+        "Shooter",
+        "Melee Action",
+        "Fighting",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "new instruments",
+      "games": [],
+      "genres": [
+        "Life Sim",
+        "Sandbox",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "song packs unlock",
+      "games": [],
+      "genres": [
+        "Party & Multiplayer",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "venues get bigger",
+      "games": [],
+      "genres": [
+        "Builder & Management",
+        "Life Sim",
+        "Party & Multiplayer",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "tempo speeds up",
+      "games": [],
+      "genres": [
+        "Roguelike",
+        "Platformer",
+        "Puzzle",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "map fills in",
+      "games": [],
+      "genres": [
+        "Metroidvania",
+        "RPG",
+        "Open World",
+        "Horror",
+        "Stealth & Immersive Sim"
+      ]
+    },
+    {
+      "card": "health fragments",
+      "games": [],
+      "genres": [
+        "Roguelike",
+        "Metroidvania",
+        "Platformer",
+        "Melee Action",
+        "RPG"
+      ]
+    },
+    {
+      "card": "lore rooms",
+      "games": [],
+      "genres": [
+        "Metroidvania",
+        "RPG",
+        "Horror",
+        "Narrative"
+      ]
+    },
+    {
+      "card": "fast travel points unlock",
+      "games": [],
+      "genres": [
+        "Metroidvania",
+        "RPG",
+        "Open World",
+        "Survival Craft"
+      ]
+    },
+    {
+      "card": "the world flips upside down",
+      "games": [],
+      "genres": [
+        "Metroidvania",
+        "Platformer",
+        "Puzzle",
+        "Horror"
+      ]
+    },
+    {
+      "card": "sealed doors remember you",
+      "games": [],
+      "genres": [
+        "Metroidvania",
+        "Puzzle",
+        "RPG",
+        "Horror"
+      ]
+    },
+    {
+      "card": "relics pile up",
+      "games": [],
+      "genres": [
+        "Roguelike",
+        "RPG",
+        "Deckbuilder & Cards"
+      ]
+    },
+    {
+      "card": "deck size cap rises",
+      "games": [],
+      "genres": [
+        "Strategy",
+        "Deckbuilder & Cards"
+      ]
+    },
+    {
+      "card": "cards evolve after use",
+      "games": [],
+      "genres": [
+        "Roguelike",
+        "RPG",
+        "Deckbuilder & Cards"
+      ]
+    },
+    {
+      "card": "new card types",
+      "games": [],
+      "genres": [
+        "Puzzle",
+        "Strategy",
+        "Deckbuilder & Cards"
+      ]
+    },
+    {
+      "card": "card rarities rise",
+      "games": [],
+      "genres": [
+        "Roguelike",
+        "Deckbuilder & Cards",
+        "Party & Multiplayer"
+      ]
+    },
+    {
+      "card": "draft new cards each fight",
+      "games": [],
+      "genres": [
+        "Roguelike",
+        "Strategy",
+        "Deckbuilder & Cards"
+      ]
+    },
+    {
+      "card": "star ratings",
+      "games": [],
+      "genres": [
+        "Platformer",
+        "Puzzle",
+        "Vehicle Sim & Racing",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "puzzles combine earlier rules",
+      "games": [],
+      "genres": [
+        "Metroidvania",
+        "Platformer",
+        "Puzzle",
+        "Narrative"
+      ]
+    },
+    {
+      "card": "a hidden layer of puzzles",
+      "games": [],
+      "genres": [
+        "Metroidvania",
+        "Puzzle",
+        "Open World",
+        "Narrative"
+      ]
+    },
+    {
+      "card": "optional brain-busters",
+      "games": [],
+      "genres": [
+        "Platformer",
+        "Puzzle",
+        "RPG"
+      ]
+    },
+    {
+      "card": "hints unlock over time",
+      "games": [],
+      "genres": [
+        "Puzzle",
+        "Horror",
+        "Narrative"
+      ]
+    },
+    {
+      "card": "solved rooms change shape",
+      "games": [],
+      "genres": [
+        "Metroidvania",
+        "Puzzle",
+        "Horror",
+        "Narrative"
+      ]
+    },
+    {
+      "card": "tuning parts",
+      "games": [],
+      "genres": [
+        "Vehicle Sim & Racing",
+        "Sandbox"
+      ]
+    },
+    {
+      "card": "sponsors join",
+      "games": [],
+      "genres": [
+        "Fighting",
+        "Builder & Management",
+        "Life Sim",
+        "Vehicle Sim & Racing"
+      ]
+    },
+    {
+      "card": "faster classes unlock",
+      "games": [],
+      "genres": [
+        "Vehicle Sim & Racing",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "new routes",
+      "games": [],
+      "genres": [
+        "Open World",
+        "Survival Craft",
+        "Builder & Management",
+        "Vehicle Sim & Racing"
+      ]
+    },
+    {
+      "card": "pit crew improves",
+      "games": [],
+      "genres": [
+        "Builder & Management",
+        "Vehicle Sim & Racing",
+        "Strategy"
+      ]
+    },
+    {
+      "card": "new gadgets",
+      "games": [],
+      "genres": [
+        "Metroidvania",
+        "Platformer",
+        "Shooter",
+        "Stealth & Immersive Sim"
+      ]
+    },
+    {
+      "card": "disguises unlock",
+      "games": [],
+      "genres": [
+        "Open World",
+        "Narrative",
+        "Stealth & Immersive Sim",
+        "Party & Multiplayer"
+      ]
+    },
+    {
+      "card": "more approaches open",
+      "games": [],
+      "genres": [
+        "Puzzle",
+        "Shooter",
+        "Open World",
+        "Stealth & Immersive Sim"
+      ]
+    },
+    {
+      "card": "alert levels persist",
+      "games": [],
+      "genres": [
+        "Shooter",
+        "Horror",
+        "Strategy",
+        "Stealth & Immersive Sim"
+      ]
+    },
+    {
+      "card": "intel reveals routes",
+      "games": [],
+      "genres": [
+        "Puzzle",
+        "Shooter",
+        "Strategy",
+        "Stealth & Immersive Sim"
+      ]
+    },
+    {
+      "card": "you grow older",
+      "games": [],
+      "genres": [
+        "RPG",
+        "Builder & Management",
+        "Life Sim",
+        "Narrative"
+      ]
+    },
+    {
+      "card": "powers fade with age",
+      "games": [],
+      "genres": [
+        "Melee Action",
+        "RPG",
+        "Open World",
+        "Narrative"
+      ]
+    },
+    {
+      "card": "you forget skills",
+      "games": [],
+      "genres": [
+        "Roguelike",
+        "RPG",
+        "Horror",
+        "Narrative"
+      ]
+    },
+    {
+      "card": "your home fills with keepsakes",
+      "games": [],
+      "genres": [
+        "Roguelike",
+        "Survival Craft",
+        "Life Sim",
+        "Narrative"
+      ]
+    },
+    {
+      "card": "friendships fade if ignored",
+      "games": [],
+      "genres": [
+        "RPG",
+        "Life Sim",
+        "Narrative"
+      ]
+    },
+    {
+      "card": "the music evolves",
+      "games": [],
+      "genres": [
+        "Platformer",
+        "Life Sim",
+        "Narrative",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "a diary fills in",
+      "games": [],
+      "genres": [
+        "Survival Craft",
+        "Horror",
+        "Life Sim",
+        "Narrative"
+      ]
+    },
+    {
+      "card": "the title screen changes",
+      "games": [],
+      "genres": [
+        "Roguelike",
+        "Puzzle",
+        "Horror",
+        "Narrative"
+      ]
     }
   ],
   "Constraint": [
@@ -27158,6 +30989,413 @@
         "Roguelike",
         "Shooter",
         "Survival Craft"
+      ]
+    },
+    {
+      "card": "Only real-world time",
+      "games": [],
+      "genres": [
+        "Survival Craft",
+        "Builder & Management",
+        "Life Sim",
+        "Strategy",
+        "Narrative"
+      ]
+    },
+    {
+      "card": "Only one sitting",
+      "games": [],
+      "genres": [
+        "Roguelike",
+        "Puzzle",
+        "Horror",
+        "Narrative",
+        "Party & Multiplayer"
+      ]
+    },
+    {
+      "card": "Only ten minutes a day",
+      "games": [],
+      "genres": [
+        "Puzzle",
+        "Builder & Management",
+        "Life Sim",
+        "Narrative",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "Only nighttime",
+      "games": [],
+      "genres": [
+        "Open World",
+        "Survival Craft",
+        "Horror",
+        "Life Sim",
+        "Stealth & Immersive Sim"
+      ]
+    },
+    {
+      "card": "Only one day",
+      "games": [],
+      "genres": [
+        "Puzzle",
+        "Horror",
+        "Builder & Management",
+        "Life Sim",
+        "Narrative",
+        "Stealth & Immersive Sim"
+      ]
+    },
+    {
+      "card": "Only one level, remixed",
+      "games": [],
+      "genres": [
+        "Roguelike",
+        "Metroidvania",
+        "Platformer",
+        "Puzzle",
+        "Shooter",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "Only one street",
+      "games": [],
+      "genres": [
+        "Open World",
+        "Horror",
+        "Builder & Management",
+        "Life Sim",
+        "Narrative",
+        "Stealth & Immersive Sim"
+      ]
+    },
+    {
+      "card": "Only a vertical climb",
+      "games": [],
+      "genres": [
+        "Roguelike",
+        "Metroidvania",
+        "Platformer",
+        "Survival Craft"
+      ]
+    },
+    {
+      "card": "No solid ground",
+      "games": [],
+      "genres": [
+        "Metroidvania",
+        "Platformer",
+        "Survival Craft",
+        "Vehicle Sim & Racing",
+        "Sandbox"
+      ]
+    },
+    {
+      "card": "Only a shrinking area",
+      "games": [],
+      "genres": [
+        "Roguelike",
+        "Shooter",
+        "Survival Craft",
+        "Strategy",
+        "Party & Multiplayer"
+      ]
+    },
+    {
+      "card": "No money",
+      "games": [],
+      "genres": [
+        "RPG",
+        "Open World",
+        "Survival Craft",
+        "Builder & Management",
+        "Life Sim",
+        "Strategy",
+        "Narrative"
+      ]
+    },
+    {
+      "card": "No shops",
+      "games": [],
+      "genres": [
+        "Roguelike",
+        "Metroidvania",
+        "Shooter",
+        "RPG",
+        "Open World",
+        "Survival Craft"
+      ]
+    },
+    {
+      "card": "No inventory",
+      "games": [],
+      "genres": [
+        "Platformer",
+        "Puzzle",
+        "Shooter",
+        "Melee Action",
+        "Horror",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "No crafting",
+      "games": [],
+      "genres": [
+        "RPG",
+        "Open World",
+        "Survival Craft",
+        "Life Sim",
+        "Sandbox"
+      ]
+    },
+    {
+      "card": "No randomness",
+      "games": [],
+      "genres": [
+        "Roguelike",
+        "Platformer",
+        "Puzzle",
+        "Fighting",
+        "Strategy",
+        "Deckbuilder & Cards"
+      ]
+    },
+    {
+      "card": "No stats",
+      "games": [],
+      "genres": [
+        "Shooter",
+        "Melee Action",
+        "Fighting",
+        "RPG",
+        "Strategy",
+        "Deckbuilder & Cards"
+      ]
+    },
+    {
+      "card": "No romance",
+      "games": [],
+      "genres": [
+        "RPG",
+        "Life Sim",
+        "Narrative"
+      ]
+    },
+    {
+      "card": "Only one friend",
+      "games": [],
+      "genres": [
+        "Puzzle",
+        "RPG",
+        "Horror",
+        "Life Sim",
+        "Narrative"
+      ]
+    },
+    {
+      "card": "Only one job",
+      "games": [],
+      "genres": [
+        "Builder & Management",
+        "Life Sim",
+        "Narrative",
+        "Stealth & Immersive Sim"
+      ]
+    },
+    {
+      "card": "No leaving home",
+      "games": [],
+      "genres": [
+        "Puzzle",
+        "Horror",
+        "Builder & Management",
+        "Life Sim",
+        "Narrative",
+        "Sandbox"
+      ]
+    },
+    {
+      "card": "Only what you grow",
+      "games": [],
+      "genres": [
+        "Survival Craft",
+        "Builder & Management",
+        "Life Sim"
+      ]
+    },
+    {
+      "card": "No days off",
+      "games": [],
+      "genres": [
+        "Survival Craft",
+        "Builder & Management",
+        "Life Sim",
+        "Narrative"
+      ]
+    },
+    {
+      "card": "No special moves",
+      "games": [],
+      "genres": [
+        "Platformer",
+        "Shooter",
+        "Melee Action",
+        "Fighting"
+      ]
+    },
+    {
+      "card": "Only mirror matches",
+      "games": [],
+      "genres": [
+        "Shooter",
+        "Melee Action",
+        "Fighting",
+        "Party & Multiplayer",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "Only ring-outs",
+      "games": [],
+      "genres": [
+        "Platformer",
+        "Fighting",
+        "Party & Multiplayer"
+      ]
+    },
+    {
+      "card": "No air moves",
+      "games": [],
+      "genres": [
+        "Platformer",
+        "Melee Action",
+        "Fighting"
+      ]
+    },
+    {
+      "card": "Only counterattacks",
+      "games": [],
+      "genres": [
+        "Melee Action",
+        "Fighting",
+        "Strategy",
+        "Deckbuilder & Cards",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "Only ten parts",
+      "games": [],
+      "genres": [
+        "Puzzle",
+        "Builder & Management",
+        "Vehicle Sim & Racing",
+        "Sandbox"
+      ]
+    },
+    {
+      "card": "No deleting",
+      "games": [],
+      "genres": [
+        "Puzzle",
+        "Builder & Management",
+        "Life Sim",
+        "Sandbox"
+      ]
+    },
+    {
+      "card": "Only one material",
+      "games": [],
+      "genres": [
+        "Puzzle",
+        "Survival Craft",
+        "Builder & Management",
+        "Sandbox"
+      ]
+    },
+    {
+      "card": "No blueprints",
+      "games": [],
+      "genres": [
+        "Survival Craft",
+        "Builder & Management",
+        "Vehicle Sim & Racing",
+        "Sandbox"
+      ]
+    },
+    {
+      "card": "Only one song",
+      "games": [],
+      "genres": [
+        "Platformer",
+        "Narrative",
+        "Party & Multiplayer",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "Only your own music",
+      "games": [],
+      "genres": [
+        "Platformer",
+        "Shooter",
+        "Vehicle Sim & Racing",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "No visual cues",
+      "games": [],
+      "genres": [
+        "Puzzle",
+        "Horror",
+        "Rhythm & Arcade"
+      ]
+    },
+    {
+      "card": "Only one ability at a time",
+      "games": [],
+      "genres": [
+        "Roguelike",
+        "Metroidvania",
+        "Platformer",
+        "Puzzle",
+        "Shooter",
+        "Melee Action"
+      ]
+    },
+    {
+      "card": "No new abilities",
+      "games": [],
+      "genres": [
+        "Metroidvania",
+        "Platformer",
+        "Puzzle",
+        "Open World",
+        "Stealth & Immersive Sim"
+      ]
+    },
+    {
+      "card": "Only abilities you trade for",
+      "games": [],
+      "genres": [
+        "Roguelike",
+        "Metroidvania",
+        "Platformer",
+        "RPG"
+      ]
+    },
+    {
+      "card": "Only backtracking",
+      "games": [],
+      "genres": [
+        "Metroidvania",
+        "Puzzle",
+        "Horror",
+        "Narrative"
       ]
     }
   ]
