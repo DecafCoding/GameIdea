@@ -33,9 +33,11 @@ test.describe('first load', { tag: '@timing' }, () => {
     await page.addInitScript((b) => {
       window.__GAMEIDEA_E2E_BOARD__ = b;
     }, board);
+    // A hash change alone would not reload the page (so the init script would not run), and
+    // a reload after it would time two loads. Leave the app first, then load the board once.
+    await page.goto('about:blank');
     start = Date.now();
     await page.goto(`/#/board/${board.id}`);
-    await page.reload();
     await expect(
       page.getByRole('button', { name: 'Draw A Player Role', exact: true }).first(),
     ).toBeEnabled();
