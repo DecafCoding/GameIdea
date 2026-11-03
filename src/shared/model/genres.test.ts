@@ -6,7 +6,7 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { GENRES } from '.';
+import { GENRE_NAME, GENRES } from '.';
 
 /** "Builder & Management" becomes "builder-management". */
 function kebab(name: string): string {
@@ -28,5 +28,13 @@ describe('GENRES', () => {
     expect(GENRES).toHaveLength(21);
     expect(new Set(GENRES).size).toBe(21);
     expect(GENRES as readonly string[]).not.toContain(`generic`);
+  });
+});
+
+describe('GENRE_NAME', () => {
+  it('genreName_everyGenre_matchesLibraryKeyInOrder', () => {
+    const file = join(process.cwd(), 'docs', 'libraries', 'genres.json');
+    const names = Object.keys(JSON.parse(readFileSync(file, 'utf8')) as Record<string, unknown>);
+    expect(GENRES.map((g) => GENRE_NAME[g])).toEqual(names);
   });
 });

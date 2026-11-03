@@ -6,6 +6,8 @@
  * - One changeBoard call is one finished change: one undo step and one save.
  * - setView (pan and zoom) saves but is never an undo step and does not stamp updatedAt.
  * - openBoard is not an undo step, clears the history and does not save unless asked.
+ * - setGenres saves and stamps updatedAt but is never an undo step; undo and redo keep the
+ *   current genres, like the view.
  * - undo and redo restore the board but keep the current view; each one saves.
  * - saveSeq counts finished changes. The autosave watcher in shared/storage saves when it
  *   changes, so loading a board never saves.
@@ -17,7 +19,7 @@
 import { create, useStore, type StoreApi } from 'zustand';
 import { useShallow } from 'zustand/shallow';
 import { temporal, type TemporalState } from 'zundo';
-import type { Board, BoardView } from '@/shared/model';
+import type { Board, BoardView, DeckGenres } from '@/shared/model';
 import { newBoard } from './newBoard';
 
 export const UNDO_LIMIT = 100;
@@ -38,6 +40,11 @@ export interface BoardState {
   changeBoard: (recipe: (board: Board) => Board) => void;
   /** Stores pan and zoom. Saves; not an undo step, and it does not stamp updatedAt. */
   setView: (view: BoardView) => void;
+  /**
+   * Replaces the board's deck genres. Saves and stamps updatedAt; never an undo step. The
+   * same object changes nothing.
+   */
+  setGenres: (genres: DeckGenres) => void;
   /** Steps back one change, keeping the current view. No-op with no history. */
   undo: () => void;
   /** Re-applies the last undone change, keeping the current view. */
@@ -61,17 +68,20 @@ export const useBoardStore = create<BoardState>()(
         history.resume();
       }
 
-      /** Runs a zundo step, then puts the view back and stamps the board as a new change. */
+      /**
+       * Runs a zundo step, then puts the view and genres back and stamps the board as a new
+       * change. zundo's past states still hold old genres, so they must not come back.
+       */
       function step(direction: 'undo' | 'redo') {
         const history = historyStore().getState();
         const available =
           direction === 'undo' ? history.pastStates.length : history.futureStates.length;
         if (available === 0) return;
-        const { view } = get().board;
+        const { view, genres } = get().board;
         history[direction]();
         const { board, saveSeq } = get();
         untracked({
-          board: { ...board, view, updatedAt: new Date().toISOString() },
+          board: { ...board, view, genres, updatedAt: new Date().toISOString() },
           saveSeq: saveSeq + 1,
         });
       }
@@ -95,6 +105,14 @@ export const useBoardStore = create<BoardState>()(
         setView: (view) => {
           const { board, saveSeq } = get();
           untracked({ board: { ...board, view }, saveSeq: saveSeq + 1 });
+        },
+        setGenres: (genres) => {
+          const { board, saveSeq } = get();
+          if (genres === board.genres) return;
+          untracked({
+            board: { ...board, genres, updatedAt: new Date().toISOString() },
+            saveSeq: saveSeq + 1,
+          });
         },
         undo: () => step('undo'),
         redo: () => step('redo'),

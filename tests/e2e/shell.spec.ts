@@ -31,7 +31,12 @@ test('shell_deckButtons_are36Tall', async ({ page }) => {
 test('shell_rail_showsGroupLabelsInOrder', async ({ page }) => {
   await openBoard(page);
   // The labels are written in Title Case and drawn uppercase by CSS (design 8.2).
-  await expect(rail(page).getByRole('heading')).toHaveText(['Core', 'Modifiers', 'Optional']);
+  await expect(rail(page).getByRole('heading')).toHaveText([
+    'Core',
+    'Modifiers',
+    'Optional',
+    'Genres',
+  ]);
   await expect(rail(page).getByRole('heading').first()).toHaveCSS('text-transform', 'uppercase');
   const modifier = rail(page).getByRole('button', { name: 'Draw A Setting Modifier' });
   await expect(modifier).toHaveAttribute('title', 'Setting Modifier');

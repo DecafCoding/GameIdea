@@ -122,6 +122,51 @@ describe('boardStore undo', () => {
   });
 });
 
+describe('boardStore genres', () => {
+  const store = () => useBoardStore.getState();
+  const history = () => useBoardStore.temporal.getState();
+  const narrowed = () => ({ ...allGenresOn(), mechanic: ['puzzle' as const] });
+
+  it('setGenres_newGenres_savesAndStampsWithoutUndoStep', () => {
+    const seq = store().saveSeq;
+    const genres = narrowed();
+    store().setGenres(genres);
+    expect(store().board.genres).toBe(genres);
+    expect(store().saveSeq).toBe(seq + 1);
+    expect(store().board.updatedAt).not.toBe(OLD);
+    expect(history().pastStates).toHaveLength(0);
+  });
+
+  it('setGenres_sameObject_noChange', () => {
+    const before = store().board;
+    const seq = store().saveSeq;
+    store().setGenres(before.genres);
+    expect(store().board).toBe(before);
+    expect(store().saveSeq).toBe(seq);
+  });
+
+  it('undo_afterGenreChange_keepsCurrentGenres', () => {
+    store().changeBoard((b) => ({ ...b, name: 'Drift' }));
+    const genres = narrowed();
+    store().setGenres(genres);
+    const seq = store().saveSeq;
+    store().undo();
+    expect(store().board.name).toBe('Untitled Board');
+    expect(store().board.genres).toBe(genres);
+    expect(store().saveSeq).toBe(seq + 1);
+  });
+
+  it('redo_afterGenreChange_keepsCurrentGenres', () => {
+    store().changeBoard((b) => ({ ...b, name: 'Drift' }));
+    store().undo();
+    const genres = narrowed();
+    store().setGenres(genres);
+    store().redo();
+    expect(store().board.name).toBe('Drift');
+    expect(store().board.genres).toBe(genres);
+  });
+});
+
 describe('newBoard', () => {
   it('newBoard_defaults_emptyBoardAtFormatVersion', () => {
     const board = newBoard({ id: 'b1', now: OLD });

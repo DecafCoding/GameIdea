@@ -388,7 +388,16 @@ npm run build &amp;&amp; npm run size &amp;&amp; npx vitest run src/shared/pools
 <p><code>undo-history</code> (genre changes kept out of undo), <code>save-transaction</code> (a genre change saves like any other change), <code>state-store</code> (Zustand + zundo; the change lives in <code>shared/store</code>), <code>schema-shape</code> and <code>board-file-format</code> (no shape change; <code>genres</code> already has its v1 shape), <code>schema-versions</code> (FORMAT_VERSION stays 1), <code>module-layout</code> (new <code>features/genres/</code>: Genres panel, genre counts), <code>import-rules</code> (draw and genres stay independent; app composes), <code>architecture-pattern</code>, <code>pool-files</code> (amended, settled: one split already done, JSON is the source, floors 10/20), <code>storage-seam</code> (unchanged), <code>tab-sync</code> (unchanged), <code>test-tools</code>, <code>test-data</code>, <code>outside-code</code> (no new dependency), <code>nfr-targets</code>, <code>ci</code>. None is <code>data-status="open"</code>. No architecture decision changes.</p>
 
 <h3>Pool check</h3>
-<p>To be filled by Task 9. At planning (2026-11-03) the in-memory comparison reported MATCH for all 11 decks when comparing parsed JSON (role 467, mechanic 380, goal 314, conflict 351, resource 272, setting 279, mood 145, modifier 503, twist 224, progression 352, constraint 222); a text comparison shows DIFF for the 5 decks with arrays only because Prettier wrapped them.</p>
+<p><strong>Task 9 result (2026-11-03, execution):</strong> <code>public/pools/</code> unchanged since <code>db0d494</code> (STRICT=1); the split CLI was not run and nothing was written. <code>poolFiles.test.ts</code> and <code>splitDecks.test.ts</code>: 23 tests pass. In-memory comparison of parsed JSON: MATCH for all 11 decks (role 467, mechanic 380, goal 314, conflict 351, resource 272, setting 279, mood 145, modifier 503, twist 224, progression 352, constraint 222). Per-genre minimums, each over 21 genres: mechanic metroidvania 33, resource metroidvania 28, progression sandbox 28, constraint fighting 42 (floor 10). Exit 0.</p>
+<p>At planning (2026-11-03) the in-memory comparison reported MATCH for all 11 decks when comparing parsed JSON (role 467, mechanic 380, goal 314, conflict 351, resource 272, setting 279, mood 145, modifier 503, twist 224, progression 352, constraint 222); a text comparison shows DIFF for the 5 decks with arrays only because Prettier wrapped them.</p>
+
+<h3>Execution notes</h3>
+<ul>
+  <li>DECISION: The panel's open state is the board id it was opened on (<code>genresOpenOn</code> in BoardScreen), so it closes by itself when another board opens.</li>
+  <li>DECISION: The shared Dialog wraps the title, close button and caption in a header block (gap 4); the caption's old -10 px margin against the 14 px column gap gave the same 4 px, so the default and wide dialogs look unchanged.</li>
+  <li>DECISION: The real-pool browser test reads drawn cue texts from the stored board (not the clamped edge labels) and reloads after narrowing, so the filter is proven against the saved genres.</li>
+  <li>DECISION: <code>tests/e2e/shell.spec.ts</code> heading order updated to Core, Modifiers, Optional, Genres (the Task 10 regression the plan predicted).</li>
+</ul>
 
 <h3>Decisions and assumptions</h3>
 <ul>
