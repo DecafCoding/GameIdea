@@ -1,6 +1,7 @@
 /**
- * SideRail: the 240 px rail (design section 8): the Decks label, 5 deck buttons in deck
- * order, Add Note, and the help panel pinned to the bottom.
+ * SideRail: the 232 px rail (design 8.2): the Decks group label, 5 deck buttons in rail
+ * order, Add Note, and the help panel pinned to the bottom. The grouped rail (Hook Card,
+ * Core, Modifiers, Optional, Genres) and Settings come in later phases.
  */
 import { DeckButton } from '@/features/draw';
 import { CARD_TYPES, type CardType } from '@/shared/model';

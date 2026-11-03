@@ -75,9 +75,9 @@ test('notes_editTitle_keepsTitleAfterClickOutside', async ({ page }) => {
   await expect(note(page).getByText('Logline', { exact: true })).toBeVisible();
 });
 
-test('notes_bodyWhiteHeaderPaper', async ({ page }) => {
+test('notes_bodyAndHeader_useNotePaper', async ({ page }) => {
   await openBoard(page, fixtureBoard([], [fixtureNote({ x: 96, y: 96, text: 'Body' })]));
-  expectRgbNear(await backgroundRgb(note(page)), [255, 255, 255]);
+  expectRgbNear(await backgroundRgb(note(page)), [0xfb, 0xf6, 0xe4]);
   const header = note(page).locator('[data-note-title]').locator('..');
   expectRgbNear(await backgroundRgb(header), [0xfb, 0xf6, 0xe4]);
 });

@@ -1,4 +1,7 @@
-/* TopBar: 56 px, --panel, app mark link, divider, board name, Undo, Redo and Export. */
+/*
+ * TopBar (design 8.1): 56 px, --surface, app mark link, divider, board name, Undo, Redo and
+ * Export. Raw sizes come from design 8.1.
+ */
 .bar {
   grid-area: top;
   /* Above the canvas region and its banners, so the Export menu opens over them. */
@@ -30,7 +33,7 @@
   flex: none;
   width: 28px;
   height: 28px;
-  border-radius: var(--radius-button);
+  border-radius: 6px;
   background: var(--accent);
   color: var(--on-accent);
 }
@@ -49,10 +52,10 @@
 
 .name {
   width: 220px;
-  height: var(--button-h);
-  padding: 0 8px;
+  min-height: var(--button-h);
+  padding: 8px 10px;
   border: 1px solid transparent;
-  border-radius: var(--radius-button);
+  border-radius: 6px;
   background: transparent;
   color: var(--text);
   font-family: var(--font-body);
@@ -67,6 +70,11 @@
 
 .gap {
   flex: 1;
+}
+
+/* Undo and Redo sit 4 apart; the bar's 16 px gap minus 12. */
+.history + .history {
+  margin-left: -12px;
 }
 
 .history {

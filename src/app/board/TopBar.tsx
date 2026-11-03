@@ -1,5 +1,5 @@
 /**
- * TopBar: the board screen's 56 px top bar (design section 8): the app mark and wordmark
+ * TopBar: the board screen's 56 px top bar (design 8.1): the app mark and wordmark
  * as one link to the board list, the board name field, the save mark, and Undo and Redo,
  * enabled while the undo history has a step, then the Export menu.
  */
@@ -38,7 +38,7 @@ export function TopBar() {
         disabled={!canUndo}
         onClick={() => useBoardStore.getState().undo()}
       >
-        <Icon name="undo" size={16} />
+        <Icon name="undo" size={18} />
       </button>
       <button
         type="button"
@@ -47,7 +47,7 @@ export function TopBar() {
         disabled={!canRedo}
         onClick={() => useBoardStore.getState().redo()}
       >
-        <Icon name="redo" size={16} />
+        <Icon name="redo" size={18} />
       </button>
       <ExportButton name={name} getBoard={() => useBoardStore.getState().board} />
     </header>

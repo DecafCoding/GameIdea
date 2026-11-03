@@ -1,10 +1,10 @@
-/* CountBadge: bottom left, 12 px, --panel. */
+/* CountBadge (design 8.3): 16 from the bottom and left, padding 8 12, radius 8, 12 px text. */
 .badge {
   position: absolute;
   left: 16px;
   bottom: 16px;
   z-index: 5;
-  padding: 6px 10px;
+  padding: 8px 12px;
   border-radius: var(--radius-button);
   background: var(--surface);
   color: var(--text-muted);

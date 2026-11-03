@@ -1,4 +1,4 @@
-/* ZoomStrip: bottom right, 4 px padding, --panel, --shadow-strip, 44 px buttons. */
+/* ZoomStrip (design 8.3): 16 from the bottom and right, padding 4, radius 10, --surface, border 1, 44 px buttons. */
 .strip {
   position: absolute;
   right: 16px;
@@ -7,7 +7,8 @@
   display: flex;
   gap: 2px;
   padding: 4px;
-  border-radius: var(--radius-panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
   background: var(--surface);
   box-shadow: var(--shadow-menu);
 }

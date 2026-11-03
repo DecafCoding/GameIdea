@@ -301,17 +301,17 @@ test('tokens_shell_rendersAtLockedValues', async ({ page }) => {
   const topBar = page.locator('header');
   expect((await boxOf(topBar)).height).toBe(56);
   await expect(topBar).toHaveCSS('background-color', 'rgb(35, 39, 47)');
-  expect((await boxOf(rail(page))).width).toBe(240);
+  expect((await boxOf(rail(page))).width).toBe(232);
   expect((await boxOf(rail(page).getByRole('button', { name: 'Draw A Player Role' }))).height).toBe(
-    56,
+    36,
   );
   for (const name of ['Zoom Out', 'Reset Zoom', 'Zoom In', 'Fit']) {
     expect((await boxOf(page.getByRole('button', { name, exact: true }))).height).toBe(44);
   }
-  // The note body is white; its header band keeps --paper-note.
-  await expect(page.getByTestId('note')).toHaveCSS('background-color', 'rgb(255, 255, 255)');
-  // A tucked Goal: 14 percent of --type-goal mixed into --paper-under-1.
-  expectRgbNear(await backgroundRgb(cardById(page, 'goal-1')), [214, 223, 211]);
+  // The note body is note paper, --note-bg (design 9.12).
+  await expect(page.getByTestId('note')).toHaveCSS('background-color', 'rgb(251, 246, 228)');
+  // A tucked Goal: 14 percent of --deck-goal mixed into --card-tucked-1.
+  expectRgbNear(await backgroundRgb(cardById(page, 'goal-1')), [212, 219, 208]);
 
   await cardById(page, 'role-1').click({ position: { x: 30, y: 30 } });
   const selected = page.locator('.react-flow__node[data-id="role-1"] [data-selected]');

@@ -148,14 +148,14 @@ test.describe('with pools loaded', () => {
     expect(box?.width).toBe(250);
     expect(box?.height).toBe(250);
     await expect(card).toHaveCSS('border-radius', '14px');
-    // 14 percent of --type-role mixed into --paper.
-    expectRgbNear(await backgroundRgb(card), [218, 222, 227]);
+    // 14 percent of --deck-role mixed into --card-face.
+    expectRgbNear(await backgroundRgb(card), [216, 220, 224]);
 
     const disc = card.getByTestId('type-disc');
     const discBox = await disc.boundingBox();
     expect(discBox?.width).toBe(48);
     expect(discBox?.height).toBe(48);
-    await expect(disc).toHaveCSS('background-color', 'rgb(59, 111, 209)');
+    await expect(disc).toHaveCSS('background-color', 'rgb(47, 95, 184)');
 
     const cue = activeCue(card);
     await expect(cue).toHaveCSS('font-size', '15px');

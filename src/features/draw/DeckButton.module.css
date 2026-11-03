@@ -1,13 +1,17 @@
-/* DeckButton: 56 px, --ground, --line border, radius 10, disc, name and caption. */
+/*
+ * DeckButton (design 8.2): min 36 px, full width, padding 4 10, radius 8, --border, --bg,
+ * gap 10; the 18 px icon in the deck rail color and the 14 / 600 deck name. 36 px is a
+ * recorded design deviation from the 44 px hit target (CLAUDE.md Conventions).
+ */
 .deck {
   display: flex;
   align-items: center;
   gap: 10px;
   width: 100%;
-  height: 56px;
-  padding: 0 10px;
+  min-height: var(--rail-button-h);
+  padding: 4px 10px;
   border: 1px solid var(--border);
-  border-radius: var(--radius-panel);
+  border-radius: var(--radius-button);
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-body);
@@ -23,27 +27,21 @@
   transform: scale(0.97);
 }
 
-.deck:disabled,
-.deck:disabled .caption {
+.deck:disabled {
   color: var(--text-disabled);
   cursor: default;
 }
 
-.words {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
+.deck:disabled .icon {
+  opacity: 0.5;
+}
+
+.icon {
+  display: inline-flex;
+  flex: none;
 }
 
 .name {
   font-size: 14px;
   font-weight: 600;
-}
-
-.caption {
-  overflow: hidden;
-  font-size: 12px;
-  color: var(--text-muted);
-  white-space: nowrap;
-  text-overflow: ellipsis;
 }
