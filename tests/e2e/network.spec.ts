@@ -1,7 +1,8 @@
 /**
  * Network test (nfr-targets privacy and security rows): a full session over the board list,
- * a board, every deck, a note, the card test page, both exports and an import sends no
- * request to any address other than the app's own.
+ * a board, every deck, a note, Settings (Light, Green, snap), the card test page, both
+ * exports, the board menu export and an import sends no request to any address other than
+ * the app's own.
  */
 import { readFile } from 'node:fs/promises';
 import { expect, test } from './test';
@@ -46,6 +47,17 @@ test('network_fullSession_onlyOwnAddress', async ({ page }) => {
     );
   }
   await rail(page).getByRole('button', { name: 'Add Note' }).click();
+  await page.keyboard.press('Escape');
+
+  // Settings: Light, Green and snap off and on again.
+  await rail(page).getByRole('button', { name: 'Settings' }).click();
+  const settings = page.getByRole('dialog', { name: 'Settings' });
+  await settings.getByRole('radio', { name: 'Light' }).click();
+  await settings.getByRole('radio', { name: 'Green' }).click();
+  await settings.getByRole('switch', { name: 'Snap To Grid' }).click();
+  await settings.getByRole('switch', { name: 'Snap To Grid' }).click();
+  await settings.getByRole('button', { name: 'Done' }).click();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'green');
 
   // The card test page.
   await page.goto('/#/card-test');
