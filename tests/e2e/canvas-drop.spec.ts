@@ -35,7 +35,7 @@ async function expectBelow(page: Page, id: string, parentId: string) {
     .poll(async () => {
       const card = await boxOf(cardById(page, id));
       const parent = await boxOf(cardById(page, parentId));
-      return Math.abs(card.y - parent.y - 59) <= 1 && Math.abs(card.x - parent.x) <= 1;
+      return Math.abs(card.y - parent.y - 56) <= 1 && Math.abs(card.x - parent.x) <= 1;
     })
     .toBe(true);
 }
@@ -51,7 +51,7 @@ test.describe('tuck', () => {
         fixtureCard('goal', { x: 528, y: 96, z: 2 }),
       ]),
     );
-    await dragTo(page, cardById(page, 'goal-1'), await pointOn(page, 'role-1', 125, 125));
+    await dragTo(page, cardById(page, 'goal-1'), await pointOn(page, 'role-1', 100, 100));
     await expectBelow(page, 'goal-1', 'role-1');
     await expect(cardById(page, 'goal-1')).toHaveAttribute('data-paper', 'under-1');
   });
@@ -63,8 +63,8 @@ test.describe('tuck', () => {
     for (let i = 1; i < ids.length; i++) {
       const parent = await boxOf(cardById(page, ids[i - 1]!));
       const tucked = await boxOf(cardById(page, ids[i]!));
-      expect(await typeAt(page, tucked.x + 125, parent.y + 222)).toBe(types[i - 1]);
-      expect(await typeAt(page, tucked.x + 125, tucked.y + 222)).toBe(types[i]);
+      expect(await typeAt(page, tucked.x + 100, parent.y + 178)).toBe(types[i - 1]);
+      expect(await typeAt(page, tucked.x + 100, tucked.y + 178)).toBe(types[i]);
     }
     await expect(cardById(page, 'conflict-1')).toHaveAttribute('data-paper', 'under-2');
   });
@@ -87,7 +87,7 @@ test.describe('tuck', () => {
   test('tuck_dragTuckedCardToPane_untucks', async ({ page }) => {
     await open(page, fixtureBoard(fixtureStack(96, 96)));
     const target = await emptyPanePoint(page);
-    await dragTo(page, cardById(page, 'conflict-1'), target, { x: 30, y: 225 });
+    await dragTo(page, cardById(page, 'conflict-1'), target, { x: 30, y: 180 });
     await expect
       .poll(async () => (await boxOf(cardById(page, 'conflict-1'))).x)
       .toBeCloseTo(target.x - 30, 0);
@@ -97,7 +97,7 @@ test.describe('tuck', () => {
     await dragBy(page, cardById(page, 'role-1'), 0, 40);
     await expect
       .poll(async () => (await boxOf(cardById(page, 'goal-1'))).y)
-      .toBeCloseTo((await boxOf(cardById(page, 'role-1'))).y + 59, 0);
+      .toBeCloseTo((await boxOf(cardById(page, 'role-1'))).y + 56, 0);
     expect((await boxOf(cardById(page, 'conflict-1'))).y).toBeCloseTo(conflict.y, 0);
   });
 
@@ -110,7 +110,7 @@ test.describe('tuck', () => {
       ]),
     );
     // Into the 72 px band under the Player Role's bottom edge.
-    const band = await pointOn(page, 'role-1', 125, 280);
+    const band = await pointOn(page, 'role-1', 100, 230);
     await dragTo(page, cardById(page, 'goal-1'), band, undefined, false);
     const slot = page.getByTestId('hint-slot');
     await expect(slot).toBeVisible();
@@ -131,7 +131,7 @@ test.describe('tuck', () => {
     await dragTo(
       page,
       cardById(page, 'conflict-1'),
-      await pointOn(page, 'setting-1', 125, 125),
+      await pointOn(page, 'setting-1', 100, 100),
       undefined,
       false,
     );
@@ -177,7 +177,7 @@ test.describe('combine', () => {
 
   test('combine_setting_followsRoleRules', async ({ page }) => {
     await open(page, pair('setting'));
-    await dragTo(page, cardById(page, 'modifier-1'), await pointOn(page, 'setting-1', 125, 125));
+    await dragTo(page, cardById(page, 'modifier-1'), await pointOn(page, 'setting-1', 100, 100));
     await expect(cardById(page, 'modifier-1')).toHaveCount(0);
     await expect(cardById(page, 'setting-1').getByTestId('active-cue')).toHaveText(
       'exiled outpost',
@@ -189,7 +189,7 @@ test.describe('combine', () => {
 
   test('swap_centerDrop_swapsAdjectivesAndPlacesModifierBeside', async ({ page }) => {
     await open(page, combinedPair());
-    await dragTo(page, cardById(page, 'modifier-2'), await pointOn(page, 'role-1', 125, 125));
+    await dragTo(page, cardById(page, 'modifier-2'), await pointOn(page, 'role-1', 100, 100));
     const role = cardById(page, 'role-1');
     const modifier = cardById(page, 'modifier-2');
     await expect(role.getByTestId('active-cue')).toHaveText('devout navigator');
@@ -207,7 +207,7 @@ test.describe('combine', () => {
     await dragTo(
       page,
       cardById(page, 'modifier-2'),
-      await pointOn(page, 'role-1', 125, 125),
+      await pointOn(page, 'role-1', 100, 100),
       undefined,
       false,
     );
@@ -215,7 +215,7 @@ test.describe('combine', () => {
     await expect(zones).toBeVisible();
     await expect(zones.getByText('Swap')).toHaveAttribute('data-active', 'true');
     await expect(zones.getByText('Add On Top')).toHaveAttribute('data-active', 'false');
-    const edge = await pointOn(page, 'role-1', 30, 220);
+    const edge = await pointOn(page, 'role-1', 30, 176);
     await page.mouse.move(edge.x, edge.y, { steps: 4 });
     await expect(zones.getByText('Add On Top')).toHaveAttribute('data-active', 'true');
     await page.mouse.up();
@@ -224,7 +224,7 @@ test.describe('combine', () => {
   test('onTop_edgeDrop_putsModifierOnTopOfCard', async ({ page }) => {
     await open(page, combinedPair());
     const before = await boxOf(cardById(page, 'role-1'));
-    await dragTo(page, cardById(page, 'modifier-2'), await pointOn(page, 'role-1', 125, 220));
+    await dragTo(page, cardById(page, 'modifier-2'), await pointOn(page, 'role-1', 100, 176));
     await expectBelow(page, 'role-1', 'modifier-2');
     await expect
       .poll(async () => {
@@ -242,7 +242,7 @@ test.describe('combine', () => {
     card.rings[1] = { ...card.rings[1]!, activeIndex: 2 };
     await open(
       page,
-      fixtureBoard([card, fixtureCard('goal', { x: 96, y: 155, z: 2, tuckedUnder: 'role-1' })]),
+      fixtureBoard([card, fixtureCard('goal', { x: 96, y: 152, z: 2, tuckedUnder: 'role-1' })]),
     );
     await expect(cardById(page, 'role-1').getByTestId('active-cue')).toHaveText('clone navigator');
     await cardById(page, 'role-1').click({ position: { x: 30, y: 30 } });
@@ -290,14 +290,14 @@ test.describe('combine', () => {
 
     const combineMs = await timeDrop(
       'modifier-1',
-      await pointOn(page, 'role-1', 125, 125),
+      await pointOn(page, 'role-1', 100, 100),
       '.react-flow__node[data-id="role-1"] [data-testid="combined-disc"]',
     );
     expect(combineMs).toBeLessThan(100);
 
     const swapMs = await timeDrop(
       'modifier-2',
-      await pointOn(page, 'role-1', 125, 125),
+      await pointOn(page, 'role-1', 100, 100),
       '.react-flow__node[data-id="modifier-2"] [data-testid="active-cue"]:not(:empty)',
     );
     expect(swapMs).toBeLessThan(100);

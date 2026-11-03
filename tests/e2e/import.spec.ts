@@ -33,13 +33,13 @@ function fullBoard(): Board {
     y: role!.y,
     z: role!.z,
   });
-  const devout = secondModifier({ x: 200, y: 200 + 59, z: 4, tuckedUnder: combined.id });
+  const devout = secondModifier({ x: 200, y: 200 + 56, z: 4, tuckedUnder: combined.id });
   // The Modifier sorts first among the children, so the others sit one step lower.
   const stack = [
     combined,
     devout,
-    { ...goal!, y: 200 + 2 * 59 },
-    { ...conflict!, y: 200 + 3 * 59 },
+    { ...goal!, y: 200 + 2 * 56 },
+    { ...conflict!, y: 200 + 3 * 56 },
   ];
   return {
     ...fixtureBoard(

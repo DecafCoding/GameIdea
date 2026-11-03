@@ -18,8 +18,8 @@
   position: absolute;
   left: 0;
   top: 0;
-  width: var(--card);
-  height: var(--card);
+  width: var(--card-size);
+  height: var(--card-size);
   margin: 0;
   padding: 0;
   border: 0;

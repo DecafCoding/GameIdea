@@ -1,17 +1,17 @@
 /**
- * Ring geometry on the 250 px card (design section 9.3), in card coordinates.
+ * Ring geometry on the 200 px card (design section 9.4), in card coordinates.
  * Builds the clip paths for the ring-half buttons and the arrow marks. The disc and the
  * rings keep their pixel size at any card size; they only sit at the card center.
  */
 
-export const CARD_SIZE = 250;
+export const CARD_SIZE = 200;
 export const CENTER = CARD_SIZE / 2;
 export const RING_WIDTH = 13;
 export const INNER_RADIUS = 33.5;
 export const OUTER_RADIUS = 49.5;
 /** Half of the 2 px split line at 12 and 6 o'clock. */
 const HALF_SPLIT = 1;
-/** Each arrow sits on its ring's center line: inner 91.5 and 158.5, outer 75.5 and 174.5. */
+/** Each arrow sits on its ring's center line: inner 66.5 and 133.5, outer 50.5 and 149.5. */
 export const ARROW_X = {
   inner: [CENTER - INNER_RADIUS, CENTER + INNER_RADIUS],
   outer: [CENTER - OUTER_RADIUS, CENTER + OUTER_RADIUS],

@@ -37,9 +37,10 @@ export interface CardNodeActions {
 
 export const CardNodeContext = createContext<CardNodeActions | null>(null);
 
+/** The paper step for a stack depth: deeper than 4 reuses the 4th step (design 9.7). */
 function paperFor(depth: number): CardPaper {
   if (depth === 0) return 'top';
-  return depth === 1 ? 'under-1' : 'under-2';
+  return `under-${Math.min(depth, 4) as 1 | 2 | 3 | 4}`;
 }
 
 /** Ring-half clicks turn the ring; they must not select the card. */

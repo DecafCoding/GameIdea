@@ -1,7 +1,7 @@
 /* CardNode: the selection outline, the drag look and the hidden state during the draw motion. */
 .node {
-  width: var(--card);
-  height: var(--card);
+  width: var(--card-size);
+  height: var(--card-size);
   border-radius: var(--radius-card);
 }
 

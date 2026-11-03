@@ -5,8 +5,8 @@
  */
 import type { Board, Card } from '@/shared/model';
 
-/** Design --card. */
-export const CARD_SIZE = 250;
+/** Design --card-size (design 9.4). */
+export const CARD_SIZE = 200;
 /** Design --grid-pitch. */
 export const GRID = 24;
 const MAX_RINGS = 400;
@@ -65,7 +65,7 @@ export function findOpenSpot(start: Point, occupied: Rect[], size: Size): Point 
   return origin;
 }
 
-/** A rect for every card (250 × 250) and note (its size), skipping the ids given. */
+/** A rect for every card (200 × 200) and note (its size), skipping the ids given. */
 export function boardRects(board: Board, skip: ReadonlySet<string> = new Set()): Rect[] {
   return [
     ...board.cards

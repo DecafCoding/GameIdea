@@ -22,7 +22,7 @@ describe('dropTarget', () => {
   it('dropTarget_tuckedCardOverlap_returnsParent', () => {
     const board = fixtureBoard([...fixtureStack(0, 0), modifier]);
     expect(dropTarget(board, modifier.id, { x: 100, y: 150 })?.id).toBe('role-1');
-    expect(dropTarget(board, modifier.id, { x: 100, y: 350 })?.id).toBe('conflict-1');
+    expect(dropTarget(board, modifier.id, { x: 100, y: 290 })?.id).toBe('conflict-1');
   });
 
   it('dropTarget_ownDescendant_skipped', () => {
@@ -35,8 +35,8 @@ describe('dropTarget', () => {
       fixtureCard('role', { x: 0, y: 0 }),
       fixtureCard('goal', { x: 900, y: 0, z: 2 }),
     ]);
-    expect(dropTarget(board, 'goal-1', { x: 100, y: 300 })?.id).toBe('role-1');
-    expect(dropTarget(board, 'goal-1', { x: 100, y: 330 })).toBeNull();
+    expect(dropTarget(board, 'goal-1', { x: 100, y: 260 })?.id).toBe('role-1');
+    expect(dropTarget(board, 'goal-1', { x: 100, y: 290 })).toBeNull();
   });
 });
 

@@ -210,7 +210,7 @@ test.describe('selection', () => {
     expect(after.x).toBeCloseTo(before.x, 0);
     expect(after.y).toBeCloseTo(before.y, 0);
     const goal = await boxOf(cardById(page, 'goal-1'));
-    expect(Math.abs(goal.y - after.y - 59)).toBeLessThanOrEqual(1);
+    expect(Math.abs(goal.y - after.y - 56)).toBeLessThanOrEqual(1);
     await expect(canvasCards(page)).toHaveCount(4);
   });
 
@@ -310,8 +310,8 @@ test('tokens_shell_rendersAtLockedValues', async ({ page }) => {
   }
   // The note body is note paper, --note-bg (design 9.12).
   await expect(page.getByTestId('note')).toHaveCSS('background-color', 'rgb(251, 246, 228)');
-  // A tucked Goal: 14 percent of --deck-goal mixed into --card-tucked-1.
-  expectRgbNear(await backgroundRgb(cardById(page, 'goal-1')), [212, 219, 208]);
+  // A tucked Goal: the first tucked paper step, --card-tucked-1 (design 9.7).
+  expectRgbNear(await backgroundRgb(cardById(page, 'goal-1')), [241, 236, 224]);
 
   await cardById(page, 'role-1').click({ position: { x: 30, y: 30 } });
   const selected = page.locator('.react-flow__node[data-id="role-1"] [data-selected]');
@@ -338,7 +338,7 @@ test('connector_conflictUnderRole_but', async ({ page }) => {
     page,
     fixtureBoard([
       fixtureCard('role', { x: 96, y: 96 }),
-      fixtureCard('conflict', { x: 96, y: 155, z: 2, tuckedUnder: 'role-1' }),
+      fixtureCard('conflict', { x: 96, y: 152, z: 2, tuckedUnder: 'role-1' }),
     ]),
   );
   await expect(
@@ -352,7 +352,7 @@ test('connector_chooseFromList_savesWordAndUndoRestores', async ({ page }) => {
     page,
     fixtureBoard([
       fixtureCard('role', { x: 96, y: 96 }),
-      fixtureCard('goal', { x: 96, y: 155, z: 2, tuckedUnder: 'role-1' }),
+      fixtureCard('goal', { x: 96, y: 152, z: 2, tuckedUnder: 'role-1' }),
     ]),
   );
   const badge = page.getByTestId('connector-badge');
@@ -387,7 +387,7 @@ test('connector_keyboard_arrowsAndEnterChooseEscCloses', async ({ page }) => {
     page,
     fixtureBoard([
       fixtureCard('role', { x: 96, y: 96 }),
-      fixtureCard('conflict', { x: 96, y: 155, z: 2, tuckedUnder: 'role-1' }),
+      fixtureCard('conflict', { x: 96, y: 152, z: 2, tuckedUnder: 'role-1' }),
     ]),
   );
   const badge = page.getByTestId('connector-badge');
@@ -407,7 +407,7 @@ test('connector_articleWord_anBeforeVowel', async ({ page }) => {
   const lower = fixtureCard('role', {
     id: 'role-2',
     x: 96,
-    y: 155,
+    y: 152,
     z: 2,
     tuckedUnder: 'role-1',
     connector: 'with a',

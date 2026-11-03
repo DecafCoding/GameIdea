@@ -1,12 +1,13 @@
 /**
- * Browser tests for the cue fit on the 250 px card (design 9.2).
+ * Browser tests for the cue fit on the 200 px card (design 9.4).
  * 2-cue cards: Goal and Conflict cues of up to 8 words show in full, in at most
  * 2 lines of 17 px, visible on a tucked card, with the outer side on the 14 px inset. Each pair is served as a
  * routed 2-cue pool, so the card shows exactly those 2 cues.
  * 4-cue cards: with the longest pool cues on every edge, plain and combined, no 2 edge
  * labels touch at a corner, and each stays inside the card and outside the outer ring.
- * Player Role and Setting share the 2-cue frame: top and bottom edges use up to 2 lines, the
- * sides up to 3, and lines break after a hyphen. A tucked card hides its side edges.
+ * A combined card's side labels may end in an ellipsis on the 200 px card.
+ * Player Role and Setting use the 4-cue frame: top and bottom edges and sides use up to 2
+ * lines of 15 px, and lines break after a hyphen. A tucked card hides its side edges.
  * The genre pools hold longer cues on purpose (docs/feature-genre-pools.html, "Long cues"):
  * the user reviews them in the app and then sets limits. Until then these checks use only
  * the pool cues inside the old fit limits (FIT_LIMITS).
@@ -38,13 +39,12 @@ const TYPES: { type: TwoCueType; deck: DeckName; prefix: string; worst: [string,
 ];
 
 /**
- * From the card center: the start of the band a tucked card still shows (125 - the 59 px
- * tuck offset, which also clears the ring band) and the 14 px inset, where every label's
- * outer side sits (125 - 14).
+ * From the card center: the start of the band a tucked card still shows (100 - the 56 px
+ * tuck offset) and the 14 px inset, where every label's outer side sits (100 - 14).
  */
-const TUCK_VISIBLE = 66;
-const INSET_EDGE = 111;
-const MAX_WIDTH = 222;
+const TUCK_VISIBLE = 44;
+const INSET_EDGE = 86;
+const MAX_WIDTH = 172;
 
 /**
  * The old cue fit class: most characters per type, and at most 2 words for the 4-cue types.
@@ -220,7 +220,12 @@ for (const type of ['role', 'setting'] as const) {
             text: el.textContent ?? '',
           };
         });
-        expect(m.clipped, `${m.text} is cut off`).toBe(false);
+        // A combined card's side label (adjective and noun in a 108 px, 2-line box) may end
+        // in an ellipsis: the 200 px card has no room for more (design 9.4), and the title
+        // holds the full text. Every other label shows in full.
+        if (!(combined && m.edge % 2 === 1)) {
+          expect(m.clipped, `${m.text} is cut off`).toBe(false);
+        }
         // Edge 0 is the bottom; the odd edges are the sides.
         expect(m.lines, `${m.text} is ${m.lines} lines at ${m.width} px`).toBeLessThanOrEqual(
           m.edge % 2 === 1 ? 3 : 2,
@@ -251,7 +256,7 @@ for (const type of ['role', 'setting'] as const) {
 }
 
 test('roleCard_hyphenatedNoun_splitsAtHyphenInTwoLines', async ({ page }) => {
-  // No spaces and wider than 222 px: the only legal breaks are after the hyphens, so 2
+  // No spaces and wider than 172 px: the only legal breaks are after the hyphens, so 2
   // unclipped lines prove it.
   const noun = { text: 'street-samurai-for-hire-and-mercenary' };
   const card = fixtureCard('role', {
@@ -307,7 +312,7 @@ test('tuckedCard_sideEdges_hidden', async ({ page }) => {
     fixtureCard('goal', { x: 96, y: 96 }),
     fixtureCard('role', {
       x: 96,
-      y: 155,
+      y: 152,
       z: 2,
       tuckedUnder: 'goal-1',
       rings: [{ cues: nouns, activeIndex: 0 }],

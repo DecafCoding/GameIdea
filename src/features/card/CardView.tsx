@@ -1,5 +1,5 @@
 /**
- * CardView: one 250 px story card (design section 9.2) with its ring control.
+ * CardView: one 200 px game concept card (design section 9.4) with its ring control.
  * Layers, bottom to top: the cue face, the rings, the type disc. The card body and
  * the disc never turn. A 1-ring card rotates its whole cue layer on a turn; a combined
  * card keeps each "adjective noun" edge centered and fades in the turned words.
@@ -13,8 +13,8 @@ import { TYPE_ICON, TypeDisc } from './TypeDisc';
 import { useTurnAngle, type TurnState } from './useTurnAngle';
 import styles from './CardView.module.css';
 
-/** The paper step (design 9.4): the top card, then each tucked depth. */
-export type CardPaper = 'top' | 'under-1' | 'under-2';
+/** The paper step (design 9.7): the top card, then each tucked depth, darker per level. */
+export type CardPaper = 'top' | 'under-1' | 'under-2' | 'under-3' | 'under-4';
 
 interface CardViewProps {
   card: Card;
@@ -29,14 +29,16 @@ const PAPER_CLASS: Record<CardPaper, string | undefined> = {
   top: undefined,
   'under-1': styles.under1,
   'under-2': styles.under2,
+  'under-3': styles.under3,
+  'under-4': styles.under4,
 };
 
 /**
  * Distance from the card center to the outer side of every label: the 14 px inset on the
- * 250 px card, 125 - 14 = 111. The label grows inward, so a wrapped label keeps its outer
+ * 200 px card, 100 - 14 = 86. The label grows inward, so a wrapped label keeps its outer
  * line on the inset. The label sizes that keep edges apart are in CardView.module.css.
  */
-const EDGE_OUTSIDE = 111;
+const EDGE_OUTSIDE = 86;
 
 function slotTransform(slot: number, count: number): string {
   // translateY's 50 percent is half the label's own height, so its outer side lands on the inset.
@@ -50,7 +52,8 @@ function slotTransform(slot: number, count: number): string {
  */
 function labelFit(type: Card['type'], count: number, edge: number): string {
   if (type === 'modifier') return '';
-  return (count === 4 && edge % 2 === 1 ? styles.side : styles.wide) ?? '';
+  if (count === 2) return styles.wide ?? '';
+  return [edge % 2 === 1 ? styles.side : styles.wide, styles.four].join(' ');
 }
 
 interface CueLabelProps {
@@ -63,6 +66,8 @@ interface CueLabelProps {
   fit: string;
   /** Hides the label but keeps its place: side edges of a tucked card. */
   hidden?: boolean;
+  /** The bottom label of a tucked card: narrower, clear of the strip's marks. */
+  narrow?: boolean;
   wordKeys?: { noun: string; adjective: string };
   slideFrom?: { noun: string; adjective: string };
 }
@@ -75,12 +80,19 @@ function CueLabel({
   adjective,
   fit,
   hidden,
+  narrow,
   wordKeys,
   slideFrom,
 }: CueLabelProps) {
   const active = edge === 0;
   const full = adjective ? `${adjective.text} ${noun.text}` : noun.text;
-  const classes = [styles.label, fit, active ? styles.active : '', hidden ? styles.tuckedSide : '']
+  const classes = [
+    styles.label,
+    fit,
+    active ? styles.active : '',
+    hidden ? styles.tuckedSide : '',
+    narrow ? styles.tuckedBottom : '',
+  ]
     .filter(Boolean)
     .join(' ');
 
@@ -134,6 +146,7 @@ export function CardView({ card, onTurn, ringClassName, paper = 'top' }: CardVie
   const edgeProps = (edge: number) => ({
     fit: labelFit(card.type, count, edge),
     hidden: tucked && count === 4 && edge % 2 === 1,
+    narrow: tucked && edge === 0,
   });
 
   function turn(slot: RingSlot, direction: TurnDirection) {

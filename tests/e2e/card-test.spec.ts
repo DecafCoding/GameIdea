@@ -145,11 +145,11 @@ test.describe('with pools loaded', () => {
     const card = await draw(page, 'Player Role');
     await page.evaluate(() => document.fonts.ready);
     const box = await card.boundingBox();
-    expect(box?.width).toBe(250);
-    expect(box?.height).toBe(250);
+    expect(box?.width).toBe(200);
+    expect(box?.height).toBe(200);
     await expect(card).toHaveCSS('border-radius', '14px');
-    // 14 percent of --deck-role mixed into --card-face.
-    expectRgbNear(await backgroundRgb(card), [216, 220, 224]);
+    // The cream --card-face, the same for every deck (design 9.4).
+    expectRgbNear(await backgroundRgb(card), [244, 240, 230]);
 
     const disc = card.getByTestId('type-disc');
     const discBox = await disc.boundingBox();
@@ -158,10 +158,11 @@ test.describe('with pools loaded', () => {
     await expect(disc).toHaveCSS('background-color', 'rgb(47, 95, 184)');
 
     const cue = activeCue(card);
-    await expect(cue).toHaveCSS('font-size', '15px');
+    // Design 9.4: the active cue is Display 14/700.
+    await expect(cue).toHaveCSS('font-size', '14px');
     await expect(cue).toHaveCSS('font-weight', '700');
     await expect(cue).toHaveCSS('font-family', /^"?Space Grotesk/);
-    expect(await page.evaluate(() => document.fonts.check('700 15px "Space Grotesk"'))).toBe(true);
+    expect(await page.evaluate(() => document.fonts.check('700 14px "Space Grotesk"'))).toBe(true);
   });
 });
 

@@ -45,7 +45,7 @@ describe('toNodes below', () => {
   it('toNodes_tuckedSetting_belowHasKindTextAndSavedWord', () => {
     const setting = fixtureCard('setting', {
       x: 0,
-      y: 59,
+      y: 56,
       z: 2,
       tuckedUnder: 'role-1',
     });

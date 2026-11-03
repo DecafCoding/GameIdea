@@ -17,14 +17,7 @@ const TOKENS = read('src/shared/ui/tokens.css');
 const HANDOFF_BODY = HANDOFF.slice(HANDOFF.indexOf(':root {'));
 
 /** Tokens kept from TheForge until Phase 2: card geometry and motion, never colors. */
-const CARRIED_OVER = [
-  '--card',
-  '--t-turn-90',
-  '--t-turn-180',
-  '--t-draw',
-  '--t-fade',
-  '--t-banner',
-];
+const CARRIED_OVER = ['--t-turn-90', '--t-turn-180', '--t-draw', '--t-fade', '--t-banner'];
 
 /** Every "--name: value" definition in a CSS text. */
 function definitions(css: string): [string, string][] {

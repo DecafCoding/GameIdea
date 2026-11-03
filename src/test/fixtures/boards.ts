@@ -15,7 +15,7 @@ import {
 } from '@/shared/model';
 
 /** Distance between a tucked card and the card above it (design --tuck-offset). */
-export const TUCK = 59;
+export const TUCK = 56;
 
 export const CUES = {
   role: ['navigator', 'diplomat', 'gardener', 'captain'],
@@ -104,7 +104,7 @@ export function fixtureBoard(cards: Card[], notes: Note[] = []): Board {
 
 /**
  * A chain stack at x, y: a Player Role with a Goal tucked under it and a Conflict
- * tucked under the Goal, each 59 px lower. Ids get the suffix.
+ * tucked under the Goal, each 56 px lower. Ids get the suffix.
  */
 export function fixtureStack(x: number, y: number, suffix = '1', z = 1): Card[] {
   const role = fixtureCard('role', { id: `role-${suffix}`, x, y, z });
@@ -125,13 +125,13 @@ export function fixtureStack(x: number, y: number, suffix = '1', z = 1): Card[] 
   return [role, goal, conflict];
 }
 
-/** A 250 px card plus a gap of more than the 24 px margin, on the 24 px grid. */
-const PITCH = 288;
+/** A 200 px card plus a gap of more than the 24 px margin, on the 24 px grid. */
+const PITCH = 240;
 const COLUMNS = 20;
 const TYPES: CardType[] = ['role', 'goal', 'setting', 'conflict', 'modifier'];
 
 /**
- * The 200-card board: 140 single cards on 7 rows of 20 at a 288 px pitch, cycling the
+ * The 200-card board: 140 single cards on 7 rows of 20 at a 240 px pitch, cycling the
  * 5 types (the first 20 Player Roles combined), and 20 stacks of 3 on the 8th row, so the
  * speed checks include tucked cards. No notes.
  */

@@ -1,13 +1,13 @@
 /**
  * Tuck stacks as pure functions. A stack is a tree: each card's tuckedUnder names its
  * parent. Every card keeps an absolute x, y; a tucked card's position is always derived
- * from its stack, 59 px below the card before it in stack order. A card whose parent is
+ * from its stack, 56 px below the card before it in stack order. A card whose parent is
  * missing counts as a root. No React Flow here: the rules must hold if the canvas changes.
  */
 import type { Board, Card } from '@/shared/model';
 
 /** Design --tuck-offset. */
-export const TUCK_OFFSET = 59;
+export const TUCK_OFFSET = 56;
 
 function byId(board: Board): Map<string, Card> {
   return new Map(board.cards.map((card) => [card.id, card]));
@@ -69,7 +69,7 @@ export function stackOrder(board: Board, rootId: string): Card[] {
   return out;
 }
 
-/** Places each card of the stack 59 px below the one before it, under the root's x, y. */
+/** Places each card of the stack 56 px below the one before it, under the root's x, y. */
 export function layoutStack(board: Board, rootId: string): Board {
   const order = stackOrder(board, rootId);
   const root = order[0]!;
