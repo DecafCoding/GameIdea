@@ -2,7 +2,7 @@
  * Tests for the board actions, and the Milestone 2 sequence through the board store.
  */
 import { beforeEach, describe, expect, it } from 'vitest';
-import { activeText, isCombined } from '@/features/card';
+import { activeText, iconFor, isCombined } from '@/features/card';
 import type { Board, Card } from '@/shared/model';
 import { newBoard, useBoardStore } from '@/shared/store';
 import {
@@ -182,6 +182,39 @@ describe('splitCard', () => {
     expect(isCombined(get(next, 'role-1'))).toBe(false);
     expect(get(next, 'goal-1')).toMatchObject({ tuckedUnder: 'role-1', y: 56 });
     expect(overlaps(get(next, 'role-1'), modifier)).toBe(false);
+  });
+});
+
+describe('modDeck through combine, swap and Split', () => {
+  it('splitCard_newModifier_takesRingModDeck', () => {
+    const card = combinedCard('role');
+    card.rings[1] = { ...card.rings[1]!, modDeck: 'setting' };
+    const next = splitCard(fixtureBoard([card]), 'role-1', () => 'new-modifier');
+    expect(get(next, 'new-modifier').modDeck).toBe('setting');
+  });
+
+  it('splitCard_newModifierRing_hasNoModDeck', () => {
+    const next = splitCard(fixtureBoard([combinedCard('role')]), 'role-1', () => 'new-modifier');
+    expect(get(next, 'new-modifier').rings[0]!.modDeck).toBeUndefined();
+    expect(get(next, 'new-modifier')).toMatchObject({ locked: false, onTopOf: null });
+  });
+
+  it('combineThenSplit_iconSurvives', () => {
+    const resourceMod = fixtureCard('modifier', { x: 600, modDeck: 'resource', z: 2 });
+    const board = fixtureBoard([fixtureCard('resource'), resourceMod]);
+    const combined = combineOnto(board, 'modifier-1', 'resource-1');
+    expect(get(combined, 'resource-1').rings[1]!.modDeck).toBe('resource');
+    const next = splitCard(combined, 'resource-1', () => 'back');
+    expect(iconFor(get(next, 'back'))).toBe('battery-plus');
+  });
+
+  it('swapOnto_exchangesModDecks', () => {
+    const base = combinedCard('role');
+    const incoming = secondModifier({ x: 600, z: 2, modDeck: 'setting' });
+    const next = swapOnto(fixtureBoard([base, incoming]), 'modifier-2', 'role-1');
+    expect(get(next, 'role-1').rings[1]!.modDeck).toBe('setting');
+    expect(get(next, 'modifier-2').modDeck).toBe('role');
+    expect(get(next, 'modifier-2').rings[0]!.modDeck).toBeUndefined();
   });
 });
 

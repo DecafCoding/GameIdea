@@ -17,6 +17,7 @@ import {
 } from '@/features/card';
 import { drawCard } from '@/features/draw';
 import {
+  BASE_TYPES,
   DECK_NAME,
   DECKS,
   GENRES,
@@ -33,9 +34,9 @@ import styles from './CardTestPage.module.css';
 const POOLS_FAILED_TEXT =
   'The decks did not load. Saved cards still work. Drawing is off until the decks load.';
 
-/** The newest uncombined Player Role or Setting, and the newest Modifier. */
+/** The newest uncombined Player Role, Resource or Setting, and the newest Modifier. */
 function combinePair(cards: Card[]): { target: Card; source: Card } | null {
-  const target = cards.find((c) => (c.type === 'role' || c.type === 'setting') && !isCombined(c));
+  const target = cards.find((c) => BASE_TYPES.includes(c.type) && !isCombined(c));
   const source = cards.find((c) => c.type === 'modifier');
   return target && source ? { target, source } : null;
 }
@@ -94,7 +95,8 @@ export function CardTestPage() {
     <main className={styles.page}>
       <h1 className={styles.title}>Card Test</h1>
       <p className={styles.caption}>
-        Draw cards, turn their rings, and combine a Modifier with a Player Role or Setting.
+        Draw cards, turn their rings, and combine a Modifier with a Player Role, Resource or
+        Setting.
       </p>
       {status === 'failed' && (
         <div className={styles.banner}>

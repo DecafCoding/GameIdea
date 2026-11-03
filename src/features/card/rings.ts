@@ -4,7 +4,7 @@
  * Edge order is clockwise from the bottom: 4-cue 0 bottom, 1 left, 2 top, 3 right;
  * 2-cue 0 bottom, 1 top. The cue at activeIndex sits on the bottom edge.
  */
-import type { Card, Cue, Ring } from '@/shared/model';
+import { BASE_TYPES, type Card, type Cue, type ModDeck, type Ring } from '@/shared/model';
 
 export type TurnDirection = 'cw' | 'ccw';
 export type RingSlot = 'outer' | 'inner';
@@ -69,14 +69,15 @@ export function activeText(card: Card): string {
 }
 
 /**
- * First combine: the Modifier's ring becomes the target's rings[1], keeping its
- * active cue. The caller deletes the Modifier card. A later Modifier exchanges the
- * adjectives through swap, and split takes them back out.
+ * First combine: the Modifier's ring becomes the target's rings[1], keeping its active cue
+ * and taking the Modifier's deck as its modDeck. The caller deletes the Modifier card. A
+ * later Modifier exchanges the adjectives through swap, and split takes them back out.
+ * Any Modifier deck combines with any Player Role, Resource or Setting card.
  */
 export function combine(target: Card, modifier: Card): Card {
-  if (target.type !== 'role' && target.type !== 'setting') {
+  if (!BASE_TYPES.includes(target.type)) {
     throw new Error(
-      `A Modifier combines only with a Player Role or Setting, not a ${target.type}.`,
+      `A Modifier combines only with a Player Role, Resource or Setting, not a ${target.type}.`,
     );
   }
   if (target.rings.length !== 1) {
@@ -85,14 +86,30 @@ export function combine(target: Card, modifier: Card): Card {
   if (modifier.type !== 'modifier') {
     throw new Error(`Only a Modifier can be combined, not a ${modifier.type}.`);
   }
-  const source = ringAt(modifier, 0);
   return {
     ...target,
-    rings: [ringAt(target, 0), { cues: [...source.cues], activeIndex: source.activeIndex }],
+    rings: [ringAt(target, 0), mergedRing(modifier)],
   };
 }
 
+/** A copy of a ring, keeping its modDeck when it has one. */
 function copyRing(ring: Ring): Ring {
+  return {
+    cues: [...ring.cues],
+    activeIndex: ring.activeIndex,
+    ...(ring.modDeck ? { modDeck: ring.modDeck } : {}),
+  };
+}
+
+/** A free Modifier's ring as a merged adjective ring: its cues, active cue and deck. */
+function mergedRing(modifier: Card): Ring {
+  const source = ringAt(modifier, 0);
+  const modDeck: ModDeck = modifier.modDeck ?? 'role';
+  return { cues: [...source.cues], activeIndex: source.activeIndex, modDeck };
+}
+
+/** A merged ring as a free Modifier's ring (no modDeck: the card carries it). */
+function freeRing(ring: Ring): Ring {
   return { cues: [...ring.cues], activeIndex: ring.activeIndex };
 }
 
@@ -102,7 +119,8 @@ function requireCombined(card: Card): void {
 
 /**
  * Swap: the combined card's adjectives and the Modifier's ring change places, each
- * keeping its own active cue. The caller places the Modifier beside the card.
+ * keeping its own active cue and its Modifier deck. The caller places the Modifier beside
+ * the card.
  */
 export function swap(target: Card, modifier: Card): { target: Card; modifier: Card } {
   requireCombined(target);
@@ -110,16 +128,19 @@ export function swap(target: Card, modifier: Card): { target: Card; modifier: Ca
     throw new Error(`Only a Modifier can be swapped, not a ${modifier.type}.`);
   }
   const adjectives = ringAt(target, 1);
-  const incoming = ringAt(modifier, 0);
   return {
-    target: { ...target, rings: [ringAt(target, 0), copyRing(incoming)] },
-    modifier: { ...modifier, rings: [copyRing(adjectives)] },
+    target: { ...target, rings: [ringAt(target, 0), mergedRing(modifier)] },
+    modifier: {
+      ...modifier,
+      rings: [freeRing(adjectives)],
+      modDeck: adjectives.modDeck ?? 'role',
+    },
   };
 }
 
 /**
  * Split: the combined card keeps only its nouns; the returned ring is a copy of its old
- * adjectives with their active cue, for the caller's new Modifier card.
+ * adjectives with their active cue and modDeck, for the caller's new Modifier card.
  */
 export function split(target: Card): { target: Card; ring: Ring } {
   requireCombined(target);

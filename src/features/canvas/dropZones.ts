@@ -4,7 +4,7 @@
  * dragged card's rectangle.
  */
 import { isCombined } from '@/features/card';
-import type { Board, Card } from '@/shared/model';
+import { BASE_TYPES, type Board, type Card } from '@/shared/model';
 import { CARD_SIZE, type Point } from './placement';
 import { descendantsOf, isRoot, stackOrder } from './stack';
 
@@ -68,11 +68,7 @@ export function dropTarget(board: Board, draggedId: string, point: Point): Card 
 }
 
 function canCombine(dragged: Card, target: Card): boolean {
-  return (
-    dragged.type === 'modifier' &&
-    (target.type === 'role' || target.type === 'setting') &&
-    !isCombined(target)
-  );
+  return dragged.type === 'modifier' && BASE_TYPES.includes(target.type) && !isCombined(target);
 }
 
 function canSwap(dragged: Card, target: Card): boolean {

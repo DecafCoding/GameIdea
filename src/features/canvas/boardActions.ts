@@ -96,7 +96,11 @@ export function swapOnto(board: Board, modifierId: string, targetId: string): Bo
   const spot = besideSpot(board, cardAt(board, targetId), skip);
   let next = untuckCard(board, modifierId, spot.x, spot.y);
   next = replaceCard(next, { ...cardAt(next, targetId), rings: result.target.rings });
-  return replaceCard(next, { ...cardAt(next, modifierId), rings: result.modifier.rings });
+  return replaceCard(next, {
+    ...cardAt(next, modifierId),
+    rings: result.modifier.rings,
+    modDeck: result.modifier.modDeck,
+  });
 }
 
 /**
@@ -114,8 +118,9 @@ export function splitCard(board: Board, cardId: string, createId: () => string =
     y: spot.y,
     z: nextZ(board),
     tuckedUnder: null,
-    rings: [result.ring],
-    modDeck: 'role',
+    // A free Modifier's ring has no modDeck; the card carries it.
+    rings: [{ cues: result.ring.cues, activeIndex: result.ring.activeIndex }],
+    modDeck: result.ring.modDeck ?? 'role',
     onTopOf: null,
     locked: false,
   };
