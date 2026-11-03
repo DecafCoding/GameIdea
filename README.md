@@ -4,7 +4,7 @@ GameIdea is a browser canvas for solo and hobby game developers and game jam ent
 
 Boards save in the browser (IndexedDB) after each change, you can keep many boards in the board list, and undo and redo cover every board change. Each board exports as a plain text file or as a board file, the backup that imports again on any computer. The app sends no request to any address but its own.
 
-> **Status: Phase 2 (hook test).** The 11 cue pools ship in `public/pools/`. The rail draws the Hook Card, the 5 core decks, the 3 Modifier decks and Setting; the Hook Card reads its stack as a hook sentence you can copy. Next: the user's manual M2 hook test (below), then the Genres panel (Phase 3) and the optional deck buttons (Phase 4).
+> **Status: Phase 3 (genres).** The 11 cue pools ship in `public/pools/`. The rail draws the Hook Card, the 5 core decks, the 3 Modifier decks and Setting; the Hook Card reads its stack as a hook sentence you can copy. The Genres panel narrows the 4 genre-tagged decks, and the rail shows genre counts. Next: the optional deck buttons (Phase 4).
 
 ## Requirements
 
@@ -95,7 +95,8 @@ Open a board from the board list. The app mark in the top bar goes back to the l
 - **Saving:** every finished change saves at once; a drag saves once, on drop. The save mark next to the board name reads Saved, Saving or Save Failed. If a save fails, the last good version stays and a banner offers Export Board File.
 - **Undo and redo:** the Undo and Redo buttons, or Ctrl+Z and Ctrl+Shift+Z (Cmd on macOS), step through up to 100 changes on this board. The history lasts for the session and clears when you open another board or reload.
 - **2 tabs:** when another tab changes the open board, this tab reloads it and shows a notice. Undo history is cleared.
-- **Rail:** the Hook Card button, then Core (Player Role, Mechanic, Resource, Goal, Conflict), the Modifiers row (Player Role, Resource and Setting Modifier; point at a button for its name) and Optional (Setting). A click draws one card into open space near the view center. If the pools do not load, a banner offers Retry and only the Hook Card button stays on.
+- **Rail:** the Hook Card button, then Core (Player Role, Mechanic, Resource, Goal, Conflict), the Modifiers row (Player Role, Resource and Setting Modifier; point at a button for its name) and Optional (Setting), then Genres. A click draws one card into open space near the view center. If the pools do not load, a banner offers Retry and only the Hook Card button stays on.
+- **Genres:** the Genres button under the rail's Genres heading opens the Genres panel. The top row picks genres for all 4 genre-tagged decks (Mechanic, Resource, Progression, Constraint) at once, and All On turns every genre back on; each deck row below turns a picked genre off or on for that deck only. Each deck keeps at least 1 genre, so its last chip cannot be turned off. A change applies to the next draw only (cards on the board keep their cues), saves with the board and is never an undo step. A genre deck button shows a count pill while its deck has fewer than 21 genres on, and the line under Genres reads "All genres" or "N genres" (the genres on in any of the 4 decks).
 - **Cards:** each 200 px card shows 4 cues (Player Role, Mechanic, Resource, Setting, Mood, Modifier) or 2 cues (Goal, Conflict, Twist, Progression, Constraint). Point at a card and click a ring arrow to turn it; R turns the card under the pointer, Shift+R its inner (adjective) ring. The cue at the bottom edge is the active one.
 - **Card strip:** click a card for Split (a card with a merged or On Top Modifier), Redraw (new cues from its deck, keeping its place, tucks, lock, badge word and adjectives), Lock or Unlock, and Discard (Delete key too). A locked card shows a lock and keeps its cues through Redraw All.
 - **Tuck:** drag a card onto another to tuck it 56 px under; a stack moves with its top card. While you drag the next card in the order Player Role, Mechanic, Resource, Goal, Conflict, a "<Deck> goes here" slot shows under the stack. A badge on each seam shows the connector word ("You are a", "who must", "using", "to", "but"); click it to pick another word.
@@ -136,13 +137,14 @@ See `CLAUDE.md` for the full folder layout and conventions. Main folders so far:
 - `src/features/card/`, `features/draw/`: the card, its rings, the card strip, deck buttons and draw logic
 - `src/features/canvas/`: the React Flow canvas, stacks, drop zones, connector badges, the stack reading order and board actions (including Redraw All)
 - `src/features/hook/`: the Hook Card, its hover menu, Copy and its fallback dialog, and the pure hook sentence builder
+- `src/features/genres/`: the Genres panel, the genre count pill, the Genres button and the pure genre rules
 - `src/features/notes/`: notes
 - `src/features/boards/`: the board list with the name-only New Board dialog, Import Board File, rename and the delete dialog
 - `src/features/export/`: the Export menu, the text file and board file, and the import checks (the only folder that uses Zod)
-- `src/shared/model/`: types and constants (the 12 card types, deck and Modifier deck names, the 21 genres, the format version)
+- `src/shared/model/`: types and constants (the 12 card types, deck and Modifier deck names, the 21 genres and their names, the format version)
 - `src/shared/storage/`: the only module that touches IndexedDB (Dexie database `gameidea`): the storage actions, the tab message and autosave
 - `src/shared/store/`: the open board in a Zustand store with zundo undo, and the save status
-- `src/shared/ui/`: the design tokens (`tokens.css`), icons, buttons, dialogs and banners
+- `src/shared/ui/`: the design tokens (`tokens.css`), icons, buttons, dialogs (default, wide and panel sizes) and banners
 - `src/test/`: fixture boards for unit and browser tests and the story-name check
 - `public/icons/`: the deck icons, UI icons and the Hook Card icon
 - `tests/e2e/`: Playwright specs, helpers and `fixtures/pools/`

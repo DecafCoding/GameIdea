@@ -1,0 +1,24 @@
+/*
+ * Genre count pill (design 8.2): 15 tall, min width 16, padding 0 4, radius 8, border 1
+ * --accent, accent at 18% fill, Inter 9 / 600 in --accent-text, at the right of the deck
+ * button. It follows the theme color through --accent.
+ */
+.pill {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  height: 15px; /* design 8.2; no token */
+  min-width: 16px; /* design 8.2; no token */
+  margin-left: auto;
+  padding: 0 4px;
+  border: 1px solid var(--accent);
+  border-radius: 8px; /* design 8.2; no token */
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+  color: var(--accent-text);
+  font-family: var(--font-body);
+  font-size: 9px; /* design 8.2; no token */
+  font-weight: 600;
+  line-height: 1;
+}

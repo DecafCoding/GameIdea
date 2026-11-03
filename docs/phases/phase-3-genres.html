@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Phase 3: Full core pools and genres</title>
+  <style>
+    :root { --fg:#1a1a1a; --muted:#666; --accent:#2563eb; --done:#16a34a; --warn:#dc2626; --rule:#e5e7eb; }
+    body { font:16px/1.6 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; color:var(--fg); max-width:62rem; margin:2rem auto; padding:0 1.25rem; }
+    h1 { font-size:2rem; border-bottom:2px solid var(--rule); padding-bottom:.3rem; }
+    h2 { font-size:1.5rem; margin-top:2.5rem; border-bottom:1px solid var(--rule); padding-bottom:.2rem; }
+    h3.milestone { font-size:1.25rem; margin-top:2rem; color:var(--accent); }
+    h4.task { font-size:1.1rem; margin-top:1.5rem; }
+    dl.phase-meta { display:grid; grid-template-columns:max-content 1fr; gap:.25rem 1rem; }
+    dl.phase-meta dt { font-weight:600; color:var(--muted); }
+    code, pre { font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+    pre { background:#f6f8fa; padding:1rem; border-radius:6px; overflow:auto; }
+    code { background:#f6f8fa; padding:.1rem .3rem; border-radius:4px; }
+    pre code { background:none; padding:0; }
+    table { border-collapse:collapse; margin:.5rem 0; }
+    th, td { border:1px solid var(--rule); padding:.25rem .5rem; text-align:left; vertical-align:top; font-size:.9rem; }
+    ul.checklist { list-style:none; padding-left:0; }
+    ul.checklist > li::before { content:"☐ "; color:var(--muted); }
+    ul.checklist > li[data-checked="true"]::before { content:"☑ "; color:var(--done); }
+    .validate { color:var(--done); font-weight:600; }
+    .stop { color:var(--warn); font-weight:600; }
+  </style>
+</head>
+<body>
+
+<h1 data-phase="3">Phase 3: Full core pools and genres</h1>
+<p>The following plan should be complete, but validate documentation, codebase patterns, and task sanity before implementing. Pay special attention to naming of existing utils, types, and models — import from the right files.</p>
+<p><strong>Preconditions (checked on 2026-11-03):</strong> Phase 2 is merged on <code>main</code> (<code>db0d494</code>); <code>npx vitest run</code> passes 47 files / 511 tests; Node.js 24, npm and the Playwright browsers (Chromium, Firefox, WebKit) are installed; <code>gh</code> is authenticated as <code>DecafCoding</code>. All 11 pool files are already in <code>public/pools/</code> from the Phase 2 split, and an in-memory run of <code>splitDecks()</code> over <code>docs/libraries/decks.json</code> matches every file semantically (the files differ only by Prettier's array wrapping).</p>
+<p><strong>Never run <code>scripts/split-decks.mjs</code> as a CLI in this phase.</strong> The JSON files are the source (CLAUDE.md "Pools"). Task 9 imports the pure <code>splitDecks()</code> function to compare in memory and writes nothing.</p>
+
+<h2>Phase Description</h2>
+<p>Phase 3 (milestone M3 in <code>docs/mvp-plan.html</code>, design-system §16 M3) gives the user control over genre: a Genres panel that sets the genres of the 4 genre-tagged decks (Mechanic, Resource, Progression, Constraint) together and one by one, a genre count pill on each genre-tagged deck button in the rail, and a count line under the rail's Genres button. Genre changes save with the board but never enter undo history, and they change only the next draw.</p>
+<p>The PRD's first bullet for this phase ("Finished core and Modifier libraries converted to JSON") was already delivered in Phase 2: architecture <code>pool-files</code> defines one split of all 11 decks, and Phase 2 ran it (see Phase 2 Notes). The genre filter itself is already wired into draws (<code>drawCard</code> with <code>board.genres</code>, all 21 on). So the remaining work is:</p>
+<ol>
+  <li><strong>Genre model and store</strong>: display names for the 21 genres; a <code>setGenres</code> store action that saves but is never an undo step, with undo and redo keeping the current genres.</li>
+  <li><strong>Genre rules</strong>: a pure module in the new <code>features/genres/</code> for the panel's toggles, the "at least 1 genre per deck" guard and the count text.</li>
+  <li><strong>Genres UI</strong>: the Genres panel (design §9.10), the genre count pill (design §8.2) and the Genres button with its count line (design §8.2), wired into the rail and the board screen.</li>
+  <li><strong>Verification</strong>: browser tests for the panel, counts, persistence, undo and the real-pool filter; a read-only re-check that the pools still match the library cue for cue and every floor holds.</li>
+</ol>
+
+<h2>User Stories</h2>
+<p><strong>Genres panel</strong><br>As a developer who knows what I build,<br>I want to limit Mechanic, Resource, Progression and Constraint to my genres,<br>so that draws fit games I can make.</p>
+<p><strong>Rail counts</strong><br>As a user looking at the rail,<br>I want to see how many genres each tagged deck uses and how many I picked,<br>so that I know at a glance my draws are narrowed.</p>
+<p><strong>Safe changes</strong><br>As a user steering draws,<br>I want genre changes to keep the cards on the board and stay out of Undo,<br>so that Undo only reverses what I see change on the canvas.</p>
+
+<h2>Problem Statement</h2>
+<p>Every board has all 21 genres on and nothing in the UI can change them, so the genre filter that draws already apply never narrows anything. The New Board dialog even tells the user to "Change them in the Genres panel", which does not exist yet. The rail has no Genres group, no counts, and the store has no way to change genres without making an undo step.</p>
+
+<h2>Solution Statement</h2>
+<p>Add <code>setGenres</code> to the board store next to <code>setView</code>: it replaces <code>board.genres</code>, saves (bumps <code>saveSeq</code>) and stamps <code>updatedAt</code> without recording an undo step, and <code>undo</code>/<code>redo</code> put the current genres back the same way they already keep the current view. A new <code>features/genres/</code> slice holds pure rules (<code>genreRules.ts</code>), the <code>GenresPanel</code> dialog, the <code>GenreCount</code> pill and the <code>GenresButton</code>. The rail (in <code>app/</code>) composes them: <code>DeckButton</code> gains a generic <code>trailing</code> slot, so <code>features/draw</code> never imports <code>features/genres</code>. The shared <code>Dialog</code> gains a <code>panel</code> size and an optional close (×) button. No board shape change: <code>Board.genres</code> already has its final v1 shape.</p>
+
+<h2>Phase Metadata</h2>
+<dl class="phase-meta">
+  <dt>Phase Type</dt><dd data-field="type">Enhancement</dd>
+  <dt>Estimated Complexity</dt><dd data-field="complexity">Medium</dd>
+  <dt>Primary Systems Affected</dt><dd data-field="systems">shared/model, shared/store (undo), shared/ui Dialog, features/genres (new), features/draw DeckButton, app/board rail and screen, tests/e2e</dd>
+  <dt>Dependencies</dt><dd data-field="dependencies">Phase 1 (copy-rename: Board.genres shape, GENRES, allGenresOn); Phase 2 (hook-test: 11 pool files, genre filter in drawCard, grouped rail, frozen board format); zustand 5.0.16, zundo 2.3.0, React 19.3.1, Vitest + Testing Library, Playwright 1.64.1, gh CLI</dd>
+</dl>
+
+<h2>Context References</h2>
+
+<h3>Relevant Codebase Files — READ THESE BEFORE IMPLEMENTING</h3>
+<ul>
+  <li><code>CLAUDE.md</code> — Why: import rules, "Draws", "Undo" ("Genre and settings changes are never in undo"), "Cards copy their cues", tokens-only CSS, 44 px hit targets, Title Case, test naming, commit authorship (no AI trailers).</li>
+  <li><code>src/shared/model/index.ts</code> (lines 43–88 GENRES, GENRE_DECKS, DeckGenres, allGenresOn; 107–130 DECK_NAME / MOD_DECK_NAME; 195–205 Board.genres) — Why: the types this phase uses; GENRE_NAME mirrors DECK_NAME.</li>
+  <li><code>src/shared/model/genres.test.ts</code> — Why: pins GENRES to <code>docs/libraries/genres.json</code>; extend it for GENRE_NAME.</li>
+  <li><code>src/shared/store/boardStore.ts</code> (lines 1–16 contract, 57–62 <code>untracked</code>, 65–77 <code>step</code>, 95–98 <code>setView</code>, 103–107 zundo options) — Why: <code>setGenres</code> mirrors <code>setView</code>; <code>step</code> must keep current genres as it keeps <code>view</code>.</li>
+  <li><code>src/shared/store/boardStore.test.ts</code> (lines 30–37 setView, 69–83 undo keeps view / setView not a step) — Why: the tests to mirror for setGenres.</li>
+  <li><code>src/features/draw/drawCard.ts</code> (lines 23–30, 59–66, 110–125) — Why: the genre filter already in draws; no change needed, but the panel guard keeps <code>filter.genres</code> non-empty (line 63 throws on missing genres).</li>
+  <li><code>src/features/draw/DeckButton.tsx</code> (lines 23–52) and <code>DeckButton.module.css</code> — Why: add the <code>trailing</code> slot; keep the "Draw A …" aria-label the tests rely on.</li>
+  <li><code>src/app/board/SideRail.tsx</code> and <code>SideRail.module.css</code> — Why: add the Genres group after Optional, before Add Note; pass pills to genre-tagged deck buttons.</li>
+  <li><code>src/app/board/SideRail.test.tsx</code> (lines 17–41) — Why: heading order test changes to Core, Modifiers, Optional, Genres.</li>
+  <li><code>src/app/board/BoardScreen.tsx</code> (lines 62–95, 118) — Why: owns the panel open state and passes <code>board.genres</code> and <code>setGenres</code>.</li>
+  <li><code>src/app/board/BoardScreen.test.tsx</code> (lines 1–80) — Why: how the screen is rendered in unit tests (store seeding, pools mock).</li>
+  <li><code>src/shared/ui/Dialog.tsx</code>, <code>Dialog.module.css</code>, <code>Dialog.test.tsx</code> — Why: the native-dialog shell to extend with a <code>panel</code> size and a close button.</li>
+  <li><code>src/features/boards/NewBoardDialog.tsx</code> — Why: the pattern for a feature dialog built on the shared Dialog and mounted only while open; its help text already points at the Genres panel.</li>
+  <li><code>src/features/hook/index.ts</code>, <code>src/features/draw/index.ts</code> — Why: a feature's public <code>index.ts</code> shape to mirror for <code>features/genres/index.ts</code>.</li>
+  <li><code>src/shared/ui/Icon.tsx</code> — Why: <code>sliders-horizontal</code> (Genres button) and <code>x</code> (close) already exist; no new icon files.</li>
+  <li><code>src/shared/ui/tokens.css</code> (lines 20–30, 175–192) — Why: <code>--accent</code>, <code>--accent-text</code>, <code>--border-strong</code>, <code>--radius-dialog</code>, <code>--shadow-dialog</code>, <code>--scrim</code>; there is no "accent 18%" token.</li>
+  <li><code>scripts/check-css-colors.mjs</code> (line 14) — Why: any <code>rgb(a)(</code> or hex outside tokens.css fails lint, so accent tints use <code>color-mix()</code>.</li>
+  <li><code>src/shared/pools/poolFiles.test.ts</code> — Why: the durable floor test (10 per genre per tagged deck, 20 per Modifier deck).</li>
+  <li><code>scripts/split-decks.mjs</code> (lines 1–11, 71, 171–196) — Why: <code>splitDecks()</code> is a pure export used for the read-only cue-for-cue check; the CLI must not run.</li>
+  <li><code>tests/e2e/test.ts</code>, <code>tests/e2e/board-helpers.ts</code> (openBoard, rail, drawFromRail, canvasCards, storedBoards), <code>tests/e2e/pools-real.spec.ts</code> — Why: browser test fixtures, helpers and the real-pool pattern (<code>context.unroute('**/pools/*.json')</code>).</li>
+  <li><code>tests/e2e/fixtures/pools/*.json</code> — Why: every fixture cue in the 4 tagged decks lists all 21 genres, so filtering cannot be observed with fixtures; the filter browser test uses the real pools.</li>
+  <li><code>docs/design-handoff/mockups/Genres.dc.html</code> and <code>screenshots/Genres.png</code> — Why: the reference frame for chip gaps (8), the row layout (gap 16, name column 170), the "All on" ghost button (36 tall) and the close button (44). Its Generic footer sentence and the "other 7 decks" line are not built (design §9.10 wins).</li>
+</ul>
+
+<h3>New Files to Create</h3>
+<ul>
+  <li><code>src/features/genres/genreRules.ts</code> — pure rules: union, normalize, toggle a top chip, toggle a deck chip, the guards, All on, count texts.</li>
+  <li><code>src/features/genres/genreRules.test.ts</code> — unit tests for every rule and guard.</li>
+  <li><code>src/features/genres/GenreCount.tsx</code> + <code>GenreCount.module.css</code> — the 15 px count pill.</li>
+  <li><code>src/features/genres/GenresButton.tsx</code> + <code>GenresButton.module.css</code> — the rail's Genres button with its count line.</li>
+  <li><code>src/features/genres/GenresPanel.tsx</code> + <code>GenresPanel.module.css</code> — the Genres panel dialog.</li>
+  <li><code>src/features/genres/GenreCount.test.tsx</code>, <code>GenresButton.test.tsx</code>, <code>GenresPanel.test.tsx</code> — component tests.</li>
+  <li><code>src/features/genres/index.ts</code> — the slice's public entry.</li>
+  <li><code>tests/e2e/genres.spec.ts</code> — browser tests.</li>
+</ul>
+
+<h3>Relevant Documentation — READ BEFORE IMPLEMENTING</h3>
+<ul>
+  <li><code>docs/design-system.html</code> §8.2 Left rail (Genre count pill, Genres button, group order), §9.10 Genres panel, §12 (aria-labels "N genres on"), §13 State sketch (<code>GenresPanel open · picked · perDeck</code>), §16 M3 — Why: every size, color and string in this phase.</li>
+  <li><code>docs/architecture.html</code> decisions <code>undo-history</code> ("A genre setting change is kept out of the undo history"), <code>save-transaction</code> ("A genre setting change saves like any other change"), <code>schema-shape</code>, <code>board-file-format</code>, <code>module-layout</code> (<code>genres/</code>), <code>import-rules</code>, <code>pool-files</code> — Why: the constraints this phase conforms to.</li>
+  <li><code>docs/prd.html</code> §6.7 Genres panel and §11 Phase 3; <code>docs/mvp-plan.html</code> Left rail, Genres panel, Rules, M3 — Why: behavior and the count line meaning ("the number of genres on in the board row").</li>
+  <li><code>docs/feature-settings-and-theme.html</code> (rail changes: genre count line, genre counts on the 4 deck buttons; genre counts follow the theme color) — Why: the counts use <code>--accent</code>, so they change with the theme in Phase 5 for free.</li>
+  <li><a href="https://github.com/charkour/zundo#readme">zundo README — pause / resume and partialize</a> — Why: <code>setGenres</code> uses the existing <code>untracked()</code> helper (pause, set, resume); past states still hold old genres, which is why <code>step()</code> must restore the current ones.</li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/color-mix">MDN: color-mix()</a> — Why: <code>color-mix(in srgb, var(--accent) 18%, transparent)</code> is the accent-at-18% fill without a literal color (supported in Chromium, Firefox and WebKit).</li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-pressed">MDN: aria-pressed</a> — Why: genre chips are toggle buttons.</li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-describedby">MDN: aria-describedby</a> — Why: the deck button keeps its "Draw A …" name and is described by its count pill.</li>
+</ul>
+
+<h3>Patterns to Follow</h3>
+<p><strong>Untracked store change</strong> (<code>boardStore.ts</code> lines 95–98) — <code>setGenres</code> mirrors it, adding the <code>updatedAt</code> stamp and a same-object no-op:</p>
+<pre><code>setView: (view) =&gt; {
+  const { board, saveSeq } = get();
+  untracked({ board: { ...board, view }, saveSeq: saveSeq + 1 });
+},</code></pre>
+<p><strong>Undo keeps the current view</strong> (<code>boardStore.ts</code> lines 65–77) — extend to genres:</p>
+<pre><code>const { view } = get().board;
+history[direction]();
+const { board, saveSeq } = get();
+untracked({
+  board: { ...board, view, updatedAt: new Date().toISOString() },
+  saveSeq: saveSeq + 1,
+});</code></pre>
+<p><strong>Display-name constant in shared/model</strong> (<code>index.ts</code> line 107) — GENRE_NAME follows <code>DECK_NAME: Record&lt;CardType, string&gt;</code>.</p>
+<p><strong>Feature public entry</strong> (<code>features/draw/index.ts</code>):</p>
+<pre><code>/**
+ * Draw feature: the public entry for drawing new cards and the rail's deck buttons.
+ */
+export { DeckButton, deckLabel, drawLabel, HookButton } from './DeckButton';</code></pre>
+<p><strong>CSS modules</strong>: a top comment naming the design section and sizes; tokens only; a size with no token carries a <code>/* design 9.10; no token */</code> comment (see <code>Dialog.module.css</code>). Accent tints: <code>background: color-mix(in srgb, var(--accent) 18%, transparent);</code></p>
+<p><strong>Tests</strong>: <code>functionName_condition_expectedResult</code>, Vitest + Testing Library beside the code; browser tests import <code>{ expect, test } from './test'</code>.</p>
+<p><strong>Naming</strong>: components PascalCase files; pure modules camelCase; exported string constants SCREAMING_SNAKE (e.g. <code>GENRES_HELP_TEXT</code>, as <code>NEW_BOARD_HELP_TEXT</code>).</p>
+
+<h2>Implementation Plan</h2>
+<p><strong>Rendering:</strong> Milestones</p>
+<p><strong>Rationale:</strong> 11 tasks in clear layers — model and store, then the pure rules, then the UI pieces and their wiring, then verification — where each layer's checkpoint proves something no single task does (genres survive undo with a real board; the panel drives the rail counts through the store).</p>
+
+<h3 class="milestone" data-milestone="1">Milestone 1: Genre model, store and rules</h3>
+<p>The data side: genre names, a non-undo genre change in the store, and the pure panel rules.</p>
+<p><strong>Validation checkpoint:</strong> a store sequence of draw-like change → <code>setGenres(toggleDeckGenre(...))</code> → undo leaves the card change undone and the new genres in place, with <code>saveSeq</code> bumped by each of the three: <code>npx vitest run src/shared/store src/features/genres src/shared/model</code> passes, including <code>undo_afterGenreChange_keepsCurrentGenres</code>.</p>
+
+<h4 class="task" data-task="1">Task 1: Add genre display names to the shared model</h4>
+<p>The panel needs the library's genre names ("Builder &amp; Management") for chip labels.</p>
+<ul>
+  <li><strong>ADD:</strong> in <code>src/shared/model/index.ts</code>, after <code>GENRES</code>, <code>export const GENRE_NAME: Record&lt;Genre, string&gt;</code> with the 21 names exactly as the keys of <code>docs/libraries/genres.json</code>: Roguelike, Metroidvania, Platformer, Puzzle, Shooter, Melee Action, Fighting, RPG, Open World, Survival Craft, Horror, Builder &amp; Management, Life Sim, Vehicle Sim &amp; Racing, Strategy, Deckbuilder &amp; Cards, Narrative, Stealth &amp; Immersive Sim, Sandbox, Party &amp; Multiplayer, Rhythm &amp; Arcade. Doc comment: "Genre display names, the keys of docs/libraries/genres.json".</li>
+  <li><strong>ADD:</strong> to <code>src/shared/model/genres.test.ts</code> a test <code>genreName_everyGenre_matchesLibraryKeyInOrder</code> that reads <code>genres.json</code> and asserts <code>GENRES.map(g =&gt; GENRE_NAME[g])</code> equals <code>Object.keys(file)</code>.</li>
+  <li><strong>GOTCHA:</strong> constants only in <code>shared/model</code> (its doc comment: "Types and constants, plus allGenresOn and newId, no other logic"). Keep the ampersands; they are UI text, not ids.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/shared/model/genres.test.ts &amp;&amp; npx tsc --noEmit</code></li>
+</ul>
+
+<h4 class="task" data-task="2">Task 2: Add setGenres to the board store, kept out of undo</h4>
+<p>A genre change saves like any other change but is never an undo step (architecture <code>undo-history</code>, <code>save-transaction</code>).</p>
+<ul>
+  <li><strong>ADD:</strong> to <code>BoardState</code> in <code>src/shared/store/boardStore.ts</code>: <code>setGenres: (genres: DeckGenres) =&gt; void</code>, documented "Replaces the board's deck genres. Saves and stamps updatedAt; never an undo step. The same object changes nothing."</li>
+  <li><strong>IMPLEMENT:</strong> <code>setGenres: (genres) =&gt; { const { board, saveSeq } = get(); if (genres === board.genres) return; untracked({ board: { ...board, genres, updatedAt: new Date().toISOString() }, saveSeq: saveSeq + 1 }); }</code>.</li>
+  <li><strong>UPDATE:</strong> <code>step()</code>: read <code>const { view, genres } = get().board;</code> before <code>history[direction]()</code> and write <code>{ ...board, view, genres, updatedAt }</code> after, so undo and redo never bring back old genres (zundo's past states still hold them).</li>
+  <li><strong>UPDATE:</strong> the contract in the file's top comment: add "setGenres saves and stamps updatedAt but is never an undo step; undo and redo keep the current genres, like the view."</li>
+  <li><strong>ADD:</strong> tests in <code>boardStore.test.ts</code>: <code>setGenres_newGenres_savesAndStampsWithoutUndoStep</code> (saveSeq +1, updatedAt changes, <code>pastStates.length</code> unchanged, <code>canUndo</code> false on a fresh board); <code>setGenres_sameObject_noChange</code>; <code>undo_afterGenreChange_keepsCurrentGenres</code> (changeBoard → setGenres → undo: card change undone, genres still the new ones); <code>redo_afterGenreChange_keepsCurrentGenres</code>.</li>
+  <li><strong>IMPORTS:</strong> <code>type DeckGenres</code> from <code>@/shared/model</code>.</li>
+  <li><strong>GOTCHA:</strong> <code>openBoard</code> already clears history; tab sync (another tab changed the board) reloads through <code>openBoard</code>, so nothing else changes. Do not touch <code>partialize</code> or <code>equality</code>.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/shared/store/boardStore.test.ts &amp;&amp; npx tsc --noEmit</code></li>
+</ul>
+
+<h4 class="task" data-task="3">Task 3: Create the pure genre rules in features/genres</h4>
+<p>All panel and rail logic as pure functions, so the UI only renders.</p>
+<ul>
+  <li><strong>CREATE:</strong> <code>src/features/genres/genreRules.ts</code> (top doc comment: the Genres panel rules, design 9.10 and mvp-plan "Genres panel"; pure, no React) with:
+    <ul>
+      <li><code>normalize(list: readonly Genre[]): Genre[]</code> — GENRES order, no repeats.</li>
+      <li><code>pickedGenres(genres: DeckGenres): Genre[]</code> — the union of the 4 deck lists, in GENRES order (the panel's top row at open, and the rail count line).</li>
+      <li><code>canTurnOffPicked(genres, genre): boolean</code> — false if any deck's list is exactly <code>[genre]</code>.</li>
+      <li><code>canTurnOffDeckGenre(genres, deck, genre): boolean</code> — false if that deck's list is exactly <code>[genre]</code>.</li>
+      <li><code>togglePicked(genres, picked: readonly Genre[], genre): { genres: DeckGenres; picked: Genre[] }</code> — off→on: add to picked and to all 4 decks; on→off: remove from picked and all 4 decks, or return the same objects when <code>canTurnOffPicked</code> is false.</li>
+      <li><code>toggleDeckGenre(genres, deck: GenreDeck, genre): DeckGenres</code> — add, or remove unless it is the deck's last genre (then return the same object).</li>
+      <li><code>allOn(genres): DeckGenres</code> — <code>allGenresOn()</code>, or the same object when every deck already has all 21.</li>
+      <li><code>genreCountText(n: number): string</code> — <code>"All genres"</code> at 21, <code>"1 genre"</code>, else <code>"N genres"</code>.</li>
+      <li><code>genresOnLabel(n: number): string</code> — <code>"1 genre on"</code> / <code>"N genres on"</code> (pill aria-label).</li>
+      <li><code>showCount(n: number): boolean</code> — <code>n &lt; GENRES.length</code>.</li>
+    </ul>
+    Every function that changes nothing returns the same object (so <code>setGenres</code> no-ops), and every new list is normalized.</li>
+  <li><strong>CREATE:</strong> <code>src/features/genres/index.ts</code> exporting the rules (UI components are added in Tasks 5–6).</li>
+  <li><strong>CREATE:</strong> <code>src/features/genres/genreRules.test.ts</code>: union order; top on adds to all 4; top off removes from all 4; top off blocked when a deck would be empty; deck off blocked at its last genre; deck on keeps GENRES order; All on resets and is a same-object no-op when already all on; count texts at 1, 3, 20, 21; pill label singular/plural; no function mutates its input (freeze the input with <code>Object.freeze</code> on lists).</li>
+  <li><strong>IMPORTS:</strong> <code>GENRES, GENRE_DECKS, allGenresOn, type DeckGenres, type Genre, type GenreDeck</code> from <code>@/shared/model</code>.</li>
+  <li><strong>GOTCHA:</strong> the ESLint import rules already cover a new feature folder (pattern <code>@/features/*/*</code>); <code>shared/</code> must not import it.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/genres/genreRules.test.ts &amp;&amp; npx eslint src/features/genres &amp;&amp; npx tsc --noEmit</code></li>
+</ul>
+
+<h3 class="milestone" data-milestone="2">Milestone 2: Genres UI</h3>
+<p>The panel, the pill and the Genres button, wired into the rail and board screen.</p>
+<p><strong>Validation checkpoint:</strong> rendering <code>BoardScreen</code> with a seeded store, opening the panel from the rail, turning a top chip off updates the Mechanic and Resource pills and the count line, and the store has no undo step: <code>npx vitest run src/app src/features/genres src/shared/ui</code> passes, including <code>boardScreen_genreChange_updatesRailCountsWithoutUndo</code>.</p>
+
+<h4 class="task" data-task="4">Task 4: Extend the shared Dialog with a panel size and a close button</h4>
+<p>The Genres panel (and later the Settings dialog) is a wide dialog with a × button in its header.</p>
+<ul>
+  <li><strong>UPDATE:</strong> <code>src/shared/ui/Dialog.tsx</code>: <code>size?: 'default' | 'wide' | 'panel'</code>; new optional <code>showClose?: boolean</code> that renders, in a header row with the title, a 44 × 44 button <code>aria-label="Close"</code> with <code>&lt;Icon name="x" size={18} /&gt;</code> calling <code>onClose</code>; new optional <code>footerNote?: ReactNode</code> rendered at the left of the actions row. Keep the caption under the title. Update the top comment.</li>
+  <li><strong>UPDATE:</strong> <code>Dialog.module.css</code>: <code>.panel</code> — <code>width: min(1040px, calc(100% - 32px))</code>, <code>max-width: none</code>, <code>max-height: calc(100vh - 32px)</code>, padding 0, radius <code>--radius-dialog</code>, <code>--shadow-dialog</code>, <code>--surface</code>; header padding 24 28 8; title Display 22/700; caption <code>--text-muted</code>, line-height 1.5, max-width 760 px; body scrolls (<code>overflow-y: auto</code>, padding 0 28); actions row padding 18 28 22, top border 1 <code>--border</code>, <code>align-items: center</code>; <code>.footerNote</code> <code>margin-right: auto</code>, 13 px <code>--text-muted</code>; close button radius 8, border 1 <code>--border</code>, transparent. Reuse the <code>dialogIn</code> animation and the reduced-motion rule.</li>
+  <li><strong>ADD:</strong> tests in <code>Dialog.test.tsx</code>: <code>dialog_panel_hasPanelClass</code>; <code>dialog_showClose_closeButtonCallsOnClose</code>; <code>dialog_footerNote_rendersBesideActions</code>; existing tests unchanged.</li>
+  <li><strong>GOTCHA:</strong> sizes with no token carry <code>/* design 9.10; no token */</code>. Do not change the default or wide variants (New Board and Delete dialogs).</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/shared/ui &amp;&amp; npm run lint</code></li>
+</ul>
+
+<h4 class="task" data-task="5">Task 5: Create the genre count pill, the Genres button and the DeckButton slot</h4>
+<p>The rail parts from design 8.2.</p>
+<ul>
+  <li><strong>CREATE:</strong> <code>src/features/genres/GenreCount.tsx</code>: props <code>{ count: number; id?: string }</code>; returns <code>null</code> when <code>!showCount(count)</code>; otherwise <code>&lt;span id={id} role="img" aria-label={genresOnLabel(count)} className={styles.pill}&gt;{count}&lt;/span&gt;</code>. CSS: 15 tall, min-width 16, padding 0 4, radius 8, border 1 <code>--accent</code>, fill <code>color-mix(in srgb, var(--accent) 18%, transparent)</code>, text Inter 9/600 <code>--accent-text</code>, <code>margin-left: auto</code>, centered, <code>box-sizing: border-box</code>.</li>
+  <li><strong>UPDATE:</strong> <code>src/features/draw/DeckButton.tsx</code>: optional props <code>trailing?: ReactNode</code> (rendered last inside the button) and <code>describedBy?: string</code> (sets <code>aria-describedby</code>). The aria-label stays <code>drawLabel(...)</code>. Update the doc comment.</li>
+  <li><strong>CREATE:</strong> <code>src/features/genres/GenresButton.tsx</code>: props <code>{ genres: DeckGenres; onOpen: () =&gt; void }</code>; a <code>&lt;button aria-label="Genres" aria-describedby={lineId}&gt;</code> with the <code>sliders-horizontal</code> icon (18, <code>--text-soft</code>) and 2 lines: "Genres" 14/600 <code>--text</code>, then <code>&lt;span id={lineId}&gt;{genreCountText(pickedGenres(genres).length)}&lt;/span&gt;</code> 12/400 <code>--text-muted</code>. CSS: full width, min-height 44, padding 4 10, gap 10, radius <code>--radius-button</code>, border 1 <code>--border-strong</code>, transparent fill, hover <code>--surface-raised</code>, active scale 0.97 (mirror <code>DeckButton.module.css</code>).</li>
+  <li><strong>UPDATE:</strong> <code>src/features/genres/index.ts</code>: export <code>GenreCount</code>, <code>GenresButton</code>.</li>
+  <li><strong>CREATE:</strong> <code>GenreCount.test.tsx</code> (<code>genreCount_all21_rendersNothing</code>, <code>genreCount_three_showsNumberAndLabel</code>, <code>genreCount_one_singularLabel</code>) and <code>GenresButton.test.tsx</code> (<code>genresButton_allOn_readsAllGenres</code>, <code>genresButton_unionOfThree_readsThreeGenres</code>, <code>genresButton_click_callsOnOpen</code>); add <code>deckButton_trailing_rendersInsideAndKeepsLabel</code> to an existing draw test file or a new <code>DeckButton.test.tsx</code>.</li>
+  <li><strong>GOTCHA:</strong> <code>features/draw</code> must not import <code>features/genres</code>; the slot keeps them apart. The pill uses <code>--accent</code>, so it follows the theme color in Phase 5 without change.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/genres src/features/draw &amp;&amp; npm run lint &amp;&amp; npx tsc --noEmit</code></li>
+</ul>
+
+<h4 class="task" data-task="6">Task 6: Create the Genres panel</h4>
+<p>Design 9.10 on the shared Dialog.</p>
+<ul>
+  <li><strong>CREATE:</strong> <code>src/features/genres/GenresPanel.tsx</code>: props <code>{ genres: DeckGenres; onChange: (genres: DeckGenres) =&gt; void; onClose: () =&gt; void }</code>; the parent mounts it only while open (NewBoardDialog pattern), so <code>const [picked, setPicked] = useState(() =&gt; pickedGenres(genres))</code> starts fresh on every open (design §13 <code>picked</code> is view state). Renders <code>&lt;Dialog open size="panel" showClose title="Genres" caption={GENRES_HELP_TEXT} footerNote={GENRES_FOOTER_TEXT} actions={&lt;Button variant="primary" data-autofocus onClick={onClose}&gt;Done&lt;/Button&gt;} onClose={onClose}&gt;</code>.</li>
+  <li><strong>IMPLEMENT:</strong> exported strings (verbatim from design 9.10): <code>GENRES_HELP_TEXT = "Pick genres at the top. Each genre you pick shows on the 4 genre decks below, already on. Turn one off to keep it out of that deck. A change applies to the next draw only. Cards on the board keep their cues."</code>; <code>GENRES_FOOTER_TEXT = "Each deck keeps at least 1 genre."</code>.</li>
+  <li><strong>IMPLEMENT:</strong> top section: a header row with the group label "All 4 Decks" (Display 12/600, 0.08em, uppercase, <code>--text-muted</code>) and an "All On" ghost button (36 tall, padding 0 14, radius 8, border 1 <code>--border-strong</code>, 13/500) calling <code>onChange(allOn(genres))</code> and <code>setPicked([...GENRES])</code>; then 21 chips (flex wrap, gap 8) in GENRES order, each a <code>&lt;button aria-pressed={on}&gt;{GENRE_NAME[g]}&lt;/button&gt;</code>; click runs <code>togglePicked</code>, then <code>setPicked</code> and <code>onChange</code> (only when the genres object changed). A chip that is on and fails <code>canTurnOffPicked</code> is <code>disabled</code> with <code>title={GENRES_FOOTER_TEXT}</code>.</li>
+  <li><strong>IMPLEMENT:</strong> deck rows, in GENRE_DECKS order (Mechanic, Resource, Progression, Constraint): a <code>role="group"</code> with <code>aria-label={DECK_NAME[deck]}</code>; padding 14 0, top border 1 <code>--border</code>, flex gap 16; name column 170 wide (flex 0 0 170, gap 10, 600) with <code>&lt;Icon name={iconFor({ type: deck })}&gt;</code>… — <code>iconFor</code> lives in <code>@/features/card</code>, import it from that index — in <code>var(--rail-${deck})</code>; chips (gap 8) for each genre in <code>picked</code>, <code>aria-pressed</code> = in that deck's list; click runs <code>toggleDeckGenre</code>; the deck's last on chip is <code>disabled</code> with the footer title.</li>
+  <li><strong>IMPLEMENT:</strong> chip CSS: top chips 36 tall, padding 0 12, radius 18, 13 px; deck chips 32 tall, padding 0 10, radius 18 (design §6 genre top chips radius 18; mockup uses 18 for both), 12 px. On: border 1 <code>--accent</code>, fill <code>color-mix(in srgb, var(--accent) 18%, transparent)</code>, text <code>--text</code> 600. Off: border 1 <code>--border-strong</code>, transparent, <code>--text-muted</code> 500. Each chip has <code>position: relative</code> and a transparent <code>::before</code> at <code>inset: -4px 0</code> so its hit area is 44 px (top) / 40 px (deck) tall without overlapping the next row (gap 8). Disabled keeps the on look with <code>cursor: default</code>.</li>
+  <li><strong>UPDATE:</strong> <code>index.ts</code>: export <code>GenresPanel</code>, <code>GENRES_HELP_TEXT</code>, <code>GENRES_FOOTER_TEXT</code>.</li>
+  <li><strong>CREATE:</strong> <code>GenresPanel.test.tsx</code>: <code>genresPanel_open_showsTitleHelp21ChipsAnd4DeckRows</code>; <code>genresPanel_topChipOff_callsOnChangeWithoutItInAllDecks</code>; <code>genresPanel_topChipOn_addsToEveryDeckRow</code>; <code>genresPanel_deckChipOff_changesOnlyThatDeck</code>; <code>genresPanel_lastDeckGenre_isDisabled</code>; <code>genresPanel_allOn_resetsToAll21</code>; <code>genresPanel_doneCloseAndEsc_callOnClose</code>; <code>genresPanel_deckOffEverywhere_topChipStaysWhileOpen</code>. Use a small wrapper that holds <code>genres</code> in state and feeds <code>onChange</code> back.</li>
+  <li><strong>GOTCHA:</strong> the label "All 4 Decks" and button "All On" are Title Case (CLAUDE.md UI Conventions win over the design's "All 4 decks" / "All on" casing, as in Phases 1–2); help and footer text stay sentence case as written. The other 7 decks do not appear. No Cancel: each click applies at once.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/genres &amp;&amp; npm run lint &amp;&amp; npx tsc --noEmit</code></li>
+</ul>
+
+<h4 class="task" data-task="7">Task 7: Wire the Genres group, pills and panel into the rail and board screen</h4>
+<p>Compose the slice in <code>app/</code>.</p>
+<ul>
+  <li><strong>UPDATE:</strong> <code>src/app/board/SideRail.tsx</code>: new props <code>genres: DeckGenres</code> and <code>onOpenGenres: () =&gt; void</code>. For a deck in <code>GENRE_DECKS</code>, render <code>&lt;DeckButton … trailing={&lt;GenreCount id={pillId(type)} count={genres[type].length} /&gt;} describedBy={showCount(n) ? pillId(type) : undefined} /&gt;</code> (ids via <code>useId()</code> prefix). Today that is Mechanic and Resource; Progression and Constraint get pills automatically when Phase 4 adds their buttons. After the Optional group add <code>&lt;h2 className={styles.label}&gt;Genres&lt;/h2&gt;</code> and <code>&lt;GenresButton genres={genres} onOpen={onOpenGenres} /&gt;</code>, then Add Note and the help panel as now. Update the top comment.</li>
+  <li><strong>UPDATE:</strong> <code>src/app/board/BoardScreen.tsx</code>: <code>const [genresOpen, setGenresOpen] = useState(false)</code>; <code>const setGenres = useBoardStore((s) =&gt; s.setGenres)</code>; pass <code>genres={board.genres}</code> and <code>onOpenGenres={() =&gt; setGenresOpen(true)}</code> to SideRail; render <code>{genresOpen &amp;&amp; &lt;GenresPanel genres={board.genres} onChange={setGenres} onClose={() =&gt; setGenresOpen(false)} /&gt;}</code>. Close the panel when <code>board.id</code> changes (key it on <code>board.id</code> or reset in an effect).</li>
+  <li><strong>UPDATE:</strong> <code>SideRail.test.tsx</code>: headings are <code>['Core', 'Modifiers', 'Optional', 'Genres']</code>; add <code>sideRail_genreDecks_showPillsOnlyWhenNarrowed</code> (all 21: no pill; Mechanic at 3: pill "3" with label "3 genres on" and the Mechanic button described by it) and <code>sideRail_genresButton_opensPanelCallback</code>. Pass <code>genres={allGenresOn()}</code> in <code>renderRail</code>.</li>
+  <li><strong>ADD:</strong> to <code>BoardScreen.test.tsx</code>: <code>boardScreen_genreChange_updatesRailCountsWithoutUndo</code> (open via the Genres button, turn Roguelike off at the top, expect pills "20" on Mechanic and Resource, count line "20 genres", <code>useBoardStore.temporal.getState().pastStates.length</code> unchanged and the Undo button still disabled).</li>
+  <li><strong>IMPORTS:</strong> <code>GenreCount, GenresButton, GenresPanel, showCount</code> from <code>@/features/genres</code>; <code>GENRE_DECKS, type DeckGenres</code> from <code>@/shared/model</code>.</li>
+  <li><strong>GOTCHA:</strong> the rail scrolls (<code>overflow-y: auto</code>) so the extra group fits at 900 px. The empty-board guide and pools-failed state are untouched; the Genres button stays enabled when pools fail (it needs no pool).</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/app src/features &amp;&amp; npm run lint &amp;&amp; npx tsc --noEmit</code></li>
+</ul>
+
+<h3 class="milestone" data-milestone="3">Milestone 3: Verification</h3>
+<p>Browser behavior across 3 engines, the pool state, and the whole suite.</p>
+<p><strong>Validation checkpoint:</strong> with real pools, narrowing Mechanic to one genre in the panel, reloading, and drawing a Mechanic card yields only cues tagged with that genre in <code>public/pools/mechanic.json</code>, while a card drawn before the change keeps its cues — <code>npx playwright test tests/e2e/genres.spec.ts</code> passes in Chromium, Firefox and WebKit, and the Task 9 pool comparison exits 0.</p>
+
+<h4 class="task" data-task="8">Task 8: Add Genres browser tests</h4>
+<ul>
+  <li><strong>CREATE:</strong> <code>tests/e2e/genres.spec.ts</code> (top comment: the Genres panel, counts, persistence, undo and the real-pool filter) with:
+    <ul>
+      <li><code>genres_newBoard_noPillsAndAllGenresLine</code> — fixture pools; rail has no "genres on" pill and the Genres button line reads "All genres".</li>
+      <li><code>genres_panel_turnOffTopChip_updatesPillsAndLine</code> — open with the Genres button; dialog "Genres" shows 21 top chips and 4 deck groups; turn Roguelike off; Done; Mechanic and Resource pills read 20 and the line "20 genres".</li>
+      <li><code>genres_change_savesAndSurvivesReload</code> — after a change, <code>storedBoards(page)</code> shows the new genres; reload; pills still show.</li>
+      <li><code>genres_change_notInUndo</code> — draw a card, change genres, press Control+z: the card is gone and the pills still show the change; the Undo button is then disabled.</li>
+      <li><code>genres_lastGenre_cannotTurnOff</code> — in the Mechanic row turn chips off until one remains; that chip is disabled and the footer reads "Each deck keeps at least 1 genre."</li>
+      <li><code>genres_realPools_drawUsesOnlyPickedGenre</code> — <code>context.unroute('**/pools/*.json')</code>; draw a Mechanic card first (keep its cue texts); open the panel, press each top chip except Metroidvania (smallest Mechanic genre) to leave one genre; draw 5 Mechanic cards (undo between draws, as in <code>pools-real.spec.ts</code>); every drawn cue text is in the set of <code>public/pools/mechanic.json</code> cues whose genres include <code>metroidvania</code> (read the file with <code>node:fs</code> in the test); the first card's cues are unchanged.</li>
+    </ul></li>
+  <li><strong>PATTERN:</strong> <code>tests/e2e/pools-real.spec.ts</code> for unroute, reduced motion and undo between draws; <code>board-helpers.ts</code> for <code>openBoard</code>, <code>rail</code>, <code>drawFromRail</code>, <code>canvasCards</code>, <code>storedBoards</code>.</li>
+  <li><strong>GOTCHA:</strong> the canvas renders only visible cards (Phase 2 DECISION), so read drawn cues from the card's <code>[data-edge]</code> labels right after the draw, or from <code>storedBoards</code>. Cue labels may be clamped; compare against stored cue text when a label ends in an ellipsis.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx playwright test tests/e2e/genres.spec.ts</code></li>
+</ul>
+
+<h4 class="task" data-task="9">Task 9: Verify pool floors and cue-for-cue state without rerunning the split</h4>
+<p>The PRD's Phase 3 pass bar ("every converted pool matches its library cue for cue after the split rules; every genre has at least 10 cues in Mechanic and Resource"), checked read-only.</p>
+<ul>
+  <li><strong>IMPLEMENT:</strong> run the in-memory comparison below (it imports the pure <code>splitDecks</code> and writes nothing). Record its output and the per-genre minimums in this doc's Notes under "Pool check".</li>
+  <li><strong>IMPLEMENT:</strong> if a deck reports DIFF, do <strong>not</strong> rerun or "fix" anything: check <code>git log --oneline db0d494..HEAD -- public/pools</code>. A DIFF with changes there is a hand edit (allowed: the JSON is the source) and is recorded in Notes; with no changes there a DIFF fails the VALIDATE and is a bug to stop on with <code>BLOCKED: pool-files</code>.</li>
+  <li><strong>GOTCHA:</strong> compare parsed JSON, not file text — Prettier wraps short arrays in the committed files. <code>docs/</code> is prettier-ignored; <code>public/pools/</code> is not.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span>
+<pre><code>npx vitest run src/shared/pools/poolFiles.test.ts src/test/splitDecks.test.ts &amp;&amp; STRICT=$(git diff --quiet db0d494 -- public/pools &amp;&amp; echo 1 || echo 0) node --input-type=module -e "
+import { readFileSync } from 'node:fs';
+import { splitDecks } from './scripts/split-decks.mjs';
+const read = (p) =&gt; JSON.parse(readFileSync(p, 'utf8'));
+const { pools } = splitDecks(read('docs/libraries/decks.json'), read('docs/libraries/genres.json'));
+let bad = 0;
+for (const p of Object.values(pools)) {
+  const same = JSON.stringify(read('public/pools/' + p.type + '.json')) === JSON.stringify(p);
+  console.log((same ? 'MATCH ' : 'DIFF ') + p.type + ' ' + p.cues.length);
+  if (!same &amp;&amp; process.env.STRICT === '1') bad++;
+}
+for (const t of ['mechanic', 'resource', 'progression', 'constraint']) {
+  const cues = read('public/pools/' + t + '.json').cues, counts = {};
+  for (const c of cues) for (const g of c.genres) counts[g] = (counts[g] || 0) + 1;
+  const [g, n] = Object.entries(counts).sort((a, b) =&gt; a[1] - b[1])[0];
+  console.log('min ' + t + ' ' + g + ' ' + n + ' over ' + Object.keys(counts).length + ' genres');
+  if (n &lt; 10 || Object.keys(counts).length !== 21) bad++;
+}
+process.exit(bad ? 1 : 0);
+"</code></pre>
+  <p>STRICT is 1 when <code>public/pools/</code> is unchanged since the Phase 2 merge, so any DIFF fails; after a committed hand edit a DIFF is printed and recorded but does not fail, while the floors always do.</p>
+  </li>
+</ul>
+
+<h4 class="task" data-task="10">Task 10: Update the README and run the full validation suite</h4>
+<ul>
+  <li><strong>UPDATE:</strong> <code>README.md</code>: the status line becomes Phase 3 (Genres panel, genre counts; next: the optional deck buttons in Phase 4); a usage bullet for the Genres panel (top row sets all 4 decks, deck rows fine-tune, each deck keeps 1 genre, changes apply to the next draw, saved with the board, never in Undo; pills on genre deck buttons, count line under Genres, hidden at all 21); list <code>src/features/genres/</code> in the layout section.</li>
+  <li><strong>IMPLEMENT:</strong> run every Level 1–4 command below; fix any regression in the code this phase touched (e.g. other browser specs that count rail headings or buttons).</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npm run lint &amp;&amp; npm run format:check &amp;&amp; npm run typecheck &amp;&amp; npm test &amp;&amp; npm run build &amp;&amp; npm run size &amp;&amp; npm run test:e2e</code></li>
+</ul>
+
+<h3 class="milestone" data-milestone="4">Commit, push, and open PR</h3>
+
+<h4 class="task" data-task="11">Task 11: Commit, push, and open PR</h4>
+<p>After every prior validation checkpoint has passed:</p>
+<ul>
+  <li><strong>IMPLEMENT:</strong> stage and commit uncommitted changes with a descriptive message summarizing the phase; push with <code>git push -u origin phase-3-genres</code>; open a PR with <code>gh pr create --head phase-3-genres --base main --title "Phase 3: Full core pools and genres" --body "&lt;body&gt;"</code>.</li>
+  <li><strong>PR title format:</strong> <code>Phase 3: Full core pools and genres</code> — names the phase, not any individual feature.</li>
+  <li><strong>PR body format:</strong> copy the Acceptance Criteria as a checklist with each box checked off, followed by a <code>Notes</code> section listing assumptions/trade-offs decided during execution (start from this doc's Notes, including the Pool check output and that the pool conversion was done in Phase 2).</li>
+  <li><strong>GOTCHA:</strong> CLAUDE.md "Commit Authorship" and the user's memory rule win over any tool default: no <code>Co-Authored-By</code> or <code>Claude-Session</code> trailer in any commit, and no "Generated with…" line, robot emoji or other AI marker in the PR body. Commits are in the owner's voice.</li>
+  <li><strong>GOTCHA:</strong> <code>gh</code> is installed and authenticated as <code>DecafCoding</code> (checked 2026-11-03); if that changes, this step fails.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>gh pr view phase-3-genres --json number,title,state,headRefName</code> returns the PR with <code>"state": "OPEN"</code>, <code>"headRefName": "phase-3-genres"</code> and title <code>Phase 3: Full core pools and genres</code>; and <code>! git log origin/main..HEAD --format=%B | grep -qiE "co-authored-by|claude-session"</code>.</li>
+</ul>
+
+<h2>Testing Strategy</h2>
+<h3>Unit Tests</h3>
+<ul>
+  <li><code>genreRules.test.ts</code>: every toggle, guard, All on, union order, count texts, immutability, same-object no-ops.</li>
+  <li><code>boardStore.test.ts</code>: setGenres saves, stamps and is not an undo step; undo and redo keep the current genres; same object is a no-op.</li>
+  <li><code>genres.test.ts</code>: GENRE_NAME matches the library keys in order.</li>
+  <li>Components: Dialog panel/close/footer note; GenreCount hidden at 21 and labeled; GenresButton count line; GenresPanel chips, rows, guards, All on, close paths; DeckButton slot; SideRail order and pills; BoardScreen genre change without undo.</li>
+  <li>Unchanged and still required: <code>drawCard.test.ts</code> (genre filter), <code>poolFiles.test.ts</code> (floors), <code>splitDecks.test.ts</code>.</li>
+</ul>
+<h3>Integration Tests</h3>
+<ul>
+  <li><code>tests/e2e/genres.spec.ts</code> in Chromium, Firefox and WebKit: panel, counts, persistence across reload, not in undo, last-genre guard, real-pool filtered draw with an earlier card unchanged.</li>
+  <li>The full existing Playwright suite (rail tests, tab sync, network check — the panel makes no requests).</li>
+</ul>
+<h3>Edge Cases</h3>
+<ul>
+  <li>Turning a top chip off when it is some deck's only genre: chip disabled, nothing changes.</li>
+  <li>A genre turned off in all 4 deck rows: the top chip stays on while the panel is open (view state) and is gone from the top row on the next open; the rail line counts the union.</li>
+  <li>All On when already all on: no save, no updatedAt change.</li>
+  <li>Genre change, then a card change, then undo twice: the second undo has nothing (genre change is not a step); genres stay.</li>
+  <li>Another tab changes genres: this tab reloads the board through the existing tab-sync path, history clears, rail counts update.</li>
+  <li>Pools failed: the Genres button and panel still work (no pool needed).</li>
+  <li>Imported board with narrowed genres: pills and line show at once (import check already requires 1+ genres per deck).</li>
+  <li>900 px tall viewport: the panel body scrolls; header and footer stay visible.</li>
+</ul>
+
+<h2>Validation Commands</h2>
+<h3>Level 1: Syntax &amp; Style</h3>
+<pre><code>npm run lint
+npm run format:check
+npm run typecheck</code></pre>
+<h3>Level 2: Unit Tests</h3>
+<pre><code>npm test</code></pre>
+<h3>Level 3: Integration Tests</h3>
+<pre><code>npm run test:e2e</code></pre>
+<h3>Level 4: Manual Validation</h3>
+<pre><code># Build, size budget, pool state and the genre browser spec, non-interactive
+npm run build &amp;&amp; npm run size &amp;&amp; npx vitest run src/shared/pools/poolFiles.test.ts &amp;&amp; npx playwright test tests/e2e/genres.spec.ts --project=chromium</code></pre>
+<p>The Task 9 comparison command is the read-only cue-for-cue check; rerun it here if <code>public/pools/</code> changed during the phase.</p>
+<h3>Level 5: Additional Validation (Optional)</h3>
+<p>None required. Optionally open <code>npm run dev</code> at <code>http://localhost:5174</code> and compare the panel with <code>docs/design-handoff/screenshots/Genres.png</code>.</p>
+
+<h2>Acceptance Criteria</h2>
+<ul class="checklist">
+  <li data-checked="false">The rail shows a Genres group after Optional with a Genres button (sliders icon) whose line reads "All genres" at 21 and "N genres" (or "1 genre") otherwise, counting the union of the 4 deck lists.</li>
+  <li data-checked="false">Each genre-tagged deck button on the rail (Mechanic and Resource now; Progression and Constraint when Phase 4 adds them) shows a count pill with aria-label "N genres on", hidden when all 21 are on.</li>
+  <li data-checked="false">The Genres panel matches design 9.10: title, help text, close (×), 21 top chips with All On, rows for Mechanic, Resource, Progression and Constraint only, footer note and Done.</li>
+  <li data-checked="false">A top chip sets all 4 decks; a deck chip sets one deck; each deck keeps at least 1 genre (its last chip cannot be turned off).</li>
+  <li data-checked="false">A genre change saves the board (survives reload) and is never an undo step; undo and redo keep the current genres.</li>
+  <li data-checked="false">A genre change affects only the next draw: with real pools, a Mechanic draw after narrowing uses only cues of the remaining genre, and cards already on the board keep their cues.</li>
+  <li data-checked="false">No BoardRecord shape change; FORMAT_VERSION stays 1.</li>
+  <li data-checked="false">The pools still match <code>docs/libraries/decks.json</code> cue for cue after the 2 split rules (in-memory check), every genre has at least 10 cues in Mechanic, Resource, Progression and Constraint, and the split CLI was not run.</li>
+  <li data-checked="false">Lint (including the color check), format check, typecheck, unit tests, build, size checks and the Playwright suite in 3 engines all pass.</li>
+</ul>
+
+<h2>Completion Checklist</h2>
+<ul class="checklist">
+  <li data-checked="false">All 11 tasks completed in order, each VALIDATE passing at completion</li>
+  <li data-checked="false">Milestone checkpoints 1–3 passed</li>
+  <li data-checked="false">Level 1: lint, format check, typecheck pass</li>
+  <li data-checked="false">Level 2: <code>npm test</code> passes</li>
+  <li data-checked="false">Level 3: <code>npm run test:e2e</code> passes</li>
+  <li data-checked="false">Level 4: build, size, pool floors and genres spec pass</li>
+  <li data-checked="false">Pool check output recorded in Notes</li>
+  <li data-checked="false">README updated</li>
+  <li data-checked="false">PR open with no AI attribution</li>
+</ul>
+
+<h2>Notes</h2>
+<h3>Architecture decisions this phase conforms to</h3>
+<p><code>undo-history</code> (genre changes kept out of undo), <code>save-transaction</code> (a genre change saves like any other change), <code>state-store</code> (Zustand + zundo; the change lives in <code>shared/store</code>), <code>schema-shape</code> and <code>board-file-format</code> (no shape change; <code>genres</code> already has its v1 shape), <code>schema-versions</code> (FORMAT_VERSION stays 1), <code>module-layout</code> (new <code>features/genres/</code>: Genres panel, genre counts), <code>import-rules</code> (draw and genres stay independent; app composes), <code>architecture-pattern</code>, <code>pool-files</code> (amended, settled: one split already done, JSON is the source, floors 10/20), <code>storage-seam</code> (unchanged), <code>tab-sync</code> (unchanged), <code>test-tools</code>, <code>test-data</code>, <code>outside-code</code> (no new dependency), <code>nfr-targets</code>, <code>ci</code>. None is <code>data-status="open"</code>. No architecture decision changes.</p>
+
+<h3>Pool check</h3>
+<p><strong>Task 9 result (2026-11-03, execution):</strong> <code>public/pools/</code> unchanged since <code>db0d494</code> (STRICT=1); the split CLI was not run and nothing was written. <code>poolFiles.test.ts</code> and <code>splitDecks.test.ts</code>: 23 tests pass. In-memory comparison of parsed JSON: MATCH for all 11 decks (role 467, mechanic 380, goal 314, conflict 351, resource 272, setting 279, mood 145, modifier 503, twist 224, progression 352, constraint 222). Per-genre minimums, each over 21 genres: mechanic metroidvania 33, resource metroidvania 28, progression sandbox 28, constraint fighting 42 (floor 10). Exit 0.</p>
+<p>At planning (2026-11-03) the in-memory comparison reported MATCH for all 11 decks when comparing parsed JSON (role 467, mechanic 380, goal 314, conflict 351, resource 272, setting 279, mood 145, modifier 503, twist 224, progression 352, constraint 222); a text comparison shows DIFF for the 5 decks with arrays only because Prettier wrapped them.</p>
+
+<h3>Execution notes</h3>
+<ul>
+  <li>DECISION: The panel's open state is the board id it was opened on (<code>genresOpenOn</code> in BoardScreen), so it closes by itself when another board opens.</li>
+  <li>DECISION: The shared Dialog wraps the title, close button and caption in a header block (gap 4); the caption's old -10 px margin against the 14 px column gap gave the same 4 px, so the default and wide dialogs look unchanged.</li>
+  <li>DECISION: The real-pool browser test reads drawn cue texts from the stored board (not the clamped edge labels) and reloads after narrowing, so the filter is proven against the saved genres.</li>
+  <li>DECISION: <code>tests/e2e/shell.spec.ts</code> heading order updated to Core, Modifiers, Optional, Genres (the Task 10 regression the plan predicted).</li>
+</ul>
+
+<h3>Decisions and assumptions</h3>
+<ul>
+  <li>DECISION: Slug <code>genres</code>, branch <code>phase-3-genres</code>, 11 tasks under 4 milestones (the last is the commit-push-PR milestone). The phase name keeps the PRD's "Full core pools and genres".</li>
+  <li>ASSUMPTION: The PRD Phase 3 bullet "Finished core and Modifier libraries converted to JSON; Mechanic and Resource carry genre tags" and its "matches its library cue for cue" check are already satisfied by the Phase 2 split of all 11 decks. Phase 3 does not convert or regenerate pools; Task 9 re-checks the state read-only through the pure <code>splitDecks()</code> export. Authority: architecture <code>pool-files</code> (wins over PRD) + Phase 2 Notes + CLAUDE.md "Pools". The PRD §11 Phase 2–4 bullets and mvp-plan M2–M4 conversion lines remain stale and need a refresh.</li>
+  <li>ASSUMPTION: The cue-for-cue check compares parsed JSON, because Prettier (<code>npm run format</code>) reformats <code>public/pools/*.json</code>; semantic equality is what "cue for cue" means. Authority: smallest reversible option + codebase (<code>.prettierignore</code> does not list <code>public/</code>).</li>
+  <li>ASSUMPTION: Genre count pills render on Mechanic and Resource only in this phase, because the Progression and Constraint buttons are Phase 4 (design §16 M4, Phase 2 Notes). SideRail computes a pill for any genre-tagged deck it renders, so Phase 4 gets them with no extra work. The panel shows all 4 deck rows now (design 9.10, PRD §6.7). Authority: design-system §16 + PRD Phase 4 + Phase 2 Notes.</li>
+  <li>ASSUMPTION: No board shape change. The panel's top-row "picked" list is view state (design §13 <code>GenresPanel open · picked · perDeck</code>), set on each open to the union of the 4 deck lists; only the per-deck lists are stored. A genre turned off in every deck row stays on in the top row until the panel closes and is gone on the next open. Authority: Phase 2 Notes (format frozen) + design §13 + smallest reversible option.</li>
+  <li>ASSUMPTION: The rail count line counts the union of the 4 deck lists ("the number of genres on in the board row", mvp-plan Left rail): "All genres" at 21, "1 genre", else "N genres". The pill aria-label is "1 genre on" / "N genres on". Authority: mvp-plan + design 8.2 / §12 + CLAUDE.md (singular forms like the card count chip).</li>
+  <li>ASSUMPTION: Turning a top chip off removes the genre from all 4 decks; it is disabled when any deck would be left with no genre. Turning a top chip on adds it to all 4 decks ("already on"). All On resets every deck to all 21. Each click applies and saves at once; there is no Cancel; Done, × and Esc only close. Authority: design 9.10 + mvp-plan Genres panel + smallest reversible option (Settings dialog also applies at once).</li>
+  <li>ASSUMPTION: <code>setGenres</code> stamps <code>updatedAt</code> (unlike <code>setView</code>), because a genre change is a saved edit of board content the board list should date. Undo and redo keep the current genres the way they keep the view. Authority: architecture <code>save-transaction</code> ("saves like any other change") + <code>undo-history</code> + codebase pattern (<code>step()</code> keeps view).</li>
+  <li>ASSUMPTION: The pill lives in <code>features/genres</code> and reaches the deck button through a generic <code>trailing</code> slot (plus <code>describedBy</code>) on <code>DeckButton</code>, so <code>features/draw</code> never imports <code>features/genres</code>; <code>app/board/SideRail</code> composes them. The deck button keeps its "Draw A …" accessible name and is described by its pill. Authority: architecture <code>module-layout</code> ("genres/: Genres panel, genre counts on deck buttons") + <code>import-rules</code>.</li>
+  <li>ASSUMPTION: The shared <code>Dialog</code> gains a <code>panel</code> size, an optional close button and an optional footer note instead of a bespoke dialog in <code>features/genres</code>; the Settings dialog (Phase 5) can reuse it. Authority: codebase dominant pattern (all dialogs use <code>shared/ui/Dialog</code>) + CLAUDE.md (shared/ui holds dialogs).</li>
+  <li>ASSUMPTION: Accent-at-18% fills use <code>color-mix(in srgb, var(--accent) 18%, transparent)</code>; <code>rgba(var(--accent-rgb), .18)</code> would fail the color lint and no tint token exists. Authority: CLAUDE.md tokens-only rule + <code>scripts/check-css-colors.mjs</code> + smallest reversible option.</li>
+  <li>ASSUMPTION: Genre chips keep the design's drawn heights (36 top, 32 deck rows) with a transparent <code>::before</code> extending the hit area by 4 px above and below: 44 px for top chips, 40 px for deck chips (a recorded deviation, for the same mouse-only reason as the 36 px rail buttons in design §5). Authority: design 9.10 + CLAUDE.md hit targets + design §5 deviation reasoning.</li>
+  <li>ASSUMPTION: The panel has <code>max-height: calc(100vh - 32px)</code> with a scrolling body, because 21 chips in 5 rows exceed 900 px at 1040 wide; design 9.10 gives no height. Authority: design §8 (1440 × 900 reference viewport) + smallest reversible option.</li>
+  <li>ASSUMPTION: The panel's group label and button read "All 4 Decks" and "All On" (Title Case), and the Done button "Done"; the help text and footer note stay verbatim from design 9.10. The mockup's Generic footer sentence and "other 7 decks do not use genre…" line are not built (design 9.10 and §15 drop Generic). Authority: CLAUDE.md UI Conventions + Phase 1/2 Notes (same casing rule) + design-system wins over the handoff.</li>
+  <li>ASSUMPTION: Genre chips use <code>aria-pressed</code>; a chip that cannot be turned off is <code>disabled</code> with the footer note as its title; deck rows are <code>role="group"</code> named by the deck. Authority: design §12 (accessibility notes) + smallest reversible option.</li>
+  <li>ASSUMPTION: The genre filter browser test uses the real pools (unrouted), narrowing Mechanic to Metroidvania, because every fixture cue in the tagged decks lists all 21 genres. Fixtures are not changed. Authority: Phase 2 Notes (fixture pools + one real-pool smoke test) + <code>test-data</code>.</li>
+  <li>ASSUMPTION: The rail help panel and Add Note stay as copied (Phase 1/2 Notes); Settings is Phase 5. Authority: Phase 1/2 Notes + design §16.</li>
+</ul>
+
+<h3>Doc conflicts recorded (no stop needed)</h3>
+<ul>
+  <li>PRD §11 Phase 3 ("Finished core and Modifier libraries converted to JSON") vs architecture <code>pool-files</code> and Phase 2's executed split of all 11 decks: architecture wins; the conversion is done.</li>
+  <li>PRD §11 Phase 3 goal says "genre filtering on Mechanic and Resource"; PRD §6.7, mvp-plan and design 9.10 put all 4 tagged decks in the panel. The panel covers all 4; the rail shows pills where buttons exist.</li>
+  <li>Design 9.10 "All 4 decks" / "All on" vs CLAUDE.md Title Case: "All 4 Decks" / "All On".</li>
+</ul>
+
+<h3>Risks</h3>
+<ul>
+  <li>Undo restoring old genres from zundo's past states if <code>step()</code> is not updated — covered by Task 2's tests and the Task 8 browser test.</li>
+  <li>Rail height: the extra Genres group plus Add Note and help may overflow 900 px; the rail already scrolls.</li>
+  <li><code>color-mix()</code> on older engines: Playwright's bundled Chromium, Firefox and WebKit all support it.</li>
+  <li>A hand edit of a pool file between planning and execution makes Task 9 report DIFF; the task records it rather than regenerating.</li>
+</ul>
+
+</body>
+</html>

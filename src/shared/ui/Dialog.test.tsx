@@ -70,6 +70,53 @@ describe('Dialog', () => {
     expect(document.activeElement).toBe(screen.getByRole('textbox', { name: 'Field' }));
   });
 
+  it('dialog_panel_hasPanelClass', () => {
+    render(
+      <Dialog open size="panel" title="Genres" onClose={() => undefined} actions={null}>
+        Body
+      </Dialog>,
+    );
+    const dialog = screen.getByRole('dialog', { name: 'Genres' });
+    expect(dialog.className).toMatch(/panel/);
+    expect(dialog.className).not.toMatch(/wide/);
+  });
+
+  it('dialog_showClose_closeButtonCallsOnClose', () => {
+    const onClose = vi.fn();
+    render(
+      <Dialog open showClose title="Genres" onClose={onClose} actions={null}>
+        Body
+      </Dialog>,
+    );
+    fireEvent.click(screen.getByRole('button', { name: 'Close' }));
+    expect(onClose).toHaveBeenCalledTimes(1);
+  });
+
+  it('dialog_noShowClose_noCloseButton', () => {
+    render(
+      <Dialog open title="Title" onClose={() => undefined} actions={null}>
+        Body
+      </Dialog>,
+    );
+    expect(screen.queryByRole('button', { name: 'Close' })).toBeNull();
+  });
+
+  it('dialog_footerNote_rendersBesideActions', () => {
+    render(
+      <Dialog
+        open
+        title="Genres"
+        footerNote="Each deck keeps at least 1 genre."
+        onClose={() => undefined}
+        actions={<Button variant="primary">Done</Button>}
+      >
+        Body
+      </Dialog>,
+    );
+    const note = screen.getByText('Each deck keeps at least 1 genre.');
+    expect(note.parentElement).toBe(screen.getByRole('button', { name: 'Done' }).parentElement);
+  });
+
   it('button_danger_hasDangerClass', () => {
     render(<Button variant="danger">Delete Board</Button>);
     expect(screen.getByRole('button', { name: 'Delete Board' }).className).toMatch(/danger/);

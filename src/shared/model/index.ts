@@ -71,6 +71,31 @@ export const GENRES = [
 ] as const;
 export type Genre = (typeof GENRES)[number];
 
+/** Genre display names, the keys of docs/libraries/genres.json. */
+export const GENRE_NAME: Record<Genre, string> = {
+  roguelike: 'Roguelike',
+  metroidvania: 'Metroidvania',
+  platformer: 'Platformer',
+  puzzle: 'Puzzle',
+  shooter: 'Shooter',
+  'melee-action': 'Melee Action',
+  fighting: 'Fighting',
+  rpg: 'RPG',
+  'open-world': 'Open World',
+  'survival-craft': 'Survival Craft',
+  horror: 'Horror',
+  'builder-management': 'Builder & Management',
+  'life-sim': 'Life Sim',
+  'vehicle-sim-racing': 'Vehicle Sim & Racing',
+  strategy: 'Strategy',
+  'deckbuilder-cards': 'Deckbuilder & Cards',
+  narrative: 'Narrative',
+  'stealth-immersive-sim': 'Stealth & Immersive Sim',
+  sandbox: 'Sandbox',
+  'party-multiplayer': 'Party & Multiplayer',
+  'rhythm-arcade': 'Rhythm & Arcade',
+};
+
 /** The 4 genre-tagged decks. Their cues carry genres; every other deck ignores genre. */
 export const GENRE_DECKS = ['mechanic', 'resource', 'progression', 'constraint'] as const;
 export type GenreDeck = (typeof GENRE_DECKS)[number];

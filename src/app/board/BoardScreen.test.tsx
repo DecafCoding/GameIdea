@@ -4,7 +4,7 @@
  */
 import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { newBoard, useBoardStore, useSaveStatus } from '@/shared/store';
 import {
@@ -76,6 +76,32 @@ describe('BoardScreen', () => {
       expect(decks().every((d) => !(d as HTMLButtonElement).disabled)).toBe(true),
     );
     expect(decks()).toHaveLength(10);
+  });
+
+  it('boardScreen_genreChange_updatesRailCountsWithoutUndo', () => {
+    servePools(false);
+    render(<BoardScreen />);
+    const rail = within(screen.getByRole('complementary', { name: 'Decks' }));
+    expect(rail.queryByRole('img', { name: /genres? on$/ })).toBeNull();
+    fireEvent.click(rail.getByRole('button', { name: 'Genres' }));
+    const dialog = within(screen.getByRole('dialog', { name: 'Genres' }));
+    const allDecks = within(dialog.getByRole('region', { name: 'All 4 Decks' }));
+    const seq = useBoardStore.getState().saveSeq;
+    fireEvent.click(allDecks.getByRole('button', { name: 'Roguelike' }));
+    const pills = rail.getAllByRole('img', { name: '20 genres on' });
+    expect(pills).toHaveLength(2);
+    expect(rail.getByRole('button', { name: 'Draw A Mechanic' }).contains(pills[0] ?? null)).toBe(
+      true,
+    );
+    expect(rail.getByRole('button', { name: 'Draw A Resource' }).contains(pills[1] ?? null)).toBe(
+      true,
+    );
+    expect(rail.getByRole('button', { name: 'Genres' }).textContent).toContain('20 genres');
+    expect(useBoardStore.getState().saveSeq).toBe(seq + 1);
+    expect(useBoardStore.temporal.getState().pastStates).toHaveLength(0);
+    expect(screen.getByRole('button', { name: 'Undo' })).toHaveProperty('disabled', true);
+    fireEvent.click(dialog.getByRole('button', { name: 'Done' }));
+    expect(screen.queryByRole('dialog', { name: 'Genres' })).toBeNull();
   });
 
   it('boardScreen_renameBlank_keepsOldName', () => {

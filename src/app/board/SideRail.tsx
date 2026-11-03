@@ -1,11 +1,22 @@
 /**
  * SideRail: the 232 px rail (design 8.2): the Hook Card button, then the Core group (Player
  * Role, Mechanic, Resource, Goal, Conflict), the Modifiers row of 3 icon buttons and the
- * Optional group (Setting; the other optional decks come in Phase 4), then Add Note and
- * the help panel pinned to the bottom. Genres and Settings come in later phases.
+ * Optional group (Setting; the other optional decks come in Phase 4), the Genres group with
+ * the Genres button and its count line, then Add Note and the help panel pinned to the
+ * bottom. Each genre-tagged deck button carries a genre count pill (design 8.2), hidden at
+ * all 21 genres. Settings comes in Phase 5.
  */
+import { useId } from 'react';
 import { DeckButton, HookButton } from '@/features/draw';
-import { MOD_DECKS, type Deck, type ModDeck } from '@/shared/model';
+import { GenreCount, GenresButton, showCount } from '@/features/genres';
+import {
+  GENRE_DECKS,
+  MOD_DECKS,
+  type Deck,
+  type DeckGenres,
+  type GenreDeck,
+  type ModDeck,
+} from '@/shared/model';
 import { Icon } from '@/shared/ui';
 import styles from './SideRail.module.css';
 
@@ -15,6 +26,9 @@ interface SideRailProps {
   /** Draws a Hook Card; it needs no pool, so it is never off. */
   onDrawHook: (from: DOMRect) => void;
   onAddNote: () => void;
+  /** The open board's deck genres, for the count pills and the Genres line. */
+  genres: DeckGenres;
+  onOpenGenres: () => void;
 }
 
 /** The Core group, in the design's order. */
@@ -22,10 +36,36 @@ const CORE: Deck[] = ['role', 'mechanic', 'resource', 'goal', 'conflict'];
 /** The Optional group this phase ships. */
 const OPTIONAL: Deck[] = ['setting'];
 
-export function SideRail({ decksReady, onDraw, onDrawHook, onAddNote }: SideRailProps) {
-  const button = (type: Deck) => (
-    <DeckButton key={type} type={type} disabled={!decksReady} onDraw={onDraw} />
-  );
+function isGenreDeck(type: Deck): type is GenreDeck {
+  return (GENRE_DECKS as readonly Deck[]).includes(type);
+}
+
+export function SideRail({
+  decksReady,
+  onDraw,
+  onDrawHook,
+  onAddNote,
+  genres,
+  onOpenGenres,
+}: SideRailProps) {
+  const idPrefix = useId();
+  const button = (type: Deck) => {
+    if (!isGenreDeck(type)) {
+      return <DeckButton key={type} type={type} disabled={!decksReady} onDraw={onDraw} />;
+    }
+    const count = genres[type].length;
+    const pillId = `${idPrefix}-${type}-genres`;
+    return (
+      <DeckButton
+        key={type}
+        type={type}
+        disabled={!decksReady}
+        onDraw={onDraw}
+        trailing={<GenreCount id={pillId} count={count} />}
+        describedBy={showCount(count) ? pillId : undefined}
+      />
+    );
+  };
   return (
     <aside className={styles.rail} aria-label="Decks">
       <HookButton onDraw={onDrawHook} />
@@ -46,6 +86,8 @@ export function SideRail({ decksReady, onDraw, onDrawHook, onAddNote }: SideRail
       </div>
       <h2 className={styles.label}>Optional</h2>
       {OPTIONAL.map(button)}
+      <h2 className={styles.label}>Genres</h2>
+      <GenresButton genres={genres} onOpen={onOpenGenres} />
       <button type="button" className={styles.addNote} onClick={onAddNote}>
         <span className={styles.noteIcon}>
           <Icon name="note" size={16} />

@@ -1,0 +1,128 @@
+/*
+ * Genres panel body (design 9.10). Top section: the "All 4 Decks" label (Display 12 / 600,
+ * 0.08em, uppercase, --text-muted) and the All On ghost button (36 tall, padding 0 14,
+ * radius 8, border 1 --border-strong, 13 / 500), then 21 chips (gap 8): 36 tall, padding
+ * 0 12, radius 18, 13 px. Deck rows: padding 14 0, top border 1, gap 16, a 170 wide name
+ * column with the deck icon in its rail color; chips 32 tall, padding 0 10, radius 18,
+ * 12 px. On: border --accent, accent at 18% fill, --text 600. Off: border --border-strong,
+ * transparent, --text-muted 500. A transparent ::before stretches each chip's hit area 4 px
+ * above and below (44 px top, 40 px deck rows; a recorded deviation like the 36 px rail).
+ */
+.top {
+  padding: 8px 0 16px; /* design 9.10; no token */
+}
+
+.topHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px; /* design 9.10; no token */
+}
+
+.groupLabel {
+  margin: 0;
+  color: var(--text-muted);
+  font-family: var(--font-display);
+  font-size: 12px; /* design 9.10; no token */
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.allOn {
+  height: 36px; /* design 9.10; no token */
+  padding: 0 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-button);
+  background: transparent;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 13px; /* design 9.10; no token */
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.allOn:hover {
+  background: var(--surface-raised);
+}
+
+.chips {
+  display: flex;
+  flex: 1 1 auto;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-width: 0;
+}
+
+.chip {
+  position: relative;
+  border: 1px solid var(--border-strong);
+  border-radius: 18px; /* design 9.10; no token */
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.chip::before {
+  position: absolute;
+  inset: -4px 0;
+  content: '';
+}
+
+.chip:hover:not(:disabled) {
+  background: var(--surface-raised);
+}
+
+.chip[aria-pressed='true'] {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+  color: var(--text);
+  font-weight: 600;
+}
+
+.chip[aria-pressed='true']:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--accent) 28%, transparent);
+}
+
+.chip:disabled {
+  cursor: default;
+}
+
+.topChip {
+  height: 36px; /* design 9.10; no token */
+  padding: 0 12px;
+  font-size: 13px; /* design 9.10; no token */
+}
+
+.deckChip {
+  height: 32px; /* design 9.10; no token */
+  padding: 0 10px;
+  font-size: 12px; /* design 9.10; no token */
+}
+
+.row {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 14px 0; /* design 9.10; no token */
+  border-top: 1px solid var(--border);
+}
+
+.deckName {
+  display: flex;
+  flex: 0 0 170px; /* design 9.10; no token */
+  align-items: center;
+  gap: 10px;
+  min-height: 32px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.deckIcon {
+  display: inline-flex;
+  flex: none;
+}

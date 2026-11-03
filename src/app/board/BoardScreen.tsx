@@ -4,7 +4,8 @@
  * panel. Deck buttons draw into open space near the center of the view with the draw
  * motion, using only cues that share a genre with that deck's list on the board. The board
  * is the open board in the store, which the route loads from storage;
- * Ctrl+Z and Ctrl+Shift+Z undo and redo.
+ * Ctrl+Z and Ctrl+Shift+Z undo and redo. The rail's Genres button opens the Genres panel;
+ * a genre change saves but is never an undo step.
  */
 import { useState } from 'react';
 import {
@@ -20,6 +21,7 @@ import {
 } from '@/features/canvas';
 import { drawCard } from '@/features/draw';
 import { downloadBoardFile } from '@/features/export';
+import { GenresPanel } from '@/features/genres';
 import { addNote, NOTE_SIZE } from '@/features/notes';
 import { GENRE_DECKS, newId, type Deck, type GenreDeck, type ModDeck } from '@/shared/model';
 import { usePools } from '@/shared/pools';
@@ -66,9 +68,12 @@ function BoardScreenBody({
   const { status, pools, retry } = usePools();
   const board = useBoardStore((state) => state.board);
   const changeBoard = useBoardStore((state) => state.changeBoard);
+  const setGenres = useBoardStore((state) => state.setGenres);
   const canvas = useCanvasApi();
   // The board id on which something was drawn or added this session: the panel stays away.
   const [startedOn, setStartedOn] = useState<string | null>(null);
+  // The board id the Genres panel was opened on; it closes when another board opens.
+  const [genresOpenOn, setGenresOpenOn] = useState<string | null>(null);
 
   const ready = status === 'ready' && pools !== null;
   const empty = board.cards.length === 0 && board.notes.length === 0;
@@ -116,7 +121,14 @@ function BoardScreenBody({
   return (
     <main className={styles.screen} aria-label="Board">
       <TopBar />
-      <SideRail decksReady={ready} onDraw={draw} onDrawHook={drawHook} onAddNote={addNoteNow} />
+      <SideRail
+        decksReady={ready}
+        onDraw={draw}
+        onDrawHook={drawHook}
+        onAddNote={addNoteNow}
+        genres={board.genres}
+        onOpenGenres={() => setGenresOpenOn(board.id)}
+      />
       <div className={styles.region} data-testid="canvas-region">
         {(saveFailed || changedElsewhere || status === 'failed' || canvas.notice) && (
           <div className={styles.banners}>
@@ -158,6 +170,13 @@ function BoardScreenBody({
         <BoardCanvas pools={pools} />
         {showPanel && <EmptyBoardPanel decksReady={ready} onDraw={draw} />}
       </div>
+      {genresOpenOn === board.id && (
+        <GenresPanel
+          genres={board.genres}
+          onChange={setGenres}
+          onClose={() => setGenresOpenOn(null)}
+        />
+      )}
     </main>
   );
 }
