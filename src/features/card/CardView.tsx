@@ -36,15 +36,18 @@ const PAPER_CLASS: Record<CardPaper, string | undefined> = {
 };
 
 /**
- * Distance from the card center to the outer side of every label: the 14 px inset on the
- * 200 px card, 100 - 14 = 86. The label grows inward, so a wrapped label keeps its outer
- * line on the inset. The label sizes that keep edges apart are in CardView.module.css.
+ * Distance from the card center to the outer side of every label. 2-cue cards use the
+ * 14 px inset on the 200 px card (100 - 14 = 86). 4-cue cards use 12 px (88), the design's
+ * distance for the active cue, so 2 lines of 16 px end at the outer ring (56) in every
+ * engine. The label grows inward, so a wrapped label keeps its outer line on the inset.
+ * The label sizes that keep edges apart are in CardView.module.css.
  */
-const EDGE_OUTSIDE = 86;
+const EDGE_OUTSIDE: Record<2 | 4, number> = { 2: 86, 4: 88 };
 
 function slotTransform(slot: number, count: number): string {
   // translateY's 50 percent is half the label's own height, so its outer side lands on the inset.
-  return `translate(-50%, -50%) rotate(${(slot * 360) / count}deg) translateY(calc(${EDGE_OUTSIDE}px - 50%))`;
+  const outside = EDGE_OUTSIDE[count === 2 ? 2 : 4];
+  return `translate(-50%, -50%) rotate(${(slot * 360) / count}deg) translateY(calc(${outside}px - 50%))`;
 }
 
 /**

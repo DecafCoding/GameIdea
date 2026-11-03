@@ -111,6 +111,19 @@ export default tseslint.config(
     files: ['src/features/canvas/**'],
     rules: { 'no-restricted-imports': restrict([dexie, zustand, zundo, zod], featureImportsUp) },
   },
+  // The canvas imports the hook feature; the hook feature never imports the canvas (no cycle).
+  {
+    files: ['src/features/hook/**'],
+    rules: {
+      'no-restricted-imports': restrict(
+        [dexie, reactFlow, zustand, zundo, zod],
+        [
+          ...featureImportsUp,
+          { group: ['@/features/canvas'], message: 'features/hook never imports the canvas.' },
+        ],
+      ),
+    },
+  },
   {
     files: ['src/features/export/**'],
     rules: {

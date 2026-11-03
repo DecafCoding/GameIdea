@@ -98,19 +98,20 @@
 
 /*
  * Edge labels, measured from the card center (100 px). Each label's outer side sits on
- * the 14 px inset (86 px) and it grows inward.
+ * the inset and it grows inward: 14 px (86) on 2-cue cards, 12 px (88) on 4-cue cards.
  *
- * Modifier (4 cues, never wraps): one 20 px line, inner side 66. Neighbours miss each
- * other at a corner with a 6 px gap when the width is at most 2 × (66 - 6) = 120.
+ * Modifier and Mood (4 cues, never wrap): one 20 px line, inner side 68. Neighbours miss
+ * each other at a corner with a 6 px gap when the width is at most 2 × (68 - 6) = 124;
+ * 120 keeps a margin.
  *
  * 2-cue decks (Goal, Conflict, Twist, Progression, Constraint): top and bottom labels of
  * 2 lines of 17 px, up to 172 px (the card less both insets), spanning 52 to 86. A tucked
  * card shows its bottom 56 px (44 to 100), so both bottom lines show.
  *
- * 4-cue decks with the shared frame (Player Role, Mechanic, Resource, Setting) use 15 px
- * lines (.four), so nothing runs under the outer ring (56):
- *   top and bottom: 2 lines, up to 172 px, spanning 56 to 86.
- *   sides: 2 lines, up to 108 px, spanning 56 to 86 across and ±54 along the edge, 2 px
+ * 4-cue decks with the shared frame (Player Role, Mechanic, Resource, Setting) use 14 px
+ * text on 16 px lines (.four), so nothing runs under the outer ring (56):
+ *   top and bottom: 2 lines, up to 172 px, spanning 56 to 88.
+ *   sides: 2 lines, up to 108 px, spanning 56 to 88 across and ±54 along the edge, 2 px
  *     short of the top and bottom labels' 56. A tucked card hides its sides (.tuckedSide).
  */
 .label {
@@ -152,7 +153,7 @@
 /* The 4-cue frame's line height keeps 2 lines between the inset and the outer ring. */
 .four {
   font-size: 14px;
-  line-height: 15px;
+  line-height: 16px;
 }
 
 /*
