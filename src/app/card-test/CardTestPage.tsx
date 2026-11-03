@@ -32,7 +32,7 @@ import { Banner, Button } from '@/shared/ui';
 import styles from './CardTestPage.module.css';
 
 const POOLS_FAILED_TEXT =
-  'The decks did not load. Saved cards still work. Drawing is off until the decks load.';
+  'The decks did not load. Saved cards still work. The deck buttons are off until the decks load.';
 
 /** The newest uncombined Player Role, Resource or Setting, and the newest Modifier. */
 function combinePair(cards: Card[]): { target: Card; source: Card } | null {

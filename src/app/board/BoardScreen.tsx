@@ -32,7 +32,7 @@ import { useUndoKeys } from './useUndoKeys';
 import styles from './BoardScreen.module.css';
 
 export const POOLS_FAILED_TEXT =
-  'The decks did not load. Saved cards still work. Drawing is off until the decks load.';
+  'The decks did not load. Saved cards still work. The deck buttons are off until the decks load.';
 
 export const SAVE_FAILED_TEXT =
   'The board did not save. The browser storage may be full. Export a board file to keep your work.';

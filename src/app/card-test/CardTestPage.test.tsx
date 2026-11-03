@@ -97,7 +97,7 @@ describe('CardTestPage', () => {
     render(<CardTestPage />);
     const alert = await screen.findByRole('alert');
     expect(alert.textContent).toContain(
-      'The decks did not load. Saved cards still work. Drawing is off until the decks load.',
+      'The decks did not load. Saved cards still work. The deck buttons are off until the decks load.',
     );
     for (const button of deckButtons()) expect(button).toHaveProperty('disabled', true);
   });

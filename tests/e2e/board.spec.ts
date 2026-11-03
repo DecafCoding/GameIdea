@@ -25,7 +25,7 @@ import {
 import { backgroundRgb, expectRgbNear, type DeckName } from './helpers';
 
 const POOLS_FAILED_TEXT =
-  'The decks did not load. Saved cards still work. Drawing is off until the decks load.';
+  'The decks did not load. Saved cards still work. The deck buttons are off until the decks load.';
 
 test.beforeEach(async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });

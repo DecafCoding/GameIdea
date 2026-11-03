@@ -46,7 +46,13 @@ export function BoardRow({
           <span className={`${styles.chip} ${styles.emptyChip}`} />
         ) : (
           summary.typeStrip.map((type, i) => (
-            <span key={i} className={styles.chip} style={{ background: `var(--deck-${type})` }} />
+            <span
+              key={i}
+              className={styles.chip}
+              data-type={type}
+              // The Hook Card has no deck color; its dot uses the accent (design 9.3).
+              style={{ background: type === 'hook' ? 'var(--accent)' : `var(--deck-${type})` }}
+            />
           ))
         )}
       </span>

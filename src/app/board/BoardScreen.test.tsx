@@ -10,6 +10,7 @@ import { newBoard, useBoardStore, useSaveStatus } from '@/shared/store';
 import {
   BoardScreen,
   CHANGED_ELSEWHERE_TEXT,
+  HOOK_CANNOT_TUCK_TEXT,
   POOLS_FAILED_TEXT,
   SAVE_FAILED_TEXT,
 } from './BoardScreen';
@@ -105,6 +106,21 @@ describe('BoardScreen', () => {
     await waitFor(() => expect(screen.getByRole('alert').textContent).toContain(POOLS_FAILED_TEXT));
     expect(decks().every((d) => (d as HTMLButtonElement).disabled)).toBe(true);
     expect(screen.getByRole('button', { name: 'Retry' })).toBeTruthy();
+  });
+
+  it('boardScreen_noticeTexts_matchDesign913', () => {
+    expect(POOLS_FAILED_TEXT).toBe(
+      'The decks did not load. Saved cards still work. The deck buttons are off until the decks load.',
+    );
+    expect(SAVE_FAILED_TEXT).toBe(
+      'The board did not save. The browser storage may be full. Export a board file to keep your work.',
+    );
+    expect(CHANGED_ELSEWHERE_TEXT).toBe(
+      'This board changed in another tab. It reloaded here. Undo history was cleared.',
+    );
+    expect(HOOK_CANNOT_TUCK_TEXT).toBe(
+      'A Hook Card is always the head of its stack. It cannot tuck under a card.',
+    );
   });
 
   it('boardScreen_hookButton_enabledWhenPoolsFail', async () => {
