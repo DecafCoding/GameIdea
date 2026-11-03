@@ -323,10 +323,10 @@ test('connector_tuckedStack_badgesOnLeftSeam', async ({ page }) => {
   await openBoard(page, fixtureBoard(fixtureStack(96, 96)));
   const badges = page.getByTestId('connector-badge');
   // Nodes paint lowest first, so the deeper badge comes first in the DOM.
-  await expect(badges).toHaveText(['but', 'wants to']);
+  await expect(badges).toHaveText(['but', 'to']);
   const role = await boxOf(cardById(page, 'role-1'));
   const goal = await boxOf(cardById(page, 'goal-1'));
-  const wantsTo = await boxOf(badges.filter({ hasText: 'wants to' }));
+  const wantsTo = await boxOf(badges.filter({ hasText: /^to$/ }));
   // Centered on the left edge, at the seam where the Player Role's bottom edge meets the Goal.
   expect(wantsTo.x + wantsTo.width / 2).toBeCloseTo(goal.x, 0);
   expect(wantsTo.y + wantsTo.height / 2).toBeCloseTo(role.y + role.height, 0);
@@ -356,30 +356,30 @@ test('connector_chooseFromList_savesWordAndUndoRestores', async ({ page }) => {
     ]),
   );
   const badge = page.getByTestId('connector-badge');
-  await expect(badge).toHaveText('wants to');
+  await expect(badge).toHaveText('to');
   await badge.click();
   const menu = page.getByTestId('connector-menu');
   const rows = menu.getByRole('menuitemradio');
-  await expect(rows).toHaveCount(6);
+  await expect(rows).toHaveCount(3);
   await expect(rows.first()).toHaveAttribute('aria-checked', 'true');
   await expect(rows.first()).toBeFocused();
   // Every row is at least 44 px tall.
   for (const row of await rows.all()) expect((await boxOf(row)).height).toBeGreaterThanOrEqual(44);
   if (process.env.SHOT) await page.screenshot({ path: process.env.SHOT });
 
-  await rows.filter({ hasText: 'refuses to' }).click();
+  await rows.filter({ hasText: 'until' }).click();
   await expect(menu).toHaveCount(0);
-  await expect(badge).toHaveText('refuses to');
+  await expect(badge).toHaveText('until');
   // The click chose a word: it did not select or move the card.
   await expect(page.getByRole('button', { name: 'Discard' })).toHaveCount(0);
   await expect
     .poll(
       async () => (await storedBoards(page))[0]?.cards.find((c) => c.id === 'goal-1')?.connector,
     )
-    .toBe('refuses to');
+    .toBe('until');
 
   await page.getByRole('button', { name: 'Undo' }).click();
-  await expect(badge).toHaveText('wants to');
+  await expect(badge).toHaveText('to');
 });
 
 test('connector_keyboard_arrowsAndEnterChooseEscCloses', async ({ page }) => {
@@ -400,18 +400,23 @@ test('connector_keyboard_arrowsAndEnterChooseEscCloses', async ({ page }) => {
   await page.keyboard.press('ArrowDown');
   await page.keyboard.press('ArrowDown');
   await page.keyboard.press('Enter');
-  await expect(badge).toHaveText('until');
+  await expect(badge).toHaveText('while');
 });
 
 test('connector_articleWord_anBeforeVowel', async ({ page }) => {
-  const setting = fixtureCard('setting', {
+  const lower = fixtureCard('role', {
+    id: 'role-2',
     x: 96,
     y: 155,
     z: 2,
     tuckedUnder: 'role-1',
-    connector: 'in a',
+    connector: 'with a',
   });
-  // Fixture place nouns: outpost (index 0) starts with a vowel.
-  await openBoard(page, fixtureBoard([fixtureCard('role', { x: 96, y: 96 }), setting]));
-  await expect(page.getByTestId('connector-badge')).toHaveText('in an');
+  // The active cue starts with a vowel, so "with a" shows as "with an".
+  lower.rings[0] = {
+    ...lower.rings[0]!,
+    cues: [{ text: 'archer' }, ...lower.rings[0]!.cues.slice(1)],
+  };
+  await openBoard(page, fixtureBoard([fixtureCard('role', { x: 96, y: 96 }), lower]));
+  await expect(page.getByTestId('connector-badge')).toHaveText('with an');
 });

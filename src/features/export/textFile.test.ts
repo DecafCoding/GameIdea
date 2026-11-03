@@ -41,8 +41,8 @@ describe('textFile', () => {
     expect(boardText(named(fixtureBoard(fixtureStack(0, 0))))).toBe(
       'Salvage Run\n\nCards\n\n' +
         'Player Role: navigator\n' +
-        '  Goal: wants to go home\n' +
-        '    Conflict: but the ship is dying\n',
+        '  Goal: keep the light on\n' +
+        '    Conflict: the tide rises every night\n',
     );
   });
 
@@ -57,10 +57,10 @@ describe('textFile', () => {
     expect(boardText(named(board))).toBe(
       'Salvage Run\n\nCards\n\n' +
         'Player Role: exiled navigator, devout\n' +
-        '  Goal: wants to go home\n' +
-        '    Conflict: but the ship is dying\n' +
+        '  Goal: keep the light on\n' +
+        '    Conflict: the tide rises every night\n' +
         'Modifier: exiled\n' +
-        '  Goal: wants to go home\n',
+        '  Goal: keep the light on\n',
     );
   });
 
@@ -74,7 +74,7 @@ describe('textFile', () => {
       'Salvage Run\n\nCards\n\n' +
         'Player Role: navigator\n' +
         'Setting: outpost\n' +
-        'Conflict: but the ship is dying\n',
+        'Conflict: the tide rises every night\n',
     );
   });
 

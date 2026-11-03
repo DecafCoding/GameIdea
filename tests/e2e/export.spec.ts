@@ -28,8 +28,8 @@ test('export_textFile_downloadsPlainWords', async ({ page, browserName }) => {
   expect(text).toBe(
     'Salvage Run\n\nCards\n\n' +
       'Player Role: exiled navigator\n' +
-      '  Goal: wants to go home\n' +
-      '    Conflict: but the ship is dying\n\n' +
+      '  Goal: keep the light on\n' +
+      '    Conflict: the tide rises every night\n\n' +
       'Notes\n\nNote\nThe fleet left without her.\n',
   );
   await expect(page.getByRole('menu')).toBeHidden();

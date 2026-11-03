@@ -1,6 +1,8 @@
 /**
- * Connector words between tucked cards. A stack reads top to bottom as a sentence:
- * "navigator wants to burn the shipyards but the power runs out at dawn".
+ * Connector words between tucked cards (docs/mvp-plan.html, Connector badges; design 9.6).
+ * A stack reads top to bottom as a sentence: "lighthouse keeper to keep the light on but
+ * the tide rises every night". The words depend only on the 2 card types, keyed by the
+ * lower card.
  *
  * Each pair has a short word list, default first. The writer picks a word on the badge
  * and it is saved on the tucked card. The badge shows the saved word while it is in the
@@ -39,23 +41,30 @@ export interface Connector {
   type: CardType;
 }
 
-const GOAL = ['wants to', 'needs to', 'must', 'refuses to', 'swore to', 'is afraid to'];
-const CONFLICT = ['but', 'until', 'because', 'while', 'unless', 'even though'];
-const ROLE = ['and', 'against', 'hunted by', 'working for', 'owes', 'betrays'];
-const SETTING = ['in the', 'in a', 'on the', 'aboard the', 'beneath the', 'outside the'];
+const SAME_ROLE = ['and a', 'with a'];
+const SAME_DECK = ['and'];
+const GOAL = ['to', 'until', 'so you can'];
+const CONFLICT = ['but', 'while', 'even though'];
+const SETTING = ['in the', 'aboard the', 'inside the'];
 
-/** The word list for a pair, default first, or null when the pair has no connector. */
+/**
+ * The word list for a pair, default first, or null when the pair has no badge. The
+ * same-deck rule comes first. A Player Role under another deck and a Modifier under any
+ * card have no badge: a Modifier over a card is its adjectives, not a new part of the
+ * sentence.
+ */
 export function connectorWords(upper: CardType, lower: CardType): string[] | null {
+  if (upper === lower) {
+    if (lower === 'role') return SAME_ROLE;
+    return lower === 'modifier' ? null : SAME_DECK;
+  }
   switch (lower) {
+    case 'goal':
+      return GOAL;
     case 'conflict':
       return CONFLICT;
     case 'setting':
-      // A Modifier over a Setting is its adjectives, not a new part of the sentence.
-      return upper === 'modifier' ? null : SETTING;
-    case 'goal':
-      return upper === 'role' ? GOAL : null;
-    case 'role':
-      return upper === 'role' ? ROLE : null;
+      return SETTING;
     default:
       return null;
   }

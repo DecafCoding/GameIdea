@@ -22,8 +22,8 @@ export const CUES = {
   role: ['navigator', 'diplomat', 'gardener', 'captain'],
   modifier: ['exiled', 'orbital', 'clone', 'salvage'],
   modifier2: ['devout', 'rogue', 'cloned', 'hollow'],
-  goal: ['wants to go home', 'wants to be believed'],
-  conflict: ['but the ship is dying', 'but the fleet is gone'],
+  goal: ['keep the light on', 'map the lost caves'],
+  conflict: ['the tide rises every night', 'the map keeps changing'],
   setting: ['outpost', 'beacon', 'eclipse', 'harbor'],
 } as const;
 

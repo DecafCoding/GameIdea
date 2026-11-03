@@ -33,7 +33,7 @@ const TYPES: { type: TwoCueType; deck: DeckName; prefix: string; worst: [string,
     type: 'conflict',
     deck: 'Conflict',
     prefix: 'co',
-    worst: ['but the fleet is gone', 'but the last ship home is already gone'],
+    worst: ['the map keeps changing', 'but the last ship home is already gone'],
   },
 ];
 
