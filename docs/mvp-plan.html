@@ -74,14 +74,14 @@
   <li>The user turns rings, locks cards they like, and uses Redraw or Redraw All until the hook is good.</li>
   <li>The user clicks Copy on the Hook Card, or writes a final version in a note.</li>
 </ol>
-<p>Example hook from one stack: "You are a reanimated lighthouse keeper who must trade to keep the light on, but the tide rises every night, using stolen memories."</p>
+<p>Example hook from one stack: "You are a reanimated lighthouse keeper who must trade using stolen memories to keep the light on, but the tide rises every night."</p>
 
 <h2>Scope</h2>
 
 <h3>In the MVP</h3>
 <ul class="checklist">
   <li data-checked="true">The 11 decks in the Decks table, with 4-cue and 2-cue cards as listed</li>
-  <li data-checked="true">The Hook Card: the head of a stack. It shows the stack as a sentence, with Copy (plain text to the clipboard) and Redraw All. The sentence is computed each time and never stored.</li>
+  <li data-checked="true">The Hook Card: the head of a stack. It shows the stack as a sentence. A menu above it shows on hover, with Copy (plain text to the clipboard), Redraw All and Discard. The sentence is computed each time and never stored.</li>
   <li data-checked="true">Connector badges with the default words and choices in the Interfaces section. Click a badge to choose another word. A card keeps the chosen word while it fits the pair. "a" or "an" follows the next word.</li>
   <li data-checked="true">The ring control: rings show on pointer-over, a click on a ring half turns one step, R and Shift+R. The card body and center icon stay still.</li>
   <li data-checked="true">The Modifier combine on Player Role, Resource and Setting: combine, swap, On Top and Split. 3 Modifier decks (Role, Resource, Setting) filter one pool by <code>targets</code>. A base card holds 1 merged ring and 1 on-top Modifier card. See <a href="feature-modifier-decks.html">feature-modifier-decks.html</a>.</li>
@@ -102,7 +102,7 @@
   <li data-checked="true">Cue pools from the user's deck libraries in <code>docs/libraries/</code>. A one-time split of <code>docs/libraries/decks.json</code> makes one JSON pool file for each deck. The split lowercases the first word of each Constraint cue and drops a leading "the", "a" or "an" from each Setting cue. Apart from those 2 rules, it does not change any cue text. After that, the JSON files are the source, and the user edits them directly. In the 4 genre-tagged decks, each cue lists every genre it fits.</li>
   <li data-checked="true">Desktop browsers only, with mouse and keyboard</li>
   <li data-checked="true">Local run at fixed ports, and HTTPS on the local network</li>
-  <li data-checked="true">The TheForge visual design: tokens, fonts, dark canvas, shell and card look. <code>/dev-ui-update</code> adds the 11 deck colors and icons and the Hook Card design.</li>
+  <li data-checked="true">The visual design in <a href="design-system.html">design-system.html</a>: the TheForge base (tokens, fonts, dark canvas, shell and card look) with 9 deliberate deviations, the 11 deck colors and icons, and the Hook Card.</li>
 </ul>
 
 <h3>Deferred</h3>
@@ -260,19 +260,20 @@ Genre                     (21 values. Meanings are in the Genres table.
   <li>Board list. Make, open, rename and delete boards. Import a board file.</li>
   <li>Board. The top bar, the left rail, the canvas, cards, notes, undo, redo and export.</li>
 </ul>
+<p>Feedback details: the start guide on an empty board goes away when the first card is on the board. After Redraw All, a green outline marks each new card for 1 second. After Copy, the menu item shows "Copied" for 2 seconds. A board name cannot be empty. With snap on, Alt held while dragging places a card freely.</p>
 
 <h3>Left rail</h3>
 <p>One rail in labeled groups, top to bottom:</p>
 <ol>
   <li>Hook Card</li>
-  <li>Core: Player Role, Mechanic, Goal, Conflict, Resource</li>
+  <li>Core: Player Role, Mechanic, Resource, Goal, Conflict</li>
   <li>Modifiers: 3 icon buttons, Role, Resource and Setting, each with a hover label</li>
   <li>Optional: Setting, Mood, Twist, Progression, Constraint</li>
   <li>Genres, which opens the Genres panel. A line under it shows the number of genres on in the board row, for example "3 genres", or "All genres".</li>
   <li>Add note, which places a new note at the free grid spot nearest the center of the view</li>
   <li>Settings, at the bottom, which opens the Settings dialog</li>
 </ol>
-<p>Each genre-tagged deck button shows its number of genres on. The count is hidden when all 21 are on.</p>
+<p>Each genre-tagged deck button shows a genre count: its number of genres on. The count is hidden when all 21 are on.</p>
 
 <h3>Genres panel</h3>
 <p>One row sets the genres of the 4 genre-tagged decks together. Below it, Mechanic, Resource, Progression and Constraint each have their own row. The other 7 decks do not appear, because genre does not change their draws. Every listed deck keeps at least 1 genre. A change applies to the next draw only.</p>
@@ -282,7 +283,7 @@ Genre                     (21 values. Meanings are in the Genres table.
 <table>
   <tr><th>Badge above</th><th>Default</th><th>Other choices</th></tr>
   <tr><td>Player Role (under the Hook Card)</td><td>You are a / an</td><td>You play a / an</td></tr>
-  <tr><td>Player Role (under another Player Role)</td><td>and a / an</td><td>with a / an</td></tr>
+  <tr><td>Same deck as the card above (any deck except Modifier)</td><td>and (Player Role: and a / an)</td><td>Player Role: with a / an</td></tr>
   <tr><td>Mechanic</td><td>who must</td><td>who can only, who learns to</td></tr>
   <tr><td>Goal</td><td>to</td><td>until, so you can</td></tr>
   <tr><td>Conflict</td><td>but</td><td>while, even though</td></tr>
@@ -296,13 +297,13 @@ Genre                     (21 values. Meanings are in the Genres table.
 
 <h3>Hints and drop zones</h3>
 <ul>
-  <li>Normal places: a Player Role under a Hook Card, then Mechanic, Goal, Conflict and Resource in that order. A Modifier on a Player Role, Resource or Setting. The user can still tuck any card under any card.</li>
+  <li>Normal places: a Player Role under a Hook Card, then Mechanic, Resource, Goal and Conflict in that order. A Modifier on a Player Role, Resource or Setting. The user can still tuck any card under any card.</li>
   <li>A Modifier over a card with no adjectives combines anywhere on the card. Over a combined card, it shows 2 zones: center to swap, top to add on top. Over a combined card that already has an on-top Modifier, it shows the swap zone only.</li>
 </ul>
 
 <h3>Visual design</h3>
-<p>The look carries over from TheForge: the design tokens, the 2 fonts, the dark canvas, the top bar and side rail, the card, the ring control, tuck, combine and notes. <code>/dev-ui-update</code> writes <code>docs/design-system.html</code> for GameIdea and adds the 11 deck colors and icons, the Hook Card, the lock and the Genres panel.</p>
-<p>The app has 2 modes, Dark and Light, and 3 theme colors. Light turns the chrome and the canvas light. Cards, notes and badges look the same in both. A fixed warning color stays the same in every theme color. <code>/dev-ui-update</code> sets the values. See <a href="feature-settings-and-theme.html">feature-settings-and-theme.html</a>.</p>
+<p>The visual design is locked in <a href="design-system.html">design-system.html</a>, which is the authority for every token, size and screen. The look carries over from TheForge, with 9 deliberate deviations listed there.</p>
+<p>The app has 2 modes, Dark and Light, and 3 theme colors. Only the chrome and the accent change. Cards, notes, badges, deck colors and the Hook Card look the same in every mode and theme color, and warnings keep a fixed color. In light mode, selection and focus outlines use the darker accent text color, so they pass contrast. See <a href="feature-settings-and-theme.html">feature-settings-and-theme.html</a>.</p>
 
 <h3>Outputs</h3>
 <ul>
@@ -368,6 +369,7 @@ Genre                     (21 values. Meanings are in the Genres table.
   <li>Rename the app, the database and the page title to GameIdea. Set ports 5174, 4174 and 4444.</li>
   <li>Remove the story pools and story card types.</li>
   <li>Move every hard-coded chrome color into a design token. Add a lint check that finds hex and rgba values in CSS modules. This lets Light mode in M5 be a token job.</li>
+  <li>The full token set from <a href="design-system.html">design-system.html</a> (both modes and all 3 theme colors, with no switch yet), the bundled fonts, the icon set in <code>public/icons/</code>, and the shell at its locked sizes.</li>
   <li>Pass bar: the copied tests pass, and the app runs at port 4174. A search of <code>src/</code> finds no TheForge story type names (character, motivation, description) and no Setting kind names.</li>
 </ul>
 
@@ -375,7 +377,8 @@ Genre                     (21 values. Meanings are in the Genres table.
 <ul>
   <li>Convert the user's libraries for the 5 core decks and the Modifier from <code>docs/libraries/</code> into JSON pool files. A library that is not finished can ship with the cues it has, at least 20 cues.</li>
   <li>First: an 11-card stack test. An 11-card stack under a Hook Card drags at the canvas speed target.</li>
-  <li>The new card types, the Hook Card with its sentence, Copy, Redraw All, the lock and the connector badges.</li>
+  <li>The new card types, the Hook Card with its sentence and hover menu (Copy, Redraw All, Discard), the lock and the connector badges, built to <a href="design-system.html">design-system.html</a>.</li>
+  <li>The grouped left rail, with the Hook Card button and the Modifiers row.</li>
   <li>The 3 Modifier decks, the deck icons through <code>modDeck</code>, and On Top as a separate card. See <a href="feature-modifier-decks.html">feature-modifier-decks.html</a>.</li>
   <li>Pass bar: the user draws 20 stacks. In each deck, at least 16 of 20 cards have a usable cue. In each of the 3 Modifier decks, at least 20 of 25 cards have a usable cue. At least 12 of the 20 hooks are ideas the user would build.</li>
 </ul>
@@ -383,7 +386,7 @@ Genre                     (21 values. Meanings are in the Genres table.
 <h3>M3: Full core pools and genres</h3>
 <ul>
   <li>The finished core and Modifier libraries, converted to JSON. The Mechanic and Resource pools carry genre tags.</li>
-  <li>The Genres panel and the genre mark on deck buttons.</li>
+  <li>The Genres panel, the genre counts on the 4 genre-tagged deck buttons, and the count line under Genres.</li>
   <li>The user writes the cues. Claude converts them and does not change their text, except for the 2 split rules in Scope (Constraint lead word lowercased, Setting leading article dropped).</li>
   <li>Pass bar: every converted pool matches its library cue for cue, after the 2 split rules. Genre filtering works, and every genre has at least 10 cues in Mechanic and Resource. Cue counts per genre are guidance only, about 30 in Mechanic and Resource.</li>
 </ul>
@@ -391,7 +394,7 @@ Genre                     (21 values. Meanings are in the Genres table.
 <h3>M4: Optional decks</h3>
 <ul>
   <li>The libraries for Setting, Mood, Twist, Progression and Constraint, converted to JSON. The Progression and Constraint pools carry genre tags.</li>
-  <li>The grouped left rail.</li>
+  <li>The 5 optional deck buttons in the Optional group of the rail.</li>
   <li>Pass bar: every converted pool matches its library cue for cue, after the 2 split rules. Cue counts per genre are guidance only, about 15 in Progression and Constraint.</li>
 </ul>
 
@@ -399,7 +402,7 @@ Genre                     (21 values. Meanings are in the Genres table.
 <ul>
   <li>The text export holds each hook.</li>
   <li>A full check of the carried-over features, and HTTPS on the local network.</li>
-  <li>Settings: Mode, Theme color, Snap to grid, the Keyboard list and the footer. The rail gains Add note, Settings and the genre counts. See <a href="feature-settings-and-theme.html">feature-settings-and-theme.html</a>.</li>
+  <li>Settings: Mode, Theme color, Snap to grid, the Keyboard list and the footer. The rail gains Add note and Settings. Light mode and the Blue and Green themes go live. See <a href="feature-settings-and-theme.html">feature-settings-and-theme.html</a>.</li>
   <li>Pass bar: all done criteria pass.</li>
 </ul>
 
@@ -463,5 +466,6 @@ Genre                     (21 values. Meanings are in the Genres table.
 
 <p class="meta">2026-11-02: The Modifier deck draws as 3 decks: Role, Resource and Setting. Each filters <code>modifier.json</code> by <code>targets</code>, so a modifier can be in 1, 2 or 3 decks. Any modifier still merges with any Player Role, Resource or Setting card. A base card holds 1 merged ring. On Top now places a second Modifier on the card as its own card, through <code>onTopOf</code>. Card and Ring gain <code>modDeck</code>. The rail Modifier group has 3 icon buttons. The M2 bar is 20 of 25 for each Modifier deck. Changed Decks, Core loop, Scope, Data model, Rules, Hook sentence rules, Left rail, Hints and drop zones, M2, Done criteria and Assumptions. Changed by <code>/dev-add-feature</code>. See <a href="feature-modifier-decks.html">feature-modifier-decks.html</a>.</p>
 <p class="meta">2026-11-02: Added Settings and theme: Dark or Light mode, 3 theme colors, Snap to grid on or off, a Keyboard list and a version footer. The grid stays at 24 px, and a grid size setting is never built. The rail gains Add note, Settings and genre counts, which replace the small mark. M1 gains a tokens-only rule with a lint check. M5 builds the feature. Changed Scope, Data model, Left rail, Visual design, State and failure, M1, M5 and Done criteria. Changed by <code>/dev-add-feature</code>. See <a href="feature-settings-and-theme.html">feature-settings-and-theme.html</a>.</p>
+<p class="meta">2026-11-02: Folded in the design handoff <code>docs/design-handoff/</code> (version 1) through <code>/dev-ui-update</code>. <a href="design-system.html">design-system.html</a> is now the visual authority. The core order is Player Role, Mechanic, Resource, Goal, Conflict, in the rail, the tuck hints and the hook sentence. The Hook Card menu shows on hover, with Copy, Redraw All and Discard. "and" joins any 2 cards of the same deck except Modifiers. "Genre count" replaces "genre mark". 5 feedback details were added. Design work moved earlier: tokens, fonts, icons and the shell to M1, the grouped rail to M2, genre counts to M3. Changed Scope, Example hook, Screens, Left rail, Connector badges, Hints, Visual design and M1 to M5. Changed by the user's decisions in the conflict sweep.</p>
 </body>
 </html>

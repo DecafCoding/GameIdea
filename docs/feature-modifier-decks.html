@@ -24,7 +24,8 @@
 <body>
 
 <h1>Feature — Three Modifier decks</h1>
-<p class="meta">2026-11-02 · Extends GameIdea (working name), as planned in <a href="mvp-plan.html">mvp-plan.html</a>. Written from the <code>/dev-add-feature</code> run.</p>
+<p class="meta">2026-11-02 · Extends GameIdea (working name), as planned in <a href="mvp-plan.html">mvp-plan.html</a>. Written from the <code>/dev-add-feature</code> run. Updated 2026-11-02 by <code>/dev-ui-update</code>.</p>
+<p><strong>Visual authority:</strong> <a href="design-system.html">design-system.html</a> holds the Modifier color, the 3 icons, the rail row and the combine zones (sections 4.4, 7, 8.2 and 9.8). Where this brief and the design doc disagree on a visual detail, the design doc wins.</p>
 
 <h2>Summary and motivation</h2>
 <p>The one Modifier deck becomes 3 Modifier decks: Role, Resource and Setting. Each deck draws only modifiers whose <code>targets</code> list includes that deck. A modifier that fits more than one target is in more than one deck. For example, "cursed" is in all 3 decks.</p>
@@ -77,7 +78,7 @@
   <tr><td>Redraw</td><td>Redraw of a Modifier card draws from the same <code>modDeck</code>. Redraw of a base card keeps its on-top card.</td></tr>
   <tr><td><code>features/hook/</code></td><td>The sentence builder reads the on-top adjective first, then the merged adjective, then the noun.</td></tr>
   <tr><td>Board file and Zod import check</td><td>The new fields go into the first board format version. No migration.</td></tr>
-  <tr><td>Icons and design</td><td>3 Modifier icons in <code>public/icons/</code>. The mockup sets them, and <code>/dev-ui-update</code> records them.</td></tr>
+  <tr><td>Icons and design</td><td>3 Modifier icons in <code>public/icons/</code>: user-plus, battery-plus and map-pin-plus. See <a href="design-system.html">design-system.html</a> sections 4.4 and 7.</td></tr>
   <tr><td>Unit tests</td><td>The pool test checks each Modifier deck has at least 20 cues and each cue has valid targets.</td></tr>
 </table>
 <p>If this is wrong, the main harm is a weak draw: a Modifier deck shows words that do not fit its card type. The M2 pass bar catches this.</p>
@@ -215,7 +216,7 @@ Pool (modifier.json)
 </ul>
 <h3>Assumptions</h3>
 <ul>
-  <li>The mockup sets the 3 icons and the Modifier color. <code>/dev-ui-update</code> records them in <code>docs/design-system.html</code>.</li>
+  <li>The 3 icons and the Modifier color (<code>#6E48B5</code>, shared by all 3 decks) are recorded in <a href="design-system.html">design-system.html</a> sections 4.4 and 7.</li>
   <li>Discard of a base card treats its on-top card the same as its tucked cards. The user did not pick this. It follows the existing tuck rule.</li>
   <li>The plan still counts 11 decks and 11 pool files. The Modifier deck draws as 3 decks from one pool file.</li>
 </ul>

@@ -24,7 +24,8 @@
 <body>
 
 <h1>Feature — Settings and theme</h1>
-<p class="meta">2026-11-02 · Extends GameIdea (working name), as planned in <a href="mvp-plan.html">mvp-plan.html</a>. Written from the <code>/dev-add-feature</code> run.</p>
+<p class="meta">2026-11-02 · Extends GameIdea (working name), as planned in <a href="mvp-plan.html">mvp-plan.html</a>. Written from the <code>/dev-add-feature</code> run. Updated 2026-11-02 by <code>/dev-ui-update</code>.</p>
+<p><strong>Visual authority:</strong> <a href="design-system.html">design-system.html</a> holds every token value, size and screen spec for this feature (sections 4, 8.2 and 9.11). Where this brief and the design doc disagree on a visual detail, the design doc wins.</p>
 
 <h2>Summary and motivation</h2>
 <p>A Settings dialog gives the user 3 settings: Mode (Dark or Light), Theme color (Orange, Blue or Green) and Snap to grid (on or off). The dialog also lists the keyboard shortcuts and shows the app version. The settings apply to every board in the browser. A change applies at once.</p>
@@ -34,7 +35,7 @@
 <h2>Fit with the existing application</h2>
 <p>The feature does not change the core loop. It adds one dialog beside it and changes how the canvas places a dropped card or note.</p>
 <p>It reverses 2 rules of the inherited TheForge design: "one theme, no light theme and no theme switch", and "one accent, ember orange". The new rule is one accent at a time, chosen by the user. Warnings keep a fixed warm color.</p>
-<p>No app code exists yet. The work lands in M5, with one guard rule in M1. Related docs: <a href="mvp-plan.html">mvp-plan.html</a>, <a href="architecture.html">architecture.html</a>, <a href="competitive-scan.html">competitive-scan.html</a>, <a href="feature-modifier-decks.html">feature-modifier-decks.html</a>. GameIdea has no <code>docs/design-system.html</code> yet. <code>/dev-ui-update</code> writes it, and it takes the token values from the settings mockups.</p>
+<p>No app code exists yet. The work lands in M5, with one guard rule in M1. Related docs: <a href="mvp-plan.html">mvp-plan.html</a>, <a href="architecture.html">architecture.html</a>, <a href="competitive-scan.html">competitive-scan.html</a>, <a href="feature-modifier-decks.html">feature-modifier-decks.html</a>. The token values are in <a href="design-system.html">design-system.html</a>.</p>
 
 <h2>Scope</h2>
 
@@ -83,7 +84,7 @@
   <tr><td><code>features/draw/</code> (rail)</td><td>Settings button at the bottom. Add note button. Genre counts on the 4 genre-tagged deck buttons.</td></tr>
   <tr><td><code>features/genres/</code></td><td>The genre count line under the Genres button</td></tr>
   <tr><td><code>features/notes/</code></td><td>A "new note at a spot" action for Add note. It opens the note ready to type.</td></tr>
-  <tr><td>Design tokens</td><td>A light token set for chrome and canvas. 3 accent sets. A fixed warning color token. <code>/dev-ui-update</code> sets the values.</td></tr>
+  <tr><td>Design tokens</td><td>A light token set for chrome and canvas. 3 accent sets. A fixed warning color token. Values in <a href="design-system.html">design-system.html</a> section 4.</td></tr>
   <tr><td>Build</td><td>Puts the <code>package.json</code> version into the app. A lint check for hard-coded chrome colors (M1).</td></tr>
   <tr><td>Unchanged</td><td>BoardRecord, the board file and its Zod check, the text export, undo, the pools and the Hook sentence builder</td></tr>
 </table>
@@ -116,7 +117,7 @@
   onSettingsChangedElsewhere(handler)   called with Settings when another tab saves</code></pre>
 
 <h3>Theme contract</h3>
-<pre><code>&lt;html data-mode="dark|light" data-accent="orange|blue|green"&gt;</code></pre>
+<pre><code>&lt;html data-mode="dark|light" data-theme="orange|blue|green"&gt;</code></pre>
 <p>The app sets these 2 attributes before the first render. All chrome colors come from tokens that the 2 attributes select. Card, note, badge and deck tokens do not depend on them.</p>
 
 <h3>Snap contract</h3>
@@ -132,12 +133,12 @@
 <table>
   <tr><th>Section</th><th>Control</th><th>Help text (from the mockup, can change)</th></tr>
   <tr><td>Appearance</td><td>Mode: Dark, Light</td><td>Dark or light screens. The cards look the same in both.</td></tr>
-  <tr><td>Appearance</td><td>Theme color: Orange, Blue, Green</td><td>The color of buttons, selection and the Hook Card border.</td></tr>
+  <tr><td>Appearance</td><td>Theme color: Orange, Blue, Green</td><td>The color of buttons, selection, the Hook Card border and the genre counts.</td></tr>
   <tr><td>Canvas</td><td>Snap to grid: toggle</td><td>Cards and notes line up with the dot grid when you drop them. Hold Alt while you drag to place freely.</td></tr>
   <tr><td>Keyboard</td><td>List only</td><td>R: turn the outer ring, or the only ring, one step. Shift+R: turn the inner ring of a combined card. Ctrl+Z: undo. Ctrl+Shift+Z: redo.</td></tr>
   <tr><td>Footer</td><td>Done button</td><td>GameIdea &lt;version&gt; · No account. No data leaves this computer.</td></tr>
 </table>
-<p>The Theme color help text is wider than in the mockup, because the color now marks selection too. When local storage is blocked, the dialog shows: "This browser does not save settings. They reset when the page reloads."</p>
+<p>The Theme color help text names selection as well as the mockup's list, because the color marks selection too. When local storage is blocked, the dialog shows: "This browser does not save settings. They reset when the page reloads."</p>
 
 <h3>Rail</h3>
 <p>Top to bottom: Hook Card, Core, Modifiers, Optional, Genres (with its count line), Add note, and Settings at the bottom.</p>
@@ -188,17 +189,18 @@
 <ol>
   <li>Move every hard-coded chrome color in the copied code into a token, for example the dialog shade in <code>Dialog.module.css</code>.</li>
   <li>Add the lint check that finds hex and rgba values in CSS modules. Card and deck tokens are the only allowed place for them.</li>
+  <li>Add the full token set from <a href="design-system.html">design-system.html</a>: the light token set, the 3 accent sets and the warning color split, as data with no switch yet.</li>
 </ol>
 <h3>M5: Export and finish (the feature)</h3>
 <ol>
   <li>Settings record, parsing and the 3 storage actions. This proves the no-flash start-up first, because it is the riskiest part.</li>
-  <li>The theme attributes on the page root, the light token set, the 3 accent sets and the warning color split.</li>
+  <li>The theme attributes on the page root, set from the settings. The tokens they select are already in place from M1.</li>
   <li>The Settings dialog, the Keyboard list, the footer version and the blocked-storage note.</li>
   <li>Snap on drop with the Alt bypass.</li>
-  <li>The rail changes: Settings, Add note, the genre count line and the deck counts.</li>
+  <li>The rail changes: Settings and Add note.</li>
   <li>The tests in the testing plan.</li>
 </ol>
-<p>The rail changes can move earlier to M3 (genre counts) and M4 (grouped rail) if that is easier when those milestones are planned.</p>
+<p>Moved earlier on 2026-11-02: the genre counts and the genre count line are built in M3, and the grouped rail in M2. Only Settings and Add note stay in M5.</p>
 
 <h2>Done criteria</h2>
 <ul>
@@ -215,17 +217,17 @@
 <h2>Open risks and assumptions</h2>
 <h3>Risks</h3>
 <ul>
-  <li>Card contrast in Light mode. The cards were designed for a dark table. On a light ground they can lose their edge. <code>/dev-ui-update</code> sets a stronger shadow or edge if needed.</li>
-  <li>Accent contrast. Blue and Green must pass contrast on both a dark and a light ground, as fills and as text. <code>/dev-ui-update</code> checks each pair.</li>
+  <li>Card contrast in Light mode. The cards were designed for a dark table. On a light ground they can lose their edge. Resolved 2026-11-02: the card face is only 1.07:1 against the light canvas, so <code>--shadow-card</code> alone sets the edge. It reads clearly in the light mockups. The shadow stays as it is and must not be softened.</li>
+  <li>Accent contrast. Blue and Green must pass contrast on both a dark and a light ground, as fills and as text. Resolved 2026-11-02: fills with dark text pass (5.1 to 6.3:1), accent text passes in both modes, and dark-mode outlines pass. Light-mode outlines in <code>--accent</code> fail (2.4 to 2.9:1), so in light mode the selection and focus outlines use the light <code>--accent-text</code>.</li>
   <li>The Keyboard list can drift from the real key handlers. A browser test checks that each listed key does what the list says.</li>
   <li>Hard-coded colors added after M1 break Light mode. The lint check guards this.</li>
 </ul>
 <h3>Assumptions</h3>
 <ul>
-  <li>The mockups are final-ish. Text and spacing can change in <code>/dev-ui-update</code>. The settled behavior does not.</li>
+  <li>The mockups were final-ish. <code>/dev-ui-update</code> settled text and spacing on 2026-11-02 in <a href="design-system.html">design-system.html</a>.</li>
   <li>The Keyboard list shows Ctrl. Cmd also works on a Mac, as in TheForge. The list does not show Cmd.</li>
   <li>The footer shows the <code>package.json</code> version as it is, with no build number.</li>
-  <li>The mockups were shared in the interview. They are not in the repo yet. <code>/dev-ui-update</code> needs them as a handoff.</li>
+  <li>The mockups are in the repo at <code>docs/design-handoff/</code>.</li>
 </ul>
 
 </body>

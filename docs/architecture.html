@@ -157,7 +157,7 @@ Pool file
                     connector badges and their word rules for the 12 card types
     hook/           Hook Card: sentence builder, Copy and its fallback dialog,
                     Redraw All
-    genres/         Genres panel, genre mark on deck buttons
+    genres/         Genres panel, genre counts on deck buttons
     notes/          free-text notes with editable titles
     boards/         board list: make, open, rename, delete
     export/         text file (with hooks), board file, import and its checks
@@ -325,7 +325,7 @@ tests/e2e/          Playwright browser tests</code></pre>
   <tr><th>Question</th><th>What settles it</th><th>Settle by</th></tr>
   <tr><td><code>/dev-claud-md</code> must read this file</td><td>This design leaves the house default stack (C# with .NET). Run <code>/dev-claud-md</code> against docs/architecture.html for this project. Its default .NET profile is wrong here.</td><td>When <code>/dev-claud-md</code> runs</td></tr>
   <tr><td>Does an 11-card stack drag smoothly in React Flow?</td><td>The long-stack test at the start of M2. If it fails, amend canvas-library.</td><td>Before the rest of M2 starts</td></tr>
-  <tr><td>Colors and icons for the 11 decks, the 3 Modifier deck icons, and the look of the Hook Card, the lock and the Genres panel</td><td><code>/dev-ui-update</code> writes docs/design-system.html. Icons ship in <code>public/icons/</code> either way.</td><td>Before M2 starts</td></tr>
+  <tr><td>Colors and icons for the 11 decks, the 3 Modifier deck icons, and the look of the Hook Card, the lock and the Genres panel</td><td>Settled 2026-11-02: <a href="design-system.html">design-system.html</a> sections 4.4, 7 and 9. Icons ship in <code>public/icons/</code>.</td><td>Done</td></tr>
   <tr><td>Final badge word choices other than the defaults</td><td>The user tries them during the M2 hook test. They live in the connector rules in <code>features/canvas/</code>, so a change is cheap.</td><td>End of M2</td></tr>
   <tr><td>How the app uses Modifier <code>targets</code>: filter the Modifier draw, hint which cards a Modifier fits, or nothing yet</td><td>Closed 2026-11-02. <code>targets</code> filters the draw of 3 Modifier decks (Role, Resource, Setting). It does not limit the merge. See pool-files and <a href="feature-modifier-decks.html">feature-modifier-decks.html</a>.</td><td>Closed</td></tr>
 </table>
@@ -337,5 +337,6 @@ tests/e2e/          Playwright browser tests</code></pre>
 <p class="meta">2026-11-02: Modifier cues carry <code>targets</code>, the card types each one fits. The split copies them into the modifier pool. How the app uses them is an open question. Changed Cue pools and Open questions. Changed by the user's request after a review.</p>
 <p class="meta">2026-11-02: Amended pool-files. The Modifier deck draws as 3 decks (Role, Resource, Setting) from one <code>modifier.json</code>, filtered by <code>targets</code>. Targets are required on Modifier cues as <code>role</code>, <code>resource</code> and <code>setting</code>. The split and a unit test check a floor of 20 cues for each Modifier deck. Closed the open question on how the app uses <code>targets</code>, and added the 3 Modifier icons to the icons question. Caused by the <code>/dev-add-feature</code> run in <a href="feature-modifier-decks.html">feature-modifier-decks.html</a>. Changed by the user's direct request.</p>
 
+<p class="meta">2026-11-02: The design open question is settled by <a href="design-system.html">design-system.html</a>, written by <code>/dev-ui-update</code> from <code>docs/design-handoff/</code>. "Genre mark" in <code>genres/</code> is now "genre counts". No architecture decision changed.</p>
 </body>
 </html>
