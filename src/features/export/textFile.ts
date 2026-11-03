@@ -4,11 +4,15 @@
  * indented 2 spaces per level; only the active cue or pair), then a Notes section (each
  * note: its title line, then its text).
  * A Modifier tucked under a card with nothing tucked under it joins its parent's line
- * ("Player Role: exiled navigator, devout"). LF line ends and one final newline.
+ * ("Player Role: exiled navigator, devout"). An On Top Modifier is never its own line: it
+ * reads inside its base card's words ("Player Role: tall frozen pilot"). A Hook Card line
+ * reads "Hook Card", with its stack indented under it (each hook sentence joins the text
+ * file in Phase 5). A Modifier line names its Modifier deck. LF line ends and one final
+ * newline.
  */
 import { activeText } from '@/features/card';
-import { childrenOf, isRoot } from '@/features/canvas';
-import { DECK_NAME, type Board, type Card } from '@/shared/model';
+import { cardText, childrenOf, isOnTop, isRoot } from '@/features/canvas';
+import { DECK_NAME, MOD_DECK_NAME, type Board, type Card } from '@/shared/model';
 import { downloadFile, safeFileBase } from './download';
 
 /** "<name>.txt", with characters Windows does not allow in a file name replaced. */
@@ -21,19 +25,31 @@ function joinsParent(board: Board, card: Card): boolean {
   return card.type === 'modifier' && childrenOf(board, card.id).length === 0;
 }
 
+/** The deck name on a card's line: "Player Role", or "Setting Modifier" for a Modifier. */
+function deckName(card: Card): string {
+  return card.type === 'modifier' && card.modDeck
+    ? MOD_DECK_NAME[card.modDeck]
+    : DECK_NAME[card.type];
+}
+
 function cardLines(board: Board): string[] {
   const lines: string[] = [];
   const visit = (card: Card, depth: number) => {
     const children = childrenOf(board, card.id);
     const joined = children.filter((child) => joinsParent(board, child));
-    const words = [activeText(card), ...joined.map(activeText)].join(', ');
-    lines.push(`${'  '.repeat(depth)}${DECK_NAME[card.type]}: ${words}`);
+    const indent = '  '.repeat(depth);
+    if (card.type === 'hook') {
+      lines.push(`${indent}${DECK_NAME.hook}`);
+    } else {
+      const words = [cardText(board, card), ...joined.map((c) => activeText(c))].join(', ');
+      lines.push(`${indent}${deckName(card)}: ${words}`);
+    }
     for (const child of children) {
       if (!joined.includes(child)) visit(child, depth + 1);
     }
   };
   const roots = board.cards
-    .filter((card) => isRoot(board, card.id))
+    .filter((card) => isRoot(board, card.id) && !isOnTop(board, card))
     .sort((a, b) => a.y - b.y || a.x - b.x || a.z - b.z);
   for (const root of roots) visit(root, 0);
   return lines;

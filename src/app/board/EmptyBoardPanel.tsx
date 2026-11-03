@@ -2,14 +2,14 @@
  * EmptyBoardPanel: the 440 px panel over an empty board (design 9.11), with a primary
  * "Draw A Player Role" button. The board screen decides when it shows.
  */
-import type { CardType } from '@/shared/model';
+import type { Deck } from '@/shared/model';
 import { Button } from '@/shared/ui';
 import { AppMark } from './TopBar';
 import styles from './EmptyBoardPanel.module.css';
 
 interface EmptyBoardPanelProps {
   decksReady: boolean;
-  onDraw: (type: CardType, from: DOMRect) => void;
+  onDraw: (type: Deck, from: DOMRect) => void;
 }
 
 export function EmptyBoardPanel({ decksReady, onDraw }: EmptyBoardPanelProps) {
@@ -24,8 +24,8 @@ export function EmptyBoardPanel({ decksReady, onDraw }: EmptyBoardPanelProps) {
         ring arrow to pick the cue you like.
       </p>
       <p className={styles.text}>
-        A good first set is a Player Role, a Goal and a Conflict. Drag a card near another to tuck
-        them together.
+        A good first set is a Hook Card, then a Player Role, a Mechanic, a Resource, a Goal and a
+        Conflict tucked under it. Drag a card near another to tuck them together.
       </p>
       <Button
         variant="primary"

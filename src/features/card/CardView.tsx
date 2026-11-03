@@ -1,20 +1,20 @@
 /**
- * CardView: one 250 px story card (design section 9.2) with its ring control.
+ * CardView: one 200 px game concept card (design section 9.4) with its ring control.
  * Layers, bottom to top: the cue face, the rings, the type disc. The card body and
  * the disc never turn. A 1-ring card rotates its whole cue layer on a turn; a combined
  * card keeps each "adjective noun" edge centered and fades in the turned words.
  */
 import { useState, type CSSProperties, type ReactNode } from 'react';
-import { DECK_NAME, type Card, type Cue } from '@/shared/model';
+import { DECK_NAME, MOD_DECK_NAME, type Card, type Cue, type Ring } from '@/shared/model';
 import { Icon } from '@/shared/ui';
 import { RingControl } from './RingControl';
-import { edgeCues, isCombined, type RingSlot, type TurnDirection } from './rings';
-import { TYPE_ICON, TypeDisc } from './TypeDisc';
+import { edgeCues, isCombined, type EdgeCue, type RingSlot, type TurnDirection } from './rings';
+import { iconFor, TypeDisc } from './TypeDisc';
 import { useTurnAngle, type TurnState } from './useTurnAngle';
 import styles from './CardView.module.css';
 
-/** The paper step (design 9.4): the top card, then each tucked depth. */
-export type CardPaper = 'top' | 'under-1' | 'under-2';
+/** The paper step (design 9.7): the top card, then each tucked depth, darker per level. */
+export type CardPaper = 'top' | 'under-1' | 'under-2' | 'under-3' | 'under-4';
 
 interface CardViewProps {
   card: Card;
@@ -23,34 +23,43 @@ interface CardViewProps {
   ringClassName?: string;
   /** Tucked cards use the next paper step and the under shadow. Defaults to 'top'. */
   paper?: CardPaper;
+  /** The ring of the Modifier on top of this card: its adjective reads first on each edge. */
+  onTop?: Ring;
 }
 
 const PAPER_CLASS: Record<CardPaper, string | undefined> = {
   top: undefined,
   'under-1': styles.under1,
   'under-2': styles.under2,
+  'under-3': styles.under3,
+  'under-4': styles.under4,
 };
 
 /**
- * Distance from the card center to the outer side of every label: the 14 px inset on the
- * 250 px card, 125 - 14 = 111. The label grows inward, so a wrapped label keeps its outer
- * line on the inset. The label sizes that keep edges apart are in CardView.module.css.
+ * Distance from the card center to the outer side of every label. 2-cue cards use the
+ * 14 px inset on the 200 px card (100 - 14 = 86). 4-cue cards use 12 px (88), the design's
+ * distance for the active cue, so 2 lines of 16 px end at the outer ring (56) in every
+ * engine. The label grows inward, so a wrapped label keeps its outer line on the inset.
+ * The label sizes that keep edges apart are in CardView.module.css.
  */
-const EDGE_OUTSIDE = 111;
+const EDGE_OUTSIDE: Record<2 | 4, number> = { 2: 86, 4: 88 };
 
 function slotTransform(slot: number, count: number): string {
   // translateY's 50 percent is half the label's own height, so its outer side lands on the inset.
-  return `translate(-50%, -50%) rotate(${(slot * 360) / count}deg) translateY(calc(${EDGE_OUTSIDE}px - 50%))`;
+  const outside = EDGE_OUTSIDE[count === 2 ? 2 : 4];
+  return `translate(-50%, -50%) rotate(${(slot * 360) / count}deg) translateY(calc(${outside}px - 50%))`;
 }
 
 /**
- * The label box for an edge. Player Role, Setting, Goal and Conflict share one frame:
- * 2 wide lines on the top and bottom edges, 3 narrow lines on the sides. Modifier stays
- * on one line. Edge 0 is the bottom; on a 4-cue card the odd edges are the sides.
+ * The label box for an edge. Modifier and Mood (1-word decks) stay on one line. Player
+ * Role, Mechanic, Resource and Setting use the 4-cue frame: 2 lines on every edge. Goal,
+ * Conflict, Twist, Progression and Constraint use the 2-cue frame: 2 wide lines.
+ * Edge 0 is the bottom; on a 4-cue card the odd edges are the sides.
  */
 function labelFit(type: Card['type'], count: number, edge: number): string {
-  if (type === 'modifier') return '';
-  return (count === 4 && edge % 2 === 1 ? styles.side : styles.wide) ?? '';
+  if (type === 'modifier' || type === 'mood') return '';
+  if (count === 2) return styles.wide ?? '';
+  return [edge % 2 === 1 ? styles.side : styles.wide, styles.four].join(' ');
 }
 
 interface CueLabelProps {
@@ -59,10 +68,13 @@ interface CueLabelProps {
   count: number;
   noun: Cue;
   adjective?: Cue;
+  onTopAdjective?: Cue;
   /** The label box class from labelFit. */
   fit: string;
   /** Hides the label but keeps its place: side edges of a tucked card. */
   hidden?: boolean;
+  /** The bottom label of a tucked card: narrower, clear of the strip's marks. */
+  narrow?: boolean;
   wordKeys?: { noun: string; adjective: string };
   slideFrom?: { noun: string; adjective: string };
 }
@@ -73,28 +85,50 @@ function CueLabel({
   count,
   noun,
   adjective,
+  onTopAdjective,
   fit,
   hidden,
+  narrow,
   wordKeys,
   slideFrom,
 }: CueLabelProps) {
   const active = edge === 0;
-  const full = adjective ? `${adjective.text} ${noun.text}` : noun.text;
-  const classes = [styles.label, fit, active ? styles.active : '', hidden ? styles.tuckedSide : '']
+  const full = [onTopAdjective, adjective, noun]
+    .filter((cue): cue is Cue => cue !== undefined)
+    .map((cue) => cue.text)
+    .join(' ');
+  const classes = [
+    styles.label,
+    fit,
+    active ? styles.active : '',
+    hidden ? styles.tuckedSide : '',
+    narrow ? styles.tuckedBottom : '',
+  ]
     .filter(Boolean)
     .join(' ');
 
   let words: ReactNode = noun.text;
-  if (adjective) {
+  if (adjective || onTopAdjective) {
     words = (
       <>
-        <span
-          key={wordKeys?.adjective}
-          className={`${styles.adj} ${wordKeys ? styles.turnIn : ''}`}
-          style={{ '--slide-from': slideFrom?.adjective } as CSSProperties}
-        >
-          {adjective.text}
-        </span>{' '}
+        {onTopAdjective && (
+          <>
+            <span className={styles.adj} data-testid="on-top-adjective">
+              {onTopAdjective.text}
+            </span>{' '}
+          </>
+        )}
+        {adjective && (
+          <>
+            <span
+              key={wordKeys?.adjective}
+              className={`${styles.adj} ${wordKeys ? styles.turnIn : ''}`}
+              style={{ '--slide-from': slideFrom?.adjective } as CSSProperties}
+            >
+              {adjective.text}
+            </span>{' '}
+          </>
+        )}
         <span
           key={wordKeys?.noun}
           className={wordKeys ? styles.turnIn : ''}
@@ -119,10 +153,17 @@ function CueLabel({
   );
 }
 
+/** The card's name for screen readers: "Resource Modifier Card", "Mechanic Card". */
+function cardLabel(card: Card): string {
+  const name =
+    card.type === 'modifier' ? MOD_DECK_NAME[card.modDeck ?? 'role'] : DECK_NAME[card.type];
+  return `${name} Card`;
+}
+
 /** A clockwise turn moves words toward local -x, so they slide in from +4 px. */
 const slide = (turn: TurnState) => (turn.direction === 'cw' ? '4px' : '-4px');
 
-export function CardView({ card, onTurn, ringClassName, paper = 'top' }: CardViewProps) {
+export function CardView({ card, onTurn, ringClassName, paper = 'top', onTop }: CardViewProps) {
   const [lastDirection, setLastDirection] = useState<TurnDirection>('cw');
   const nouns = card.rings[0];
   const count = nouns?.cues.length ?? 0;
@@ -134,6 +175,7 @@ export function CardView({ card, onTurn, ringClassName, paper = 'top' }: CardVie
   const edgeProps = (edge: number) => ({
     fit: labelFit(card.type, count, edge),
     hidden: tucked && count === 4 && edge % 2 === 1,
+    narrow: tucked && edge === 0,
   });
 
   function turn(slot: RingSlot, direction: TurnDirection) {
@@ -144,13 +186,13 @@ export function CardView({ card, onTurn, ringClassName, paper = 'top' }: CardVie
   let face: ReactNode;
   if (!nouns) {
     face = null;
-  } else if (combined) {
+  } else if (combined || onTop) {
     // Static composed edges; only the turned group's words remount and fade in.
     const wordKeys = { noun: `n${outerTurn.turns}`, adjective: `a${innerTurn.turns}` };
     const slideFrom = { noun: slide(outerTurn), adjective: slide(innerTurn) };
     face = (
       <div className={styles.cueLayer}>
-        {edgeCues(card).map(({ edge, noun, adjective }) => (
+        {edgeCues(card, onTop).map(({ edge, noun, adjective, onTopAdjective }: EdgeCue) => (
           <CueLabel
             key={edge}
             edge={edge}
@@ -158,6 +200,7 @@ export function CardView({ card, onTurn, ringClassName, paper = 'top' }: CardVie
             count={count}
             noun={noun}
             adjective={adjective}
+            onTopAdjective={onTopAdjective}
             {...edgeProps(edge)}
             wordKeys={wordKeys}
             slideFrom={slideFrom}
@@ -190,7 +233,8 @@ export function CardView({ card, onTurn, ringClassName, paper = 'top' }: CardVie
       data-testid="card"
       data-type={card.type}
       data-combined={combined}
-      aria-label={`${DECK_NAME[card.type]} Card`}
+      data-mod-deck={card.type === 'modifier' ? card.modDeck : undefined}
+      aria-label={cardLabel(card)}
     >
       <div className={styles.face}>
         {face}
@@ -201,12 +245,23 @@ export function CardView({ card, onTurn, ringClassName, paper = 'top' }: CardVie
         className={[styles.disc, combined ? styles.combinedDisc : ''].filter(Boolean).join(' ')}
         data-testid={combined ? 'combined-disc' : undefined}
       >
-        <TypeDisc type={card.type} size={48} />
+        <TypeDisc type={card.type} size={48} icon={iconFor(card)} />
       </span>
       {paper !== 'top' && (
         // A tucked card shows only its bottom edge, so the disc glyph repeats there, small.
         <span className={styles.tuckMark} data-testid="tuck-mark">
-          <Icon name={TYPE_ICON[card.type]} size={14} />
+          <Icon name={iconFor(card)} size={14} />
+        </span>
+      )}
+      {card.locked && (
+        // An indicator only: lock and unlock go through the card strip (44 px targets).
+        <span
+          className={tucked ? styles.lockTucked : styles.lockMark}
+          data-testid="lock-mark"
+          aria-label="Locked"
+          role="img"
+        >
+          <Icon name="lock" size={tucked ? 13 : 15} />
         </span>
       )}
     </article>

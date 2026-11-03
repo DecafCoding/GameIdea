@@ -19,6 +19,8 @@ import {
   fixtureNote,
   fixtureStack,
 } from '@/test/fixtures/boards';
+import { boardFileJson } from './boardFile';
+import { parseBoardFile } from './importBoard';
 import { boardSchema } from './schema';
 
 function mixedBoard(): Board {
@@ -142,5 +144,103 @@ describe('boardSchema', () => {
 
   it('boardSchema_badTimestamp_rejected', () => {
     rejects({ ...fixtureBoard([]), updatedAt: 'yesterday' });
+  });
+
+  it('schema_everyCardType_roundTrips', () => {
+    const resource = combinedCard('role', {
+      id: 'resource-combined',
+      type: 'resource',
+      rings: [
+        { cues: fixtureCard('resource').rings[0]!.cues, activeIndex: 1 },
+        { cues: fixtureCard('modifier').rings[0]!.cues, activeIndex: 2, modDeck: 'resource' },
+      ],
+    });
+    const board = fixtureBoard([
+      ...CARD_TYPES.map((type, i) =>
+        fixtureCard(type, { id: `${type}-x`, x: i * 300, locked: type === 'goal' }),
+      ),
+      fixtureCard('modifier', { id: 'mod-resource', modDeck: 'resource' }),
+      fixtureCard('modifier', { id: 'mod-setting', modDeck: 'setting' }),
+      resource,
+      fixtureCard('modifier', { id: 'on-top', onTopOf: 'resource-combined' }),
+      fixtureCard('role', { id: 'under-hook', tuckedUnder: 'hook-x', connector: 'You play a' }),
+    ]);
+    expect(parseBoardFile(boardFileJson(board))).toEqual(board);
+  });
+
+  it('schema_modifierWithoutModDeck_rejects', () => {
+    const { modDeck: _drop, ...bare } = fixtureCard('modifier');
+    void _drop;
+    rejects(fixtureBoard([bare]));
+  });
+
+  it('schema_mergedRingWithoutModDeck_rejects', () => {
+    const card = combinedCard('setting');
+    rejects(withCard({ rings: [card.rings[0]!, { ...card.rings[1]!, modDeck: undefined }] }, card));
+  });
+
+  it('schema_modDeckOnNounRing_rejects', () => {
+    const card = fixtureCard('role');
+    rejects(withCard({ rings: [{ ...card.rings[0]!, modDeck: 'role' }] }, card));
+  });
+
+  it('schema_modDeckOnNonModifierCard_rejects', () => {
+    rejects(withCard({ modDeck: 'role' }, fixtureCard('goal')));
+  });
+
+  it('schema_hookWithRings_rejects', () => {
+    rejects(withCard({ rings: fixtureCard('role').rings }, fixtureCard('hook')));
+  });
+
+  it('schema_tuckedHook_rejects', () => {
+    rejects(fixtureBoard([fixtureCard('role'), fixtureCard('hook', { tuckedUnder: 'role-1' })]));
+  });
+
+  it('schema_onTopOfNonBase_rejects', () => {
+    rejects(fixtureBoard([fixtureCard('goal'), fixtureCard('modifier', { onTopOf: 'goal-1' })]));
+    rejects(fixtureBoard([fixtureCard('role'), fixtureCard('goal', { onTopOf: 'role-1' })]));
+  });
+
+  it('schema_twoOnTopOfOneBase_rejects', () => {
+    rejects(
+      fixtureBoard([
+        combinedCard('role'),
+        fixtureCard('modifier', { onTopOf: 'role-1' }),
+        fixtureCard('modifier', { id: 'modifier-2', onTopOf: 'role-1' }),
+      ]),
+    );
+  });
+
+  it('schema_onTopCardTucked_rejects', () => {
+    rejects(
+      fixtureBoard([
+        combinedCard('role'),
+        fixtureCard('goal', { id: 'goal-1' }),
+        fixtureCard('modifier', { onTopOf: 'role-1', tuckedUnder: 'goal-1' }),
+      ]),
+    );
+    rejects(
+      fixtureBoard([
+        combinedCard('role'),
+        fixtureCard('modifier', { onTopOf: 'role-1' }),
+        fixtureCard('goal', { tuckedUnder: 'modifier-1' }),
+      ]),
+    );
+  });
+
+  it('schema_missingLocked_rejects', () => {
+    const { locked: _drop, ...bare } = fixtureCard('role');
+    void _drop;
+    rejects(fixtureBoard([bare as Card]));
+  });
+
+  it('schema_danglingOnTopOf_accepts', () => {
+    const board = fixtureBoard([fixtureCard('modifier', { onTopOf: 'gone' })]);
+    expect(boardSchema.safeParse(board).success).toBe(true);
+  });
+
+  it('schema_mechanicWithTwoRings_rejects', () => {
+    const card = fixtureCard('mechanic');
+    rejects(withCard({ rings: [card.rings[0]!, card.rings[0]!] }, card));
   });
 });

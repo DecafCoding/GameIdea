@@ -6,7 +6,7 @@
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { CARD_TYPES } from '@/shared/model';
+import { DECKS } from '@/shared/model';
 import type { IconName } from './Icon';
 
 const read = (path: string) => readFileSync(join(process.cwd(), path), 'utf8');
@@ -17,14 +17,7 @@ const TOKENS = read('src/shared/ui/tokens.css');
 const HANDOFF_BODY = HANDOFF.slice(HANDOFF.indexOf(':root {'));
 
 /** Tokens kept from TheForge until Phase 2: card geometry and motion, never colors. */
-const CARRIED_OVER = [
-  '--card',
-  '--t-turn-90',
-  '--t-turn-180',
-  '--t-draw',
-  '--t-fade',
-  '--t-banner',
-];
+const CARRIED_OVER = ['--t-turn-90', '--t-turn-180', '--t-draw', '--t-fade', '--t-banner'];
 
 /** Every "--name: value" definition in a CSS text. */
 function definitions(css: string): [string, string][] {
@@ -109,8 +102,9 @@ describe('design tokens', () => {
     for (const file of files) {
       for (const m of read(file).matchAll(/var\((--[\w-]*)(\$\{[^}]+\})?([\w-]*)\)/g)) {
         const [, start, template, end] = m;
-        // A template use such as var(--deck-${type}) must resolve for every card type.
-        const names = template ? CARD_TYPES.map((t) => `${start!}${t}${end!}`) : [start!];
+        // A template use such as var(--deck-${type}) must resolve for every deck (a Hook Card
+        // has no deck color and never reaches these templates).
+        const names = template ? DECKS.map((t) => `${start!}${t}${end!}`) : [start!];
         for (const name of names) if (!defined.has(name)) missing.push(`${file}: ${name}`);
       }
       // Tokens read from script, such as getPropertyValue('--t-draw').

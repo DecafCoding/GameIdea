@@ -3,18 +3,12 @@
  */
 import { describe, expect, it } from 'vitest';
 import type { Board, Card } from '@/shared/model';
-import {
-  combinedCard,
-  fixtureBoard,
-  fixtureCard,
-  fixtureStack,
-  secondModifier,
-} from '@/test/fixtures/boards';
+import { fixtureBoard, fixtureCard, fixtureStack } from '@/test/fixtures/boards';
 import {
   childrenOf,
+  layoutStack,
   moveCard,
   nextZ,
-  putOnTop,
   removeFromStacks,
   stackDepth,
   stackOrder,
@@ -26,7 +20,7 @@ const find = (board: Board, id: string): Card => board.cards.find((c) => c.id ==
 const ys = (board: Board, ids: string[]) => ids.map((id) => find(board, id).y);
 
 describe('stackOrder', () => {
-  it('stackOrder_chain_roleGoalConflictAt0And59And118', () => {
+  it('stackOrder_chain_roleGoalConflictAt0And56And112', () => {
     const board = tuckCard(
       tuckCard(
         fixtureBoard([
@@ -45,7 +39,7 @@ describe('stackOrder', () => {
       'goal-1',
       'conflict-1',
     ]);
-    expect(ys(board, ['role-1', 'goal-1', 'conflict-1'])).toEqual([100, 159, 218]);
+    expect(ys(board, ['role-1', 'goal-1', 'conflict-1'])).toEqual([100, 156, 212]);
     expect(find(board, 'conflict-1').x).toBe(100);
     expect(stackDepth(board, 'conflict-1')).toBe(2);
   });
@@ -74,7 +68,7 @@ describe('tuckCard', () => {
     ]);
     const next = tuckCard(board, 'goal-1', 'setting-1');
     expect(find(next, 'goal-1')).toMatchObject({ tuckedUnder: 'setting-1', z: 11 });
-    expect(ys(next, ['goal-1', 'conflict-1'])).toEqual([459, 518]);
+    expect(ys(next, ['goal-1', 'conflict-1'])).toEqual([456, 512]);
     expect(stackOrder(next, 'role-1')).toHaveLength(1);
   });
 });
@@ -84,66 +78,13 @@ describe('moveCard', () => {
     const next = moveCard(fixtureBoard(fixtureStack(0, 0)), 'role-1', 300, 200);
     expect(next.cards.map((c) => [c.x, c.y])).toEqual([
       [300, 200],
-      [300, 259],
-      [300, 318],
+      [300, 256],
+      [300, 312],
     ]);
   });
 
   it('moveCard_tuckedCard_throws', () => {
     expect(() => moveCard(fixtureBoard(fixtureStack(0, 0)), 'conflict-1', 1, 1)).toThrow();
-  });
-});
-
-describe('putOnTop', () => {
-  const story = () =>
-    fixtureBoard([
-      combinedCard('role', { x: 96, y: 96, z: 1 }),
-      fixtureCard('goal', { x: 96, y: 155, z: 2, tuckedUnder: 'role-1' }),
-      secondModifier({ x: 600, y: 96, z: 3 }),
-    ]);
-
-  it('putOnTop_rootTarget_takesItsPlaceAndPushesStackDown', () => {
-    const next = putOnTop(story(), 'modifier-2', 'role-1');
-    expect(find(next, 'modifier-2')).toMatchObject({ tuckedUnder: null, x: 96, y: 96 });
-    expect(find(next, 'role-1')).toMatchObject({ tuckedUnder: 'modifier-2', x: 96 });
-    expect(stackOrder(next, 'modifier-2').map((c) => c.id)).toEqual([
-      'modifier-2',
-      'role-1',
-      'goal-1',
-    ]);
-    expect(ys(next, ['modifier-2', 'role-1', 'goal-1'])).toEqual([96, 155, 214]);
-  });
-
-  it('putOnTop_modifierTuckedUnderTarget_movesToTop', () => {
-    const board = tuckCard(story(), 'modifier-2', 'role-1');
-    const next = putOnTop(board, 'modifier-2', 'role-1');
-    expect(stackOrder(next, 'modifier-2').map((c) => c.id)).toEqual([
-      'modifier-2',
-      'role-1',
-      'goal-1',
-    ]);
-    expect(ys(next, ['modifier-2', 'role-1', 'goal-1'])).toEqual([96, 155, 214]);
-  });
-
-  it('putOnTop_tuckedTarget_takesTargetSlotUnderParent', () => {
-    const board = fixtureBoard([
-      fixtureCard('conflict', { x: 0, y: 0, z: 1 }),
-      combinedCard('setting', { x: 0, y: 59, z: 2, tuckedUnder: 'conflict-1' }),
-      secondModifier({ x: 600, y: 0, z: 3 }),
-    ]);
-    const next = putOnTop(board, 'modifier-2', 'setting-1');
-    expect(find(next, 'modifier-2').tuckedUnder).toBe('conflict-1');
-    expect(stackOrder(next, 'conflict-1').map((c) => c.id)).toEqual([
-      'conflict-1',
-      'modifier-2',
-      'setting-1',
-    ]);
-    expect(ys(next, ['conflict-1', 'modifier-2', 'setting-1'])).toEqual([0, 59, 118]);
-  });
-
-  it('putOnTop_ontoOwnDescendant_throws', () => {
-    const board = tuckCard(story(), 'role-1', 'modifier-2');
-    expect(() => putOnTop(board, 'modifier-2', 'role-1')).toThrow();
   });
 });
 
@@ -156,7 +97,7 @@ describe('untuckCard', () => {
     // Take the Goal (with the Conflict and Modifier under it) out.
     const next = untuckCard(board, 'goal-1', 600, 300);
     expect(find(next, 'goal-1')).toMatchObject({ tuckedUnder: null, x: 600, y: 300, z: 5 });
-    expect(ys(next, ['conflict-1', 'modifier-1'])).toEqual([359, 418]);
+    expect(ys(next, ['conflict-1', 'modifier-1'])).toEqual([356, 412]);
     expect(stackOrder(next, 'role-1')).toHaveLength(1);
   });
 });
@@ -165,20 +106,20 @@ describe('removeFromStacks', () => {
   it('removeFromStacks_rootWithChildren_childrenBecomeRoots', () => {
     const board = fixtureBoard([
       fixtureCard('role', { z: 1 }),
-      fixtureCard('goal', { y: 59, z: 2, tuckedUnder: 'role-1' }),
-      fixtureCard('conflict', { y: 118, z: 3, tuckedUnder: 'goal-1' }),
-      fixtureCard('modifier', { y: 59, z: 4, tuckedUnder: 'role-1' }),
+      fixtureCard('goal', { y: 56, z: 2, tuckedUnder: 'role-1' }),
+      fixtureCard('conflict', { y: 112, z: 3, tuckedUnder: 'goal-1' }),
+      fixtureCard('modifier', { y: 56, z: 4, tuckedUnder: 'role-1' }),
     ]);
     const next = removeFromStacks(board, 'role-1');
-    expect(find(next, 'modifier-1')).toMatchObject({ tuckedUnder: null, y: 59 });
+    expect(find(next, 'modifier-1')).toMatchObject({ tuckedUnder: null, y: 56 });
     expect(find(next, 'goal-1')).toMatchObject({ tuckedUnder: null });
     expect(find(next, 'conflict-1')).toMatchObject({ tuckedUnder: 'goal-1' });
-    expect(find(next, 'conflict-1').y).toBe(find(next, 'goal-1').y + 59);
+    expect(find(next, 'conflict-1').y).toBe(find(next, 'goal-1').y + 56);
   });
 
   it('removeFromStacks_middleCard_childrenMoveUp', () => {
     const next = removeFromStacks(fixtureBoard(fixtureStack(0, 0)), 'goal-1');
-    expect(find(next, 'conflict-1')).toMatchObject({ tuckedUnder: 'role-1', y: 59 });
+    expect(find(next, 'conflict-1')).toMatchObject({ tuckedUnder: 'role-1', y: 56 });
     expect(find(next, 'goal-1').tuckedUnder).toBeNull();
   });
 });
@@ -190,5 +131,21 @@ describe('nextZ', () => {
 
   it('nextZ_cards_returnsMaxPlusOne', () => {
     expect(nextZ(fixtureBoard(fixtureStack(0, 0, '1', 7)))).toBe(10);
+  });
+});
+
+describe('layoutStack with a Hook Card', () => {
+  it('layoutStack_hookRoot_insetsCards20', () => {
+    const board = fixtureBoard([
+      fixtureCard('hook', { x: 96, y: 48 }),
+      fixtureCard('role', { x: 0, y: 0, z: 2, tuckedUnder: 'hook-1' }),
+      fixtureCard('mechanic', { x: 0, y: 0, z: 3, tuckedUnder: 'role-1' }),
+    ]);
+    const next = layoutStack(board, 'hook-1');
+    expect(next.cards.map((c) => [c.x, c.y])).toEqual([
+      [96, 48],
+      [116, 104],
+      [116, 160],
+    ]);
   });
 });

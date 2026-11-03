@@ -6,7 +6,15 @@
  * paints above the tucked one, so the badge sits on top of both cards.
  */
 import { NodeToolbar, Position, type NodeProps } from '@xyflow/react';
-import { createContext, memo, useContext, type MouseEvent } from 'react';
+import {
+  createContext,
+  memo,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  type MouseEvent,
+} from 'react';
 import {
   CardStrip,
   CardView,
@@ -15,10 +23,14 @@ import {
   type RingSlot,
   type TurnDirection,
 } from '@/features/card';
+import { buildHookSentence, HookCard, HookMenu } from '@/features/hook';
 import { useBoardStore } from '@/shared/store';
 import { connectorFor } from './connector';
 import { ConnectorBadge } from './ConnectorBadge';
 import { sameBelow, type CardFlowNode } from './nodes';
+import { HOOK_INSET } from './placement';
+import { stackEntries } from './reading';
+import { childrenOf } from './stack';
 import styles from './CardNode.module.css';
 
 /** Stable callbacks from the canvas to its card nodes. */
@@ -30,16 +42,23 @@ export interface CardNodeActions {
   turn: (cardId: string, slot: RingSlot, direction: TurnDirection) => void;
   split: (cardId: string) => void;
   redraw: (cardId: string) => void;
+  lock: (cardId: string) => void;
   discard: (cardId: string) => void;
+  /** Redraws every unlocked card in the Hook Card's stack (one undo step). */
+  redrawAll: (hookId: string) => void;
   /** Saves the connector word on the tucked card below the badge. */
   chooseConnector: (cardId: string, word: string) => void;
 }
 
 export const CardNodeContext = createContext<CardNodeActions | null>(null);
 
+/** The strip's bottom sits 56 px above the card's top (design 9.4). */
+const STRIP_OFFSET = 56;
+
+/** The paper step for a stack depth: deeper than 4 reuses the 4th step (design 9.7). */
 function paperFor(depth: number): CardPaper {
   if (depth === 0) return 'top';
-  return depth === 1 ? 'under-1' : 'under-2';
+  return `under-${Math.min(depth, 4) as 1 | 2 | 3 | 4}`;
 }
 
 /** Ring-half clicks turn the ring; they must not select the card. */
@@ -49,8 +68,62 @@ function stopRingClick(event: MouseEvent) {
   }
 }
 
+/** The hover menu hides this long after the pointer leaves both the card and the menu. */
+const MENU_HIDE_MS = 150;
+
+/**
+ * The Hook Card's face and hover menu: the sentence is computed from the store on each
+ * change (a string, so the node re-renders only when the words change) and never stored.
+ * The menu shows while the pointer is over the Hook Card or the menu.
+ */
+function HookBody({ hookId, actions }: { hookId: string; actions: CardNodeActions }) {
+  const sentence = useBoardStore((state) => buildHookSentence(stackEntries(state.board, hookId)));
+  const empty = useBoardStore((state) => childrenOf(state.board, hookId).length === 0);
+  const [hover, setHover] = useState(false);
+  const hideTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(
+    () => () => {
+      if (hideTimer.current) clearTimeout(hideTimer.current);
+    },
+    [],
+  );
+
+  const enter = () => {
+    if (hideTimer.current) clearTimeout(hideTimer.current);
+    hideTimer.current = null;
+    setHover(true);
+  };
+  const leave = () => {
+    if (hideTimer.current) clearTimeout(hideTimer.current);
+    hideTimer.current = setTimeout(() => setHover(false), MENU_HIDE_MS);
+  };
+
+  return (
+    <div className={styles.hookBody} onPointerEnter={enter} onPointerLeave={leave}>
+      <HookCard sentence={sentence} empty={empty} />
+      <NodeToolbar isVisible position={Position.Top} offset={STRIP_OFFSET}>
+        <HookMenu
+          sentence={sentence}
+          hasStack={!empty}
+          poolsReady={actions.canRedraw}
+          visible={hover}
+          onRedrawAll={() => actions.redrawAll(hookId)}
+          onDiscard={() => actions.discard(hookId)}
+          onPointerEnter={enter}
+          onPointerLeave={leave}
+        />
+      </NodeToolbar>
+    </div>
+  );
+}
+
 function CardNodeView({ data }: NodeProps<CardFlowNode>) {
   const card = useBoardStore((state) => state.board.cards.find((c) => c.id === data.cardId));
+  // The ring of the Modifier on top of this card: the same object until that card changes.
+  const onTop = useBoardStore(
+    (state) => state.board.cards.find((c) => c.onTopOf === data.cardId)?.rings[0],
+  );
   const actions = useContext(CardNodeContext);
   if (!card || !actions) return null;
   const id = card.id;
@@ -62,9 +135,28 @@ function CardNodeView({ data }: NodeProps<CardFlowNode>) {
     data.selected ? styles.selected : '',
     data.lifted ? styles.lifted : '',
     data.hidden ? styles.hidden : '',
+    data.fresh ? styles.fresh : '',
   ]
     .filter(Boolean)
     .join(' ');
+
+  if (card.type === 'hook') {
+    return (
+      <div className={`${classes} ${styles.hookNode}`}>
+        <div className={styles.inner}>
+          <HookBody hookId={id} actions={actions} />
+          {below && connector && (
+            <ConnectorBadge
+              connector={connector}
+              nextText={below.text}
+              left={HOOK_INSET}
+              onChoose={(word) => actions.chooseConnector(below.id, word)}
+            />
+          )}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
@@ -80,6 +172,7 @@ function CardNodeView({ data }: NodeProps<CardFlowNode>) {
           onTurn={(slot, direction) => actions.turn(id, slot, direction)}
           ringClassName="nodrag"
           paper={paperFor(data.depth)}
+          onTop={onTop}
         />
         {below && connector && (
           <ConnectorBadge
@@ -89,12 +182,14 @@ function CardNodeView({ data }: NodeProps<CardFlowNode>) {
           />
         )}
       </div>
-      <NodeToolbar isVisible={data.selected} position={Position.Top} offset={10}>
+      <NodeToolbar isVisible={data.selected} position={Position.Top} offset={STRIP_OFFSET}>
         <CardStrip
-          combined={isCombined(card)}
+          canSplit={isCombined(card) || onTop !== undefined}
+          locked={card.locked}
           redrawDisabled={!actions.canRedraw}
           onSplit={() => actions.split(id)}
           onRedraw={() => actions.redraw(id)}
+          onLock={() => actions.lock(id)}
           onDiscard={() => actions.discard(id)}
         />
       </NodeToolbar>
@@ -112,6 +207,7 @@ function sameData(a: NodeProps<CardFlowNode>, b: NodeProps<CardFlowNode>): boole
     sameBelow(x.below, y.below) &&
     x.selected === y.selected &&
     x.hidden === y.hidden &&
+    x.fresh === y.fresh &&
     x.lifted === y.lifted
   );
 }

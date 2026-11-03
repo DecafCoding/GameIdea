@@ -1,19 +1,20 @@
 /**
  * Tests for the card test page: deck buttons, draw, combine, the pools banner and R.
  */
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { CARD_TYPES } from '@/shared/model';
 import { CardTestPage } from './CardTestPage';
 
-const POOL_FILES = Object.fromEntries(
-  CARD_TYPES.map((type) => [
-    type,
-    readFileSync(join(process.cwd(), 'tests', 'e2e', 'fixtures', 'pools', `${type}.json`), 'utf8'),
-  ]),
+const POOL_DIR = join(process.cwd(), 'tests', 'e2e', 'fixtures', 'pools');
+/** Every fixture pool file, by its deck name. */
+const POOL_FILES: Record<string, string> = Object.fromEntries(
+  readdirSync(POOL_DIR)
+    .filter((file) => file.endsWith('.json'))
+    .map((file) => [file.replace(/\.json$/, ''), readFileSync(join(POOL_DIR, file), 'utf8')]),
 );
+const POOL_TYPES = Object.keys(POOL_FILES);
 
 let failing = false;
 
@@ -21,7 +22,7 @@ function servePools() {
   vi.stubGlobal('fetch', (input: RequestInfo | URL) => {
     if (failing) return Promise.reject(new TypeError('Failed to fetch'));
     const url = input instanceof Request ? input.url : input.toString();
-    const type = CARD_TYPES.find((t) => url.endsWith(`pools/${t}.json`));
+    const type = POOL_TYPES.find((t) => url.endsWith(`pools/${t}.json`));
     return Promise.resolve(
       type ? new Response(POOL_FILES[type]) : new Response('', { status: 404 }),
     );
@@ -47,14 +48,22 @@ describe('CardTestPage', () => {
     vi.unstubAllGlobals();
   });
 
-  it('CardTestPage_poolsReady_showsFiveEnabledDeckButtons', async () => {
+  it('CardTestPage_poolsReady_showsEveryDeckWithModifierAsThreeButtons', async () => {
     await renderReady();
     expect(deckButtons().map((b) => b.textContent)).toEqual([
       'Draw A Player Role',
+      'Draw A Mechanic',
+      'Draw A Resource',
       'Draw A Goal',
       'Draw A Conflict',
-      'Draw A Modifier',
+      'Draw A Player Role Modifier',
+      'Draw A Resource Modifier',
+      'Draw A Setting Modifier',
       'Draw A Setting',
+      'Draw A Mood',
+      'Draw A Twist',
+      'Draw A Progression',
+      'Draw A Constraint',
     ]);
     for (const button of deckButtons()) expect(button).toHaveProperty('disabled', false);
   });
@@ -69,7 +78,7 @@ describe('CardTestPage', () => {
   it('CardTestPage_combineWithRoleAndModifier_leavesOneCombinedCard', async () => {
     await renderReady();
     draw('Draw A Player Role');
-    draw('Draw A Modifier');
+    draw('Draw A Player Role Modifier');
     expect(cards()).toHaveLength(2);
     fireEvent.click(screen.getByRole('button', { name: 'Combine' }));
     expect(cards()).toHaveLength(1);
@@ -88,7 +97,7 @@ describe('CardTestPage', () => {
     render(<CardTestPage />);
     const alert = await screen.findByRole('alert');
     expect(alert.textContent).toContain(
-      'The decks did not load. Saved cards still work. Drawing is off until the decks load.',
+      'The decks did not load. Saved cards still work. The deck buttons are off until the decks load.',
     );
     for (const button of deckButtons()) expect(button).toHaveProperty('disabled', true);
   });

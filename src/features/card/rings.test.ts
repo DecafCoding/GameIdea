@@ -2,8 +2,8 @@
  * Tests for the ring math: turns, the edge pair formula, combine, swap and split.
  */
 import { describe, expect, it } from 'vitest';
-import type { Card, CardType } from '@/shared/model';
-import { activeText, combine, edgeCues, split, swap, turnCard, turnRing } from './rings';
+import type { Card, CardType, ModDeck } from '@/shared/model';
+import { activeText, combine, edgeCues, ringWord, split, swap, turnCard, turnRing } from './rings';
 
 function card(type: CardType, rings: { texts: string[]; activeIndex?: number }[]): Card {
   return {
@@ -13,6 +13,8 @@ function card(type: CardType, rings: { texts: string[]; activeIndex?: number }[]
     y: 0,
     z: 0,
     tuckedUnder: null,
+    onTopOf: null,
+    locked: false,
     rings: rings.map(({ texts, activeIndex = 0 }) => ({
       cues: texts.map((text) => ({ text })),
       activeIndex,
@@ -98,7 +100,8 @@ describe('combine', () => {
     const modifier = card('modifier', [{ texts: ADJS, activeIndex: 2 }]);
     const combined = combine(target, modifier);
     expect(combined.rings).toHaveLength(2);
-    expect(combined.rings[1]).toEqual(modifier.rings[0]);
+    // A Modifier without a modDeck falls back to the Player Role Modifier deck.
+    expect(combined.rings[1]).toEqual({ ...modifier.rings[0], modDeck: 'role' });
     expect(combined.id).toBe(target.id);
   });
 
@@ -146,8 +149,9 @@ describe('swap', () => {
     const modifier = card('modifier', [{ texts: DEVOUT, activeIndex: 1 }]);
     const result = swap(target, modifier);
     expect(result.target.rings[0]).toEqual(target.rings[0]);
-    expect(result.target.rings[1]).toEqual(modifier.rings[0]);
+    expect(result.target.rings[1]).toEqual({ ...modifier.rings[0], modDeck: 'role' });
     expect(result.modifier.rings).toEqual([target.rings[1]]);
+    expect(result.modifier.modDeck).toBe('role');
     expect(activeText(result.target)).toBe('rogue navigator');
     expect(result.target.rings[1]!.cues).not.toBe(modifier.rings[0]!.cues);
   });
@@ -169,5 +173,82 @@ describe('split', () => {
 
   it('split_uncombined_throws', () => {
     expect(() => split(card('role', [{ texts: NOUNS }]))).toThrow();
+  });
+});
+
+describe('ringWord', () => {
+  const ringCard = (type: CardType, rings = 1): Card =>
+    card(
+      type,
+      Array.from({ length: rings }, () => ({ texts: ['a', 'b', 'c', 'd'] })),
+    );
+
+  it.each([
+    ['role', 0, 'Nouns'],
+    ['resource', 0, 'Nouns'],
+    ['setting', 0, 'Nouns'],
+    ['role', 1, 'Adjectives'],
+    ['resource', 1, 'Adjectives'],
+    ['modifier', 0, 'Adjectives'],
+    ['mechanic', 0, 'Cues'],
+    ['mood', 0, 'Cues'],
+    ['goal', 0, 'Cues'],
+    ['conflict', 0, 'Cues'],
+    ['twist', 0, 'Cues'],
+    ['progression', 0, 'Cues'],
+    ['constraint', 0, 'Cues'],
+  ] as const)('ringWord_eachDeck_namesItsCues (%s ring %i)', (type, ring, word) => {
+    expect(ringWord(ringCard(type, ring + 1), ring)).toBe(word);
+  });
+});
+
+describe('modDeck', () => {
+  const withDeck = (c: Card, modDeck: ModDeck): Card => ({ ...c, modDeck });
+
+  it('combine_resource_merges', () => {
+    const combined = combine(
+      card('resource', [{ texts: NOUNS }]),
+      withDeck(card('modifier', [{ texts: ADJS }]), 'resource'),
+    );
+    expect(combined.rings).toHaveLength(2);
+    expect(activeText(combined)).toBe(`${ADJS[0]} ${NOUNS[0]}`);
+  });
+
+  it('combine_mechanic_throws', () => {
+    expect(() =>
+      combine(card('mechanic', [{ texts: NOUNS }]), card('modifier', [{ texts: ADJS }])),
+    ).toThrow(/Player Role, Resource or Setting/);
+  });
+
+  it('combine_copiesModDeckToRing', () => {
+    const combined = combine(
+      card('role', [{ texts: NOUNS }]),
+      withDeck(card('modifier', [{ texts: ADJS }]), 'setting'),
+    );
+    expect(combined.rings[0]!.modDeck).toBeUndefined();
+    expect(combined.rings[1]!.modDeck).toBe('setting');
+  });
+
+  it('swap_exchangesModDecks', () => {
+    const base = combine(
+      card('role', [{ texts: NOUNS }]),
+      withDeck(card('modifier', [{ texts: ADJS }]), 'setting'),
+    );
+    const incoming = withDeck(
+      card('modifier', [{ texts: ['devout', 'rogue', 'cloned', 'hollow'] }]),
+      'resource',
+    );
+    const result = swap(base, incoming);
+    expect(result.target.rings[1]!.modDeck).toBe('resource');
+    expect(result.modifier.modDeck).toBe('setting');
+    expect(result.modifier.rings[0]!.modDeck).toBeUndefined();
+  });
+
+  it('split_returnsRingWithModDeck', () => {
+    const base = combine(
+      card('setting', [{ texts: NOUNS }]),
+      withDeck(card('modifier', [{ texts: ADJS }]), 'resource'),
+    );
+    expect(split(base).ring.modDeck).toBe('resource');
   });
 });

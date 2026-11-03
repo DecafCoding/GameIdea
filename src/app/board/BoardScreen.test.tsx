@@ -2,38 +2,44 @@
  * Tests for the board screen shell: its controls, the board name field, the save mark, undo
  * and redo, and the banners.
  */
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { CARD_TYPES } from '@/shared/model';
 import { newBoard, useBoardStore, useSaveStatus } from '@/shared/store';
 import {
   BoardScreen,
   CHANGED_ELSEWHERE_TEXT,
+  HOOK_CANNOT_TUCK_TEXT,
   POOLS_FAILED_TEXT,
   SAVE_FAILED_TEXT,
 } from './BoardScreen';
 
-const POOL_FILES = Object.fromEntries(
-  CARD_TYPES.map((type) => [
-    type,
-    readFileSync(join(process.cwd(), 'tests', 'e2e', 'fixtures', 'pools', `${type}.json`), 'utf8'),
-  ]),
+const POOL_DIR = join(process.cwd(), 'tests', 'e2e', 'fixtures', 'pools');
+/** Every fixture pool file, by its deck name. */
+const POOL_FILES: Record<string, string> = Object.fromEntries(
+  readdirSync(POOL_DIR)
+    .filter((file) => file.endsWith('.json'))
+    .map((file) => [file.replace(/\.json$/, ''), readFileSync(join(POOL_DIR, file), 'utf8')]),
 );
+const POOL_TYPES = Object.keys(POOL_FILES);
 
 function servePools(failing: boolean) {
   vi.stubGlobal('fetch', (input: RequestInfo | URL) => {
     if (failing) return Promise.reject(new TypeError('Failed to fetch'));
     const url = input instanceof Request ? input.url : input.toString();
-    const type = CARD_TYPES.find((t) => url.endsWith(`pools/${t}.json`));
+    const type = POOL_TYPES.find((t) => url.endsWith(`pools/${t}.json`));
     return Promise.resolve(
       type ? new Response(POOL_FILES[type]) : new Response('', { status: 404 }),
     );
   });
 }
 
-const decks = () => screen.getAllByRole('button', { name: /^Draw A / });
+/** The pool deck buttons (every "Draw A" button but the Hook Card, which needs no pool). */
+const decks = () =>
+  screen
+    .getAllByRole('button', { name: /^Draw A / })
+    .filter((button) => button.getAttribute('aria-label') !== 'Draw A Hook Card');
 
 beforeEach(() => {
   useBoardStore.getState().openBoard(newBoard());
@@ -65,11 +71,11 @@ describe('BoardScreen', () => {
     expect(screen.getByRole('button', { name: 'Undo' })).toHaveProperty('disabled', true);
     expect(screen.getByRole('button', { name: 'Redo' })).toHaveProperty('disabled', true);
     expect(screen.getByRole('button', { name: 'Add Note' })).toBeTruthy();
-    // 5 rail decks plus the empty board panel's button.
+    // 9 rail deck buttons (5 core, 3 Modifier, Setting) plus the empty board panel's button.
     await waitFor(() =>
       expect(decks().every((d) => !(d as HTMLButtonElement).disabled)).toBe(true),
     );
-    expect(decks()).toHaveLength(6);
+    expect(decks()).toHaveLength(10);
   });
 
   it('boardScreen_renameBlank_keepsOldName', () => {
@@ -100,6 +106,31 @@ describe('BoardScreen', () => {
     await waitFor(() => expect(screen.getByRole('alert').textContent).toContain(POOLS_FAILED_TEXT));
     expect(decks().every((d) => (d as HTMLButtonElement).disabled)).toBe(true);
     expect(screen.getByRole('button', { name: 'Retry' })).toBeTruthy();
+  });
+
+  it('boardScreen_noticeTexts_matchDesign913', () => {
+    expect(POOLS_FAILED_TEXT).toBe(
+      'The decks did not load. Saved cards still work. The deck buttons are off until the decks load.',
+    );
+    expect(SAVE_FAILED_TEXT).toBe(
+      'The board did not save. The browser storage may be full. Export a board file to keep your work.',
+    );
+    expect(CHANGED_ELSEWHERE_TEXT).toBe(
+      'This board changed in another tab. It reloaded here. Undo history was cleared.',
+    );
+    expect(HOOK_CANNOT_TUCK_TEXT).toBe(
+      'A Hook Card is always the head of its stack. It cannot tuck under a card.',
+    );
+  });
+
+  it('boardScreen_hookButton_enabledWhenPoolsFail', async () => {
+    servePools(true);
+    render(<BoardScreen />);
+    await screen.findByRole('alert');
+    const hook = screen.getByRole('button', { name: 'Draw A Hook Card' });
+    expect((hook as HTMLButtonElement).disabled).toBe(false);
+    fireEvent.click(hook);
+    expect(useBoardStore.getState().board.cards.map((c) => c.type)).toEqual(['hook']);
   });
 });
 

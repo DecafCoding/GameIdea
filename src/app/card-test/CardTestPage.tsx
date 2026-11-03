@@ -1,26 +1,59 @@
 /**
- * Card test page (milestone M1): 5 deck buttons, a "Combine" button that stands in for
+ * Card test page (milestone M1): a button for each deck (the Modifier deck as its 3
+ * Modifier decks), a "Combine" button that stands in for
  * the drop, and the drawn cards in a plain grid. No canvas, no storage. It lets the user
  * judge random cards and adjective-and-noun pairs before the rest of the app is built.
- * It has no board; none of its 5 decks is genre-tagged, so it draws from the full pools.
+ * It has no board, so a genre-tagged deck draws with every genre on.
  */
 import { useRef, useState } from 'react';
-import { CardView, combine, isCombined, TypeDisc, turnCard, useRingKeys } from '@/features/card';
+import {
+  CardView,
+  combine,
+  iconFor,
+  isCombined,
+  TypeDisc,
+  turnCard,
+  useRingKeys,
+} from '@/features/card';
 import { drawCard } from '@/features/draw';
-import { CARD_TYPES, DECK_NAME, type Card, type CardType } from '@/shared/model';
+import {
+  BASE_TYPES,
+  DECK_NAME,
+  DECKS,
+  GENRES,
+  MOD_DECK_NAME,
+  MOD_DECKS,
+  type Card,
+  type Deck,
+  type ModDeck,
+} from '@/shared/model';
 import { usePools } from '@/shared/pools';
 import { Banner, Button } from '@/shared/ui';
 import styles from './CardTestPage.module.css';
 
 const POOLS_FAILED_TEXT =
-  'The decks did not load. Saved cards still work. Drawing is off until the decks load.';
+  'The decks did not load. Saved cards still work. The deck buttons are off until the decks load.';
 
-/** The newest uncombined Player Role or Setting, and the newest Modifier. */
+/** The newest uncombined Player Role, Resource or Setting, and the newest Modifier. */
 function combinePair(cards: Card[]): { target: Card; source: Card } | null {
-  const target = cards.find((c) => (c.type === 'role' || c.type === 'setting') && !isCombined(c));
+  const target = cards.find((c) => BASE_TYPES.includes(c.type) && !isCombined(c));
   const source = cards.find((c) => c.type === 'modifier');
   return target && source ? { target, source } : null;
 }
+
+/** One draw button: a deck, and for a Modifier its Modifier deck. */
+interface DrawButton {
+  type: Deck;
+  modDeck?: ModDeck;
+  label: string;
+}
+
+/** Every deck in rail order; the Modifier deck as its 3 Modifier decks. */
+const DRAW_BUTTONS: DrawButton[] = DECKS.flatMap((type): DrawButton[] =>
+  type === 'modifier'
+    ? MOD_DECKS.map((modDeck) => ({ type, modDeck, label: MOD_DECK_NAME[modDeck] }))
+    : [{ type, label: DECK_NAME[type] }],
+);
 
 export function CardTestPage() {
   const { status, pools, retry } = usePools();
@@ -38,9 +71,10 @@ export function CardTestPage() {
     setCards((list) => list.map((c) => (c.id === id ? change(c) : c)));
   }
 
-  function draw(type: CardType) {
+  function draw(type: Deck, modDeck: ModDeck = 'role') {
     if (!pools) return;
-    const card = drawCard(type, pools[type], null);
+    // Every genre on; the genres filter applies only to genre-tagged decks.
+    const card = drawCard(type, pools[type], { genres: GENRES, modDeck });
     setCards((list) => [card, ...list]);
   }
 
@@ -61,7 +95,8 @@ export function CardTestPage() {
     <main className={styles.page}>
       <h1 className={styles.title}>Card Test</h1>
       <p className={styles.caption}>
-        Draw cards, turn their rings, and combine a Modifier with a Player Role or Setting.
+        Draw cards, turn their rings, and combine a Modifier with a Player Role, Resource or
+        Setting.
       </p>
       {status === 'failed' && (
         <div className={styles.banner}>
@@ -69,16 +104,16 @@ export function CardTestPage() {
         </div>
       )}
       <div className={styles.toolbar}>
-        {CARD_TYPES.map((type) => (
+        {DRAW_BUTTONS.map(({ type, modDeck, label }) => (
           <button
-            key={type}
+            key={label}
             type="button"
             className={styles.deck}
             disabled={!ready}
-            onClick={() => draw(type)}
+            onClick={() => draw(type, modDeck)}
           >
-            <TypeDisc type={type} size={36} />
-            {`Draw A ${DECK_NAME[type]}`}
+            <TypeDisc type={type} size={36} icon={iconFor({ type, modDeck })} />
+            {`Draw A ${label}`}
           </button>
         ))}
         <Button variant="secondary" disabled={!pair} onClick={combinePairNow}>

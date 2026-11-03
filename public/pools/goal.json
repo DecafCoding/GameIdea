@@ -1,0 +1,1261 @@
+{
+  "type": "goal",
+  "cues": [
+    {
+      "id": "goal-0001",
+      "text": "be the last one standing"
+    },
+    {
+      "id": "goal-0002",
+      "text": "beat the final boss"
+    },
+    {
+      "id": "goal-0003",
+      "text": "build a rocket and leave the planet"
+    },
+    {
+      "id": "goal-0004",
+      "text": "complete the objective"
+    },
+    {
+      "id": "goal-0005",
+      "text": "wipe out the other team"
+    },
+    {
+      "id": "goal-0006",
+      "text": "win the race"
+    },
+    {
+      "id": "goal-0007",
+      "text": "escape the lab"
+    },
+    {
+      "id": "goal-0008",
+      "text": "find who did it"
+    },
+    {
+      "id": "goal-0009",
+      "text": "grow your shop into the best in town"
+    },
+    {
+      "id": "goal-0010",
+      "text": "keep the child alive"
+    },
+    {
+      "id": "goal-0011",
+      "text": "teach a child to survive"
+    },
+    {
+      "id": "goal-0012",
+      "text": "meet the quota before the deadline"
+    },
+    {
+      "id": "goal-0013",
+      "text": "reach the surface"
+    },
+    {
+      "id": "goal-0014",
+      "text": "slay the beast that will eat the world"
+    },
+    {
+      "id": "goal-0015",
+      "text": "survive as long as you can"
+    },
+    {
+      "id": "goal-0016",
+      "text": "win two rounds before your rival does"
+    },
+    {
+      "id": "goal-0017",
+      "text": "escape your captors"
+    },
+    {
+      "id": "goal-0018",
+      "text": "beat your captor at their own game"
+    },
+    {
+      "id": "goal-0019",
+      "text": "bring back the light"
+    },
+    {
+      "id": "goal-0020",
+      "text": "heal the forest"
+    },
+    {
+      "id": "goal-0021",
+      "text": "build the biggest trucking empire"
+    },
+    {
+      "id": "goal-0022",
+      "text": "clear every floor of enemies"
+    },
+    {
+      "id": "goal-0023",
+      "text": "close the portal to hell"
+    },
+    {
+      "id": "goal-0024",
+      "text": "outlast every rival empire"
+    },
+    {
+      "id": "goal-0025",
+      "text": "escape the facility"
+    },
+    {
+      "id": "goal-0026",
+      "text": "stop the invasion"
+    },
+    {
+      "id": "goal-0027",
+      "text": "reach the bottom floor"
+    },
+    {
+      "id": "goal-0028",
+      "text": "find your missing child"
+    },
+    {
+      "id": "goal-0029",
+      "text": "grab the loot and reach the getaway car"
+    },
+    {
+      "id": "goal-0030",
+      "text": "knock every rival off the stage"
+    },
+    {
+      "id": "goal-0031",
+      "text": "prove the accused innocent"
+    },
+    {
+      "id": "goal-0032",
+      "text": "find the real killer"
+    },
+    {
+      "id": "goal-0033",
+      "text": "reach the rescue before the horde does"
+    },
+    {
+      "id": "goal-0034",
+      "text": "reach the summit"
+    },
+    {
+      "id": "goal-0035",
+      "text": "renew the dying world, or let it end"
+    },
+    {
+      "id": "goal-0036",
+      "text": "rescue a VIP held by your enemy"
+    },
+    {
+      "id": "goal-0037",
+      "text": "restore the town to its former glory"
+    },
+    {
+      "id": "goal-0038",
+      "text": "stop the cult before it ends the world"
+    },
+    {
+      "id": "goal-0039",
+      "text": "stop the infection"
+    },
+    {
+      "id": "goal-0040",
+      "text": "survive every wave"
+    },
+    {
+      "id": "goal-0041",
+      "text": "survive until the war ends"
+    },
+    {
+      "id": "goal-0042",
+      "text": "overthrow the usurper"
+    },
+    {
+      "id": "goal-0043",
+      "text": "get the lost child home"
+    },
+    {
+      "id": "goal-0044",
+      "text": "be the first to reach the target score"
+    },
+    {
+      "id": "goal-0045",
+      "text": "beat the house at its own game"
+    },
+    {
+      "id": "goal-0046",
+      "text": "defeat the frost guardian"
+    },
+    {
+      "id": "goal-0047",
+      "text": "bring back the sun"
+    },
+    {
+      "id": "goal-0048",
+      "text": "beat the island bosses and claim the crown"
+    },
+    {
+      "id": "goal-0049",
+      "text": "beat the record time"
+    },
+    {
+      "id": "goal-0050",
+      "text": "become a god, or give the power away"
+    },
+    {
+      "id": "goal-0051",
+      "text": "become king"
+    },
+    {
+      "id": "goal-0052",
+      "text": "become lord of a broken world"
+    },
+    {
+      "id": "goal-0053",
+      "text": "become the star of the festival"
+    },
+    {
+      "id": "goal-0054",
+      "text": "recover what grief took from you"
+    },
+    {
+      "id": "goal-0055",
+      "text": "bring down the gang from the inside"
+    },
+    {
+      "id": "goal-0056",
+      "text": "repair a car with parts or scrap"
+    },
+    {
+      "id": "goal-0057",
+      "text": "build a great monument"
+    },
+    {
+      "id": "goal-0058",
+      "text": "keep the colony happy"
+    },
+    {
+      "id": "goal-0059",
+      "text": "build a temple and beat the demon"
+    },
+    {
+      "id": "goal-0060",
+      "text": "build the best ranch in the valley"
+    },
+    {
+      "id": "goal-0061",
+      "text": "build the biggest farm"
+    },
+    {
+      "id": "goal-0062",
+      "text": "build the great machine that heals the land"
+    },
+    {
+      "id": "goal-0063",
+      "text": "carry the last flame into hell"
+    },
+    {
+      "id": "goal-0064",
+      "text": "deliver vital intel"
+    },
+    {
+      "id": "goal-0065",
+      "text": "catch the killer stalking the town"
+    },
+    {
+      "id": "goal-0066",
+      "text": "catch the killer no one can reach"
+    },
+    {
+      "id": "goal-0067",
+      "text": "catch the man who has the cure"
+    },
+    {
+      "id": "goal-0068",
+      "text": "expose the corrupt"
+    },
+    {
+      "id": "goal-0069",
+      "text": "clear your name"
+    },
+    {
+      "id": "goal-0070",
+      "text": "claim the wish-granting relic"
+    },
+    {
+      "id": "goal-0071",
+      "text": "clear the evil under your family home"
+    },
+    {
+      "id": "goal-0072",
+      "text": "climb the tower"
+    },
+    {
+      "id": "goal-0073",
+      "text": "stop the end of the world"
+    },
+    {
+      "id": "goal-0074",
+      "text": "climb to the citadel"
+    },
+    {
+      "id": "goal-0075",
+      "text": "face the queen"
+    },
+    {
+      "id": "goal-0076",
+      "text": "close the portal before the invaders pour through"
+    },
+    {
+      "id": "goal-0077",
+      "text": "gather the scattered pieces of a fallen legend"
+    },
+    {
+      "id": "goal-0078",
+      "text": "conquer the galaxy"
+    },
+    {
+      "id": "goal-0079",
+      "text": "win by conquest, science, or diplomacy"
+    },
+    {
+      "id": "goal-0080",
+      "text": "decide who rules the wasteland"
+    },
+    {
+      "id": "goal-0081",
+      "text": "defeat the enemy army on a fixed budget"
+    },
+    {
+      "id": "goal-0082",
+      "text": "defeat the god behind the world"
+    },
+    {
+      "id": "goal-0083",
+      "text": "defeat the rival god"
+    },
+    {
+      "id": "goal-0084",
+      "text": "defeat the tyrant holding your family"
+    },
+    {
+      "id": "goal-0085",
+      "text": "defeat the warlords who hold the towers"
+    },
+    {
+      "id": "goal-0086",
+      "text": "deliver the prisoner to settle your debt"
+    },
+    {
+      "id": "goal-0087",
+      "text": "destroy every rival"
+    },
+    {
+      "id": "goal-0088",
+      "text": "destroy the monsters' nest"
+    },
+    {
+      "id": "goal-0089",
+      "text": "save the last city"
+    },
+    {
+      "id": "goal-0090",
+      "text": "drive out the invaders"
+    },
+    {
+      "id": "goal-0091",
+      "text": "save your mentor"
+    },
+    {
+      "id": "goal-0092",
+      "text": "end the war"
+    },
+    {
+      "id": "goal-0093",
+      "text": "escape back to the real world"
+    },
+    {
+      "id": "goal-0094",
+      "text": "escape the arena and stop the robot invasion"
+    },
+    {
+      "id": "goal-0095",
+      "text": "escape the asylum with the proof"
+    },
+    {
+      "id": "goal-0096",
+      "text": "escape the city"
+    },
+    {
+      "id": "goal-0097",
+      "text": "escape the containment site"
+    },
+    {
+      "id": "goal-0098",
+      "text": "escape the house of horrors"
+    },
+    {
+      "id": "goal-0099",
+      "text": "escape the island and save your friends"
+    },
+    {
+      "id": "goal-0100",
+      "text": "escape the tyrant's world"
+    },
+    {
+      "id": "goal-0101",
+      "text": "escape the ship where monsters feast"
+    },
+    {
+      "id": "goal-0102",
+      "text": "escape the machine stealing your ideas"
+    },
+    {
+      "id": "goal-0103",
+      "text": "save your friend"
+    },
+    {
+      "id": "goal-0104",
+      "text": "face what you did"
+    },
+    {
+      "id": "goal-0105",
+      "text": "make peace with your friends"
+    },
+    {
+      "id": "goal-0106",
+      "text": "fight your way to the far end"
+    },
+    {
+      "id": "goal-0107",
+      "text": "destroy what killed your daughter"
+    },
+    {
+      "id": "goal-0108",
+      "text": "find the killer among you and escape"
+    },
+    {
+      "id": "goal-0109",
+      "text": "find her and keep your promise"
+    },
+    {
+      "id": "goal-0110",
+      "text": "learn how you got here and leave"
+    },
+    {
+      "id": "goal-0111",
+      "text": "find out what happened to your wife"
+    },
+    {
+      "id": "goal-0112",
+      "text": "find the ancient source before the cult does"
+    },
+    {
+      "id": "goal-0113",
+      "text": "find the weapon that can undo the past"
+    },
+    {
+      "id": "goal-0114",
+      "text": "find the hidden heir before the invasion"
+    },
+    {
+      "id": "goal-0115",
+      "text": "find the missing girl"
+    },
+    {
+      "id": "goal-0116",
+      "text": "save your old best friend"
+    },
+    {
+      "id": "goal-0117",
+      "text": "find the relics the stranger wants"
+    },
+    {
+      "id": "goal-0118",
+      "text": "find the cause of the earthquakes"
+    },
+    {
+      "id": "goal-0119",
+      "text": "save the people beneath the sea"
+    },
+    {
+      "id": "goal-0120",
+      "text": "find what causes the rising radiation"
+    },
+    {
+      "id": "goal-0121",
+      "text": "find someone who should not be alive"
+    },
+    {
+      "id": "goal-0122",
+      "text": "finish a week of chores"
+    },
+    {
+      "id": "goal-0123",
+      "text": "finish every job and rebuild the region"
+    },
+    {
+      "id": "goal-0124",
+      "text": "finish the work"
+    },
+    {
+      "id": "goal-0125",
+      "text": "expose the traitor"
+    },
+    {
+      "id": "goal-0126",
+      "text": "finish rescues and grow your fleet"
+    },
+    {
+      "id": "goal-0127",
+      "text": "finish the job and make it to extraction"
+    },
+    {
+      "id": "goal-0128",
+      "text": "finish your hits and learn who made you"
+    },
+    {
+      "id": "goal-0129",
+      "text": "finish your old master's last order"
+    },
+    {
+      "id": "goal-0130",
+      "text": "fix the ship"
+    },
+    {
+      "id": "goal-0131",
+      "text": "kill the dragon"
+    },
+    {
+      "id": "goal-0132",
+      "text": "follow the signal to the last safe haven"
+    },
+    {
+      "id": "goal-0133",
+      "text": "free the city from its alien rulers"
+    },
+    {
+      "id": "goal-0134",
+      "text": "avenge your parents"
+    },
+    {
+      "id": "goal-0135",
+      "text": "free the machines, or stop them"
+    },
+    {
+      "id": "goal-0136",
+      "text": "rescue your parent"
+    },
+    {
+      "id": "goal-0137",
+      "text": "find the superweapon"
+    },
+    {
+      "id": "goal-0138",
+      "text": "recover what you lost"
+    },
+    {
+      "id": "goal-0139",
+      "text": "get home"
+    },
+    {
+      "id": "goal-0140",
+      "text": "recover the stolen relic"
+    },
+    {
+      "id": "goal-0141",
+      "text": "save the town"
+    },
+    {
+      "id": "goal-0142",
+      "text": "get off the island before the volcano erupts"
+    },
+    {
+      "id": "goal-0143",
+      "text": "get past the wall and across the water"
+    },
+    {
+      "id": "goal-0144",
+      "text": "get revenge on the one who sold you"
+    },
+    {
+      "id": "goal-0145",
+      "text": "fix your relationship"
+    },
+    {
+      "id": "goal-0146",
+      "text": "undo the curse"
+    },
+    {
+      "id": "goal-0147",
+      "text": "descend to the bottom of hell"
+    },
+    {
+      "id": "goal-0148",
+      "text": "grant a dying man's last wish"
+    },
+    {
+      "id": "goal-0149",
+      "text": "grow your shop and help rebuild the island"
+    },
+    {
+      "id": "goal-0150",
+      "text": "have the fastest time over every stage"
+    },
+    {
+      "id": "goal-0151",
+      "text": "heal every patient"
+    },
+    {
+      "id": "goal-0152",
+      "text": "help the dead pass on"
+    },
+    {
+      "id": "goal-0153",
+      "text": "help divided peoples understand each other"
+    },
+    {
+      "id": "goal-0154",
+      "text": "control the board when time runs out"
+    },
+    {
+      "id": "goal-0155",
+      "text": "keep the city alive through the storm"
+    },
+    {
+      "id": "goal-0156",
+      "text": "keep your crew alive"
+    },
+    {
+      "id": "goal-0157",
+      "text": "keep the zombies out of your house"
+    },
+    {
+      "id": "goal-0158",
+      "text": "kill the crew before they unmask you"
+    },
+    {
+      "id": "goal-0159",
+      "text": "kill the demon king"
+    },
+    {
+      "id": "goal-0160",
+      "text": "kill the rulers and free the chained one"
+    },
+    {
+      "id": "goal-0161",
+      "text": "kill the giant beast"
+    },
+    {
+      "id": "goal-0162",
+      "text": "sail home"
+    },
+    {
+      "id": "goal-0163",
+      "text": "kill the one who decides who dies next"
+    },
+    {
+      "id": "goal-0164",
+      "text": "knock out the whole rival team"
+    },
+    {
+      "id": "goal-0165",
+      "text": "land safely at your destination"
+    },
+    {
+      "id": "goal-0166",
+      "text": "launch the ark"
+    },
+    {
+      "id": "goal-0167",
+      "text": "save what is left of humanity"
+    },
+    {
+      "id": "goal-0168",
+      "text": "learn the fates of everyone before you"
+    },
+    {
+      "id": "goal-0169",
+      "text": "learn the fate of everyone on board"
+    },
+    {
+      "id": "goal-0170",
+      "text": "learn who killed your mother"
+    },
+    {
+      "id": "goal-0171",
+      "text": "stop the mad scientist"
+    },
+    {
+      "id": "goal-0172",
+      "text": "learn why the world keeps ending"
+    },
+    {
+      "id": "goal-0173",
+      "text": "leave every job spotless"
+    },
+    {
+      "id": "goal-0174",
+      "text": "lift the town's curse and win her heart"
+    },
+    {
+      "id": "goal-0175",
+      "text": "make something and share it with the world"
+    },
+    {
+      "id": "goal-0176",
+      "text": "make the planet livable"
+    },
+    {
+      "id": "goal-0177",
+      "text": "make your grandfather proud"
+    },
+    {
+      "id": "goal-0178",
+      "text": "identify the ghost"
+    },
+    {
+      "id": "goal-0179",
+      "text": "get out alive"
+    },
+    {
+      "id": "goal-0180",
+      "text": "open the puzzle box and learn its secret"
+    },
+    {
+      "id": "goal-0181",
+      "text": "open the portal and save your friend"
+    },
+    {
+      "id": "goal-0182",
+      "text": "outlast every rival until the world resets"
+    },
+    {
+      "id": "goal-0183",
+      "text": "cook for an impossible-to-satisfy judge"
+    },
+    {
+      "id": "goal-0184",
+      "text": "pay for your sick daughter's treatment"
+    },
+    {
+      "id": "goal-0185",
+      "text": "pay off a deal with the devil"
+    },
+    {
+      "id": "goal-0186",
+      "text": "pay the rent and keep the bar alive"
+    },
+    {
+      "id": "goal-0187",
+      "text": "prove yourself worthy of the afterlife"
+    },
+    {
+      "id": "goal-0188",
+      "text": "raise your flag on every level"
+    },
+    {
+      "id": "goal-0189",
+      "text": "kill the devil"
+    },
+    {
+      "id": "goal-0190",
+      "text": "raise your child into who she becomes"
+    },
+    {
+      "id": "goal-0191",
+      "text": "reach other worlds and bring your crew home"
+    },
+    {
+      "id": "goal-0192",
+      "text": "reach the bottom and escape"
+    },
+    {
+      "id": "goal-0193",
+      "text": "reach the bottom of the world"
+    },
+    {
+      "id": "goal-0194",
+      "text": "reach the center of the galaxy"
+    },
+    {
+      "id": "goal-0195",
+      "text": "reach the enemy nest"
+    },
+    {
+      "id": "goal-0196",
+      "text": "decide the planet's fate"
+    },
+    {
+      "id": "goal-0197",
+      "text": "reach the heart of the lab"
+    },
+    {
+      "id": "goal-0198",
+      "text": "reach the king and beat him"
+    },
+    {
+      "id": "goal-0199",
+      "text": "reach the moon"
+    },
+    {
+      "id": "goal-0200",
+      "text": "beat the final guardian"
+    },
+    {
+      "id": "goal-0201",
+      "text": "climb to the top of the mountain"
+    },
+    {
+      "id": "goal-0202",
+      "text": "reach the top of the tower"
+    },
+    {
+      "id": "goal-0203",
+      "text": "rebuild what was destroyed"
+    },
+    {
+      "id": "goal-0204",
+      "text": "remove the parasite"
+    },
+    {
+      "id": "goal-0205",
+      "text": "free your master from an endless curse"
+    },
+    {
+      "id": "goal-0206",
+      "text": "rise to the top of the drug trade"
+    },
+    {
+      "id": "goal-0207",
+      "text": "rise to godhood, or escape to normal life"
+    },
+    {
+      "id": "goal-0208",
+      "text": "save humanity"
+    },
+    {
+      "id": "goal-0209",
+      "text": "save the rightful heir"
+    },
+    {
+      "id": "goal-0210",
+      "text": "save the princesses from the dark wizard"
+    },
+    {
+      "id": "goal-0211",
+      "text": "save up for your own house"
+    },
+    {
+      "id": "goal-0212",
+      "text": "save your daughter from the witch"
+    },
+    {
+      "id": "goal-0213",
+      "text": "carry out a loved one's last wish"
+    },
+    {
+      "id": "goal-0214",
+      "text": "seal the sources of the darkness"
+    },
+    {
+      "id": "goal-0215",
+      "text": "shut down the rogue AI"
+    },
+    {
+      "id": "goal-0216",
+      "text": "kill the captive, or set them free"
+    },
+    {
+      "id": "goal-0217",
+      "text": "stay alive and grow your farm"
+    },
+    {
+      "id": "goal-0218",
+      "text": "stop the alien empire"
+    },
+    {
+      "id": "goal-0219",
+      "text": "stop the plague"
+    },
+    {
+      "id": "goal-0220",
+      "text": "stop the glitch"
+    },
+    {
+      "id": "goal-0221",
+      "text": "put the game back together"
+    },
+    {
+      "id": "goal-0222",
+      "text": "stop someone rewriting history"
+    },
+    {
+      "id": "goal-0223",
+      "text": "stop the madman's army of monsters"
+    },
+    {
+      "id": "goal-0224",
+      "text": "stop the private army and its backer"
+    },
+    {
+      "id": "goal-0225",
+      "text": "stop the purge and find a cure"
+    },
+    {
+      "id": "goal-0226",
+      "text": "stop the rebel from stealing the ancient magic"
+    },
+    {
+      "id": "goal-0227",
+      "text": "stop the supervillain gang"
+    },
+    {
+      "id": "goal-0228",
+      "text": "stop the weapon that will destroy your home"
+    },
+    {
+      "id": "goal-0229",
+      "text": "stop your father's grab for power"
+    },
+    {
+      "id": "goal-0230",
+      "text": "survive 30 minutes"
+    },
+    {
+      "id": "goal-0231",
+      "text": "survive the month"
+    },
+    {
+      "id": "goal-0232",
+      "text": "keep your family fed"
+    },
+    {
+      "id": "goal-0233",
+      "text": "survive until dawn"
+    },
+    {
+      "id": "goal-0234",
+      "text": "take down the corporate bosses"
+    },
+    {
+      "id": "goal-0235",
+      "text": "stop the mind-control plan"
+    },
+    {
+      "id": "goal-0236",
+      "text": "take down the crime ring"
+    },
+    {
+      "id": "goal-0237",
+      "text": "take the city from the gang"
+    },
+    {
+      "id": "goal-0238",
+      "text": "destroy the threat before it ruins your business"
+    },
+    {
+      "id": "goal-0239",
+      "text": "tell your life story and pass on"
+    },
+    {
+      "id": "goal-0240",
+      "text": "turn villains into heroes"
+    },
+    {
+      "id": "goal-0241",
+      "text": "win every event in the city"
+    },
+    {
+      "id": "goal-0242",
+      "text": "win her heart"
+    },
+    {
+      "id": "goal-0243",
+      "text": "win the match and finish your foe"
+    },
+    {
+      "id": "goal-0244",
+      "text": "win the tournament"
+    },
+    {
+      "id": "goal-0245",
+      "text": "write the song everyone sings"
+    },
+    {
+      "id": "goal-0246",
+      "text": "finish your masterpiece before you die"
+    },
+    {
+      "id": "goal-0247",
+      "text": "build a home from nothing"
+    },
+    {
+      "id": "goal-0248",
+      "text": "open the restaurant of your dreams"
+    },
+    {
+      "id": "goal-0249",
+      "text": "design a city that runs itself"
+    },
+    {
+      "id": "goal-0250",
+      "text": "make a game someone loves"
+    },
+    {
+      "id": "goal-0251",
+      "text": "grow the tallest tree in the world"
+    },
+    {
+      "id": "goal-0252",
+      "text": "invent something that changes everything"
+    },
+    {
+      "id": "goal-0253",
+      "text": "make one true friend"
+    },
+    {
+      "id": "goal-0254",
+      "text": "get the old band back together"
+    },
+    {
+      "id": "goal-0255",
+      "text": "get everyone to the party on time"
+    },
+    {
+      "id": "goal-0256",
+      "text": "reunite the family for one dinner"
+    },
+    {
+      "id": "goal-0257",
+      "text": "earn your rival's respect"
+    },
+    {
+      "id": "goal-0258",
+      "text": "become your hero's partner"
+    },
+    {
+      "id": "goal-0259",
+      "text": "get the whole town to like you"
+    },
+    {
+      "id": "goal-0260",
+      "text": "find a home for every stray"
+    },
+    {
+      "id": "goal-0261",
+      "text": "say goodbye properly"
+    },
+    {
+      "id": "goal-0262",
+      "text": "map the whole world"
+    },
+    {
+      "id": "goal-0263",
+      "text": "name every creature on the island"
+    },
+    {
+      "id": "goal-0264",
+      "text": "fill every page of the field guide"
+    },
+    {
+      "id": "goal-0265",
+      "text": "read every book in the library"
+    },
+    {
+      "id": "goal-0266",
+      "text": "find where the river ends"
+    },
+    {
+      "id": "goal-0267",
+      "text": "learn the lost language"
+    },
+    {
+      "id": "goal-0268",
+      "text": "photograph the creature no one believes in"
+    },
+    {
+      "id": "goal-0269",
+      "text": "answer the question no one can"
+    },
+    {
+      "id": "goal-0270",
+      "text": "collect one of everything"
+    },
+    {
+      "id": "goal-0271",
+      "text": "own every house on the street"
+    },
+    {
+      "id": "goal-0272",
+      "text": "complete the set"
+    },
+    {
+      "id": "goal-0273",
+      "text": "buy back the family farm"
+    },
+    {
+      "id": "goal-0274",
+      "text": "fill the museum"
+    },
+    {
+      "id": "goal-0275",
+      "text": "hold every title at once"
+    },
+    {
+      "id": "goal-0276",
+      "text": "win the pie contest"
+    },
+    {
+      "id": "goal-0277",
+      "text": "get the cat down from the tree"
+    },
+    {
+      "id": "goal-0278",
+      "text": "grow a perfect pumpkin"
+    },
+    {
+      "id": "goal-0279",
+      "text": "make it through the first day of school"
+    },
+    {
+      "id": "goal-0280",
+      "text": "keep your houseplant alive for a year"
+    },
+    {
+      "id": "goal-0281",
+      "text": "finish the puzzle before the guests arrive"
+    },
+    {
+      "id": "goal-0282",
+      "text": "have the best garden on the block"
+    },
+    {
+      "id": "goal-0283",
+      "text": "get a good night's sleep"
+    },
+    {
+      "id": "goal-0284",
+      "text": "learn to walk again"
+    },
+    {
+      "id": "goal-0285",
+      "text": "face your fear of the dark"
+    },
+    {
+      "id": "goal-0286",
+      "text": "become the person your dog thinks you are"
+    },
+    {
+      "id": "goal-0287",
+      "text": "master the craft your father failed at"
+    },
+    {
+      "id": "goal-0288",
+      "text": "forgive the one who hurt you"
+    },
+    {
+      "id": "goal-0289",
+      "text": "remember who you were"
+    },
+    {
+      "id": "goal-0290",
+      "text": "choose your own name"
+    },
+    {
+      "id": "goal-0291",
+      "text": "steal the crown without being seen"
+    },
+    {
+      "id": "goal-0292",
+      "text": "swap the painting before the auction"
+    },
+    {
+      "id": "goal-0293",
+      "text": "keep your secret until the end"
+    },
+    {
+      "id": "goal-0294",
+      "text": "fake your own death"
+    },
+    {
+      "id": "goal-0295",
+      "text": "break out of prison"
+    },
+    {
+      "id": "goal-0296",
+      "text": "frame the real villain"
+    },
+    {
+      "id": "goal-0297",
+      "text": "leave no trace you were there"
+    },
+    {
+      "id": "goal-0298",
+      "text": "pull off the perfect con"
+    },
+    {
+      "id": "goal-0299",
+      "text": "get fired on purpose"
+    },
+    {
+      "id": "goal-0300",
+      "text": "lose the game without anyone noticing"
+    },
+    {
+      "id": "goal-0301",
+      "text": "ruin the wedding"
+    },
+    {
+      "id": "goal-0302",
+      "text": "be forgotten by everyone"
+    },
+    {
+      "id": "goal-0303",
+      "text": "become the villain the hero needs"
+    },
+    {
+      "id": "goal-0304",
+      "text": "get the most boring job done perfectly"
+    },
+    {
+      "id": "goal-0305",
+      "text": "convince everyone you are human"
+    },
+    {
+      "id": "goal-0306",
+      "text": "bring the animals back"
+    },
+    {
+      "id": "goal-0307",
+      "text": "clean the whole ocean"
+    },
+    {
+      "id": "goal-0308",
+      "text": "wake the sleeping forest"
+    },
+    {
+      "id": "goal-0309",
+      "text": "turn the desert green"
+    },
+    {
+      "id": "goal-0310",
+      "text": "return every stolen thing"
+    },
+    {
+      "id": "goal-0311",
+      "text": "land the perfect trick"
+    },
+    {
+      "id": "goal-0312",
+      "text": "win the crowd, not the match"
+    },
+    {
+      "id": "goal-0313",
+      "text": "play the perfect show"
+    },
+    {
+      "id": "goal-0314",
+      "text": "go from last place to champion"
+    }
+  ]
+}

@@ -2,7 +2,14 @@
  * Tests for board → React Flow nodes: z order.
  */
 import { describe, expect, it } from 'vitest';
-import { fixtureBoard, fixtureCard, fixtureNote, fixtureStack } from '@/test/fixtures/boards';
+import {
+  combinedCard,
+  fixtureBoard,
+  fixtureCard,
+  fixtureNote,
+  fixtureStack,
+  secondModifier,
+} from '@/test/fixtures/boards';
 import { toNodes, type CardNodeData } from './nodes';
 
 const UI = { selectedId: null, hiddenIds: new Set<string>() };
@@ -45,7 +52,7 @@ describe('toNodes below', () => {
   it('toNodes_tuckedSetting_belowHasKindTextAndSavedWord', () => {
     const setting = fixtureCard('setting', {
       x: 0,
-      y: 59,
+      y: 56,
       z: 2,
       tuckedUnder: 'role-1',
     });
@@ -60,5 +67,26 @@ describe('toNodes below', () => {
       saved: 'after the',
     });
     expect(data('setting-1').below).toBeNull();
+  });
+
+  it('toNodes_onTopCard_hasNoNode', () => {
+    const board = fixtureBoard([
+      combinedCard('role'),
+      fixtureCard('goal', { y: 56, z: 2, tuckedUnder: 'role-1' }),
+      secondModifier({ onTopOf: 'role-1' }),
+    ]);
+    const nodes = toNodes(board, UI);
+    expect(nodes.map((n) => n.id)).not.toContain('modifier-2');
+    expect(nodes).toHaveLength(2);
+  });
+
+  it('toNodes_badgeBelowBaseWithOnTop_readsOnTopAdjective', () => {
+    const board = fixtureBoard([
+      fixtureCard('goal'),
+      combinedCard('role', { y: 56, z: 2, tuckedUnder: 'goal-1' }),
+      secondModifier({ onTopOf: 'role-1' }),
+    ]);
+    const goal = toNodes(board, UI).find((n) => n.id === 'goal-1')!.data as CardNodeData;
+    expect(goal.below?.text).toBe('devout exiled navigator');
   });
 });

@@ -6,7 +6,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { useState } from 'react';
 import { describe, expect, it } from 'vitest';
 import { drawCard } from '@/features/draw';
-import { GENRES, type Card, type CardType, type Pool } from '@/shared/model';
+import type { Card, CardType, Deck, Pool } from '@/shared/model';
 import { CardView } from './CardView';
 import { combine, turnCard } from './rings';
 
@@ -18,6 +18,8 @@ function card(type: CardType, rings: string[][]): Card {
     y: 0,
     z: 0,
     tuckedUnder: null,
+    onTopOf: null,
+    locked: false,
     rings: rings.map((texts) => ({
       cues: texts.map((text) => ({ text })),
       activeIndex: 0,
@@ -82,17 +84,17 @@ describe('CardView', () => {
   });
 
   it('CardView_card_hasTitleCaseAriaLabel', () => {
-    render(<CardView card={card('modifier', [ADJS])} onTurn={noop} />);
-    expect(screen.getByRole('article', { name: 'Modifier Card' })).toBeTruthy();
+    render(<CardView card={{ ...card('modifier', [ADJS]), modDeck: 'resource' }} onTurn={noop} />);
+    expect(screen.getByRole('article', { name: 'Resource Modifier Card' })).toBeTruthy();
   });
 
   it('CardView_combinedInnerRightClick_changesOnlyBottomAdjective', () => {
-    const pool = (type: CardType, texts: string[]): Pool => ({
+    const pool = (type: Deck, texts: string[]): Pool => ({
       type,
-      cues: texts.map((text, i) => ({ id: `${type}-${i}`, text, genres: ['roguelike'] })),
+      cues: texts.map((text, i) => ({ id: `${type}-${i}`, text, targets: ['role'] })),
     });
-    const role = drawCard('role', pool('role', NOUNS), GENRES);
-    const modifier = drawCard('modifier', pool('modifier', ADJS), GENRES);
+    const role = drawCard('role', pool('role', NOUNS));
+    const modifier = drawCard('modifier', pool('modifier', ADJS), { modDeck: 'role' });
     const combined = combine(role, modifier);
     const [noun, adjective] = [combined.rings[0]!.cues[0]!.text, combined.rings[1]!.cues[0]!.text];
 
@@ -127,5 +129,31 @@ describe('CardView', () => {
     render(<CardView card={card('role', [NOUNS])} onTurn={noop} ringClassName="nodrag" />);
     const halves = screen.getAllByRole('button', { name: /^Turn / });
     expect(halves.every((half) => half.classList.contains('nodrag'))).toBe(true);
+  });
+
+  it.each([
+    ['role', 'user-plus'],
+    ['resource', 'battery-plus'],
+    ['setting', 'map-pin-plus'],
+  ] as const)('cardView_modifierEachModDeck_showsItsIcon (%s)', (modDeck, icon) => {
+    render(<CardView card={{ ...card('modifier', [ADJS]), modDeck }} onTurn={noop} />);
+    const article = screen.getByRole('article');
+    expect(article.getAttribute('data-mod-deck')).toBe(modDeck);
+    expect(screen.getByTestId('type-disc').querySelector(`[data-icon="${icon}"]`)).toBeTruthy();
+  });
+
+  it('cardView_mood_rendersFourCues', () => {
+    render(<CardView card={card('mood', [['tense', 'cozy', 'eerie', 'giddy']])} onTurn={noop} />);
+    expect(screen.getAllByText(/tense|cozy|eerie|giddy/)).toHaveLength(4);
+    expect(screen.queryByTestId('middle-rule')).toBeNull();
+    expect(screen.getByTestId('type-disc').querySelector('[data-icon="smile"]')).toBeTruthy();
+  });
+
+  it('cardView_constraint_rendersTwoCuesAndRule', () => {
+    render(<CardView card={card('constraint', [['no jumping', 'only one hand']])} onTurn={noop} />);
+    expect(screen.getByTestId('active-cue').textContent).toBe('no jumping');
+    expect(screen.getAllByTestId('cue')).toHaveLength(1);
+    expect(screen.getByTestId('middle-rule')).toBeTruthy();
+    expect(screen.getByRole('article', { name: 'Constraint Card' })).toBeTruthy();
   });
 });

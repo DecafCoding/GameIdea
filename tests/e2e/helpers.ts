@@ -1,23 +1,38 @@
 /**
  * Helpers for the browser tests: ring-half arrow points, drawing cards and paper colors.
- * A ring-half button is 250 × 250 but clipped to its half, so clicks go to the arrow
+ * A ring-half button is 200 × 200 but clipped to its half, so clicks go to the arrow
  * point inside the half, never the box center (which sits over the type disc).
  */
 import type { Locator, Page } from '@playwright/test';
 import { expect } from './test';
 
 export const ARROW = {
-  innerLeft: { x: 91.5, y: 125 },
-  innerRight: { x: 158.5, y: 125 },
-  outerLeft: { x: 75.5, y: 125 },
-  outerRight: { x: 174.5, y: 125 },
+  innerLeft: { x: 66.5, y: 100 },
+  innerRight: { x: 133.5, y: 100 },
+  outerLeft: { x: 50.5, y: 100 },
+  outerRight: { x: 149.5, y: 100 },
 } as const;
 
-export type DeckName = 'Player Role' | 'Goal' | 'Conflict' | 'Modifier' | 'Setting';
+/** A deck button label after "Draw A ": the rail and the card test page. */
+export type DeckName =
+  | 'Hook Card'
+  | 'Player Role'
+  | 'Mechanic'
+  | 'Resource'
+  | 'Goal'
+  | 'Conflict'
+  | 'Player Role Modifier'
+  | 'Resource Modifier'
+  | 'Setting Modifier'
+  | 'Setting'
+  | 'Mood'
+  | 'Twist'
+  | 'Progression'
+  | 'Constraint';
 
 /** Clicks "Draw A <deck>" and returns the newest card (the page lists newest first). */
 export async function draw(page: Page, deck: DeckName): Promise<Locator> {
-  await page.getByRole('button', { name: `Draw A ${deck}` }).click();
+  await page.getByRole('button', { name: `Draw A ${deck}`, exact: true }).click();
   return page.getByTestId('card').first();
 }
 

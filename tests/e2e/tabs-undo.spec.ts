@@ -130,10 +130,10 @@ test.describe('undo', () => {
     );
 
     // Combine.
-    await dragTo(page, cardById(page, 'modifier-1'), await pointOn(page, 'role-1', 125, 125));
+    await dragTo(page, cardById(page, 'modifier-1'), await pointOn(page, 'role-1', 100, 100));
     await expect(activeCue(page, 'role-1')).toHaveText('exiled navigator');
     // Swap.
-    await dragTo(page, cardById(page, 'modifier-2'), await pointOn(page, 'role-1', 125, 125));
+    await dragTo(page, cardById(page, 'modifier-2'), await pointOn(page, 'role-1', 100, 100));
     await expect(activeCue(page, 'role-1')).toHaveText('devout navigator');
     // Split.
     await cardById(page, 'role-1').click({ position: { x: 30, y: 30 } });
@@ -141,14 +141,14 @@ test.describe('undo', () => {
     await expect(activeCue(page, 'role-1')).toHaveText('navigator');
     await expect(canvasCards(page)).toHaveCount(4);
     // Tuck.
-    await dragTo(page, cardById(page, 'goal-1'), await pointOn(page, 'role-1', 125, 125));
+    await dragTo(page, cardById(page, 'goal-1'), await pointOn(page, 'role-1', 100, 100));
     await expect
       .poll(async () => {
         const role = await boxOf(cardById(page, 'role-1'));
         const goal = await boxOf(cardById(page, 'goal-1'));
         return Math.round(goal.y - role.y);
       })
-      .toBe(59);
+      .toBe(56);
 
     // Each undo steps back one gesture.
     await undoButton(page).click();
@@ -158,7 +158,7 @@ test.describe('undo', () => {
         const goal = await boxOf(cardById(page, 'goal-1'));
         return Math.round(goal.y - role.y);
       })
-      .not.toBe(59);
+      .not.toBe(56);
     await expect(activeCue(page, 'role-1')).toHaveText('navigator');
     await undoButton(page).click();
     await expect(activeCue(page, 'role-1')).toHaveText('devout navigator');
@@ -178,7 +178,9 @@ test.describe('undo', () => {
     await expect(undoButton(page)).toBeEnabled();
     await waitForSaved(page);
     await page.reload();
-    await expect(rail(page).getByRole('button', { name: 'Draw A Player Role' })).toBeEnabled();
+    await expect(
+      rail(page).getByRole('button', { name: 'Draw A Player Role', exact: true }),
+    ).toBeEnabled();
     await expect(canvasCards(page)).toHaveCount(1);
     await expect(undoButton(page)).toBeDisabled();
   });

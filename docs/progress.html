@@ -100,10 +100,37 @@
   </ul>
 </section>
 
-<section class="phase" data-phase="2" data-status="not-planned">
-  <h2>Phase 2: Hook test <span class="badge">not planned</span></h2>
-  <p class="meta"><strong>Branch:</strong> <em>to be determined by <code>/dev-plan-phase 2</code></em></p>
-  <p class="meta"><strong>Phase doc:</strong> <em>none yet — run <code>/dev-plan-phase 2</code></em></p>
+<section class="phase" data-phase="2" data-status="complete">
+  <h2>Phase 2: Hook test <span class="badge">complete</span></h2>
+  <p class="meta"><strong>Branch:</strong> <code>phase-2-hook-test</code></p>
+  <p class="meta"><strong>Phase doc:</strong> <code>docs/phases/phase-2-hook-test.html</code></p>
+  <p class="meta"><strong>Depends on:</strong> Phase 1 (copy-rename, merged); docs/libraries/decks.json and genres.json; @xyflow/react 12.12.0, zustand 5.0.16 + zundo 2.3.0, zod 4.6.7, Vitest 5.0.5, Playwright 1.64.1 (all already pinned); gh CLI authenticated</p>
+  <p class="meta"><strong>Summary:</strong> Phase 2 (milestone M2 in docs/mvp-plan.html) turns the story-free Phase 1 copy into a working hook machine: the user draws game concept cards from the real pools, turns rings, locks and combines Modifiers, tucks cards under a Hook Card, reads the computed hook sentence and copies it.</p>
+  <ul class="tasks">
+    <li class="task" data-task="1" data-status="done">Task 1: Add the 11-card stack fixture and the long-stack drag test (gate for canvas-library)</li>
+    <li class="task" data-task="2" data-status="done">Task 2: Write the split script and its unit tests</li>
+    <li class="task" data-task="3" data-status="done">Task 3: Run the split once and commit the 11 pool files</li>
+    <li class="task" data-task="4" data-status="done">Task 4: Widen the model to the 12 card types and the new card fields</li>
+    <li class="task" data-task="5" data-status="done">Task 5: Load and check all 11 pools, with the durable pool floor test and new fixture pools</li>
+    <li class="task" data-task="6" data-status="done">Task 6: Draw with the genre filter on tagged decks and the target filter on the 3 Modifier decks</li>
+    <li class="task" data-task="7" data-status="done">Task 7: Rewrite the Zod import check for the new card shape</li>
+    <li class="task" data-task="8" data-status="done">Task 8: Move cards to 200 px with a 56 px tuck and the cream card face</li>
+    <li class="task" data-task="9" data-status="done">Task 9: Draw the 6 new deck faces and the Modifier icon by modDeck</li>
+    <li class="task" data-task="10" data-status="done">Task 10: Add the lock and the full card strip</li>
+    <li class="task" data-task="11" data-status="done">Task 11: Carry modDeck through combine, swap and Split, and allow Resource as a base card</li>
+    <li class="task" data-task="12" data-status="done">Task 12: Replace TheForge's On Top with the onTopOf link and the 2 drop zones</li>
+    <li class="task" data-task="13" data-status="done">Task 13: Connector words for the 12 types, tuck hints in the core order, and the Hook Card stack layout</li>
+    <li class="task" data-task="14" data-status="done">Task 14: Build the pure hook sentence builder and the stack reading order</li>
+    <li class="task" data-task="15" data-status="done">Task 15: Draw the Hook Card on the canvas, with its button and the cannot-tuck notice</li>
+    <li class="task" data-task="16" data-status="done">Task 16: Add the Hook Card hover menu: Copy with its fallback dialog, Redraw All and Discard</li>
+    <li class="task" data-task="17" data-status="done">Task 17: Regroup the rail: Hook Card, Core, Modifiers row and Optional</li>
+    <li class="task" data-task="18" data-status="done">Task 18: Align the notices with design 9.13 and update the text file for the new card types</li>
+    <li class="task" data-task="19" data-status="done">Task 19: Browser tests for the 3 Modifier decks, combine, swap, On Top and Split</li>
+    <li class="task" data-task="20" data-status="done">Task 20: Browser tests for the Hook Card flow and a real-pool smoke test</li>
+    <li class="task" data-task="21" data-status="done">Task 21: Run the full check suite in all 3 browsers and fix regressions</li>
+    <li class="task" data-task="22" data-status="done">Task 22: Update the README and hand over the manual M2 hook test</li>
+    <li class="task" data-task="23" data-status="done">Task 23: Commit, push, and open PR</li>
+  </ul>
 </section>
 
 <section class="phase" data-phase="3" data-status="not-planned">

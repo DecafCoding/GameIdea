@@ -25,7 +25,9 @@ export async function openBoard(page: Page, board?: Board): Promise<void> {
     await page.waitForURL(/#\/board\//);
   }
   await expect(page.locator('main[aria-label="Board"]')).toBeVisible();
-  await expect(rail(page).getByRole('button', { name: 'Draw A Player Role' })).toBeEnabled();
+  await expect(
+    rail(page).getByRole('button', { name: 'Draw A Player Role', exact: true }),
+  ).toBeEnabled();
 }
 
 /** The open New Board dialog. */
@@ -48,7 +50,7 @@ export function rail(page: Page): Locator {
 /** Clicks "Draw A <deck>" in the rail. */
 export async function drawFromRail(page: Page, deck: DeckName): Promise<void> {
   await rail(page)
-    .getByRole('button', { name: `Draw A ${deck}` })
+    .getByRole('button', { name: `Draw A ${deck}`, exact: true })
     .click();
 }
 

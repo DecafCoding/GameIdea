@@ -59,8 +59,34 @@ describe('textFile', () => {
         'Player Role: exiled navigator, devout\n' +
         '  Goal: keep the light on\n' +
         '    Conflict: the tide rises every night\n' +
-        'Modifier: exiled\n' +
+        'Player Role Modifier: exiled\n' +
         '  Goal: keep the light on\n',
+    );
+  });
+
+  it('boardText_onTopModifier_readsInBaseLine', () => {
+    const board = fixtureBoard([
+      combinedCard('role', { x: 0, y: 0 }),
+      secondModifier({ x: 900, y: 900, onTopOf: 'role-1' }),
+    ]);
+    expect(boardText(named(board))).toBe(
+      'Salvage Run\n\nCards\n\nPlayer Role: devout exiled navigator\n',
+    );
+  });
+
+  it('boardText_hookStack_listsHookCardThenStack', () => {
+    const board = fixtureBoard([
+      fixtureCard('hook', { x: 0, y: 0 }),
+      fixtureCard('role', { x: 20, y: 56, z: 2, tuckedUnder: 'hook-1' }),
+      fixtureCard('mechanic', { x: 20, y: 112, z: 3, tuckedUnder: 'role-1' }),
+      fixtureCard('modifier', { x: 600, y: 0, z: 4, modDeck: 'setting' }),
+    ]);
+    expect(boardText(named(board))).toBe(
+      'Salvage Run\n\nCards\n\n' +
+        'Hook Card\n' +
+        '  Player Role: navigator\n' +
+        '    Mechanic: trade\n' +
+        'Setting Modifier: exiled\n',
     );
   });
 

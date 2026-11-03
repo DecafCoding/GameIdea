@@ -1,7 +1,6 @@
 /**
- * Tests for the connector words between tucked cards: the GameIdea badge table for the 5
- * present types, the saved word and its fallback to the default, and the automatic "a" or
- * "an".
+ * Tests for the connector words between tucked cards: the badge table for the 12 card
+ * types, the saved word and its fallback to the default, and the automatic "a" or "an".
  */
 import { describe, expect, it } from 'vitest';
 import type { CardType } from '@/shared/model';
@@ -14,43 +13,41 @@ const below = (type: CardType, options: { text?: string; saved?: string } = {}):
 });
 
 describe('connectorWords', () => {
-  it('connectorWords_roleOverRole_andAWithA', () => {
-    expect(connectorWords('role', 'role')).toEqual(['and a', 'with a']);
-  });
+  const OTHERS = ['role', 'mechanic', 'resource', 'goal', 'conflict', 'setting'] as const;
 
-  it('connectorWords_sameDeckNotRoleOrModifier_and', () => {
-    for (const type of ['goal', 'conflict', 'setting'] as const) {
-      expect(connectorWords(type, type)).toEqual(['and']);
-    }
-  });
-
-  it('connectorWords_lowerGoal_toUntilSoYouCan', () => {
-    for (const upper of ['role', 'conflict', 'modifier', 'setting'] as const) {
-      expect(connectorWords(upper, 'goal')).toEqual(['to', 'until', 'so you can']);
-    }
-  });
-
-  it('connectorWords_lowerConflict_butWhileEvenThough', () => {
-    for (const upper of ['role', 'goal', 'modifier', 'setting'] as const) {
-      expect(connectorWords(upper, 'conflict')).toEqual(['but', 'while', 'even though']);
-    }
-  });
-
-  it('connectorWords_lowerSetting_inTheAboardTheInsideThe', () => {
-    for (const upper of ['role', 'goal', 'conflict', 'modifier'] as const) {
-      expect(connectorWords(upper, 'setting')).toEqual(['in the', 'aboard the', 'inside the']);
-    }
-  });
-
-  it('connectorWords_roleUnderNonRole_null', () => {
-    for (const upper of ['goal', 'conflict', 'modifier', 'setting'] as const) {
-      expect(connectorWords(upper, 'role')).toBeNull();
-    }
+  it.each([
+    ['hook', 'role', ['You are a', 'You play a']],
+    ['role', 'role', ['and a', 'with a']],
+    ['goal', 'role', ['with a', 'and a']],
+    ['mechanic', 'mechanic', ['and']],
+    ['goal', 'goal', ['and']],
+    ['constraint', 'constraint', ['and']],
+    ['role', 'mechanic', ['who must', 'who can only', 'who learns to']],
+    ['hook', 'mechanic', ['who must', 'who can only', 'who learns to']],
+    ['mechanic', 'resource', ['using', 'while managing', 'spending']],
+    ['resource', 'goal', ['to', 'until', 'so you can']],
+    ['goal', 'conflict', ['but', 'while', 'even though']],
+    ['role', 'setting', ['in the', 'aboard the', 'inside the']],
+    ['conflict', 'mood', ['It feels', 'The tone is']],
+    ['mood', 'twist', ['Except', 'The catch:']],
+    ['twist', 'progression', ['As you play,', 'Over time,']],
+    ['hook', 'progression', ['As you play,', 'Over time,']],
+    ['progression', 'constraint', ['with', 'and']],
+  ] as const)('connectorWords_eachPair_matchesBadgeTable (%s over %s)', (upper, lower, words) => {
+    expect(connectorWords(upper, lower)).toEqual(words);
   });
 
   it('connectorWords_lowerModifier_null', () => {
-    for (const upper of ['role', 'goal', 'conflict', 'modifier', 'setting'] as const) {
+    for (const upper of [...OTHERS, 'hook', 'modifier'] as const) {
       expect(connectorWords(upper, 'modifier')).toBeNull();
+    }
+  });
+
+  it('connectorWords_everyOtherDeckUnderAnother_hasWords', () => {
+    for (const lower of ['mechanic', 'resource', 'goal', 'conflict', 'setting'] as const) {
+      for (const upper of ['hook', ...OTHERS] as const) {
+        expect(connectorWords(upper, lower), `${upper} over ${lower}`).not.toBeNull();
+      }
     }
   });
 });
@@ -95,7 +92,13 @@ describe('connectorFor', () => {
   });
 
   it('connectorFor_noPair_null', () => {
-    expect(connectorFor('goal', below('role'))).toBeNull();
     expect(connectorFor('role', below('modifier'))).toBeNull();
+  });
+
+  it('connectorFor_roleUnderHookBeforeVowel_isYouAreAn', () => {
+    expect(connectorFor('hook', below('role', { text: 'astronaut' }))).toMatchObject({
+      word: 'You are a',
+      text: 'You are an',
+    });
   });
 });

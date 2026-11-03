@@ -2,8 +2,8 @@
 .flight {
   position: fixed;
   z-index: 1000;
-  width: var(--card);
-  height: var(--card);
+  width: var(--card-size);
+  height: var(--card-size);
   pointer-events: none;
   transform-origin: center;
 }

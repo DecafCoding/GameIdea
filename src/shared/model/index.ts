@@ -4,12 +4,42 @@
  * and docs/feature-dual-ring-cards.html for the ring rules.
  */
 
-/** Board file and record format version. A shape change needs an upgrade step. */
+/**
+ * Board file and record format version. A shape change needs an upgrade step.
+ * Phase 2 added hook, 6 decks, modDeck, onTopOf and locked inside version 1 before any
+ * user board existed; from Phase 2 on, a shape change needs an upgrade step.
+ */
 export const FORMAT_VERSION = 1;
 
-/** The 5 decks, in rail order: core, then modifiers, then optional. */
-export const CARD_TYPES = ['role', 'goal', 'conflict', 'modifier', 'setting'] as const;
+/**
+ * The 11 decks, in rail order: the core decks in design order, the Modifier deck, then
+ * the optional decks.
+ */
+export const DECKS = [
+  'role',
+  'mechanic',
+  'resource',
+  'goal',
+  'conflict',
+  'modifier',
+  'setting',
+  'mood',
+  'twist',
+  'progression',
+  'constraint',
+] as const;
+export type Deck = (typeof DECKS)[number];
+
+/** The 12 card types: the Hook Card, which no deck draws, and the 11 decks. */
+export const CARD_TYPES = ['hook', ...DECKS] as const;
 export type CardType = (typeof CARD_TYPES)[number];
+
+/** The 3 Modifier decks, named by the card type their adjectives target. */
+export const MOD_DECKS = ['role', 'resource', 'setting'] as const;
+export type ModDeck = (typeof MOD_DECKS)[number];
+
+/** The card types a Modifier combines with (the same 3 as the Modifier decks). */
+export const BASE_TYPES: readonly CardType[] = MOD_DECKS;
 
 /**
  * The 21 genres, in docs/libraries/genres.json order: each name lowercased, "&" dropped and
@@ -58,22 +88,42 @@ export function allGenresOn(): DeckGenres {
   };
 }
 
-/** Cues on one ring at draw time: 4 nouns / 2 cues / 4 adjectives. */
-export const CUES_PER_CARD: Record<CardType, 2 | 4> = {
+/** Cues on one ring at draw time: 4 cues, nouns or adjectives, or 2 cues. */
+export const CUES_PER_CARD: Record<Deck, 2 | 4> = {
   role: 4,
+  mechanic: 4,
+  resource: 4,
   goal: 2,
   conflict: 2,
   modifier: 4,
   setting: 4,
+  mood: 4,
+  twist: 2,
+  progression: 2,
+  constraint: 2,
 };
 
 /** The deck name shown on deck buttons, cards and in the text file. */
 export const DECK_NAME: Record<CardType, string> = {
+  hook: 'Hook Card',
   role: 'Player Role',
+  mechanic: 'Mechanic',
+  resource: 'Resource',
   goal: 'Goal',
   conflict: 'Conflict',
   modifier: 'Modifier',
   setting: 'Setting',
+  mood: 'Mood',
+  twist: 'Twist',
+  progression: 'Progression',
+  constraint: 'Constraint',
+};
+
+/** The name of each Modifier deck, on its button, its cards and in the text file. */
+export const MOD_DECK_NAME: Record<ModDeck, string> = {
+  role: 'Player Role Modifier',
+  resource: 'Resource Modifier',
+  setting: 'Setting Modifier',
 };
 
 /** A cue copied onto a card. */
@@ -85,6 +135,11 @@ export interface Cue {
 export interface Ring {
   cues: Cue[];
   activeIndex: number;
+  /**
+   * The Modifier deck a merged adjective ring came from. Only on rings[1] of a combined
+   * Player Role, Resource or Setting card; it brings the right icon back on a Split.
+   */
+  modDeck?: ModDeck;
 }
 
 export interface Card {
@@ -94,8 +149,20 @@ export interface Card {
   y: number;
   z: number;
   tuckedUnder: string | null;
-  /** Player Role/Setting: [nouns] or [nouns, adjectives]. Others: one ring. */
+  /**
+   * Player Role, Resource, Setting: [nouns] or [nouns, adjectives]. A Hook Card: none.
+   * Every other deck: one ring.
+   */
   rings: Ring[];
+  /** The Modifier deck a modifier card was drawn from. Required on a modifier card only. */
+  modDeck?: ModDeck;
+  /**
+   * The base card (Player Role, Resource or Setting with a merged ring) this Modifier sits
+   * on top of, or null. An on-top card is never tucked and has no place of its own.
+   */
+  onTopOf: string | null;
+  /** A locked card keeps its cues when Redraw All runs. */
+  locked: boolean;
   /**
    * The connector word chosen on the badge above this card while it was tucked, such as
    * "aboard the". Shown only while it fits the pair; otherwise the pair's default shows.
@@ -154,13 +221,15 @@ export interface PoolCue {
   text: string;
   /** Genre-tagged decks only: 1 or more; a cue in 2 genres is stored once. */
   genres?: Genre[];
+  /** Modifier cues only: the Modifier decks that draw this cue. Cards never copy it. */
+  targets?: ModDeck[];
 }
 
 export interface Pool {
-  type: CardType;
+  type: Deck;
   cues: PoolCue[];
 }
 
-export type Pools = Record<CardType, Pool>;
+export type Pools = Record<Deck, Pool>;
 
 export { newId } from './newId';

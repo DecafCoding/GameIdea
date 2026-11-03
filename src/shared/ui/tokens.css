@@ -191,9 +191,8 @@
 
 /* The Hook label sits on the dark Hook Card in every mode, so it keeps the dark-mode accent text. */
 
-/* Carried over from TheForge: card geometry and motion, not colors. Phase 2 moves cards to --card-size. */
+/* Carried over from TheForge: motion timings, not colors. */
 :root {
-  --card: 250px;
   --t-turn-90: 180ms;
   --t-turn-180: 260ms;
   --t-draw: 250ms;

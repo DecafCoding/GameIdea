@@ -19,7 +19,7 @@ import {
 } from '@xyflow/react';
 import { useCallback, useEffect, useMemo, useRef, useState, type MouseEvent } from 'react';
 import { useRingKeys, type RingSlot, type TurnDirection } from '@/features/card';
-import { drawCard } from '@/features/draw';
+import { drawFor } from '@/features/draw';
 import { moveNote } from '@/features/notes';
 import type { Pools } from '@/shared/model';
 import { useBoardStore } from '@/shared/store';
@@ -27,6 +27,8 @@ import {
   chooseConnector,
   discardCard,
   dropCard,
+  lockCard,
+  redrawAll,
   redrawCard,
   splitCard,
   turnCardOnBoard,
@@ -46,6 +48,8 @@ const nodeTypes = { card: CardNode, note: NoteNode };
 
 /** A drag shorter than this, in screen pixels, is a click and commits nothing. */
 const CLICK_DISTANCE = 4;
+/** How long the new-card outline shows after Redraw All (design 9.9). */
+const FRESH_MS = 1000;
 /** Added to the dragged stack's zIndex so it paints above every other card. */
 const DRAG_RAISE = 1_000_000;
 
@@ -82,7 +86,7 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
   const board = useBoardStore((state) => state.board);
   const changeBoard = useBoardStore((state) => state.changeBoard);
   const setView = useBoardStore((state) => state.setView);
-  const { canvasRef, flights, setEditingNoteId } = useCanvasUi();
+  const { canvasRef, flights, setEditingNoteId, setNotice } = useCanvasUi();
   const flow = useReactFlow();
 
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -91,11 +95,21 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
   const drag = useRef<DragState | null>(null);
   const hoverRef = useRef<string | null>(null);
 
+  // Cards Redraw All just replaced: the new-card outline for 1 second (design 9.9).
+  const [freshIds, setFreshIds] = useState<ReadonlySet<string>>(() => new Set());
+  const freshTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(
+    () => () => {
+      if (freshTimer.current) clearTimeout(freshTimer.current);
+    },
+    [],
+  );
+
   const selected = selectedId && board.cards.some((c) => c.id === selectedId) ? selectedId : null;
   const hiddenIds = useMemo(() => new Set(flights.map((f) => f.card.id)), [flights]);
   const derived = useMemo(
-    () => toNodes(board, { selectedId: selected, hiddenIds }),
-    [board, selected, hiddenIds],
+    () => toNodes(board, { selectedId: selected, hiddenIds, freshIds }),
+    [board, selected, hiddenIds, freshIds],
   );
   const nodes = dragNodes ?? derived;
 
@@ -121,10 +135,25 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
         const current = latest.current.pools;
         const board = useBoardStore.getState().board;
         const card = board.cards.find((c) => c.id === id);
-        if (!current || !card) return;
-        // Redraw draws like a deck draw; none of the 5 Phase 1 decks is genre-tagged.
-        const drawn = drawCard(card.type, current[card.type], null);
+        if (!current || !card || card.type === 'hook') return;
+        // Redraw draws like a deck draw: same deck, same Modifier deck, the board's genres.
+        const drawn = drawFor(card, current, board.genres);
         changeBoard((b) => redrawCard(b, id, drawn));
+      },
+      lock: (id: string) => changeBoard((b) => lockCard(b, id)),
+      redrawAll: (hookId: string) => {
+        const current = latest.current.pools;
+        if (!current) return;
+        let redrawn: string[] = [];
+        changeBoard((b) => {
+          const result = redrawAll(b, hookId, (card) => drawFor(card, current, b.genres));
+          redrawn = result.redrawn;
+          return result.board;
+        });
+        if (redrawn.length === 0) return;
+        setFreshIds(new Set(redrawn));
+        if (freshTimer.current) clearTimeout(freshTimer.current);
+        freshTimer.current = setTimeout(() => setFreshIds(new Set()), FRESH_MS);
       },
       discard: (id: string) => {
         changeBoard((b) => discardCard(b, id));
@@ -238,15 +267,17 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
       const dragged = b.cards.find((c) => c.id === node.id);
       if (!dragged) return;
       const target = dropTarget(b, node.id, point);
-      const kind = hintFor(dragged, target, point);
+      const kind = hintFor(b, dragged, target, point);
       setHint((current) => {
         if (!target || !kind) return current === null ? current : null;
         const zone =
           kind === 'swapZones'
-            ? dropAction(dragged, target, point).kind === 'swap'
+            ? dropAction(b, dragged, target, point).kind === 'swap'
               ? 'swap'
               : 'top'
-            : null;
+            : kind === 'swapOnly'
+              ? 'swap'
+              : null;
         if (
           current &&
           current.target === target &&
@@ -276,13 +307,23 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
         return;
       }
       const point = flow.screenToFlowPosition(p);
+      // A Hook Card dropped on a card only moves; the notice says why (design 9.13).
+      const b = useBoardStore.getState().board;
+      const dragged = b.cards.find((c) => c.id === node.id);
+      if (dragged) {
+        const action = dropAction(b, dragged, dropTarget(b, node.id, point), point);
+        if (action.kind === 'move' && action.refused) setNotice(action.refused);
+      }
       changeBoard((b) => dropCard(b, node.id, point, { x, y }));
     },
-    [changeBoard, flow],
+    [changeBoard, flow, setNotice],
   );
 
+  // A Hook Card has a hover menu, not a strip: a click selects nothing.
   const onNodeClick = useCallback((_: MouseEvent, node: BoardFlowNode) => {
-    if (node.type === 'card') setSelectedId(node.id);
+    if (node.type !== 'card') return;
+    const card = useBoardStore.getState().board.cards.find((c) => c.id === node.id);
+    setSelectedId(card?.type === 'hook' ? null : node.id);
   }, []);
 
   const onPaneClick = useCallback(() => {

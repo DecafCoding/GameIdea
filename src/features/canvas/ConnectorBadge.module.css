@@ -1,22 +1,23 @@
 /*
- * Connector badge: centered on this card's bottom left corner, which is the seam with the
- * card tucked below it. Half of it hangs off the left edge. The tucked card's type color.
- * The badge is a button: an invisible 44 px area around it takes the pointer.
+ * Connector badge (design 9.6): a 22 px pill centered on the lower card's left edge, its
+ * top 11 above the seam (this card's bottom edge, where the tucked card shows). The
+ * component sets left: 0 on a card, or the 20 px inset under a Hook Card. The tucked card's
+ * deck color. The badge is a button: an invisible 44 px area around it takes the pointer.
  */
 .badge {
   position: absolute;
-  left: 0;
   bottom: 0;
   z-index: 4;
   transform: translate(-50%, 50%);
-  padding: 3px 9px;
+  height: var(--badge-h);
+  padding: 0 9px;
   border: none;
-  border-radius: var(--radius-button);
+  border-radius: var(--radius-pill);
   color: #fff; /* fixed: white on deck color */
   font-family: var(--font-display);
-  font-size: 12px;
+  font-size: var(--badge-font);
   font-weight: 600;
-  line-height: 16px;
+  line-height: var(--badge-h);
   white-space: nowrap;
   box-shadow: var(--shadow-menu);
   cursor: pointer;
@@ -44,10 +45,11 @@
   display: flex;
   flex-direction: column;
   gap: 2px;
-  min-width: 240px;
+  width: 200px;
+  box-sizing: border-box;
   padding: 6px;
   border: 1px solid var(--border);
-  border-radius: var(--radius-dialog);
+  border-radius: 10px;
   background: var(--surface);
   box-shadow: var(--shadow-menu);
 }
@@ -66,6 +68,7 @@
   font-size: 14px;
   text-align: left;
   white-space: nowrap;
+  overflow: hidden;
   cursor: pointer;
 }
 
@@ -87,5 +90,7 @@
 }
 
 .preview {
+  overflow: hidden;
+  text-overflow: ellipsis;
   color: var(--text-disabled);
 }

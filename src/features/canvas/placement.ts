@@ -4,9 +4,14 @@
  * Points are flow coordinates.
  */
 import type { Board, Card } from '@/shared/model';
+import { isOnTop } from './reading';
 
-/** Design --card. */
-export const CARD_SIZE = 250;
+/** Design --card-size (design 9.4). */
+export const CARD_SIZE = 200;
+/** Design --hook-w: the Hook Card is 240 × 200 (design 9.5). */
+export const HOOK_WIDTH = 240;
+/** Stack cards sit 20 px in from the Hook Card's left edge (design 9.5). */
+export const HOOK_INSET = 20;
 /** Design --grid-pitch. */
 export const GRID = 24;
 const MAX_RINGS = 400;
@@ -22,6 +27,11 @@ export interface Size {
 }
 
 export interface Rect extends Point, Size {}
+
+/** A card's size on the board: the Hook Card is 240 wide, every other card 200 square. */
+export function cardSize(card: Pick<Card, 'type'>): Size {
+  return { width: card.type === 'hook' ? HOOK_WIDTH : CARD_SIZE, height: CARD_SIZE };
+}
 
 const snap = (value: number) => Math.round(value / GRID) * GRID;
 
@@ -65,22 +75,26 @@ export function findOpenSpot(start: Point, occupied: Rect[], size: Size): Point 
   return origin;
 }
 
-/** A rect for every card (250 × 250) and note (its size), skipping the ids given. */
+/**
+ * A rect for every card (200 × 200) and note (its size), skipping the ids given. A card on
+ * top of another has no place of its own: its base card covers it.
+ */
 export function boardRects(board: Board, skip: ReadonlySet<string> = new Set()): Rect[] {
   return [
     ...board.cards
-      .filter((card) => !skip.has(card.id))
-      .map((card) => ({ x: card.x, y: card.y, width: CARD_SIZE, height: CARD_SIZE })),
+      .filter((card) => !skip.has(card.id) && !isOnTop(board, card))
+      .map((card) => ({ x: card.x, y: card.y, ...cardSize(card) })),
     ...board.notes
       .filter((note) => !skip.has(note.id))
       .map(({ x, y, width, height }) => ({ x, y, width, height })),
   ];
 }
 
-/** The free spot nearest to one card width plus a grid step right of the card. */
+/** The free spot for a 200 px card nearest to one card width plus a grid step right of the card. */
 export function besideSpot(board: Board, card: Card, skip?: ReadonlySet<string>): Point {
-  return findOpenSpot({ x: card.x + CARD_SIZE + GRID, y: card.y }, boardRects(board, skip), {
-    width: CARD_SIZE,
-    height: CARD_SIZE,
-  });
+  return findOpenSpot(
+    { x: card.x + cardSize(card).width + GRID, y: card.y },
+    boardRects(board, skip),
+    { width: CARD_SIZE, height: CARD_SIZE },
+  );
 }

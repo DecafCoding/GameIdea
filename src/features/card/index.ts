@@ -4,13 +4,15 @@
  */
 export { CardStrip } from './CardStrip';
 export { CardView, type CardPaper } from './CardView';
+export { toggleLock } from './lock';
 export { RingControl } from './RingControl';
-export { TYPE_ICON, TypeDisc } from './TypeDisc';
+export { iconFor, MOD_ICON, TYPE_ICON, TypeDisc } from './TypeDisc';
 export { useRingKeys } from './useRingKeys';
 export {
   activeText,
   combine,
   edgeCues,
+  edgeText,
   isCombined,
   ringIndexFor,
   ringWord,

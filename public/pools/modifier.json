@@ -1,0 +1,2520 @@
+{
+  "type": "modifier",
+  "cues": [
+    {
+      "id": "modifier-0001",
+      "text": "tiny",
+      "targets": ["role", "resource", "setting"]
+    },
+    {
+      "id": "modifier-0002",
+      "text": "cursed",
+      "targets": ["role", "resource", "setting"]
+    },
+    {
+      "id": "modifier-0003",
+      "text": "infected",
+      "targets": ["role", "resource", "setting"]
+    },
+    {
+      "id": "modifier-0004",
+      "text": "stranded",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0005",
+      "text": "haunted",
+      "targets": ["role", "resource", "setting"]
+    },
+    {
+      "id": "modifier-0006",
+      "text": "alien",
+      "targets": ["role", "resource", "setting"]
+    },
+    {
+      "id": "modifier-0007",
+      "text": "frozen",
+      "targets": ["role", "resource", "setting"]
+    },
+    {
+      "id": "modifier-0008",
+      "text": "masked",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0009",
+      "text": "ruined",
+      "targets": ["role", "resource", "setting"]
+    },
+    {
+      "id": "modifier-0010",
+      "text": "silent",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0011",
+      "text": "secret",
+      "targets": ["role", "resource", "setting"]
+    },
+    {
+      "id": "modifier-0012",
+      "text": "dying",
+      "targets": ["role", "resource", "setting"]
+    },
+    {
+      "id": "modifier-0013",
+      "text": "underground",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0014",
+      "text": "war-torn",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0015",
+      "text": "zombie-filled",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0016",
+      "text": "armed",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0017",
+      "text": "blocky",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0018",
+      "text": "doomed",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0019",
+      "text": "homemade",
+      "targets": ["resource", "setting"]
+    },
+    {
+      "id": "modifier-0020",
+      "text": "neon",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0021",
+      "text": "overworked",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0022",
+      "text": "armored",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0023",
+      "text": "trapped",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0024",
+      "text": "nameless",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0025",
+      "text": "rookie",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0026",
+      "text": "lone",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0027",
+      "text": "abandoned",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0028",
+      "text": "ancient",
+      "targets": ["role", "resource", "setting"]
+    },
+    {
+      "id": "modifier-0029",
+      "text": "lost",
+      "targets": ["role", "resource", "setting"]
+    },
+    {
+      "id": "modifier-0030",
+      "text": "medieval",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0031",
+      "text": "corrupted",
+      "targets": ["role", "resource", "setting"]
+    },
+    {
+      "id": "modifier-0032",
+      "text": "demonic",
+      "targets": ["role", "resource", "setting"]
+    },
+    {
+      "id": "modifier-0033",
+      "text": "enchanted",
+      "targets": ["role", "resource", "setting"]
+    },
+    {
+      "id": "modifier-0034",
+      "text": "undead",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0035",
+      "text": "wobbly",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0036",
+      "text": "mutant",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0037",
+      "text": "grieving",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0038",
+      "text": "desperate",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0039",
+      "text": "shifting",
+      "targets": ["resource", "setting"]
+    },
+    {
+      "id": "modifier-0040",
+      "text": "random",
+      "targets": ["resource", "setting"]
+    },
+    {
+      "id": "modifier-0041",
+      "text": "quarantined",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0042",
+      "text": "hostile",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0043",
+      "text": "quiet",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0044",
+      "text": "deep",
+      "targets": ["resource", "setting"]
+    },
+    {
+      "id": "modifier-0045",
+      "text": "dark",
+      "targets": ["role", "resource", "setting"]
+    },
+    {
+      "id": "modifier-0046",
+      "text": "strange",
+      "targets": ["role", "resource", "setting"]
+    },
+    {
+      "id": "modifier-0047",
+      "text": "foggy",
+      "targets": ["resource", "setting"]
+    },
+    {
+      "id": "modifier-0048",
+      "text": "cloned",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0049",
+      "text": "filthy",
+      "targets": ["role", "resource", "setting"]
+    },
+    {
+      "id": "modifier-0050",
+      "text": "godly",
+      "targets": ["role", "resource"]
+    },
+    {
+      "id": "modifier-0051",
+      "text": "irradiated",
+      "targets": ["role", "resource", "setting"]
+    },
+    {
+      "id": "modifier-0052",
+      "text": "mercenary",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0053",
+      "text": "rusty",
+      "targets": ["role", "resource", "setting"]
+    },
+    {
+      "id": "modifier-0054",
+      "text": "starving",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0055",
+      "text": "retired",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0056",
+      "text": "hollow",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0057",
+      "text": "last",
+      "targets": ["role", "resource", "setting"]
+    },
+    {
+      "id": "modifier-0058",
+      "text": "gothic",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0059",
+      "text": "deep-sea",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0060",
+      "text": "open",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0061",
+      "text": "dead",
+      "targets": ["role", "resource", "setting"]
+    },
+    {
+      "id": "modifier-0062",
+      "text": "burning",
+      "targets": ["role", "resource", "setting"]
+    },
+    {
+      "id": "modifier-0063",
+      "text": "cultist",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0064",
+      "text": "destructible",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0065",
+      "text": "endless",
+      "targets": ["resource", "setting"]
+    },
+    {
+      "id": "modifier-0066",
+      "text": "exiled",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0067",
+      "text": "floating",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0068",
+      "text": "flooded",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0069",
+      "text": "hunted",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0070",
+      "text": "looping",
+      "targets": ["resource", "setting"]
+    },
+    {
+      "id": "modifier-0071",
+      "text": "outgunned",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0072",
+      "text": "overpowered",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0073",
+      "text": "possessed",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0074",
+      "text": "self-aware",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0075",
+      "text": "chosen",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0076",
+      "text": "drunk",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0077",
+      "text": "condemned",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0078",
+      "text": "crashed",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0079",
+      "text": "new",
+      "targets": ["role", "resource", "setting"]
+    },
+    {
+      "id": "modifier-0080",
+      "text": "stick-figure",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0081",
+      "text": "young",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0082",
+      "text": "captive",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0083",
+      "text": "cosmic",
+      "targets": ["role", "resource", "setting"]
+    },
+    {
+      "id": "modifier-0084",
+      "text": "busy",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0085",
+      "text": "walled",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0086",
+      "text": "crime-ridden",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0087",
+      "text": "cartoon",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0088",
+      "text": "near-future",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0089",
+      "text": "broken",
+      "targets": ["role", "resource", "setting"]
+    },
+    {
+      "id": "modifier-0090",
+      "text": "shadowy",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0091",
+      "text": "stormy",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0092",
+      "text": "convict",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0093",
+      "text": "artificial",
+      "targets": ["role", "resource", "setting"]
+    },
+    {
+      "id": "modifier-0094",
+      "text": "automated",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0095",
+      "text": "besieged",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0096",
+      "text": "bloodied",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0097",
+      "text": "bonded",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0098",
+      "text": "caped",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0099",
+      "text": "deranged",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0100",
+      "text": "disposable",
+      "targets": ["role", "resource"]
+    },
+    {
+      "id": "modifier-0101",
+      "text": "draconic",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0102",
+      "text": "dreaming",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0103",
+      "text": "drowned",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0104",
+      "text": "explosive",
+      "targets": ["resource", "setting"]
+    },
+    {
+      "id": "modifier-0105",
+      "text": "famous",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0106",
+      "text": "feathered",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0107",
+      "text": "forgotten",
+      "targets": ["role", "resource", "setting"]
+    },
+    {
+      "id": "modifier-0108",
+      "text": "fragile",
+      "targets": ["role", "resource", "setting"]
+    },
+    {
+      "id": "modifier-0109",
+      "text": "framed",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0110",
+      "text": "ghostly",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0111",
+      "text": "glowing",
+      "targets": ["role", "resource", "setting"]
+    },
+    {
+      "id": "modifier-0112",
+      "text": "growing",
+      "targets": ["role", "resource", "setting"]
+    },
+    {
+      "id": "modifier-0113",
+      "text": "guilty",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0114",
+      "text": "illegal",
+      "targets": ["resource", "setting"]
+    },
+    {
+      "id": "modifier-0115",
+      "text": "imagined",
+      "targets": ["role", "resource", "setting"]
+    },
+    {
+      "id": "modifier-0116",
+      "text": "imperial",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0117",
+      "text": "limbless",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0118",
+      "text": "locked",
+      "targets": ["resource", "setting"]
+    },
+    {
+      "id": "modifier-0119",
+      "text": "long-haul",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0120",
+      "text": "lucky",
+      "targets": ["role", "resource"]
+    },
+    {
+      "id": "modifier-0121",
+      "text": "muddy",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0122",
+      "text": "obsessed",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0123",
+      "text": "occupied",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0124",
+      "text": "orphaned",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0125",
+      "text": "overgrown",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0126",
+      "text": "paranormal",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0127",
+      "text": "plagued",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0128",
+      "text": "powerless",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0129",
+      "text": "prophetic",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0130",
+      "text": "reformed",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0131",
+      "text": "sinful",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0132",
+      "text": "twin",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0133",
+      "text": "vengeful",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0134",
+      "text": "broke",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0135",
+      "text": "escaped",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0136",
+      "text": "fleeing",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0137",
+      "text": "immortal",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0138",
+      "text": "indebted",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0139",
+      "text": "living",
+      "targets": ["resource", "setting"]
+    },
+    {
+      "id": "modifier-0140",
+      "text": "outlaw",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0141",
+      "text": "undercover",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0142",
+      "text": "apprentice",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0143",
+      "text": "eccentric",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0144",
+      "text": "hazmat",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0145",
+      "text": "prophesied",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0146",
+      "text": "runaway",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0147",
+      "text": "veteran",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0148",
+      "text": "amateur",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0149",
+      "text": "amnesiac",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0150",
+      "text": "android",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0151",
+      "text": "animal",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0152",
+      "text": "expendable",
+      "targets": ["role", "resource"]
+    },
+    {
+      "id": "modifier-0153",
+      "text": "hired",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0154",
+      "text": "reluctant",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0155",
+      "text": "searching",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0156",
+      "text": "corporate",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0157",
+      "text": "frontier",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0158",
+      "text": "mythic",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0159",
+      "text": "run-down",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0160",
+      "text": "sterile",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0161",
+      "text": "creepy",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0162",
+      "text": "cult-run",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0163",
+      "text": "deathtrap",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0164",
+      "text": "future",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0165",
+      "text": "modern",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0166",
+      "text": "1980s",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0167",
+      "text": "post-plague",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0168",
+      "text": "smoky",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0169",
+      "text": "post-nuclear",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0170",
+      "text": "seaside",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0171",
+      "text": "snowy",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0172",
+      "text": "tropical",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0173",
+      "text": "toy-sized",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0174",
+      "text": "bouncy",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0175",
+      "text": "cyborg",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0176",
+      "text": "aspiring",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0177",
+      "text": "shy",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0178",
+      "text": "norse",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0179",
+      "text": "all-star",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0180",
+      "text": "ambitious",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0181",
+      "text": "mechanical",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0182",
+      "text": "anxious",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0183",
+      "text": "ashen",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0184",
+      "text": "awakened",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0185",
+      "text": "barren",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0186",
+      "text": "battered",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0187",
+      "text": "bendable",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0188",
+      "text": "betrayed",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0189",
+      "text": "blood-fueled",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0190",
+      "text": "borrowed",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0191",
+      "text": "bureaucratic",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0192",
+      "text": "camouflaged",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0193",
+      "text": "cannibal",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0194",
+      "text": "chatty",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0195",
+      "text": "clumsy",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0196",
+      "text": "collared",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0197",
+      "text": "colliding",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0198",
+      "text": "colorless",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0199",
+      "text": "contained",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0200",
+      "text": "cornered",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0201",
+      "text": "cozy",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0202",
+      "text": "crooked",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0203",
+      "text": "curious",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0204",
+      "text": "cute",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0205",
+      "text": "dancing",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0206",
+      "text": "defective",
+      "targets": ["role", "resource"]
+    },
+    {
+      "id": "modifier-0207",
+      "text": "determined",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0208",
+      "text": "disgraced",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0209",
+      "text": "disguised",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0210",
+      "text": "divorcing",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0211",
+      "text": "drifting",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0212",
+      "text": "drugged",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0213",
+      "text": "dystopian",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0214",
+      "text": "eldritch",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0215",
+      "text": "elemental",
+      "targets": ["role", "resource", "setting"]
+    },
+    {
+      "id": "modifier-0216",
+      "text": "evolving",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0217",
+      "text": "experimental",
+      "targets": ["role", "resource", "setting"]
+    },
+    {
+      "id": "modifier-0218",
+      "text": "feared",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0219",
+      "text": "feral",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0220",
+      "text": "festival",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0221",
+      "text": "forbidden",
+      "targets": ["resource", "setting"]
+    },
+    {
+      "id": "modifier-0222",
+      "text": "foreign",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0223",
+      "text": "frantic",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0224",
+      "text": "friendly",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0225",
+      "text": "furious",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0226",
+      "text": "furry",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0227",
+      "text": "gifted",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0228",
+      "text": "glitched",
+      "targets": ["role", "resource", "setting"]
+    },
+    {
+      "id": "modifier-0229",
+      "text": "golden",
+      "targets": ["role", "resource", "setting"]
+    },
+    {
+      "id": "modifier-0230",
+      "text": "graffiti",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0231",
+      "text": "greedy",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0232",
+      "text": "hallowed",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0233",
+      "text": "hand-drawn",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0234",
+      "text": "hardened",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0235",
+      "text": "headless",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0236",
+      "text": "heavy",
+      "targets": ["role", "resource"]
+    },
+    {
+      "id": "modifier-0237",
+      "text": "heavy-metal",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0238",
+      "text": "hidden",
+      "targets": ["role", "resource", "setting"]
+    },
+    {
+      "id": "modifier-0239",
+      "text": "homeless",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0240",
+      "text": "immune",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0241",
+      "text": "inherited",
+      "targets": ["resource", "setting"]
+    },
+    {
+      "id": "modifier-0242",
+      "text": "jobless",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0243",
+      "text": "kind",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0244",
+      "text": "lowborn",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0245",
+      "text": "lunar",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0246",
+      "text": "many-armed",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0247",
+      "text": "mind-controlled",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0248",
+      "text": "mirrored",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0249",
+      "text": "modded",
+      "targets": ["resource", "setting"]
+    },
+    {
+      "id": "modifier-0250",
+      "text": "moldy",
+      "targets": ["resource", "setting"]
+    },
+    {
+      "id": "modifier-0251",
+      "text": "molten",
+      "targets": ["resource", "setting"]
+    },
+    {
+      "id": "modifier-0252",
+      "text": "naked",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0253",
+      "text": "nocturnal",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0254",
+      "text": "occult",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0255",
+      "text": "one-armed",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0256",
+      "text": "orbiting",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0257",
+      "text": "ordinary",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0258",
+      "text": "overheated",
+      "targets": ["resource", "setting"]
+    },
+    {
+      "id": "modifier-0259",
+      "text": "painted",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0260",
+      "text": "pastel",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0261",
+      "text": "patriotic",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0262",
+      "text": "perfect",
+      "targets": ["role", "resource", "setting"]
+    },
+    {
+      "id": "modifier-0263",
+      "text": "plush",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0264",
+      "text": "poisoned",
+      "targets": ["role", "resource", "setting"]
+    },
+    {
+      "id": "modifier-0265",
+      "text": "polluted",
+      "targets": ["resource", "setting"]
+    },
+    {
+      "id": "modifier-0266",
+      "text": "punishing",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0267",
+      "text": "quake-struck",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0268",
+      "text": "rare",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0269",
+      "text": "rebel",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0270",
+      "text": "reckless",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0271",
+      "text": "reopened",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0272",
+      "text": "rewritten",
+      "targets": ["resource", "setting"]
+    },
+    {
+      "id": "modifier-0273",
+      "text": "rickety",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0274",
+      "text": "rigged",
+      "targets": ["resource", "setting"]
+    },
+    {
+      "id": "modifier-0275",
+      "text": "road-worn",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0276",
+      "text": "rogue",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0277",
+      "text": "rotting",
+      "targets": ["resource", "setting"]
+    },
+    {
+      "id": "modifier-0278",
+      "text": "royal",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0279",
+      "text": "rule-bound",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0280",
+      "text": "sacred",
+      "targets": ["resource", "setting"]
+    },
+    {
+      "id": "modifier-0281",
+      "text": "sacrificed",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0282",
+      "text": "scarred",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0283",
+      "text": "scrap",
+      "targets": ["resource", "setting"]
+    },
+    {
+      "id": "modifier-0284",
+      "text": "sentient",
+      "targets": ["role", "resource", "setting"]
+    },
+    {
+      "id": "modifier-0285",
+      "text": "sharp-dressed",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0286",
+      "text": "small-time",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0287",
+      "text": "spotless",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0288",
+      "text": "stray",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0289",
+      "text": "street-trained",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0290",
+      "text": "stylish",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0291",
+      "text": "suburban",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0292",
+      "text": "summoned",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0293",
+      "text": "sunken",
+      "targets": ["resource", "setting"]
+    },
+    {
+      "id": "modifier-0294",
+      "text": "sunless",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0295",
+      "text": "superpowered",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0296",
+      "text": "supersonic",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0297",
+      "text": "suspicious",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0298",
+      "text": "teenage",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0299",
+      "text": "televised",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0300",
+      "text": "thirsty",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0301",
+      "text": "time-bending",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0302",
+      "text": "time-displaced",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0303",
+      "text": "trigger-happy",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0304",
+      "text": "two-faced",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0305",
+      "text": "underfunded",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0306",
+      "text": "understaffed",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0307",
+      "text": "unleashed",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0308",
+      "text": "unstoppable",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0309",
+      "text": "wild",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0310",
+      "text": "accused",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0311",
+      "text": "anti-gravity",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0312",
+      "text": "brawling",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0313",
+      "text": "burned-out",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0314",
+      "text": "evicted",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0315",
+      "text": "failed",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0316",
+      "text": "fairy-tale",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0317",
+      "text": "fallen",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0318",
+      "text": "former",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0319",
+      "text": "freed",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0320",
+      "text": "game-trapped",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0321",
+      "text": "historical",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0322",
+      "text": "invited",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0323",
+      "text": "lonely",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0324",
+      "text": "loyal",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0325",
+      "text": "master",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0326",
+      "text": "mysterious",
+      "targets": ["role", "resource", "setting"]
+    },
+    {
+      "id": "modifier-0327",
+      "text": "old",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0328",
+      "text": "one-legged",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0329",
+      "text": "pacifist",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0330",
+      "text": "probationary",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0331",
+      "text": "recalled",
+      "targets": ["role", "resource"]
+    },
+    {
+      "id": "modifier-0332",
+      "text": "resurrected",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0333",
+      "text": "rising",
+      "targets": ["role", "resource", "setting"]
+    },
+    {
+      "id": "modifier-0334",
+      "text": "robot-armed",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0335",
+      "text": "rock-and-roll",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0336",
+      "text": "shut-in",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0337",
+      "text": "space",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0338",
+      "text": "stressed",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0339",
+      "text": "home-alone",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0340",
+      "text": "time-rewinding",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0341",
+      "text": "transforming",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0342",
+      "text": "unseen",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0343",
+      "text": "vacationing",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0344",
+      "text": "virtual",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0345",
+      "text": "wandering",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0346",
+      "text": "wannabe",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0347",
+      "text": "widowed",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0348",
+      "text": "wish-seeking",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0349",
+      "text": "spirit",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0350",
+      "text": "dungeon",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0351",
+      "text": "mob",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0352",
+      "text": "1920s",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0353",
+      "text": "1990s",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0354",
+      "text": "ai-run",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0355",
+      "text": "art-deco",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0356",
+      "text": "candy-bright",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0357",
+      "text": "cramped",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0358",
+      "text": "cyberpunk",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0359",
+      "text": "demon-infested",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0360",
+      "text": "calm",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0361",
+      "text": "european",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0362",
+      "text": "flying",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0363",
+      "text": "green",
+      "targets": ["role", "resource", "setting"]
+    },
+    {
+      "id": "modifier-0364",
+      "text": "grim",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0365",
+      "text": "gritty",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0366",
+      "text": "timeless",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0367",
+      "text": "mob-run",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0368",
+      "text": "mediterranean",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0369",
+      "text": "noir",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0370",
+      "text": "overrun",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0371",
+      "text": "remote",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0372",
+      "text": "rival",
+      "targets": ["role"]
+    },
+    {
+      "id": "modifier-0373",
+      "text": "roadside",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0374",
+      "text": "robot-run",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0375",
+      "text": "rural",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0376",
+      "text": "sealed",
+      "targets": ["resource", "setting"]
+    },
+    {
+      "id": "modifier-0377",
+      "text": "web-covered",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0378",
+      "text": "sinking",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0379",
+      "text": "small-town",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0380",
+      "text": "soviet",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0381",
+      "text": "stone",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0382",
+      "text": "storm-wrecked",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0383",
+      "text": "sunny",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0384",
+      "text": "swampy",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0385",
+      "text": "uncharted",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0386",
+      "text": "warring",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0387",
+      "text": "world-spanning",
+      "targets": ["setting"]
+    },
+    {
+      "id": "modifier-0388",
+      "text": "1930s",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0389",
+      "text": "musical",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0390",
+      "text": "victorian",
+      "targets": ["role", "setting"]
+    },
+    {
+      "id": "modifier-0391",
+      "text": "unique",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0392",
+      "text": "rusted",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0393",
+      "text": "volatile",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0394",
+      "text": "counterfeit",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0395",
+      "text": "rationed",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0396",
+      "text": "salvaged",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0397",
+      "text": "brittle",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0398",
+      "text": "spoiled",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0399",
+      "text": "stolen",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0400",
+      "text": "contraband",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0401",
+      "text": "unstable",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0402",
+      "text": "radioactive",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0403",
+      "text": "scarce",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0404",
+      "text": "abundant",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0405",
+      "text": "perishable",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0406",
+      "text": "refined",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0407",
+      "text": "crude",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0408",
+      "text": "polished",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0409",
+      "text": "tarnished",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0410",
+      "text": "chipped",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0411",
+      "text": "cracked",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0412",
+      "text": "dented",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0413",
+      "text": "patched",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0414",
+      "text": "makeshift",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0415",
+      "text": "recycled",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0416",
+      "text": "reforged",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0417",
+      "text": "tempered",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0418",
+      "text": "blessed",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0419",
+      "text": "smuggled",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0420",
+      "text": "rented",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0421",
+      "text": "heirloom",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0422",
+      "text": "antique",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0423",
+      "text": "vintage",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0424",
+      "text": "prototype",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0425",
+      "text": "mass-produced",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0426",
+      "text": "handcrafted",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0427",
+      "text": "synthetic",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0428",
+      "text": "organic",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0429",
+      "text": "fermented",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0430",
+      "text": "preserved",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0431",
+      "text": "salted",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0432",
+      "text": "dried",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0433",
+      "text": "canned",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0434",
+      "text": "liquid",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0435",
+      "text": "crystalline",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0436",
+      "text": "magnetic",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0437",
+      "text": "flammable",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0438",
+      "text": "toxic",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0439",
+      "text": "sticky",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0440",
+      "text": "slippery",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0441",
+      "text": "weightless",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0442",
+      "text": "bottomless",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0443",
+      "text": "self-repairing",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0444",
+      "text": "self-replicating",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0445",
+      "text": "regenerating",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0446",
+      "text": "decaying",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0447",
+      "text": "expiring",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0448",
+      "text": "single-use",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0449",
+      "text": "rechargeable",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0450",
+      "text": "depleted",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0451",
+      "text": "overcharged",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0452",
+      "text": "leaking",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0453",
+      "text": "encrypted",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0454",
+      "text": "engraved",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0455",
+      "text": "mislabeled",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0456",
+      "text": "fake",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0457",
+      "text": "replica",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0458",
+      "text": "genuine",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0459",
+      "text": "legendary",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0460",
+      "text": "worthless",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0461",
+      "text": "priceless",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0462",
+      "text": "overpriced",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0463",
+      "text": "taxed",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0464",
+      "text": "pawned",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0465",
+      "text": "insured",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0466",
+      "text": "stockpiled",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0467",
+      "text": "hoarded",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0468",
+      "text": "scattered",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0469",
+      "text": "compressed",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0470",
+      "text": "diluted",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0471",
+      "text": "concentrated",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0472",
+      "text": "purified",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0473",
+      "text": "contaminated",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0474",
+      "text": "tainted",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0475",
+      "text": "spiked",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0476",
+      "text": "edible",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0477",
+      "text": "overripe",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0478",
+      "text": "stale",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0479",
+      "text": "fresh",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0480",
+      "text": "talking",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0481",
+      "text": "humming",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0482",
+      "text": "ticking",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0483",
+      "text": "pulsing",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0484",
+      "text": "scalding",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0485",
+      "text": "smoldering",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0486",
+      "text": "charred",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0487",
+      "text": "waterlogged",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0488",
+      "text": "dusty",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0489",
+      "text": "bloodstained",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0490",
+      "text": "gilded",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0491",
+      "text": "jeweled",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0492",
+      "text": "copper",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0493",
+      "text": "bone",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0494",
+      "text": "cardboard",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0495",
+      "text": "duct-taped",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0496",
+      "text": "gift-wrapped",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0497",
+      "text": "stamped",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0498",
+      "text": "numbered",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0499",
+      "text": "matched",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0500",
+      "text": "mismatched",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0501",
+      "text": "fused",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0502",
+      "text": "miniature",
+      "targets": ["resource"]
+    },
+    {
+      "id": "modifier-0503",
+      "text": "oversized",
+      "targets": ["resource"]
+    }
+  ]
+}

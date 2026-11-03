@@ -1,8 +1,13 @@
 /* CardNode: the selection outline, the drag look and the hidden state during the draw motion. */
 .node {
-  width: var(--card);
-  height: var(--card);
+  width: var(--card-size);
+  height: var(--card-size);
   border-radius: var(--radius-card);
+}
+
+/* The Hook Card node is 240 wide (design 9.5). */
+.hookNode {
+  width: var(--hook-w);
 }
 
 .selected {
@@ -24,6 +29,16 @@
 
 .lifted :global([data-card]) {
   box-shadow: var(--shadow-drag);
+}
+
+/* A card Redraw All just replaced: a 2 px outline for 1 second (design 9.9). */
+.fresh :global([data-card]) {
+  outline: 2px solid var(--new-card-outline);
+  outline-offset: -2px;
+}
+
+.hookBody {
+  position: relative;
 }
 
 .hidden {

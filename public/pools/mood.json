@@ -1,0 +1,585 @@
+{
+  "type": "mood",
+  "cues": [
+    {
+      "id": "mood-0001",
+      "text": "tense"
+    },
+    {
+      "id": "mood-0002",
+      "text": "funny"
+    },
+    {
+      "id": "mood-0003",
+      "text": "frantic"
+    },
+    {
+      "id": "mood-0004",
+      "text": "chaotic"
+    },
+    {
+      "id": "mood-0005",
+      "text": "grim"
+    },
+    {
+      "id": "mood-0006",
+      "text": "eerie"
+    },
+    {
+      "id": "mood-0007",
+      "text": "lonely"
+    },
+    {
+      "id": "mood-0008",
+      "text": "cozy"
+    },
+    {
+      "id": "mood-0009",
+      "text": "calm"
+    },
+    {
+      "id": "mood-0010",
+      "text": "epic"
+    },
+    {
+      "id": "mood-0011",
+      "text": "absurd"
+    },
+    {
+      "id": "mood-0012",
+      "text": "bleak"
+    },
+    {
+      "id": "mood-0013",
+      "text": "awe"
+    },
+    {
+      "id": "mood-0014",
+      "text": "sad"
+    },
+    {
+      "id": "mood-0015",
+      "text": "stylish"
+    },
+    {
+      "id": "mood-0016",
+      "text": "warm"
+    },
+    {
+      "id": "mood-0017",
+      "text": "cheerful"
+    },
+    {
+      "id": "mood-0018",
+      "text": "silly"
+    },
+    {
+      "id": "mood-0019",
+      "text": "free"
+    },
+    {
+      "id": "mood-0020",
+      "text": "intense"
+    },
+    {
+      "id": "mood-0021",
+      "text": "playful"
+    },
+    {
+      "id": "mood-0022",
+      "text": "brutal"
+    },
+    {
+      "id": "mood-0023",
+      "text": "hopeful"
+    },
+    {
+      "id": "mood-0024",
+      "text": "satisfying"
+    },
+    {
+      "id": "mood-0025",
+      "text": "melancholy"
+    },
+    {
+      "id": "mood-0026",
+      "text": "dreamlike"
+    },
+    {
+      "id": "mood-0027",
+      "text": "mysterious"
+    },
+    {
+      "id": "mood-0028",
+      "text": "macabre"
+    },
+    {
+      "id": "mood-0029",
+      "text": "oppressive"
+    },
+    {
+      "id": "mood-0030",
+      "text": "adventurous"
+    },
+    {
+      "id": "mood-0031",
+      "text": "cute"
+    },
+    {
+      "id": "mood-0032",
+      "text": "bittersweet"
+    },
+    {
+      "id": "mood-0033",
+      "text": "heroic"
+    },
+    {
+      "id": "mood-0034",
+      "text": "scary"
+    },
+    {
+      "id": "mood-0035",
+      "text": "strange"
+    },
+    {
+      "id": "mood-0036",
+      "text": "curious"
+    },
+    {
+      "id": "mood-0037",
+      "text": "dread"
+    },
+    {
+      "id": "mood-0038",
+      "text": "nostalgic"
+    },
+    {
+      "id": "mood-0039",
+      "text": "claustrophobic"
+    },
+    {
+      "id": "mood-0040",
+      "text": "desperate"
+    },
+    {
+      "id": "mood-0041",
+      "text": "disturbing"
+    },
+    {
+      "id": "mood-0042",
+      "text": "dramatic"
+    },
+    {
+      "id": "mood-0043",
+      "text": "gothic"
+    },
+    {
+      "id": "mood-0044",
+      "text": "grotesque"
+    },
+    {
+      "id": "mood-0045",
+      "text": "obsessive"
+    },
+    {
+      "id": "mood-0046",
+      "text": "paranoid"
+    },
+    {
+      "id": "mood-0047",
+      "text": "romantic"
+    },
+    {
+      "id": "mood-0048",
+      "text": "crude"
+    },
+    {
+      "id": "mood-0049",
+      "text": "hype"
+    },
+    {
+      "id": "mood-0050",
+      "text": "magical"
+    },
+    {
+      "id": "mood-0051",
+      "text": "meditative"
+    },
+    {
+      "id": "mood-0052",
+      "text": "outrageous"
+    },
+    {
+      "id": "mood-0053",
+      "text": "powerful"
+    },
+    {
+      "id": "mood-0054",
+      "text": "rebellious"
+    },
+    {
+      "id": "mood-0055",
+      "text": "aggressive"
+    },
+    {
+      "id": "mood-0056",
+      "text": "bold"
+    },
+    {
+      "id": "mood-0057",
+      "text": "brooding"
+    },
+    {
+      "id": "mood-0058",
+      "text": "dizzying"
+    },
+    {
+      "id": "mood-0059",
+      "text": "explosive"
+    },
+    {
+      "id": "mood-0060",
+      "text": "funky"
+    },
+    {
+      "id": "mood-0061",
+      "text": "greedy"
+    },
+    {
+      "id": "mood-0062",
+      "text": "guilty"
+    },
+    {
+      "id": "mood-0063",
+      "text": "inventive"
+    },
+    {
+      "id": "mood-0064",
+      "text": "mischievous"
+    },
+    {
+      "id": "mood-0065",
+      "text": "nerdy"
+    },
+    {
+      "id": "mood-0066",
+      "text": "noir"
+    },
+    {
+      "id": "mood-0067",
+      "text": "patient"
+    },
+    {
+      "id": "mood-0068",
+      "text": "rowdy"
+    },
+    {
+      "id": "mood-0069",
+      "text": "spiteful"
+    },
+    {
+      "id": "mood-0070",
+      "text": "surreal"
+    },
+    {
+      "id": "mood-0071",
+      "text": "thoughtful"
+    },
+    {
+      "id": "mood-0072",
+      "text": "torn"
+    },
+    {
+      "id": "mood-0073",
+      "text": "whimsical"
+    },
+    {
+      "id": "mood-0074",
+      "text": "serene"
+    },
+    {
+      "id": "mood-0075",
+      "text": "tender"
+    },
+    {
+      "id": "mood-0076",
+      "text": "gentle"
+    },
+    {
+      "id": "mood-0077",
+      "text": "intimate"
+    },
+    {
+      "id": "mood-0078",
+      "text": "wistful"
+    },
+    {
+      "id": "mood-0079",
+      "text": "hushed"
+    },
+    {
+      "id": "mood-0080",
+      "text": "sleepy"
+    },
+    {
+      "id": "mood-0081",
+      "text": "soothing"
+    },
+    {
+      "id": "mood-0082",
+      "text": "airy"
+    },
+    {
+      "id": "mood-0083",
+      "text": "peaceful"
+    },
+    {
+      "id": "mood-0084",
+      "text": "uneasy"
+    },
+    {
+      "id": "mood-0085",
+      "text": "anxious"
+    },
+    {
+      "id": "mood-0086",
+      "text": "uncanny"
+    },
+    {
+      "id": "mood-0087",
+      "text": "ominous"
+    },
+    {
+      "id": "mood-0088",
+      "text": "haunting"
+    },
+    {
+      "id": "mood-0089",
+      "text": "suspicious"
+    },
+    {
+      "id": "mood-0090",
+      "text": "sinister"
+    },
+    {
+      "id": "mood-0091",
+      "text": "feverish"
+    },
+    {
+      "id": "mood-0092",
+      "text": "hostile"
+    },
+    {
+      "id": "mood-0093",
+      "text": "cold"
+    },
+    {
+      "id": "mood-0094",
+      "text": "tragic"
+    },
+    {
+      "id": "mood-0095",
+      "text": "mournful"
+    },
+    {
+      "id": "mood-0096",
+      "text": "despairing"
+    },
+    {
+      "id": "mood-0097",
+      "text": "cruel"
+    },
+    {
+      "id": "mood-0098",
+      "text": "vengeful"
+    },
+    {
+      "id": "mood-0099",
+      "text": "sickly"
+    },
+    {
+      "id": "mood-0100",
+      "text": "apocalyptic"
+    },
+    {
+      "id": "mood-0101",
+      "text": "hollow"
+    },
+    {
+      "id": "mood-0102",
+      "text": "numb"
+    },
+    {
+      "id": "mood-0103",
+      "text": "joyful"
+    },
+    {
+      "id": "mood-0104",
+      "text": "triumphant"
+    },
+    {
+      "id": "mood-0105",
+      "text": "giddy"
+    },
+    {
+      "id": "mood-0106",
+      "text": "festive"
+    },
+    {
+      "id": "mood-0107",
+      "text": "sunny"
+    },
+    {
+      "id": "mood-0108",
+      "text": "bouncy"
+    },
+    {
+      "id": "mood-0109",
+      "text": "euphoric"
+    },
+    {
+      "id": "mood-0110",
+      "text": "sweet"
+    },
+    {
+      "id": "mood-0111",
+      "text": "proud"
+    },
+    {
+      "id": "mood-0112",
+      "text": "awkward"
+    },
+    {
+      "id": "mood-0113",
+      "text": "flirty"
+    },
+    {
+      "id": "mood-0114",
+      "text": "petty"
+    },
+    {
+      "id": "mood-0115",
+      "text": "competitive"
+    },
+    {
+      "id": "mood-0116",
+      "text": "smug"
+    },
+    {
+      "id": "mood-0117",
+      "text": "defiant"
+    },
+    {
+      "id": "mood-0118",
+      "text": "jealous"
+    },
+    {
+      "id": "mood-0119",
+      "text": "embarrassing"
+    },
+    {
+      "id": "mood-0120",
+      "text": "cosmic"
+    },
+    {
+      "id": "mood-0121",
+      "text": "enchanted"
+    },
+    {
+      "id": "mood-0122",
+      "text": "psychedelic"
+    },
+    {
+      "id": "mood-0123",
+      "text": "otherworldly"
+    },
+    {
+      "id": "mood-0124",
+      "text": "sacred"
+    },
+    {
+      "id": "mood-0125",
+      "text": "mythic"
+    },
+    {
+      "id": "mood-0126",
+      "text": "majestic"
+    },
+    {
+      "id": "mood-0127",
+      "text": "eldritch"
+    },
+    {
+      "id": "mood-0128",
+      "text": "relentless"
+    },
+    {
+      "id": "mood-0129",
+      "text": "breathless"
+    },
+    {
+      "id": "mood-0130",
+      "text": "urgent"
+    },
+    {
+      "id": "mood-0131",
+      "text": "lazy"
+    },
+    {
+      "id": "mood-0132",
+      "text": "chill"
+    },
+    {
+      "id": "mood-0133",
+      "text": "rhythmic"
+    },
+    {
+      "id": "mood-0134",
+      "text": "wild"
+    },
+    {
+      "id": "mood-0135",
+      "text": "restless"
+    },
+    {
+      "id": "mood-0136",
+      "text": "campy"
+    },
+    {
+      "id": "mood-0137",
+      "text": "deadpan"
+    },
+    {
+      "id": "mood-0138",
+      "text": "satirical"
+    },
+    {
+      "id": "mood-0139",
+      "text": "retro"
+    },
+    {
+      "id": "mood-0140",
+      "text": "gritty"
+    },
+    {
+      "id": "mood-0141",
+      "text": "sleek"
+    },
+    {
+      "id": "mood-0142",
+      "text": "kitschy"
+    },
+    {
+      "id": "mood-0143",
+      "text": "theatrical"
+    },
+    {
+      "id": "mood-0144",
+      "text": "pulpy"
+    },
+    {
+      "id": "mood-0145",
+      "text": "lo-fi"
+    }
+  ]
+}

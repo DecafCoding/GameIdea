@@ -5,12 +5,23 @@
  */
 import { readFile } from 'node:fs/promises';
 import { expect, test } from './test';
-import { canvasCards, createBoard, drawFromRail, rail } from './board-helpers';
+import { createBoard, drawFromRail, rail } from './board-helpers';
 import { exportFile } from './export-helpers';
 import { draw, type DeckName } from './helpers';
 
 const APP_ORIGIN = 'http://localhost:4174';
-const DECKS: DeckName[] = ['Player Role', 'Goal', 'Conflict', 'Modifier', 'Setting'];
+const DECKS: DeckName[] = [
+  'Hook Card',
+  'Player Role',
+  'Mechanic',
+  'Resource',
+  'Goal',
+  'Conflict',
+  'Player Role Modifier',
+  'Resource Modifier',
+  'Setting Modifier',
+  'Setting',
+];
 
 test('network_fullSession_onlyOwnAddress', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
@@ -22,18 +33,23 @@ test('network_fullSession_onlyOwnAddress', async ({ page }) => {
   await createBoard(page);
   await page.waitForURL(/#\/board\//);
   const boardUrl = page.url();
-  await expect(rail(page).getByRole('button', { name: 'Draw A Player Role' })).toBeEnabled();
+  await expect(
+    rail(page).getByRole('button', { name: 'Draw A Player Role', exact: true }),
+  ).toBeEnabled();
 
   // One card of each type, and a note.
+  // The count chip reads the board; the canvas renders only the cards in view.
   for (const [i, deck] of DECKS.entries()) {
     await drawFromRail(page, deck);
-    await expect(canvasCards(page)).toHaveCount(i + 1);
+    await expect(page.getByTestId('count-badge')).toContainText(
+      `${i + 1} card${i === 0 ? '' : 's'}`,
+    );
   }
   await rail(page).getByRole('button', { name: 'Add Note' }).click();
 
   // The card test page.
   await page.goto('/#/card-test');
-  await expect(page.getByRole('button', { name: 'Draw A Player Role' })).toBeEnabled();
+  await expect(page.getByRole('button', { name: 'Draw A Player Role', exact: true })).toBeEnabled();
   await draw(page, 'Player Role');
   await expect(page.getByTestId('card')).toHaveCount(1);
 
@@ -41,7 +57,7 @@ test('network_fullSession_onlyOwnAddress', async ({ page }) => {
   await page.goto('/#/');
   await expect(page.getByRole('list', { name: 'Saved Boards' })).toBeVisible();
   await page.goto(boardUrl);
-  await expect(canvasCards(page)).toHaveCount(DECKS.length);
+  await expect(page.getByTestId('count-badge')).toContainText(`${DECKS.length} cards`);
   await exportFile(page, 'Text File');
   const boardFile = await exportFile(page, 'Board File');
   const buffer = await readFile(await boardFile.path());

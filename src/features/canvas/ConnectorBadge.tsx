@@ -1,6 +1,6 @@
 /**
  * ConnectorBadge: the connector word on the seam between a card and the card tucked under
- * it (design 9.4). A click opens the pair's word list; a click on a word saves it and
+ * it (design 9.6). A click opens the pair's word list; a click on a word saves it and
  * closes the list. The list is drawn in screen space in a portal, so it keeps its size at
  * any zoom and sits above every stack. Built on the ARIA menu-button pattern, like Export.
  */
@@ -22,6 +22,8 @@ interface ConnectorBadgeProps {
   connector: Connector;
   /** The tucked card's active text, shown after each word as a preview. */
   nextText: string;
+  /** The lower card's left edge from this card's left edge: 20 under a Hook Card, else 0. */
+  left?: number;
   onChoose: (word: string) => void;
 }
 
@@ -33,7 +35,7 @@ function stop(event: SyntheticEvent) {
   event.stopPropagation();
 }
 
-export function ConnectorBadge({ connector, nextText, onChoose }: ConnectorBadgeProps) {
+export function ConnectorBadge({ connector, nextText, left = 0, onChoose }: ConnectorBadgeProps) {
   const [open, setOpen] = useState(false);
   const [place, setPlace] = useState<{ left: number; top: number } | null>(null);
   const menuId = useId();
@@ -129,7 +131,7 @@ export function ConnectorBadge({ connector, nextText, onChoose }: ConnectorBadge
         ref={badge}
         type="button"
         className={`${styles.badge} nodrag nopan`}
-        style={{ background: `var(--deck-${connector.type})` }}
+        style={{ background: `var(--deck-${connector.type})`, left }}
         aria-haspopup="menu"
         aria-expanded={open}
         aria-controls={open ? menuId : undefined}

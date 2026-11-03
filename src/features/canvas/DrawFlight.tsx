@@ -7,9 +7,9 @@
 import { useLayoutEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { CardView } from '@/features/card';
+import { HOOK_NEW_TEXT, HookCard } from '@/features/hook';
 import type { Card } from '@/shared/model';
-import type { Point } from './placement';
-import { CARD_SIZE } from './placement';
+import { cardSize, type Point } from './placement';
 import styles from './DrawFlight.module.css';
 
 export interface Flight {
@@ -26,8 +26,9 @@ const noop = () => {};
 
 function FlyingCard({ flight, onDone }: { flight: Flight; onDone: (key: number) => void }) {
   const ref = useRef<HTMLDivElement>(null);
-  const half = CARD_SIZE / 2;
-  const center = { x: flight.to.x + half * flight.zoom, y: flight.to.y + half * flight.zoom };
+  const size = cardSize(flight.card);
+  const half = { x: size.width / 2, y: size.height / 2 };
+  const center = { x: flight.to.x + half.x * flight.zoom, y: flight.to.y + half.y * flight.zoom };
 
   useLayoutEffect(() => {
     const element = ref.current;
@@ -60,11 +61,15 @@ function FlyingCard({ flight, onDone }: { flight: Flight; onDone: (key: number) 
     <div
       ref={ref}
       className={styles.flight}
-      style={{ left: center.x - half, top: center.y - half }}
+      style={{ left: center.x - half.x, top: center.y - half.y, width: size.width }}
       aria-hidden="true"
       data-testid="draw-flight"
     >
-      <CardView card={flight.card} onTurn={noop} />
+      {flight.card.type === 'hook' ? (
+        <HookCard sentence={HOOK_NEW_TEXT} empty={false} />
+      ) : (
+        <CardView card={flight.card} onTurn={noop} />
+      )}
     </div>
   );
 }

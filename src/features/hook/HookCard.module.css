@@ -1,0 +1,87 @@
+/*
+ * HookCard (design 9.5): 240 × 200, radius 14, border 2 --accent, fill --hook-bg, padding
+ * 14 16 16, gap 10. Dark in every mode. The long-hook risk: a sentence that does not fit
+ * scrolls inside the card body.
+ */
+.hook {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: var(--hook-w);
+  height: var(--hook-h);
+  padding: 14px 16px 16px;
+  border: 2px solid var(--accent);
+  border-radius: var(--radius-card);
+  background: var(--hook-bg);
+  box-shadow: var(--shadow-card);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* A 24 dot in --accent with the hook icon 13 in --on-accent. */
+.dot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+/* "Hook", Display 12/600, 0.08em, uppercase, in the dark-mode accent text. */
+.label {
+  color: var(--accent-text);
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* The sentence: 14, line height 1.45, --hook-text. */
+.sentence {
+  flex: 1;
+  min-height: 0;
+  margin: 0;
+  overflow-y: auto;
+  color: var(--hook-text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+/*
+ * The New state's static slot (design 9.7): 200 × 72 under the card, 20 in from its left
+ * edge, starting 16 above its bottom, dashed 2 in the Player Role card color with no top
+ * border, the label in --rail-role, bottom-aligned.
+ */
+.slot {
+  position: absolute;
+  left: 18px;
+  top: calc(100% - 14px);
+  z-index: -1;
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: var(--card-size);
+  height: 72px;
+  padding-bottom: 10px;
+  border: 2px dashed var(--deck-role);
+  border-top: none;
+  border-radius: 0 0 var(--radius-card) var(--radius-card);
+  background: color-mix(in srgb, var(--deck-role) calc(var(--slot-fill-alpha) * 100%), transparent);
+  color: var(--rail-role);
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  pointer-events: none;
+}

@@ -1,13 +1,14 @@
 /**
  * Tuck stacks as pure functions. A stack is a tree: each card's tuckedUnder names its
  * parent. Every card keeps an absolute x, y; a tucked card's position is always derived
- * from its stack, 59 px below the card before it in stack order. A card whose parent is
+ * from its stack, 56 px below the card before it in stack order. A card whose parent is
  * missing counts as a root. No React Flow here: the rules must hold if the canvas changes.
  */
 import type { Board, Card } from '@/shared/model';
+import { HOOK_INSET } from './placement';
 
 /** Design --tuck-offset. */
-export const TUCK_OFFSET = 59;
+export const TUCK_OFFSET = 56;
 
 function byId(board: Board): Map<string, Card> {
   return new Map(board.cards.map((card) => [card.id, card]));
@@ -69,17 +70,23 @@ export function stackOrder(board: Board, rootId: string): Card[] {
   return out;
 }
 
-/** Places each card of the stack 59 px below the one before it, under the root's x, y. */
+/**
+ * Places each card of the stack 56 px below the one before it, under the root's x, y.
+ * Under a Hook Card, every stack card sits 20 px in from its left edge.
+ */
 export function layoutStack(board: Board, rootId: string): Board {
   const order = stackOrder(board, rootId);
   const root = order[0]!;
+  const x = root.type === 'hook' ? root.x + HOOK_INSET : root.x;
   const place = new Map(order.map((card, i) => [card.id, root.y + i * TUCK_OFFSET]));
   let changed = false;
   const cards = board.cards.map((card) => {
     const y = place.get(card.id);
-    if (y === undefined || (card.x === root.x && card.y === y)) return card;
+    if (y === undefined) return card;
+    const cx = card.id === root.id ? root.x : x;
+    if (card.x === cx && card.y === y) return card;
     changed = true;
-    return { ...card, x: root.x, y };
+    return { ...card, x: cx, y };
   });
   return changed ? { ...board, cards } : board;
 }
@@ -113,31 +120,6 @@ export function tuckCard(board: Board, id: string, targetId: string): Board {
   let next = replaceCard(board, id, (card) => ({ ...card, tuckedUnder: targetId, z }));
   if (oldRoot !== id) next = layoutStack(next, oldRoot);
   return layoutStack(next, rootOf(next, targetId).id);
-}
-
-/**
- * Puts the card (with its own stack) on top of the target: it takes the target's place,
- * as a root at the target's x, y or under the target's parent, and the target (with its
- * stack) tucks under it. A second Modifier on a combined card uses this, so both sets
- * of adjectives read before the noun.
- */
-export function putOnTop(board: Board, id: string, targetId: string): Board {
-  if (id === targetId || descendantsOf(board, id).some((card) => card.id === targetId)) {
-    throw new Error('A card cannot go on top of itself or a card tucked under it.');
-  }
-  const before = cardAt(board, targetId);
-  // Out of its old stack first; the target sits above it there, so the target does not move.
-  let next = untuckCard(board, id, before.x, before.y);
-  const target = cardAt(next, targetId);
-  next = replaceCard(next, id, (card) => ({
-    ...card,
-    x: target.x,
-    y: target.y,
-    z: target.z,
-    tuckedUnder: target.tuckedUnder,
-  }));
-  next = replaceCard(next, targetId, (card) => ({ ...card, tuckedUnder: id, z: nextZ(next) }));
-  return layoutStack(next, rootOf(next, id).id);
 }
 
 /** Takes a tucked card (with its own stack) out of its stack, as a new root at x, y. */

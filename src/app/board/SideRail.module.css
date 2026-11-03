@@ -24,6 +24,13 @@
   color: var(--text-muted);
 }
 
+/* The Modifiers row (design 8.2): a 3-column grid, gap 4. */
+.modifiers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+}
+
 .addNote {
   display: flex;
   align-items: center;

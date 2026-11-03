@@ -1,10 +1,10 @@
-/* CardStrip: 4 px padding, --panel, --line border, radius 10, 44 px buttons with 13 px text. */
+/* CardStrip (design 9.4): padding 4, radius 10, border 1, --surface, 44 px buttons, 13/500. */
 .strip {
   display: flex;
   gap: 4px;
   padding: 4px;
   border: 1px solid var(--border);
-  border-radius: var(--radius-panel);
+  border-radius: 10px;
   background: var(--surface);
   box-shadow: var(--shadow-menu);
 }
@@ -18,7 +18,7 @@
   color: var(--text);
   font-family: var(--font-body);
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 500;
   white-space: nowrap;
   cursor: pointer;
 }
@@ -41,5 +41,5 @@
 }
 
 .discard {
-  color: var(--accent-text);
+  color: var(--danger-text);
 }

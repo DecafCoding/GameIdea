@@ -15,7 +15,7 @@ import {
 } from '@/shared/model';
 
 /** Distance between a tucked card and the card above it (design --tuck-offset). */
-const TUCK = 59;
+export const TUCK = 56;
 
 export const CUES = {
   role: ['navigator', 'diplomat', 'gardener', 'captain'],
@@ -24,6 +24,13 @@ export const CUES = {
   goal: ['keep the light on', 'map the lost caves'],
   conflict: ['the tide rises every night', 'the map keeps changing'],
   setting: ['outpost', 'beacon', 'eclipse', 'harbor'],
+  mechanic: ['trade', 'climb', 'hide', 'build'],
+  resource: ['memories', 'lamp oil', 'rope', 'favors'],
+  mood: ['tense', 'cozy', 'eerie', 'giddy'],
+  twist: ['the map is alive', 'your guide lies'],
+  progression: ['new islands open', 'tools get sharper'],
+  constraint: ['no jumping', 'only one hand'],
+  hook: [],
 } as const;
 
 function cuesFor(type: CardType): Cue[] {
@@ -39,7 +46,10 @@ export function fixtureCard(type: CardType, overrides: Partial<Card> = {}): Card
     y: 0,
     z: 1,
     tuckedUnder: null,
-    rings: [{ cues: cuesFor(type), activeIndex: 0 }],
+    rings: type === 'hook' ? [] : [{ cues: cuesFor(type), activeIndex: 0 }],
+    ...(type === 'modifier' ? { modDeck: 'role' as const } : {}),
+    onTopOf: null,
+    locked: false,
     ...overrides,
   };
 }
@@ -53,12 +63,12 @@ export function secondModifier(overrides: Partial<Card> = {}): Card {
   });
 }
 
-/** A Player Role or Setting already combined with the first Modifier set. */
+/** A Player Role or Setting already combined with the first Modifier set (role deck). */
 export function combinedCard(type: 'role' | 'setting', overrides: Partial<Card> = {}): Card {
   return fixtureCard(type, {
     rings: [
       { cues: cuesFor(type), activeIndex: 0 },
-      { cues: cuesFor('modifier'), activeIndex: 0 },
+      { cues: cuesFor('modifier'), activeIndex: 0, modDeck: 'role' },
     ],
     ...overrides,
   });
@@ -94,7 +104,7 @@ export function fixtureBoard(cards: Card[], notes: Note[] = []): Board {
 
 /**
  * A chain stack at x, y: a Player Role with a Goal tucked under it and a Conflict
- * tucked under the Goal, each 59 px lower. Ids get the suffix.
+ * tucked under the Goal, each 56 px lower. Ids get the suffix.
  */
 export function fixtureStack(x: number, y: number, suffix = '1', z = 1): Card[] {
   const role = fixtureCard('role', { id: `role-${suffix}`, x, y, z });
@@ -115,13 +125,13 @@ export function fixtureStack(x: number, y: number, suffix = '1', z = 1): Card[] 
   return [role, goal, conflict];
 }
 
-/** A 250 px card plus a gap of more than the 24 px margin, on the 24 px grid. */
-const PITCH = 288;
+/** A 200 px card plus a gap of more than the 24 px margin, on the 24 px grid. */
+const PITCH = 240;
 const COLUMNS = 20;
 const TYPES: CardType[] = ['role', 'goal', 'setting', 'conflict', 'modifier'];
 
 /**
- * The 200-card board: 140 single cards on 7 rows of 20 at a 288 px pitch, cycling the
+ * The 200-card board: 140 single cards on 7 rows of 20 at a 240 px pitch, cycling the
  * 5 types (the first 20 Player Roles combined), and 20 stacks of 3 on the 8th row, so the
  * speed checks include tucked cards. No notes.
  */
@@ -149,4 +159,36 @@ export function board200(): Board {
     z += 3;
   }
   return { ...fixtureBoard(cards), id: 'board-200', name: 'Board 200' };
+}
+
+/** Stack cards sit this far in from a Hook Card root's left edge (design 9.5). */
+export const HOOK_INSET = 20;
+
+/**
+ * The long-stack fixture (test-data in docs/architecture.html): one chain of 11 cards,
+ * long-0 to long-10, each tucked under the one before, for the 11-card stack drag test.
+ * long-0 is a Hook Card; the 10 cards under it cycle 5 decks and sit 20 px in from its
+ * left edge. Modifiers sit tucked, never combined, because only a drop combines.
+ */
+export function stack11Board(): Board {
+  const cycle: CardType[] = ['role', 'goal', 'conflict', 'setting', 'modifier'];
+  const cards: Card[] = [fixtureCard('hook', { id: 'long-0', x: 240, y: 48, z: 1 })];
+  for (let i = 1; i < 11; i++) {
+    const type = cycle[(i - 1) % cycle.length]!;
+    cards.push(
+      fixtureCard(type, {
+        id: `long-${i}`,
+        x: 240 + HOOK_INSET,
+        y: 48 + i * TUCK,
+        z: i + 1,
+        tuckedUnder: `long-${i - 1}`,
+      }),
+    );
+  }
+  return {
+    ...fixtureBoard(cards),
+    id: 'board-long-stack',
+    name: 'Long Stack',
+    view: { panX: 0, panY: 0, zoom: 0.75 },
+  };
 }

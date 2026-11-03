@@ -17,6 +17,8 @@ function card(type: CardType, ringCount: 1 | 2): Card {
     y: 0,
     z: 0,
     tuckedUnder: null,
+    onTopOf: null,
+    locked: false,
     rings: ringCount === 2 ? [ring, ring] : [ring],
   };
 }
@@ -114,11 +116,11 @@ describe('useRingKeys', () => {
 describe('ringGeometry', () => {
   it('halfAnnulusPath_left_staysLeftOfSplit', () => {
     const path = halfAnnulusPath(43, 56, 'left');
-    // Every x in M, L and the arc end points is 124 or less (center 125, 1 px half split).
+    // Every x in M, L and the arc end points is 99 or less (center 100, 1 px half split).
     const xs = [...path.matchAll(/[ML] ([\d.]+)|0 0 [01] ([\d.]+)/g)].map((m) =>
       Number(m[1] ?? m[2]),
     );
     expect(xs.length).toBe(4);
-    for (const x of xs) expect(x).toBeLessThanOrEqual(124);
+    for (const x of xs) expect(x).toBeLessThanOrEqual(99);
   });
 });
