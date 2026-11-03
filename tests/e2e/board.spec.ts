@@ -253,13 +253,13 @@ test.describe('selection', () => {
     const cue = await boxOf(mechanic.getByTestId('active-cue'));
     expect(cue.y).toBeGreaterThanOrEqual(stripTop);
     expect(cue.y + cue.height).toBeLessThanOrEqual(card.y + card.height);
-    // The lock and type marks sit in the strip's band, just outside the card's right edge.
+    // The lock and type marks sit in the strip's band, in the card's bottom-right corner.
     for (const part of [mechanic.getByTestId('lock-mark'), mechanic.getByTestId('tuck-mark')]) {
       const box = await boxOf(part);
       expect(box.y).toBeGreaterThanOrEqual(stripTop);
       expect(box.y + box.height).toBeLessThanOrEqual(card.y + card.height);
-      expect(box.x).toBeGreaterThanOrEqual(card.x + card.width);
-      expect(box.x).toBeLessThanOrEqual(card.x + card.width + 16);
+      expect(box.x + box.width).toBeLessThanOrEqual(card.x + card.width);
+      expect(box.x + box.width).toBeGreaterThanOrEqual(card.x + card.width - 6);
     }
     expect((await boxOf(mechanic.getByTestId('lock-mark'))).width).toBe(13);
   });
@@ -385,7 +385,7 @@ test.describe('selection', () => {
     await expect(role.getByTestId('combined-disc')).toBeVisible();
   });
 
-  test('tuckedCard_typeMark_besideCardAndUncovered', async ({ page }) => {
+  test('tuckedCard_typeMark_inCornerAndClearOfCue', async ({ page }) => {
     await openBoard(page, stack());
     await expect(cardById(page, 'role-1').getByTestId('tuck-mark')).toHaveCount(0);
     for (const id of ['goal-1', 'conflict-1']) {
@@ -394,18 +394,58 @@ test.describe('selection', () => {
       const m = await boxOf(mark);
       const c = await boxOf(card);
       expect(m.width).toBe(14);
-      // Just outside the card's right edge, level with its bottom band (user 2026-11-03).
-      expect(m.x).toBeGreaterThanOrEqual(c.x + c.width);
-      expect(m.x).toBeLessThanOrEqual(c.x + c.width + 16);
-      expect(m.y + m.height).toBeLessThanOrEqual(c.y + c.height);
-      expect(m.y).toBeGreaterThanOrEqual(c.y + c.height - 56);
-      // No card covers the mark (it ignores the pointer, so the hit lands on what is below).
+      // In the bottom-right corner, 4 from each edge (user 2026-11-03).
+      expect(Math.abs(c.x + c.width - (m.x + m.width) - 4)).toBeLessThanOrEqual(1);
+      expect(Math.abs(c.y + c.height - (m.y + m.height) - 4)).toBeLessThanOrEqual(1);
+      // No other card covers the mark (it ignores the pointer, so the hit lands on its own
+      // card), and it does not touch the bottom cue.
       const covered = await mark.evaluate((el) => {
         const r = el.getBoundingClientRect();
         const hit = document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2);
-        return hit?.closest('[data-card]') != null;
+        return !el.closest('[data-card]')!.contains(hit);
       });
       expect(covered, `${id} mark is covered`).toBe(false);
+      const cue = await boxOf(card.getByTestId('active-cue'));
+      const touch =
+        m.x < cue.x + cue.width &&
+        cue.x < m.x + m.width &&
+        m.y < cue.y + cue.height &&
+        cue.y < m.y + m.height;
+      expect(touch, `${id} mark touches its cue`).toBe(false);
+    }
+  });
+
+  test('tuckedGoal_longCue_fitsOnTwoLinesClearOfMarks', async ({ page }) => {
+    const rings = [
+      {
+        cues: [{ text: 'get past the wall and across the water' }, { text: 'reach the summit' }],
+        activeIndex: 0,
+      },
+    ];
+    await openBoard(
+      page,
+      fixtureBoard([
+        fixtureCard('role', { x: 96, y: 96 }),
+        fixtureCard('goal', { x: 96, y: 152, z: 2, tuckedUnder: 'role-1', locked: true, rings }),
+        fixtureCard('goal', { id: 'goal-2', x: 480, y: 96, z: 3, rings }),
+      ]),
+    );
+    await page.evaluate(() => document.fonts.ready);
+    for (const id of ['goal-1', 'goal-2']) {
+      const cue = cardById(page, id).getByTestId('active-cue');
+      // Two 17 px lines, nothing clipped (user 2026-11-03).
+      const { client, scroll } = await cue.evaluate((el) => ({
+        client: el.clientHeight,
+        scroll: el.scrollHeight,
+      }));
+      expect(client, id).toBeLessThanOrEqual(35);
+      expect(scroll - client, `${id} cue is clipped`).toBeLessThanOrEqual(1);
+    }
+    const goal = cardById(page, 'goal-1');
+    const cue = await boxOf(goal.getByTestId('active-cue'));
+    for (const mark of ['tuck-mark', 'lock-mark']) {
+      const m = await boxOf(goal.getByTestId(mark));
+      expect(cue.x + cue.width, `cue clear of ${mark}`).toBeLessThan(m.x);
     }
   });
 

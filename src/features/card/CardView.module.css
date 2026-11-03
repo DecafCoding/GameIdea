@@ -105,12 +105,13 @@
  * 120 keeps a margin.
  *
  * 2-cue decks (Goal, Conflict, Twist, Progression, Constraint): top and bottom labels of
- * 2 lines of 17 px, up to 172 px (the card less both insets), spanning 52 to 86. A tucked
- * card shows its bottom 56 px (44 to 100), so both bottom lines show.
+ * 2 lines of 17 px, up to 180 px (10 in from each side; there are no side labels to
+ * meet), spanning 52 to 86. A tucked card shows its bottom 56 px (44 to 100), so both
+ * bottom lines show.
  *
  * 4-cue decks with the shared frame (Player Role, Mechanic, Resource, Setting) use 14 px
  * text on 16 px lines (.four), so nothing runs under the outer ring (56):
- *   top and bottom: 2 lines, up to 172 px, spanning 56 to 88.
+ *   top and bottom: 2 lines, up to 172 px (.four.wide), spanning 56 to 88.
  *   sides: 2 lines, up to 108 px, spanning 56 to 88 across and ±54 along the edge, 2 px
  *     short of the top and bottom labels' 56. A tucked card hides its sides (.tuckedSide).
  */
@@ -129,9 +130,9 @@
   color: var(--card-cue);
 }
 
-/* Top and bottom label: 2 lines, 172 px. */
+/* Top and bottom label: 2 lines, 180 px on 2-cue cards (user 2026-11-03; was 172). */
 .wide {
-  max-width: 172px;
+  max-width: 180px;
   line-height: 17px;
   white-space: normal;
   display: -webkit-box;
@@ -158,19 +159,22 @@
 
 /*
  * A clamped 4-cue top or bottom label ends its 2nd line with an ellipsis; 4 px of inline
- * padding inside the 172 px box leaves room for it, so it never runs past the box.
+ * padding inside the 172 px box leaves room for it, so it never runs past the box. It
+ * stays 172 so it misses the side labels at the corners.
  */
 .four.wide {
+  max-width: 172px;
   box-sizing: border-box;
   padding-inline: 4px;
 }
 
 /*
- * A tucked card's bottom label narrows to 140 px (30 to 170 from the left edge), so the type
- * mark and the lock mark at the right of the 56 px strip never touch it.
+ * A tucked card's bottom label narrows to 160 px (20 to 180 from the left edge), so the
+ * type mark and the lock mark in the corner (from 182) never touch it (user 2026-11-03;
+ * was 140).
  */
-.tuckedBottom {
-  max-width: 140px;
+.tuckedBottom.tuckedBottom {
+  max-width: 160px;
 }
 
 /* A tucked card shows only its bottom band; side text would peek into it, so it hides. */
@@ -233,11 +237,11 @@
  * A tucked card's type mark: the disc glyph, 14 px, in the type color with no disc, 8 px in
  * from the bottom right corner, inside the 14 px corner radius.
  */
-/* A tucked card's type glyph and lock sit just outside its right edge (user 2026-11-03). */
+/* A tucked card's type glyph sits in its bottom-right corner, 4 from each edge (user 2026-11-03). */
 .tuckMark {
   position: absolute;
-  left: calc(100% + 8px);
-  bottom: 8px;
+  right: 4px;
+  bottom: 4px;
   z-index: 2;
   display: flex;
   color: var(--card-type);
@@ -267,13 +271,13 @@
 }
 
 /*
- * The lock on a tucked strip: 13 px in the deck card color, 30 from the bottom of the
- * visible 56 px strip, above the type mark, just outside the card's right edge.
+ * The lock on a tucked strip: 13 px in the deck card color, above the type mark in the
+ * same corner column, 24 from the bottom of the visible 56 px strip.
  */
 .lockTucked {
   position: absolute;
-  left: calc(100% + 8px);
-  bottom: 30px;
+  right: 4px;
+  bottom: 24px;
   z-index: 2;
   display: flex;
   color: var(--card-type);

@@ -160,7 +160,7 @@ test.describe('with pools loaded', () => {
     const box = await card.boundingBox();
     expect(box?.width).toBe(200);
     expect(box?.height).toBe(200);
-    await expect(card).toHaveCSS('border-radius', '14px');
+    await expect(card).toHaveCSS('border-radius', '7px');
     // The cream --card-face, the same for every deck (design 9.4).
     expectRgbNear(await backgroundRgb(card), [244, 240, 230]);
 
