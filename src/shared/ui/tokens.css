@@ -1,6 +1,7 @@
-/* Design tokens: the body below is copied verbatim from docs/design-handoff/_ds/gameidea/styles.css.
+/* Design tokens: the v1 body below is copied verbatim from docs/design-handoff/_ds/gameidea/styles.css.
    docs/design-system.html is the authority for every value. Keep this file out of Prettier
-   so the values stay byte-for-byte the same as the handoff. */
+   so the values stay byte-for-byte the same as the handoff. Later sections hold the
+   carried-over motion timings, the user overrides and the 2026-11-04 mode tokens (design 4.5). */
 :root {
   /* Fonts (bundle with @fontsource, no remote fonts) */
   --font-display: 'Space Grotesk', system-ui, sans-serif; /* 500, 600, 700 */
@@ -206,6 +207,50 @@
  */
 :root {
   --radius-card: 7px; /* user 2026-11-03: half of the handoff's 14 */
+}
+
+/* 2026-11-04 handoff (docs/design-system.html 4.5): card, tucked, Hook Card and note tokens follow data-mode. Dark is the default. */
+:root {
+  --card-face: #2A2F38;
+  --card-tucked-1: #2A2F38;
+  --card-tucked-2: #2A2F38;
+  --card-tucked-3: #2A2F38;
+  --card-tucked-4: #2A2F38;
+  --card-cue: #A9ADB6;
+  --card-cue-active: #ECEAE4;
+  --card-adjective: #A88BE6;
+  --card-adjective-active: #A88BE6;
+  --card-divider: #4A505C;
+  --zone-text: #C9B6F0;
+  --hook-bg: #2A2F38;
+  --hook-text: #ECEAE4;
+  --shadow-hook: 0 10px 26px rgba(0, 0, 0, 0.5);
+  --note-bg: #2E2A22;
+  --note-border: 1px solid #4A4436;
+  --note-label: #C9BFA6;
+  --note-text: #ECEAE4;
+  --shadow-note: 0 8px 22px rgba(0, 0, 0, 0.45);
+}
+[data-mode="light"] {
+  --card-face: #F4F0E6;
+  --card-tucked-1: #F1ECE0;
+  --card-tucked-2: #EFE9DC;
+  --card-tucked-3: #ECE6D8;
+  --card-tucked-4: #E9E3D4;
+  --card-cue: #5A5E68;
+  --card-cue-active: #1B1E24;
+  --card-adjective: #6E48B5;
+  --card-adjective-active: #5B3F99;
+  --card-divider: #D5CFC0;
+  --zone-text: #4A2E86;
+  --hook-bg: #FFFFFF;
+  --hook-text: #1B1E24;
+  --shadow-hook: 0 8px 22px rgba(0, 0, 0, 0.18);
+  --note-bg: #FBF6E4;
+  --note-border: none;
+  --note-label: #6B6355;
+  --note-text: #1B1E24;
+  --shadow-note: 0 8px 22px rgba(0, 0, 0, 0.4);
 }
 
 /* Reduced motion: every duration goes to 0 (design section 11). The change is instant. */

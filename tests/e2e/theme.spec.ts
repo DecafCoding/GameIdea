@@ -1,8 +1,10 @@
 /**
  * Browser tests for the 6 mode × theme color combinations (design 4.1 to 4.3, 9.1): both
- * screens take their chrome from the tokens of the chosen combination; cards, notes,
- * badges, deck colors and the Hook Card look the same in every combination; warning colors
- * stay fixed in Blue and Green; light-mode outlines use the light --accent-text.
+ * screens take their chrome from the tokens of the chosen combination; the card face, the
+ * note and the Hook Card fill follow the mode only (design 4.5); badges and center icons look
+ * the same in every combination; every card carries its deck edge and 14% tint and the Hook
+ * Card none (4.4); warning colors stay fixed in Blue and Green; light-mode outlines and the
+ * Hook label use the mode's --accent-text.
  */
 import type { Locator, Page } from '@playwright/test';
 import { expect, test } from './test';
@@ -61,15 +63,19 @@ function themedBoard() {
   };
 }
 
-/** The fixed-look colors: card face, note paper, badge fill, Hook Card fill, deck ring. */
+/** The colors that never change: badge fill and center icon (type disc) fill. */
 async function fixedLook(page: Page): Promise<number[][]> {
   return [
-    await backgroundRgb(cardById(page, 'setting-1')),
-    await backgroundRgb(page.getByTestId('note')),
     await backgroundRgb(page.getByTestId('connector-badge').first()),
-    await backgroundRgb(page.getByRole('article', { name: 'Hook Card' })),
+    await backgroundRgb(cardById(page, 'setting-1').getByTestId('type-disc')),
   ];
 }
+
+/** Design 4.5: card face, note paper and Hook Card fill by mode. */
+const MODE_LOOK: Record<Mode, { face: Rgb; note: Rgb; hook: Rgb }> = {
+  dark: { face: [42, 47, 56], note: [46, 42, 34], hook: [42, 47, 56] },
+  light: { face: [244, 240, 230], note: [251, 246, 228], hook: [255, 255, 255] },
+};
 
 const MODES: Mode[] = ['dark', 'light'];
 const ACCENTS: Accent[] = ['orange', 'blue', 'green'];
@@ -109,10 +115,16 @@ for (const mode of MODES) {
         expectRgbNear(await colorRgb(newBoard), ON_ACCENT);
       });
 
-      test(`theme_${mode}_${accent}_cardsNotesBadgesHookUnchanged`, async ({ page }) => {
+      test(`theme_${mode}_${accent}_cardsNotesHookFollowModeOnly`, async ({ page }) => {
         await openBoard(page, themedBoard());
+        expectRgbNear(await backgroundRgb(cardById(page, 'setting-1')), MODE_LOOK[mode].face);
+        expectRgbNear(await backgroundRgb(page.getByTestId('note')), MODE_LOOK[mode].note);
+        expectRgbNear(
+          await backgroundRgb(page.getByRole('article', { name: 'Hook Card' })),
+          MODE_LOOK[mode].hook,
+        );
         const look = await fixedLook(page);
-        // The dark orange baseline, read on the same page.
+        // The dark orange baseline, read on the same page: badges and center icons never change.
         await page.evaluate(() => {
           document.documentElement.dataset.mode = 'dark';
           document.documentElement.dataset.theme = 'orange';
