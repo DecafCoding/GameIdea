@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Phase 7: One-Pager Board</title>
+  <style>
+    :root { --fg:#1a1a1a; --muted:#666; --accent:#2563eb; --done:#16a34a; --warn:#dc2626; --rule:#e5e7eb; }
+    body { font:16px/1.6 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; color:var(--fg); max-width:62rem; margin:2rem auto; padding:0 1.25rem; }
+    h1 { font-size:2rem; border-bottom:2px solid var(--rule); padding-bottom:.3rem; }
+    h2 { font-size:1.5rem; margin-top:2.5rem; border-bottom:1px solid var(--rule); padding-bottom:.2rem; }
+    h3.milestone { font-size:1.25rem; margin-top:2rem; color:var(--accent); }
+    h4.task { font-size:1.1rem; margin-top:1.5rem; }
+    dl.phase-meta { display:grid; grid-template-columns:max-content 1fr; gap:.25rem 1rem; }
+    dl.phase-meta dt { font-weight:600; color:var(--muted); }
+    code, pre { font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+    pre { background:#f6f8fa; padding:1rem; border-radius:6px; overflow:auto; }
+    code { background:#f6f8fa; padding:.1rem .3rem; border-radius:4px; }
+    pre code { background:none; padding:0; }
+    ul.checklist { list-style:none; padding-left:0; }
+    ul.checklist > li::before { content:"☐ "; color:var(--muted); }
+    ul.checklist > li[data-checked="true"]::before { content:"☑ "; color:var(--done); }
+    .validate { color:var(--done); font-weight:600; }
+    table { border-collapse:collapse; margin:.5rem 0 1rem; }
+    th, td { border:1px solid var(--rule); padding:.3rem .6rem; text-align:left; vertical-align:top; font-size:.92rem; }
+  </style>
+</head>
+<body>
+
+<h1 data-phase="7">Phase 7: One-Pager Board</h1>
+<p>The following plan should be complete, but validate documentation, codebase patterns, and task sanity before implementing. Pay special attention to naming of existing utils, types, and models — import from the right files.</p>
+
+<h2>Phase Description</h2>
+<p>Phase 7 (M7) adds a second board kind, the <strong>One-Pager board</strong>, from <code>docs/feature-one-pager-board.html</code> (behavior authority) and <code>docs/design-system.html</code> 9.15 (visual authority, plus 8.3, 10, 13, 15 and 16). A One-Pager board holds exactly 1 game: 1 Hook Card with a short Hook Train (the stack under it, with today's tuck rules and hook sentence), and 1 <strong>Concept panel</strong> to the right of the Hook Card for every settled card. The panel groups its cards by deck in lanes (rail order) as small text chips (drop order). Every existing board becomes a <strong>Free Form board</strong> and behaves exactly as before.</p>
+<p>The phase bundles 6 pieces of work, in the order the feature brief's build plan sets (riskiest first):</p>
+<ol>
+  <li><strong>Board format version 2.</strong> <code>Board.kind</code>, <code>Board.conceptWidth?</code>, <code>Card.inConcept</code>; <code>FORMAT_VERSION = 2</code>; Dexie schema version 2 with an upgrade of each saved record; <code>UPGRADES[1]</code> for board files. Tests first.</li>
+  <li><strong>Zod checks</strong> for the new fields and the One-Pager rules (exactly 1 Hook Card, no tucked Concept card, no Hook Card in Concept).</li>
+  <li><strong>Board kind.</strong> New Board asks One-Pager or Free Form. A One-Pager board starts with its Hook Card. Its Hook Card menu has Copy Hook and Redraw All only; the rail Hook Card button is off.</li>
+  <li><strong>The Concept panel</strong> node beside the Hook Card (it moves with it): header, count pill, lanes and chips; drop routing into the lane of the card's deck; Modifier combine on a Player Role, Resource or Setting chip with a hint that names the result ("Stolen Salt"); Redraw All skips Concept.</li>
+  <li><strong>Chip actions.</strong> Pop-out by double-click to an open spot beside the panel; drag a chip out to the canvas or onto a Hook Train card; resize the panel width (232 to 640, saved on release).</li>
+  <li><strong>Outputs.</strong> A Concept section in the text file, a One-Pager label on the board list, and the One-Pager footer "12 cards · 1 hook · 1 concept".</li>
+</ol>
+<p>Checked against the code at planning (2026-11-04, <code>main</code> at 6263f47):</p>
+<ul>
+  <li><strong>Already there:</strong> the upgrade runner and its tests (<code>src/features/export/upgrade.ts</code>, empty <code>UPGRADES</code>); Dexie schema version 1 (<code>src/shared/storage/db.ts</code>); pure Board → Board recipes (<code>features/canvas/boardActions.ts</code>, <code>stack.ts</code>); <code>findOpenSpot</code>/<code>boardRects</code> (<code>placement.ts</code>); the drop-zone logic (<code>dropZones.ts</code>); the hover-menu Hook Card (<code>features/hook/HookMenu.tsx</code>); the note resize that commits on release (<code>features/notes/NoteView.tsx</code>); the segmented control (<code>features/settings/Segmented.tsx</code>); the text file (<code>features/export/textFile.ts</code>); the board list summary (<code>features/boards/summary.ts</code>); the footer chip (<code>features/canvas/CountBadge.tsx</code>).</li>
+  <li><strong>Missing:</strong> every One-Pager field, rule, view and test. Nothing in <code>src/</code> mentions One-Pager, Concept or a board kind.</li>
+</ul>
+<p><strong>Precondition for the user, not a task:</strong> before the first Phase 7 build runs on port 4174 in the user's own browser, the user exports each real board as a board file (feature brief "Migration and rollback", PRD risk table). After Dexie version 2 runs, an older build cannot open the database. The Playwright runs in this phase use their own fresh browser profiles, so they never touch the user's data.</p>
+
+<h2>User Stories</h2>
+<ul>
+  <li>As a game jam entrant, I want a One-Pager board with 1 Hook Card and a Concept panel, so that I can keep many Resources, Settings, Mechanics and Goals for one game without the hook train growing into a paragraph.</li>
+  <li>As a user, I want to drop a settled card anywhere on the Concept panel and have it land in its deck's lane, so that the page sorts itself.</li>
+  <li>As a user, I want to drop a Modifier on a Player Role, Resource or Setting chip and see the result named before I let go, so that I can build "stolen salt" in place.</li>
+  <li>As a user, I want to double-click or drag a chip back out to a full card, so that I can turn its rings or put it in the Hook Train.</li>
+  <li>As a user, I want to resize the panel and have the width saved, so that long chips have room.</li>
+  <li>As a user with saved boards, I want every board I already have to open unchanged as a Free Form board, so that the update loses nothing.</li>
+  <li>As a user, I want the text file, the board list and the footer to show the One-Pager parts, so that the export reads like a one-pager and I can tell my boards apart.</li>
+</ul>
+
+<h2>Problem Statement</h2>
+<p>A game idea often has more than one Resource, Setting, Mechanic or Goal. Today every card goes into one vertical train under a Hook Card. At about 10 cards the train is too tall to see or edit, and the hook sentence becomes a paragraph instead of a hook. The board format has never changed since version 1, so this is also the first real use of the upgrade path; a mistake there stops saved boards from loading.</p>
+
+<h2>Solution Statement</h2>
+<p>Raise the format to version 2 with 3 fields and 1 shared, pure upgrade step that both Dexie (saved records) and the board file import (<code>UPGRADES[1]</code>) run, so the 2 paths cannot drift. Model the Concept panel as data on cards (<code>inConcept: true</code>, <code>tuckedUnder: null</code>, chip order by <code>z</code>) plus 1 board field (<code>conceptWidth</code>). Its place is derived from the Hook Card, never stored. All rules (lanes, routing, enter, leave, pop-out, combine on a chip, resize) are pure Board → Board recipes in <code>features/canvas/concept.ts</code>, each committed through one <code>changeBoard</code> call: 1 undo step and 1 save. The panel is 1 extra React Flow node (<code>type: 'concept'</code>) built from the board on each change. The canvas finds the chip under the pointer with <code>document.elementsFromPoint</code>, because the chips are laid out by CSS wrapping. Stack, reading, drop, placement and Redraw All code skip Concept cards, so the hook sentence builder and every Free Form path stay as they are.</p>
+
+<h2>Phase Metadata</h2>
+<dl class="phase-meta">
+  <dt>Phase Type</dt><dd data-field="type">New Capability (with a board format migration)</dd>
+  <dt>Estimated Complexity</dt><dd data-field="complexity">High</dd>
+  <dt>Primary Systems Affected</dt><dd data-field="systems">shared/model, shared/storage (Dexie v2), shared/store (newBoard), features/export (upgrade, schema, text file), features/boards (New Board kind, list label), features/canvas (Concept node, drops, actions, footer), features/card (chip view), features/hook (menu), features/settings (Segmented export), app/board (rail, placement)</dd>
+  <dt>Dependencies</dt><dd data-field="dependencies">Phase 6 (card themes and tokens, merged); Phases 1–5; no new library (dexie 4.4.7, zod 4.6.7, @xyflow/react 12.12.0, zustand 5.0.16, zundo 2.3.0 as pinned); gh CLI authenticated for the final task</dd>
+</dl>
+
+<h2>Context References</h2>
+
+<h3>Relevant Codebase Files — READ THESE BEFORE IMPLEMENTING</h3>
+<ul>
+  <li><code>src/shared/model/index.ts</code> (line 12 <code>FORMAT_VERSION</code>; lines 18–30 <code>DECKS</code> = rail order; lines 131–145 <code>DECK_NAME</code>; lines 170–197 <code>Card</code>; lines 216–231 <code>Board</code>; lines 260–270 re-exports) — Why: the 3 new fields, the format bump, the lane names and the shared upgrade step go here.</li>
+  <li><code>src/shared/model/settings.ts</code> — Why: precedent for a small pure function living in <code>shared/model</code> (<code>parseSettings</code>), which the new <code>upgradeBoardV1</code> follows.</li>
+  <li><code>src/shared/storage/db.ts</code> (lines 14–22 <code>GameIdeaDb</code>) and <code>db.test.ts</code> — Why: add <code>this.version(2)</code> with the upgrade; the test pins the version number.</li>
+  <li><code>src/shared/store/newBoard.ts</code> (lines 1–24) — Why: takes a kind; a One-Pager board starts with its Hook Card and <code>conceptWidth</code>.</li>
+  <li><code>src/features/export/upgrade.ts</code> (line 15 <code>UPGRADES</code>, lines 25–41 runner) and <code>upgrade.test.ts</code> (the version-1 tests at the end must change) — Why: <code>UPGRADES[1]</code>.</li>
+  <li><code>src/features/export/schema.ts</code> (lines 55–96 card schema, lines 135–186 board schema) and <code>schema.test.ts</code> — Why: the new fields and One-Pager refinements. Typed <code>z.ZodType&lt;Board&gt;</code>, so it must change in the same task as the model.</li>
+  <li><code>src/features/export/importBoard.ts</code> (lines 20–31 <code>parseBoardFile</code>) — Why: upgrade then Zod; the version-1 import path.</li>
+  <li><code>src/features/export/textFile.ts</code> (lines 35–56 <code>cardLines</code>, lines 70–79 <code>boardText</code>) — Why: skip Concept cards in Cards; add the Concept section.</li>
+  <li><code>src/features/boards/NewBoardDialog.tsx</code> (all), <code>NewBoardDialog.module.css</code>, <code>NewBoardDialog.test.tsx</code> — Why: the kind choice.</li>
+  <li><code>src/features/boards/BoardList.tsx</code> (lines 164–176 <code>createBoard</code>, line 306–310 dialog mount) — Why: pass the kind to <code>newBoard</code>.</li>
+  <li><code>src/features/boards/summary.ts</code> (lines 9–39) and <code>BoardCard.tsx</code> (lines 64–100 top row and meta) — Why: the One-Pager label.</li>
+  <li><code>src/features/settings/Segmented.tsx</code> and <code>src/features/settings/index.ts</code> — Why: the kind choice reuses this control; export it from the settings index.</li>
+  <li><code>src/features/canvas/stack.ts</code> (line 29 <code>rootOf</code>, 46 <code>childrenOf</code>, 63 <code>stackOrder</code>, 77 <code>layoutStack</code>, 95 <code>nextZ</code>, 126 <code>untuckCard</code>, 138 <code>removeFromStacks</code>) — Why: <code>enterConcept</code> mirrors <code>untuckCard</code>.</li>
+  <li><code>src/features/canvas/boardActions.ts</code> (line 61 <code>placeHookCard</code>, 83 <code>dropCard</code>, 115 <code>combineOnto</code>, 132 <code>putOnTopOf</code>, 149 <code>swapOnto</code>, 168 <code>splitCard</code>, 221 <code>redrawAll</code>) — Why: Card literals gain <code>inConcept</code>; Redraw All skips Concept; drop and combine are reused on chips.</li>
+  <li><code>src/features/canvas/dropZones.ts</code> (line 74 <code>paintOrder</code>, 85 <code>dropTarget</code>, 113 <code>dropAction</code>, 133 <code>hintFor</code>) — Why: Concept cards are never drop targets on the canvas.</li>
+  <li><code>src/features/canvas/placement.ts</code> (line 32 <code>cardSize</code>, 61 <code>findOpenSpot</code>, 91 <code>boardRects</code>, 103 <code>besideSpot</code>) — Why: skip Concept cards; pop-out spot.</li>
+  <li><code>src/features/canvas/reading.ts</code> (line 28 <code>cardText</code>, 60 <code>hookSentences</code>) — Why: chip text and text-file bullets use <code>cardText</code> (merged and On Top adjectives).</li>
+  <li><code>src/features/canvas/nodes.ts</code> (lines 15–42 node types, line 63 <code>toNodes</code>) — Why: skip Concept cards; add the panel node.</li>
+  <li><code>src/features/canvas/BoardCanvas.tsx</code> (line 153 <code>actions</code>, 226 <code>onNodesChange</code>, 265 <code>onNodeDragStart</code>, 300 <code>onNodeDrag</code>, 336 <code>onNodeDragStop</code>, 398–443 render) — Why: panel moves with the Hook Card during a drag; Concept drop routing; chip drag; node type registration.</li>
+  <li><code>src/features/canvas/CanvasProvider.tsx</code> (lines 96–145 <code>CanvasApi</code>) — Why: add <code>occupiedRects()</code> so draws, notes and Hook Cards avoid the measured panel.</li>
+  <li><code>src/features/canvas/DropHints.tsx</code> and <code>DropHints.module.css</code> — Why: the tuck slot style (dashed 2 deck color, <code>--slot-fill-alpha</code> fill, "&lt;Deck&gt; goes here" 12/600 rail color) that the lane placeholder mirrors; the slot also shows when a chip is dragged over a Hook Train card.</li>
+  <li><code>src/features/canvas/CardNode.tsx</code> (lines 43–59 <code>CardNodeActions</code>, 172–207 <code>HookBody</code>) — Why: the Hook Card menu gets no Duplicate/Discard on a One-Pager board.</li>
+  <li><code>src/features/canvas/CountBadge.tsx</code> (lines 1–23) — Why: the One-Pager footer text.</li>
+  <li><code>src/features/canvas/index.ts</code> — Why: the canvas public surface; new exports go through it.</li>
+  <li><code>src/features/hook/HookMenu.tsx</code> (lines 21–35 props, 114–133 Duplicate and Discard) and <code>HookMenu.test.tsx</code> — Why: make Duplicate and Discard optional.</li>
+  <li><code>src/features/card/TypeDisc.tsx</code> (lines 10–23 <code>TYPE_ICON</code>) and <code>CardView.module.css</code> (lines 7–49 per-deck <code>--card-type</code>) — Why: lane label icons; per-deck color variable pattern for chips.</li>
+  <li><code>src/features/notes/NoteView.tsx</code> (lines 52–88 resize with pointer capture, commit on release) — Why: MIRROR for the panel resize handle.</li>
+  <li><code>src/features/draw/DeckButton.tsx</code> (lines 68–90 <code>HookButton</code>) and <code>src/features/draw/drawCard.ts</code> (line ~104 Card literal) — Why: a <code>disabled</code> prop; a Card literal needs <code>inConcept: false</code>.</li>
+  <li><code>src/app/board/BoardScreen.tsx</code> (line 81 <code>empty</code>, 84 <code>draw</code>, 104 <code>drawHook</code>, 114 <code>addNoteNow</code>, 126 <code>SideRail</code>) and <code>SideRail.tsx</code> (lines 25–36 props, line 76 <code>HookButton</code>) — Why: rail Hook Card button off on a One-Pager board; placement uses <code>canvas.occupiedRects()</code>.</li>
+  <li><code>src/test/fixtures/boards.ts</code> (line 41 <code>fixtureCard</code>, line 90 <code>fixtureBoard</code>) — Why: v2 defaults; new <code>onePagerBoard()</code> and <code>version1BoardFile()</code> fixtures.</li>
+  <li><code>src/test/storyNames.test.ts</code> (lines 22–25) — Why: the story-name check forbids the attribute <code>data-kind</code>. Use <code>data-board-kind</code>, never <code>data-kind</code>.</li>
+  <li><code>tests/e2e/board-helpers.ts</code> (<code>openBoard</code>, <code>createBoard</code>, <code>dragTo</code>, <code>storedBoards</code>), <code>tests/e2e/persistence.spec.ts</code> (lines 35–52 raw IndexedDB read), <code>tests/e2e/import.spec.ts</code> — Why: patterns for the new <code>one-pager.spec.ts</code>.</li>
+  <li><code>scripts/check-css-colors.mjs</code> — Why: no hex or rgba in CSS modules; use tokens and <code>color-mix</code> on <code>var(--deck-*)</code>.</li>
+  <li><code>docs/phases/phase-6-card-themes.html</code> Notes — Why: the WebKit 300 ms temporary limit on 2 timing tests (do not tighten or loosen it here); token conventions.</li>
+</ul>
+
+<h3>New Files to Create</h3>
+<ul>
+  <li><code>src/shared/model/upgradeV1.ts</code> + <code>upgradeV1.test.ts</code> — the pure version 1 → 2 step, shared by Dexie and <code>UPGRADES[1]</code>.</li>
+  <li><code>src/features/canvas/concept.ts</code> + <code>concept.test.ts</code> — pure Concept rules: place, lanes, counts, routing, enter/leave/pop-out/drag-out/combine-on-chip/resize, result hint text.</li>
+  <li><code>src/features/canvas/ConceptNode.tsx</code> + <code>ConceptNode.module.css</code> + <code>ConceptNode.test.tsx</code> — the panel node: header, count pill, lanes, chips, placeholder lane, chip target outline and result tag, resize handle.</li>
+  <li><code>src/features/card/ChipView.tsx</code> + <code>ChipView.module.css</code> + <code>ChipView.test.tsx</code> — one chip (text only, deck border and 28% fill).</li>
+  <li><code>tests/e2e/one-pager.spec.ts</code> — browser tests for the whole feature, grown task by task.</li>
+</ul>
+
+<h3>Relevant Documentation — READ BEFORE IMPLEMENTING</h3>
+<ul>
+  <li><a href="../feature-one-pager-board.html">docs/feature-one-pager-board.html</a> — the behavior authority: Data model changes, Rules, Migration, Drop routing table, Chip actions, Undo and save, Text file, Board list and footer, Testing plan, Done criteria.</li>
+  <li><a href="../design-system.html#s-onepager">docs/design-system.html §9.15</a> — panel place, size, header, count pill, lanes, chips, resize handle, Modifier drop target, light mode, card count chip. Also §4.4 (chip border/fill, lane label color), §6 (chip, header, lane label, count pill type), §8.3 (count chip), §10 (undo contract), §12 (chips 36 tall deviation), §13 (view state <code>concept?</code>), §15 (not drawn), §16 (M7).</li>
+  <li><a href="../architecture.html">docs/architecture.html</a> — decisions <code>board-file-format</code>, <code>schema-shape</code>, <code>schema-versions</code>, <code>import-checks</code>, <code>import-policy</code>, <code>module-layout</code>, <code>import-rules</code>, <code>hook-sentence</code>, <code>undo-history</code>, <code>save-transaction</code>, <code>canvas-library</code>, <code>storage-seam</code>, <code>nfr-targets</code>.</li>
+  <li><a href="../feature-modifier-decks.html">docs/feature-modifier-decks.html</a> — combine, On Top and Swap rules used on chips.</li>
+  <li><a href="https://dexie.org/docs/Tutorial/Design#database-versioning">Dexie — Database versioning</a> and <a href="https://dexie.org/docs/Version/Version.upgrade()">Version.upgrade()</a> — the upgrade runs in a versionchange transaction; <a href="https://dexie.org/docs/Collection/Collection.modify()">Collection.modify()</a>: replace a whole record with <code>ref.value = …</code>. Dexie's native IndexedDB version is the declared version × 10 (version 1 is native 10).</li>
+  <li><a href="https://zod.dev/api#refinements">Zod 4 — refinements (superRefine)</a> — the existing pattern for board-level rules.</li>
+  <li><a href="https://reactflow.dev/api-reference/types/node">React Flow 12 — Node</a> (<code>draggable</code>, <code>selectable</code>, <code>zIndex</code>, <code>measured</code>) and <a href="https://reactflow.dev/api-reference/hooks/use-react-flow#get-internal-node">useReactFlow().getInternalNode</a> — the panel node and its measured size. The <code>nodrag</code>/<code>nopan</code> classes keep chip pointer events out of React Flow; <code>nopan</code> also stops the double-click zoom (the d3 filter returns false for a <code>nopan</code> target).</li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/elementsFromPoint">MDN — Document.elementsFromPoint()</a> — finds the chip under the pointer during a drag.</li>
+</ul>
+
+<h3>Patterns to Follow</h3>
+<p><strong>Pure recipe, one undo step.</strong> Every user action is a Board → Board function that never mutates its input, committed with one <code>changeBoard</code> (<code>boardActions.ts</code> lines 48–58):</p>
+<pre><code>function replaceCard(board: Board, card: Card): Board {
+  return { ...board, cards: board.cards.map((c) =&gt; (c.id === card.id ? card : c)) };
+}
+export function placeNewCard(board: Board, card: Card, spot: Point): Board {
+  return { ...board, cards: [...board.cards, { ...card, x: spot.x, y: spot.y, z: nextZ(board), tuckedUnder: null }] };
+}
+// canvas: changeBoard((b) =&gt; splitCard(b, id));   A recipe that returns the same board is no step and no save.</code></pre>
+<p><strong>Untuck shape</strong> to mirror for <code>enterConcept</code> (<code>stack.ts</code> lines 126–132):</p>
+<pre><code>export function untuckCard(board: Board, id: string, x: number, y: number): Board {
+  const oldRoot = rootOf(board, id).id;
+  const z = nextZ(board);
+  let next = replaceCard(board, id, (card) =&gt; ({ ...card, tuckedUnder: null, z, x, y }));
+  if (oldRoot !== id) next = layoutStack(next, oldRoot);
+  return layoutStack(next, id);
+}</code></pre>
+<p><strong>Upgrade registry</strong> (<code>upgrade.ts</code>): key n turns version n into n + 1; the runner sets <code>formatVersion</code> after each step.</p>
+<p><strong>Resize that commits once on release</strong> (<code>NoteView.tsx</code> lines 56–88): <code>setPointerCapture</code> on pointerdown, a local <code>live</code> size on pointermove, one <code>onResize</code> call on pointerup.</p>
+<p><strong>Per-deck color without hex</strong> (<code>DropHints.tsx</code> lines 215–221): <code>borderColor: `var(--deck-${deck})`</code>, <code>color: `var(--rail-${deck})`</code>; fills with <code>color-mix(in srgb, var(--chip-deck) 28%, transparent)</code>.</p>
+<p><strong>Naming:</strong> tests <code>functionName_condition_expectedResult</code>; a doc comment at the top of each module; Title Case UI labels ("Resize Concept", "One-Pager", "Free Form", "7 Cards"); sentence case help text. Icon-only buttons carry an <code>aria-label</code>. No <code>console.log</code>. No <code>any</code> without a reason comment.</p>
+<p><strong>Import rules:</strong> <code>features/card</code> never imports React Flow (ChipView is plain React). <code>features/boards</code> uses <code>Segmented</code> only through <code>@/features/settings</code>. <code>features/export</code> uses Concept helpers only through <code>@/features/canvas</code>. <code>shared/</code> imports no feature.</p>
+
+<h2>Implementation Plan</h2>
+<p><strong>Rendering:</strong> Milestones</p>
+<p><strong>Rationale:</strong> 15 tasks in natural layers: the format migration (riskiest, first), the board kind, the Concept panel (pure rules → view → interaction), the outputs, then regression and docs. Each milestone has a compound checkpoint; every task keeps its own VALIDATE.</p>
+
+<h3 class="milestone" data-milestone="1">Milestone 1: Board format version 2</h3>
+<p>The data model, both upgrade paths and the One-Pager import checks, with tests first.</p>
+<p><strong>Validation checkpoint:</strong> a version 1 record saved by a Dexie version 1 database and a version 1 board file both come out as the same Free Form version 2 board that passes <code>boardSchema</code>; a good One-Pager file passes and each bad case fails — <code>npx vitest run src/shared src/features/export</code> exits 0.</p>
+
+<h4 class="task" data-task="1">Task 1: Raise the board format to version 2 with kind, conceptWidth and inConcept, and the version 1 upgrade step</h4>
+<p>The model, the shared upgrade step, <code>UPGRADES[1]</code>, the Zod field shapes and every Card literal change together, so the type check and every existing test stay green after this task.</p>
+<ul>
+  <li><strong>UPDATE</strong> <code>src/shared/model/index.ts</code>: <code>FORMAT_VERSION = 2</code> (update its doc comment: version 2 added <code>kind</code>, <code>conceptWidth</code>, <code>inConcept</code> with <code>UPGRADES[1]</code> and Dexie version 2). Add <code>export const BOARD_KINDS = ['free', 'onePager'] as const; export type BoardKind = …</code>; <code>BOARD_KIND_NAME: Record&lt;BoardKind, string&gt; = { free: 'Free Form', onePager: 'One-Pager' }</code>; <code>CONCEPT_WIDTH = { min: 232, max: 640, default: 232 } as const</code>; <code>DECK_LANE_NAME: Record&lt;Deck, string&gt;</code> = Player Roles, Mechanics, Resources, Goals, Conflicts, Modifiers, Settings, Mood, Twist, Progression, Constraints. <code>Board</code> gains <code>kind: BoardKind</code> and <code>conceptWidth?: number</code> (One-Pager only). <code>Card</code> gains <code>inConcept: boolean</code> (doc: true while the card is a chip in the Concept panel; then <code>tuckedUnder</code> is null and x, y are kept but unused).</li>
+  <li><strong>CREATE</strong> <code>src/shared/model/upgradeV1.ts</code>: <code>export function upgradeBoardV1(record: Record&lt;string, unknown&gt;): Record&lt;string, unknown&gt;</code> — returns a new object with <code>formatVersion: 2</code>, <code>kind: 'free'</code>, and <code>cards</code> mapped to <code>{ ...card, inConcept: false }</code> when <code>cards</code> is an array (each plain-object element; others left as they are for Zod to reject). It never sets <code>conceptWidth</code>. Never mutates its input. Export it from <code>shared/model/index.ts</code>.</li>
+  <li><strong>CREATE</strong> <code>src/shared/model/upgradeV1.test.ts</code>: <code>upgradeBoardV1_version1Record_becomesFreeFormV2</code>, <code>upgradeBoardV1_everyCard_inConceptFalse</code>, <code>upgradeBoardV1_noConceptWidth</code>, <code>upgradeBoardV1_input_notMutated</code>, <code>upgradeBoardV1_cardsMissing_leftForZod</code>.</li>
+  <li><strong>UPDATE</strong> <code>src/features/export/upgrade.ts</code>: <code>UPGRADES = { 1: (file) =&gt; upgradeBoardV1(file) }</code>; update the header comment.</li>
+  <li><strong>UPDATE</strong> <code>src/features/export/upgrade.test.ts</code>: replace <code>upgradeBoardFile_version1File_returnsSameFile</code> and <code>UPGRADES_formatVersion1_hasNoSteps</code> with <code>upgradeBoardFile_version1File_becomesFreeFormV2</code> and <code>UPGRADES_version1_hasStep</code>; fix the comment in <code>upgradeBoardFile_version2File_returnsNull</code> (now <code>FORMAT_VERSION + 1</code> is 3).</li>
+  <li><strong>UPDATE</strong> <code>src/features/export/schema.ts</code> (shapes only; the One-Pager rules are Task 3): card <code>inConcept: z.boolean()</code>; board <code>kind: z.enum(BOARD_KINDS)</code>, <code>conceptWidth: z.number().optional()</code>. Update the header comment (format 2).</li>
+  <li><strong>UPDATE</strong> every Card and Board literal the type check flags: <code>src/shared/store/newBoard.ts</code> (<code>kind: 'free'</code> for now), <code>src/features/canvas/boardActions.ts</code> (<code>placeHookCard</code>, <code>splitCard</code>: <code>inConcept: false</code>), <code>src/features/draw/drawCard.ts</code>, <code>src/test/fixtures/boards.ts</code> (<code>fixtureCard</code>: <code>inConcept: false</code>; <code>fixtureBoard</code>: <code>kind: 'free'</code>), <code>src/shared/store/boardStore.test.ts</code> line ~174 and any other test literal. Run <code>npm run typecheck</code> until clean.</li>
+  <li><strong>ADD</strong> to <code>src/test/fixtures/boards.ts</code>: <code>version1BoardFile(): Record&lt;string, unknown&gt;</code> — a plain-JSON version 1 board (<code>formatVersion: 1</code>, no <code>kind</code>, cards with no <code>inConcept</code>), built from <code>roundTripBoard()</code> with those keys removed, so the import tests and Playwright share it.</li>
+  <li><strong>ADD</strong> to <code>src/features/export/importBoard.test.ts</code>: <code>parseBoardFile_version1File_importsAsFreeForm</code> (every card <code>inConcept: false</code>, <code>kind: 'free'</code>, no <code>conceptWidth</code>, cards and notes otherwise deep-equal to the source).</li>
+  <li><strong>GOTCHA:</strong> <code>Board.formatVersion</code> is typed <code>typeof FORMAT_VERSION</code>, so every Board literal now needs <code>2</code>; use <code>FORMAT_VERSION</code>, never a literal number. The story-name check bans <code>data-kind</code> anywhere in <code>src/</code>; the field name <code>kind</code> is fine.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npm run typecheck &amp;&amp; npx vitest run src/shared/model src/features/export src/shared/store &amp;&amp; npm test</code></li>
+</ul>
+
+<h4 class="task" data-task="2">Task 2: Upgrade saved boards with Dexie schema version 2</h4>
+<ul>
+  <li><strong>UPDATE</strong> <code>src/shared/storage/db.ts</code>: keep <code>this.version(1).stores({ boards: 'id', boardIndex: 'id, updatedAt' })</code> and add <code>this.version(2).stores({ boards: 'id', boardIndex: 'id, updatedAt' }).upgrade((tx) =&gt; tx.table('boards').toCollection().modify((record, ref) =&gt; { ref.value = upgradeBoardV1(record) as never; }))</code> with a typed cast and a comment saying why. The <code>boardIndex</code> table does not change. Update the header comment (schema version 2, its upgrade, and that a later change adds <code>version(3)</code> plus <code>UPGRADES[2]</code>).</li>
+  <li><strong>UPDATE</strong> <code>src/shared/storage/db.test.ts</code>: <code>db_freshDatabase_opensAtSchemaVersion2WithBothTables</code> (<code>verno === 2</code>). <strong>ADD</strong> <code>db_version1Record_upgradesToFreeFormV2</code>: open a test-only <code>class V1Db extends Dexie</code> named <code>DB_NAME</code> with only <code>version(1)</code>, put a version 1 record (from <code>version1BoardFile()</code> plus an index row), close it, then <code>openDb().open()</code> and read: <code>formatVersion 2</code>, <code>kind 'free'</code>, every card <code>inConcept false</code>, no <code>conceptWidth</code>, index row unchanged. <strong>ADD</strong> <code>db_version1Record_loadsThroughSeam</code> via <code>loadBoard</code> from <code>./boardStorage</code>.</li>
+  <li><strong>ADD</strong> to <code>src/shared/storage/boardStorage.test.ts</code> if a save round trip pins the record shape: assert a saved v2 board loads with <code>kind</code> and <code>inConcept</code> intact.</li>
+  <li><strong>GOTCHA:</strong> <code>shared/storage</code> may import <code>shared/model</code> only (never <code>features/export</code>), which is why the step lives in <code>shared/model</code>. In <code>modify</code>, assigning to the callback parameter does nothing; set <code>ref.value</code>. Close every handle in tests (<code>resetDbForTests</code> in <code>afterEach</code>).</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/shared/storage &amp;&amp; npm run typecheck</code></li>
+</ul>
+
+<h4 class="task" data-task="3">Task 3: Check One-Pager rules in the board file schema</h4>
+<ul>
+  <li><strong>UPDATE</strong> <code>src/features/export/schema.ts</code> board <code>superRefine</code>, adding issues (plain sentences, like the existing ones) when:
+    <ul>
+      <li>a One-Pager board has 0 Hook Cards or 2 or more ("A One-Pager board has exactly 1 Hook Card.");</li>
+      <li>a card with <code>inConcept: true</code> has <code>tuckedUnder</code> set ("A Concept card is never tucked.");</li>
+      <li>a Hook Card has <code>inConcept: true</code> ("A Hook Card is never in Concept.");</li>
+      <li>a card is tucked under a Concept card ("A card is tucked under a Concept card.");</li>
+      <li>a Free Form board has a card with <code>inConcept: true</code> or has <code>conceptWidth</code> ("Only a One-Pager board has a Concept panel.");</li>
+      <li><code>conceptWidth</code> is present and outside <code>CONCEPT_WIDTH.min</code>–<code>max</code> ("The Concept width is out of range."). A One-Pager file with no <code>conceptWidth</code> is allowed (the panel uses the default).</li>
+    </ul>
+  </li>
+  <li><strong>ADD</strong> to <code>src/test/fixtures/boards.ts</code>: <code>onePagerBoard()</code> — <code>kind: 'onePager'</code>, <code>conceptWidth: 232</code>, a Hook Card <code>hook-1</code> at (96, 96) with a Player Role and a Mechanic tucked under it, and Concept cards: 2 Resources (<code>resource-c1</code> "memories", <code>resource-c2</code> "rope", z ascending), 1 Setting chip <code>setting-c1</code> (plain, for the combine tests), 1 Mechanic chip; plus 1 loose Modifier (<code>modifier-1</code>, role deck) and 1 note. Every Concept card <code>tuckedUnder: null</code>, <code>inConcept: true</code>.</li>
+  <li><strong>ADD</strong> to <code>src/features/export/schema.test.ts</code>: <code>boardSchema_goodOnePager_passes</code>; <code>boardSchema_onePagerNoHook_fails</code>; <code>boardSchema_onePagerTwoHooks_fails</code>; <code>boardSchema_conceptCardTucked_fails</code>; <code>boardSchema_hookInConcept_fails</code>; <code>boardSchema_cardTuckedUnderConceptCard_fails</code>; <code>boardSchema_freeFormInConcept_fails</code>; <code>boardSchema_freeFormConceptWidth_fails</code>; <code>boardSchema_conceptWidthOutOfRange_fails</code> (231 and 641); <code>boardSchema_onePagerNoWidth_passes</code>; <code>boardSchema_missingKind_fails</code>; <code>boardSchema_missingInConcept_fails</code>.</li>
+  <li><strong>ADD</strong> to <code>importBoard.test.ts</code>: <code>parseBoardFile_badOnePager_null</code> (each bad case through the full text path) and <code>importedBoard_onePager_keepsKindAndWidth</code>.</li>
+  <li><strong>GOTCHA:</strong> no repair of a bad file (feature brief: a repair hides data loss) — reject only. The user sees the existing "This file is not a GameIdea board file. Nothing changed." message.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/export &amp;&amp; npm run typecheck</code></li>
+</ul>
+
+<h3 class="milestone" data-milestone="2">Milestone 2: Board kind</h3>
+<p>New Board makes either kind; a One-Pager board opens with its 1 Hook Card and can never get a second.</p>
+<p><strong>Validation checkpoint:</strong> in Chromium, New Board with One-Pager opens a board whose stored record has <code>kind: 'onePager'</code> and exactly 1 Hook Card, whose rail Hook Card button is disabled and whose Hook Card menu shows only Copy Hook and Redraw All; New Board with the default kind still gives a Free Form board with the empty-board guide — <code>npx playwright test tests/e2e/one-pager.spec.ts tests/e2e/persistence.spec.ts --project=chromium</code> exits 0.</p>
+
+<h4 class="task" data-task="4">Task 4: Make One-Pager boards from New Board with their Hook Card</h4>
+<ul>
+  <li><strong>UPDATE</strong> <code>src/shared/store/newBoard.ts</code>: options gain <code>kind?: BoardKind</code> (default <code>'free'</code>) and <code>hookId?: string</code> (for tests). A One-Pager board gets <code>conceptWidth: CONCEPT_WIDTH.default</code> and 1 Hook Card: <code>{ id: hookId ?? newId(), type: 'hook', x: 96, y: 96, z: 1, tuckedUnder: null, rings: [], onTopOf: null, locked: false, inConcept: false }</code> (export <code>ONE_PAGER_HOOK_SPOT = { x: 96, y: 96 }</code>). A Free Form board has no <code>conceptWidth</code> key. Update the doc comment.</li>
+  <li><strong>ADD</strong> tests in a new <code>src/shared/store/newBoard.test.ts</code>: <code>newBoard_default_isFreeFormWithNoCards</code>, <code>newBoard_onePager_hasExactlyOneHookCard</code>, <code>newBoard_onePager_defaultConceptWidth</code>, <code>newBoard_freeForm_noConceptWidthKey</code>.</li>
+  <li><strong>UPDATE</strong> <code>src/features/settings/index.ts</code>: <code>export { Segmented, type SegmentedOption } from './Segmented';</code></li>
+  <li><strong>UPDATE</strong> <code>src/features/boards/NewBoardDialog.tsx</code>: below the Name field and its help line, a "Kind" label (same label class as Name) and <code>&lt;Segmented label="Board Kind" value={kind} options={[{ value: 'onePager', label: 'One-Pager' }, { value: 'free', label: 'Free Form' }]} onChange={setKind} /&gt;</code>, default <code>'free'</code>, with the help line <code>NEW_BOARD_KIND_HELP_TEXT = 'A One-Pager board holds 1 game: 1 Hook Card and a Concept panel. The kind cannot change later.'</code> in the existing <code>.help</code> style. <code>onCreate(name, kind)</code>. Update the header comment. Enter still submits.</li>
+  <li><strong>UPDATE</strong> <code>src/features/boards/NewBoardDialog.module.css</code>: a section gap of 14 between the name block and the kind block (design 9.3 dialog gap 14), no new colors.</li>
+  <li><strong>UPDATE</strong> <code>src/features/boards/BoardList.tsx</code> <code>createBoard(name, kind)</code> → <code>newBoard({ name, kind })</code>.</li>
+  <li><strong>UPDATE</strong> <code>NewBoardDialog.test.tsx</code>: <code>newBoardDialog_default_freeFormChecked</code>, <code>newBoardDialog_pickOnePager_createsWithOnePager</code>, <code>newBoardDialog_arrowKey_switchesKind</code>; existing tests expect <code>onCreate</code> called with <code>('Name', 'free')</code>.</li>
+  <li><strong>UPDATE</strong> <code>tests/e2e/board-helpers.ts</code>: <code>createBoard(page, name = 'Test Board', kind: 'Free Form' | 'One-Pager' = 'Free Form')</code> clicks the radio by name when it is not the default; <code>openBoard(page, board?, kind?)</code> passes it through.</li>
+  <li><strong>CREATE</strong> <code>tests/e2e/one-pager.spec.ts</code> (doc comment at top) with <code>onePager_newBoard_opensWithItsHookCard</code> (1 Hook Card node, stored <code>kind 'onePager'</code>, <code>conceptWidth 232</code>) and <code>onePager_newBoardDefault_isFreeForm</code> (stored <code>kind 'free'</code>, empty-board guide visible).</li>
+  <li><strong>GOTCHA:</strong> <code>Segmented</code> styles live in <code>features/settings/Settings.module.css</code>; importing the component through the settings index brings them, so do not copy the CSS. <code>features/boards</code> must not deep-import <code>features/settings/Segmented</code>.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/shared/store src/features/boards &amp;&amp; npm run typecheck &amp;&amp; npm run lint &amp;&amp; npx playwright test tests/e2e/one-pager.spec.ts --project=chromium</code></li>
+</ul>
+
+<h4 class="task" data-task="5">Task 5: Limit the Hook Card menu and rail on a One-Pager board</h4>
+<ul>
+  <li><strong>UPDATE</strong> <code>src/features/hook/HookMenu.tsx</code>: <code>onDuplicate?</code> and <code>onDiscard?</code> become optional; each button renders only when its handler is given. Update the header comment (4 buttons on a Free Form board; Copy Hook and Redraw All only on a One-Pager board).</li>
+  <li><strong>UPDATE</strong> <code>src/features/canvas/CardNode.tsx</code> <code>HookBody</code>: read <code>state.board.kind</code>; on <code>'onePager'</code> pass no <code>onDuplicate</code>/<code>onDiscard</code>.</li>
+  <li><strong>UPDATE</strong> <code>src/features/draw/DeckButton.tsx</code> <code>HookButton</code>: optional <code>disabled</code> prop on the button (the existing disabled deck-button style). <code>src/app/board/SideRail.tsx</code>: a <code>hookDisabled</code> prop passed to it. <code>src/app/board/BoardScreen.tsx</code>: <code>hookDisabled={board.kind === 'onePager'}</code>, and <code>drawHook</code> returns early on a One-Pager board (belt and braces).</li>
+  <li><strong>CONFIRM</strong> (no code): <code>BoardScreen</code>'s <code>empty</code> is false on a One-Pager board because it starts with its Hook Card, so the Free Form guide panel never shows; the Hook Card's New state ("Tuck a Player Role under this card…" and the "Player Role goes here" slot) is the One-Pager start guide. Add a comment saying so at <code>showPanel</code>.</li>
+  <li><strong>ADD</strong> tests: <code>HookMenu.test.tsx</code> <code>hookMenu_noDuplicateOrDiscardHandlers_showsTwoButtons</code>; <code>SideRail.test.tsx</code> <code>sideRail_hookDisabled_hookButtonDisabled</code>; <code>DeckButton.test.tsx</code> <code>hookButton_disabled_noDraw</code>; <code>BoardScreen.test.tsx</code> <code>boardScreen_onePager_noEmptyGuide</code>.</li>
+  <li><strong>ADD</strong> to <code>tests/e2e/one-pager.spec.ts</code>: <code>onePager_hookMenu_copyAndRedrawOnly</code> (hover the Hook Card: Copy Hook and Redraw All present, no Duplicate, no Discard) and <code>onePager_railHookButton_disabled</code>. Free Form behavior is covered by the existing <code>hook.spec.ts</code>.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/hook src/features/draw src/app/board &amp;&amp; npm run typecheck &amp;&amp; npx playwright test tests/e2e/one-pager.spec.ts tests/e2e/hook.spec.ts --project=chromium</code></li>
+</ul>
+
+<h3 class="milestone" data-milestone="3">Milestone 3: The Concept panel</h3>
+<p>Pure rules first, then the panel view, then placement, drops and chip actions.</p>
+<p><strong>Validation checkpoint:</strong> in Chromium on a fresh One-Pager board: draw a Resource, drop it on the panel (a Resources lane appears with its chip), drop a role Modifier onto a Setting chip after seeing the result tag, double-click the chip out, drag it back in, drag it onto the Hook Train, resize the panel and reload — each step is exactly 1 undo step, the Hook sentence never includes a Concept card, and every existing Free Form spec still passes — <code>npx playwright test tests/e2e/one-pager.spec.ts tests/e2e/canvas-drop.spec.ts tests/e2e/modifier.spec.ts --project=chromium</code> exits 0.</p>
+
+<h4 class="task" data-task="6">Task 6: Add the pure Concept rules and skip Concept cards in stacks, drops, placement and Redraw All</h4>
+<ul>
+  <li><strong>CREATE</strong> <code>src/features/canvas/concept.ts</code> (read side; no React, no React Flow):
+    <ul>
+      <li><code>CONCEPT_GAP = 56</code>; <code>CONCEPT_NODE_ID = 'concept-panel'</code>.</li>
+      <li><code>onePagerHook(board): Card | null</code> — the Hook Card of a One-Pager board (null on Free Form).</li>
+      <li><code>conceptPlace(board): Point | null</code> — <code>{ x: hook.x + HOOK_WIDTH + CONCEPT_GAP, y: hook.y }</code> (design 9.15: Hook left + 240 + 56).</li>
+      <li><code>conceptWidth(board): number</code> — <code>board.conceptWidth ?? CONCEPT_WIDTH.default</code>, clamped.</li>
+      <li><code>conceptCards(board): Card[]</code> — <code>inConcept</code> cards.</li>
+      <li><code>conceptLanes(board): { deck: Deck; cards: Card[] }[]</code> — 1 lane per deck that has a Concept card, in <code>DECKS</code> order (= rail order), chips by <code>z</code> ascending.</li>
+      <li><code>onePagerCardCount(board): number</code> — Hook Train (<code>descendantsOf(board, hook.id).length</code>) plus Concept cards; not the Hook Card, not loose cards, not On Top cards.</li>
+      <li><code>titleCaseWords(text): string</code> — first letter of each space-separated word upper-cased ("stolen salt" → "Stolen Salt").</li>
+    </ul>
+  </li>
+  <li><strong>UPDATE</strong> skips (each with a one-line comment "Concept cards have no canvas place"):
+    <ul>
+      <li><code>nodes.ts</code> <code>toNodes</code>: roots filter adds <code>!card.inConcept</code>.</li>
+      <li><code>dropZones.ts</code> <code>paintOrder</code>: filter adds <code>!card.inConcept</code>.</li>
+      <li><code>placement.ts</code> <code>boardRects</code>: skip <code>inConcept</code> cards.</li>
+      <li><code>boardActions.ts</code> <code>redrawAll</code>: <code>if (card.locked || card.type === 'hook' || card.inConcept) continue;</code> (Concept cards are never descendants today; the guard pins the rule).</li>
+    </ul>
+  </li>
+  <li><strong>CREATE</strong> <code>src/features/canvas/concept.test.ts</code>: <code>conceptPlace_hookAt96_panelAt392</code>; <code>conceptPlace_freeForm_null</code>; <code>conceptLanes_mixedDecks_railOrder</code>; <code>conceptLanes_chips_zOrder</code>; <code>conceptLanes_emptyDeck_noLane</code>; <code>conceptWidth_absent_default232</code>; <code>onePagerCardCount_trainPlusConcept_excludesHookLooseAndOnTop</code>; <code>titleCaseWords_twoWords_capitalized</code>.</li>
+  <li><strong>ADD</strong> tests: <code>nodes.test.ts</code> <code>toNodes_conceptCard_noCardNode</code>; <code>dropZones.test.ts</code> <code>dropTarget_overConceptCardPlace_null</code>; <code>placement.test.ts</code> <code>boardRects_conceptCard_skipped</code>; <code>boardActions.test.ts</code> <code>redrawAll_conceptCards_unchanged</code>; <code>reading.test.ts</code> <code>hookSentences_onePager_ignoresConceptCards</code>.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/canvas &amp;&amp; npm run typecheck</code></li>
+</ul>
+
+<h4 class="task" data-task="7">Task 7: Add the Concept board actions: enter, leave, pop out, drag out, combine on a chip and resize</h4>
+<ul>
+  <li><strong>ADD</strong> to <code>src/features/canvas/concept.ts</code> (pure recipes; each throws on a broken precondition like <code>boardActions</code> does):
+    <ul>
+      <li><code>enterConcept(board, cardId)</code> — the card and every card in its own stack (<code>stackOrder</code>) get <code>tuckedUnder: null</code>, <code>inConcept: true</code>, and new top z values <code>nextZ + i</code> in stack order (so each becomes a chip in its own lane, in stack order). If the card was tucked, its old stack closes the gap (<code>layoutStack(oldRoot)</code>). On Top Modifiers keep <code>onTopOf</code> and stay <code>inConcept: false</code>. Throws for a Hook Card or on a Free Form board.</li>
+      <li><code>leaveConcept(board, cardId, at: Point)</code> — <code>inConcept: false</code>, <code>x, y = at</code>, top z.</li>
+      <li><code>popOutOfConcept(board, cardId, panel: Rect, occupied: Rect[])</code> — <code>leaveConcept</code> at <code>findOpenSpot({ x: panel.x + panel.width + GRID, y: panel.y }, [...occupied, panel], CARD_SIZE square)</code>.</li>
+      <li><code>dragOutOfConcept(board, cardId, point, dropAt, options: { snap?: boolean })</code> — <code>dropCard(leaveConcept(board, cardId, dropAt), cardId, point, dropAt, options)</code>, so a drop on the canvas places a full card (snap applies to the free drop) and a drop on a Hook Train card tucks, combines or goes on top by the normal rules.</li>
+      <li><code>chipDropAction(board, dragged, chip): 'combine' | 'onTop' | 'swap' | null</code> — null unless <code>dragged</code> is a Modifier and <code>chip</code> is a Concept Player Role, Resource or Setting; plain chip → <code>'combine'</code>; combined chip with no On Top → <code>'onTop'</code>; chip with an On Top Modifier → <code>'swap'</code>.</li>
+      <li><code>combineOntoChip(board, modifierId, chipId, dropAt: Point)</code> — first, each card tucked under the Modifier enters Concept (<code>enterConcept</code>); then by <code>chipDropAction</code>: <code>combineOnto</code>, <code>putOnTopOf</code>, or a chip swap (rings exchanged as <code>swapOnto</code> does, with the returned Modifier left on the canvas at <code>dropAt</code>, not beside the chip). Every result leaves the chip <code>inConcept</code> with <code>tuckedUnder: null</code>.</li>
+      <li><code>chipResultText(board, modifierId, chipId): string</code> — <code>titleCaseWords(cardText(next, chip))</code> on the trial board from <code>combineOntoChip</code> ("Stolen Salt").</li>
+      <li><code>resizeConcept(board, width)</code> — clamps and rounds to <code>CONCEPT_WIDTH</code>; returns the same board when unchanged (no undo step, no save).</li>
+      <li><code>conceptDrop(board, dragged, over: { panel: boolean; chipId: string | null }): { kind: 'enter' } | { kind: 'chip'; chipId: string } | { kind: 'stay' } | null</code> — null when not over the panel or on a Free Form board; a Hook Card → <code>'stay'</code>; a Modifier on a target chip → <code>'chip'</code>; any other Modifier → <code>'stay'</code>; every other deck card → <code>'enter'</code>.</li>
+    </ul>
+  </li>
+  <li><strong>UPDATE</strong> <code>boardActions.ts</code> <code>dropCard</code>: an optional <code>concept?: { panel: boolean; chipId: string | null }</code> in <code>options</code>. When <code>conceptDrop</code> is non-null: <code>enter</code> → <code>enterConcept</code>; <code>chip</code> → <code>combineOntoChip</code>; <code>stay</code> → the existing <code>move</code> branch at <code>dropAt</code> (snap applies), ignoring any card under the panel. Otherwise the existing path, unchanged for Free Form boards.</li>
+  <li><strong>EXPORT</strong> through <code>src/features/canvas/index.ts</code>: <code>conceptLanes</code>, <code>conceptCards</code>, <code>onePagerCardCount</code> (the export feature and the footer need them).</li>
+  <li><strong>ADD</strong> to <code>concept.test.ts</code>: <code>enterConcept_rootCard_inConceptTopZ</code>; <code>enterConcept_trainCard_trainClosesGap</code>; <code>enterConcept_cardWithTucked_eachBecomesChipInOwnLane</code>; <code>enterConcept_onTopModifier_keepsOnTopOf</code>; <code>enterConcept_hook_throws</code>; <code>leaveConcept_setsPlaceAndClearsFlag</code>; <code>popOutOfConcept_openSpotBesidePanel_noOverlap</code>; <code>dragOutOfConcept_onCanvas_fullCardAtDrop</code>; <code>dragOutOfConcept_onTrainCard_tucks</code>; <code>dragOutOfConcept_snap_onGrid</code>; <code>chipDropAction_modifierOnPlainSetting_combine</code>; <code>chipDropAction_modifierOnMechanicChip_null</code>; <code>chipDropAction_nonModifier_null</code>; <code>combineOntoChip_plainChip_mergedRingChipStays</code>; <code>combineOntoChip_modifierWithTucked_tuckedEnterConcept</code>; <code>combineOntoChip_combinedChip_onTop</code>; <code>combineOntoChip_chipWithOnTop_swapReturnsModifierAtDrop</code>; <code>chipResultText_salt_stolenSalt</code> (Modifier "stolen" on Resource "salt", fixtures built inline); <code>resizeConcept_clamps232And640</code>; <code>resizeConcept_sameWidth_sameBoard</code>; <code>conceptDrop_eachDeck_enter</code> (every non-Modifier deck); <code>conceptDrop_modifierOffChip_stay</code>; <code>conceptDrop_freeForm_null</code>; <code>dropCard_concept_enterIsOneChange</code>.</li>
+  <li><strong>GOTCHA:</strong> <code>combineOnto</code> re-tucks the Modifier's children under the target; move them into Concept first, or the chip ends up with tucked cards (which Task 3's schema rejects). Keep every new recipe free of React and React Flow so the rules hold if the canvas changes.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/canvas &amp;&amp; npm run typecheck</code></li>
+</ul>
+
+<h4 class="task" data-task="8">Task 8: Draw the Concept panel node with lanes and chips beside the Hook Card</h4>
+<ul>
+  <li><strong>CREATE</strong> <code>src/features/card/ChipView.tsx</code> + <code>ChipView.module.css</code>: <code>ChipView({ text, deck, targeted?, hidden? })</code> — an element with <code>data-type={deck}</code>, inline <code>--chip-deck: var(--deck-${deck})</code>; min-height 36, padding 8 12, radius 8, border 1 <code>var(--chip-deck)</code>, fill <code>color-mix(in srgb, var(--chip-deck) 28%, transparent)</code>, text Inter 13/600 line-height 18 <code>var(--text)</code>, <code>max-width: 100%</code>, wraps (<code>overflow-wrap: anywhere</code>). No icon, no buttons. <code>targeted</code>: outline 2 <code>var(--deck-modifier)</code>, offset 3. <code>hidden</code>: <code>visibility: hidden</code> (kept in layout while dragged). Export from <code>features/card/index.ts</code>. <strong>CREATE</strong> <code>ChipView.test.tsx</code>: <code>chipView_text_rendersNoIcon</code>, <code>chipView_targeted_hasOutlineAttr</code>.</li>
+  <li><strong>CREATE</strong> <code>src/features/canvas/ConceptNode.tsx</code> + <code>.module.css</code>: a React Flow node (<code>type: 'concept'</code>), <code>role="region"</code> <code>aria-label="Concept"</code>, <code>data-testid="concept-panel"</code>, class <code>nodrag nopan nowheel</code> on interactive parts. Width from node data; height grows with content. Panel: padding 16, radius 12 (<code>--radius-panel</code>), gap 12, fill <code>--surface</code>, border 1 <code>--border</code>, shadow <code>var(--shadow-card-raised)</code> (the same value as design's 0 8px 22px rgba(0,0,0,0.4)). Header: "Concept" (Display 12/600, 0.08em, uppercase, <code>--text-muted</code>) and the count pill (22 tall, padding 0 9, radius 11 <code>--radius-pill</code>, border 1 <code>--border-strong</code>, Inter 11/600 <code>--text</code>, "7 Cards"/"1 Card", <code>data-testid="concept-count"</code>), gap 8. Lanes from <code>conceptLanes</code>: label (<code>Icon</code> <code>TYPE_ICON[deck]</code> 14 + <code>DECK_LANE_NAME[deck]</code>, Inter 12/600, gap 6, color <code>var(--rail-${deck})</code> — the rail token already equals the card color in light mode), then a <code>&lt;ul aria-label={lane name}&gt;</code> of chips (flex wrap, gap 8), each <code>&lt;li data-testid="concept-chip" data-card-id=…&gt;</code> with <code>ChipView</code> and <code>cardText(board, card)</code>. Lane gap 6. Empty panel: header with "0 Cards" and the help line <code>CONCEPT_EMPTY_TEXT = 'Drop a card here to add it to the concept.'</code> (13, line-height 1.4, <code>--text-muted</code>). Export the text constants.</li>
+  <li><strong>UPDATE</strong> <code>nodes.ts</code>: <code>ConceptNodeData = { width: number }</code>, <code>ConceptFlowNode = Node&lt;ConceptNodeData, 'concept'&gt;</code> in <code>BoardFlowNode</code>. <code>toNodes</code> appends, on a One-Pager board with its Hook Card, <code>{ id: CONCEPT_NODE_ID, type: 'concept', position: conceptPlace(board), width: conceptWidth(board), zIndex: 1, draggable: false, selectable: false, data: { width } }</code> — above notes (0), below every card. <strong>ADD</strong> <code>nodes.test.ts</code>: <code>toNodes_onePager_conceptNodeBesideHook</code>, <code>toNodes_freeForm_noConceptNode</code>.</li>
+  <li><strong>UPDATE</strong> <code>BoardCanvas.tsx</code>: register <code>concept: ConceptNode</code> in <code>nodeTypes</code>. In <code>onNodesChange</code>, when the moved node is the One-Pager Hook Card, push an extra position change for <code>CONCEPT_NODE_ID</code> by the same delta, so the panel moves with the Hook Card during the drag (on drop, <code>moveCard</code> moves the hook and the panel is derived again). Every handler that assumes <code>card</code> or <code>note</code> keeps working: the panel is never dragged.</li>
+  <li><strong>CREATE</strong> <code>ConceptNode.test.tsx</code> (render the panel body with a store board, without React Flow, by exporting a <code>ConceptPanel</code> body component that <code>ConceptNode</code> wraps): <code>conceptPanel_lanes_railOrderWithPluralNames</code>, <code>conceptPanel_countPill_singularAndPlural</code>, <code>conceptPanel_empty_showsHelpLine</code>, <code>conceptPanel_combinedChip_readsWithAdjective</code>.</li>
+  <li><strong>ADD</strong> to <code>one-pager.spec.ts</code> (fixture <code>onePagerBoard()</code>): <code>onePager_panel_besideHookCard</code> (panel box left = hook box left + 296 × zoom, same top), <code>onePager_moveHookCard_panelFollows</code>, <code>onePager_lanes_railOrderAndChipText</code>, <code>onePager_lightMode_panelUsesSurface</code> (<code>test.use({ settings: { mode: 'light' } })</code>, background rgb(255,255,255)).</li>
+  <li><strong>GOTCHA:</strong> <code>ConceptNode</code> must not re-render on every unrelated card change: select a stable signature (for example <code>useShallow</code> over lane ids and chip texts). The 200-card perf fixture is Free Form, so the panel does not affect it, but keep the selector cheap. Never use the attribute name <code>data-kind</code>.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/card src/features/canvas &amp;&amp; npm run typecheck &amp;&amp; npm run lint &amp;&amp; npx playwright test tests/e2e/one-pager.spec.ts --project=chromium</code></li>
+</ul>
+
+<h4 class="task" data-task="9">Task 9: Keep new cards, notes and pop-outs off the Concept panel</h4>
+<ul>
+  <li><strong>ADD</strong> to <code>src/features/canvas/CanvasProvider.tsx</code> <code>CanvasApi</code>: <code>occupiedRects(): Rect[]</code> — <code>boardRects(board)</code> plus, on a One-Pager board, the panel rect from <code>flow.getInternalNode(CONCEPT_NODE_ID)</code> (<code>positionAbsolute</code> and <code>measured</code> width and height; before measurement, <code>conceptWidth</code> × 120). Also <code>conceptRect(): Rect | null</code> for the canvas. Export <code>Rect</code> from the canvas index if app/ needs the type.</li>
+  <li><strong>UPDATE</strong> <code>src/app/board/BoardScreen.tsx</code>: <code>draw</code>, <code>drawHook</code> and <code>addNoteNow</code> use <code>canvas.occupiedRects()</code> in place of <code>boardRects(board)</code> / <code>boardRects(b)</code>.</li>
+  <li><strong>ADD</strong> to <code>one-pager.spec.ts</code>: <code>onePager_drawWithViewCenteredOnPanel_cardLandsOffPanel</code> (pan so the view center is on the panel, draw a Mechanic, the card box does not intersect the panel box).</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npm run typecheck &amp;&amp; npx vitest run src/app &amp;&amp; npx playwright test tests/e2e/one-pager.spec.ts tests/e2e/board.spec.ts --project=chromium</code></li>
+</ul>
+
+<h4 class="task" data-task="10">Task 10: Route drops into the Concept panel with lane and chip hints</h4>
+<ul>
+  <li><strong>UPDATE</strong> <code>BoardCanvas.tsx</code>:
+    <ul>
+      <li>A helper <code>conceptOver(p: screen point): { panel: boolean; chipId: string | null }</code>: <code>panel</code> from the pointer's flow point inside <code>conceptRect()</code>; <code>chipId</code> from <code>document.elementsFromPoint(p.x, p.y)</code>, the first element with <code>[data-card-id]</code> inside <code>[data-testid="concept-panel"]</code>. Only on a One-Pager board.</li>
+      <li><code>onNodeDrag</code>: compute <code>conceptDrop</code>. On <code>enter</code>: set a Concept hint <code>{ lane: dragged.type }</code> and clear the canvas <code>DragHint</code>. On <code>chip</code> where <code>chipDropAction</code> is non-null: <code>{ chipId, result: chipResultText(…) }</code> (computed only when the chip changes). On <code>stay</code>: no hint at all. Otherwise the existing hint logic.</li>
+      <li><code>onNodeDragStop</code>: pass <code>{ concept: conceptOver(p) }</code> into <code>dropCard</code> options (one <code>changeBoard</code>, one undo step, one save). A note dropped on the panel stays a normal note move.</li>
+      <li>A <code>ConceptUiContext</code> (beside <code>CardNodeContext</code>) gives <code>ConceptNode</code> the hint: <code>{ lane: Deck | null; chipId: string | null; result: string | null }</code>. View state only, never in the store (design 13 <code>dropTargetChipId</code>).</li>
+    </ul>
+  </li>
+  <li><strong>UPDATE</strong> <code>ConceptNode.tsx</code>: with <code>hint.lane</code>, the lane for that deck shows (a new lane with its label when the panel has none), ending in a placeholder chip in the tuck-slot style: min-height 36, radius 8, border 2 dashed <code>var(--deck-x)</code>, fill <code>color-mix(in srgb, var(--deck-x) calc(var(--slot-fill-alpha) * 100%), transparent)</code> (or the existing slot CSS rule if it already composes the alpha), label "&lt;Deck&gt; goes here" Inter 12/600 <code>var(--rail-x)</code>, <code>data-testid="concept-slot"</code>. With <code>hint.chipId</code>: that chip's <code>ChipView targeted</code>, and above it a result tag <code>data-testid="chip-result"</code> showing <code>hint.result</code>: padding 4 8, radius 8, border 1 <code>var(--deck-modifier)</code>, fill <code>--surface</code>, Inter 12/700 <code>--zone-text</code>, <code>--shadow-menu</code>. No lane highlight (design 9.15).</li>
+  <li><strong>ADD</strong> to <code>one-pager.spec.ts</code>: <code>onePager_dropEachDeck_goesToItsLane</code> (draw each non-Modifier deck, drop on the panel, a chip in the right lane, stored <code>inConcept true</code>, <code>tuckedUnder null</code>); <code>onePager_dragOverPanel_laneAndSlotShow</code>; <code>onePager_dropTrainCardIntoPanel_trainClosesGap</code>; <code>onePager_modifierOverSettingChip_outlineAndResultTag</code> (tag text = Title Case of adjective + noun); <code>onePager_modifierOnChip_combines</code> (chip text reads with the adjective, the Modifier card is gone); <code>onePager_modifierOffChip_staysOnCanvas</code>; <code>onePager_noteOnPanel_noHint</code>; <code>onePager_eachDrop_oneUndoStep</code> (Ctrl+Z restores the card to the canvas or train); <code>onePager_redrawAll_conceptUnchanged</code>.</li>
+  <li><strong>GOTCHA:</strong> <code>elementsFromPoint</code> skips elements with <code>pointer-events: none</code>; chips keep pointer events. The dragged node is under the pointer too; search the whole list, not only the first element. Compute <code>chipResultText</code> only when the targeted chip changes (it runs a trial combine), to keep the drag at the 50 fps target.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npm run typecheck &amp;&amp; npx vitest run src/features/canvas &amp;&amp; npx playwright test tests/e2e/one-pager.spec.ts tests/e2e/canvas-drop.spec.ts tests/e2e/modifier.spec.ts --project=chromium</code></li>
+</ul>
+
+<h4 class="task" data-task="11">Task 11: Pop out, drag out and resize in the Concept panel</h4>
+<ul>
+  <li><strong>Pop-out.</strong> <code>ConceptNode</code> chips (<code>nodrag nopan</code>) call a <code>ConceptUiContext</code> action <code>popOut(cardId)</code> on <code>onDoubleClick</code>; <code>BoardCanvas</code> runs <code>changeBoard((b) =&gt; popOutOfConcept(b, id, conceptRect()!, canvasOccupied))</code>.</li>
+  <li><strong>Drag out.</strong> Chip <code>onPointerDown</code> (primary button) calls <code>startChipDrag(cardId, event)</code>. <code>BoardCanvas</code> listens on <code>window</code> for <code>pointermove</code>/<code>pointerup</code>/<code>pointercancel</code>: past <code>CLICK_DISTANCE</code> it marks the chip <code>hidden</code> and draws a ghost in a <code>ViewportPortal</code> at the pointer (the chip look with the 9.7 drag style: rotate 3°, scale 1.04, <code>--shadow-drag</code>); over a canvas card it shows the existing <code>DropHints</code> from <code>dropTarget</code>/<code>hintFor</code>; over the panel no hint. On release outside the panel: <code>changeBoard((b) =&gt; dragOutOfConcept(b, id, point, dropAt, { snap }))</code> with <code>dropAt</code> = pointer flow point minus 100, 100 (the full card centered on the pointer), <code>snap = getSettings().snap &amp;&amp; !event.altKey</code>. A release on the panel or a click changes nothing. Remove listeners on release and unmount.</li>
+  <li><strong>Resize.</strong> <code>ConceptNode</code> handle: a button <code>aria-label="Resize Concept"</code>, <code>data-testid="concept-resize"</code>, 24 × 44, radius 8, border 1 <code>--border-strong</code>, fill <code>--surface</code>, grip icon 14 <code>--text-muted</code> (design 7: a grip of 2 vertical lines; add a new <code>grip</code> SVG to <code>public/icons/</code> in the Lucide stroke style — 2 vertical lines, stroke 2.2, round caps — add <code>'grip'</code> to <code>IconName</code> in <code>src/shared/ui/Icon.tsx</code>, and update any icon-list test that pins the files), on the right edge, vertically centered, 12 outside the edge, <code>cursor: ew-resize</code>, <code>nodrag nopan</code>. MIRROR <code>NoteView</code> lines 56–88: pointer capture, live width = start + Δx / zoom clamped 232–640 (no snap), one <code>resize(width)</code> → <code>changeBoard((b) =&gt; resizeConcept(b, width))</code> on release.</li>
+  <li><strong>ADD</strong> to <code>one-pager.spec.ts</code>: <code>onePager_doubleClickChip_popsOutBesidePanel</code> (full card, right of the panel, no overlap, zoom unchanged); <code>onePager_dragChipToCanvas_fullCardAtDrop</code>; <code>onePager_dragChipOntoTrain_tucks</code> (the hook sentence now includes it); <code>onePager_dragChipBackIn_againAChip</code>; <code>onePager_resizePanel_widthSavedAfterReload</code>; <code>onePager_popOutDragOutResize_eachOneUndoStep</code>.</li>
+  <li><strong>GOTCHA:</strong> a chip double-click must not zoom the canvas; the <code>nopan</code> class makes React Flow's d3 filter refuse it — assert the zoom label is unchanged. Use <code>flow.getZoom()</code> for screen-to-flow deltas in the resize, or the width drifts when zoomed.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npm run typecheck &amp;&amp; npm run lint &amp;&amp; npx playwright test tests/e2e/one-pager.spec.ts --project=chromium</code></li>
+</ul>
+
+<h3 class="milestone" data-milestone="4">Milestone 4: Text file, board list and footer</h3>
+<p>The One-Pager shows up in every output.</p>
+<p><strong>Validation checkpoint:</strong> exporting the text file of <code>onePagerBoard()</code> from the app gives Hooks, then Concept with lanes in rail order, then Cards without any Concept card; the board list shows the One-Pager label on that board only; the footer reads "N cards · 1 hook · 1 concept" — <code>npx vitest run src/features/export src/features/boards src/features/canvas &amp;&amp; npx playwright test tests/e2e/one-pager.spec.ts tests/e2e/export.spec.ts --project=chromium</code> exits 0.</p>
+
+<h4 class="task" data-task="12">Task 12: Add the Concept section to the text file, the One-Pager label to the board list and the One-Pager footer counts</h4>
+<ul>
+  <li><strong>UPDATE</strong> <code>src/features/export/textFile.ts</code>: <code>cardLines</code> roots skip <code>inConcept</code> cards. New <code>conceptLines(board)</code>: for each lane of <code>conceptLanes</code>, the lane name (<code>DECK_LANE_NAME</code>), then <code>- &lt;cardText&gt;</code> per chip; lanes separated by a blank line. <code>boardText</code> order: name, Hooks, <strong>Concept</strong> (heading "Concept", blank line, lanes) — only on a One-Pager board with at least 1 Concept card — then Cards, then Notes. Update the header comment.</li>
+  <li><strong>ADD</strong> to <code>textFile.test.ts</code>: <code>boardText_onePager_conceptAfterHooksBeforeCards</code> (exact string), <code>boardText_onePager_cardsSectionSkipsConcept</code>, <code>boardText_conceptBullets_includeMergedAndOnTopAdjectives</code>, <code>boardText_freeForm_noConceptSection</code>, <code>boardText_onePagerEmptyPanel_noConceptSection</code>.</li>
+  <li><strong>UPDATE</strong> <code>src/features/boards/summary.ts</code>: <code>BoardSummary.kind</code>. <code>BoardCard.tsx</code>: on a One-Pager board, a label <code>&lt;span data-testid="board-kind-label" data-board-kind="onePager"&gt;One-Pager&lt;/span&gt;</code> in the top row after the name, styled like the Concept count pill (22 tall, padding 0 9, radius 11, border 1 <code>--border-strong</code>, Inter 11/600 <code>--text</code>, no shrink). The meta line and hook preview are unchanged. <strong>ADD</strong> <code>summary.test.ts</code> <code>summarize_onePager_kindOnePager</code>; <code>BoardList.test.tsx</code> <code>boardList_onePager_showsLabel</code>, <code>boardList_freeForm_noLabel</code>.</li>
+  <li><strong>UPDATE</strong> <code>src/features/canvas/CountBadge.tsx</code>: on a One-Pager board, <code>onePagerCountText(n)</code> = <code>"N cards · 1 hook · 1 concept"</code> (singular "1 card") with <code>n = onePagerCardCount(board)</code>; Free Form unchanged. <strong>ADD</strong> a unit test file or cases: <code>onePagerCountText_twelve_matchesDesign</code>, <code>onePagerCountText_one_singular</code>.</li>
+  <li><strong>ADD</strong> to <code>one-pager.spec.ts</code>: <code>onePager_footer_countsTrainPlusConcept</code>, <code>onePager_boardList_showsOnePagerLabel</code>, <code>onePager_textFile_hasConceptSection</code> (download through the Export menu, as <code>export.spec.ts</code> does).</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/export src/features/boards src/features/canvas &amp;&amp; npm run typecheck &amp;&amp; npx playwright test tests/e2e/one-pager.spec.ts tests/e2e/export.spec.ts --project=chromium</code></li>
+</ul>
+
+<h3 class="milestone" data-milestone="5">Milestone 5: Upgrade in the browser, regression and docs</h3>
+<p>Prove the upgrade on real browser storage, run every engine and target, and update the house docs.</p>
+<p><strong>Validation checkpoint:</strong> the full suite passes in Chromium, Firefox and WebKit, the timing project passes at its current limits, and the size check stays within 250 KB JS gzip — <code>npm run lint &amp;&amp; npm run format:check &amp;&amp; npm run typecheck &amp;&amp; npm test &amp;&amp; npm run build &amp;&amp; npm run size &amp;&amp; npm run test:e2e</code> exits 0.</p>
+
+<h4 class="task" data-task="13">Task 13: Add the browser upgrade and import tests and run the full regression with the targets</h4>
+<ul>
+  <li><strong>ADD</strong> to <code>one-pager.spec.ts</code>:
+    <ul>
+      <li><code>upgrade_version1Database_opensAsFreeForm</code>: <code>page.goto('/pools/role.json')</code> (same origin, no app code runs, so nothing opens Dexie first); in <code>page.evaluate</code> open raw IndexedDB <code>'gameidea'</code> at native version <strong>10</strong> (Dexie version 1 × 10), create stores <code>boards</code> (keyPath <code>id</code>) and <code>boardIndex</code> (keyPath <code>id</code>, index <code>updatedAt</code>), put <code>version1BoardFile()</code> with id <code>v1-board</code> and its index row, close. Then <code>page.goto('/#/board/v1-board')</code>: the board opens, its cards show, no Concept panel, the rail Hook Card button is enabled, and <code>storedBoards</code> reads <code>formatVersion 2</code>, <code>kind 'free'</code>, every card <code>inConcept false</code>.</li>
+      <li><code>import_version1BoardFile_opensAsFreeForm</code>: import <code>version1BoardFile()</code> through Import Board File (as <code>import.spec.ts</code>), open it, Free Form.</li>
+      <li><code>import_badOnePagerFile_bannerAndNothingChanged</code>: a One-Pager file with 2 Hook Cards shows the bad-file banner and the list is unchanged.</li>
+      <li><code>import_onePagerFile_roundTrips</code>: export a One-Pager board file and import it: new board, same kind, width and chips.</li>
+    </ul>
+  </li>
+  <li><strong>RUN</strong> <code>npm run lint &amp;&amp; npm run format:check &amp;&amp; npm run typecheck &amp;&amp; npm test &amp;&amp; npm run build &amp;&amp; npm run size</code>, then <code>fuser -k 4174/tcp 2&gt;/dev/null || true; npm run test:e2e</code> (Chromium, Firefox, WebKit) and <code>npx playwright test --project=chromium-timing</code>.</li>
+  <li><strong>CHECK:</strong> <code>tests/e2e/network.spec.ts</code> passes (no outside request); <code>src/test/storyNames.test.ts</code> passes (no <code>data-kind</code>); <code>grep -rn "@xyflow" src --include=*.ts --include=*.tsx | grep -v "src/features/canvas/"</code> is empty; <code>grep -rn "from 'zod'" src | grep -v "src/features/export/"</code> is empty.</li>
+  <li><strong>RECORD</strong> in this doc's Notes under "Execution notes": the JS size, the timing results and any existing test that needed a change.</li>
+  <li><strong>GOTCHA:</strong> keep the Phase 6 WebKit-only 300 ms limits on <code>board_drawAndTurn_under100ms</code> and <code>perf_ringTurn_updatesHookUnder100ms</code> exactly as they are; this phase neither tightens nor loosens them. If a fps test drops below 50, first check that <code>ConceptNode</code> is not re-rendering on every drag frame.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npm run lint &amp;&amp; npm run format:check &amp;&amp; npm run typecheck &amp;&amp; npm test &amp;&amp; npm run build &amp;&amp; npm run size &amp;&amp; (fuser -k 4174/tcp 2&gt;/dev/null || true) &amp;&amp; npm run test:e2e</code></li>
+</ul>
+
+<h4 class="task" data-task="14">Task 14: Update CLAUDE.md and the README for format version 2 and One-Pager boards</h4>
+<ul>
+  <li><strong>UPDATE</strong> <code>CLAUDE.md</code> Key Patterns: the "Board file format" bullet now says <code>formatVersion</code> is 2, with 1 upgrade step (<code>UPGRADES[1]</code>, shared with Dexie version 2 through <code>upgradeBoardV1</code> in <code>shared/model</code>); a further shape change adds Dexie <code>version(3)</code> and <code>UPGRADES[2]</code>. Add a "One-Pager" bullet: 2 board kinds; a One-Pager board has exactly 1 Hook Card and 1 Concept panel; Concept cards have <code>inConcept: true</code>, <code>tuckedUnder: null</code>, chip order by <code>z</code>; the panel place is derived from the Hook Card; stack, reading, drop and placement code skip Concept cards; never use the attribute name <code>data-kind</code>. Add the Concept panel to the <code>features/canvas/</code> line of the layout block. No AI attribution anywhere.</li>
+  <li><strong>UPDATE</strong> <code>README.md</code> usage: New Board asks One-Pager or Free Form; what the Concept panel does (drop, combine on a chip, double-click or drag out, resize); the text file's Concept section; and the upgrade note (export real boards before the first run of this version on port 4174; an older build cannot open the upgraded database).</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>grep -q "One-Pager" CLAUDE.md &amp;&amp; grep -q "UPGRADES\[1\]" CLAUDE.md &amp;&amp; grep -q "One-Pager" README.md &amp;&amp; npm run format:check</code></li>
+</ul>
+
+<h3 class="milestone" data-milestone="6">Commit, push, and open PR</h3>
+<h4 class="task" data-task="15">Task 15: Commit, push, and open PR</h4>
+<p>After every prior validation checkpoint has passed:</p>
+<ul>
+  <li><strong>IMPLEMENT:</strong> on branch <code>phase-7-one-pager</code>, stage and commit uncommitted changes with a descriptive message summarizing the phase, in the repository owner's voice; push with <code>git push -u origin phase-7-one-pager</code>; open a PR with <code>gh pr create --head phase-7-one-pager --title "Phase 7: One-Pager Board" --body "&lt;body&gt;"</code>.</li>
+  <li><strong>PR title format:</strong> <code>Phase 7: One-Pager Board</code>.</li>
+  <li><strong>PR body format:</strong> the Acceptance Criteria as a checklist with each box checked off, then a <code>Notes</code> section listing assumptions and trade-offs decided during execution, and the reminder that the user exports real boards on port 4174 before running this build there.</li>
+  <li><strong>GOTCHA:</strong> commits are authored solely by the user: no <code>Co-Authored-By</code> or session trailer and no AI attribution in the commit or PR body (CLAUDE.md "Commit Authorship"; the <code>/ship</code> flow rejects them). <code>gh</code> must be installed and authenticated.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>gh pr view --json number,title,state,headRefName</code> returns the new PR with <code>"state": "OPEN"</code> and <code>"headRefName": "phase-7-one-pager"</code>.</li>
+</ul>
+
+<h2>Testing Strategy</h2>
+<h3>Unit Tests</h3>
+<ul>
+  <li><strong>Upgrade (first):</strong> <code>upgradeBoardV1</code>; <code>UPGRADES[1]</code> through <code>upgradeBoardFile</code> and <code>parseBoardFile</code>; Dexie version 1 → 2 on fake-indexeddb, read directly and through <code>loadBoard</code>.</li>
+  <li><strong>Zod:</strong> a good One-Pager passes; each bad case fails (0 and 2 Hook Cards, tucked Concept card, Hook Card in Concept, card tucked under a Concept card, Free Form with Concept data, width out of range, missing fields).</li>
+  <li><strong>Concept rules:</strong> place, width, lanes (rail order, z order), counts, enter (root, train card, card with tucked cards, On Top kept), leave, pop-out (open spot, no overlap), drag-out (canvas, train tuck, snap), chip routing per deck, combine / On Top / swap on chips, result text, resize clamp and no-op.</li>
+  <li><strong>Skips:</strong> <code>toNodes</code>, <code>paintOrder</code>/<code>dropTarget</code>, <code>boardRects</code>, <code>redrawAll</code>, <code>hookSentences</code>, text-file Cards section.</li>
+  <li><strong>Views:</strong> <code>NewBoardDialog</code> kind, <code>HookMenu</code> with 2 buttons, <code>HookButton</code> disabled, <code>ChipView</code>, <code>ConceptPanel</code>, board list label, footer text.</li>
+</ul>
+<h3>Integration Tests</h3>
+<ul>
+  <li><code>tests/e2e/one-pager.spec.ts</code> in Chromium, Firefox and WebKit: make a One-Pager board; drop each deck into its lane; combine a Modifier onto a chip with the result tag; pop out by double-click; drag out to the canvas and onto the Hook Train; drag back in; resize and reload; move the Hook Card and the panel follows; Redraw All leaves Concept alone; each action is 1 undo step; footer, board list label and text file; light mode panel; version 1 database upgrade; version 1 file import; bad One-Pager import; One-Pager round trip.</li>
+  <li>Regression: every existing spec runs unchanged on Free Form boards (the default kind), including <code>canvas-perf.spec.ts</code> (200 cards) and <code>long-stack.spec.ts</code> (11-card stack).</li>
+</ul>
+<h3>Edge Cases</h3>
+<ul>
+  <li>A card with cards tucked under it dropped into the panel: each becomes a chip in its own lane, in stack order.</li>
+  <li>A Modifier with tucked cards combined onto a chip: its tucked cards become chips.</li>
+  <li>A chip with an On Top Modifier: the chip reads "tall frozen pilot"; popping it out brings the On Top Modifier along.</li>
+  <li>A Modifier dropped on a Mechanic chip or on empty panel space: it stays on the canvas where it was released; no outline.</li>
+  <li>A Hook Card or a note over the panel: no hint, a normal move.</li>
+  <li>A chip dragged and released on the panel, or clicked: no change, no undo step.</li>
+  <li>Resize released at the same width: no undo step, no save.</li>
+  <li>A chip double-click: no canvas zoom.</li>
+  <li>A version 1 file with a card that is not an object: <code>upgradeBoardV1</code> leaves it, and Zod rejects the file.</li>
+  <li>A One-Pager file with no <code>conceptWidth</code>: imports, panel at 232.</li>
+  <li>A loose card placed over the panel area: draws, notes and pop-outs avoid the measured panel; a drop with the pointer over the panel still routes to the panel.</li>
+</ul>
+
+<h2>Validation Commands</h2>
+<h3>Level 1: Syntax &amp; Style</h3>
+<pre><code>npm run lint
+npm run format:check
+npm run typecheck</code></pre>
+<h3>Level 2: Unit Tests</h3>
+<pre><code>npm test</code></pre>
+<h3>Level 3: Integration Tests</h3>
+<pre><code>fuser -k 4174/tcp 2&gt;/dev/null || true
+npm run test:e2e
+npx playwright test --project=chromium-timing</code></pre>
+<h3>Level 4: Manual Validation</h3>
+<pre><code>set -e
+npm run build
+npm run size
+grep -q "One-Pager" dist/assets/*.js
+! grep -rn "data-kind" src --include=*.ts --include=*.tsx --include=*.css
+! (grep -rn "@xyflow" src --include=*.ts --include=*.tsx | grep -v "src/features/canvas/")
+! (grep -rn "from 'zod'" src | grep -v "src/features/export/")
+npx playwright test tests/e2e/one-pager.spec.ts</code></pre>
+<h3>Level 5: Additional Validation (Optional)</h3>
+<p>None required. A Lighthouse first-load run is already covered by <code>tests/e2e/first-load.spec.ts</code>.</p>
+
+<h2>Acceptance Criteria</h2>
+<ul class="checklist">
+  <li data-checked="false"><code>FORMAT_VERSION</code> is 2; <code>Board.kind</code>, <code>Board.conceptWidth?</code> and <code>Card.inConcept</code> exist; Dexie schema version 2 and <code>UPGRADES[1]</code> both use <code>upgradeBoardV1</code>, with their tests written first.</li>
+  <li data-checked="false">Every existing board (saved record or version 1 file) opens unchanged as a Free Form board, and every existing test passes.</li>
+  <li data-checked="false">Zod rejects a One-Pager file with 0 or 2+ Hook Cards, a tucked Concept card, a Hook Card in Concept, a card tucked under a Concept card, Concept data on a Free Form board, or a width outside 232–640; a bad file shows the normal import message and nothing changes.</li>
+  <li data-checked="false">New Board offers One-Pager or Free Form (default Free Form); a One-Pager board starts with exactly 1 Hook Card; its Hook Card menu has Copy Hook and Redraw All only; the rail Hook Card button is disabled.</li>
+  <li data-checked="false">The Concept panel sits at Hook Card left + 296, same top, moves with the Hook Card, and matches design 9.15 (panel, header, count pill, lanes in rail order with plural names, chips in drop order) in both modes.</li>
+  <li data-checked="false">Any non-Modifier deck card dropped on the panel goes into its deck's lane (cards tucked under it come along as chips); the lane and a "goes here" placeholder show during the drag over the panel.</li>
+  <li data-checked="false">A Modifier over a Player Role, Resource or Setting chip shows the 2 px Modifier outline and a tag naming the result ("Stolen Salt"); the drop combines (or goes On Top, or swaps) and the chip reads with the adjective; a Modifier elsewhere on the panel stays on the canvas.</li>
+  <li data-checked="false">Double-click pops a chip out to an open spot beside the panel; dragging a chip out places a full card at the drop or tucks it into the Hook Train; the panel resizes from 232 to 640 and the width survives a reload.</li>
+  <li data-checked="false">Each drop into Concept, pop-out, drag out, combine onto a chip and resize is exactly 1 undo step and 1 save; Redraw All leaves every Concept card unchanged.</li>
+  <li data-checked="false">The text file has a Concept section (lanes in rail order, chips in lane order, merged and On Top adjectives) after Hooks; Cards skips Concept cards.</li>
+  <li data-checked="false">The board list shows a One-Pager label on One-Pager boards only; the footer reads "N cards · 1 hook · 1 concept" with N = Hook Train + Concept cards.</li>
+  <li data-checked="false">Speed, size (≤ 250 KB JS gzip) and privacy (no outside request) targets pass; the import rules hold (React Flow only in features/canvas, Zod only in features/export).</li>
+  <li data-checked="false">CLAUDE.md and README describe format version 2 and One-Pager boards.</li>
+</ul>
+
+<h2>Completion Checklist</h2>
+<ul class="checklist">
+  <li data-checked="false">All 15 tasks completed in order, each VALIDATE passing at its completion</li>
+  <li data-checked="false">Each milestone validation checkpoint passed</li>
+  <li data-checked="false">Level 1: lint, format check and type check exit 0</li>
+  <li data-checked="false">Level 2: <code>npm test</code> exits 0</li>
+  <li data-checked="false">Level 3: <code>npm run test:e2e</code> (3 engines) and the timing project pass</li>
+  <li data-checked="false">Level 4: build, size, grep checks and the One-Pager spec pass</li>
+  <li data-checked="false">Execution notes recorded in this doc's Notes</li>
+  <li data-checked="false">PR open with the checked Acceptance Criteria and Notes</li>
+</ul>
+
+<h2>Notes</h2>
+<h3>Architecture decisions this phase conforms to</h3>
+<p>No amendment and no local exception (feature brief "Architecture fit", rechecked at planning; no decision in <code>docs/architecture.html</code> is <code>data-status="open"</code>).</p>
+<ul>
+  <li><code>board-file-format</code> (expensive), <code>schema-shape</code> (moderate), <code>schema-versions</code> (cheap): the format changes through exactly 1 upgrade step from version 1 to 2 — Dexie <code>version(2)</code> with its <code>upgrade</code>, and <code>UPGRADES[1]</code> for files. Still 1 record per board; <code>boardIndex</code> unchanged.</li>
+  <li><code>storage-seam</code>, <code>storage-engine</code>: only <code>shared/storage</code> touches Dexie; the seam's functions are unchanged.</li>
+  <li><code>import-checks</code>, <code>import-policy</code>: Zod (only in features/export) rejects bad One-Pager files; import still always makes a new board.</li>
+  <li><code>module-layout</code>, <code>import-rules</code>, <code>architecture-pattern</code>: the panel is a React Flow node in features/canvas; the chip view in features/card (no React Flow); the kind choice in features/boards; no new folder; features talk through <code>index.ts</code>.</li>
+  <li><code>canvas-library</code>: the panel is 1 more flat node with manual z order; React Flow stays in features/canvas.</li>
+  <li><code>hook-sentence</code>: no change; Concept cards are in no stack.</li>
+  <li><code>undo-history</code>, <code>save-transaction</code>, <code>state-store</code>: each panel action is 1 <code>changeBoard</code> = 1 undo step and 1 save; hints and chip drag state are view state, never in the store.</li>
+  <li><code>nfr-targets</code>, <code>outside-code</code>: no new library; no outside request; the size check stays in force.</li>
+</ul>
+
+<h3>Decisions and assumptions</h3>
+<ul>
+  <li>ASSUMPTION: Slug <code>one-pager</code>, branch <code>phase-7-one-pager</code>. Authority: dev-plan-phase slug rules (short, from the PRD phase name "One-Pager Board").</li>
+  <li>ASSUMPTION: The version 1 → 2 step is one pure function, <code>upgradeBoardV1</code>, in <code>src/shared/model/upgradeV1.ts</code>, used by both Dexie (<code>shared/storage/db.ts</code>) and <code>UPGRADES[1]</code> (<code>features/export/upgrade.ts</code>). <code>shared/storage</code> may not import features, and the export feature may not import storage internals, so <code>shared/model</code> is the one place both can reach. This follows the <code>parseSettings</code> precedent of a small pure function in <code>shared/model</code>. Authority: architecture <code>import-rules</code> and <code>storage-seam</code> + codebase pattern.</li>
+  <li>ASSUMPTION: New Board defaults to Free Form. Every existing browser test makes boards through New Board without choosing, so they keep testing the unchanged Free Form board. The segmented control lists One-Pager first, then Free Form, in the order the docs name them. Authority: feature brief ("The layout and the default kind come from /dev-ui-update", not yet drawn, design §15) + smallest reversible option + the PRD validation "every existing test passes on Free Form boards".</li>
+  <li>ASSUMPTION: The kind choice reuses the Settings segmented control (design 9.11), exported from <code>features/settings/index.ts</code>. It has a "Kind" label in the Name label style and the help line "A One-Pager board holds 1 game: 1 Hook Card and a Concept panel. The kind cannot change later." The kind can never change after creation, so the dialog is the only place to say so. Authority: brief (segmented control in 9.11 for the kind choice) + design §15 (not drawn) + feature brief "Never: a change of kind".</li>
+  <li>ASSUMPTION: A new One-Pager board places its Hook Card at (96, 96) on the 24 px grid, so the Hook Card and its panel (at x 392) are in view at the default pan and zoom. Authority: smallest reversible option (design 9.15 fixes only the panel's offset from the Hook Card).</li>
+  <li>ASSUMPTION: The rail Hook Card button is disabled on a One-Pager board, not hidden. The rail keeps the same layout on both kinds, as design 8.2 says. Authority: design §15 ("hidden or disabled") + 8.2 + smallest reversible option.</li>
+  <li>ASSUMPTION: The One-Pager empty state is the Hook Card's existing New state (help line and "Player Role goes here" slot) plus an empty Concept panel with "0 Cards" and the help line "Drop a card here to add it to the concept." The Free Form guide panel never shows on a One-Pager board, because the board starts with a card. Authority: design §15 (not drawn) + design 9.2, 9.5 + smallest reversible option.</li>
+  <li>ASSUMPTION: The board list "One-Pager" label uses the Concept count pill style (22 tall, radius 11, border 1 <code>--border-strong</code>, 11/600 <code>--text</code>), after the board name in the card's top row. The meta line and its card count are unchanged for both kinds. Authority: brief (an existing tag/pill) + design 9.3, 9.15 + smallest reversible option (feature brief asks only for the label and the hook sentence).</li>
+  <li>ASSUMPTION: Lane names (design: "plural deck name", with examples Mechanics, Resources, Settings, Mood, Twist) are Player Roles, Mechanics, Resources, Goals, Conflicts, Modifiers, Settings, Mood, Twist, Progression, Constraints. Mood and Twist stay singular as the design shows. Progression stays singular to match. The text file uses the same names as lane headings. Authority: design 9.15 examples + smallest consistent extension.</li>
+  <li>ASSUMPTION: A lane appearing during a drag shows its label and a placeholder chip in the tuck-slot style ("&lt;Deck&gt; goes here", dashed 2 in the deck color, deck color at <code>--slot-fill-alpha</code>, radius 8). It shows only while the pointer is over the panel, so the panel does not change size on every drag. Authority: brief (existing tuck-slot hint style) + design 9.7, 9.15 + feature brief "During a drag, the lane for the dragged card's deck shows" + smallest reversible option.</li>
+  <li>ASSUMPTION: The combine hint that names the result ("Stolen Salt") is a small tag above the targeted chip. It has radius 8, border 1 <code>--deck-modifier</code>, fill <code>--surface</code>, text 12/700 <code>--zone-text</code> and <code>--shadow-menu</code>, and sits beside the design's drawn 2 px outline at offset 3. The text is the chip's would-be words in Title Case, computed by a trial combine. Authority: design 9.8 zone label, 9.15 drop target, §15 (not drawn) + feature brief example + CLAUDE.md Title Case for UI labels.</li>
+  <li>ASSUMPTION: A Modifier on a chip follows the full combine rules, not only the first combine. On a plain chip it combines. On a combined chip with no On Top Modifier it goes On Top. On a chip that already has an On Top Modifier it swaps, and the returned Modifier stays on the canvas where the dragged one was released. A chip is too small for 2 zones, and design 9.15 outlines any Player Role, Resource or Setting chip. Authority: feature brief ("by the rules of feature-modifier-decks.html") + design 9.15 + feature-modifier-decks.html.</li>
+  <li>ASSUMPTION: A Modifier combined onto a chip brings any cards tucked under it into the Concept panel as chips, the same as a card dropped into the panel brings its tucked cards. A Concept card never has tucked cards, and the schema rejects one that does. Authority: feature brief Drop routing ("brings them with it into the panel") + Rules (Concept cards have <code>tuckedUnder: null</code>) + smallest consistent option.</li>
+  <li>ASSUMPTION: A chip drag works through pointer events on the chip (<code>nodrag nopan</code>), not as a React Flow node, because chips are laid out by CSS wrap. A ghost chip in the 9.7 drag style follows the pointer while the original keeps its space hidden. On release the full card lands centered on the pointer (snap applies, Alt skips it), or tucks, combines or goes On Top by the normal drop rules. A release on the panel changes nothing. Authority: design §15 ("A chip being dragged out … not drawn") + design 9.7 + CLAUDE.md snap rule + smallest reversible option.</li>
+  <li>ASSUMPTION: The canvas finds the chip under the pointer with <code>document.elementsFromPoint</code>, and the panel from its measured React Flow node. Chip geometry is never computed in pure code. Authority: canvas-library (React Flow owns layout in features/canvas) + smallest option.</li>
+  <li>ASSUMPTION: The panel node has <code>zIndex</code> 1, above notes and below every card. A Modifier that stays on the canvas over the panel paints above it. A drop with the pointer over the panel routes to the panel even when a loose card lies under it. New draws, notes and pop-outs avoid the measured panel through <code>CanvasApi.occupiedRects()</code>. Authority: design 9.15 + feature brief Drop routing + smallest option.</li>
+  <li>ASSUMPTION: The panel shadow uses <code>var(--shadow-card-raised)</code>, whose value equals design 9.15's "0 8px 22px rgba(0, 0, 0, 0.4)", so no new token and no literal color. Chip and lane colors use <code>var(--deck-*)</code>, <code>var(--rail-*)</code> and <code>color-mix</code>. No new color token. Authority: brief ("Do not invent new color tokens") + CLAUDE.md color lint + design 5.</li>
+  <li>ASSUMPTION: The Zod checks add 3 rules beyond the feature brief's list. A card may not be tucked under a Concept card. A Free Form board may not carry Concept data (<code>inConcept: true</code> or <code>conceptWidth</code>). A <code>conceptWidth</code> must be within 232–640. A One-Pager file with no <code>conceptWidth</code> is allowed. Authority: feature brief Rules ("On a Free Form board, every card has inConcept: false, and conceptWidth is absent"; width 232–640) + import-checks.</li>
+  <li>ASSUMPTION: The text file puts the Concept section after Hooks and before Cards. The brief's example shows Concept right after the hook, and "after the hook and before Notes" holds either way. Headings keep the existing format ("Hooks", not "Hook"), with a blank line after the section heading and between lanes. A One-Pager board with an empty panel has no Concept section, as empty sections are left out today. Authority: feature brief Text file + existing textFile.ts format.</li>
+  <li>ASSUMPTION: The footer on a One-Pager board leaves out notes ("12 cards · 1 hook · 1 concept", exactly as design 9.15). On Top Modifiers do not count, because they are neither in the Hook Train nor in the panel. Authority: design 9.15 + feature brief footer rule.</li>
+  <li>ASSUMPTION: On Top Modifiers of a Concept card keep <code>inConcept: false</code> and their <code>onTopOf</code>. They have no place of their own, as today, and they come along on pop-out. Authority: feature brief Rules ("An On Top Modifier keeps its onTopOf on a Concept card").</li>
+  <li>ASSUMPTION: The resize handle grip (design 7: "grip with 2 vertical lines") is a new project SVG <code>public/icons/grip.svg</code> drawn in the Lucide stroke style (stroke 2.2, round caps), named <code>grip</code> in <code>IconName</code>. No Lucide icon in the vendored set draws exactly 2 vertical lines, and <code>tokens.test.ts</code> pins every icon file to stroke 2.2. Authority: design 7 ("pick the matching Lucide names when vendoring") + codebase icon tests + smallest option.</li>
+  <li>ASSUMPTION: The PRD Phase 7 bullets and checkboxes are ticked by dev-execute, not by a task. Authority: pipeline convention (Phase 6 Notes).</li>
+  <li>DECISION: The user's export of real boards on port 4174 before the first Phase 7 build is a user precondition (PRD risk table, feature brief). It is noted in the Phase Description, the README task and the PR body, not as a task step, because an unattended run has no user to ask and Playwright never touches the user's browser profile. Authority: PRD §13 + feature brief Migration.</li>
+</ul>
+
+<h3>Execution notes</h3>
+<p>(Filled during execution: JS size, timings, tests changed.)</p>
+
+</body>
+</html>
