@@ -30,7 +30,8 @@ src/
     draw/           deck buttons, grouped rail, draw logic (distinct cues), genre and target filters
     card/           card view, rings, rotate, cue text, lock control, type icons
     canvas/         React Flow setup, pan, zoom, drag, tuck, tuck hints, snap,
-                    connector badges and their word rules for the 12 card types
+                    connector badges and their word rules for the 12 card types,
+                    the One-Pager Concept panel (pure rules in concept.ts, the panel node)
     hook/           Hook Card: sentence builder (pure), selectable sentence, icon menu (Copy Hook and its fallback dialog, Redraw All, Duplicate, Discard)
     genres/         Genres tab content (on the Settings dialog), genre counts
     notes/          free-text notes with editable titles, Add note
@@ -101,7 +102,8 @@ Import rules (`import-rules` in `docs/architecture.html`). Do not break them:
 - **Hook sentence is a pure function** in `features/hook/`, computed on every change and never stored. It takes the stack in reading order and must not import React or React Flow. Never output a blank slot. Rules live in `docs/mvp-plan.html` (Hook sentence rules, Connector badges).
 - **Pools.** 11 JSON files in `public/pools/`, made once by a split of `docs/libraries/decks.json`. After the split the JSON is the source; never rerun the split over edited pools. The split changes cue text only by its 2 rules (lowercase the Constraint lead word, drop a leading the/a/an from Setting). Floors: 10 cues per genre per tagged deck, 20 per Modifier deck — enforced by the split and a unit test.
 - **Pool load failure** shows an error with Retry. Boards and saved cards still work; only deck buttons stop.
-- **Board file format is expensive to change.** `formatVersion` starts at 1 with no upgrade steps. A shape change needs an upgrade step. Import always creates a new board; a duplicate name gets "(imported)".
+- **Board file format is expensive to change.** `formatVersion` is 2, with 1 upgrade step: `UPGRADES[1]` for board files, shared with Dexie schema version 2 for saved records through `upgradeBoardV1` in `shared/model`. A further shape change adds Dexie `version(3)` and `UPGRADES[2]`. Import always creates a new board; a duplicate name gets "(imported)".
+- **One-Pager boards.** 2 board kinds, `free` (Free Form, every board made before format 2) and `onePager`, set at New Board and never changed. A One-Pager board has exactly 1 Hook Card and 1 Concept panel. Concept cards have `inConcept: true`, `tuckedUnder: null` and chip order by `z`; the panel's place is derived from the Hook Card (left + 296, same top) and only `conceptWidth` (232 to 640) is stored. Stack, reading, drop and placement code skip Concept cards, so the hook sentence never reads them. Each panel action is 1 `changeBoard`. Never use the attribute name `data-kind` (the story-name check bans it); use `data-board-kind`.
 - **Undo.** zundo, up to 100 steps per board, session only; clears on board change, reload and when another tab changes the board. Every user action is one step (Redraw All included). Genre and settings changes are never in undo.
 - **2 tabs.** After a save, post the board id on a BroadcastChannel; a tab showing that board reloads and shows the notice.
 - **Theme.** Settings set `<html data-mode data-theme>` before first render (local storage, so no dark flash). The theme color changes only the accent. The mode changes the chrome, card faces, tucked faces, the note and the Hook Card fill (design 4.5). Badges, rings, center icons and deck colors never change. Every card has a 1 px deck-color edge and a 14% deck tint; the Hook Card has none. Light-mode outlines use `--accent-text`; the Hook label uses the current mode's `--accent-text`.
