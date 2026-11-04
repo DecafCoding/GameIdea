@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Phase 6: Card Themes And Settings Tabs</title>
+  <style>
+    :root { --fg:#1a1a1a; --muted:#666; --accent:#2563eb; --done:#16a34a; --warn:#dc2626; --rule:#e5e7eb; }
+    body { font:16px/1.6 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; color:var(--fg); max-width:62rem; margin:2rem auto; padding:0 1.25rem; }
+    h1 { font-size:2rem; border-bottom:2px solid var(--rule); padding-bottom:.3rem; }
+    h2 { font-size:1.5rem; margin-top:2.5rem; border-bottom:1px solid var(--rule); padding-bottom:.2rem; }
+    h3.milestone { font-size:1.25rem; margin-top:2rem; color:var(--accent); }
+    h4.task { font-size:1.1rem; margin-top:1.5rem; }
+    dl.phase-meta { display:grid; grid-template-columns:max-content 1fr; gap:.25rem 1rem; }
+    dl.phase-meta dt { font-weight:600; color:var(--muted); }
+    code, pre { font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+    pre { background:#f6f8fa; padding:1rem; border-radius:6px; overflow:auto; }
+    code { background:#f6f8fa; padding:.1rem .3rem; border-radius:4px; }
+    pre code { background:none; padding:0; }
+    ul.checklist { list-style:none; padding-left:0; }
+    ul.checklist > li::before { content:"☐ "; color:var(--muted); }
+    ul.checklist > li[data-checked="true"]::before { content:"☑ "; color:var(--done); }
+    .validate { color:var(--done); font-weight:600; }
+    table { border-collapse:collapse; margin:.5rem 0 1rem; }
+    th, td { border:1px solid var(--rule); padding:.3rem .6rem; text-align:left; vertical-align:top; font-size:.92rem; }
+  </style>
+</head>
+<body>
+
+<h1 data-phase="6">Phase 6: Card Themes And Settings Tabs</h1>
+<p>The following plan should be complete, but validate documentation, codebase patterns, and task sanity before implementing. Pay special attention to naming of existing utils, types, and models — import from the right files.</p>
+
+<h2>Phase Description</h2>
+<p>Phase 6 (M6) comes from the 2026-11-04 design handoff (<code>docs/design-handoff-2026-11-04/</code>), folded into <code>docs/design-system.html</code>. It changes 3 things the user sees:</p>
+<ol>
+  <li><strong>Card themes.</strong> Card faces, tucked faces, the Hook Card fill and the note now follow the mode. In dark mode the cards are dark (<code>#2A2F38</code>). In light mode they stay cream and the Hook Card turns white. The "Hook" label uses the current mode's <code>--accent-text</code>. The theme color still changes only the accent. Badges, rings, center icons and deck colors never change (design 3 deviations 4 and 8, 4.5, 10.9).</li>
+  <li><strong>Deck tint.</strong> Every card and tucked card, on every board and in both modes, gets a 1 px inset edge in its deck card color and a 14% deck-color tint over the face (design 4.4, 9.4, 9.7). The Hook Card has no tint (9.5).</li>
+  <li><strong>Settings tabs.</strong> The Settings dialog is 900 wide and has 2 tabs, Appearance and Genres (9.11). The Genres panel's content moves into the Genres tab (9.10). The tab is disabled when no board is open. The rail loses the GENRES group, the Genres button and its count line (8.2). While the dialog is open, the rail Settings button shows pressed. The Mode help text and the New Board help line change.</li>
+</ol>
+<p>It also brings the docs and checks in line with the new theme rule: the Theme bullet in <code>CLAUDE.md</code>, the README, and the color lint (<code>scripts/check-css-colors.mjs</code>).</p>
+<p>Checked against the code at planning (2026-11-04):</p>
+<ul>
+  <li><strong>Already there:</strong> the full v1 token set in <code>src/shared/ui/tokens.css</code>, selected by <code>[data-mode]</code> / <code>[data-theme]</code>. Every card, Hook Card and note color is read through a token (<code>--card-*</code>, <code>--hook-*</code>, <code>--note-*</code>, <code>--zone-text</code>), so the mode switch needs token values, not component rewrites. Also there: the per-deck <code>--card-type</code> variable on <code>[data-type]</code> (<code>CardView.module.css</code> lines 7–49), the Settings dialog on the shared <code>Dialog</code> (<code>size="settings"</code>, 760), the Genres panel on <code>Dialog size="panel"</code>, the genre rules (<code>genreRules.ts</code>) and the count pills (<code>GenreCount</code>).</li>
+  <li><strong>Missing:</strong> dark-mode card, Hook Card and note values; the white light-mode Hook Card; <code>--note-border</code>, <code>--shadow-hook</code> and <code>--shadow-note</code>; the deck edge and tint; the light-mode Hook label (it is now hard-coded to the dark-mode accent text with 3 <code>/* fixed: */</code> lines in <code>HookCard.module.css</code> lines 49–61); the Settings tabs; the Genres tab; the disabled state; the pressed Settings button; the 900 width; the new help texts. The browser tests and docs still state the old "cards never change" rule (<code>tests/e2e/theme.spec.ts</code> line 112, <code>tests/e2e/shell.spec.ts</code> lines 76–92, <code>tests/e2e/card-test.spec.ts</code> line 164, <code>CLAUDE.md</code> "Theme", <code>README.md</code> lines 104–105, 120 and 130).</li>
+</ul>
+<p>The board format does not change. <code>FORMAT_VERSION</code> stays 1. Nothing new is stored: the Settings tab is view state, and genres keep their v1 place in the BoardRecord. The One-Pager board (Concept panel, chips, board kind, format version 2) is Phase 7 and is <strong>not</strong> part of this phase.</p>
+
+<h2>User Stories</h2>
+<ul>
+  <li>As a user who works in dark mode, I want dark cards, a dark Hook Card and dark notes, so that the board is not a wall of bright cream on a dark canvas.</li>
+  <li>As a user who works in light mode, I want cream cards and a white Hook Card with a readable "Hook" label in my theme color, so that the board looks right in daylight.</li>
+  <li>As a user scanning a stack, I want every card edged and tinted in its deck color, so that I can tell the decks apart at a glance in either mode.</li>
+  <li>As a user, I want genres on a tab of the Settings dialog, so that the rail is shorter and a setting I rarely change sits with the other settings.</li>
+  <li>As a user on the board list, I want the Genres tab to say it needs an open board, so that I know where genres apply.</li>
+  <li>As the owner, I want CLAUDE.md, the README, the token test and the color lint to state the new rule, so that later phases do not undo it.</li>
+</ul>
+
+<h2>Problem Statement</h2>
+<p>Cream cards on the dark canvas are too bright, and the user asked for dark cards. Cards of different decks look alike apart from the center icon. Genres take a whole rail group for a setting that is rarely used. Today the code, the tests and <code>CLAUDE.md</code> all pin the old rule ("cards, notes and the Hook Card never change"). So the change must update the tokens, the components, the tests and the house rules together.</p>
+
+<h2>Solution Statement</h2>
+<ul>
+  <li><strong>Tokens.</strong> Keep the v1 handoff body in <code>tokens.css</code> verbatim. Append one "2026-11-04 handoff" section after the existing blocks. It has a <code>:root</code> block with the dark values (the default mode) and a <code>[data-mode="light"]</code> block with the light values, for every token in design 4.5. It adds 3 tokens: <code>--note-border</code>, <code>--shadow-hook</code> and <code>--shadow-note</code>. <code>tokens.test.ts</code> pins every value against a table copied from design 4.5. A new contrast test checks the section 12 figures.</li>
+  <li><strong>Components.</strong> The Hook Card takes <code>--shadow-hook</code> and the plain <code>--accent-text</code> label. The note takes <code>--note-border</code>, <code>--shadow-note</code> and radius 12. The card gets the deck edge and tint as a <code>::before</code> layer over the face. A layer, not the card's own <code>box-shadow</code>, so the drag shadow and the Redraw All outline never remove it.</li>
+  <li><strong>Settings tabs.</strong> The shared <code>Dialog</code> gets a <code>tabs</code> slot between the title row and the caption. <code>features/genres</code> gets a <code>GenresTab</code> with the body of the old panel, and <code>GenresPanel</code> goes away. <code>SettingsDialog</code> gets an optional <code>genresTab</code> slot (caption, footer note, content). <code>app/board/BoardScreen</code> fills it. With no slot, the Genres tab is disabled. <code>features/settings</code> never imports <code>features/genres</code>, the same composition pattern Phase 3 used for the count pill.</li>
+  <li><strong>Rail.</strong> The Genres group and the <code>GenresButton</code> are removed. The Settings button gets <code>aria-haspopup="dialog"</code> and <code>aria-expanded</code>, and its pressed look keys off <code>aria-expanded="true"</code>.</li>
+  <li><strong>Rules.</strong> The color lint accepts a <code>/* fixed: */</code> literal only for a listed reason. It fails any CSS file outside <code>tokens.css</code> that defines a card, Hook Card or note token. <code>CLAUDE.md</code> and the README state the new theme rule.</li>
+</ul>
+
+<h2>Phase Metadata</h2>
+<dl class="phase-meta">
+  <dt>Phase Type</dt><dd data-field="type">Enhancement (visual theme change, UI restructure)</dd>
+  <dt>Estimated Complexity</dt><dd data-field="complexity">Medium</dd>
+  <dt>Primary Systems Affected</dt><dd data-field="systems">shared/ui (tokens, Dialog), features/card, features/hook, features/notes, features/genres, features/settings, features/boards, app/board (BoardScreen, SideRail), scripts/check-css-colors.mjs, tests/e2e, CLAUDE.md, README.md</dd>
+  <dt>Dependencies</dt><dd data-field="dependencies">Phase 1 (tokens.css, tokens.test.ts, color lint), Phase 3 (Genres panel, genre rules, count pills, shared Dialog sizes), Phase 5 (Settings dialog, settings store, theme attributes, theme.spec.ts); docs/design-system.html 2026-11-04 fold; no new npm dependency; gh CLI authenticated</dd>
+</dl>
+
+<h2>Context References</h2>
+
+<h3>Relevant Codebase Files — READ THESE BEFORE IMPLEMENTING</h3>
+<ul>
+  <li><code>CLAUDE.md</code> — import rules, the "Theme" bullet this phase rewrites, Title Case UI rule, test naming <code>functionName_condition_expectedResult</code>, commit authorship (no AI attribution).</li>
+  <li><code>docs/design-system.html</code> — the authority. §3 (deviations 4, 8, 11), §4.2 (accent text and outline rules), §4.4 (deck edge and tint table), §4.5 (card, Hook Card and note tokens by mode), §8.2 (rail without GENRES, Settings pressed), §9.3 (New Board help line), §9.4 (card), §9.5 (Hook Card, no tint), §9.7 (tucked faces), §9.8 (zone text), §9.10 (Genres tab), §9.11 (Settings dialog, tabs), §9.12 (note), §10.3 and §10.9 (undo, theme contracts), §12 (contrast figures), §16 M6.</li>
+  <li><code>docs/feature-settings-and-theme.html</code> — lines marked "Superseded 2026-11-04" (46, 56, 137, 146, 175, 210) lose to the design doc. Read the rest for unchanged rules (no undo, settings scope).</li>
+  <li><code>src/shared/ui/tokens.css</code> (lines 1–4 header, 55–74 card, Hook Card and note tokens, 113 <code>--shadow-card</code>, 124 <code>--zone-text</code>, 143–173 light block, 192 the stale Hook label comment, 203–209 user-override block) — where the v2 section goes.</li>
+  <li><code>src/shared/ui/tokens.test.ts</code> (lines 14–27, 83–96) — the verbatim-handoff and "extras are not colors" rules this phase extends.</li>
+  <li><code>src/features/card/CardView.module.css</code> (lines 1–78 deck type variable, face and tucked classes; 228–271 disc, tuck mark, lock) and <code>src/features/card/CardView.tsx</code> (lines 17–35 paper classes, 228–262 render) — the card element (<code>data-card</code>, <code>data-type</code>) that gets the tint layer.</li>
+  <li><code>src/features/canvas/CardNode.module.css</code> (lines 33–42) — <code>.lifted [data-card] { box-shadow: var(--shadow-drag) }</code> and the <code>.fresh</code> outline. This is why the tint must not live on the card's own <code>box-shadow</code>.</li>
+  <li><code>src/features/card/RingControl.module.css</code> (lines 45–66) — rings use <code>--card-face</code> for dividers and arrows. They follow the mode by token, with no edit.</li>
+  <li><code>src/features/canvas/DropHints.module.css</code> (line 30) — the combine zone label uses <code>--zone-text</code>.</li>
+  <li><code>src/features/hook/HookCard.module.css</code> (lines 1–61) — the Hook Card fill, the shadow (<code>--shadow-card</code>, to become <code>--shadow-hook</code>) and the 3 fixed label lines to remove.</li>
+  <li><code>src/features/notes/NoteView.module.css</code> (lines 1–34) — note radius (<code>--radius-dialog</code>), shadow (<code>--shadow-card-raised</code>) and header band.</li>
+  <li><code>src/shared/ui/Dialog.tsx</code> (whole file) and <code>Dialog.module.css</code> (lines 88–92 footer note, 121–166 <code>panel</code>, 168–195 <code>settings</code>, 197–216 open animation).</li>
+  <li><code>src/features/settings/SettingsDialog.tsx</code> (whole file) and <code>Settings.module.css</code> — the Appearance content. Line 82 has the Mode help text to change.</li>
+  <li><code>src/features/settings/index.ts</code> — the settings public surface.</li>
+  <li><code>src/features/genres/GenresPanel.tsx</code> (whole file), <code>GenresPanel.module.css</code>, <code>GenresPanel.test.tsx</code> — the content that becomes <code>GenresTab</code>.</li>
+  <li><code>src/features/genres/GenresButton.tsx</code>, <code>GenresButton.module.css</code>, <code>GenresButton.test.tsx</code> — to remove. <code>src/features/genres/index.ts</code> — exports to trim. <code>src/features/genres/genreRules.ts</code> — <code>genreCountText</code> is used only by <code>GenresButton</code>.</li>
+  <li><code>src/app/board/BoardScreen.tsx</code> (lines 63–186) — <code>genresOpenOn</code>, <code>settingsOpen</code>, <code>SideRail</code> props, the <code>GenresPanel</code> and <code>SettingsDialog</code> mounts. Also <code>BoardScreen.test.tsx</code>.</li>
+  <li><code>src/app/board/SideRail.tsx</code> (lines 1–104) and <code>SideRail.module.css</code> (lines 170–193), plus <code>SideRail.test.tsx</code>.</li>
+  <li><code>src/features/boards/NewBoardDialog.tsx</code> (line 18 <code>NEW_BOARD_HELP_TEXT</code>) and <code>NewBoardDialog.test.tsx</code> (line 24).</li>
+  <li><code>scripts/check-css-colors.mjs</code> (whole file) — the color lint.</li>
+  <li><code>tests/e2e/theme.spec.ts</code> (lines 1–123), <code>tests/e2e/shell.spec.ts</code> (lines 33–92), <code>tests/e2e/card-test.spec.ts</code> (lines 157–166), <code>tests/e2e/genres.spec.ts</code> (lines 1–60 helpers, tests at 55–154), <code>tests/e2e/board.spec.ts</code> (line 50), <code>tests/e2e/settings.spec.ts</code>, <code>tests/e2e/helpers.ts</code> (<code>backgroundRgb</code>, <code>expectRgbNear</code>), <code>tests/e2e/board-helpers.ts</code> (<code>openBoard</code>, <code>rail</code>, <code>cardById</code>).</li>
+  <li><code>src/test/fixtures/boards.ts</code> — <code>fixtureBoard</code>, <code>fixtureCard</code>, <code>fixtureNote</code>, <code>fixtureStack</code>.</li>
+  <li><code>README.md</code> (line 7 status; 104–105 Rail and Genres; 120–121 Mode and Theme Color; 130 tokens paragraph).</li>
+  <li><code>docs/phases/phase-3-genres.html</code> Notes (picked is view state, slot composition for the pill, shared Dialog sizes) and <code>docs/phases/phase-5-export-finish.html</code> Notes (fixed-literal Hook label, outline rule overrides, theme swatches).</li>
+</ul>
+
+<h3>New Files to Create</h3>
+<ul>
+  <li><code>src/shared/ui/contrast.test.ts</code> — WCAG contrast checks of the design 4.5 text pairs, with the deck tint composited, read from <code>tokens.css</code> (design §12 figures).</li>
+  <li><code>src/features/genres/GenresTab.tsx</code> (+ <code>GenresTab.module.css</code>, renamed from <code>GenresPanel.module.css</code>; + <code>GenresTab.test.tsx</code>, moved from <code>GenresPanel.test.tsx</code>) — the Genres tab body, with no dialog.</li>
+  <li><code>src/shared/ui/cssColorLint.test.ts</code> — self-tests of the color lint against temp folders.</li>
+  <li><code>src/features/settings/SettingsTabs.tsx</code> — the tab bar (<code>role="tablist"</code>), with tab buttons and the disabled Genres tab.</li>
+</ul>
+<p>Files removed: <code>src/features/genres/GenresPanel.tsx</code>, <code>GenresButton.tsx</code>, <code>GenresButton.module.css</code>, <code>GenresButton.test.tsx</code>.</p>
+
+<h3>Relevant Documentation — READ BEFORE IMPLEMENTING</h3>
+<ul>
+  <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/tabs/">WAI-ARIA APG: Tabs pattern</a> — <code>role="tablist"</code>, <code>role="tab"</code>, <code>aria-selected</code>, <code>aria-controls</code>, <code>role="tabpanel"</code>, <code>aria-labelledby</code>. Design 9.11 requires these roles.</li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-disabled">MDN: aria-disabled</a> — a disabled tab that stays focusable and shows its tooltip (design 9.10: <code>aria-disabled="true"</code> plus a tooltip).</li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/color-mix">MDN: color-mix()</a> — <code>color-mix(in srgb, var(--card-type) 14%, transparent)</code> for the tint. It is already used in <code>HookCard.module.css</code> and <code>NoteView.module.css</code>, and supported in all 3 Playwright engines.</li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow#inset">MDN: box-shadow inset</a> — the 1 px inset edge (design 4.4: "inset 1 px in the deck card color").</li>
+  <li><a href="https://www.w3.org/TR/WCAG22/#dfn-contrast-ratio">WCAG 2.2: contrast ratio</a> and <a href="https://www.w3.org/TR/WCAG22/#dfn-relative-luminance">relative luminance</a> — the formula for <code>contrast.test.ts</code>.</li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/getComputedStyle#pseudoelt">MDN: getComputedStyle pseudoElt</a> — <code>getComputedStyle(el, '::before')</code> to read the tint layer in browser tests.</li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-expanded">MDN: aria-expanded</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-haspopup">aria-haspopup</a> — the Settings rail button's open state.</li>
+</ul>
+
+<h3>Patterns to Follow</h3>
+<p><strong>Mode-selected tokens</strong> (<code>src/shared/ui/tokens.css</code> lines 143–160): dark is the <code>:root</code> default, and light overrides it under <code>[data-mode="light"]</code>. A later block of equal specificity wins:</p>
+<pre><code>/* Light mode base */
+[data-mode="light"] {
+  --bg: #F5F3EE;
+  --canvas: #ECE9E2;
+  ...
+}</code></pre>
+<p><strong>Per-deck variable</strong> (<code>CardView.module.css</code> lines 7–9). The tint reads <code>--card-type</code>, so it needs no per-deck rule:</p>
+<pre><code>[data-type='role'] {
+  --card-type: var(--deck-role);
+}</code></pre>
+<p><strong>Light-mode outline rule</strong> (<code>CardNode.module.css</code> lines 18–21), for the selected-tab underline:</p>
+<pre><code>:global([data-mode='light']) .selected {
+  outline-color: var(--accent-text);
+}</code></pre>
+<p><strong>Slot composition across features</strong> (<code>SideRail.tsx</code> lines 62–69, Phase 3). <code>app/</code> passes one feature's part into another's slot, so features never import each other:</p>
+<pre><code>&lt;DeckButton
+  ...
+  trailing={&lt;GenreCount id={pillId} count={count} /&gt;}
+  describedBy={showCount(count) ? pillId : undefined}
+/&gt;</code></pre>
+<p><strong>Module doc comment</strong> (every module): a short <code>/** … */</code> at the top that says what the module is for and cites the design section. CSS modules start with a <code>/* … */</code> comment, and literal sizes carry <code>/* design 9.x; no token */</code>.</p>
+<p><strong>Unit test style</strong> (<code>src/features/genres/GenresPanel.test.tsx</code>): Testing Library <code>render</code> / <code>screen</code> / <code>fireEvent</code>. Names follow <code>functionName_condition_expectedResult</code>.</p>
+<p><strong>Browser test style</strong> (<code>tests/e2e/theme.spec.ts</code>): <code>test.use({ settings: { mode, accent } })</code> per describe block, then <code>openBoard(page, board)</code> and <code>backgroundRgb</code> / <code>expectRgbNear</code> from <code>./helpers</code>.</p>
+
+<h2>Implementation Plan</h2>
+<p><strong>Rendering:</strong> Milestones</p>
+<p><strong>Rationale:</strong> 13 tasks fall into 3 sub-layers. First the token and component layer (card themes and tint), then the dialog and rail layer (Settings tabs), then the rules layer (lint, docs, full regression). Each milestone has its own integration check. Inside each milestone, tasks run top to bottom. Every task updates the existing tests it would otherwise break, so the suite stays green after each one.</p>
+
+<h3 class="milestone" data-milestone="1">Milestone 1: Card, Hook Card and note themes by mode, and the deck tint</h3>
+<p>Cards, tucked cards, the Hook Card and notes take the design 4.5 values for the current mode, and every card shows its deck edge and tint.</p>
+<p><strong>Validation checkpoint:</strong> in both modes and all 3 theme colors, one board with a Hook Card stack, a free card and a note renders the design 4.5 face, Hook Card and note colors. The tint layer is present on every card, the Hook Card has none, and badges and center icons are identical in all 6 combinations. Run: <code>npx vitest run src/shared/ui &amp;&amp; fuser -k 4174/tcp 2&gt;/dev/null || true; npx playwright test tests/e2e/theme.spec.ts tests/e2e/card-test.spec.ts tests/e2e/shell.spec.ts --project=chromium --project=firefox --project=webkit</code></p>
+
+<h4 class="task" data-task="1">Task 1: Add the card, Hook Card and note tokens for each mode and pin them in the token test</h4>
+<p>The tokens that design 4.5 says follow <code>data-mode</code>. The v1 body stays byte-for-byte, so the earlier token test still holds.</p>
+<ul>
+  <li><strong>UPDATE:</strong> <code>src/shared/ui/tokens.css</code> — append, after the existing user-override <code>:root</code> block (line 209) and before the reduced-motion <code>@media</code> block, a section headed <code>/* 2026-11-04 handoff (docs/design-system.html 4.5): card, tucked, Hook Card and note tokens follow data-mode. Dark is the default. */</code> with 2 blocks, in this order:
+    <table>
+      <tr><th>Token</th><th><code>:root</code> (dark)</th><th><code>[data-mode="light"]</code></th></tr>
+      <tr><td><code>--card-face</code></td><td>#2A2F38</td><td>#F4F0E6</td></tr>
+      <tr><td><code>--card-tucked-1</code> … <code>-4</code></td><td>#2A2F38 (all 4)</td><td>#F1ECE0 · #EFE9DC · #ECE6D8 · #E9E3D4</td></tr>
+      <tr><td><code>--card-cue</code></td><td>#A9ADB6</td><td>#5A5E68</td></tr>
+      <tr><td><code>--card-cue-active</code></td><td>#ECEAE4</td><td>#1B1E24</td></tr>
+      <tr><td><code>--card-adjective</code></td><td>#A88BE6</td><td>#6E48B5</td></tr>
+      <tr><td><code>--card-adjective-active</code></td><td>#A88BE6</td><td>#5B3F99</td></tr>
+      <tr><td><code>--card-divider</code></td><td>#4A505C</td><td>#D5CFC0</td></tr>
+      <tr><td><code>--zone-text</code></td><td>#C9B6F0</td><td>#4A2E86</td></tr>
+      <tr><td><code>--hook-bg</code></td><td>#2A2F38</td><td>#FFFFFF</td></tr>
+      <tr><td><code>--hook-text</code></td><td>#ECEAE4</td><td>#1B1E24</td></tr>
+      <tr><td><code>--shadow-hook</code> (new)</td><td>0 10px 26px rgba(0, 0, 0, 0.5)</td><td>0 8px 22px rgba(0, 0, 0, 0.18)</td></tr>
+      <tr><td><code>--note-bg</code></td><td>#2E2A22</td><td>#FBF6E4</td></tr>
+      <tr><td><code>--note-border</code> (new)</td><td>1px solid #4A4436</td><td>none</td></tr>
+      <tr><td><code>--note-label</code></td><td>#C9BFA6</td><td>#6B6355</td></tr>
+      <tr><td><code>--note-text</code></td><td>#ECEAE4</td><td>#1B1E24</td></tr>
+      <tr><td><code>--shadow-note</code> (new)</td><td>0 8px 22px rgba(0, 0, 0, 0.45)</td><td>0 8px 22px rgba(0, 0, 0, 0.4)</td></tr>
+    </table>
+    <code>--shadow-card</code> and <code>--slot-fill-alpha</code> are the same in both modes (design 4.5). They stay in the v1 body and are not redefined. Delete the stale line-192 comment ("The Hook label sits on the dark Hook Card in every mode…"). That line is outside the verbatim body: check it with <code>git diff</code>, and if the token test says it is inside, leave it and say so in Notes. Update the file header comment: the v1 body is verbatim, and later sections hold carried-over motion, user overrides and the 2026-11-04 mode tokens from design 4.5.</li>
+  <li><strong>UPDATE:</strong> <code>src/shared/ui/tokens.test.ts</code>:
+    <ul>
+      <li>Add <code>const MODE_TOKENS_2026_11_04: Record&lt;string, { dark: string; light: string }&gt;</code> holding exactly the table above (design 4.5), with a doc comment citing the section.</li>
+      <li>In <code>tokens_carriedOverTokens_areAllowedAndNotColors</code>, allow the names in <code>MODE_TOKENS_2026_11_04</code> as well (colors allowed only for those names).</li>
+      <li>Add <code>tokens_v2Section_darkDefaultsMatchDesign45</code> and <code>tokens_v2Section_lightValuesMatchDesign45</code>. Take the text after the v2 header comment, parse the <code>:root</code> block and the <code>[data-mode="light"]</code> block with the existing <code>definitions()</code> helper, and expect each to equal the table. Compare case-insensitively, with whitespace normalised inside <code>rgba(…)</code>.</li>
+      <li>Add <code>tokens_v2Section_comesAfterV1LightBlock</code>: the v2 light block's index is greater than the v1 <code>[data-mode="light"]</code> index, so it wins by order.</li>
+    </ul>
+  </li>
+  <li><strong>UPDATE (browser tests that pin the old rule):</strong>
+    <ul>
+      <li><code>tests/e2e/shell.spec.ts</code> <code>shell_themeAttributes_changeChromeNotCards</code> → rename to <code>shell_themeAttributes_changeChromeAndCardFace</code>. Dark default face <code>#2A2F38</code> before the switch. After Light + Green, <code>--card-face</code> is <code>#F4F0E6</code> and the card background is about <code>[244, 240, 230]</code>.</li>
+      <li><code>tests/e2e/card-test.spec.ts</code> line 164: the default (dark) card background is about <code>[42, 47, 56]</code>. Update the comment to "the mode's --card-face (design 4.5)".</li>
+      <li><code>tests/e2e/theme.spec.ts</code>: replace <code>cardsNotesBadgesHookUnchanged</code> with <code>theme_${mode}_${accent}_cardsNotesHookFollowModeOnly</code>. The card face, note and Hook Card fill equal the design 4.5 values for <code>mode</code>: dark <code>[42,47,56]</code> / <code>[46,42,34]</code> / <code>[42,47,56]</code>; light <code>[244,240,230]</code> / <code>[251,246,228]</code> / <code>[255,255,255]</code>. The badge fill and the center icon (<code>type-disc</code>) background equal the dark-orange baseline read on the same page (keep the existing baseline trick for those 2 only). Update the file doc comment to the new rule.</li>
+    </ul>
+  </li>
+  <li><strong>GOTCHA:</strong> <code>:root</code> and <code>[data-mode="light"]</code> have the same specificity (0,1,0), so the light block must come after the dark block. Do not move or reformat anything in the v1 body. <code>tokens_handoffBody_isCopiedVerbatim</code> must still pass. <code>tokens.css</code> is in <code>.prettierignore</code>. Keep it that way.</li>
+  <li><strong>GOTCHA:</strong> the Hook Card and note colors switch at once in this task. Their component CSS changes (label, shadows, border) come in Task 3. Until then the light-mode Hook label still shows the fixed dark-mode accent text on the now-white Hook Card. That is expected for one task.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/shared/ui/tokens.test.ts &amp;&amp; npm run lint &amp;&amp; fuser -k 4174/tcp 2&gt;/dev/null || true; npx playwright test tests/e2e/shell.spec.ts tests/e2e/card-test.spec.ts tests/e2e/theme.spec.ts --project=chromium</code></li>
+</ul>
+
+<h4 class="task" data-task="2">Task 2: Add a contrast test for card, Hook Card and note text in both modes</h4>
+<p>The PRD pass bar is "the contrast values in design-system section 12 hold". This test makes that a durable check, read from the real token file.</p>
+<ul>
+  <li><strong>CREATE:</strong> <code>src/shared/ui/contrast.test.ts</code>, with a doc comment citing design §12 and §4.4.
+    <ul>
+      <li>Helpers: <code>hex(color)</code> → <code>[r,g,b]</code>; <code>relativeLuminance</code> and <code>contrast(a, b)</code> per WCAG 2.2; <code>over(top, bottom, alpha)</code> for straight alpha compositing.</li>
+      <li><code>tokenValue(mode, name)</code>: reads <code>tokens.css</code>. For dark, the last <code>:root</code> definition wins. For light, the last <code>[data-mode="light"]</code> definition wins, falling back to the dark value. Resolve <code>var(--deck-x)</code> one level.</li>
+      <li><code>tintedFace(mode, deck)</code> = <code>over(deckColor, --card-face, 0.14)</code> (design 4.4).</li>
+    </ul>
+  </li>
+  <li><strong>Tests</strong>, each with the design §12 figure minus 0.1 for rounding. The thresholds are the measured figures, not new targets:
+    <ul>
+      <li><code>contrast_darkActiveCueOnFace_atLeast11_1</code> (#ECEAE4 on #2A2F38; design 11.2).</li>
+      <li><code>contrast_darkInactiveCueOnFace_atLeast5_9</code> (design 6.0) and <code>contrast_darkAdjectiveOnFace_atLeast4_7</code> (design 4.8), on the untinted face.</li>
+      <li><code>contrast_darkInactiveCueOnTintedFace_atLeast5_2ForEveryDeck</code> (design "5.3:1 or better").</li>
+      <li><code>contrast_lightInactiveCueOnTintedFace_atLeast4_6ForEveryDeck</code> (design "4.7:1 or better"; computed minimum 4.66 on Conflict).</li>
+      <li><code>contrast_activeCueOnEveryTintedFaceAndTuckedFace_atLeast4_5</code>, in both modes, for all 11 decks and all 4 tucked levels. A tucked strip shows its active cue.</li>
+      <li><code>contrast_darkNote_textAtLeast11_8_labelAtLeast7_7</code> (design 11.9 and 7.8).</li>
+      <li><code>contrast_lightHookSentence_atLeast16_6</code> (design 16.7) and <code>contrast_hookLabelAccentText_atLeast4_9EveryThemeBothModes</code>: label <code>--accent-text</code> of each mode and accent on that mode's <code>--hook-bg</code>. Design light 5.0–6.1. Dark is about 7.4–8.4.</li>
+    </ul>
+  </li>
+  <li><strong>GOTCHA:</strong> at planning, the dark adjective on a <em>tinted</em> face computes to 4.28–4.45:1. Design §12 states 4.8:1 only for the untinted face. Do not assert 4.5 on the tinted adjective, and do not change a token (the design doc owns values). The figure is recorded in Notes for the next design session.</li>
+  <li><strong>GOTCHA:</strong> the accent-text values sit in the v1 body's combined selectors (<code>[data-mode="light"][data-theme="blue"]</code> and so on, lines 176–190). Read them from those selectors, or copy the 6 values into the test from design 4.2 with a comment. Copying is simpler and acceptable.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/shared/ui/contrast.test.ts &amp;&amp; npm run typecheck &amp;&amp; npm run lint</code></li>
+</ul>
+
+<h4 class="task" data-task="3">Task 3: Give the Hook Card and the note their by-mode look</h4>
+<ul>
+  <li><strong>UPDATE:</strong> <code>src/features/hook/HookCard.module.css</code>:
+    <ul>
+      <li>Remove the 3 <code>:global([data-mode='light'…]) .label</code> rules with the fixed literals (lines 49–61). The label keeps <code>color: var(--accent-text)</code>, which now gives the current mode's value (design 4.2, 9.5).</li>
+      <li><code>.hook</code> <code>box-shadow: var(--shadow-hook)</code> (was <code>--shadow-card</code>).</li>
+      <li>Update the header and label comments: "Dark in dark mode, white in light mode (design 9.5, 2026-11-04). No deck tint." Radius 7 via <code>--radius-card</code>, not "radius 14".</li>
+    </ul>
+  </li>
+  <li><strong>UPDATE:</strong> <code>src/features/notes/NoteView.module.css</code> <code>.note</code>: <code>border: var(--note-border)</code>, <code>box-shadow: var(--shadow-note)</code>, and <code>border-radius: var(--radius-panel)</code> (12, design 9.12; was <code>--radius-dialog</code> 14). Change <code>.header</code>'s top radius to <code>var(--radius-panel)</code> to match. Keep the header-band and body layout from earlier phases.</li>
+  <li><strong>UPDATE:</strong> <code>tests/e2e/theme.spec.ts</code> — add <code>theme_${mode}_${accent}_hookLabelUsesModeAccentText</code> to the 6-combination loop. The Hook Card "Hook" label color equals <code>--accent-text</code> for that mode and accent: dark <code>#F6B08A / #A9C8FF / #8FDDB5</code>, light <code>#B4531A / #2B5FB8 / #1F7A4F</code>. In the same loop, assert the note border: dark <code>border-top-width</code> 1px and color about <code>[74,68,54]</code>; light <code>border-top-style</code> <code>none</code>. If the Phase 5 test that asserted the old fixed label exists, find it with <code>grep -rn "f6b08a\|246, 176, 138" tests/e2e</code> and replace it.</li>
+  <li><strong>GOTCHA:</strong> the color lint must still pass after the fixed lines go. <code>npm run lint</code> runs <code>check-css-colors.mjs</code>.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/hook src/features/notes &amp;&amp; npm run lint &amp;&amp; ! grep -n "fixed: Hook label" src/features/hook/HookCard.module.css &amp;&amp; fuser -k 4174/tcp 2&gt;/dev/null || true; npx playwright test tests/e2e/theme.spec.ts tests/e2e/notes.spec.ts tests/e2e/hook.spec.ts --project=chromium</code></li>
+</ul>
+
+<h4 class="task" data-task="4">Task 4: Add the deck-color edge and 14% tint to every card and tucked card</h4>
+<p>Design 4.4: "Inset 1 px in the deck card color" plus "Deck card color at 14%, laid over the face", on every card face and tucked face, on every board, in both modes. The Hook Card has none.</p>
+<ul>
+  <li><strong>UPDATE:</strong> <code>src/features/card/CardView.module.css</code>:
+    <ul>
+      <li>Add a tint layer on <code>.card::before</code>: <code>content: ''</code>, <code>position: absolute</code>, <code>inset: 0</code>, <code>z-index: 0</code>, <code>border-radius: inherit</code>, <code>pointer-events: none</code>, <code>background: color-mix(in srgb, var(--card-type) 14%, transparent)</code>, <code>box-shadow: inset 0 0 0 1px var(--card-type)</code>. Comment it: design 4.4 tint and edge, kept off the card's own box-shadow so the drag shadow (<code>CardNode.module.css</code> <code>.lifted</code>) and the Redraw All outline never remove it.</li>
+      <li>Fix the stale comment at lines 3–6 ("The face itself is the cream --card-face in every deck") → "The face is the mode's --card-face (design 4.5), tinted and edged in the deck card color (4.4)."</li>
+      <li>Check the stacking: <code>.face</code> (z 1), <code>.tuckMark</code> (z 2), <code>.disc</code> (z 3) and <code>.lockMark</code> (z 4) stay above the layer. Check that the <code>RingControl</code> SVG and the tuck lock button paint above it too. If one sits at z-index auto, give the layer <code>z-index: 0</code> and that element <code>position: relative; z-index: 1</code>.</li>
+    </ul>
+  </li>
+  <li><strong>ADD:</strong> <code>tests/e2e/theme.spec.ts</code> — <code>theme_${mode}_${accent}_everyCardHasDeckTintAndHookNone</code>. For <code>setting-1</code> (free), <code>role-1</code> and <code>goal-1</code> (tucked), read <code>getComputedStyle(el, '::before')</code>. Its <code>background-color</code> is the deck color at alpha 0.14 (parse <code>rgba(…)</code> or <code>color(srgb …)</code>, so accept either serialisation; compare RGB within 2 and alpha within 0.01). Its <code>box-shadow</code> contains <code>inset</code> and the deck RGB. The Hook Card element's <code>::before</code> has no deck background (<code>content</code> is <code>none</code>, or the background is transparent).</li>
+  <li><strong>ADD:</strong> <code>tests/e2e/theme.spec.ts</code> — <code>theme_drag_tintStaysOnLiftedCard</code> (dark orange only): start a mouse drag on <code>setting-1</code> (down, move 40 px, no up). The <code>::before</code> background is still the 14% deck color. Release.</li>
+  <li><strong>GOTCHA:</strong> <code>backgroundRgb(card)</code> keeps returning the face token, because the tint is on the pseudo-element. Existing card-color tests stay valid. Do not put the tint into the card's <code>background</code> with a gradient: the tucked paper classes and <code>RingControl</code> read <code>--card-face</code> directly.</li>
+  <li><strong>GOTCHA:</strong> performance. One pseudo-element per card with no filter or blur. Re-run the 200-card perf test in this task to prove ≥ 50 fps is kept.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/card &amp;&amp; npm run lint &amp;&amp; fuser -k 4174/tcp 2&gt;/dev/null || true; npx playwright test tests/e2e/theme.spec.ts tests/e2e/card-test.spec.ts tests/e2e/canvas-drop.spec.ts tests/e2e/modifier.spec.ts --project=chromium &amp;&amp; npx playwright test tests/e2e/canvas-perf.spec.ts --project=chromium-timing</code></li>
+</ul>
+
+<h3 class="milestone" data-milestone="2">Milestone 2: Settings tabs, the Genres tab and the rail</h3>
+<p>Genres move into the Settings dialog. The rail loses its Genres group and shows Settings pressed while the dialog is open.</p>
+<p><strong>Validation checkpoint:</strong> on a board, the rail has no Genres heading or button. Settings opens 900 wide on Appearance, with the Settings button pressed. Switching to Genres and turning a top chip off updates the Mechanic count pill at once. The change survives a reload and is not undone by Ctrl+Z. Rendered with no board, the Genres tab is <code>aria-disabled</code> with the tooltip. Run: <code>npx vitest run src/shared/ui src/features/settings src/features/genres src/app &amp;&amp; fuser -k 4174/tcp 2&gt;/dev/null || true; npx playwright test tests/e2e/genres.spec.ts tests/e2e/settings.spec.ts tests/e2e/shell.spec.ts tests/e2e/board.spec.ts --project=chromium --project=firefox --project=webkit</code></p>
+
+<h4 class="task" data-task="5">Task 5: Give the shared Dialog a tabs slot and make the Settings size 900 wide</h4>
+<ul>
+  <li><strong>UPDATE:</strong> <code>src/shared/ui/Dialog.tsx</code> — add an optional <code>tabs?: ReactNode</code> prop, rendered inside <code>.header</code> after <code>.headerRow</code> and before the caption. Update the doc comment: settings is the Settings dialog (design 9.11), 900 wide; tabs sit under the title row and the caption under the tabs.</li>
+  <li><strong>UPDATE:</strong> <code>src/shared/ui/Dialog.module.css</code>:
+    <ul>
+      <li><code>.settings</code> width <code>min(900px, calc(100% - 32px))</code>. Comment: design 9.11, 900 (was 760).</li>
+      <li><code>.settings .headerRow</code> <code>padding-bottom: 10px</code> (design 9.11 header).</li>
+      <li><code>.settings .caption</code>: 13, line height 1.5, <code>--text-muted</code>, <code>margin-top: 10px</code>. That is 14 below the tab bar once you count the header gap of 4 (design 9.11 scope line, margin-top 14).</li>
+      <li><code>.settings .actions</code>: <code>border-top: 1px solid var(--border)</code>, <code>padding-top: 16px</code> (design 9.10 footer, and the Settings and Genres mockups both draw it).</li>
+      <li><code>.settings .footerNote</code>: <code>font-size: 12px</code> (design 9.10).</li>
+    </ul>
+  </li>
+  <li><strong>ADD:</strong> tests in <code>src/shared/ui/Dialog.test.tsx</code>: <code>dialog_tabs_renderBetweenTitleAndCaption</code> (DOM order: heading, tablist child, caption) and <code>dialog_noTabs_rendersAsBefore</code>.</li>
+  <li><strong>GOTCHA:</strong> keep the <code>panel</code> size for now. <code>GenresPanel</code> still uses it until Task 7.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/shared/ui &amp;&amp; npm run typecheck &amp;&amp; npm run lint</code></li>
+</ul>
+
+<h4 class="task" data-task="6">Task 6: Turn the Genres panel body into a GenresTab with the new scope text</h4>
+<ul>
+  <li><strong>CREATE:</strong> <code>src/features/genres/GenresTab.tsx</code>. Move the body of <code>GenresPanel</code> (the "All 4 Decks" section and the 4 deck rows, lines 64–130) into <code>export function GenresTab({ genres, onChange }: { genres: DeckGenres; onChange: (g: DeckGenres) =&gt; void })</code>. Keep the <code>picked</code> state, initialised from <code>pickedGenres(genres)</code> at mount (design 13: view state, never stored). Doc comment: the Genres tab of the Settings dialog (design 9.10); <code>app/</code> mounts it inside <code>SettingsDialog</code>; it has no dialog of its own.</li>
+  <li><strong>ADD:</strong> <code>export const GENRES_SCOPE_TEXT = 'These genres apply to this board only. Pick genres at the top. Each genre you pick shows on the 4 genre decks below, already on. Turn one off to keep it out of that deck. A change applies to the next draw only. Cards on the board keep their cues. The other 7 decks do not use genre.'</code> (design 9.10, verbatim). Keep <code>GENRES_FOOTER_TEXT = 'Each deck keeps at least 1 genre.'</code> with no Generic line. Remove <code>GENRES_HELP_TEXT</code>.</li>
+  <li><strong>RENAME:</strong> <code>GenresPanel.module.css</code> → <code>GenresTab.module.css</code>. Change the header comment to "Genres tab body (design 9.10)". Top section padding is 16 0 (design 9.10 "padding 16 0, gap 12"; was <code>8px 0 16px</code>).</li>
+  <li><strong>UPDATE:</strong> <code>GenresPanel.tsx</code> becomes a thin wrapper for one task: <code>&lt;Dialog size="panel" … caption={GENRES_SCOPE_TEXT}&gt;&lt;GenresTab … /&gt;&lt;/Dialog&gt;</code>, so <code>BoardScreen</code> keeps working until Task 7 removes it.</li>
+  <li><strong>UPDATE:</strong> <code>src/features/genres/index.ts</code> — export <code>GenresTab</code> and <code>GENRES_SCOPE_TEXT</code>.</li>
+  <li><strong>MOVE:</strong> the content tests of <code>GenresPanel.test.tsx</code> into <code>GenresTab.test.tsx</code>. Render <code>&lt;GenresTab genres onChange /&gt;</code> directly. Keep every behavior test (top chip off and on, All On, deck row toggle, last-chip guard, onChange only on change). Leave one wrapper test in <code>GenresPanel.test.tsx</code> until Task 7.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/genres &amp;&amp; npm run typecheck &amp;&amp; npm run lint</code></li>
+</ul>
+
+<h4 class="task" data-task="7">Task 7: Add the Appearance and Genres tabs to the Settings dialog and mount the Genres tab from the board screen</h4>
+<ul>
+  <li><strong>CREATE:</strong> <code>src/features/settings/SettingsTabs.tsx</code>. <code>SettingsTabs({ tab, onSelect, genresEnabled, idPrefix })</code> renders a <code>div role="tablist" aria-label="Settings"</code> with 2 <code>button role="tab"</code>: "Appearance" and "Genres". Each has <code>id</code>, <code>aria-selected</code> and <code>aria-controls={`${idPrefix}-panel`}</code>. When <code>genresEnabled</code> is false, the Genres tab has <code>aria-disabled="true"</code> and <code>title="Open a board to change its genres."</code>, and a click does nothing.</li>
+  <li><strong>UPDATE:</strong> <code>src/features/settings/Settings.module.css</code> — add the tab bar and tabs from design 9.11.
+    <ul>
+      <li>Bar: <code>display: flex</code>, gap 4, <code>border-bottom: 1px solid var(--border)</code>, margin-bottom 4.</li>
+      <li>Tab: height 44, padding 0 14, 14/600, <code>--text-muted</code>, transparent background, <code>border-bottom: 2px solid transparent</code>, margin-bottom −1.</li>
+      <li><code>[aria-selected='true']</code>: <code>--text</code>, <code>border-bottom-color: var(--accent)</code>. Light mode: <code>:global([data-mode='light']) .tab[aria-selected='true'] { border-bottom-color: var(--accent-text) }</code> (design 9.11 "light mode: the outline rule in 4.2").</li>
+      <li><code>[aria-disabled='true']</code>: <code>--text-disabled</code>, <code>cursor: not-allowed</code>.</li>
+    </ul>
+  </li>
+  <li><strong>UPDATE:</strong> <code>src/features/settings/SettingsDialog.tsx</code>:
+    <ul>
+      <li>New optional prop <code>genresTab?: { caption: string; footerNote: string; content: ReactNode }</code>. Without it, the Genres tab is disabled.</li>
+      <li>Local <code>const [tab, setTab] = useState&lt;'appearance' | 'genres'&gt;('appearance')</code>, reset to <code>'appearance'</code> whenever <code>open</code> turns true. It is never stored and never an undo step (design 9.11, 10.3).</li>
+      <li>Pass <code>tabs={&lt;SettingsTabs … /&gt;}</code> to <code>Dialog</code>. <code>caption</code> is <code>SETTINGS_CAPTION</code> on Appearance and <code>genresTab.caption</code> on Genres. <code>footerNote</code> is <code>FOOTER_TEXT</code> on Appearance and <code>genresTab.footerNote</code> on Genres.</li>
+      <li>The body is a <code>div role="tabpanel" id={`${idPrefix}-panel`} aria-labelledby={selected tab id}</code>. It holds the existing Appearance, Canvas and Keyboard sections on Appearance, and <code>genresTab.content</code> on Genres. The blocked-storage note stays on the Appearance tab only.</li>
+      <li>The Mode help text becomes <code>'Dark or light screens. Cards are dark in dark mode and cream in light mode.'</code> (design 9.11, 2026-11-04). Export it as <code>MODE_HELP_TEXT</code>.</li>
+      <li>Update the module doc comment.</li>
+    </ul>
+  </li>
+  <li><strong>UPDATE:</strong> <code>src/features/settings/index.ts</code> — export <code>MODE_HELP_TEXT</code>. Keep the other exports.</li>
+  <li><strong>UPDATE:</strong> <code>src/app/board/BoardScreen.tsx</code>:
+    <ul>
+      <li>Remove <code>genresOpenOn</code> and the <code>GenresPanel</code> mount.</li>
+      <li>Pass <code>genresTab={{ caption: GENRES_SCOPE_TEXT, footerNote: GENRES_FOOTER_TEXT, content: &lt;GenresTab key={board.id} genres={board.genres} onChange={setGenres} /&gt; }}</code> to <code>SettingsDialog</code>.</li>
+      <li>Until Task 8 removes the rail Genres button, pass <code>onOpenGenres={() =&gt; setSettingsOpen(true)}</code> to <code>SideRail</code> (the button opens Settings; the user picks the Genres tab).</li>
+      <li>Update the doc comment (genres live on the Settings Genres tab, never in undo).</li>
+    </ul>
+  </li>
+  <li><strong>REMOVE:</strong> <code>src/features/genres/GenresPanel.tsx</code> and <code>GenresPanel.test.tsx</code>, and their exports from <code>index.ts</code>. Remove the <code>panel</code> size from <code>Dialog.tsx</code> (<code>SIZE_CLASS</code>, the prop union, the doc comment), its CSS in <code>Dialog.module.css</code> (lines 121–166 and the <code>.panel[open]</code> entries in the animation rules), and <code>dialog_panel_hasPanelClass</code> from <code>Dialog.test.tsx</code>.</li>
+  <li><strong>ADD:</strong> unit tests in <code>src/features/settings/SettingsDialog.test.tsx</code>:
+    <ul>
+      <li><code>settingsDialog_open_showsAppearanceTabSelected</code>.</li>
+      <li><code>settingsDialog_tabs_haveTabRolesAndAriaSelected</code>.</li>
+      <li><code>settingsDialog_genresTabClick_showsGenresContentCaptionAndFooter</code>, with a stub <code>genresTab</code>.</li>
+      <li><code>settingsDialog_noGenresTab_genresTabAriaDisabledWithTooltip</code>: <code>aria-disabled="true"</code>, title "Open a board to change its genres.", and a click keeps Appearance.</li>
+      <li><code>settingsDialog_reopen_returnsToAppearance</code>.</li>
+      <li><code>settingsDialog_modeHelp_isNewText</code>.</li>
+    </ul>
+    Update <code>BoardScreen.test.tsx</code> if it opened the Genres panel.
+  </li>
+  <li><strong>UPDATE:</strong> <code>tests/e2e/genres.spec.ts</code>. Replace <code>genresButton</code> / <code>panel</code> / <code>openPanel</code> with <code>openGenresTab(page)</code>: click the rail Settings button, click <code>getByRole('tab', { name: 'Genres' })</code>, and expect the <code>tabpanel</code> visible. <code>panel(page)</code> becomes <code>page.getByRole('dialog', { name: 'Settings' }).getByRole('tabpanel')</code>. The "All genres" line assertion in <code>genres_newBoard_noPillsAndAllGenresLine</code> and in <code>genres_panel_turnOffTopChip_updatesPillsAndLine</code> stays until Task 8 removes the button. Rename the tests from <code>panel</code> to <code>genresTab</code> in Task 8. Add <code>genres_settingsGenresTab_showsScopeLineAndFooter</code>: the exact <code>GENRES_SCOPE_TEXT</code> and "Each deck keeps at least 1 genre." show, and "Generic" does not.</li>
+  <li><strong>UPDATE:</strong> <code>tests/e2e/settings.spec.ts</code>. Add <code>settings_dialog_is900WideWithTwoTabs</code>: the dialog box width is 900 at the 1280 default viewport, and the tabs are Appearance and Genres. Add <code>settings_tabChange_notAnUndoStep</code>: switch tabs, and Undo stays disabled on a fresh board.</li>
+  <li><strong>GOTCHA:</strong> the import rules. <code>features/settings</code> must not import <code>features/genres</code>, or the other way round. Only <code>app/board/BoardScreen.tsx</code> imports both. Check with <code>! grep -rn "features/genres" src/features/settings</code>.</li>
+  <li><strong>GOTCHA:</strong> <code>GenresTab</code> mounts only while the Genres tab is selected, so <code>picked</code> resets each time the tab shows. <code>key={board.id}</code> remounts it when the board changes under an open dialog. This keeps the Phase 3 rule: picked is view state, rebuilt from the stored per-deck lists.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/shared/ui src/features/settings src/features/genres src/app &amp;&amp; npm run typecheck &amp;&amp; npm run lint &amp;&amp; ! grep -rn "features/genres" src/features/settings &amp;&amp; fuser -k 4174/tcp 2&gt;/dev/null || true; npx playwright test tests/e2e/genres.spec.ts tests/e2e/settings.spec.ts --project=chromium</code></li>
+</ul>
+
+<h4 class="task" data-task="8">Task 8: Remove the rail Genres group and show the Settings button pressed while the dialog is open</h4>
+<ul>
+  <li><strong>UPDATE:</strong> <code>src/app/board/SideRail.tsx</code>:
+    <ul>
+      <li>Remove the <code>&lt;h2&gt;Genres&lt;/h2&gt;</code> label, the <code>GenresButton</code>, the <code>onOpenGenres</code> prop and the <code>GenresButton</code> import. Keep <code>GenreCount</code> and <code>showCount</code> for the pills.</li>
+      <li>Add a <code>settingsOpen: boolean</code> prop. The Settings button gets <code>aria-haspopup="dialog"</code> and <code>aria-expanded={settingsOpen}</code>.</li>
+      <li>Update the doc comment to the design 8.2 order: Hook Card, Core, Modifiers, Optional, Add Note, Settings.</li>
+    </ul>
+  </li>
+  <li><strong>UPDATE:</strong> <code>src/app/board/SideRail.module.css</code> <code>.settings</code>: add <code>border: 1px solid transparent</code> (no layout shift when pressed). Add <code>.settings[aria-expanded='true'] { background: var(--surface-raised); border-color: var(--accent); }</code> with the comment "pressed while the Settings dialog is open (design 8.2, 2026-11-04)". The border keeps <code>--accent</code> in both modes, because borders are not outlines (design 4.2).</li>
+  <li><strong>UPDATE:</strong> <code>src/app/board/BoardScreen.tsx</code> — pass <code>settingsOpen={settingsOpen}</code> and drop <code>onOpenGenres</code>.</li>
+  <li><strong>REMOVE:</strong> <code>src/features/genres/GenresButton.tsx</code>, <code>GenresButton.module.css</code> and <code>GenresButton.test.tsx</code>, and the export from <code>index.ts</code>. Remove <code>genreCountText</code> from <code>genreRules.ts</code>, <code>index.ts</code> and <code>genreRules.test.ts</code> if <code>grep -rn genreCountText src</code> shows no other user. Keep <code>genresOnLabel</code>, which <code>GenreCount</code> uses. Keep <code>public/icons/sliders-horizontal.svg</code> and its <code>ICONS</code> entry in <code>tokens.test.ts</code> (the icon list test compares files to the list, not to usage).</li>
+  <li><strong>UPDATE:</strong> <code>src/app/board/SideRail.test.tsx</code>. No "Genres" heading or button. <code>sideRail_settingsOpen_buttonAriaExpandedTrue</code>. Pills still render for narrowed genres.</li>
+  <li><strong>UPDATE (browser tests):</strong>
+    <ul>
+      <li><code>tests/e2e/shell.spec.ts</code> <code>shell_rail_showsGroupLabelsInOrder</code> → <code>['Core', 'Modifiers', 'Optional']</code>. Add <code>shell_settingsButton_pressedWhileDialogOpen</code>: while open, <code>aria-expanded="true"</code>, background about <code>--surface-raised</code> and border color about <code>--accent</code>. After Done it is <code>false</code> again.</li>
+      <li><code>tests/e2e/board.spec.ts</code> line 50: replace the "All genres" assertion with <code>expect(rail(page).getByRole('button', { name: 'Genres' })).toHaveCount(0)</code>.</li>
+      <li><code>tests/e2e/genres.spec.ts</code>: drop the "All genres" line assertions. Rename <code>genres_panel_turnOffTopChip_updatesPillsAndLine</code> → <code>genres_tab_turnOffTopChip_updatesPills</code> and <code>genres_newBoard_noPillsAndAllGenresLine</code> → <code>genres_newBoard_noPillsAndNoRailGenresButton</code>. Update the file doc comment.</li>
+      <li><code>grep -rn "'Genres'" tests/e2e</code> for any other rail Genres use.</li>
+    </ul>
+  </li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/app src/features/genres &amp;&amp; npm run typecheck &amp;&amp; npm run lint &amp;&amp; ! grep -rn "GenresButton\|GenresPanel" src &amp;&amp; fuser -k 4174/tcp 2&gt;/dev/null || true; npx playwright test tests/e2e/shell.spec.ts tests/e2e/board.spec.ts tests/e2e/genres.spec.ts tests/e2e/optional-decks.spec.ts --project=chromium</code></li>
+</ul>
+
+<h4 class="task" data-task="9">Task 9: Point the New Board help line at the Genres tab</h4>
+<ul>
+  <li><strong>UPDATE:</strong> <code>src/features/boards/NewBoardDialog.tsx</code> line 18: <code>NEW_BOARD_HELP_TEXT = 'All 21 genres start on. Change them in Settings, on the Genres tab.'</code> (design 9.3, 2026-11-04). Fix the doc comment if it names the Genres panel.</li>
+  <li><strong>UPDATE:</strong> <code>NewBoardDialog.test.tsx</code> keeps importing the constant. Add <code>newBoardDialog_helpLine_pointsAtGenresTab</code> with the literal string.</li>
+  <li><strong>UPDATE:</strong> <code>grep -rn "Genres panel" src tests/e2e</code> — fix any user-facing text or comment that still names the panel. The design history in docs stays.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/boards &amp;&amp; npm run lint &amp;&amp; ! grep -rn "Genres panel" src/features src/app --include=*.tsx --include=*.ts | grep -v test</code></li>
+</ul>
+
+<h3 class="milestone" data-milestone="3">Milestone 3: Rules, docs and full regression</h3>
+<p>The house rules, the lint and the README state the new theme rule, and every existing check passes in all 3 engines.</p>
+<p><strong>Validation checkpoint:</strong> <code>npm run lint</code> fails on a planted CSS file that defines <code>--card-face</code> outside <code>tokens.css</code>, or that uses a <code>/* fixed: */</code> literal with an unlisted reason, and passes once the file is removed. <code>CLAUDE.md</code> and <code>README.md</code> state the new rule. The full suite passes: <code>npm run lint &amp;&amp; npm run format:check &amp;&amp; npm run typecheck &amp;&amp; npm test &amp;&amp; npm run build &amp;&amp; npm run size &amp;&amp; npm run test:e2e</code>.</p>
+
+<h4 class="task" data-task="10">Task 10: Match the color lint to the new card tokens</h4>
+<ul>
+  <li><strong>UPDATE:</strong> <code>scripts/check-css-colors.mjs</code>:
+    <ul>
+      <li>A <code>/* fixed: &lt;reason&gt; */</code> marker passes only when the reason is one of <code>FIXED_REASONS = ['white on deck color', 'white on --danger', 'theme color swatch']</code> (the 3 kinds in use; check with <code>grep -rn "fixed:" src</code> and match the strings exactly). Any other reason fails with <code>FAIL … unlisted fixed reason</code>.</li>
+      <li>A new check fails any CSS file under <code>src/</code> other than <code>tokens.css</code> that <em>defines</em> a card, Hook Card or note token: <code>/^\s*--(card-(face|tucked-\d|cue|cue-active|adjective|adjective-active|divider)|hook-(bg|text)|note-(bg|border|label|text)|zone-text|shadow-(hook|note|card))\s*:/</code>. The message: "card, Hook Card and note colors follow data-mode only through tokens.css (design 4.5)". <code>--card-type</code> and <code>--card-size</code> are not in the list.</li>
+      <li>Update the doc comment: the rule is now "chrome, card, Hook Card and note colors come from tokens.css; only deck colors, white on deck or danger, and the theme swatches are literal".</li>
+    </ul>
+  </li>
+  <li><strong>ADD:</strong> a self-test that does not touch <code>src/</code>. Give the script an optional root argument (<code>process.argv[2] ?? 'src'</code>; the token path is resolved relative to that root). Add <code>src/shared/ui/cssColorLint.test.ts</code> (Vitest only includes <code>src/**/*.test.{ts,tsx}</code>, <code>vite.config.ts</code> line 64). It writes temp folders under <code>os.tmpdir()</code> and runs the script with <code>child_process.spawnSync(process.execPath, [script, dir])</code>. Tests:
+    <ul>
+      <li><code>cssColorLint_cardTokenOutsideTokens_fails</code></li>
+      <li><code>cssColorLint_unlistedFixedReason_fails</code></li>
+      <li><code>cssColorLint_listedFixedReason_passes</code></li>
+      <li><code>cssColorLint_tokenUseNotDefinition_passes</code> (<code>color: var(--card-cue)</code>)</li>
+    </ul>
+  </li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npm run lint &amp;&amp; npx vitest run src/shared/ui/cssColorLint.test.ts</code></li>
+</ul>
+
+<h4 class="task" data-task="11">Task 11: State the new theme rule in CLAUDE.md and the README</h4>
+<ul>
+  <li><strong>UPDATE:</strong> <code>CLAUDE.md</code>:
+    <ul>
+      <li>Key Patterns, "Theme": "Settings set <code>&lt;html data-mode data-theme&gt;</code> before first render (local storage, so no dark flash). The theme color changes only the accent. The mode changes the chrome, card faces, tucked faces, the note and the Hook Card fill (design 4.5). Badges, rings, center icons and deck colors never change. Every card has a 1 px deck-color edge and a 14% deck tint; the Hook Card has none. Light-mode outlines use <code>--accent-text</code>; the Hook label uses the current mode's <code>--accent-text</code>."</li>
+      <li>Conventions color-lint bullet: "the lint check fails hex and rgba in CSS modules outside <code>tokens.css</code> (except white on a deck or danger color and the theme swatches), and any card, Hook Card or note token defined outside <code>tokens.css</code>".</li>
+      <li>Project Overview / layout: <code>genres/</code> "Genres tab content (on the Settings dialog), genre counts"; <code>settings/</code> "Settings dialog with Appearance and Genres tabs". Remove "Genres panel" wording.</li>
+    </ul>
+    Do not touch the Commit Authorship or interaction sections.
+  </li>
+  <li><strong>UPDATE:</strong> <code>README.md</code>:
+    <ul>
+      <li>Status line (line 7): "Phase 6 (card themes and Settings tabs)". One sentence on dark cards in dark mode, the deck tint and the Genres tab.</li>
+      <li>Rail bullet (line 104): drop "then Genres".</li>
+      <li>Genres bullet (line 105): "Settings › Genres (the tab is off on the board list) …". Remove the count-line sentence.</li>
+      <li>Mode bullet (line 120): "Dark (default) or Light. Cards are dark in dark mode and cream in light mode."</li>
+      <li>Tokens paragraph (line 130): the new rule as in CLAUDE.md. <code>tokens.css</code> holds the v1 handoff body plus the 2026-11-04 card, Hook Card and note tokens by mode.</li>
+      <li>Code map (lines 156–170): <code>features/genres</code> = Genres tab and counts; <code>features/settings</code> = Settings dialog with tabs.</li>
+    </ul>
+  </li>
+  <li><strong>GOTCHA:</strong> Title Case for UI names in the README ("Genres Tab" only where it names a UI element in a heading or label list. Body copy stays sentence case, per CLAUDE.md UI Conventions). No AI attribution anywhere.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>! grep -n "Cards, notes, badges, deck colors and the Hook Card never change" CLAUDE.md README.md &amp;&amp; grep -q "card faces, tucked faces, the note and the Hook Card fill" CLAUDE.md &amp;&amp; ! grep -n "then Genres" README.md &amp;&amp; grep -q "Phase 6" README.md &amp;&amp; npm run format:check</code></li>
+</ul>
+
+<h4 class="task" data-task="12">Task 12: Run the full regression and the speed, size and privacy targets</h4>
+<ul>
+  <li><strong>RUN:</strong> <code>npm run lint &amp;&amp; npm run format:check &amp;&amp; npm run typecheck &amp;&amp; npm test &amp;&amp; npm run build &amp;&amp; npm run size &amp;&amp; node scripts/check-port-lock.mjs</code>, then <code>fuser -k 4174/tcp 2&gt;/dev/null || true; npm run test:e2e</code> (Chromium, Firefox, WebKit) and <code>npx playwright test --project=chromium-timing</code> (draw/turn/hook &lt; 100 ms, 200-card pan and drag ≥ 50 fps, 11-card stack drag, first load &lt; 2 s).</li>
+  <li><strong>CHECK:</strong> <code>tests/e2e/network.spec.ts</code> passes (no outside request). The size check stays ≤ 250 KB JS gzip. No new dependency, so this is expected.</li>
+  <li><strong>CHECK:</strong> <code>grep -rn "Character\|Motivation\|Description\b" src</code> still finds no story code (Phase 1 bar). <code>grep -rn "features/genres" src/features/settings</code> and <code>grep -rn "features/settings" src/features/genres</code> are both empty.</li>
+  <li><strong>RECORD:</strong> in this doc's Notes, under "Execution notes": the measured fps, timings, JS size, and any test that needed a fix.</li>
+  <li><strong>GOTCHA:</strong> if a perf test drops below 50 fps after the tint layer, first try <code>contain: paint</code> on <code>.card</code>. Then try moving the edge into the layer's <code>outline</code> with <code>outline-offset: -1px</code>. Record the fix.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npm run lint &amp;&amp; npm run format:check &amp;&amp; npm run typecheck &amp;&amp; npm test &amp;&amp; npm run build &amp;&amp; npm run size &amp;&amp; fuser -k 4174/tcp 2&gt;/dev/null || true; npm run test:e2e</code></li>
+</ul>
+
+<h3 class="milestone" data-milestone="4">Commit, push, and open PR</h3>
+
+<h4 class="task" data-task="13">Task 13: Commit, push, and open PR</h4>
+<p>After every prior validation checkpoint has passed:</p>
+<ul>
+  <li><strong>IMPLEMENT:</strong> stage and commit uncommitted changes with a descriptive message summarizing the phase. Push with <code>git push -u origin phase-6-card-themes</code>. Open a PR with <code>gh pr create --head phase-6-card-themes --base main --title "Phase 6: Card Themes And Settings Tabs" --body "&lt;body&gt;"</code>.</li>
+  <li><strong>PR title format:</strong> <code>Phase 6: Card Themes And Settings Tabs</code> — names the phase, not any individual feature.</li>
+  <li><strong>PR body format:</strong> copy the Acceptance Criteria as a checklist with each box checked off, followed by a <code>Notes</code> section listing the assumptions and trade-offs decided during execution. Start from this doc's Notes: the token placement, the tint layer, the tab slot, the tinted-adjective contrast finding, and the measured fps and size.</li>
+  <li><strong>GOTCHA:</strong> CLAUDE.md "Commit Authorship" and the user's memory rule win over any tool default. No <code>Co-Authored-By</code> or <code>Claude-Session</code> trailer in any commit, and no "Generated with…" line, robot emoji or other AI marker in the PR body. Commits are in the owner's voice.</li>
+  <li><strong>GOTCHA:</strong> <code>gh</code> must be installed and authenticated as <code>DecafCoding</code>. If not, this step fails.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>gh pr view phase-6-card-themes --json number,title,state,headRefName</code> returns the PR with <code>"state": "OPEN"</code>, <code>"headRefName": "phase-6-card-themes"</code> and the title <code>Phase 6: Card Themes And Settings Tabs</code>; and <code>! git log origin/main..HEAD --format=%B | grep -qiE "co-authored-by|claude-session"</code>.</li>
+</ul>
+
+<h2>Testing Strategy</h2>
+<h3>Unit Tests</h3>
+<ul>
+  <li><code>tokens.test.ts</code>: v1 body verbatim; the v2 dark and light values equal design 4.5; the v2 light block comes after the v1 light block; colors outside the v1 body only for the listed mode tokens.</li>
+  <li><code>contrast.test.ts</code>: the design §12 figures (dark card text, tinted cue in both modes, active cue on every tinted and tucked face, dark note, light Hook sentence, Hook label for 6 combinations).</li>
+  <li><code>Dialog.test.tsx</code>: tabs slot order; no tabs renders as before; no <code>panel</code> size left.</li>
+  <li><code>GenresTab.test.tsx</code>: every behavior from the old panel tests.</li>
+  <li><code>SettingsDialog.test.tsx</code>: Appearance first, the tab roles, Genres content, caption and footer, the disabled tab with no board, reset on reopen, the new Mode help.</li>
+  <li><code>SideRail.test.tsx</code>: no Genres heading or button; <code>aria-expanded</code> follows <code>settingsOpen</code>; pills kept.</li>
+  <li><code>NewBoardDialog.test.tsx</code>: the new help line.</li>
+  <li>Color lint self-tests: card token defined outside tokens, unlisted fixed reason, listed reason, token use.</li>
+</ul>
+<h3>Integration Tests</h3>
+<ul>
+  <li><code>theme.spec.ts</code> (all 6 combinations): chrome from tokens; card face, note and Hook Card fill follow the mode only; badges and center icons identical; Hook label in the mode's accent text; note border by mode; deck tint and edge on free and tucked cards; none on the Hook Card; tint kept while dragging.</li>
+  <li><code>shell.spec.ts</code>: rail group labels without Genres; the Settings button pressed while open; the card face changes with the mode.</li>
+  <li><code>genres.spec.ts</code>: every genre behavior through Settings › Genres; scope line and footer; no Generic line; persistence; not in undo; last-genre guard; real-pool draw filter.</li>
+  <li><code>settings.spec.ts</code>: 900 wide, 2 tabs, a tab change is not an undo step; the existing Appearance tests unchanged.</li>
+  <li><code>board.spec.ts</code>, <code>card-test.spec.ts</code>: updated expectations; everything else unchanged and green.</li>
+  <li>Perf, timing, network, size, first load: unchanged targets, re-run in Task 12.</li>
+</ul>
+<h3>Edge Cases</h3>
+<ul>
+  <li>A board switch while Settings is open on the Genres tab: <code>GenresTab key={board.id}</code> remounts with the new board's genres.</li>
+  <li>A genre turned off in every deck row: it stays in the top row until the tab remounts (Phase 3 rule, now per tab show).</li>
+  <li>The disabled Genres tab: a click and Enter do nothing, and the tooltip shows on hover.</li>
+  <li>Dark mode tucked cards at 4+ levels: one face color; the tint keeps the decks apart.</li>
+  <li>A Modifier combine zone over a dark card: the label <code>--zone-text</code> #C9B6F0 stays readable (computed about 6.0:1).</li>
+  <li>A locked full card in dark mode: the lock circle stays <code>--bg</code> on the dark face, per design 9.4. Visual only.</li>
+  <li>A Redraw All fresh outline and the drag shadow on a tinted card: the tint layer survives both.</li>
+  <li>A light-mode reload: the boot script still sets <code>data-mode</code> before paint, so the cards never flash dark.</li>
+</ul>
+
+<h2>Validation Commands</h2>
+<h3>Level 1: Syntax &amp; Style</h3>
+<pre><code>npm run lint
+npm run format:check
+npm run typecheck</code></pre>
+<h3>Level 2: Unit Tests</h3>
+<pre><code>npm test</code></pre>
+<h3>Level 3: Integration Tests</h3>
+<pre><code>npm run build
+npm run size
+node scripts/check-port-lock.mjs
+fuser -k 4174/tcp 2&gt;/dev/null || true
+npm run test:e2e</code></pre>
+<h3>Level 4: Manual Validation</h3>
+<pre><code># Built app serves; the CSS carries both card face values and no Genres panel text remains.
+set -e
+npm run build
+grep -rqi "#2a2f38" dist/assets/*.css
+grep -rqi "#f4f0e6" dist/assets/*.css
+grep -rq "Change them in Settings, on the Genres tab." dist/assets/
+! grep -rq "Change them in the Genres panel." dist/assets/
+grep -rq "Open a board to change its genres." dist/assets/
+fuser -k 4174/tcp 2&gt;/dev/null || true
+(npx vite preview --port 4174 --strictPort &gt; /tmp/gi-preview.log 2&gt;&amp;1 &amp;)
+for i in $(seq 1 60); do curl -fsS http://localhost:4174/ &gt;/dev/null 2&gt;&amp;1 &amp;&amp; break; sleep 0.5; done
+curl -fsS http://localhost:4174/ | grep -q "&lt;title&gt;GameIdea&lt;/title&gt;"
+fuser -k 4174/tcp 2&gt;/dev/null || true</code></pre>
+<h3>Level 5: Additional Validation (Optional)</h3>
+<pre><code># Chromium-only timing projects: draw/turn/hook, 200-card pan and drag, long stack, first load
+fuser -k 4174/tcp 2&gt;/dev/null || true
+npx playwright test --project=chromium-timing</code></pre>
+
+<h2>Acceptance Criteria</h2>
+<ul class="checklist">
+  <li data-checked="false">In dark mode, card faces and every tucked face are #2A2F38, the Hook Card fill is #2A2F38 and the note is #2E2A22 with a 1 px #4A4436 border. In light mode, faces are #F4F0E6 with the 4 tucked shades, the Hook Card is #FFFFFF and the note is #FBF6E4 with no border. Every value comes from tokens.css and matches design 4.5 (token test).</li>
+  <li data-checked="false">The theme color changes none of the card, Hook Card or note colors. Badges, rings, center icons and deck colors are identical in all 6 mode × theme combinations.</li>
+  <li data-checked="false">The Hook Card "Hook" label uses the current mode's --accent-text in all 6 combinations, and no fixed Hook label literal remains. The Hook Card uses --shadow-hook and the note --shadow-note and radius 12.</li>
+  <li data-checked="false">Every card and tucked card, in both modes, has a 1 px inset edge in its deck card color and a 14% deck-color tint. The Hook Card has neither. The tint stays during a drag and after Redraw All.</li>
+  <li data-checked="false">The contrast figures of design section 12 hold (contrast.test.ts). The tinted-adjective figure is recorded in Notes.</li>
+  <li data-checked="false">The Settings dialog is 900 wide, opens on Appearance, and has Appearance and Genres tabs with role="tablist", role="tab" and aria-selected. A tab change is instant and is not an undo step.</li>
+  <li data-checked="false">The Appearance tab keeps Mode, Theme Color, Snap To Grid, Keyboard, the version footer and the blocked-storage note. The Mode help reads "Dark or light screens. Cards are dark in dark mode and cream in light mode."</li>
+  <li data-checked="false">The Genres tab holds the old panel's content with the design 9.10 scope line and the footer "Each deck keeps at least 1 genre.", with no Generic line. Changes apply at once, save with the board, update the count pills and are not undo steps.</li>
+  <li data-checked="false">With no board open, the Genres tab is aria-disabled with the tooltip "Open a board to change its genres.", and the dialog shows Appearance.</li>
+  <li data-checked="false">The rail has no GENRES group, Genres button or count line, and the count pills on the 4 genre decks remain. The Settings rail button shows pressed (--surface-raised fill, 1 px --accent border, aria-expanded="true") while the dialog is open.</li>
+  <li data-checked="false">The New Board help line reads "All 21 genres start on. Change them in Settings, on the Genres tab."</li>
+  <li data-checked="false">CLAUDE.md and README.md state the new theme rule. The color lint fails a card, Hook Card or note token defined outside tokens.css and an unlisted fixed reason.</li>
+  <li data-checked="false">features/settings and features/genres do not import each other, and only app/board composes them.</li>
+  <li data-checked="false">Every existing test passes in Chromium, Firefox and WebKit. Draw/turn/hook stay under 100 ms, 200-card pan and drag at 50 fps or more, JS at 250 KB gzip or less, first load under 2 s, and no outside request.</li>
+  <li data-checked="false">FORMAT_VERSION stays 1. No board, board file or undo history shape changes.</li>
+</ul>
+
+<h2>Completion Checklist</h2>
+<ul class="checklist">
+  <li data-checked="false">Tasks 1–13 done in order, each VALIDATE passed at the moment its task finished.</li>
+  <li data-checked="false">Milestone 1–3 validation checkpoints passed.</li>
+  <li data-checked="false">Level 1: <code>npm run lint</code>, <code>npm run format:check</code>, <code>npm run typecheck</code> exit 0.</li>
+  <li data-checked="false">Level 2: <code>npm test</code> exits 0.</li>
+  <li data-checked="false">Level 3: build, size, port lock and <code>npm run test:e2e</code> in 3 engines exit 0.</li>
+  <li data-checked="false">Level 4: the built-app snippet exits 0.</li>
+  <li data-checked="false">Level 5: <code>chromium-timing</code> passes, and the numbers are recorded in Notes.</li>
+  <li data-checked="false">PR open with the title <code>Phase 6: Card Themes And Settings Tabs</code> and no AI attribution.</li>
+</ul>
+
+<h2>Notes</h2>
+
+<h3>Architecture decisions this phase conforms to</h3>
+<p><code>architecture-pattern</code> and <code>module-layout</code> (features stay in their folders. <code>features/genres</code> now holds the Genres tab content and the counts, and <code>features/settings</code> the tabbed dialog; no new folder). <code>import-rules</code> (settings and genres never import each other, and <code>app/board</code> composes them; only <code>shared/storage</code> touches local storage; no React Flow outside <code>features/canvas</code>). <code>state-store</code> (the Settings tab is local React state, not a store field; genres stay in the board store). <code>undo-history</code> (tab and genre changes never in undo). <code>save-transaction</code>, <code>schema-shape</code>, <code>board-file-format</code> and <code>schema-versions</code> (no shape change; <code>FORMAT_VERSION</code> stays 1). <code>storage-seam</code> (unchanged, 5 board actions plus the 3 recorded settings actions). <code>ui-framework</code>, <code>stack-language</code>, <code>fonts</code>, <code>test-tools</code>, <code>test-data</code>, <code>outside-code</code> (no new dependency). <code>nfr-targets</code> (speed, size, first load and privacy re-checked). <code>ci</code>, <code>source-control</code>. No decision touched is <code>data-status="open"</code>. No architecture decision changes. Phase 7 (One-Pager Board, format version 2) is not planned here.</p>
+
+<h3>Decisions and assumptions</h3>
+<ul>
+  <li>ASSUMPTION: The 2026-11-04 card, Hook Card and note values go into a new section appended to <code>src/shared/ui/tokens.css</code> (dark in <code>:root</code>, light in a later <code>[data-mode="light"]</code> block). The v1 handoff body stays verbatim, and <code>tokens.test.ts</code> pins the new values against a table copied from design 4.5. The v2 bundle has only <code>tokens.json</code>, no CSS to copy verbatim, and design §1 says this document wins over the bundle. Authority: design-system §1, §4.5 + Phase 1 Notes (verbatim body pinned by test) + smallest reversible option.</li>
+  <li>ASSUMPTION: <code>--note-border</code> holds a full border shorthand (<code>1px solid #4A4436</code> dark, <code>none</code> light), used as <code>border: var(--note-border)</code>, because design 4.5 gives the light value as "none". Authority: design 4.5 + v2 tokens.json <code>note.dark.border</code>.</li>
+  <li>ASSUMPTION: The 2 new shadows get the token names <code>--shadow-hook</code> and <code>--shadow-note</code>, exactly as design 4.5 lists them. <code>--shadow-card</code> is the same in both modes and is not redefined. Authority: design 4.5 (its names; no invented token).</li>
+  <li>ASSUMPTION: The deck edge and 14% tint are drawn on a <code>.card::before</code> layer, not on the card's own <code>box-shadow</code> or <code>background</code>. <code>CardNode.module.css</code> replaces the card's box-shadow while dragging, and the tucked paper classes and rings read <code>--card-face</code> directly. Design 4.4 allows "for example <code>box-shadow: inset 0 0 0 999px</code>", so the method is open. Authority: design 4.4 + codebase (<code>CardNode.module.css</code> lines 33–42) + smallest reversible option.</li>
+  <li>ASSUMPTION: The note takes radius 12 (<code>--radius-panel</code>), <code>--shadow-note</code> and <code>--note-border</code> from design 9.12. Its header-band and body layout and paddings from Phases 1–5 stay, because the editing state is "not designed" (design §15.1). Authority: design 9.12 + §15 + Phase 1 Notes.</li>
+  <li>ASSUMPTION: The shared <code>Dialog</code> gains a <code>tabs</code> slot (between the title row and the caption) instead of a bespoke Settings dialog. The <code>panel</code> size is removed with <code>GenresPanel</code>, its only user. Authority: Phase 3 Notes (the shared Dialog grows by props) + design 9.11 layout.</li>
+  <li>ASSUMPTION: <code>SettingsDialog</code> takes an optional <code>genresTab</code> slot (caption, footer note, content), and <code>app/board/BoardScreen</code> fills it with <code>GenresTab</code>. With no slot, the Genres tab is disabled. This keeps <code>features/settings</code> and <code>features/genres</code> independent, the same composition Phase 3 used for the count pill on <code>DeckButton</code>. Authority: architecture <code>import-rules</code> + Phase 3 Notes + codebase dominant pattern.</li>
+  <li>ASSUMPTION: The Board list has no Settings entry today, and design 9.3 draws none. So this phase adds no Settings button to the Board list. The disabled Genres tab ("no board open") is built into <code>SettingsDialog</code> and proven by a unit test with no <code>genresTab</code> slot. Authority: design 9.3 (no Settings on the list) + 9.10 (disabled state spec) + smallest reversible option.</li>
+  <li>ASSUMPTION: The dialog footer follows the selected tab. Appearance shows the version line, and Genres shows "Each deck keeps at least 1 genre." Both tabs have the top border and the 16 px padding-top. The caption (scope line) also follows the tab. Authority: design 9.10 (Genres footer), 9.11 (Appearance footer, scope line per tab) + the v2 Settings and Genres mockups (both draw the bordered footer).</li>
+  <li>ASSUMPTION: The selected tab lives in <code>SettingsDialog</code> local state, resets to Appearance on every open, and is never stored or put into undo. Authority: design 9.11 ("The dialog opens on Appearance. A tab change is instant and is not an undo step") + design 13 (Settings tab is view state).</li>
+  <li>ASSUMPTION: The tabs are plain focusable buttons with <code>role="tab"</code>, <code>aria-selected</code> and <code>aria-controls</code>, activated by click, Enter or Space. No arrow-key roving tabindex, because design §12 lists "focus style on tabs" and keyboard details as not specified. The disabled tab uses <code>aria-disabled</code> (still focusable, so its tooltip can be read), not <code>disabled</code>. Authority: design 9.10, 9.11, §12, §15 + smallest reversible option.</li>
+  <li>ASSUMPTION: The selected-tab underline uses <code>--accent</code> in dark mode and <code>--accent-text</code> in light mode (the outline rule). The pressed Settings rail button's border keeps <code>--accent</code> in both modes, because design 4.2 keeps borders on <code>--accent</code>. Authority: design 4.2, 8.2, 9.11.</li>
+  <li>ASSUMPTION: The pressed Settings rail button is expressed as <code>aria-haspopup="dialog"</code> + <code>aria-expanded</code>, and styled from <code>[aria-expanded='true']</code>, rather than <code>aria-pressed</code>, because the button opens a dialog and is not a toggle. Authority: WAI-ARIA practice + smallest reversible option (design 8.2 only fixes the look).</li>
+  <li>ASSUMPTION: <code>GenresTab</code> mounts only while the Genres tab is selected, keyed by board id. So the top-row <code>picked</code> list is rebuilt from the stored per-deck lists on each tab show, not only on each dialog open. Authority: Phase 3 Notes (picked is view state, rebuilt on each open) + design 13.</li>
+  <li>ASSUMPTION: <code>GenresButton</code> and its CSS and test are deleted, and so is <code>genreCountText</code> if nothing else uses it. The <code>sliders-horizontal</code> icon file stays (the icon list test pins files to a list). Authority: design 8.2 (button removed) + smallest change.</li>
+  <li>ASSUMPTION: "The lint check matched to the new card tokens" means 2 changes to <code>scripts/check-css-colors.mjs</code>. A <code>/* fixed: */</code> literal now passes only for the 3 reasons in use: white on deck color, white on --danger, theme color swatch. And a card, Hook Card or note token defined outside <code>tokens.css</code> now fails. Together these stop the removed fixed Hook-label rule from coming back, and keep "follows data-mode" inside the token file. Authority: PRD Phase 6 bullet + CLAUDE.md color-lint convention + Phase 1 Notes (the lint's fixed marker).</li>
+  <li>ASSUMPTION: The contrast unit test asserts the design §12 figures minus 0.1 for rounding: dark tinted inactive cue ≥ 5.2, light tinted ≥ 4.6 (computed minimum 4.66, on Conflict), and the others as listed in Task 2. It also checks that the active cue is ≥ 4.5 on every tinted and tucked face. Authority: PRD Phase 6 validation ("the contrast values in design-system section 12 hold").</li>
+  <li>DECISION: Finding for the next design session, not changed in this phase. The dark-mode adjective (<code>--card-adjective</code> = <code>--card-adjective-active</code> = #A88BE6) on a <em>tinted</em> dark face computes to 4.28–4.45:1, below 4.5:1. Design §12 states only the untinted 4.8:1. Also, the light inactive cue on tucked levels 2–4 falls to 4.18–4.40:1, but tucked strips show only the active cue. Tokens are owned by <code>docs/design-system.html</code>, so the plan asserts the stated figures and records this here. Authority: CLAUDE.md "Do not invent tokens" + design §1.</li>
+  <li>ASSUMPTION: The superseded lines in <code>docs/feature-settings-and-theme.html</code> (marked 2026-11-04) are not rewritten in this phase. They are already marked, and the design doc wins. The PRD Phase 6 checkboxes are ticked by <code>dev-execute</code>, not by a task. Authority: brief + design §1 + pipeline convention.</li>
+  <li>ASSUMPTION: The browser tests that pinned "cards never change" (<code>theme.spec.ts</code>, <code>shell.spec.ts</code>, <code>card-test.spec.ts</code>) are changed in Task 1, the task that changes the tokens, so every task's VALIDATE stays green. Authority: skill rule "no deferred validation" + Phase 5 pattern.</li>
+  <li>ASSUMPTION: Slug <code>card-themes</code>, branch <code>phase-6-card-themes</code>. Authority: dev-plan-phase slug rules (short, from the PRD phase name).</li>
+</ul>
+
+<h3>Execution notes</h3>
+<p>(Filled in during execution: the measured fps, timings, JS size, and any test fixes.)</p>
+
+</body>
+</html>
