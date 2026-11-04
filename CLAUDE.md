@@ -4,9 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-GameIdea (working name) is a browser canvas for solo and hobby game developers and game jam entrants. The user draws game concept cards from 11 decks, turns each card's ring to choose the active cue, combines Modifiers onto Player Role, Resource and Setting cards, tucks cards under a Hook Card, and copies the computed one-sentence game hook. It runs locally in a desktop browser, with no server, no account and no AI.
+GameIdea (working name) is a browser canvas for solo and hobby game developers and game jam entrants. The user draws game concept cards from 11 decks, turns each card's ring to choose the active cue, combines Modifiers onto Player Role, Resource and Setting cards, tucks cards under a Hook Card, and selects and copies the computed one-sentence game hook. It runs locally in a desktop browser, with no server, no account and no AI.
 
-**Deck click → draw distinct cues from a pool (genre / target filter) → card on canvas → turn rings / lock / combine / tuck under a Hook Card → computed hook sentence → Copy → autosave to IndexedDB → export.**
+**Deck click → draw distinct cues from a pool (genre / target filter) → card on canvas → turn rings / lock / combine / tuck under a Hook Card → computed hook sentence → select and copy → autosave to IndexedDB → export.**
 
 The app starts from a copy of TheForge (`~/repos/theforge`), the user's story-card app. Phase 1 copies, renames and strips its story code.
 
@@ -31,7 +31,7 @@ src/
     card/           card view, rings, rotate, cue text, lock control, type icons
     canvas/         React Flow setup, pan, zoom, drag, tuck, tuck hints, snap,
                     connector badges and their word rules for the 12 card types
-    hook/           Hook Card: sentence builder (pure), Copy and its fallback dialog, Redraw All
+    hook/           Hook Card: sentence builder (pure), selectable sentence, icon menu (Copy Hook and its fallback dialog, Redraw All, Duplicate, Discard)
     genres/         Genres panel, genre counts
     notes/          free-text notes with editable titles, Add note
     boards/         board list: make, open, rename, delete

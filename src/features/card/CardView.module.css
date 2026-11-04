@@ -269,17 +269,3 @@
   color: var(--text);
   pointer-events: none;
 }
-
-/*
- * The lock on a tucked strip: 13 px in the deck card color, above the type mark in the
- * same corner column, 24 from the bottom of the visible 56 px strip.
- */
-.lockTucked {
-  position: absolute;
-  right: 4px;
-  bottom: 24px;
-  z-index: 2;
-  display: flex;
-  color: var(--card-type);
-  pointer-events: none;
-}

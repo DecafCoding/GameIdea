@@ -19,4 +19,11 @@ describe('HookCard', () => {
     expect(screen.queryByTestId('hook-slot')).toBeNull();
     expect(screen.getByText('Hook')).toBeTruthy();
   });
+
+  it('hookCard_sentence_isSelectableNotDragHandle', () => {
+    render(<HookCard sentence="You are a pilot." empty={false} />);
+    const text = screen.getByTestId('hook-sentence');
+    expect(text.classList.contains('nodrag')).toBe(true);
+    expect(text.classList.contains('nopan')).toBe(true);
+  });
 });

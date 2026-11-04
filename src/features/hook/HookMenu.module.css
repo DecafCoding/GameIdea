@@ -1,4 +1,4 @@
-/* HookMenu (design 9.4 strip menu): padding 4, radius 10, border 1, --surface, 44 px items, 13/500. */
+/* HookMenu (design 9.4 strip menu): padding 4, radius 10, border 1, --surface, 44 px icon items. */
 .menu {
   display: flex;
   gap: 4px;
@@ -16,16 +16,16 @@
 }
 
 .button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--button-h);
   min-height: var(--button-h);
-  padding: 0 12px;
+  padding: 0;
   border: 0;
   border-radius: 7px;
   background: transparent;
   color: var(--text);
-  font-family: var(--font-body);
-  font-size: 13px;
-  font-weight: 500;
-  white-space: nowrap;
   cursor: pointer;
 }
 

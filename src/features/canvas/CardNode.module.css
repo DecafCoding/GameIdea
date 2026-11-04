@@ -49,3 +49,42 @@
 .hidden {
   visibility: hidden;
 }
+
+/*
+ * A tucked card's Lock / Unlock button (user 2026-11-03): a 44 px target just outside the
+ * card's right edge, centered in the visible 56 px bottom band, the 14 px icon 4 from the
+ * edge. Unlocked it shows only while the pointer is over the card or the button (or it has
+ * keyboard focus); locked it always shows.
+ */
+.tuckLock {
+  position: absolute;
+  left: 100%;
+  bottom: 6px;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: var(--button-h);
+  height: var(--button-h);
+  padding: 0 0 0 4px;
+  border: 0;
+  background: transparent;
+  color: var(--text-muted);
+  opacity: 0;
+  cursor: pointer;
+}
+
+.node:hover .tuckLock,
+.tuckLock:focus-visible,
+.tuckLock[aria-pressed='true'] {
+  opacity: 1;
+}
+
+.tuckLock:hover,
+.tuckLock[aria-pressed='true'] {
+  color: var(--text);
+}
+
+.lifted .tuckLock[aria-pressed='false'] {
+  opacity: 0;
+}

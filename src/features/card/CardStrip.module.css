@@ -1,4 +1,4 @@
-/* CardStrip (design 9.4): padding 4, radius 10, border 1, --surface, 44 px buttons, 13/500. */
+/* CardStrip (design 9.4): padding 4, radius 10, border 1, --surface, 44 px icon buttons. */
 .strip {
   display: flex;
   gap: 4px;
@@ -10,16 +10,16 @@
 }
 
 .button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--button-h);
   min-height: var(--button-h);
-  padding: 0 12px;
+  padding: 0;
   border: 0;
   border-radius: 7px;
   background: transparent;
   color: var(--text);
-  font-family: var(--font-body);
-  font-size: 13px;
-  font-weight: 500;
-  white-space: nowrap;
   cursor: pointer;
 }
 
@@ -44,15 +44,7 @@
   color: var(--danger-text);
 }
 
-/* The Lock icon button: a 44 px square; pressed (locked) it takes the raised fill. */
-.lock {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: var(--button-h);
-  padding: 0;
-}
-
+/* The Lock button: pressed (locked) it takes the raised fill. */
 .lock[aria-pressed='true'] {
   background: var(--surface-raised);
   color: var(--accent-text);

@@ -13,9 +13,10 @@ const handlers = {
   onLock: noop,
   onDiscard: noop,
 };
-/** Each button's name: its text, or its aria-label for the icon-only Lock button. */
-const names = () =>
-  screen.getAllByRole('button').map((b) => b.getAttribute('aria-label') ?? b.textContent);
+/** Each button's name: its aria-label (every item is icon-only). */
+const names = () => screen.getAllByRole('button').map((b) => b.getAttribute('aria-label'));
+const iconOf = (button: HTMLElement) =>
+  button.querySelector('[data-icon]')?.getAttribute('data-icon');
 
 describe('CardStrip', () => {
   it('cardStrip_uncombined_hasNoSplit', () => {
@@ -41,11 +42,32 @@ describe('CardStrip', () => {
     expect(onLock).toHaveBeenCalledOnce();
   });
 
-  it('cardStrip_lock_isIconOnly', () => {
+  it('cardStrip_items_areIconsWithTooltips', () => {
+    render(<CardStrip canSplit locked={false} {...handlers} />);
+    const buttons = screen.getAllByRole('button');
+    for (const b of buttons) {
+      expect(b.textContent).toBe('');
+      expect(b.title).toBe(b.getAttribute('aria-label'));
+    }
+    expect(buttons.map(iconOf)).toEqual([
+      'split',
+      'playing-cards-fan',
+      'copy',
+      'lock-open',
+      'trash',
+    ]);
+  });
+
+  it('cardStrip_unlockedCard_showsOpenLock', () => {
     render(<CardStrip canSplit={false} locked={false} {...handlers} />);
     const lock = screen.getByRole('button', { name: 'Lock' });
-    expect(lock.textContent).toBe('');
-    expect(lock.querySelector('[data-icon="lock"]')).not.toBeNull();
+    expect(lock.getAttribute('aria-pressed')).toBe('false');
+    expect(iconOf(lock)).toBe('lock-open');
+  });
+
+  it('cardStrip_lockedCard_showsClosedLock', () => {
+    render(<CardStrip canSplit={false} locked {...handlers} />);
+    expect(iconOf(screen.getByRole('button', { name: 'Unlock' }))).toBe('lock');
   });
 
   it('cardStrip_duplicate_calls', () => {

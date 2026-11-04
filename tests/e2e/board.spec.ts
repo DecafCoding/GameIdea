@@ -2,7 +2,7 @@
  * Browser tests for the board screen: the shell, the empty board, drawing onto the canvas,
  * fixture boards, the pools banner, selection and the card strip, keys, and locked tokens.
  */
-import type { Route } from '@playwright/test';
+import type { Page, Route } from '@playwright/test';
 import type { Board } from '@/shared/model';
 import { expect, test } from './test';
 import {
@@ -204,6 +204,10 @@ test('board_drawAndTurn_under100ms', { tag: '@timing' }, async ({ page }) => {
   expect(turnResult.elapsed).toBeLessThan(100);
 });
 
+/** A tucked card's Lock / Unlock button, beside the card. */
+const tuckLock = (page: Page, id: string) =>
+  page.locator(`.react-flow__node[data-id="${id}"] [data-testid="tuck-lock"]`);
+
 test.describe('selection', () => {
   const stack = () =>
     fixtureBoard([...fixtureStack(96, 96), fixtureCard('setting', { x: 480, y: 96, z: 9 })]);
@@ -213,8 +217,14 @@ test.describe('selection', () => {
     await cardById(page, 'setting-1').click({ position: { x: 30, y: 30 } });
     const strip = page.getByTestId('card-strip');
     await expect(strip).toBeVisible();
-    await expect(strip.getByRole('button')).toHaveText(['Redraw', 'Duplicate', '', 'Discard']);
-    await expect(strip.getByRole('button', { name: 'Lock' })).toBeVisible();
+    expect(
+      await strip
+        .getByRole('button')
+        .evaluateAll((els) => els.map((el) => el.getAttribute('title'))),
+    ).toEqual(['Redraw', 'Duplicate', 'Lock', 'Discard']);
+    await expect(
+      strip.getByRole('button', { name: 'Lock' }).locator('[data-icon]'),
+    ).toHaveAttribute('data-icon', 'lock-open');
     const wrapper = page.locator('.react-flow__node[data-id="setting-1"] [data-selected]');
     await expect(wrapper).toHaveCSS('outline-width', '2px');
     await expect(wrapper).toHaveCSS('outline-color', 'rgb(232, 116, 46)');
@@ -231,10 +241,9 @@ test.describe('selection', () => {
     const strip = page.getByTestId('card-strip');
     await strip.getByRole('button', { name: 'Lock' }).click();
     await expect(cardById(page, 'setting-1').getByTestId('lock-mark')).toBeVisible();
-    await expect(strip.getByRole('button', { name: 'Unlock' })).toHaveAttribute(
-      'aria-pressed',
-      'true',
-    );
+    const unlock = strip.getByRole('button', { name: 'Unlock' });
+    await expect(unlock).toHaveAttribute('aria-pressed', 'true');
+    await expect(unlock.locator('[data-icon]')).toHaveAttribute('data-icon', 'lock');
     await page.keyboard.press('Control+z');
     await expect(cardById(page, 'setting-1').getByTestId('lock-mark')).toHaveCount(0);
   });
@@ -253,25 +262,73 @@ test.describe('selection', () => {
     const cue = await boxOf(mechanic.getByTestId('active-cue'));
     expect(cue.y).toBeGreaterThanOrEqual(stripTop);
     expect(cue.y + cue.height).toBeLessThanOrEqual(card.y + card.height);
-    // The lock and type marks sit in the strip's band, in the card's bottom-right corner.
-    for (const part of [mechanic.getByTestId('lock-mark'), mechanic.getByTestId('tuck-mark')]) {
-      const box = await boxOf(part);
-      expect(box.y).toBeGreaterThanOrEqual(stripTop);
-      expect(box.y + box.height).toBeLessThanOrEqual(card.y + card.height);
-      expect(box.x + box.width).toBeLessThanOrEqual(card.x + card.width);
-      expect(box.x + box.width).toBeGreaterThanOrEqual(card.x + card.width - 6);
-    }
-    expect((await boxOf(mechanic.getByTestId('lock-mark'))).width).toBe(13);
+    // The type mark sits in the strip's band, in the card's bottom-right corner.
+    const mark = await boxOf(mechanic.getByTestId('tuck-mark'));
+    expect(mark.y).toBeGreaterThanOrEqual(stripTop);
+    expect(mark.y + mark.height).toBeLessThanOrEqual(card.y + card.height);
+    expect(mark.x + mark.width).toBeLessThanOrEqual(card.x + card.width);
+    expect(mark.x + mark.width).toBeGreaterThanOrEqual(card.x + card.width - 6);
+    // The lock is a button just outside the right edge, in the band, shown while locked.
+    await expect(mechanic.getByTestId('lock-mark')).toHaveCount(0);
+    const lock = tuckLock(page, 'mechanic-1');
+    await expect(lock).toHaveCSS('opacity', '1');
+    await expect(lock).toHaveAttribute('aria-label', 'Unlock');
+    const box = await boxOf(lock);
+    expect(box.width).toBe(44);
+    expect(box.height).toBe(44);
+    expect(Math.abs(box.x - (card.x + card.width))).toBeLessThanOrEqual(1);
+    expect(box.y).toBeGreaterThanOrEqual(stripTop);
+    expect(box.y + box.height).toBeLessThanOrEqual(card.y + card.height);
+  });
+
+  test('tuckedCard_lockButton_showsOnHoverAndToggles', async ({ page }) => {
+    await openBoard(
+      page,
+      fixtureBoard([
+        fixtureCard('role', { x: 96, y: 96 }),
+        fixtureCard('mechanic', { x: 96, y: 152, z: 2, tuckedUnder: 'role-1' }),
+      ]),
+    );
+    const lock = tuckLock(page, 'mechanic-1');
+    await expect(lock).toHaveCSS('opacity', '0');
+    await expect(tuckLock(page, 'role-1')).toHaveCount(0);
+    const card = await boxOf(cardById(page, 'mechanic-1'));
+    await page.mouse.move(card.x + 40, card.y + card.height - 20);
+    await expect(lock).toHaveCSS('opacity', '1');
+    await expect(lock).toHaveAttribute('aria-label', 'Lock');
+    await expect(lock.locator('[data-icon]')).toHaveAttribute('data-icon', 'lock-open');
+    await lock.click();
+    await expect(lock).toHaveAttribute('aria-label', 'Unlock');
+    await expect(lock.locator('[data-icon]')).toHaveAttribute('data-icon', 'lock');
+    await expect
+      .poll(async () => (await storedBoards(page))[0]!.cards.find((c) => c.id === 'mechanic-1'))
+      .toMatchObject({ locked: true });
+    // The click locks only: it does not select the card.
+    await expect(
+      page.locator('.react-flow__node[data-id="mechanic-1"] [data-selected]'),
+    ).toHaveCount(0);
+    // Locked, it stays after the pointer leaves.
+    await page.mouse.move(5, 5);
+    await expect(lock).toHaveCSS('opacity', '1');
+    await page.keyboard.press('Control+z');
+    await expect(lock).toHaveAttribute('aria-label', 'Lock');
+    await expect(lock).toHaveCSS('opacity', '0');
+    await lock.hover();
+    await lock.click();
+    await lock.click();
+    await expect(lock).toHaveAttribute('aria-label', 'Lock');
   });
 
   test('select_combinedCard_stripHasSplit', async ({ page }) => {
     await openBoard(page, fixtureBoard([combinedCard('role', { x: 96, y: 96 })]));
     await cardById(page, 'role-1').click({ position: { x: 30, y: 30 } });
-    await expect(page.getByTestId('card-strip').getByRole('button')).toHaveText([
+    const buttons = page.getByTestId('card-strip').getByRole('button');
+    await expect(buttons).toHaveCount(5);
+    expect(await buttons.evaluateAll((els) => els.map((el) => el.getAttribute('title')))).toEqual([
       'Split',
       'Redraw',
       'Duplicate',
-      '',
+      'Lock',
       'Discard',
     ]);
   });
@@ -443,9 +500,9 @@ test.describe('selection', () => {
     }
     const goal = cardById(page, 'goal-1');
     const cue = await boxOf(goal.getByTestId('active-cue'));
-    for (const mark of ['tuck-mark', 'lock-mark']) {
-      const m = await boxOf(goal.getByTestId(mark));
-      expect(cue.x + cue.width, `cue clear of ${mark}`).toBeLessThan(m.x);
+    for (const mark of [goal.getByTestId('tuck-mark'), tuckLock(page, 'goal-1')]) {
+      const m = await boxOf(mark);
+      expect(cue.x + cue.width, 'cue clear of the marks').toBeLessThan(m.x);
     }
   });
 

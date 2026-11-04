@@ -10,7 +10,7 @@ import styles from './TypeDisc.module.css';
 export const TYPE_ICON: Record<CardType, IconName> = {
   hook: 'hook',
   role: 'user',
-  mechanic: 'repeat',
+  mechanic: 'wrench',
   resource: 'battery',
   goal: 'flag',
   conflict: 'zap',

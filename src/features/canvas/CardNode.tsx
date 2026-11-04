@@ -6,6 +6,8 @@
  * tucked under another card shows no strip menu; the Hook Card always shows its menu.
  * A card with a tucked card below it may show the connector badge on the seam: this node
  * paints above the tucked one, so the badge sits on top of both cards.
+ * A tucked card has a Lock / Unlock button just outside its right edge, in its visible
+ * bottom band: shown on hover while unlocked, and always while locked.
  */
 import { NodeToolbar, Position, type NodeProps } from '@xyflow/react';
 import {
@@ -28,6 +30,7 @@ import {
 } from '@/features/card';
 import { buildHookSentence, HookCard, HookMenu } from '@/features/hook';
 import { useBoardStore } from '@/shared/store';
+import { Icon } from '@/shared/ui';
 import { connectorFor } from './connector';
 import { ConnectorBadge } from './ConnectorBadge';
 import { sameBelow, type CardFlowNode } from './nodes';
@@ -278,6 +281,23 @@ function CardNodeView({ data }: NodeProps<CardFlowNode>) {
             nextText={below.text}
             onChoose={(word) => actions.chooseConnector(below.id, word)}
           />
+        )}
+        {tucked && (
+          <button
+            type="button"
+            className={`${styles.tuckLock} nodrag nopan`}
+            aria-label={card.locked ? 'Unlock' : 'Lock'}
+            title={card.locked ? 'Unlock' : 'Lock'}
+            aria-pressed={card.locked}
+            data-testid="tuck-lock"
+            onClick={(event) => {
+              // Lock only: the click must not select the card.
+              event.stopPropagation();
+              actions.lock(id);
+            }}
+          >
+            <Icon name={card.locked ? 'lock' : 'lock-open'} size={14} />
+          </button>
         )}
       </div>
       <NodeToolbar

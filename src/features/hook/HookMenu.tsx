@@ -1,18 +1,21 @@
 /**
  * HookMenu: the Hook Card's hover menu (design 9.5, on the card strip menu spec of 9.4):
- * Copy, Redraw All, Duplicate (the whole stack) and Discard. Copy and Redraw All are off until a card is tucked under
- * the Hook Card; Redraw All is also off while the pools are not ready. After a good copy,
- * Copy reads "Copied" for 2 seconds; a blocked copy opens the fallback dialog.
+ * 4 icon buttons, Copy Hook, Redraw All, Duplicate (the whole stack) and Discard. Copy
+ * Hook and Redraw All are off until a card is tucked under the Hook Card; Redraw All is
+ * also off while the pools are not ready. After a good copy, Copy Hook shows a check and
+ * reads "Copied" for 2 seconds; a blocked copy opens the fallback dialog. The sentence on
+ * the card is also selectable text.
  * The canvas shows the menu while the pointer is over the Hook Card or the menu. The menu
  * stays mounted while hidden, so the "Copied" state and the dialog survive the pointer
  * leaving.
  */
 import { useEffect, useRef, useState } from 'react';
+import { Icon } from '@/shared/ui';
 import { copyHook, type ClipboardLike } from './copyHook';
 import { CopyFallbackDialog } from './CopyFallbackDialog';
 import styles from './HookMenu.module.css';
 
-/** How long Copy reads "Copied" (design 9.5). */
+/** How long Copy Hook reads "Copied" (design 9.5). */
 export const COPIED_MS = 2000;
 
 interface HookMenuProps {
@@ -47,6 +50,7 @@ export function HookMenu({
   // The menu also stays while focus is in it (after a click, or from the keyboard).
   const [focused, setFocused] = useState(false);
   const shown = visible || focused;
+  const tabIndex = shown ? undefined : -1;
   const [fallback, setFallback] = useState<string | null>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -68,6 +72,8 @@ export function HookMenu({
     timer.current = setTimeout(() => setCopied(false), COPIED_MS);
   }
 
+  const copyLabel = copied ? 'Copied' : 'Copy Hook';
+
   return (
     <>
       <div
@@ -86,36 +92,44 @@ export function HookMenu({
         <button
           type="button"
           className={`${styles.button} ${copied ? styles.copied : ''}`}
+          aria-label={copyLabel}
+          title={copyLabel}
           disabled={!hasStack}
-          tabIndex={shown ? undefined : -1}
+          tabIndex={tabIndex}
           onClick={() => void copy()}
         >
-          {copied ? 'Copied' : 'Copy'}
+          <Icon name={copied ? 'check' : 'hook'} size={16} />
         </button>
         <button
           type="button"
           className={styles.button}
+          aria-label="Redraw All"
+          title="Redraw All"
           disabled={!hasStack || !poolsReady}
-          tabIndex={shown ? undefined : -1}
+          tabIndex={tabIndex}
           onClick={onRedrawAll}
         >
-          Redraw All
+          <Icon name="playing-cards-fan" size={16} />
         </button>
         <button
           type="button"
           className={styles.button}
-          tabIndex={shown ? undefined : -1}
+          aria-label="Duplicate"
+          title="Duplicate"
+          tabIndex={tabIndex}
           onClick={onDuplicate}
         >
-          Duplicate
+          <Icon name="copy" size={16} />
         </button>
         <button
           type="button"
           className={`${styles.button} ${styles.discard}`}
-          tabIndex={shown ? undefined : -1}
+          aria-label="Discard"
+          title="Discard"
+          tabIndex={tabIndex}
           onClick={onDiscard}
         >
-          Discard
+          <Icon name="trash" size={16} />
         </button>
       </div>
       <CopyFallbackDialog
