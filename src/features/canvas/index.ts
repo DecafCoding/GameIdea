@@ -18,6 +18,7 @@ export {
   swapOnto,
   turnCardOnBoard,
 } from './boardActions';
+export { conceptCards, conceptLanes, onePagerCardCount, type ConceptLane } from './concept';
 export { CanvasProvider, useCanvasApi, type CanvasApi, type CanvasNotice } from './CanvasProvider';
 export { boardRects, CARD_SIZE, cardSize, findOpenSpot, HOOK_WIDTH, snapToGrid } from './placement';
 export { cardText, hookSentences, isOnTop, onTopCardOf } from './reading';

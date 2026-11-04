@@ -72,10 +72,13 @@ function inSlotBand(card: Card, point: Point): boolean {
 
 /** Every card, topmost first: roots by z descending, each followed by its stack order. */
 export function paintOrder(board: Board): Card[] {
-  return board.cards
-    .filter((card) => isRoot(board, card.id) && !isOnTop(board, card))
-    .sort((a, b) => b.z - a.z)
-    .flatMap((root) => stackOrder(board, root.id));
+  return (
+    board.cards
+      // Concept cards have no canvas place, so they are never a drop target on the canvas.
+      .filter((card) => isRoot(board, card.id) && !isOnTop(board, card) && !card.inConcept)
+      .sort((a, b) => b.z - a.z)
+      .flatMap((root) => stackOrder(board, root.id))
+  );
 }
 
 /**

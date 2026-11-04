@@ -86,12 +86,13 @@ export function findOpenSpot(start: Point, occupied: Rect[], size: Size): Point 
 
 /**
  * A rect for every card (200 × 200) and note (its size), skipping the ids given. A card on
- * top of another has no place of its own: its base card covers it.
+ * top of another has no place of its own: its base card covers it. Concept cards are skipped.
  */
 export function boardRects(board: Board, skip: ReadonlySet<string> = new Set()): Rect[] {
   return [
     ...board.cards
-      .filter((card) => !skip.has(card.id) && !isOnTop(board, card))
+      // Concept cards have no canvas place: the panel's measured rect covers them.
+      .filter((card) => !skip.has(card.id) && !isOnTop(board, card) && !card.inConcept)
       .map((card) => ({ x: card.x, y: card.y, ...cardSize(card) })),
     ...board.notes
       .filter((note) => !skip.has(note.id))

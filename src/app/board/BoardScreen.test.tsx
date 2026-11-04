@@ -96,7 +96,7 @@ describe('BoardScreen', () => {
     render(<BoardScreen />);
     expect(screen.queryByRole('region', { name: 'Build Your First Hook' })).toBeNull();
     expect(screen.queryByTestId('start-here')).toBeNull();
-    const hook = screen.getByRole('button', { name: 'Draw A Hook Card' }) as HTMLButtonElement;
+    const hook = screen.getByRole<HTMLButtonElement>('button', { name: 'Draw A Hook Card' });
     expect(hook.disabled).toBe(true);
   });
 

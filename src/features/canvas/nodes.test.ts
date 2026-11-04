@@ -9,6 +9,7 @@ import {
   fixtureNote,
   fixtureStack,
   secondModifier,
+  onePagerBoard,
 } from '@/test/fixtures/boards';
 import { toNodes, type CardNodeData } from './nodes';
 
@@ -88,5 +89,16 @@ describe('toNodes below', () => {
     ]);
     const goal = toNodes(board, UI).find((n) => n.id === 'goal-1')!.data as CardNodeData;
     expect(goal.below?.text).toBe('devout exiled navigator');
+  });
+});
+
+describe('toNodes on a One-Pager board', () => {
+  it('toNodes_conceptCard_noCardNode', () => {
+    const ids = toNodes(onePagerBoard(), UI).map((node) => node.id);
+    for (const id of ['resource-c1', 'resource-c2', 'setting-c1', 'mechanic-c1']) {
+      expect(ids).not.toContain(id);
+    }
+    expect(ids).toContain('hook-1');
+    expect(ids).toContain('mechanic-t1');
   });
 });

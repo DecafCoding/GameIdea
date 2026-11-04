@@ -11,6 +11,7 @@ import {
   fixtureCard,
   fixtureStack,
   secondModifier,
+  onePagerBoard,
 } from '@/test/fixtures/boards';
 import {
   chooseConnector,
@@ -497,6 +498,17 @@ describe('redrawAll', () => {
   const fresh = (card: Card): Card => ({
     ...card,
     rings: [{ cues: card.rings[0]!.cues.map((c) => ({ text: `new ${c.text}` })), activeIndex: 0 }],
+  });
+
+  it('redrawAll_conceptCards_unchanged', () => {
+    const board = onePagerBoard();
+    const { board: next } = redrawAll(board, 'hook-1', fresh);
+    for (const card of board.cards.filter((c) => c.inConcept)) {
+      expect(next.cards.find((c) => c.id === card.id)).toBe(card);
+    }
+    expect(next.cards.find((c) => c.id === 'role-t1')!.rings[0]!.cues[0]!.text).toBe(
+      'new navigator',
+    );
   });
 
   it('redrawAll_skipsLockedCards', () => {

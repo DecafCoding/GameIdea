@@ -30,7 +30,7 @@ describe('DeckButton', () => {
   it('hookButton_disabled_noDraw', () => {
     const onDraw = vi.fn();
     render(<HookButton onDraw={onDraw} disabled />);
-    const button = screen.getByRole('button', { name: 'Draw A Hook Card' }) as HTMLButtonElement;
+    const button = screen.getByRole<HTMLButtonElement>('button', { name: 'Draw A Hook Card' });
     expect(button.disabled).toBe(true);
     fireEvent.click(button);
     expect(onDraw).not.toHaveBeenCalled();

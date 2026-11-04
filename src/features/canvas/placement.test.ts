@@ -2,7 +2,7 @@
  * Tests for the open-spot search.
  */
 import { describe, expect, it } from 'vitest';
-import { fixtureBoard, fixtureCard } from '@/test/fixtures/boards';
+import { fixtureBoard, fixtureCard, onePagerBoard } from '@/test/fixtures/boards';
 import { besideSpot, boardRects, cardSize, findOpenSpot, snapToGrid } from './placement';
 
 const SIZE = { width: 200, height: 200 };
@@ -58,5 +58,13 @@ describe('snapToGrid', () => {
   it('snapToGrid_halfwayRoundsUp', () => {
     expect(snapToGrid({ x: 12, y: 36 })).toEqual({ x: 24, y: 48 });
     expect(snapToGrid({ x: -12, y: -36 })).toEqual({ x: 0, y: -24 });
+  });
+});
+
+describe('boardRects on a One-Pager board', () => {
+  it('boardRects_conceptCard_skipped', () => {
+    const board = onePagerBoard();
+    // Hook Card, 2 train cards, the loose Modifier and the note: no Concept card.
+    expect(boardRects(board)).toHaveLength(5);
   });
 });

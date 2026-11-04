@@ -62,8 +62,9 @@ export function sameBelow(a: BelowCard | null, b: BelowCard | null): boolean {
 
 export function toNodes(board: Board, ui: NodeUi): BoardFlowNode[] {
   // A card on top of another has no node: it reads as part of its base card.
+  // Concept cards have no canvas place: they are chips in the Concept panel node.
   const roots = board.cards
-    .filter((card) => isRoot(board, card.id) && !isOnTop(board, card))
+    .filter((card) => isRoot(board, card.id) && !isOnTop(board, card) && !card.inConcept)
     .sort((a, b) => a.z - b.z);
   const cards: CardFlowNode[] = roots.flatMap((root, r) =>
     stackOrder(board, root.id).map((card, i, order): CardFlowNode => ({
