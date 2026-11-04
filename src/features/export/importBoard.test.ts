@@ -8,6 +8,7 @@ import {
   fixtureBoard,
   fixtureCard,
   fixtureNote,
+  onePagerBoard,
   roundTripBoard,
   version1BoardFile,
 } from '@/test/fixtures/boards';
@@ -58,6 +59,28 @@ describe('parseBoardFile', () => {
     expect(board.notes).toEqual(roundTripBoard().notes);
   });
 
+  it('parseBoardFile_badOnePager_null', () => {
+    const good = onePagerBoard();
+    const bad = [
+      { ...good, cards: good.cards.filter((card) => card.type !== 'hook') },
+      { ...good, cards: [...good.cards, fixtureCard('hook', { id: 'hook-2' })] },
+      {
+        ...good,
+        cards: good.cards.map((c) =>
+          c.id === 'resource-c1' ? { ...c, tuckedUnder: 'hook-1' } : c,
+        ),
+      },
+      {
+        ...good,
+        cards: good.cards.map((c) => (c.type === 'hook' ? { ...c, inConcept: true } : c)),
+      },
+      { ...good, conceptWidth: 700 },
+      { ...good, kind: 'free' },
+    ];
+    expect(parseBoardFile(boardFileJson(good))).toEqual(good);
+    for (const board of bad) expect(parseBoardFile(JSON.stringify(board))).toBeNull();
+  });
+
   it('parseBoardFile_badCard_null', () => {
     const card = { ...fixtureCard('goal'), rings: [] };
     expect(parseBoardFile(JSON.stringify(fixtureBoard([card])))).toBeNull();
@@ -101,6 +124,14 @@ describe('importedBoard', () => {
     expect(strip(result)).toEqual(strip(original));
     expect(result.id).toBe('new-id');
     expect(result.name).toBe('Round Trip (imported)');
+  });
+
+  it('importedBoard_onePager_keepsKindAndWidth', () => {
+    const parsed = parseBoardFile(boardFileJson({ ...onePagerBoard(), conceptWidth: 400 }))!;
+    const { board: result } = importedBoard(parsed, [], options);
+    expect(result.kind).toBe('onePager');
+    expect(result.conceptWidth).toBe(400);
+    expect(result.cards).toEqual(onePagerBoard().cards);
   });
 
   it('importedBoard_keepsCardsNotesViewCreatedAt', () => {

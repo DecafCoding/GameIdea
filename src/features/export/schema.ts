@@ -13,12 +13,16 @@
  * The Phase 2 fields (hook, the 6 new decks, modDeck, onTopOf, locked) went into format 1
  * before any user board existed. Format 2 adds the board kind, conceptWidth and each
  * card's inConcept; a version 1 file reaches this check through UPGRADES[1].
+ * One-Pager rules: exactly 1 Hook Card, no Concept card tucked, no Hook Card in Concept, no
+ * card tucked under a Concept card, a width within CONCEPT_WIDTH, and no Concept data on a
+ * Free Form board. A One-Pager file with no conceptWidth is allowed (the panel's default).
  */
 import { z } from 'zod';
 import {
   BASE_TYPES,
   BOARD_KINDS,
   CARD_TYPES,
+  CONCEPT_WIDTH,
   FORMAT_VERSION,
   GENRES,
   MOD_DECKS,
@@ -182,6 +186,35 @@ export const boardSchema: z.ZodType<Board> = z
     );
     if (board.cards.some((card) => card.tuckedUnder !== null && onTopIds.has(card.tuckedUnder))) {
       ctx.addIssue({ code: 'custom', message: 'A card is tucked under a card that is on top.' });
+    }
+    // One-Pager rules (docs/feature-one-pager-board.html Rules). A bad file is rejected,
+    // never repaired, because a repair would hide data loss.
+    const issue = (message: string) => ctx.addIssue({ code: 'custom', message });
+    if (board.kind === 'onePager') {
+      if (board.cards.filter((card) => card.type === 'hook').length !== 1) {
+        issue('A One-Pager board has exactly 1 Hook Card.');
+      }
+    } else if (board.cards.some((card) => card.inConcept) || board.conceptWidth !== undefined) {
+      issue('Only a One-Pager board has a Concept panel.');
+    }
+    if (board.cards.some((card) => card.inConcept && card.tuckedUnder !== null)) {
+      issue('A Concept card is never tucked.');
+    }
+    if (board.cards.some((card) => card.inConcept && card.type === 'hook')) {
+      issue('A Hook Card is never in Concept.');
+    }
+    if (
+      board.cards.some(
+        (card) => card.tuckedUnder !== null && byId.get(card.tuckedUnder)?.inConcept === true,
+      )
+    ) {
+      issue('A card is tucked under a Concept card.');
+    }
+    if (
+      board.conceptWidth !== undefined &&
+      (board.conceptWidth < CONCEPT_WIDTH.min || board.conceptWidth > CONCEPT_WIDTH.max)
+    ) {
+      issue('The Concept width is out of range.');
     }
     if (board.cards.some((card) => card.tuckedUnder === card.id)) {
       ctx.addIssue({ code: 'custom', message: 'A card is tucked under itself.' });
