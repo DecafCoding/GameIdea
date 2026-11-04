@@ -1,5 +1,5 @@
 /*
- * Genres panel body (design 9.10). Top section: the "All 4 Decks" label (Display 12 / 600,
+ * Genres tab body (design 9.10). Top section: the "All 4 Decks" label (Display 12 / 600,
  * 0.08em, uppercase, --text-muted) and the All On ghost button (36 tall, padding 0 14,
  * radius 8, border 1 --border-strong, 13 / 500), then 21 chips (gap 8): 36 tall, padding
  * 0 12, radius 18, 13 px. Deck rows: padding 14 0, top border 1, gap 16, a 170 wide name
@@ -9,7 +9,7 @@
  * above and below (44 px top, 40 px deck rows; a recorded deviation like the 36 px rail).
  */
 .top {
-  padding: 8px 0 16px; /* design 9.10; no token */
+  padding: 16px 0; /* design 9.10: padding 16 0, gap 12; no token */
 }
 
 .topHeader {

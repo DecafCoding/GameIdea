@@ -15,4 +15,5 @@ export {
 } from './genreRules';
 export { GenreCount } from './GenreCount';
 export { GenresButton } from './GenresButton';
-export { GENRES_FOOTER_TEXT, GENRES_HELP_TEXT, GenresPanel } from './GenresPanel';
+export { GenresPanel } from './GenresPanel';
+export { GENRES_FOOTER_TEXT, GENRES_SCOPE_TEXT, GenresTab } from './GenresTab';
