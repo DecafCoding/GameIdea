@@ -276,7 +276,7 @@
   <tr><td>Board name field</td><td>Inter 15/600</td><td>Top bar</td></tr>
   <tr><td>Note text</td><td>Inter 15, line height 1.5</td><td></td></tr>
   <tr><td>Rail button label</td><td>Inter 14/600</td><td></td></tr>
-  <tr><td>Hook sentence</td><td>Inter 14, line height 1.45</td><td><code>--hook-text</code></td></tr>
+  <tr><td>Hook sentence</td><td>Inter 14, line height 1.45. A long sentence scrolls with a 4 px rounded thumb in <code>--hook-text</code> at 30% (50% on hover), no track, 4 from the card's right border <span class="tag">user 2026-11-03</span></td><td><code>--hook-text</code></td></tr>
   <tr><td>Setting name, export item title</td><td>Inter 14/600</td><td></td></tr>
   <tr><td>Button, Export label</td><td>Inter 14/500</td><td></td></tr>
   <tr><td>Menu item</td><td>Inter 13/500</td><td>Strip menus</td></tr>
@@ -477,9 +477,9 @@
 <ul>
   <li><strong>Tuck:</strong> each lower card's top is 56 below the top of the card above it, so a 56 strip of the upper card shows. Tucked faces darken one step per level (<code>--card-tucked-1</code> to <code>-4</code>).</li>
   <li><strong>Normal order under a Hook Card</strong> <span class="tag">user 2026-11-02</span>: Player Role, Mechanic, Resource, Goal, Conflict. The slot follows the last card of that order in the stack. Any card can still tuck under any card.</li>
-  <li><strong>Slot:</strong> it shows when a normal card is dragged near a stack.
+  <li><strong>Slot:</strong> it shows whenever a drop would tuck: a card dragged over any card, a stack or a Hook Card, in any order, and a card in the normal order dragged into the 72 band under a stack <span class="tag">user 2026-11-03</span>. It marks where the card will land. A tuck adds the card as the target's last child (a Modifier as its first), so over a card in the middle of a stack the slot shows after that card's own tucked cards, and over a Hook Card it shows under the stack's last card.
     <ul>
-      <li>Size and place: 200 × 72, starting 16 above the upper card's bottom.</li>
+      <li>Size and place: 200 × 72 over the landed card's visible 56 band and 16 above it, so at the end of a stack it starts 16 above the last card's bottom.</li>
       <li>Border: 2, dashed, in the dragged deck's card color, with no top border. Radius 0 0 7 7 (<code>--radius-card</code>).</li>
       <li>Fill: the card color at <code>--slot-fill-alpha</code>.</li>
       <li>Label: "&lt;Deck&gt; goes here", 12/600 in the deck rail color, bottom-aligned, padding-bottom 10.</li>

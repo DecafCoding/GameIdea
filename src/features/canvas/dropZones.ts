@@ -11,7 +11,7 @@ import { isCombined } from '@/features/card';
 import { BASE_TYPES, type Board, type Card, type CardType } from '@/shared/model';
 import { cardSize, type Point } from './placement';
 import { isOnTop, onTopCardOf } from './reading';
-import { childrenOf, descendantsOf, isRoot, stackOrder } from './stack';
+import { childrenOf, descendantsOf, isRoot, stackOrder, tuckCard } from './stack';
 
 /** Height of the "Add on top" band across a merged card's top (design 9.8). */
 export const TOP_BAND = 52;
@@ -126,16 +126,23 @@ export function dropAction(
   return { kind: 'tuck' };
 }
 
-/** The hint to draw while dragging over the target. */
+/**
+ * The hint to draw while dragging over the target. Every drop that tucks shows the slot
+ * where the card will land (user 2026-11-03); before, only the normal place did.
+ */
 export function hintFor(board: Board, dragged: Card, target: Card | null, point: Point): DropHint {
   if (!target || dragged.type === 'hook') return null;
   if (canCombine(dragged, target)) return 'combine';
   if (canSwap(dragged, target)) return onTopCardOf(board, target.id) ? 'swapOnly' : 'swapZones';
-  if (
-    isNormalPlace(board, dragged, target) &&
-    (inCard(target, point) || inSlotBand(target, point))
-  ) {
-    return 'slot';
-  }
-  return null;
+  return dropAction(board, dragged, target, point).kind === 'tuck' ? 'slot' : null;
+}
+
+/**
+ * Where a card tucked under the target will land: its top-left after the tuck and the
+ * stack layout. A tuck adds the card as the target's last child (a Modifier as its first),
+ * so on a card in the middle of a stack it lands after that card's own tucked cards.
+ */
+export function tuckLanding(board: Board, draggedId: string, targetId: string): Point {
+  const card = tuckCard(board, draggedId, targetId).cards.find((c) => c.id === draggedId)!;
+  return { x: card.x, y: card.y };
 }
