@@ -130,6 +130,7 @@ const ICONS: IconName[] = [
   'playing-cards-fan',
   'lock-open',
   'split',
+  'grip',
 ];
 
 describe('design tokens', () => {

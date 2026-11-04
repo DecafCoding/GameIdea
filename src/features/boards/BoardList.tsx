@@ -29,7 +29,7 @@ import {
   saveBoard,
   whenSaved,
 } from '@/shared/storage';
-import { newId } from '@/shared/model';
+import { newId, type BoardKind } from '@/shared/model';
 import { newBoard } from '@/shared/store';
 import { Banner, Button, Icon } from '@/shared/ui';
 import { BoardCard } from './BoardCard';
@@ -160,11 +160,11 @@ export function BoardList({ boardHref, onOpen }: BoardListProps) {
     newBoardButton.current?.focus();
   }, [choosing]);
 
-  async function createBoard(name: string) {
+  async function createBoard(name: string, kind: BoardKind) {
     setChoosing(false);
     clearNotice();
     setCreating(true);
-    const board = newBoard({ name });
+    const board = newBoard({ name, kind });
     try {
       await saveBoard(board);
     } catch {
@@ -306,7 +306,7 @@ export function BoardList({ boardHref, onOpen }: BoardListProps) {
         <NewBoardDialog
           open
           onCancel={cancelNewBoard}
-          onCreate={(name) => void createBoard(name)}
+          onCreate={(name, kind) => void createBoard(name, kind)}
         />
       )}
       <DeleteBoardDialog

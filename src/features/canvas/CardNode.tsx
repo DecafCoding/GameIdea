@@ -166,12 +166,15 @@ function scrollHookText(event: WheelEvent<HTMLDivElement>) {
 /**
  * The Hook Card's face and hover menu: the sentence is computed from the store on each
  * change (a string, so the node re-renders only when the words change) and never stored.
- * The menu shows while the pointer is over the Hook Card or the menu. The wheel over the
+ * The menu shows while the pointer is over the Hook Card or the menu; on a One-Pager board
+ * it has only Copy Hook and Redraw All. The wheel over the
  * card scrolls the sentence instead of zooming the canvas.
  */
 function HookBody({ hookId, actions }: { hookId: string; actions: CardNodeActions }) {
   const sentence = useBoardStore((state) => buildHookSentence(stackEntries(state.board, hookId)));
   const empty = useBoardStore((state) => childrenOf(state.board, hookId).length === 0);
+  // A One-Pager board keeps exactly 1 Hook Card: no Duplicate and no Discard.
+  const onePager = useBoardStore((state) => state.board.kind === 'onePager');
   const { hover, cardRef, menuRef, enter, leave } = useHoverMenu();
 
   return (
@@ -197,8 +200,8 @@ function HookBody({ hookId, actions }: { hookId: string; actions: CardNodeAction
             poolsReady={actions.canRedraw}
             visible={hover}
             onRedrawAll={() => actions.redrawAll(hookId)}
-            onDuplicate={() => actions.duplicate(hookId)}
-            onDiscard={() => actions.discard(hookId)}
+            onDuplicate={onePager ? undefined : () => actions.duplicate(hookId)}
+            onDiscard={onePager ? undefined : () => actions.discard(hookId)}
           />
         </div>
       </NodeToolbar>

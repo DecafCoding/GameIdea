@@ -12,7 +12,6 @@
 import { useState } from 'react';
 import {
   BoardCanvas,
-  boardRects,
   CanvasProvider,
   CARD_SIZE,
   findOpenSpot,
@@ -79,7 +78,11 @@ function BoardScreenBody({
 
   const ready = status === 'ready' && pools !== null;
   const empty = board.cards.length === 0 && board.notes.length === 0;
+  // A One-Pager board starts with its Hook Card, so it is never empty and this guide never
+  // shows there: the Hook Card's New state (its help line and "Player Role goes here" slot)
+  // and the empty Concept panel are the One-Pager start guide.
   const showPanel = empty && startedOn !== board.id;
+  const onePager = board.kind === 'onePager';
 
   function draw(type: Deck, from: DOMRect, modDeck?: ModDeck) {
     if (!pools) return;
@@ -91,7 +94,7 @@ function BoardScreenBody({
     const card = drawCard(type, pools[type], filter);
     const center = canvas.viewCenter();
     const half = CARD_SIZE / 2;
-    const spot = findOpenSpot({ x: center.x - half, y: center.y - half }, boardRects(board), {
+    const spot = findOpenSpot({ x: center.x - half, y: center.y - half }, canvas.occupiedRects(), {
       width: CARD_SIZE,
       height: CARD_SIZE,
     });
@@ -102,10 +105,15 @@ function BoardScreenBody({
 
   /** Places a new Hook Card at the open 240 × 200 spot nearest the view center. */
   function drawHook(from: DOMRect) {
+    // A One-Pager board keeps exactly 1 Hook Card; the rail button is off there too.
+    if (onePager) return;
     const id = newId();
     const center = canvas.viewCenter();
     const start = { x: center.x - HOOK_WIDTH / 2, y: center.y - CARD_SIZE / 2 };
-    const spot = findOpenSpot(start, boardRects(board), { width: HOOK_WIDTH, height: CARD_SIZE });
+    const spot = findOpenSpot(start, canvas.occupiedRects(), {
+      width: HOOK_WIDTH,
+      height: CARD_SIZE,
+    });
     changeBoard((b) => placeHookCard(b, id, spot));
     setStartedOn(board.id);
     canvas.flyIn(id, from);
@@ -115,7 +123,8 @@ function BoardScreenBody({
     const id = newId();
     const center = canvas.viewCenter();
     const start = { x: center.x - NOTE_SIZE.width / 2, y: center.y - NOTE_SIZE.height / 2 };
-    changeBoard((b) => addNote(b, findOpenSpot(start, boardRects(b), NOTE_SIZE), id));
+    const spot = findOpenSpot(start, canvas.occupiedRects(), NOTE_SIZE);
+    changeBoard((b) => addNote(b, spot, id));
     setStartedOn(board.id);
     canvas.editNote(id);
   }
@@ -127,6 +136,7 @@ function BoardScreenBody({
         decksReady={ready}
         onDraw={draw}
         onDrawHook={drawHook}
+        hookDisabled={onePager}
         onAddNote={addNoteNow}
         genres={board.genres}
         onOpenSettings={() => setSettingsOpen(true)}

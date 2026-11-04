@@ -90,6 +90,16 @@ describe('BoardScreen', () => {
     expect(screen.getByTestId('start-here').textContent).toBe('Start Here');
   });
 
+  it('boardScreen_onePager_noEmptyGuide', () => {
+    servePools(false);
+    useBoardStore.getState().openBoard(newBoard({ kind: 'onePager' }));
+    render(<BoardScreen />);
+    expect(screen.queryByRole('region', { name: 'Build Your First Hook' })).toBeNull();
+    expect(screen.queryByTestId('start-here')).toBeNull();
+    const hook = screen.getByRole<HTMLButtonElement>('button', { name: 'Draw A Hook Card' });
+    expect(hook.disabled).toBe(true);
+  });
+
   it('boardScreen_settingsButton_opensDialog', () => {
     servePools(false);
     render(<BoardScreen />);

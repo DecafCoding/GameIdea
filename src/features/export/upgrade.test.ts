@@ -47,18 +47,24 @@ describe('upgradeBoardFile', () => {
     expect(upgradeBoardFile('board')).toBeNull();
   });
 
-  it('upgradeBoardFile_version1File_returnsSameFile', () => {
+  it('upgradeBoardFile_version1File_becomesFreeFormV2', () => {
     const file = { formatVersion: 1, name: 'A', cards: [{ id: 'a' }] };
-    expect(upgradeBoardFile(file)).toEqual(file);
+    expect(upgradeBoardFile(file)).toEqual({
+      formatVersion: 2,
+      name: 'A',
+      kind: 'free',
+      cards: [{ id: 'a', inConcept: false }],
+    });
   });
 
   it('upgradeBoardFile_version2File_returnsNull', () => {
-    // FORMAT_VERSION is 1, so version 2 is a newer format.
+    // FORMAT_VERSION is 2, so FORMAT_VERSION + 1 (3) is a newer format.
     expect(upgradeBoardFile({ formatVersion: FORMAT_VERSION + 1, name: 'A' })).toBeNull();
   });
 
-  it('UPGRADES_formatVersion1_hasNoSteps', () => {
-    expect(Object.keys(UPGRADES)).toEqual([]);
+  it('UPGRADES_version1_hasStep', () => {
+    expect(Object.keys(UPGRADES)).toEqual(['1']);
+    expect(UPGRADES[1]).toBeTypeOf('function');
   });
 
   it('UPGRADES_everyOldVersion_hasStep', () => {

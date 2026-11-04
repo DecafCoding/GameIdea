@@ -1,9 +1,9 @@
 /**
  * Tests for the rail's deck button.
  */
-import { render, screen } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
-import { DeckButton } from './DeckButton';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
+import { DeckButton, HookButton } from './DeckButton';
 
 describe('DeckButton', () => {
   it('deckButton_trailing_rendersInsideAndKeepsLabel', () => {
@@ -25,5 +25,14 @@ describe('DeckButton', () => {
     render(<DeckButton type="mechanic" disabled={false} onDraw={() => undefined} />);
     const button = screen.getByRole('button', { name: 'Draw A Mechanic' });
     expect(button.hasAttribute('aria-describedby')).toBe(false);
+  });
+
+  it('hookButton_disabled_noDraw', () => {
+    const onDraw = vi.fn();
+    render(<HookButton onDraw={onDraw} disabled />);
+    const button = screen.getByRole<HTMLButtonElement>('button', { name: 'Draw A Hook Card' });
+    expect(button.disabled).toBe(true);
+    fireEvent.click(button);
+    expect(onDraw).not.toHaveBeenCalled();
   });
 });

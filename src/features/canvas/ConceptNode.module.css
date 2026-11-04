@@ -1,0 +1,167 @@
+/*
+ * The Concept panel (design 9.15): padding 16, radius 12, gap 12, fill --surface, border 1
+ * --border, the raised card shadow (0 8px 22px at 40% black). The height grows with the
+ * content; the width comes from the board (232 to 640).
+ */
+.panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-sizing: border-box;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-panel);
+  background: var(--surface);
+  box-shadow: var(--shadow-card-raised);
+  color: var(--text);
+  cursor: default;
+}
+
+/* Header: "Concept" and the count pill, gap 8. */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Section label role: Space Grotesk 12 / 600, uppercase, 0.08em, --text-muted. */
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* Count pill: 22 tall, padding 0 9, radius 11, border 1 --border-strong, 11/600 --text. */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  box-sizing: border-box;
+  height: 22px;
+  padding: 0 9px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.help {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--text-muted);
+}
+
+/* A lane: its label, then its chips, gap 6. */
+.lane {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Lane label: deck icon 14 and the plural deck name, 12/600, gap 6, in the lane color. */
+.laneLabel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Chips wrap side by side, gap 8. */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chipItem {
+  position: relative;
+  display: flex;
+  max-width: 100%;
+  cursor: grab;
+}
+
+/*
+ * The result tag above a targeted chip: padding 4 8, radius 8, border 1 --deck-modifier,
+ * fill --surface, Inter 12/700 --zone-text, the menu shadow.
+ */
+.result {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 0;
+  z-index: 1;
+  padding: 4px 8px;
+  border: 1px solid var(--deck-modifier);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: var(--shadow-menu);
+  color: var(--zone-text);
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/*
+ * The placeholder chip at the end of the dragged card's lane, in the tuck slot style
+ * (design 9.7): min 36 tall, radius 8, dashed 2 in the deck card color, the card color at
+ * --slot-fill-alpha, "<Deck> goes here" 12/600 in the rail color. The component sets the
+ * deck colors.
+ */
+.slot {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  min-height: 36px;
+  padding: 0 12px;
+  border: 2px dashed;
+  border-radius: 8px;
+  background: color-mix(
+    in srgb,
+    var(--slot-color) calc(var(--slot-fill-alpha) * 100%),
+    transparent
+  );
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  pointer-events: none;
+}
+
+/*
+ * Resize handle: 24 × 44, radius 8, border 1 --border-strong, fill --surface, grip 14
+ * --text-muted, on the right edge, centered on the panel height, 12 outside the edge.
+ */
+.handle {
+  position: absolute;
+  top: 50%;
+  right: -36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 24px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text-muted);
+  cursor: ew-resize;
+  transform: translateY(-50%);
+  touch-action: none;
+}

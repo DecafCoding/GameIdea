@@ -18,6 +18,7 @@ import {
   fixtureCard,
   fixtureNote,
   fixtureStack,
+  onePagerBoard,
 } from '@/test/fixtures/boards';
 import { boardFileJson } from './boardFile';
 import { parseBoardFile } from './importBoard';
@@ -242,5 +243,85 @@ describe('boardSchema', () => {
   it('schema_mechanicWithTwoRings_rejects', () => {
     const card = fixtureCard('mechanic');
     rejects(withCard({ rings: [card.rings[0]!, card.rings[0]!] }, card));
+  });
+});
+
+/** The One-Pager fixture with its cards changed by fn. */
+function onePagerWith(fn: (cards: Card[]) => Card[]): Board {
+  const board = onePagerBoard();
+  return { ...board, cards: fn(board.cards) };
+}
+
+describe('boardSchema One-Pager rules', () => {
+  it('boardSchema_goodOnePager_passes', () => {
+    const result = boardSchema.safeParse(onePagerBoard());
+    expect(result.success).toBe(true);
+    expect(result.data).toEqual(onePagerBoard());
+  });
+
+  it('boardSchema_onePagerNoHook_fails', () => {
+    rejects(onePagerWith((cards) => cards.filter((card) => card.type !== 'hook')));
+  });
+
+  it('boardSchema_onePagerTwoHooks_fails', () => {
+    rejects(onePagerWith((cards) => [...cards, fixtureCard('hook', { id: 'hook-2', x: 900 })]));
+  });
+
+  it('boardSchema_conceptCardTucked_fails', () => {
+    rejects(
+      onePagerWith((cards) =>
+        cards.map((c) => (c.id === 'resource-c1' ? { ...c, tuckedUnder: 'hook-1' } : c)),
+      ),
+    );
+  });
+
+  it('boardSchema_hookInConcept_fails', () => {
+    rejects(
+      onePagerWith((cards) =>
+        cards.map((c) => (c.type === 'hook' ? { ...c, inConcept: true } : c)),
+      ),
+    );
+  });
+
+  it('boardSchema_cardTuckedUnderConceptCard_fails', () => {
+    rejects(
+      onePagerWith((cards) =>
+        cards.map((c) => (c.id === 'modifier-1' ? { ...c, tuckedUnder: 'resource-c1' } : c)),
+      ),
+    );
+  });
+
+  it('boardSchema_freeFormInConcept_fails', () => {
+    rejects(fixtureBoard([fixtureCard('resource', { inConcept: true })]));
+  });
+
+  it('boardSchema_freeFormConceptWidth_fails', () => {
+    rejects({ ...fixtureBoard([]), conceptWidth: 232 });
+  });
+
+  it('boardSchema_conceptWidthOutOfRange_fails', () => {
+    rejects({ ...onePagerBoard(), conceptWidth: 231 });
+    rejects({ ...onePagerBoard(), conceptWidth: 641 });
+    expect(boardSchema.safeParse({ ...onePagerBoard(), conceptWidth: 640 }).success).toBe(true);
+  });
+
+  it('boardSchema_onePagerNoWidth_passes', () => {
+    const board: Partial<Board> = onePagerBoard();
+    delete board.conceptWidth;
+    const result = boardSchema.safeParse(board);
+    expect(result.success).toBe(true);
+    expect(result.data?.conceptWidth).toBeUndefined();
+  });
+
+  it('boardSchema_missingKind_fails', () => {
+    const board: Partial<Board> = fixtureBoard([]);
+    delete board.kind;
+    rejects(board);
+  });
+
+  it('boardSchema_missingInConcept_fails', () => {
+    const card: Partial<Card> = fixtureCard('goal');
+    delete card.inConcept;
+    rejects({ ...fixtureBoard([]), cards: [card] });
   });
 });

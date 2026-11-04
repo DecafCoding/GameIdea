@@ -11,9 +11,13 @@ import type { DeckName } from './helpers';
 /**
  * Opens the board screen. A given board is passed to the app through the test seam, which
  * saves it to storage once, and opened by its address; without one, New Board on the board
- * list makes a new saved board.
+ * list makes a new saved board of the given kind (default Free Form).
  */
-export async function openBoard(page: Page, board?: Board): Promise<void> {
+export async function openBoard(
+  page: Page,
+  board?: Board,
+  kind: BoardKindName = 'Free Form',
+): Promise<void> {
   if (board) {
     await page.addInitScript((b) => {
       window.__GAMEIDEA_E2E_BOARD__ = b;
@@ -21,7 +25,7 @@ export async function openBoard(page: Page, board?: Board): Promise<void> {
     await page.goto(`/#/board/${encodeURIComponent(board.id)}`);
   } else {
     await page.goto('/');
-    await createBoard(page);
+    await createBoard(page, 'Test Board', kind);
     await page.waitForURL(/#\/board\//);
   }
   await expect(page.locator('main[aria-label="Board"]')).toBeVisible();
@@ -35,11 +39,22 @@ export function newBoardDialog(page: Page): Locator {
   return page.getByRole('dialog', { name: 'New Board' });
 }
 
-/** On the board list: clicks New Board, types the name and clicks Make Board. */
-export async function createBoard(page: Page, name = 'Test Board'): Promise<void> {
+/** A board kind as the New Board dialog names it. */
+export type BoardKindName = 'Free Form' | 'One-Pager';
+
+/**
+ * On the board list: clicks New Board, types the name, picks the kind when it is not the
+ * default (Free Form) and clicks Make Board.
+ */
+export async function createBoard(
+  page: Page,
+  name = 'Test Board',
+  kind: BoardKindName = 'Free Form',
+): Promise<void> {
   await page.getByRole('button', { name: 'New Board' }).first().click();
   const dialog = newBoardDialog(page);
   await dialog.getByRole('textbox', { name: 'Name' }).fill(name);
+  if (kind !== 'Free Form') await dialog.getByRole('radio', { name: kind }).click();
   await dialog.getByRole('button', { name: 'Make Board' }).click();
 }
 

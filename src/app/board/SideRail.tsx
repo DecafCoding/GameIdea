@@ -25,8 +25,10 @@ import styles from './SideRail.module.css';
 interface SideRailProps {
   decksReady: boolean;
   onDraw: (type: Deck, from: DOMRect, modDeck?: ModDeck) => void;
-  /** Draws a Hook Card; it needs no pool, so it is never off. */
+  /** Draws a Hook Card; it needs no pool, so the pools never turn it off. */
   onDrawHook: (from: DOMRect) => void;
+  /** True on a One-Pager board: the Hook Card button is off (it keeps 1 Hook Card). */
+  hookDisabled?: boolean;
   onAddNote: () => void;
   /** The open board's deck genres, for the count pills. */
   genres: DeckGenres;
@@ -48,6 +50,7 @@ export function SideRail({
   decksReady,
   onDraw,
   onDrawHook,
+  hookDisabled = false,
   onAddNote,
   genres,
   onOpenSettings,
@@ -73,7 +76,7 @@ export function SideRail({
   };
   return (
     <aside className={styles.rail} aria-label="Decks">
-      <HookButton onDraw={onDrawHook} />
+      <HookButton onDraw={onDrawHook} disabled={hookDisabled} />
       <h2 className={styles.label}>Core</h2>
       {CORE.map(button)}
       <h2 className={styles.label}>Modifiers</h2>

@@ -520,12 +520,12 @@ tests/e2e/          Playwright browser tests</code></pre>
 <p class="meta">M7 · Phase 7 starts after Phase 6. The Concept panel look is in <a href="design-system.html#s-onepager">design-system.html 9.15</a>; the board kind choice, the One-Pager empty state and the board list label are still to be drawn (section 15). See <a href="feature-one-pager-board.html">feature-one-pager-board.html</a>.</p>
 <p><strong>Goal:</strong> a One-Pager board kind with a Hook Train and a Concept panel, on board format version 2, with every existing board kept as a Free Form board.</p>
 <ul class="checklist">
-  <li data-checked="false">Model fields <code>kind</code>, <code>conceptWidth</code> and <code>inConcept</code>; Dexie schema version 2 and <code>UPGRADES[1]</code>, with tests first</li>
-  <li data-checked="false">Zod checks: reject a One-Pager file with 0 or 2+ Hook Cards, a tucked Concept card or a Hook Card in Concept</li>
-  <li data-checked="false">Board kind in New Board (One-Pager or Free Form); a One-Pager board starts with its Hook Card; Hook Card menu with Copy Hook and Redraw All only</li>
-  <li data-checked="false">Concept panel beside the Hook Card: deck lanes in rail order, chips in drop order, drop routing, Modifier combine on chips</li>
-  <li data-checked="false">Pop-out by double-click, drag out, panel resize; Redraw All skips Concept</li>
-  <li data-checked="false">Concept section in the text file, One-Pager label in the board list, footer counts</li>
+  <li data-checked="true">Model fields <code>kind</code>, <code>conceptWidth</code> and <code>inConcept</code>; Dexie schema version 2 and <code>UPGRADES[1]</code>, with tests first</li>
+  <li data-checked="true">Zod checks: reject a One-Pager file with 0 or 2+ Hook Cards, a tucked Concept card or a Hook Card in Concept</li>
+  <li data-checked="true">Board kind in New Board (One-Pager or Free Form); a One-Pager board starts with its Hook Card; Hook Card menu with Copy Hook and Redraw All only</li>
+  <li data-checked="true">Concept panel beside the Hook Card: deck lanes in rail order, chips in drop order, drop routing, Modifier combine on chips</li>
+  <li data-checked="true">Pop-out by double-click, drag out, panel resize; Redraw All skips Concept</li>
+  <li data-checked="true">Concept section in the text file, One-Pager label in the board list, footer counts</li>
 </ul>
 <p><strong>Validation:</strong> the done criteria in feature-one-pager-board.html pass; every existing test passes on Free Form boards; speed, size and privacy targets pass.</p>
 

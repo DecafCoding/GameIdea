@@ -9,6 +9,7 @@ import {
   fixtureCard,
   fixtureStack,
   secondModifier,
+  onePagerBoard,
 } from '@/test/fixtures/boards';
 import { dropAction, dropTarget, hintFor, isNormalPlace, tuckLanding } from './dropZones';
 
@@ -225,5 +226,13 @@ describe('tuckLanding', () => {
       fixtureCard('goal', { x: 600, y: 0, z: 3 }),
     ]);
     expect(tuckLanding(board, 'goal-1', 'hook-1')).toEqual({ x: 20, y: 112 });
+  });
+});
+
+describe('dropTarget on a One-Pager board', () => {
+  it('dropTarget_overConceptCardPlace_null', () => {
+    // Every Concept card keeps x, y = 0, 0; nothing on the canvas is there.
+    const board = onePagerBoard();
+    expect(dropTarget(board, 'modifier-1', { x: 50, y: 50 })).toBeNull();
   });
 });

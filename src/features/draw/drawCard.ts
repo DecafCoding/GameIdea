@@ -103,6 +103,7 @@ export function drawCard(
     ...(type === 'modifier' ? { modDeck } : {}),
     onTopOf: null,
     locked: false,
+    inConcept: false,
   };
 }
 

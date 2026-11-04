@@ -2,11 +2,14 @@
  * Board → React Flow nodes. Every card and note is a flat top-level node (no parentId,
  * see the Phase 3 tuck spike). Paint order: roots ranked by z; the root of rank r (from 1)
  * gets zIndex r * 1000 and the card at index i of its stack order r * 1000 - i, so a
- * tucked card paints under the card above it. Notes sit at zIndex 0 under every card.
+ * tucked card paints under the card above it. Notes sit at zIndex 0 under every card. On a
+ * One-Pager board the Concept panel is 1 more node at zIndex 1, beside the Hook Card; its
+ * width comes from its content, so React Flow measures it. Concept cards have no node.
  * The array is sorted by zIndex, so Tab moves through the cards in z order.
  */
 import type { Node } from '@xyflow/react';
 import type { Board, Card } from '@/shared/model';
+import { CONCEPT_NODE_ID, conceptPlace, conceptWidth } from './concept';
 import type { Below } from './connector';
 import { cardSize } from './placement';
 import { cardText, isOnTop } from './reading';
@@ -30,9 +33,13 @@ export type BelowCard = Below & { id: string };
 
 export type NoteNodeData = { noteId: string };
 
+/** The Concept panel of a One-Pager board: its saved width. */
+export type ConceptNodeData = { width: number };
+
 export type CardFlowNode = Node<CardNodeData, 'card'>;
 export type NoteFlowNode = Node<NoteNodeData, 'note'>;
-export type BoardFlowNode = CardFlowNode | NoteFlowNode;
+export type ConceptFlowNode = Node<ConceptNodeData, 'concept'>;
+export type BoardFlowNode = CardFlowNode | NoteFlowNode | ConceptFlowNode;
 
 export interface NodeUi {
   selectedId: string | null;
@@ -62,8 +69,9 @@ export function sameBelow(a: BelowCard | null, b: BelowCard | null): boolean {
 
 export function toNodes(board: Board, ui: NodeUi): BoardFlowNode[] {
   // A card on top of another has no node: it reads as part of its base card.
+  // Concept cards have no canvas place: they are chips in the Concept panel node.
   const roots = board.cards
-    .filter((card) => isRoot(board, card.id) && !isOnTop(board, card))
+    .filter((card) => isRoot(board, card.id) && !isOnTop(board, card) && !card.inConcept)
     .sort((a, b) => a.z - b.z);
   const cards: CardFlowNode[] = roots.flatMap((root, r) =>
     stackOrder(board, root.id).map((card, i, order): CardFlowNode => ({
@@ -93,5 +101,21 @@ export function toNodes(board: Board, ui: NodeUi): BoardFlowNode[] {
     selectable: false,
     data: { noteId: note.id },
   }));
-  return [...notes, ...cards.sort((a, b) => (a.zIndex ?? 0) - (b.zIndex ?? 0))];
+  // The Concept panel beside a One-Pager Hook Card: above notes, below every card.
+  const place = conceptPlace(board);
+  const concept: ConceptFlowNode[] = place
+    ? [
+        {
+          id: CONCEPT_NODE_ID,
+          type: 'concept',
+          position: place,
+          zIndex: 1,
+          draggable: false,
+          selectable: false,
+          focusable: false,
+          data: { width: conceptWidth(board) },
+        },
+      ]
+    : [];
+  return [...notes, ...concept, ...cards.sort((a, b) => (a.zIndex ?? 0) - (b.zIndex ?? 0))];
 }

@@ -14,6 +14,7 @@ import {
   type TurnDirection,
 } from '@/features/card';
 import { newId, type Board, type Card } from '@/shared/model';
+import { combineOntoChip, conceptDrop, enterConcept, type ConceptOver } from './concept';
 import { dropAction, dropTarget } from './dropZones';
 import {
   besideSpot,
@@ -69,6 +70,7 @@ export function placeHookCard(board: Board, id: string, spot: Point): Board {
     rings: [],
     onTopOf: null,
     locked: false,
+    inConcept: false,
   };
   return { ...board, cards: [...board.cards, hook] };
 }
@@ -79,15 +81,27 @@ export function placeHookCard(board: Board, id: string, spot: Point): Board {
  * options.snap, a drop on empty canvas (a move or an untuck) lands on the 24 px grid; a
  * dragged root moves its tucked cards by the same delta. Tuck, combine, swap and On Top
  * ignore snap.
+ * On a One-Pager board, options.concept says whether the pointer is over the Concept panel
+ * (and which chip). A drop there goes into the panel, onto the chip, or stays where it was
+ * released (a Hook Card, or a Modifier off a chip), ignoring any card under the panel.
  */
 export function dropCard(
   board: Board,
   draggedId: string,
   point: Point,
   dropAt: Point,
-  options: { snap?: boolean } = {},
+  options: { snap?: boolean; concept?: ConceptOver } = {},
 ): Board {
   const dragged = cardAt(board, draggedId);
+  const concept = options.concept ? conceptDrop(board, dragged, options.concept) : null;
+  if (concept?.kind === 'enter') return enterConcept(board, draggedId);
+  if (concept?.kind === 'chip') return combineOntoChip(board, draggedId, concept.chipId, dropAt);
+  if (concept?.kind === 'stay') {
+    const at = options.snap ? snapToGrid(dropAt) : dropAt;
+    return isRoot(board, draggedId)
+      ? moveCard(board, draggedId, at.x, at.y)
+      : untuckCard(board, draggedId, at.x, at.y);
+  }
   const target = dropTarget(board, draggedId, point);
   const action = dropAction(board, dragged, target, point);
   switch (action.kind) {
@@ -186,6 +200,7 @@ export function splitCard(board: Board, cardId: string, createId: () => string =
     modDeck: result.ring.modDeck ?? 'role',
     onTopOf: null,
     locked: false,
+    inConcept: false,
   };
   const next = replaceCard(board, { ...card, rings: result.target.rings });
   return { ...next, cards: [...next.cards, modifier] };
@@ -214,7 +229,7 @@ export function redrawCard(board: Board, cardId: string, drawn: Card): Board {
 /**
  * Redraw All (design 9.9): redraws every unlocked card in the Hook Card's stack with
  * redrawCard, so each keeps its place, tucks, badge word, merged ring and On Top card.
- * Locked cards and On Top cards (not in the stack) stay as they are. One recipe, so one
+ * Locked cards, On Top cards (not in the stack) and Concept cards stay as they are. One recipe, so one
  * undo step; with nothing to redraw it returns the same board (no step, no save).
  * draw draws a new card like the given one; the caller has the pools.
  */
@@ -226,7 +241,8 @@ export function redrawAll(
   let next = board;
   const redrawn: string[] = [];
   for (const card of descendantsOf(board, hookId)) {
-    if (card.locked || card.type === 'hook') continue;
+    // Concept cards have no canvas place; they are never in a stack, and the guard pins it.
+    if (card.locked || card.type === 'hook' || card.inConcept) continue;
     next = redrawCard(next, card.id, draw(card));
     redrawn.push(card.id);
   }

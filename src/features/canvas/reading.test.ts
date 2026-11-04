@@ -5,7 +5,7 @@
 import { describe, expect, it } from 'vitest';
 import { iconFor } from '@/features/card';
 import { buildHookSentence } from '@/features/hook';
-import { fixtureBoard, fixtureCard } from '@/test/fixtures/boards';
+import { fixtureBoard, fixtureCard, onePagerBoard } from '@/test/fixtures/boards';
 import type { Board, Card } from '@/shared/model';
 import { dropCard, splitCard } from './boardActions';
 import { hintFor } from './dropZones';
@@ -164,5 +164,11 @@ describe('hookSentences', () => {
       fixtureCard('goal', { z: 3, tuckedUnder: 'role-1' }),
     ]);
     expect(hookSentences(board)).toEqual([buildHookSentence(stackEntries(board, 'hook-1'))]);
+  });
+});
+
+describe('hookSentences on a One-Pager board', () => {
+  it('hookSentences_onePager_ignoresConceptCards', () => {
+    expect(hookSentences(onePagerBoard())).toEqual(['You are a navigator who must trade.']);
   });
 });

@@ -3,7 +3,7 @@
  */
 import 'fake-indexeddb/auto';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { board200, fixtureBoard, fixtureCard } from '@/test/fixtures/boards';
+import { board200, fixtureBoard, fixtureCard, onePagerBoard } from '@/test/fixtures/boards';
 import {
   deleteBoard,
   listBoards,
@@ -43,6 +43,15 @@ describe('boardStorage', () => {
     const b = board('b1', '2026-01-01T00:00:00.000Z');
     await saveBoard(b);
     expect(await loadBoard('b1')).toEqual(b);
+  });
+
+  it('saveBoard_onePagerBoard_keepsKindAndInConcept', async () => {
+    const b = { ...onePagerBoard(), updatedAt: '2026-01-01T00:00:00.000Z' };
+    await saveBoard(b);
+    const loaded = (await loadBoard(b.id))!;
+    expect(loaded.kind).toBe('onePager');
+    expect(loaded.conceptWidth).toBe(232);
+    expect(loaded).toEqual(b);
   });
 
   it('loadBoard_unknownId_returnsNull', async () => {

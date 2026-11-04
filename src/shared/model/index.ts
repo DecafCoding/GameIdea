@@ -1,15 +1,31 @@
 /**
  * Shared model types: boards, cards with rings, cues, notes, pools and genres.
- * Types and constants, plus allGenresOn, newId and parseSettings (the Settings record), no other logic. See docs/architecture.html (schema-shape)
+ * Types and constants, plus allGenresOn, newId, parseSettings (the Settings record) and
+ * upgradeBoardV1 (the format 1 to 2 step), no other logic. See docs/architecture.html (schema-shape)
  * and docs/feature-dual-ring-cards.html for the ring rules.
  */
 
 /**
  * Board file and record format version. A shape change needs an upgrade step.
  * Phase 2 added hook, 6 decks, modDeck, onTopOf and locked inside version 1 before any
- * user board existed; from Phase 2 on, a shape change needs an upgrade step.
+ * user board existed. Version 2 (Phase 7) added Board.kind, Board.conceptWidth and
+ * Card.inConcept, with 1 upgrade step (upgradeBoardV1) run by both UPGRADES[1] for board
+ * files and Dexie schema version 2 for saved records.
  */
-export const FORMAT_VERSION = 1;
+export const FORMAT_VERSION = 2;
+
+/** The 2 board kinds. Every board saved before format version 2 is a Free Form board. */
+export const BOARD_KINDS = ['free', 'onePager'] as const;
+export type BoardKind = (typeof BOARD_KINDS)[number];
+
+/** The name of each board kind, in the New Board dialog and on the board list. */
+export const BOARD_KIND_NAME: Record<BoardKind, string> = {
+  free: 'Free Form',
+  onePager: 'One-Pager',
+};
+
+/** The Concept panel width range and default, in flow pixels (design 9.15). */
+export const CONCEPT_WIDTH = { min: 232, max: 640, default: 232 } as const;
 
 /**
  * The 11 decks, in rail order: the core decks in design order, the Modifier deck, then
@@ -144,6 +160,24 @@ export const DECK_NAME: Record<CardType, string> = {
   constraint: 'Constraint',
 };
 
+/**
+ * The plural deck names on the Concept panel lanes and in the text file's Concept section.
+ * Mood, Twist and Progression stay singular, as design 9.15 shows Mood and Twist.
+ */
+export const DECK_LANE_NAME: Record<Deck, string> = {
+  role: 'Player Roles',
+  mechanic: 'Mechanics',
+  resource: 'Resources',
+  goal: 'Goals',
+  conflict: 'Conflicts',
+  modifier: 'Modifiers',
+  setting: 'Settings',
+  mood: 'Mood',
+  twist: 'Twist',
+  progression: 'Progression',
+  constraint: 'Constraints',
+};
+
 /** The name of each Modifier deck, on its button, its cards and in the text file. */
 export const MOD_DECK_NAME: Record<ModDeck, string> = {
   role: 'Player Role Modifier',
@@ -194,6 +228,11 @@ export interface Card {
    * Absent until the user picks one.
    */
   connector?: string;
+  /**
+   * True while the card is a chip in the One-Pager Concept panel. Then tuckedUnder is null
+   * and x, y are kept but unused. Always false on a Free Form board.
+   */
+  inConcept: boolean;
 }
 
 export interface Note {
@@ -218,6 +257,10 @@ export interface Board {
   formatVersion: typeof FORMAT_VERSION;
   id: string;
   name: string;
+  /** Free Form or One-Pager, set when the board is made and never changed. */
+  kind: BoardKind;
+  /** One-Pager boards only: the Concept panel width (CONCEPT_WIDTH); absent means default. */
+  conceptWidth?: number;
   createdAt: string;
   updatedAt: string;
   /**
@@ -258,6 +301,7 @@ export interface Pool {
 export type Pools = Record<Deck, Pool>;
 
 export { newId } from './newId';
+export { upgradeBoardV1 } from './upgradeV1';
 export {
   ACCENTS,
   DEFAULT_SETTINGS,
