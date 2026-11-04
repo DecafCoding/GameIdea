@@ -79,7 +79,11 @@ function BoardScreenBody({
 
   const ready = status === 'ready' && pools !== null;
   const empty = board.cards.length === 0 && board.notes.length === 0;
+  // A One-Pager board starts with its Hook Card, so it is never empty and this guide never
+  // shows there: the Hook Card's New state (its help line and "Player Role goes here" slot)
+  // and the empty Concept panel are the One-Pager start guide.
   const showPanel = empty && startedOn !== board.id;
+  const onePager = board.kind === 'onePager';
 
   function draw(type: Deck, from: DOMRect, modDeck?: ModDeck) {
     if (!pools) return;
@@ -102,6 +106,8 @@ function BoardScreenBody({
 
   /** Places a new Hook Card at the open 240 × 200 spot nearest the view center. */
   function drawHook(from: DOMRect) {
+    // A One-Pager board keeps exactly 1 Hook Card; the rail button is off there too.
+    if (onePager) return;
     const id = newId();
     const center = canvas.viewCenter();
     const start = { x: center.x - HOOK_WIDTH / 2, y: center.y - CARD_SIZE / 2 };
@@ -127,6 +133,7 @@ function BoardScreenBody({
         decksReady={ready}
         onDraw={draw}
         onDrawHook={drawHook}
+        hookDisabled={onePager}
         onAddNote={addNoteNow}
         genres={board.genres}
         onOpenSettings={() => setSettingsOpen(true)}

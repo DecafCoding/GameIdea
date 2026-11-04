@@ -1,6 +1,8 @@
 /**
  * HookMenu: the Hook Card's hover menu (design 9.5, on the card strip menu spec of 9.4):
- * 4 icon buttons, Copy Hook, Redraw All, Duplicate (the whole stack) and Discard. Copy
+ * on a Free Form board 4 icon buttons, Copy Hook, Redraw All, Duplicate (the whole stack)
+ * and Discard; on a One-Pager board only Copy Hook and Redraw All, because that board keeps
+ * exactly 1 Hook Card (Duplicate and Discard show only when their handler is given). Copy
  * Hook and Redraw All are off until a card is tucked under the Hook Card; Redraw All is
  * also off while the pools are not ready. After a good copy, Copy Hook shows a check and
  * reads "Copied" for 2 seconds; a blocked copy opens the fallback dialog. The sentence on
@@ -26,8 +28,10 @@ interface HookMenuProps {
   /** The pointer is over the Hook Card or the menu. */
   visible: boolean;
   onRedrawAll: () => void;
-  onDuplicate: () => void;
-  onDiscard: () => void;
+  /** Omitted on a One-Pager board: no Duplicate button. */
+  onDuplicate?: () => void;
+  /** Omitted on a One-Pager board: no Discard button. */
+  onDiscard?: () => void;
   onPointerEnter?: () => void;
   onPointerLeave?: () => void;
   /** For tests; defaults to navigator.clipboard. */
@@ -111,26 +115,30 @@ export function HookMenu({
         >
           <Icon name="playing-cards-fan" size={16} />
         </button>
-        <button
-          type="button"
-          className={styles.button}
-          aria-label="Duplicate"
-          title="Duplicate"
-          tabIndex={tabIndex}
-          onClick={onDuplicate}
-        >
-          <Icon name="copy" size={16} />
-        </button>
-        <button
-          type="button"
-          className={`${styles.button} ${styles.discard}`}
-          aria-label="Discard"
-          title="Discard"
-          tabIndex={tabIndex}
-          onClick={onDiscard}
-        >
-          <Icon name="trash" size={16} />
-        </button>
+        {onDuplicate && (
+          <button
+            type="button"
+            className={styles.button}
+            aria-label="Duplicate"
+            title="Duplicate"
+            tabIndex={tabIndex}
+            onClick={onDuplicate}
+          >
+            <Icon name="copy" size={16} />
+          </button>
+        )}
+        {onDiscard && (
+          <button
+            type="button"
+            className={`${styles.button} ${styles.discard}`}
+            aria-label="Discard"
+            title="Discard"
+            tabIndex={tabIndex}
+            onClick={onDiscard}
+          >
+            <Icon name="trash" size={16} />
+          </button>
+        )}
       </div>
       <CopyFallbackDialog
         open={fallback !== null}

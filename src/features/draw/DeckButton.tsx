@@ -67,18 +67,22 @@ export function DeckButton({
 
 interface HookButtonProps {
   onDraw: (from: DOMRect) => void;
+  /** Off on a One-Pager board, which keeps exactly 1 Hook Card. */
+  disabled?: boolean;
 }
 
 /**
  * The Hook Card button at the top of the rail (design 8.2): a deck button with an accent
- * border and fill. It needs no pool, so it stays on when the pools fail.
+ * border and fill. It needs no pool, so it stays on when the pools fail. It is off (the
+ * deck button's disabled style) on a One-Pager board.
  */
-export function HookButton({ onDraw }: HookButtonProps) {
+export function HookButton({ onDraw, disabled = false }: HookButtonProps) {
   return (
     <button
       type="button"
       className={`${styles.deck} ${styles.hook}`}
       aria-label="Draw A Hook Card"
+      disabled={disabled}
       onClick={(event) => onDraw(event.currentTarget.getBoundingClientRect())}
     >
       <span className={styles.icon} style={{ color: 'var(--accent)' }}>

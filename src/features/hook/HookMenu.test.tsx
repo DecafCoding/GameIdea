@@ -43,6 +43,14 @@ describe('HookMenu', () => {
     ]);
   });
 
+  it('hookMenu_noDuplicateOrDiscardHandlers_showsTwoButtons', () => {
+    renderMenu({ onDuplicate: undefined, onDiscard: undefined });
+    expect(screen.getAllByRole('button').map((b) => b.getAttribute('aria-label'))).toEqual([
+      'Copy Hook',
+      'Redraw All',
+    ]);
+  });
+
   it('hookMenu_items_areIconsWithTooltips', () => {
     renderMenu();
     const buttons = screen.getAllByRole('button');

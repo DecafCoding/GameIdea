@@ -104,6 +104,15 @@ describe('SideRail', () => {
     expect(onDraw).toHaveBeenLastCalledWith('mechanic', expect.anything(), undefined);
   });
 
+  it('sideRail_hookDisabled_hookButtonDisabled', () => {
+    const onDrawHook = vi.fn();
+    renderRail({ hookDisabled: true, onDrawHook });
+    const hook = screen.getByRole('button', { name: 'Draw A Hook Card' }) as HTMLButtonElement;
+    expect(hook.disabled).toBe(true);
+    fireEvent.click(hook);
+    expect(onDrawHook).not.toHaveBeenCalled();
+  });
+
   it('sideRail_poolsNotReady_disablesDecksButNotHookCard', () => {
     const onDrawHook = vi.fn();
     renderRail({ decksReady: false, onDrawHook });
