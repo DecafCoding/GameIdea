@@ -80,8 +80,9 @@ This PRD cites those documents. Where it and they differ, they win.</p>
   <li data-checked="true">Genre settings: 21 genres on the 4 genre-tagged decks (Mechanic, Resource, Progression, Constraint), set together and per deck; next draw only</li>
   <li data-checked="true">Grouped left rail: Hook Card, Core, Modifiers (3 icon buttons), Optional, Genres with its count line, Add note, Settings</li>
   <li data-checked="true">Settings: Dark/Light mode, Theme color (Orange, Blue, Green), Snap to grid, Keyboard list, version footer — <a href="feature-settings-and-theme.html">feature-settings-and-theme.html</a></li>
-  <li data-checked="true">Board list: make, open, rename, delete; New Board asks only for a name</li>
+  <li data-checked="true">Board list: make, open, rename, delete; New Board asks for a name and, from Phase 7, the board kind (One-Pager or Free Form)</li>
   <li data-checked="true">Undo and redo for the open session</li>
+  <li data-checked="true">One-Pager board: a second board kind beside Free Form, with 1 Hook Card, a short Hook Train and a Concept panel of chips in deck lanes — <a href="feature-one-pager-board.html">feature-one-pager-board.html</a></li>
 </ul>
 
 <h3>Technical</h3>
@@ -159,10 +160,13 @@ This PRD cites those documents. Where it and they differ, they win.</p>
 
   <li><strong>As a user who works in a bright room, I want Light mode and a theme color, so that the app is comfortable to use.</strong><br>
   Example: the user opens Settings, picks Light and Green. The chrome and canvas turn light at once; cards, badges and the Hook Card look the same. After a reload there is no dark frame.</li>
+
+  <li><strong>As a developer with a bigger idea, I want a One-Pager board, so that extra cards sit in a compact Concept panel instead of a long train.</strong><br>
+  Example: the user makes a One-Pager board, builds a 5-card Hook Train, then drops 3 Resources and 2 Settings on the Concept panel. They show as chips in a Resources lane and a Settings lane. A double-click on "salt" moves it back to the canvas.</li>
 </ol>
 
 <h3>Technical user stories</h3>
-<ol start="9">
+<ol start="10">
   <li><strong>As the pool author, I want a pool edit that breaks a floor to fail CI, so that a draw can never come up short.</strong><br>
   Example: the user removes Fighting tags from Progression cues until Fighting has 9. The pool unit test fails the pull request.</li>
   <li><strong>As the developer, I want the hook sentence builder to be a pure function, so that every grammar rule is unit-tested without a canvas.</strong><br>
@@ -368,11 +372,13 @@ tests/e2e/          Playwright browser tests</code></pre>
 
 <h3>BoardRecord and board file (<code>schema-shape</code>, <code>board-file-format</code>)</h3>
 <pre><code>BoardRecord
-  formatVersion: 1
+  formatVersion: 2
   id, name, createdAt, updatedAt
+  kind:   'free' | 'onePager'
+  conceptWidth?: number   (onePager only)
   view:   { panX, panY, zoom }
   genres: { mechanic, resource, progression, constraint: Genre[] }
-  cards:  Card[]   { id, type, modDeck?, rings[], x, y, z, tuckedUnder, onTopOf, locked, connector? }
+  cards:  Card[]   { id, type, modDeck?, rings[], x, y, z, tuckedUnder, onTopOf, locked, inConcept, connector? }
   notes:  Note[]   { id, title, text, x, y, width, height }</code></pre>
 <p>Full field rules: <a href="mvp-plan.html#data-model">mvp-plan.html, Data model</a>.</p>
 
@@ -497,6 +503,19 @@ tests/e2e/          Playwright browser tests</code></pre>
 </ul>
 <p><strong>Validation:</strong> all done criteria in mvp-plan.html and both feature briefs pass; speed, size and privacy targets pass.</p>
 
+<h3 class="phase" data-phase="7">Phase 7: One-Pager Board</h3>
+<p class="meta">M7 · Phase 6 is reserved for Themed Cards, which <code>/dev-ui-update</code> adds. Phase 7 starts after Phase 6 and after the One-Pager visuals are in design-system.html. See <a href="feature-one-pager-board.html">feature-one-pager-board.html</a>.</p>
+<p><strong>Goal:</strong> a One-Pager board kind with a Hook Train and a Concept panel, on board format version 2, with every existing board kept as a Free Form board.</p>
+<ul class="checklist">
+  <li data-checked="false">Model fields <code>kind</code>, <code>conceptWidth</code> and <code>inConcept</code>; Dexie schema version 2 and <code>UPGRADES[1]</code>, with tests first</li>
+  <li data-checked="false">Zod checks: reject a One-Pager file with 0 or 2+ Hook Cards, a tucked Concept card or a Hook Card in Concept</li>
+  <li data-checked="false">Board kind in New Board (One-Pager or Free Form); a One-Pager board starts with its Hook Card; Hook Card menu with Copy Hook and Redraw All only</li>
+  <li data-checked="false">Concept panel beside the Hook Card: deck lanes in rail order, chips in drop order, drop routing, Modifier combine on chips</li>
+  <li data-checked="false">Pop-out by double-click, drag out, panel resize; Redraw All skips Concept</li>
+  <li data-checked="false">Concept section in the text file, One-Pager label in the board list, footer counts</li>
+</ul>
+<p><strong>Validation:</strong> the done criteria in feature-one-pager-board.html pass; every existing test passes on Free Form boards; speed, size and privacy targets pass.</p>
+
 <!-- ============================================================ -->
 <h2 id="future">12. Future Considerations</h2>
 <ul>
@@ -519,6 +538,7 @@ tests/e2e/          Playwright browser tests</code></pre>
   <tr><td>Story code left in the copy causes odd bugs</td><td>Phase 1 pass bar searches <code>src/</code> for story type and Setting kind names</td></tr>
   <tr><td>Sentence grammar: some cue and badge pairs read badly</td><td>Cue forms, the 2 split rules, badge alternatives; tuned during Phase 2</td></tr>
   <tr><td>Lost browser data (cleared data, Safari eviction)</td><td>Persistent storage request; board file export; import always makes a new board</td></tr>
+  <tr><td>The first board format upgrade (version 1 to 2) stops saved boards from loading</td><td>Upgrade tests come first in Phase 7; the user exports real boards on port 4174 before the first Phase 7 build</td></tr>
   <tr><td>Hard-coded colors break Light mode</td><td>Phase 1 tokens-only rule and lint check on every pull request</td></tr>
 </table>
 

@@ -95,13 +95,14 @@
   <li data-checked="true">Genre settings: the 21 genres in the Genres table, on the 4 genre-tagged decks only (Mechanic, Resource, Progression, Constraint). The Genres panel sets the genres of those 4 decks together and one by one. The user can change them at any time. A change affects the next draw only. The other 7 decks ignore genre.</li>
   <li data-checked="true">A left rail in labeled groups: Hook Card, Core, Modifiers (3 icon buttons), Optional, Genres with its count line, Add note, and Settings at the bottom</li>
   <li data-checked="true">Settings: Dark or Light mode, Theme color (Orange, Blue, Green), Snap to grid on or off, the Keyboard list and the version footer. The settings apply to every board in the browser. See <a href="feature-settings-and-theme.html">feature-settings-and-theme.html</a>.</li>
-  <li data-checked="true">Board list with multiple boards: make, open, rename and delete. The New Board dialog asks only for a name.</li>
+  <li data-checked="true">Board list with multiple boards: make, open, rename and delete. The New Board dialog asks for a name and, from M7, the board kind (One-Pager or Free Form).</li>
   <li data-checked="true">Autosave after each change, a warning when a save fails, and a warning when one board is open in 2 tabs</li>
   <li data-checked="true">Undo and redo for the open session</li>
   <li data-checked="true">Export to a text file, which holds each hook, and to a board file. Import of a board file.</li>
   <li data-checked="true">Cue pools from the user's deck libraries in <code>docs/libraries/</code>. A one-time split of <code>docs/libraries/decks.json</code> makes one JSON pool file for each deck. The split lowercases the first word of each Constraint cue and drops a leading "the", "a" or "an" from each Setting cue. Apart from those 2 rules, it does not change any cue text. After that, the JSON files are the source, and the user edits them directly. In the 4 genre-tagged decks, each cue lists every genre it fits.</li>
   <li data-checked="true">Desktop browsers only, with mouse and keyboard</li>
   <li data-checked="true">Local run at fixed ports, and HTTPS on the local network</li>
+  <li data-checked="true">One-Pager board: a second board kind beside Free Form. It has 1 Hook Card with a short Hook Train and 1 Concept panel that holds the other cards as chips in deck lanes. See <a href="feature-one-pager-board.html">feature-one-pager-board.html</a>.</li>
   <li data-checked="true">The visual design in <a href="design-system.html">design-system.html</a>: the TheForge base (tokens, fonts, dark canvas, shell and card look) with 9 deliberate deviations, the 11 deck colors and icons, and the Hook Card.</li>
 </ul>
 
@@ -134,6 +135,8 @@
 <p>The Settings record (mode, accent, snap) lives in browser local storage, one for each address and port. It is never part of a Board, a board file or the undo history. See <a href="feature-settings-and-theme.html">feature-settings-and-theme.html</a>.</p>
 <pre><code>Board                     (one record for each board)
   id, name, createdAt, updatedAt
+  kind: free | onePager   (format version 2. Version 1 boards become free.)
+  conceptWidth?: number   (onePager only. The Concept panel width in px.)
   view: { panX, panY, zoom }
   genres: { [deck]: Genre[] }   only for the 4 genre-tagged decks: mechanic,
                                 resource, progression, constraint. 1 or more each.
@@ -158,6 +161,7 @@ Card                      (stored inside its Board record)
   tuckedUnder: Card.id | null
   onTopOf: Card.id | null (a modifier card on top of a merged base card)
   locked: boolean
+  inConcept: boolean      (true while the card is in a One-Pager Concept panel)
   connector?: string      (the word chosen on the badge above this card)
 
 Ring
@@ -230,6 +234,7 @@ Genre                     (21 values. Meanings are in the Genres table.
   <li>Redraw replaces a card with a new card of the same deck. It takes the old card's place, tucks and lock state. A combined card keeps its adjective ring.</li>
   <li>Redraw All on a Hook Card applies Redraw to every unlocked card in its stack.</li>
   <li>A Hook Card is always the head of its stack. It cannot tuck under a card.</li>
+  <li>A One-Pager board has exactly 1 Hook Card. A Concept card is never tucked. Redraw All never changes a Concept card. See <a href="feature-one-pager-board.html">feature-one-pager-board.html</a>.</li>
   <li>The Hook Card sentence is computed from the stack on each change. It is never stored.</li>
   <li>Each pool is a separate data file. The pools are not written into the app code.</li>
 </ul>
@@ -406,6 +411,17 @@ Genre                     (21 values. Meanings are in the Genres table.
   <li>Pass bar: all done criteria pass.</li>
 </ul>
 
+<h3>M6: Themed Cards</h3>
+<ul>
+  <li>Reserved. Cards, chips and the Hook Card get a light and a dark version. <code>/dev-ui-update</code> defines it from the user's mockups.</li>
+</ul>
+
+<h3>M7: One-Pager Board</h3>
+<ul>
+  <li>Board format version 2 with its upgrade step, the board kind in New Board, the Concept panel with lanes and chips, pop-out, resize and the Concept section in the text file.</li>
+  <li>Pass bar: the done criteria in <a href="feature-one-pager-board.html">feature-one-pager-board.html</a> pass.</li>
+</ul>
+
 <h3>Cue rules</h3>
 <p>The user writes the libraries. These rules are guidance for the user, and the conversion step reports cues that break them. Pool sizes come from the libraries. The earlier targets of about 150 cues for each core deck and about 80 for each optional deck are guidance only.</p>
 <ul>
@@ -429,6 +445,7 @@ Genre                     (21 values. Meanings are in the Genres table.
   <li>The speed and first-load targets pass.</li>
   <li>An exported board file imports again with no data lost, and the text file holds each hook.</li>
   <li>The done criteria in <a href="feature-settings-and-theme.html">feature-settings-and-theme.html</a> pass.</li>
+  <li>The done criteria in <a href="feature-one-pager-board.html">feature-one-pager-board.html</a> pass.</li>
   <li>One command runs the app at port 4174. Another command serves HTTPS on the local network at port 4444.</li>
 </ul>
 
@@ -467,5 +484,6 @@ Genre                     (21 values. Meanings are in the Genres table.
 <p class="meta">2026-11-02: The Modifier deck draws as 3 decks: Role, Resource and Setting. Each filters <code>modifier.json</code> by <code>targets</code>, so a modifier can be in 1, 2 or 3 decks. Any modifier still merges with any Player Role, Resource or Setting card. A base card holds 1 merged ring. On Top now places a second Modifier on the card as its own card, through <code>onTopOf</code>. Card and Ring gain <code>modDeck</code>. The rail Modifier group has 3 icon buttons. The M2 bar is 20 of 25 for each Modifier deck. Changed Decks, Core loop, Scope, Data model, Rules, Hook sentence rules, Left rail, Hints and drop zones, M2, Done criteria and Assumptions. Changed by <code>/dev-add-feature</code>. See <a href="feature-modifier-decks.html">feature-modifier-decks.html</a>.</p>
 <p class="meta">2026-11-02: Added Settings and theme: Dark or Light mode, 3 theme colors, Snap to grid on or off, a Keyboard list and a version footer. The grid stays at 24 px, and a grid size setting is never built. The rail gains Add note, Settings and genre counts, which replace the small mark. M1 gains a tokens-only rule with a lint check. M5 builds the feature. Changed Scope, Data model, Left rail, Visual design, State and failure, M1, M5 and Done criteria. Changed by <code>/dev-add-feature</code>. See <a href="feature-settings-and-theme.html">feature-settings-and-theme.html</a>.</p>
 <p class="meta">2026-11-02: Folded in the design handoff <code>docs/design-handoff/</code> (version 1) through <code>/dev-ui-update</code>. <a href="design-system.html">design-system.html</a> is now the visual authority. The core order is Player Role, Mechanic, Resource, Goal, Conflict, in the rail, the tuck hints and the hook sentence. The Hook Card menu shows on hover, with Copy, Redraw All and Discard. "and" joins any 2 cards of the same deck except Modifiers. "Genre count" replaces "genre mark". 5 feedback details were added. Design work moved earlier: tokens, fonts, icons and the shell to M1, the grouped rail to M2, genre counts to M3. Changed Scope, Example hook, Screens, Left rail, Connector badges, Hints, Visual design and M1 to M5. Changed by the user's decisions in the conflict sweep.</p>
+<p class="meta">2026-11-04: Added the One-Pager board, a second board kind beside Free Form. It has 1 Hook Card with a short Hook Train and 1 Concept panel for the other cards. Board gains <code>kind</code> and <code>conceptWidth</code>, and Card gains <code>inConcept</code>, in board format version 2. Added M6 (reserved for Themed Cards) and M7. Changed Scope, Data model, Rules, Milestones and Done criteria. Changed by <code>/dev-add-feature</code>. See <a href="feature-one-pager-board.html">feature-one-pager-board.html</a>.</p>
 </body>
 </html>
