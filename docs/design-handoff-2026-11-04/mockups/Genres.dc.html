@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>GameIdea settings, genres tab</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
+<style>
+body{margin:0;background:#1B1E24}
+a{color:#ECEAE4}a:hover{color:#FFFFFF}
+button{font-family:inherit;cursor:pointer}
+.i{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.lbl{font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#A9ADB6}
+.sec{display:flex;flex-direction:column;gap:4px;padding:18px 0;border-top:1px solid #30353F}
+.row{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:52px}
+.rt{display:flex;flex-direction:column;gap:2px}
+.rn{font-weight:600}
+.rd{font-size:13px;color:#A9ADB6;line-height:1.4}
+.sw{position:relative;width:44px;height:26px;flex:0 0 44px;border-radius:13px;border:none;padding:0}
+.sw span{position:absolute;top:3px;width:20px;height:20px;border-radius:50%;background:#FFFFFF}
+.seg{display:flex;padding:3px;border-radius:9px;background:#1B1E24;border:1px solid #30353F}
+.seg button{height:36px;padding:0 12px;border-radius:7px;border:none;background:transparent;color:#A9ADB6;font-size:13px;font-weight:500}
+.keys{display:grid;grid-template-columns:150px minmax(0,1fr);gap:8px 16px;font-size:13px;align-items:center}
+kbd{font-family:inherit;font-size:12px;padding:2px 7px;border:1px solid #4A505C;border-radius:5px;color:#ECEAE4;background:#1B1E24}
+.tabs{display:flex;gap:4px;border-bottom:1px solid #30353F;margin-bottom:4px}
+.tab{height:44px;padding:0 14px;border:none;border-bottom:2px solid transparent;margin-bottom:-1px;background:transparent;color:#A9ADB6;font-size:14px;font-weight:600;display:inline-flex;align-items:center;gap:8px}
+.tab[aria-selected="true"]{color:#ECEAE4;border-bottom-color:#E8742E}
+.scope{margin:14px 0 0;font-size:13px;color:#A9ADB6;line-height:1.5}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.on{height:36px;padding:0 12px;border-radius:18px;border:1px solid #E8742E;background:rgba(232,116,46,0.18);color:#ECEAE4;font-size:13px;font-weight:600}
+.off{height:36px;padding:0 12px;border-radius:18px;border:1px solid #4A505C;background:transparent;color:#A9ADB6;font-size:13px;font-weight:500}
+.sm .on,.sm .off{height:32px;font-size:12px;padding:0 10px}
+.dot{width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;flex:0 0 18px}
+.drow{display:flex;gap:16px;padding:14px 0;border-top:1px solid #30353F}
+.dname{display:flex;align-items:center;gap:10px;width:170px;flex:0 0 170px;font-weight:600;align-self:flex-start;min-height:32px}
+.ghost{height:44px;padding:0 14px;border-radius:8px;border:1px solid #4A505C;background:transparent;color:#ECEAE4;font-size:13px;font-weight:500}
+.deck{display:flex;align-items:center;gap:10px;min-height:36px;padding:4px 10px;border-radius:8px;color:#ECEAE4;font-size:14px;font-weight:600;box-sizing:border-box}
+</style>
+</helmet>
+<div style="width: 1440px; height: 900px; box-sizing: border-box; position: relative; overflow: hidden; background: #1B1E24; color: #ECEAE4; font-family: Inter, system-ui, sans-serif; font-size: 14px">
+
+  <div aria-hidden="true" style="position: absolute; left: 0; right: 0; top: 0; height: 56px; background: #23272F; border-bottom: 1px solid #30353F"></div>
+  <div aria-hidden="true" style="position: absolute; left: 0; top: 56px; bottom: 0; width: 232px; background: #23272F; border-right: 1px solid #30353F"></div>
+  <div aria-hidden="true" style="position: absolute; inset: 0; background: rgba(10,12,16,0.62)"></div>
+  <div class="deck" aria-hidden="true" style="position: absolute; left: 12px; bottom: 12px; width: 208px; background: #2B303A; border: 1px solid #E8742E">
+    <svg class="i" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>Settings
+  </div>
+
+  <div role="dialog" aria-labelledby="sTitle" style="position: absolute; left: 270px; top: 40px; width: 900px; box-sizing: border-box; padding: 24px 28px 22px; border-radius: 14px; background: #23272F; border: 1px solid #30353F; box-shadow: 0 24px 60px rgba(0,0,0,0.6); display: flex; flex-direction: column">
+
+    <div style="display: flex; align-items: flex-start; justify-content: space-between; align-items: center; gap: 16px; padding-bottom: 10px">
+      <h2 id="sTitle" style="margin: 0; font-family: 'Space Grotesk', system-ui, sans-serif; font-weight: 700; font-size: 22px">Settings</h2>
+      <button type="button" aria-label="Close" style="width: 44px; height: 44px; border-radius: 8px; border: 1px solid #30353F; background: transparent; color: #ECEAE4; font-size: 18px; flex: 0 0 44px">×</button>
+    </div>
+
+    <div class="tabs" role="tablist" aria-label="Settings">
+      <button type="button" class="tab" role="tab" aria-selected="false">Appearance</button>
+      <button type="button" class="tab" role="tab" aria-selected="true">Genres</button>
+    </div>
+    <p class="scope">These genres apply to this board only. Pick genres at the top. Each genre you pick shows on the 4 genre decks below, already on. Turn one off to keep it out of that deck. A change applies to the next draw only. Cards on the board keep their cues. The other 7 decks do not use genre.</p>
+    <div style="padding: 16px 0; display: flex; flex-direction: column; gap: 12px">
+      <div style="display: flex; align-items: center; justify-content: space-between">
+        <span class="lbl">All 4 decks</span>
+        <span style="display: flex; gap: 8px"><button type="button" class="ghost" style="height: 36px">All on</button></span>
+      </div>
+      <div class="chips">
+        <button type="button" class="on" aria-pressed="true">Roguelike</button>
+        <button type="button" class="off" aria-pressed="false">Metroidvania</button>
+        <button type="button" class="off" aria-pressed="false">Platformer</button>
+        <button type="button" class="off" aria-pressed="false">Puzzle</button>
+        <button type="button" class="off" aria-pressed="false">Shooter</button>
+        <button type="button" class="off" aria-pressed="false">Melee Action</button>
+        <button type="button" class="off" aria-pressed="false">Fighting</button>
+        <button type="button" class="off" aria-pressed="false">RPG</button>
+        <button type="button" class="off" aria-pressed="false">Open World</button>
+        <button type="button" class="on" aria-pressed="true">Survival Craft</button>
+        <button type="button" class="off" aria-pressed="false">Horror</button>
+        <button type="button" class="on" aria-pressed="true">Builder &amp; Management</button>
+        <button type="button" class="off" aria-pressed="false">Life Sim</button>
+        <button type="button" class="off" aria-pressed="false">Vehicle Sim &amp; Racing</button>
+        <button type="button" class="off" aria-pressed="false">Strategy</button>
+        <button type="button" class="off" aria-pressed="false">Deckbuilder &amp; Cards</button>
+        <button type="button" class="off" aria-pressed="false">Narrative</button>
+        <button type="button" class="off" aria-pressed="false">Stealth &amp; Immersive Sim</button>
+        <button type="button" class="off" aria-pressed="false">Sandbox</button>
+        <button type="button" class="off" aria-pressed="false">Party &amp; Multiplayer</button>
+        <button type="button" class="off" aria-pressed="false">Rhythm &amp; Arcade</button>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column">
+      <div class="drow" style="align-items: center">
+        <span class="dname" style="align-self: center"><span class="dot" style="color: #E0A040"><svg class="i" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M17 2l4 4-4 4"></path><path d="M3 11V9a3 3 0 0 1 3-3h15"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v2a3 3 0 0 1-3 3H3"></path></svg></span>Mechanic</span>
+        <div class="chips sm">
+          <button type="button" class="on" aria-pressed="true">Roguelike</button>
+          <button type="button" class="on" aria-pressed="true">Survival Craft</button>
+          <button type="button" class="on" aria-pressed="true">Builder &amp; Management</button>
+        </div>
+      </div>
+      <div class="drow" style="align-items: center">
+        <span class="dname" style="align-self: center"><span class="dot" style="color: #79B85E"><svg class="i" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><rect width="16" height="10" x="2" y="7" rx="2" ry="2"/><path d="M22 11v2"/></svg></span>Resource</span>
+        <div class="chips sm">
+          <button type="button" class="on" aria-pressed="true">Roguelike</button>
+          <button type="button" class="on" aria-pressed="true">Survival Craft</button>
+          <button type="button" class="on" aria-pressed="true">Builder &amp; Management</button>
+        </div>
+      </div>
+      <div class="drow" style="align-items: center">
+        <span class="dname" style="align-self: center"><span class="dot" style="color: #4FAED6"><svg class="i" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"></path><path d="M15 7h6v6"></path></svg></span>Progression</span>
+        <div class="chips sm">
+          <button type="button" class="on" aria-pressed="true">Roguelike</button>
+          <button type="button" class="on" aria-pressed="true">Survival Craft</button>
+          <button type="button" class="on" aria-pressed="true">Builder &amp; Management</button>
+        </div>
+      </div>
+      <div class="drow" style="align-items: center">
+        <span class="dname" style="align-self: center"><span class="dot" style="color: #A3AAB6"><svg class="i" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m14.5 9.5-5 5"/><path d="m9.5 9.5 5 5"/></svg></span>Constraint</span>
+        <div class="chips sm">
+          <button type="button" class="on" aria-pressed="true">Roguelike</button>
+          <button type="button" class="on" aria-pressed="true">Survival Craft</button>
+          <button type="button" class="off" aria-pressed="false">Builder &amp; Management</button>
+        </div>
+      </div>
+    </div>
+
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 16px; border-top: 1px solid #30353F">
+      <span style="font-size: 12px; color: #A9ADB6">Each deck keeps at least 1 genre. Cues tagged Generic fit every genre and are always on.</span>
+      <button type="button" style="height: 44px; padding: 0 20px; border-radius: 8px; border: none; background: {{accent}}; color: #1B1E24; font-size: 14px; font-weight: 600">Done</button>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#E8742E","options":["#E8742E","#4C8DF6","#3FB37F"]},"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? '#E8742E' };
+  }
+}
+</script>
+</body>
+</html>
