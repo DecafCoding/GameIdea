@@ -32,11 +32,11 @@ src/
     canvas/         React Flow setup, pan, zoom, drag, tuck, tuck hints, snap,
                     connector badges and their word rules for the 12 card types
     hook/           Hook Card: sentence builder (pure), selectable sentence, icon menu (Copy Hook and its fallback dialog, Redraw All, Duplicate, Discard)
-    genres/         Genres tab content (inside Settings from Phase 6), genre counts
+    genres/         Genres tab content (on the Settings dialog), genre counts
     notes/          free-text notes with editable titles, Add note
     boards/         board list: make, open, rename, delete
     export/         text file (with hooks), board file, import and its Zod checks
-    settings/       Settings dialog, Keyboard list, footer, settings store (no zundo)
+    settings/       Settings dialog with Appearance and Genres tabs, Keyboard list, footer, settings store (no zundo)
   shared/
     model/          types: Board, Card, Ring, Cue, Note, Pool, Genre, format version
     store/          the board Zustand store with zundo
@@ -104,7 +104,7 @@ Import rules (`import-rules` in `docs/architecture.html`). Do not break them:
 - **Board file format is expensive to change.** `formatVersion` starts at 1 with no upgrade steps. A shape change needs an upgrade step. Import always creates a new board; a duplicate name gets "(imported)".
 - **Undo.** zundo, up to 100 steps per board, session only; clears on board change, reload and when another tab changes the board. Every user action is one step (Redraw All included). Genre and settings changes are never in undo.
 - **2 tabs.** After a save, post the board id on a BroadcastChannel; a tab showing that board reloads and shows the notice.
-- **Theme.** Settings set `<html data-mode data-theme>` before first render (local storage, so no dark flash). The theme color changes only the accent. From Phase 6 the mode also changes card faces, tucked faces, notes and the Hook Card fill (`docs/design-system.html` 4.5). Badges, rings, center icons and deck colors never change. Light-mode outlines use `--accent-text`.
+- **Theme.** Settings set `<html data-mode data-theme>` before first render (local storage, so no dark flash). The theme color changes only the accent. The mode changes the chrome, card faces, tucked faces, the note and the Hook Card fill (design 4.5). Badges, rings, center icons and deck colors never change. Every card has a 1 px deck-color edge and a 14% deck tint; the Hook Card has none. Light-mode outlines use `--accent-text`; the Hook label uses the current mode's `--accent-text`.
 - **Snap** applies only to the drop of a free card or note, to the 24 px grid. Alt skips it. Tuck, combine and On Top drops ignore it.
 
 ## Configuration
@@ -115,7 +115,7 @@ There is no configuration and there are no secrets. No environment variables. CI
 
 - TypeScript strict. No `any` without a comment that says why.
 - No request to any address other than the app's own. Fonts (Space Grotesk, Inter) and icons are bundled. A Playwright test checks the network.
-- Use the design tokens from `docs/design-system.html` as CSS custom properties. Never hard-code a chrome color; the lint check fails hex and rgba in CSS modules outside card and deck tokens.
+- Use the design tokens from `docs/design-system.html` as CSS custom properties. Never hard-code a chrome color; the lint check fails hex and rgba in CSS modules outside tokens.css (except white on a deck or danger color and the theme swatches), and any card, Hook Card or note token defined outside tokens.css.
 - Hit targets are 44 px, except rail deck buttons at 36 px (a recorded design deviation). Icon-only buttons need an `aria-label`.
 - No `console.log` left in committed code. Show user-facing errors through the notices in the design doc.
 - A short doc comment at the top of each module that says what it is for.

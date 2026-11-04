@@ -4,7 +4,7 @@ GameIdea is a browser canvas for solo and hobby game developers and game jam ent
 
 Boards save in the browser (IndexedDB) after each change, you can keep many boards in the board list, and undo and redo cover every board change. Each board exports as a plain text file or as a board file, the backup that imports again on any computer. The app sends no request to any address but its own.
 
-> **Status: Phase 5 (export and finish) — the MVP is complete.** The rail draws all 11 decks plus the Hook Card, which reads its stack as a hook sentence you can copy. The text file export starts with each hook. Settings switch Dark or Light mode and the Orange, Blue or Green theme color, and dropped cards and notes snap to the dot grid.
+> **Status: Phase 6 (card themes and Settings tabs).** The MVP is complete: the rail draws all 11 decks plus the Hook Card, which reads its stack as a hook sentence you can copy, and the text file export starts with each hook. Cards, notes and the Hook Card are now dark in dark mode, every card carries a tint and edge in its deck color, and genres moved to the Genres tab of the Settings dialog.
 
 ## Requirements
 
@@ -101,8 +101,8 @@ Open a board from the board list. The app mark in the top bar goes back to the l
 - **Saving:** every finished change saves at once; a drag saves once, on drop. The save mark next to the board name reads Saved, Saving or Save Failed. If a save fails, the last good version stays and a banner offers Export Board File.
 - **Undo and redo:** the Undo and Redo buttons, or Ctrl+Z and Ctrl+Shift+Z (Cmd on macOS), step through up to 100 changes on this board. The history lasts for the session and clears when you open another board or reload.
 - **2 tabs:** when another tab changes the open board, this tab reloads it and shows a notice. Undo history is cleared.
-- **Rail:** the Hook Card button, then Core (Player Role, Mechanic, Resource, Goal, Conflict), the Modifiers row (Player Role, Resource and Setting Modifier; point at a button for its name) and Optional (Setting, Mood, Twist, Progression, Constraint), then Genres, Add Note and Settings at the bottom. Mechanic, Resource, Progression and Constraint show a genre count pill when their genres are narrowed. A click draws one card into open space near the view center. If the pools do not load, a banner offers Retry and only the Hook Card button stays on.
-- **Genres:** the Genres button under the rail's Genres heading opens the Genres panel. The top row picks genres for all 4 genre-tagged decks (Mechanic, Resource, Progression, Constraint) at once, and All On turns every genre back on; each deck row below turns a picked genre off or on for that deck only. Each deck keeps at least 1 genre, so its last chip cannot be turned off. A change applies to the next draw only (cards on the board keep their cues), saves with the board and is never an undo step. A genre deck button shows a count pill while its deck has fewer than 21 genres on, and the line under Genres reads "All genres" or "N genres" (the genres on in any of the 4 decks).
+- **Rail:** the Hook Card button, then Core (Player Role, Mechanic, Resource, Goal, Conflict), the Modifiers row (Player Role, Resource and Setting Modifier; point at a button for its name) and Optional (Setting, Mood, Twist, Progression, Constraint), then Add Note and Settings at the bottom. While the Settings dialog is open, its rail button shows pressed. Mechanic, Resource, Progression and Constraint show a genre count pill when their genres are narrowed. A click draws one card into open space near the view center. If the pools do not load, a banner offers Retry and only the Hook Card button stays on.
+- **Genres:** open Settings › Genres (the tab is off on the board list, with the tooltip "Open a board to change its genres."). The top row picks genres for all 4 genre-tagged decks (Mechanic, Resource, Progression, Constraint) at once, and All On turns every genre back on; each deck row below turns a picked genre off or on for that deck only. Each deck keeps at least 1 genre, so its last chip cannot be turned off. A change applies to the next draw only (cards on the board keep their cues), saves with the board and is never an undo step. A genre deck button shows a count pill while its deck has fewer than 21 genres on.
 - **Cards:** each 200 px card shows 4 cues (Player Role, Mechanic, Resource, Setting, Mood, Modifier) or 2 cues (Goal, Conflict, Twist, Progression, Constraint). Point at a card and click a ring arrow to turn it; R turns the card under the pointer, Shift+R its inner (adjective) ring. The cue at the bottom edge is the active one.
 - **Card strip:** point at or click a card for its icon menu (hover a button for its name): Split (a card with a merged or On Top Modifier), Redraw (new cues from its deck, keeping its place, tucks, lock, badge word and adjectives), Duplicate, Lock or Unlock (an open lock while unlocked, a closed lock while locked), and Discard (Delete key too). A locked card shows a lock and keeps its cues through Redraw All. A tucked card has its own lock button just outside its right edge: point at the card to see the open lock and click it to lock; a locked tucked card always shows the closed lock, and clicking it unlocks.
 - **Tuck:** drag a card onto another to tuck it 56 px under; a stack moves with its top card. While you drag a card over a card, a stack or a Hook Card, a dashed "<Deck> goes here" slot shows where it will land. Dropped on a card in the middle of a stack, it lands after that card's own tucked cards. For the next card in the order Player Role, Mechanic, Resource, Goal, Conflict, the slot also shows in the band just under the stack. A badge on each seam shows the connector word ("You are a", "who must", "using", "to", "but"); click it to pick another word.
@@ -115,9 +115,9 @@ Open a board from the board list. The app mark in the top bar goes back to the l
 
 ## Settings
 
-**Settings** at the bottom of the rail opens the Settings dialog. Every change applies at once and saves; there is no Cancel, and Done, × or Esc close it.
+**Settings** at the bottom of the rail opens the Settings dialog, on its Appearance tab; the Genres tab holds the board's genres (see Use The Board). Every change applies at once and saves; there is no Cancel, and Done, × or Esc close it. A tab change is never an undo step.
 
-- **Mode:** Dark (default) or Light. The cards look the same in both.
+- **Mode:** Dark (default) or Light. Cards are dark in dark mode and cream in light mode.
 - **Theme Color:** Orange (default), Blue or Green: buttons, selection, the Hook Card border and the genre counts.
 - **Snap To Grid:** on by default (see Use The Board). Hold Alt while you drag to place freely.
 - **Keyboard:** R turns the outer ring (or the only ring) one step, Shift+R the inner ring of a combined card, Ctrl+Z undoes and Ctrl+Shift+Z redoes.
@@ -127,7 +127,7 @@ Settings apply to every board in this browser and live only in the local storage
 
 ## Design Tokens And Icons
 
-`src/shared/ui/tokens.css` holds the GameIdea token set from `docs/design-system.html`: Dark and Light mode and the Orange, Blue and Green theme colors, picked by `data-mode` and `data-theme` on `<html>`. `index.html` sets `data-mode="dark" data-theme="orange"` as the fallback; a small inline script (`src/shared/storage/themeBoot.ts`, put at the top of `<head>` by a Vite plugin) applies the saved settings before the first paint, so a Light reload never flashes dark. Only the chrome and the accent follow the attributes; cards, notes, badges, deck colors and the Hook Card never change. In light mode, selection and focus outlines use the light accent text color; warning banners, "Save Failed" and Discard keep fixed colors in every theme. The fonts (Space Grotesk and Inter) are bundled, and the deck icons, UI icons and the Hook Card icon are SVG files in `public/icons/`.
+`src/shared/ui/tokens.css` holds the GameIdea token set from `docs/design-system.html`: Dark and Light mode and the Orange, Blue and Green theme colors, picked by `data-mode` and `data-theme` on `<html>`. `index.html` sets `data-mode="dark" data-theme="orange"` as the fallback; a small inline script (`src/shared/storage/themeBoot.ts`, put at the top of `<head>` by a Vite plugin) applies the saved settings before the first paint, so a Light reload never flashes dark. The file holds the v1 handoff body verbatim plus the 2026-11-04 card, Hook Card and note tokens by mode. The theme color changes only the accent. The mode changes the chrome, card faces, tucked faces, the note and the Hook Card fill (design 4.5); badges, rings, center icons and deck colors never change. Every card has a 1 px deck-color edge and a 14% deck tint; the Hook Card has none. In light mode, selection and focus outlines use the light accent text color, and the Hook label uses the current mode's accent text; warning banners, "Save Failed" and Discard keep fixed colors in every theme. The fonts (Space Grotesk and Inter) are bundled, and the deck icons, UI icons and the Hook Card icon are SVG files in `public/icons/`.
 
 ## Pools
 
@@ -157,20 +157,20 @@ See `CLAUDE.md` for the full folder layout and conventions. Main folders so far:
 - `src/features/card/`, `features/draw/`: the card, its rings, the card strip, deck buttons and draw logic
 - `src/features/canvas/`: the React Flow canvas, stacks, drop zones, connector badges, the stack reading order and board actions (including Redraw All)
 - `src/features/hook/`: the Hook Card, its hover menu, Copy Hook and its fallback dialog, and the pure hook sentence builder
-- `src/features/genres/`: the Genres panel, the genre count pill, the Genres button and the pure genre rules
+- `src/features/genres/`: the Genres tab content, the genre count pill and the pure genre rules
 - `src/features/notes/`: notes
 - `src/features/boards/`: the board list with board cards, the More menu (rename, export, delete), the name-only New Board dialog, Import Board File and the delete dialog
-- `src/features/settings/`: the settings store (Zustand, no undo), the Settings dialog, its Keyboard list and the version footer
+- `src/features/settings/`: the settings store (Zustand, no undo), the Settings dialog with its Appearance and Genres tabs, its Keyboard list and the version footer
 - `src/features/export/`: the Export menu, the text file and board file, and the import checks (the only folder that uses Zod)
 - `src/shared/model/`: types and constants (the 12 card types, deck and Modifier deck names, the 21 genres and their names, the format version) and the Settings record with its parser
 - `src/shared/storage/`: the only module that touches IndexedDB (Dexie database `gameidea`) or local storage: the 5 board actions, the 3 settings actions, the theme boot script, the tab message and autosave
 - `src/shared/store/`: the open board in a Zustand store with zundo undo, and the save status
-- `src/shared/ui/`: the design tokens (`tokens.css`), icons, buttons, dialogs (default, wide, panel and settings sizes) and banners
+- `src/shared/ui/`: the design tokens (`tokens.css`), icons, buttons, dialogs (default, wide and settings sizes, with an optional tab bar) and banners
 - `src/test/`: fixture boards for unit and browser tests and the story-name check
 - `public/icons/`: the deck icons, UI icons and the Hook Card icon
 - `tests/e2e/`: Playwright specs, helpers and `fixtures/pools/`
 - `public/pools/`: the 11 cue pools
-- `scripts/`: the one-time pool split, the size check, the port lock check, the local network HTTPS check and the CSS color check
+- `scripts/`: the one-time pool split, the size check, the port lock check, the local network HTTPS check and the CSS color check (literal colors and by-mode card tokens)
 
 `docs/architecture.html` holds every technical decision. The spec and phases are in `docs/prd.html`.
 
