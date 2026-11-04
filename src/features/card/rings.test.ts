@@ -15,6 +15,7 @@ function card(type: CardType, rings: { texts: string[]; activeIndex?: number }[]
     tuckedUnder: null,
     onTopOf: null,
     locked: false,
+    inConcept: false,
     rings: rings.map(({ texts, activeIndex = 0 }) => ({
       cues: texts.map((text) => ({ text })),
       activeIndex,

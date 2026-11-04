@@ -460,6 +460,7 @@ describe('Hook Card', () => {
       rings: [],
       onTopOf: null,
       locked: false,
+      inConcept: false,
     });
   });
 

@@ -20,6 +20,7 @@ function card(type: CardType, rings: string[][]): Card {
     tuckedUnder: null,
     onTopOf: null,
     locked: false,
+    inConcept: false,
     rings: rings.map((texts) => ({
       cues: texts.map((text) => ({ text })),
       activeIndex: 0,

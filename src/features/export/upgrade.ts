@@ -6,13 +6,19 @@
  * To change the format: raise FORMAT_VERSION in shared/model, and add UPGRADES[old] that
  * turns a version-old file into a version-(old + 1) file. The runner sets formatVersion
  * after each step. A test fails while any version below FORMAT_VERSION has no step.
+ * Format version 2 has 1 step, UPGRADES[1].
  */
-import { FORMAT_VERSION } from '@/shared/model';
+import { FORMAT_VERSION, upgradeBoardV1 } from '@/shared/model';
 
 export type UpgradeStep = (file: Record<string, unknown>) => Record<string, unknown>;
 
-/** Key n turns version n into n + 1. The format starts at version 1, so there are none yet. */
-export const UPGRADES: Readonly<Record<number, UpgradeStep>> = {};
+/**
+ * Key n turns version n into n + 1. Step 1 makes a version 1 file a Free Form board with
+ * every card inConcept: false, the same step Dexie schema version 2 runs on saved records.
+ */
+export const UPGRADES: Readonly<Record<number, UpgradeStep>> = {
+  1: (file) => upgradeBoardV1(file),
+};
 
 function isPlainObject(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value);

@@ -50,6 +50,7 @@ export function fixtureCard(type: CardType, overrides: Partial<Card> = {}): Card
     ...(type === 'modifier' ? { modDeck: 'role' as const } : {}),
     onTopOf: null,
     locked: false,
+    inConcept: false,
     ...overrides,
   };
 }
@@ -93,6 +94,7 @@ export function fixtureBoard(cards: Card[], notes: Note[] = []): Board {
     formatVersion: FORMAT_VERSION,
     id: 'fixture-board',
     name: 'Fixture Board',
+    kind: 'free',
     createdAt: now,
     updatedAt: now,
     genres: allGenresOn(),
@@ -279,5 +281,70 @@ export function roundTripBoard(): Board {
     updatedAt: '2026-03-04T05:06:07.000Z',
     genres: { ...allGenresOn(), mechanic: ['horror', 'puzzle'], constraint: ['roguelike'] },
     view: { panX: -120, panY: 64, zoom: 0.8 },
+  };
+}
+
+/**
+ * A plain-JSON version 1 board file, as a build before format version 2 wrote it: the
+ * round-trip board with formatVersion 1, no kind and no inConcept on any card. The import
+ * tests, the Dexie upgrade test and Playwright share it.
+ */
+export function version1BoardFile(): Record<string, unknown> {
+  const board = roundTripBoard();
+  const { kind: _kind, ...rest } = board;
+  return JSON.parse(
+    JSON.stringify({
+      ...rest,
+      formatVersion: 1,
+      cards: board.cards.map(({ inConcept: _inConcept, ...card }) => card),
+    }),
+  ) as Record<string, unknown>;
+}
+
+/**
+ * The One-Pager fixture: a Hook Card hook-1 at (96, 96) with a Player Role and a Mechanic
+ * tucked under it, and Concept chips: 2 Resources (resource-c1 "memories", resource-c2
+ * "rope", z ascending), 1 plain Setting (setting-c1) and 1 Mechanic (mechanic-c1). Plus 1
+ * loose role Modifier (modifier-1) and 1 note.
+ */
+export function onePagerBoard(): Board {
+  const hook = fixtureCard('hook', { id: 'hook-1', x: 96, y: 96, z: 1 });
+  const role = fixtureCard('role', {
+    id: 'role-t1',
+    x: 96 + HOOK_INSET,
+    y: 96 + TUCK,
+    z: 2,
+    tuckedUnder: hook.id,
+  });
+  const mechanic = fixtureCard('mechanic', {
+    id: 'mechanic-t1',
+    x: 96 + HOOK_INSET,
+    y: 96 + 2 * TUCK,
+    z: 3,
+    tuckedUnder: role.id,
+  });
+  const chip = (type: CardType, id: string, z: number, activeIndex = 0): Card =>
+    fixtureCard(type, {
+      id,
+      z,
+      inConcept: true,
+      rings: [{ cues: cuesFor(type), activeIndex }],
+    });
+  const cards: Card[] = [
+    hook,
+    role,
+    mechanic,
+    chip('resource', 'resource-c1', 4, 0),
+    chip('resource', 'resource-c2', 5, 2),
+    chip('setting', 'setting-c1', 6),
+    chip('mechanic', 'mechanic-c1', 7, 1),
+    fixtureCard('modifier', { id: 'modifier-1', x: 96, y: 600, z: 8 }),
+  ];
+  return {
+    ...fixtureBoard(cards, [fixtureNote({ x: 1200, y: 96 })]),
+    id: 'one-pager',
+    name: 'One Pager',
+    kind: 'onePager',
+    conceptWidth: 232,
   };
 }

@@ -69,6 +69,7 @@ export function placeHookCard(board: Board, id: string, spot: Point): Board {
     rings: [],
     onTopOf: null,
     locked: false,
+    inConcept: false,
   };
   return { ...board, cards: [...board.cards, hook] };
 }
@@ -186,6 +187,7 @@ export function splitCard(board: Board, cardId: string, createId: () => string =
     modDeck: result.ring.modDeck ?? 'role',
     onTopOf: null,
     locked: false,
+    inConcept: false,
   };
   const next = replaceCard(board, { ...card, rings: result.target.rings });
   return { ...next, cards: [...next.cards, modifier] };

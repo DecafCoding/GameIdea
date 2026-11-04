@@ -11,11 +11,13 @@
  * on top of a card (onTopOf), never tucked, on a Player Role, Resource or Setting, 1 per
  * base card. An onTopOf that names no card is allowed, like a dangling tuckedUnder.
  * The Phase 2 fields (hook, the 6 new decks, modDeck, onTopOf, locked) went into format 1
- * before any user board existed, so there is no upgrade step (board-file-format).
+ * before any user board existed. Format 2 adds the board kind, conceptWidth and each
+ * card's inConcept; a version 1 file reaches this check through UPGRADES[1].
  */
 import { z } from 'zod';
 import {
   BASE_TYPES,
+  BOARD_KINDS,
   CARD_TYPES,
   FORMAT_VERSION,
   GENRES,
@@ -65,6 +67,7 @@ const cardSchema = z
     modDeck: z.enum(MOD_DECKS).optional(),
     onTopOf: z.string().nullable(),
     locked: z.boolean(),
+    inConcept: z.boolean(),
   })
   .superRefine((card, ctx) => {
     const issue = (message: string) => ctx.addIssue({ code: 'custom', message });
@@ -137,6 +140,8 @@ export const boardSchema: z.ZodType<Board> = z
     formatVersion: z.literal(FORMAT_VERSION),
     id: z.string().min(1),
     name: z.string().trim().min(1),
+    kind: z.enum(BOARD_KINDS),
+    conceptWidth: z.number().optional(),
     createdAt: z.iso.datetime(),
     updatedAt: z.iso.datetime(),
     genres: deckGenresSchema,

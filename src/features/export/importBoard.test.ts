@@ -9,6 +9,7 @@ import {
   fixtureCard,
   fixtureNote,
   roundTripBoard,
+  version1BoardFile,
 } from '@/test/fixtures/boards';
 import { boardFileJson } from './boardFile';
 import { importedBoard, MAX_BOARD_FILE_BYTES, parseBoardFile, readBoardFile } from './importBoard';
@@ -43,6 +44,18 @@ describe('parseBoardFile', () => {
     const genres = { ...allGenresOn(), mechanic: ['horror' as const] };
     const board = { ...fixtureBoard([]), genres };
     expect(parseBoardFile(boardFileJson(board))?.genres).toEqual(genres);
+  });
+
+  it('parseBoardFile_version1File_importsAsFreeForm', () => {
+    const board = parseBoardFile(JSON.stringify(version1BoardFile()))!;
+    expect(board).not.toBeNull();
+    expect(board.formatVersion).toBe(FORMAT_VERSION);
+    expect(board.kind).toBe('free');
+    expect('conceptWidth' in board).toBe(false);
+    expect(board.cards.every((card) => card.inConcept === false)).toBe(true);
+    // Apart from the new fields, cards and notes are the round-trip board's exactly.
+    expect(board.cards).toEqual(roundTripBoard().cards);
+    expect(board.notes).toEqual(roundTripBoard().notes);
   });
 
   it('parseBoardFile_badCard_null', () => {

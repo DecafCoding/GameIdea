@@ -174,6 +174,7 @@ describe('newBoard', () => {
       formatVersion: FORMAT_VERSION,
       id: 'b1',
       name: 'Untitled Board',
+      kind: 'free',
       createdAt: OLD,
       updatedAt: OLD,
       genres: allGenresOn(),

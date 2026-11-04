@@ -14,6 +14,7 @@ export function newBoard(options: { id?: string; now?: string; name?: string } =
     formatVersion: FORMAT_VERSION,
     id: options.id ?? newId(),
     name: options.name ?? NEW_BOARD_NAME,
+    kind: 'free',
     createdAt: now,
     updatedAt: now,
     genres: allGenresOn(),
