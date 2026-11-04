@@ -301,7 +301,7 @@ export function version1BoardFile(): Record<string, unknown> {
  * The One-Pager fixture: a Hook Card hook-1 at (96, 96) with a Player Role and a Mechanic
  * tucked under it, and Concept chips: 2 Resources (resource-c1 "memories", resource-c2
  * "rope", z ascending), 1 plain Setting (setting-c1) and 1 Mechanic (mechanic-c1). Plus 1
- * loose role Modifier (modifier-1) and 1 note.
+ * loose role Modifier (modifier-1) and 1 note, both right of the panel and in view at zoom 1.
  */
 export function onePagerBoard(): Board {
   const hook = fixtureCard('hook', { id: 'hook-1', x: 96, y: 96, z: 1 });
@@ -334,10 +334,10 @@ export function onePagerBoard(): Board {
     chip('resource', 'resource-c2', 5, 2),
     chip('setting', 'setting-c1', 6),
     chip('mechanic', 'mechanic-c1', 7, 1),
-    fixtureCard('modifier', { id: 'modifier-1', x: 96, y: 600, z: 8 }),
+    fixtureCard('modifier', { id: 'modifier-1', x: 720, y: 360, z: 8 }),
   ];
   return {
-    ...fixtureBoard(cards, [fixtureNote({ x: 1200, y: 96 })]),
+    ...fixtureBoard(cards, [fixtureNote({ x: 720, y: 96 })]),
     id: 'one-pager',
     name: 'One Pager',
     kind: 'onePager',

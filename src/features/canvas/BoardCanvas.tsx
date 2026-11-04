@@ -7,6 +7,12 @@
  * drop, so a drag is one undo step and one save. With Snap To Grid on, a dragged card or
  * note moves dot to dot on the 24 px grid, and a free card or note dropped on empty canvas
  * lands on it; Alt held places it freely.
+ * On a One-Pager board the Concept panel is 1 more node beside the Hook Card and moves
+ * with it. A card dropped with the pointer over the panel goes into the panel, onto the
+ * chip under the pointer (found with document.elementsFromPoint, since chips are laid out
+ * by CSS) or stays where it was released. Chips are dragged out with pointer events, not
+ * as nodes; a ghost chip follows the pointer. Each drop, pop-out, drag out and resize is
+ * one changeBoard: 1 undo step and 1 save.
  */
 import '@xyflow/react/dist/base.css';
 import {
@@ -15,16 +21,25 @@ import {
   BackgroundVariant,
   ReactFlow,
   useReactFlow,
+  ViewportPortal,
   type NodeChange,
   type OnNodeDrag,
   type Viewport,
 } from '@xyflow/react';
-import { useCallback, useEffect, useMemo, useRef, useState, type MouseEvent } from 'react';
-import { useRingKeys, type RingSlot, type TurnDirection } from '@/features/card';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type MouseEvent,
+  type PointerEvent as ReactPointerEvent,
+} from 'react';
+import { ChipView, useRingKeys, type RingSlot, type TurnDirection } from '@/features/card';
 import { drawFor } from '@/features/draw';
 import { moveNote } from '@/features/notes';
 import { getSettings, useSettings } from '@/features/settings';
-import type { Pools } from '@/shared/model';
+import type { Board, Deck, Pools } from '@/shared/model';
 import { useBoardStore } from '@/shared/store';
 import {
   chooseConnector,
@@ -37,19 +52,32 @@ import {
   splitCard,
   turnCardOnBoard,
 } from './boardActions';
-import { useCanvasUi } from './CanvasProvider';
+import { conceptRectOf, useCanvasUi } from './CanvasProvider';
 import { CardNode, CardNodeContext, type CardNodeActions } from './CardNode';
+import {
+  chipResultText,
+  CONCEPT_NODE_ID,
+  conceptDrop,
+  dragOutOfConcept,
+  leaveConcept,
+  onePagerHook,
+  popOutOfConcept,
+  resizeConcept,
+  type ConceptOver,
+} from './concept';
+import { ConceptNode, ConceptUiContext, type ConceptHint, type ConceptUi } from './ConceptNode';
 import { CountBadge } from './CountBadge';
 import { DropHints, type DragHint } from './DropHints';
 import { dropAction, dropTarget, hintFor, tuckLanding } from './dropZones';
 import { toNodes, type BoardFlowNode } from './nodes';
 import { NoteNode } from './NoteNode';
-import { snapToGrid } from './placement';
+import { boardRects, CARD_SIZE, snapToGrid, type Point } from './placement';
+import { cardText } from './reading';
 import { descendantsOf } from './stack';
 import { ZoomStrip } from './ZoomStrip';
 import styles from './BoardCanvas.module.css';
 
-const nodeTypes = { card: CardNode, note: NoteNode };
+const nodeTypes = { card: CardNode, note: NoteNode, concept: ConceptNode };
 
 /** A drag shorter than this, in screen pixels, is a click and commits nothing. */
 const CLICK_DISTANCE = 4;
@@ -90,6 +118,50 @@ interface BoardCanvasProps {
   pools: Pools | null;
 }
 
+/** A chip press that may become a drag out of the Concept panel. */
+interface ChipPress {
+  id: string;
+  pointerId: number;
+  startX: number;
+  startY: number;
+  /** Past CLICK_DISTANCE: the chip is being dragged. */
+  active: boolean;
+}
+
+/** The chip being dragged out: its card and the pointer in flow coordinates. */
+interface ChipGhost {
+  id: string;
+  at: Point;
+}
+
+/**
+ * Where a screen point is relative to the Concept panel: inside it (from the flow point
+ * and the panel's measured rect) and over which chip. Null on a Free Form board. The
+ * dragged node is under the pointer too, so the whole hit list is searched.
+ */
+function conceptOverAt(
+  flow: ReturnType<typeof useReactFlow>,
+  board: Board,
+  screen: Point,
+  point: Point,
+): ConceptOver | null {
+  const rect = conceptRectOf(flow, board);
+  if (!rect) return null;
+  const panel =
+    point.x >= rect.x &&
+    point.x <= rect.x + rect.width &&
+    point.y >= rect.y &&
+    point.y <= rect.y + rect.height;
+  if (!panel) return { panel: false, chipId: null };
+  for (const element of document.elementsFromPoint(screen.x, screen.y)) {
+    const chip = element.closest('[data-card-id]');
+    if (chip?.closest('[data-testid="concept-panel"]')) {
+      return { panel: true, chipId: chip.getAttribute('data-card-id') };
+    }
+  }
+  return { panel: true, chipId: null };
+}
+
 /** The snap grid while dragging: the 24 px dot grid (docs/feature-settings-and-theme.html). */
 const SNAP_GRID: [number, number] = [24, 24];
 
@@ -121,6 +193,9 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [dragNodes, setDragNodes] = useState<BoardFlowNode[] | null>(null);
   const [hint, setHint] = useState<DragHint | null>(null);
+  const [conceptHint, setConceptHint] = useState<ConceptHint | null>(null);
+  const [ghost, setGhost] = useState<ChipGhost | null>(null);
+  const chipPress = useRef<ChipPress | null>(null);
   const snapOn = useSettings().snap;
   const altHeld = useAltHeld();
   const drag = useRef<DragState | null>(null);
@@ -229,6 +304,8 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
       // The tucked cards under each moved card, read now: the updater may run after a drop
       // has already removed the card from the board.
       const b = useBoardStore.getState().board;
+      // On a One-Pager board the Concept panel moves with the Hook Card during its drag.
+      const hookId = onePagerHook(b)?.id ?? null;
       const tucked = new Map<string, string[]>();
       for (const change of changes) {
         if (change.type !== 'position' || !b.cards.some((c) => c.id === change.id)) continue;
@@ -246,6 +323,16 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
           if (!node) continue;
           const dx = change.position.x - node.position.x;
           const dy = change.position.y - node.position.y;
+          if (change.id === hookId) {
+            const panel = base.find((n) => n.id === CONCEPT_NODE_ID);
+            if (panel) {
+              extra.push({
+                type: 'position',
+                id: CONCEPT_NODE_ID,
+                position: { x: panel.position.x + dx, y: panel.position.y + dy },
+              });
+            }
+          }
           for (const childId of tucked.get(change.id) ?? []) {
             const child = base.find((n) => n.id === childId);
             if (!child) continue;
@@ -264,6 +351,8 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
 
   const onNodeDragStart: OnNodeDrag<BoardFlowNode> = useCallback(
     (event, node) => {
+      // The Concept panel is never dragged.
+      if (node.type === 'concept') return;
       const start = pointerOf(event);
       drag.current = {
         id: node.id,
@@ -305,6 +394,30 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
       const b = useBoardStore.getState().board;
       const dragged = b.cards.find((c) => c.id === node.id);
       if (!dragged) return;
+      // Over the Concept panel: the lane hint, the chip hint, or no hint at all.
+      const over = conceptOverAt(flow, b, p, point);
+      const concept = over ? conceptDrop(b, dragged, over) : null;
+      if (concept) {
+        setHint(null);
+        if (concept.kind === 'enter') {
+          const lane = dragged.type as Deck;
+          setConceptHint((current) =>
+            current?.lane === lane ? current : { lane, chipId: null, result: null },
+          );
+        } else if (concept.kind === 'chip') {
+          const chipId = concept.chipId;
+          // The result needs a trial combine, so it is worked out only when the chip changes.
+          setConceptHint((current) =>
+            current?.chipId === chipId
+              ? current
+              : { lane: null, chipId, result: chipResultText(b, dragged.id, chipId) },
+          );
+        } else {
+          setConceptHint(null);
+        }
+        return;
+      }
+      setConceptHint(null);
       const target = dropTarget(b, node.id, point);
       const kind = hintFor(b, dragged, target, point);
       setHint((current) => {
@@ -339,6 +452,7 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
       drag.current = null;
       setDragNodes(null);
       setHint(null);
+      setConceptHint(null);
       if (!state) return;
       const p = pointerOf(event);
       if (Math.hypot(p.x - state.startX, p.y - state.startY) < CLICK_DISTANCE) return;
@@ -360,14 +474,129 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
       // A Hook Card dropped on a card only moves; the notice says why (design 9.13).
       const b = useBoardStore.getState().board;
       const dragged = b.cards.find((c) => c.id === node.id);
-      if (dragged) {
+      const concept = conceptOverAt(flow, b, p, point) ?? undefined;
+      if (dragged && !(concept && conceptDrop(b, dragged, concept))) {
         const action = dropAction(b, dragged, dropTarget(b, node.id, point), point);
         if (action.kind === 'move' && action.refused) setNotice(action.refused);
       }
-      changeBoard((b) => dropCard(b, node.id, point, { x, y }, { snap }));
+      changeBoard((b) => dropCard(b, node.id, point, { x, y }, { snap, concept }));
     },
     [changeBoard, flow, setNotice],
   );
+
+  // A chip drag out of the Concept panel: pointer events on the window, not a node drag.
+  useEffect(() => {
+    function hintAt(id: string, screen: Point, point: Point) {
+      const b = useBoardStore.getState().board;
+      if (conceptOverAt(flow, b, screen, point)?.panel) {
+        setHint(null);
+        return;
+      }
+      // The chip as a full card at the drop, for the canvas hints of 9.7 and 9.8.
+      const trial = leaveConcept(b, id, { x: point.x - CARD_SIZE / 2, y: point.y - CARD_SIZE / 2 });
+      const dragged = trial.cards.find((c) => c.id === id)!;
+      const target = dropTarget(trial, id, point);
+      const kind = hintFor(trial, dragged, target, point);
+      setHint((current) => {
+        if (!target || !kind) return current === null ? current : null;
+        const zone =
+          kind === 'swapZones'
+            ? dropAction(trial, dragged, target, point).kind === 'swap'
+              ? 'swap'
+              : 'top'
+            : kind === 'swapOnly'
+              ? 'swap'
+              : null;
+        if (
+          current &&
+          current.target.id === target.id &&
+          current.hint === kind &&
+          current.zone === zone
+        ) {
+          return current;
+        }
+        const landing = kind === 'slot' ? tuckLanding(trial, id, target.id) : null;
+        return { target, hint: kind, zone, draggedType: dragged.type, landing };
+      });
+    }
+    function onMove(event: PointerEvent) {
+      const press = chipPress.current;
+      if (!press || event.pointerId !== press.pointerId) return;
+      const screen = { x: event.clientX, y: event.clientY };
+      if (
+        !press.active &&
+        Math.hypot(screen.x - press.startX, screen.y - press.startY) < CLICK_DISTANCE
+      ) {
+        return;
+      }
+      press.active = true;
+      const point = flow.screenToFlowPosition(screen);
+      setGhost({ id: press.id, at: point });
+      hintAt(press.id, screen, point);
+    }
+    function end() {
+      chipPress.current = null;
+      setGhost(null);
+      setHint(null);
+    }
+    function onUp(event: PointerEvent) {
+      const press = chipPress.current;
+      if (!press || event.pointerId !== press.pointerId) return;
+      end();
+      // A click or a release on the panel changes nothing.
+      if (!press.active) return;
+      const screen = { x: event.clientX, y: event.clientY };
+      const point = flow.screenToFlowPosition(screen);
+      if (conceptOverAt(flow, useBoardStore.getState().board, screen, point)?.panel) return;
+      // The full card lands centered on the pointer.
+      const dropAt = { x: point.x - CARD_SIZE / 2, y: point.y - CARD_SIZE / 2 };
+      const snap = getSettings().snap && !event.altKey;
+      changeBoard((b) => dragOutOfConcept(b, press.id, point, dropAt, { snap }));
+    }
+    function onCancel(event: PointerEvent) {
+      if (chipPress.current?.pointerId === event.pointerId) end();
+    }
+    window.addEventListener('pointermove', onMove);
+    window.addEventListener('pointerup', onUp);
+    window.addEventListener('pointercancel', onCancel);
+    return () => {
+      window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('pointerup', onUp);
+      window.removeEventListener('pointercancel', onCancel);
+    };
+  }, [changeBoard, flow]);
+
+  const startChipDrag = useCallback((id: string, event: ReactPointerEvent<HTMLElement>) => {
+    if (event.button !== 0) return;
+    chipPress.current = {
+      id,
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
+      active: false,
+    };
+  }, []);
+
+  const popOut = useCallback(
+    (id: string) =>
+      changeBoard((b) => {
+        const panel = conceptRectOf(flow, b);
+        return panel ? popOutOfConcept(b, id, panel, boardRects(b)) : b;
+      }),
+    [changeBoard, flow],
+  );
+
+  const resize = useCallback(
+    (width: number) => changeBoard((b) => resizeConcept(b, width)),
+    [changeBoard],
+  );
+
+  const draggingChipId = ghost?.id ?? null;
+  const conceptUi = useMemo<ConceptUi>(
+    () => ({ hint: conceptHint, draggingChipId, popOut, startChipDrag, resize }),
+    [conceptHint, draggingChipId, popOut, startChipDrag, resize],
+  );
+  const ghostCard = ghost ? board.cards.find((c) => c.id === ghost.id) : undefined;
 
   // A Hook Card has a hover menu, not a strip: a click selects nothing.
   const onNodeClick = useCallback((_: MouseEvent, node: BoardFlowNode) => {
@@ -402,42 +631,55 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
       data-testid="canvas"
     >
       <CardNodeContext.Provider value={actions}>
-        <ReactFlow<BoardFlowNode>
-          nodes={nodes}
-          onNodesChange={onNodesChange}
-          nodeTypes={nodeTypes}
-          zIndexMode="manual"
-          elevateNodesOnSelect={false}
-          nodeDragThreshold={0}
-          nodesConnectable={false}
-          elementsSelectable={false}
-          proOptions={{ hideAttribution: true }}
-          minZoom={0.25}
-          maxZoom={2}
-          deleteKeyCode={null}
-          multiSelectionKeyCode={null}
-          selectionKeyCode={null}
-          onlyRenderVisibleElements
-          snapToGrid={snapOn && !altHeld}
-          snapGrid={SNAP_GRID}
-          defaultViewport={defaultViewport}
-          onMoveEnd={onMoveEnd}
-          onNodeDragStart={onNodeDragStart}
-          onNodeDrag={onNodeDrag}
-          onNodeDragStop={onNodeDragStop}
-          onNodeClick={onNodeClick}
-          onPaneClick={onPaneClick}
-        >
-          <Background
-            variant={BackgroundVariant.Dots}
-            gap={24}
-            size={1.2}
-            color="var(--canvas-dot)"
-          />
-          <DropHints hint={hint} />
-          <ZoomStrip />
-          <CountBadge />
-        </ReactFlow>
+        <ConceptUiContext.Provider value={conceptUi}>
+          <ReactFlow<BoardFlowNode>
+            nodes={nodes}
+            onNodesChange={onNodesChange}
+            nodeTypes={nodeTypes}
+            zIndexMode="manual"
+            elevateNodesOnSelect={false}
+            nodeDragThreshold={0}
+            nodesConnectable={false}
+            elementsSelectable={false}
+            proOptions={{ hideAttribution: true }}
+            minZoom={0.25}
+            maxZoom={2}
+            deleteKeyCode={null}
+            multiSelectionKeyCode={null}
+            selectionKeyCode={null}
+            onlyRenderVisibleElements
+            snapToGrid={snapOn && !altHeld}
+            snapGrid={SNAP_GRID}
+            defaultViewport={defaultViewport}
+            onMoveEnd={onMoveEnd}
+            onNodeDragStart={onNodeDragStart}
+            onNodeDrag={onNodeDrag}
+            onNodeDragStop={onNodeDragStop}
+            onNodeClick={onNodeClick}
+            onPaneClick={onPaneClick}
+          >
+            <Background
+              variant={BackgroundVariant.Dots}
+              gap={24}
+              size={1.2}
+              color="var(--canvas-dot)"
+            />
+            <DropHints hint={hint} />
+            {ghost && ghostCard && ghostCard.type !== 'hook' && (
+              <ViewportPortal>
+                <div
+                  className={styles.ghost}
+                  style={{ left: ghost.at.x, top: ghost.at.y }}
+                  data-testid="chip-ghost"
+                >
+                  <ChipView text={cardText(board, ghostCard)} deck={ghostCard.type} />
+                </div>
+              </ViewportPortal>
+            )}
+            <ZoomStrip />
+            <CountBadge />
+          </ReactFlow>
+        </ConceptUiContext.Provider>
       </CardNodeContext.Provider>
     </div>
   );

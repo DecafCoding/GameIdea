@@ -1,0 +1,34 @@
+/*
+ * A Concept chip (design 9.15 and 4.4): min 36 tall, padding 8 12, radius 8, border 1 in
+ * the deck card color, fill the deck card color at 28%, text Inter 13/600 line height 18
+ * --text. As wide as its text, never wider than its lane; long words wrap.
+ */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  min-height: 36px;
+  max-width: 100%;
+  padding: 8px 12px;
+  border: 1px solid var(--chip-deck);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--chip-deck) 28%, transparent);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 18px;
+  overflow-wrap: anywhere;
+  user-select: none;
+}
+
+/* The Modifier drop target (design 9.15): outline 2 in --deck-modifier, offset 3. */
+.targeted {
+  outline: 2px solid var(--deck-modifier);
+  outline-offset: 3px;
+}
+
+/* Dragged out: keeps its space in the lane. */
+.hidden {
+  visibility: hidden;
+}

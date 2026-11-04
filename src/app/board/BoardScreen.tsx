@@ -12,7 +12,6 @@
 import { useState } from 'react';
 import {
   BoardCanvas,
-  boardRects,
   CanvasProvider,
   CARD_SIZE,
   findOpenSpot,
@@ -95,7 +94,7 @@ function BoardScreenBody({
     const card = drawCard(type, pools[type], filter);
     const center = canvas.viewCenter();
     const half = CARD_SIZE / 2;
-    const spot = findOpenSpot({ x: center.x - half, y: center.y - half }, boardRects(board), {
+    const spot = findOpenSpot({ x: center.x - half, y: center.y - half }, canvas.occupiedRects(), {
       width: CARD_SIZE,
       height: CARD_SIZE,
     });
@@ -111,7 +110,10 @@ function BoardScreenBody({
     const id = newId();
     const center = canvas.viewCenter();
     const start = { x: center.x - HOOK_WIDTH / 2, y: center.y - CARD_SIZE / 2 };
-    const spot = findOpenSpot(start, boardRects(board), { width: HOOK_WIDTH, height: CARD_SIZE });
+    const spot = findOpenSpot(start, canvas.occupiedRects(), {
+      width: HOOK_WIDTH,
+      height: CARD_SIZE,
+    });
     changeBoard((b) => placeHookCard(b, id, spot));
     setStartedOn(board.id);
     canvas.flyIn(id, from);
@@ -121,7 +123,8 @@ function BoardScreenBody({
     const id = newId();
     const center = canvas.viewCenter();
     const start = { x: center.x - NOTE_SIZE.width / 2, y: center.y - NOTE_SIZE.height / 2 };
-    changeBoard((b) => addNote(b, findOpenSpot(start, boardRects(b), NOTE_SIZE), id));
+    const spot = findOpenSpot(start, canvas.occupiedRects(), NOTE_SIZE);
+    changeBoard((b) => addNote(b, spot, id));
     setStartedOn(board.id);
     canvas.editNote(id);
   }

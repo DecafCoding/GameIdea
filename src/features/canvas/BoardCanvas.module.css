@@ -10,3 +10,19 @@
 .dragging :global([data-testid='ring-layer']) {
   opacity: 0 !important;
 }
+
+/*
+ * The chip being dragged out of the Concept panel, centered on the pointer, in the drag
+ * style of design 9.7: rotate 3°, scale 1.04, --shadow-drag. Above every card.
+ */
+.ghost {
+  position: absolute;
+  z-index: 3000000;
+  display: flex;
+  max-width: 280px;
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: var(--shadow-drag);
+  transform: translate(-50%, -50%) rotate(3deg) scale(1.04);
+  pointer-events: none;
+}

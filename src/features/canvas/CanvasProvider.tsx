@@ -2,7 +2,8 @@
  * CanvasProvider: wraps React Flow's provider and holds the canvas UI state that the
  * board screen shares with the canvas: the note being edited, the draw-motion flights and
  * the canvas notice.
- * useCanvasApi gives app/ the canvas functions without importing React Flow.
+ * useCanvasApi gives app/ the canvas functions without importing React Flow, including the
+ * rects new cards and notes must avoid (the Concept panel's measured rect among them).
  * None of this state enters the board store (it is never an undo step or a save).
  */
 import { ReactFlowProvider, useReactFlow } from '@xyflow/react';
@@ -18,10 +19,29 @@ import {
   type RefObject,
   type SetStateAction,
 } from 'react';
-import type { Card } from '@/shared/model';
+import type { Board, Card } from '@/shared/model';
 import { useBoardStore } from '@/shared/store';
+import { CONCEPT_NODE_ID, conceptPlace, conceptWidth } from './concept';
 import { DrawFlight, type Flight } from './DrawFlight';
-import type { Point } from './placement';
+import { boardRects, type Point, type Rect } from './placement';
+
+/** The panel's height before React Flow has measured it. */
+const UNMEASURED_PANEL_HEIGHT = 120;
+
+/**
+ * The Concept panel's rect in flow coordinates: its place from the Hook Card and its
+ * measured size (before measurement, the board width × 120). Null on a Free Form board.
+ */
+export function conceptRectOf(flow: ReturnType<typeof useReactFlow>, board: Board): Rect | null {
+  const place = conceptPlace(board);
+  if (!place) return null;
+  const measured = flow.getInternalNode(CONCEPT_NODE_ID)?.measured;
+  return {
+    ...place,
+    width: measured?.width ?? conceptWidth(board),
+    height: measured?.height ?? UNMEASURED_PANEL_HEIGHT,
+  };
+}
 
 /** A canvas notice the board screen shows as a banner (design 9.13). */
 export type CanvasNotice = 'hookCannotTuck';
@@ -104,6 +124,13 @@ export interface CanvasApi {
   /** The current canvas notice, and a way to clear it (Dismiss). */
   notice: CanvasNotice | null;
   dismissNotice: () => void;
+  /**
+   * Every card and note rect, plus the measured Concept panel on a One-Pager board, so new
+   * draws, notes and Hook Cards land off the panel.
+   */
+  occupiedRects: () => Rect[];
+  /** The Concept panel's rect, or null on a Free Form board. */
+  conceptRect: () => Rect | null;
 }
 
 export function useCanvasApi(): CanvasApi {
@@ -139,6 +166,12 @@ export function useCanvasApi(): CanvasApi {
       editNote: (id) => setEditingNoteId(id),
       notice,
       dismissNotice: () => setNotice(null),
+      occupiedRects: () => {
+        const board = useBoardStore.getState().board;
+        const panel = conceptRectOf(flow, board);
+        return panel ? [...boardRects(board), panel] : boardRects(board);
+      },
+      conceptRect: () => conceptRectOf(flow, useBoardStore.getState().board),
     }),
     [flow, canvasRef, addFlight, setEditingNoteId, notice, setNotice],
   );

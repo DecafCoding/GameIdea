@@ -3,6 +3,7 @@
  * Other features use the card only through this file.
  */
 export { CardStrip } from './CardStrip';
+export { ChipView } from './ChipView';
 export { CardView, type CardPaper } from './CardView';
 export { toggleLock } from './lock';
 export { RingControl } from './RingControl';
