@@ -1,6 +1,7 @@
 /*
- * HookCard (design 9.5): 240 × 200, radius 14, border 2 --accent, fill --hook-bg, padding
- * 14 16 16, gap 10. Dark in every mode. The long-hook risk: a sentence that does not fit
+ * HookCard (design 9.5): 240 × 200, radius 7 (--radius-card), border 2 --accent, fill
+ * --hook-bg, --shadow-hook, padding 14 16 16, gap 10. Dark in dark mode, white in light mode
+ * (design 9.5, 2026-11-04). No deck tint. The long-hook risk: a sentence that does not fit
  * scrolls inside the card body.
  */
 .hook {
@@ -15,7 +16,7 @@
   border: 2px solid var(--accent);
   border-radius: var(--radius-card);
   background: var(--hook-bg);
-  box-shadow: var(--shadow-card);
+  box-shadow: var(--shadow-hook);
 }
 
 .header {
@@ -36,7 +37,7 @@
   color: var(--on-accent);
 }
 
-/* "Hook", Display 12/600, 0.08em, uppercase, in the dark-mode accent text. */
+/* "Hook", Display 12/600, 0.08em, uppercase, in the current mode's --accent-text (design 4.2, 9.5). */
 .label {
   color: var(--accent-text);
   font-family: var(--font-display);
@@ -44,20 +45,6 @@
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-}
-
-/* The Hook Card is dark in every mode, so in light mode the label keeps the dark-mode
-   accent text of each theme color (design 4.2). */
-:global([data-mode='light']) .label {
-  color: #f6b08a; /* fixed: Hook label keeps dark-mode accent text */
-}
-
-:global([data-mode='light'][data-theme='blue']) .label {
-  color: #a9c8ff; /* fixed: Hook label keeps dark-mode accent text */
-}
-
-:global([data-mode='light'][data-theme='green']) .label {
-  color: #8fddb5; /* fixed: Hook label keeps dark-mode accent text */
 }
 
 /* The sentence: 14, line height 1.45, --hook-text. Selectable, so it can be copied

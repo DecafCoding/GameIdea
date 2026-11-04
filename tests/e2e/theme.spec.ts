@@ -77,6 +77,12 @@ const MODE_LOOK: Record<Mode, { face: Rgb; note: Rgb; hook: Rgb }> = {
   light: { face: [244, 240, 230], note: [251, 246, 228], hook: [255, 255, 255] },
 };
 
+/** Design 4.2: --accent-text by mode and theme color (the Hook label). */
+const ACCENT_TEXT: Record<Mode, Record<Accent, Rgb>> = {
+  dark: { orange: [0xf6, 0xb0, 0x8a], blue: [0xa9, 0xc8, 0xff], green: [0x8f, 0xdd, 0xb5] },
+  light: { orange: [0xb4, 0x53, 0x1a], blue: [0x2b, 0x5f, 0xb8], green: [0x1f, 0x7a, 0x4f] },
+};
+
 const MODES: Mode[] = ['dark', 'light'];
 const ACCENTS: Accent[] = ['orange', 'blue', 'green'];
 
@@ -131,6 +137,22 @@ for (const mode of MODES) {
         });
         const baseline = await fixedLook(page);
         look.forEach((rgb, i) => expectRgbNear(rgb, baseline[i]!));
+      });
+
+      test(`theme_${mode}_${accent}_hookLabelUsesModeAccentText`, async ({ page }) => {
+        await openBoard(page, themedBoard());
+        const hook = page.getByRole('article', { name: 'Hook Card' });
+        expectRgbNear(
+          await colorRgb(hook.getByText('Hook', { exact: true })),
+          ACCENT_TEXT[mode][accent],
+        );
+        const note = page.getByTestId('note');
+        if (mode === 'dark') {
+          await expect(note).toHaveCSS('border-top-width', '1px');
+          expectRgbNear(await colorRgb(note, 'border-top-color'), [74, 68, 54]);
+        } else {
+          await expect(note).toHaveCSS('border-top-style', 'none');
+        }
       });
     });
   }

@@ -550,10 +550,10 @@ test('tokens_shell_rendersAtLockedValues', async ({ page }) => {
   for (const name of ['Zoom Out', 'Reset Zoom', 'Zoom In', 'Fit']) {
     expect((await boxOf(page.getByRole('button', { name, exact: true }))).height).toBe(44);
   }
-  // The note body is note paper, --note-bg (design 9.12).
-  await expect(page.getByTestId('note')).toHaveCSS('background-color', 'rgb(251, 246, 228)');
-  // A tucked Goal: the first tucked paper step, --card-tucked-1 (design 9.7).
-  expectRgbNear(await backgroundRgb(cardById(page, 'goal-1')), [241, 236, 224]);
+  // The note body is note paper, the dark-mode --note-bg (design 9.12, 4.5).
+  await expect(page.getByTestId('note')).toHaveCSS('background-color', 'rgb(46, 42, 34)');
+  // A tucked Goal: --card-tucked-1, #2A2F38 in dark mode (design 9.7, 4.5).
+  expectRgbNear(await backgroundRgb(cardById(page, 'goal-1')), [42, 47, 56]);
 
   await cardById(page, 'role-1').click({ position: { x: 30, y: 30 } });
   const selected = page.locator('.react-flow__node[data-id="role-1"] [data-selected]');
