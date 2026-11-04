@@ -1,7 +1,7 @@
 /**
- * The Genres panel rules (design 9.10 and docs/mvp-plan.html "Genres panel"): the top row
+ * The Genres tab rules (design 9.10 and the docs/mvp-plan.html genre rules): the top row
  * toggles, the deck row toggles, the "each deck keeps at least 1 genre" guard, All On and
- * the count texts. Pure, no React. A rule that changes nothing returns the same object, so
+ * the count pill label. Pure, no React. A rule that changes nothing returns the same object, so
  * the store's setGenres does not save; every new list is in GENRES order.
  */
 import {
@@ -72,12 +72,6 @@ export function toggleDeckGenre(genres: DeckGenres, deck: GenreDeck, genre: Genr
 export function allOn(genres: DeckGenres): DeckGenres {
   const already = GENRE_DECKS.every((deck) => normalize(genres[deck]).length === GENRES.length);
   return already ? genres : allGenresOn();
-}
-
-/** The rail count line: "All genres", "1 genre" or "N genres". */
-export function genreCountText(n: number): string {
-  if (n >= GENRES.length) return 'All genres';
-  return n === 1 ? '1 genre' : `${n} genres`;
 }
 
 /** The count pill's label: "1 genre on" or "N genres on". */

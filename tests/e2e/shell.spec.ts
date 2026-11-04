@@ -35,12 +35,7 @@ test('shell_deckButtons_are36Tall', async ({ page }) => {
 test('shell_rail_showsGroupLabelsInOrder', async ({ page }) => {
   await openBoard(page);
   // The labels are written in Title Case and drawn uppercase by CSS (design 8.2).
-  await expect(rail(page).getByRole('heading')).toHaveText([
-    'Core',
-    'Modifiers',
-    'Optional',
-    'Genres',
-  ]);
+  await expect(rail(page).getByRole('heading')).toHaveText(['Core', 'Modifiers', 'Optional']);
   await expect(rail(page).getByRole('heading').first()).toHaveCSS('text-transform', 'uppercase');
   const modifier = rail(page).getByRole('button', { name: 'Draw A Setting Modifier' });
   await expect(modifier).toHaveAttribute('title', 'Setting Modifier');
@@ -91,4 +86,20 @@ test('shell_themeAttributes_changeChromeAndCardFace', async ({ page }) => {
   const face = await card.evaluate((el) => getComputedStyle(el).getPropertyValue('--card-face'));
   expect(face.trim().toUpperCase()).toBe('#F4F0E6');
   expectRgbNear(await backgroundRgb(card), [244, 240, 230]);
+});
+
+test('shell_settingsButton_pressedWhileDialogOpen', async ({ page }) => {
+  await openBoard(page);
+  const settings = rail(page).getByRole('button', { name: 'Settings' });
+  await expect(settings).toHaveAttribute('aria-expanded', 'false');
+  await settings.click();
+  const dialog = page.getByRole('dialog', { name: 'Settings' });
+  await expect(dialog).toBeVisible();
+  await expect(settings).toHaveAttribute('aria-expanded', 'true');
+  // --surface-raised #2B303A fill and a 1 px --accent #E8742E border (design 8.2).
+  expectRgbNear(await backgroundRgb(settings), [0x2b, 0x30, 0x3a]);
+  await expect(settings).toHaveCSS('border-top-width', '1px');
+  await expect(settings).toHaveCSS('border-top-color', 'rgb(232, 116, 46)');
+  await dialog.getByRole('button', { name: 'Done' }).click();
+  await expect(settings).toHaveAttribute('aria-expanded', 'false');
 });

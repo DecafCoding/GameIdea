@@ -129,8 +129,8 @@ function BoardScreenBody({
         onDrawHook={drawHook}
         onAddNote={addNoteNow}
         genres={board.genres}
-        onOpenGenres={() => setSettingsOpen(true)}
         onOpenSettings={() => setSettingsOpen(true)}
+        settingsOpen={settingsOpen}
       />
       <div className={styles.region} data-testid="canvas-region">
         {(saveFailed || changedElsewhere || status === 'failed' || canvas.notice) && (

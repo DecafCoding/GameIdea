@@ -1,7 +1,7 @@
 /**
- * Genres browser tests (design 8.2 and 9.10): the Genres panel, the genre count pills and
- * the Genres line, persistence across reload, genre changes kept out of undo, the last
- * genre guard, and the genre filter on draws with the real pools.
+ * Genres browser tests (design 8.2, 9.10 and 9.11): the Settings Genres tab, the genre count
+ * pills, no rail Genres button, persistence across reload, genre changes kept out of undo,
+ * the last genre guard, and the genre filter on draws with the real pools.
  */
 import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
@@ -16,10 +16,6 @@ const GENRES_SCOPE_TEXT =
   'These genres apply to this board only. Pick genres at the top. Each genre you pick shows on the 4 genre decks below, already on. Turn one off to keep it out of that deck. A change applies to the next draw only. Cards on the board keep their cues. The other 7 decks do not use genre.';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
-
-function genresButton(page: Page) {
-  return rail(page).getByRole('button', { name: 'Genres', exact: true });
-}
 
 function settingsDialog(page: Page) {
   return page.getByRole('dialog', { name: 'Settings' });
@@ -64,13 +60,14 @@ async function storedBoardWhen(page: Page, ok: (board: Board) => boolean): Promi
 const cueTexts = (board: Board, id: string) =>
   board.cards.find((c) => c.id === id)!.rings.flatMap((r) => r.cues.map((c) => c.text));
 
-test('genres_newBoard_noPillsAndAllGenresLine', async ({ page }) => {
+test('genres_newBoard_noPillsAndNoRailGenresButton', async ({ page }) => {
   await openBoard(page);
   await expect(rail(page).getByRole('img', { name: /genres? on$/ })).toHaveCount(0);
-  await expect(genresButton(page)).toContainText('All genres');
+  await expect(rail(page).getByRole('button', { name: 'Genres' })).toHaveCount(0);
+  await expect(rail(page).getByRole('heading', { name: 'Genres' })).toHaveCount(0);
 });
 
-test('genres_panel_turnOffTopChip_updatesPillsAndLine', async ({ page }) => {
+test('genres_tab_turnOffTopChip_updatesPills', async ({ page }) => {
   await openBoard(page);
   await openGenresTab(page);
   await expect(topRow(page).getByRole('button')).toHaveCount(22); // 21 chips and All On
@@ -94,7 +91,6 @@ test('genres_panel_turnOffTopChip_updatesPillsAndLine', async ({ page }) => {
         .getByRole('img'),
     ).toHaveCount(0);
   }
-  await expect(genresButton(page)).toContainText('20 genres');
 });
 
 test('genres_settingsGenresTab_showsScopeLineAndFooter', async ({ page }) => {
@@ -121,8 +117,6 @@ test('genres_deckRow_narrowsOnlyThatDecksPill', async ({ page }) => {
   for (const deck of ['Mechanic', 'Resource', 'Progression']) {
     await expect(pill(page, deck)).toHaveCount(0);
   }
-  // The union of the 4 decks still has all 21 genres.
-  await expect(genresButton(page)).toContainText('All genres');
 });
 
 test('genres_change_savesAndSurvivesReload', async ({ page }) => {
@@ -139,8 +133,6 @@ test('genres_change_savesAndSurvivesReload', async ({ page }) => {
   await page.reload();
   await expect(pill(page, 'Mechanic')).toHaveText('20');
   await expect(pill(page, 'Resource')).toHaveCount(0);
-  // The union of the 4 decks still has every genre.
-  await expect(genresButton(page)).toContainText('All genres');
 });
 
 test('genres_change_notInUndo', async ({ page }) => {

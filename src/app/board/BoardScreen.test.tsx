@@ -125,7 +125,6 @@ describe('BoardScreen', () => {
     expect(rail.getByRole('button', { name: 'Draw A Constraint' }).contains(pills[3] ?? null)).toBe(
       true,
     );
-    expect(rail.getByRole('button', { name: 'Genres' }).textContent).toContain('20 genres');
     expect(useBoardStore.getState().saveSeq).toBe(seq + 1);
     expect(useBoardStore.temporal.getState().pastStates).toHaveLength(0);
     expect(screen.getByRole('button', { name: 'Undo' })).toHaveProperty('disabled', true);

@@ -1,15 +1,16 @@
 /**
  * SideRail: the 232 px rail (design 8.2): the Hook Card button, then the Core group (Player
  * Role, Mechanic, Resource, Goal, Conflict), the Modifiers row of 3 icon buttons and the
- * Optional group (Setting, Mood, Twist, Progression, Constraint), the Genres group with the
- * Genres button and its count line, then Add Note and Settings at the bottom (margin-top
- * auto; when the rail overflows and scrolls, Settings simply follows Add Note).
+ * Optional group (Setting, Mood, Twist, Progression, Constraint), then Add Note and Settings
+ * at the bottom (margin-top auto; when the rail overflows and scrolls, Settings simply follows
+ * Add Note). Genres live on the Settings Genres tab, so there is no Genres group (design 8.2,
+ * 2026-11-04). The Settings button shows pressed (aria-expanded) while its dialog is open.
  * Each genre-tagged deck button (Mechanic, Resource, Progression, Constraint) carries a genre
  * count pill (design 8.2), hidden at all 21 genres.
  */
 import { useId } from 'react';
 import { DeckButton, HookButton } from '@/features/draw';
-import { GenreCount, GenresButton, showCount } from '@/features/genres';
+import { GenreCount, showCount } from '@/features/genres';
 import {
   GENRE_DECKS,
   MOD_DECKS,
@@ -27,10 +28,11 @@ interface SideRailProps {
   /** Draws a Hook Card; it needs no pool, so it is never off. */
   onDrawHook: (from: DOMRect) => void;
   onAddNote: () => void;
-  /** The open board's deck genres, for the count pills and the Genres line. */
+  /** The open board's deck genres, for the count pills. */
   genres: DeckGenres;
-  onOpenGenres: () => void;
   onOpenSettings: () => void;
+  /** True while the Settings dialog is open: the Settings button shows pressed. */
+  settingsOpen: boolean;
 }
 
 /** The Core group, in the design's order. */
@@ -48,8 +50,8 @@ export function SideRail({
   onDrawHook,
   onAddNote,
   genres,
-  onOpenGenres,
   onOpenSettings,
+  settingsOpen,
 }: SideRailProps) {
   const idPrefix = useId();
   const button = (type: Deck) => {
@@ -89,13 +91,17 @@ export function SideRail({
       </div>
       <h2 className={styles.label}>Optional</h2>
       {OPTIONAL.map(button)}
-      <h2 className={styles.label}>Genres</h2>
-      <GenresButton genres={genres} onOpen={onOpenGenres} />
       <button type="button" className={styles.addNote} onClick={onAddNote}>
         <Icon name="note" size={18} className={styles.addNoteIcon} />
         Add Note
       </button>
-      <button type="button" className={styles.settings} onClick={onOpenSettings}>
+      <button
+        type="button"
+        className={styles.settings}
+        aria-haspopup="dialog"
+        aria-expanded={settingsOpen}
+        onClick={onOpenSettings}
+      >
         <Icon name="settings" size={18} />
         Settings
       </button>
