@@ -2,7 +2,8 @@
  * HookCard: the dark 240 × 200 Hook Card (design 9.5). It shows the hook sentence the
  * canvas computes from its stack on every change; it never stores it. With nothing tucked
  * under it, it shows the New state: the help line and a static "Player Role goes here"
- * slot under the card.
+ * slot under the card. The sentence is selectable text (nodrag, nopan), so it is copied
+ * with the pointer and Ctrl+C; drag the card by its header.
  */
 import { Icon } from '@/shared/ui';
 import styles from './HookCard.module.css';
@@ -26,7 +27,11 @@ export function HookCard({ sentence, empty }: HookCardProps) {
         </span>
         <span className={styles.label}>Hook</span>
       </header>
-      <p className={styles.sentence} data-testid="hook-sentence" data-hook-text="">
+      <p
+        className={`${styles.sentence} nodrag nopan`}
+        data-testid="hook-sentence"
+        data-hook-text=""
+      >
         {empty ? HOOK_NEW_TEXT : sentence}
       </p>
       {empty && (

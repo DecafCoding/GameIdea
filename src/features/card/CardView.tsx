@@ -253,15 +253,11 @@ export function CardView({ card, onTurn, ringClassName, paper = 'top', onTop }: 
           <Icon name={iconFor(card)} size={14} />
         </span>
       )}
-      {card.locked && (
-        // An indicator only: lock and unlock go through the card strip (44 px targets).
-        <span
-          className={tucked ? styles.lockTucked : styles.lockMark}
-          data-testid="lock-mark"
-          aria-label="Locked"
-          role="img"
-        >
-          <Icon name="lock" size={tucked ? 13 : 15} />
+      {card.locked && !tucked && (
+        // An indicator only: a full card locks through its strip menu (44 px targets). A
+        // tucked card's lock is a button beside the card, drawn by the canvas.
+        <span className={styles.lockMark} data-testid="lock-mark" aria-label="Locked" role="img">
+          <Icon name="lock" size={15} />
         </span>
       )}
     </article>

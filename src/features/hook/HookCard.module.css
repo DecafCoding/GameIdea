@@ -60,7 +60,8 @@
   color: #8fddb5; /* fixed: Hook label keeps dark-mode accent text */
 }
 
-/* The sentence: 14, line height 1.45, --hook-text. */
+/* The sentence: 14, line height 1.45, --hook-text. Selectable, so it can be copied
+   (React Flow turns selection off on nodes). */
 .sentence {
   flex: 1;
   min-height: 0;
@@ -70,6 +71,9 @@
   font-family: var(--font-body);
   font-size: 14px;
   line-height: 1.45;
+  cursor: text;
+  user-select: text;
+  -webkit-user-select: text;
 }
 
 /*

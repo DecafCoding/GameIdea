@@ -39,7 +39,7 @@ function sourceFiles(dir: string): string[] {
 const ICONS: IconName[] = [
   'hook',
   'user',
-  'repeat',
+  'wrench',
   'battery',
   'flag',
   'zap',
@@ -73,6 +73,10 @@ const ICONS: IconName[] = [
   'board-file',
   'upload',
   'file-x',
+  'copy',
+  'playing-cards-fan',
+  'lock-open',
+  'split',
 ];
 
 describe('design tokens', () => {

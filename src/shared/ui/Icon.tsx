@@ -8,7 +8,7 @@ import styles from './Icon.module.css';
 export type IconName =
   | 'hook'
   | 'user'
-  | 'repeat'
+  | 'wrench'
   | 'battery'
   | 'flag'
   | 'zap'
@@ -42,7 +42,11 @@ export type IconName =
   | 'board-file'
   | 'upload'
   | 'file-x'
-  | 'check';
+  | 'check'
+  | 'copy'
+  | 'playing-cards-fan'
+  | 'lock-open'
+  | 'split';
 
 interface IconProps {
   name: IconName;

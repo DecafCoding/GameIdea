@@ -1,8 +1,9 @@
 /**
  * Browser tests for the Hook Card (design 9.5, 9.6, 9.7, 9.9, 9.13) on the fixture pools:
- * a full core stack built from the rail with the tuck hints, badge words, Copy and its
- * fallback, Redraw All, the cannot-tuck notice and Discard. The clipboard is stubbed in
- * the page, because clipboard permissions exist only in Chromium.
+ * a full core stack built from the rail with the tuck hints, badge words, the selectable
+ * sentence, the icon menu, Copy Hook and its fallback, Redraw All, Duplicate, the
+ * cannot-tuck notice and Discard. The clipboard is stubbed in the page, because clipboard
+ * permissions exist only in Chromium.
  */
 import type { Page } from '@playwright/test';
 import { expect, test } from './test';
@@ -122,22 +123,39 @@ test('hook_badgeWord_changesSentenceAndUndoes', async ({ page }) => {
   await expect(sentence(page)).toHaveText(HOOK_TEXT);
 });
 
+test('hook_sentence_selectsForCopyWithoutMovingCard', async ({ page }) => {
+  await openBoard(page, hookBoard());
+  const before = await boxOf(hookCard(page));
+  const text = await boxOf(sentence(page));
+  await page.mouse.move(text.x + 2, text.y + 4);
+  await page.mouse.down();
+  await page.mouse.move(text.x + text.width - 2, text.y + text.height - 4, { steps: 8 });
+  await page.mouse.up();
+  await sentence(page).click({ clickCount: 3 });
+  expect((await page.evaluate(() => window.getSelection()?.toString() ?? '')).trim()).toBe(
+    HOOK_TEXT,
+  );
+  expect(await boxOf(hookCard(page))).toEqual(before);
+});
+
 test('hook_copy_putsPlainSentenceOnClipboard', async ({ page }) => {
   await stubClipboard(page);
   await openBoard(page, hookBoard());
   await openMenu(page);
-  await menu(page).getByRole('button', { name: 'Copy' }).click();
+  await menu(page).getByRole('button', { name: 'Copy Hook' }).click();
   await expect(menu(page).getByRole('button', { name: 'Copied' })).toBeVisible();
   expect(await page.evaluate(() => window.__copied)).toBe(HOOK_TEXT);
-  // After 2 seconds it reads "Copy" again (read whether or not the pointer still hovers).
-  await expect(menu(page).locator('button').first()).toHaveText('Copy', { timeout: 4000 });
+  // After 2 seconds it reads "Copy Hook" again (read whether or not the pointer still hovers).
+  await expect(menu(page).locator('button').first()).toHaveAttribute('aria-label', 'Copy Hook', {
+    timeout: 4000,
+  });
 });
 
 test('hook_copyBlocked_showsSelectedFallback', async ({ page }) => {
   await stubClipboard(page, true);
   await openBoard(page, hookBoard());
   await openMenu(page);
-  await menu(page).getByRole('button', { name: 'Copy' }).click();
+  await menu(page).getByRole('button', { name: 'Copy Hook' }).click();
   const dialog = page.getByRole('dialog', { name: 'Copy The Hook' });
   await expect(dialog).toBeVisible();
   await expect(dialog).toContainText(
@@ -152,6 +170,19 @@ test('hook_copyBlocked_showsSelectedFallback', async ({ page }) => {
   expect(selection).toEqual([0, HOOK_TEXT.length]);
   await dialog.getByRole('button', { name: 'Close' }).click();
   await expect(dialog).toHaveCount(0);
+});
+
+test('hook_menu_hasIconItems', async ({ page }) => {
+  await openBoard(page, hookBoard());
+  await openMenu(page);
+  const items = menu(page).getByRole('button');
+  await expect(items).toHaveCount(4);
+  expect(await items.evaluateAll((els) => els.map((el) => el.getAttribute('aria-label')))).toEqual([
+    'Copy Hook',
+    'Redraw All',
+    'Duplicate',
+    'Discard',
+  ]);
 });
 
 test('hook_redrawAll_skipsLockedAndUndoesInOneStep', async ({ page }) => {
