@@ -572,7 +572,15 @@ npx playwright test --project=chromium-timing</code></pre>
 </ul>
 
 <h3>Execution notes</h3>
-<p>(Filled in during execution: the measured fps, timings, JS size, and any test fixes.)</p>
+<ul>
+  <li><strong>Size:</strong> JavaScript 207.4 KB gzip of 250 KB (the size check); pools 48.6 KB of 100 KB. No new dependency.</li>
+  <li><strong>Timing (Task 12, <code>npm run test:e2e</code>):</strong> every functional test passed in Chromium, Firefox and WebKit (688 passed, 8 skipped: the existing Firefox and WebKit fps and first-load timing tests, which are Chromium-only by design). Chromium timing: perf_pan200Cards_atLeast50Fps, perf_drag200Cards_atLeast50Fps and perf_dragLongStack_atLeast50Fps passed (≥ 50 fps; the specs assert the floor and do not print the figure); draw, turn, combine and hook updates under 100 ms in all 3 engines; first load at 25 Mbps: board list 458 ms, board with pools 571 ms. The tint layer needed no <code>contain: paint</code> fallback.</li>
+  <li><strong>Tests fixed for the new rule:</strong> besides the planned theme, shell and card-test changes, <code>tests/e2e/notes.spec.ts</code> notes_bodyAndHeader_useNotePaper and <code>tests/e2e/board.spec.ts</code> (the note paper and tucked-1 assertions in the locked-values test) pinned the old cream note and tucked colors; they now assert the dark defaults (#2E2A22, #2A2F38).</li>
+  <li><strong>Line-192 comment:</strong> the stale "The Hook label sits on the dark Hook Card in every mode…" comment is the last line of the v1 handoff file, so it is inside the verbatim body that tokens_handoffBody_isCopiedVerbatim pins. It was left in place; the file header now says later sections (the 2026-11-04 block) supersede the body.</li>
+  <li><strong>Tinted adjective (for the next design session):</strong> the dark adjective #A88BE6 on a tinted dark face measures 4.28–4.45:1 across the 11 decks (untinted 4.8:1). Not asserted, no token changed.</li>
+  <li><strong>Tab reset:</strong> SettingsDialog resets to Appearance by adjusting state during render when <code>open</code> turns true (React's "store the previous prop" pattern), not with an effect.</li>
+  <li><strong>Disabled tab name:</strong> the tooltip string is exported as <code>GENRES_DISABLED_TEXT</code> from <code>features/settings</code>.</li>
+</ul>
 
 </body>
 </html>
