@@ -10,7 +10,7 @@ import {
   fixtureStack,
   secondModifier,
 } from '@/test/fixtures/boards';
-import { dropAction, dropTarget, hintFor, isNormalPlace } from './dropZones';
+import { dropAction, dropTarget, hintFor, isNormalPlace, tuckLanding } from './dropZones';
 
 const modifier = fixtureCard('modifier', { x: 900, y: 900, z: 9 });
 
@@ -101,7 +101,7 @@ describe('dropAction', () => {
     expect(dropAction(on(mechanic), modifier, mechanic, { x: 100, y: 100 })).toEqual({
       kind: 'tuck',
     });
-    expect(hintFor(on(mechanic), modifier, mechanic, { x: 100, y: 100 })).toBeNull();
+    expect(hintFor(on(mechanic), modifier, mechanic, { x: 100, y: 100 })).toBe('slot');
   });
 
   it('dropAction_goalOnSetting_tuck', () => {
@@ -124,9 +124,14 @@ describe('hintFor', () => {
     expect(hintFor(board, fixtureCard('goal'), role, { x: 100, y: 230 })).toBe('slot');
   });
 
-  it('hintFor_roleOverGoal_null', () => {
+  it('hintFor_roleOverGoal_slot', () => {
+    // Out of the normal order, a tuck still shows where the card lands (user 2026-11-03).
     const goal = fixtureCard('goal');
-    expect(hintFor(fixtureBoard([goal]), role, goal, { x: 100, y: 100 })).toBeNull();
+    expect(hintFor(fixtureBoard([goal]), role, goal, { x: 100, y: 100 })).toBe('slot');
+  });
+
+  it('hintFor_goalOverEmptyCanvas_null', () => {
+    expect(hintFor(board, fixtureCard('goal'), null, { x: 900, y: 900 })).toBeNull();
   });
 
   it('hintFor_hookOverCard_null', () => {
@@ -186,5 +191,39 @@ describe('hook drops', () => {
   it('dropTarget_hookIs240Wide', () => {
     const board = fixtureBoard([fixtureCard('hook'), fixtureCard('role', { x: 900, z: 2 })]);
     expect(dropTarget(board, 'role-1', { x: 230, y: 100 })?.id).toBe('hook-1');
+  });
+});
+
+describe('tuckLanding', () => {
+  // A chain: role → mechanic → goal, from (0, 0).
+  const chain = () =>
+    fixtureBoard([
+      fixtureCard('role', { x: 0, y: 0 }),
+      fixtureCard('mechanic', { x: 0, y: 56, z: 2, tuckedUnder: 'role-1' }),
+      fixtureCard('goal', { x: 0, y: 112, z: 3, tuckedUnder: 'mechanic-1' }),
+      fixtureCard('conflict', { x: 600, y: 0, z: 4 }),
+      fixtureCard('modifier', { x: 900, y: 0, z: 5 }),
+    ]);
+
+  it('tuckLanding_bottomCard_landsBelowIt', () => {
+    expect(tuckLanding(chain(), 'conflict-1', 'goal-1')).toEqual({ x: 0, y: 168 });
+  });
+
+  it('tuckLanding_middleCard_landsAfterItsTuckedCards', () => {
+    expect(tuckLanding(chain(), 'conflict-1', 'role-1')).toEqual({ x: 0, y: 168 });
+  });
+
+  it('tuckLanding_modifierOnMiddleCard_landsRightAfterIt', () => {
+    // A Modifier over a Mechanic tucks (it combines only onto Role, Resource, Setting).
+    expect(tuckLanding(chain(), 'modifier-1', 'mechanic-1')).toEqual({ x: 0, y: 112 });
+  });
+
+  it('tuckLanding_hookCard_landsInsetAfterItsStack', () => {
+    const board = fixtureBoard([
+      fixtureCard('hook', { x: 0, y: 0 }),
+      fixtureCard('role', { x: 20, y: 56, z: 2, tuckedUnder: 'hook-1' }),
+      fixtureCard('goal', { x: 600, y: 0, z: 3 }),
+    ]);
+    expect(tuckLanding(board, 'goal-1', 'hook-1')).toEqual({ x: 20, y: 112 });
   });
 });

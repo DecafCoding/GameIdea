@@ -139,7 +139,7 @@ for (const snap of [true, false]) {
         await expectBelow(page, 'goal-1', 'role-1');
       });
 
-      test('tuck_dropConflictOnSetting_tucksWithoutHint', async ({ page }) => {
+      test('tuck_dropConflictOnSetting_showsSlotWhereItLands', async ({ page }) => {
         await open(
           page,
           fixtureBoard([
@@ -154,9 +154,75 @@ for (const snap of [true, false]) {
           undefined,
           false,
         );
-        await expect(page.getByTestId('hint-slot')).toHaveCount(0);
+        // Out of the normal order, the slot still shows where the card lands (user 2026-11-03).
+        const slot = page.getByTestId('hint-slot');
+        await expect(slot).toHaveText('Conflict goes here');
+        const setting = await boxOf(cardById(page, 'setting-1'));
+        expect(
+          Math.abs((await boxOf(slot)).y - (setting.y + setting.height - 16)),
+        ).toBeLessThanOrEqual(1);
         await page.mouse.up();
+        await expect(slot).toHaveCount(0);
         await expectBelow(page, 'conflict-1', 'setting-1');
+      });
+
+      test('tuck_overMiddleOfStack_slotShowsAtLandingSpot', async ({ page }) => {
+        await open(
+          page,
+          fixtureBoard([
+            fixtureCard('role', { x: 96, y: 96 }),
+            fixtureCard('mechanic', { x: 96, y: 152, z: 2, tuckedUnder: 'role-1' }),
+            fixtureCard('goal', { x: 96, y: 208, z: 3, tuckedUnder: 'mechanic-1' }),
+            fixtureCard('conflict', { x: 528, y: 96, z: 4 }),
+          ]),
+        );
+        // Over the Player Role's face: the Conflict tucks under it, after its tucked cards.
+        await dragTo(
+          page,
+          cardById(page, 'conflict-1'),
+          await pointOn(page, 'role-1', 100, 20),
+          undefined,
+          false,
+        );
+        const slot = page.getByTestId('hint-slot');
+        await expect(slot).toHaveText('Conflict goes here');
+        const goal = await boxOf(cardById(page, 'goal-1'));
+        const box = await boxOf(slot);
+        // Under the Goal, the stack's last card: 16 above its bottom edge.
+        expect(Math.abs(box.y - (goal.y + goal.height - 16))).toBeLessThanOrEqual(1);
+        expect(Math.abs(box.x - goal.x)).toBeLessThanOrEqual(1);
+        await page.mouse.up();
+        await expect(slot).toHaveCount(0);
+        const conflict = await boxOf(cardById(page, 'conflict-1'));
+        expect(Math.abs(conflict.y - (box.y + box.height - conflict.height))).toBeLessThanOrEqual(
+          1,
+        );
+      });
+
+      test('tuck_overHookCardWithStack_slotShowsAfterStack', async ({ page }) => {
+        await open(
+          page,
+          fixtureBoard([
+            fixtureCard('hook', { x: 96, y: 96 }),
+            fixtureCard('role', { x: 116, y: 152, z: 2, tuckedUnder: 'hook-1' }),
+            fixtureCard('goal', { x: 528, y: 96, z: 3 }),
+          ]),
+        );
+        await dragTo(
+          page,
+          cardById(page, 'goal-1'),
+          await pointOn(page, 'hook-1', 120, 40),
+          undefined,
+          false,
+        );
+        const slot = page.getByTestId('hint-slot');
+        await expect(slot).toHaveText('Goal goes here');
+        const role = await boxOf(cardById(page, 'role-1'));
+        const box = await boxOf(slot);
+        expect(Math.abs(box.y - (role.y + role.height - 16))).toBeLessThanOrEqual(1);
+        expect(Math.abs(box.x - role.x)).toBeLessThanOrEqual(1);
+        await page.mouse.up();
+        await expectBelow(page, 'goal-1', 'role-1');
       });
     });
 

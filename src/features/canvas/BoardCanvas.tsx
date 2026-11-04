@@ -41,7 +41,7 @@ import { useCanvasUi } from './CanvasProvider';
 import { CardNode, CardNodeContext, type CardNodeActions } from './CardNode';
 import { CountBadge } from './CountBadge';
 import { DropHints, type DragHint } from './DropHints';
-import { dropAction, dropTarget, hintFor } from './dropZones';
+import { dropAction, dropTarget, hintFor, tuckLanding } from './dropZones';
 import { toNodes, type BoardFlowNode } from './nodes';
 import { NoteNode } from './NoteNode';
 import { snapToGrid } from './placement';
@@ -325,7 +325,9 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
         ) {
           return current;
         }
-        return { target, hint: kind, zone, draggedType: dragged.type };
+        // The landing spot needs a trial tuck, so it is worked out only when the hint changes.
+        const landing = kind === 'slot' ? tuckLanding(b, dragged.id, target.id) : null;
+        return { target, hint: kind, zone, draggedType: dragged.type, landing };
       });
     },
     [flow],
