@@ -1,18 +1,27 @@
 /**
- * Hard-coded color check for `npm run lint` (mvp-plan M1, design-system section 4): every
- * chrome color in a CSS file under src/ comes from a design token in
- * src/shared/ui/tokens.css. A hex, rgb(a) or hsl(a) value anywhere else fails, unless its
- * line ends in a "fixed: <reason>" comment (white on a deck color or on --danger).
- * Comments are stripped before the search, keeping line numbers, so a color named in a
- * comment never fails.
+ * Color check for `npm run lint` (mvp-plan M1, design-system sections 4.4 and 4.5): chrome,
+ * card, Hook Card and note colors come from src/shared/ui/tokens.css; only deck colors, white
+ * on a deck or danger color, and the theme swatches are literal. In a CSS file under the root
+ * (default src/) other than tokens.css:
+ *   - a hex, rgb(a) or hsl(a) value fails, unless its line ends in a "fixed: <reason>" comment
+ *     whose reason is one of FIXED_REASONS;
+ *   - defining a card, Hook Card or note token fails, because those follow data-mode only
+ *     through tokens.css (design 4.5).
+ * Comments are stripped before the color search, keeping line numbers, so a color named in a
+ * comment never fails. An optional first argument sets the root folder, for the self-tests.
  */
 import { readdirSync, readFileSync } from 'node:fs';
 import { join, relative } from 'node:path';
 
-const ROOT = 'src';
-const TOKENS = join('src', 'shared', 'ui', 'tokens.css');
+const ROOT = process.argv[2] ?? 'src';
+const TOKENS = join(ROOT, 'shared', 'ui', 'tokens.css');
 const COLOR = /#[0-9a-fA-F]{3,8}\b|\b(rgba?|hsla?)\(/;
-const ALLOWED = /\/\*\s*fixed:\s*[^*]+\*\/\s*$/;
+const FIXED = /\/\*\s*fixed:\s*([^*]+?)\s*\*\/\s*$/;
+/** The only reasons a literal color may carry. */
+const FIXED_REASONS = ['white on deck color', 'white on --danger', 'theme color swatch'];
+/** A card, Hook Card or note token definition (design 4.5); --card-type and --card-size are not in it. */
+const MODE_TOKEN =
+  /^\s*--(card-(face|tucked-\d|cue|cue-active|adjective|adjective-active|divider)|hook-(bg|text)|note-(bg|border|label|text)|zone-text|shadow-(hook|note|card))\s*:/;
 
 /** Lists every .css file under a folder, recursively. */
 function cssFiles(dir) {
@@ -29,20 +38,35 @@ function stripComments(text) {
 }
 
 let failed = false;
+const fail = (file, i, line, why) => {
+  failed = true;
+  process.stdout.write(`FAIL ${relative('.', file)}:${i + 1}: ${line.trim()}${why}\n`);
+};
+
 for (const file of cssFiles(ROOT)) {
-  if (relative('.', file) === TOKENS) continue;
+  if (relative('.', file) === relative('.', TOKENS)) continue;
   const original = readFileSync(file, 'utf8').split('\n');
   const stripped = stripComments(original.join('\n')).split('\n');
   stripped.forEach((line, i) => {
-    if (!COLOR.test(line) || ALLOWED.test(original[i])) return;
-    failed = true;
-    process.stdout.write(`FAIL ${relative('.', file)}:${i + 1}: ${original[i].trim()}\n`);
+    if (MODE_TOKEN.test(line)) {
+      fail(
+        file,
+        i,
+        original[i],
+        ' (card, Hook Card and note colors follow data-mode only through tokens.css (design 4.5))',
+      );
+      return;
+    }
+    if (!COLOR.test(line)) return;
+    const fixed = FIXED.exec(original[i]);
+    if (!fixed) return fail(file, i, original[i], '');
+    if (!FIXED_REASONS.includes(fixed[1])) fail(file, i, original[i], ' (unlisted fixed reason)');
   });
 }
 
 process.stdout.write(
   failed
-    ? 'FAIL hard-coded colors in CSS under src/; use a design token.\n'
-    : 'PASS no hard-coded colors in CSS under src/.\n',
+    ? `FAIL hard-coded colors or mode tokens in CSS under ${ROOT}/; use a design token.\n`
+    : `PASS no hard-coded colors in CSS under ${ROOT}/.\n`,
 );
 process.exit(failed ? 1 : 0);
