@@ -66,7 +66,7 @@
   <dt>Later extensions</dt>
   <dd>None yet.</dd>
   <dt>Last coverage pass</dt>
-  <dd>2026-11-01, against <code>docs/mvp-plan.html</code>. P# in a badge is milestone M# in that plan. Re-run this pass whenever a milestone is added or rescoped.</dd>
+  <dd>2026-11-04, against <code>docs/mvp-plan.html</code>. P# in a badge is milestone M# in that plan. Re-run this pass whenever a milestone is added or rescoped.</dd>
 </dl>
 
 <div class="note">
@@ -224,12 +224,12 @@
     <div class="cov">Not in MVP.</div>
   </li>
 
-  <li data-coverage="none">
-    <div class="li-name">Send a saved idea to a design document <span class="badge b-no">Not in MVP</span></div>
+  <li data-coverage="partial" data-phase="7">
+    <div class="li-name">Send a saved idea to a design document <span class="badge b-part">Partial · P7</span></div>
     <div class="li-who">Wayline sends ideas to Blueprint to make a game design document. Ludo builds one in its project workspace. Milanote has a game design document template board.</div>
     <div class="li-sent"><b>Sentiment:</b> None found from users. Milanote's guide says long text design documents often "end up unused" (<a href="https://milanote.com/guide/game-design-document">Milanote</a>, vendor claim).</div>
     <div class="why">Rank 10. Common in the paid tools, with no user sentiment found. It extends market-wide signal 2.</div>
-    <div class="cov">Not in MVP. The text export holds each hook, which answers part of the need.</div>
+    <div class="cov">Partial, milestone 7. The One-Pager board holds 1 game: its hook and a Concept panel of the other cards by deck. The text file lists both. Sending to an outside design document tool, and a One-Pager export, are still left out. See <a href="feature-one-pager-board.html">feature-one-pager-board.html</a>.</div>
   </li>
 
 </ol>
@@ -277,7 +277,7 @@
     <div class="name">Visual board to develop an idea <span class="badge b-part">Partial · P1</span></div>
     <div class="who">Milanote has game design boards: brainstorm, moodboard, mechanics, storyboard and design document.</div>
     <div class="sent"><b>Sentiment:</b> App Store complaints are about image quality and text input. "it makes all my photos that are high resolution into really bad resolution" (<a href="https://apps.apple.com/us/app/milanote/id1433852790">App Store</a>). Paid plan is $12.49 a month.</div>
-    <div class="cov">Partial, milestone 1. The infinite canvas, cards and titled notes carry over from TheForge. Images, moodboards and template boards are left out.</div>
+    <div class="cov">Partial, milestone 1. The infinite canvas, cards and titled notes carry over from TheForge. Milestone 7 adds the One-Pager board, a structured board kind with a Hook Train and a Concept panel (<a href="feature-one-pager-board.html">feature-one-pager-board.html</a>). Images and moodboards are still left out.</div>
   </div>
 
   <div class="row" data-coverage="none">
@@ -368,6 +368,7 @@
     <li>2026-11-01: plan amendment (21 genres, hidden Generic tag). Updated the note on the genre filter row. No badge changed. Tally unchanged.</li>
     <li>2026-11-02: feature pass from <code>/dev-add-feature</code> (3 Modifier decks, On Top as a separate card). Updated the note on the Modifier card row and linked <code>docs/feature-modifier-decks.html</code>. No badge changed. Tally unchanged.</li>
     <li>2026-11-02: feature pass from <code>/dev-add-feature</code> (Settings and theme). Added 1 Other row, In MVP · P5, from the interview. Updated the note on the Keyboard shortcuts row, which stays Partial, and linked <code>docs/feature-settings-and-theme.html</code>. 12 In, 4 Partial, 15 Not in MVP, 2 Never, of 33 rows.</li>
+    <li>2026-11-04: feature pass from <code>/dev-add-feature</code> (One-Pager board). "Send a saved idea to a design document" moves from Not in MVP to Partial · P7. Updated the note on the "Visual board to develop an idea" row, which stays Partial. Linked <code>docs/feature-one-pager-board.html</code>. 12 In, 5 Partial, 14 Not in MVP, 2 Never, of 33 rows.</li>
   </ul>
   <p><b>Sources</b></p>
   <ul>
