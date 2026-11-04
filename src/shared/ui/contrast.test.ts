@@ -1,7 +1,7 @@
 /**
  * Contrast checks for card, Hook Card and note text in both modes, read from the real
  * tokens.css (design §12, measured 2026-11-04). The deck tint (design 4.4: the deck card
- * color at 14% over the face) is composited before measuring. Thresholds are the design
+ * color at --card-tint over the face) is composited before measuring. Thresholds are the design
  * figures minus 0.1 for rounding, not new targets.
  */
 import { readFileSync } from 'node:fs';
@@ -78,7 +78,11 @@ const color = (mode: Mode, name: string) => hex(tokenValue(mode, name));
 
 /** A face color with the deck tint laid over it (design 4.4). */
 function tintedFace(mode: Mode, deck: string, face = '--card-face'): Rgb {
-  return over(color(mode, `--deck-${deck}`), color(mode, face), 0.14);
+  return over(
+    color(mode, `--deck-${deck}`),
+    color(mode, face),
+    parseFloat(tokenValue(mode, '--card-tint')) / 100,
+  );
 }
 
 /** Card decks: DECKS holds the 11 decks; the Hook Card has no deck color and no tint. */

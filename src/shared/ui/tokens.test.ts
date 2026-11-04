@@ -27,6 +27,7 @@ const USER_OVERRIDES = ['--radius-card'];
  */
 const MODE_TOKENS_2026_11_04: Record<string, { dark: string; light: string }> = {
   '--card-face': { dark: '#2A2F38', light: '#F4F0E6' },
+  '--card-tint': { dark: '14%', light: '7%' },
   '--card-tucked-1': { dark: '#2A2F38', light: '#F1ECE0' },
   '--card-tucked-2': { dark: '#2A2F38', light: '#EFE9DC' },
   '--card-tucked-3': { dark: '#2A2F38', light: '#ECE6D8' },
