@@ -277,7 +277,10 @@ test('hook_discard_freesStackAndUndoes', async ({ page }) => {
   await expect(sentence(page)).toHaveText(HOOK_TEXT);
 });
 
-test('perf_ringTurn_updatesHookUnder100ms', { tag: '@timing' }, async ({ page }) => {
+test('perf_ringTurn_updatesHookUnder100ms', { tag: '@timing' }, async ({ page, browserName }) => {
+  // WebKit limit temporarily raised from 100 to 300 ms by the user's decision on 2026-11-04,
+  // pending a perf fix (CI WebKit measured 136–231 ms after Phase 6). Chromium and Firefox keep 100.
+  const limit = browserName === 'webkit' ? 300 : 100;
   await openBoard(page, hookBoard());
   await page.evaluate(() => document.fonts.ready);
   // Warm the engine with one turn first.
@@ -297,5 +300,5 @@ test('perf_ringTurn_updatesHookUnder100ms', { tag: '@timing' }, async ({ page })
     return { elapsed: performance.now() - start, changed: hook.textContent !== before };
   });
   expect(result.changed).toBe(true);
-  expect(result.elapsed).toBeLessThan(100);
+  expect(result.elapsed).toBeLessThan(limit);
 });

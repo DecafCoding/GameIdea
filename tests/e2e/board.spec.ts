@@ -165,7 +165,10 @@ test('board_poolsBlocked_bannerThenRetry', async ({ page }) => {
   await expect(canvasCards(page)).toHaveCount(1);
 });
 
-test('board_drawAndTurn_under100ms', { tag: '@timing' }, async ({ page }) => {
+test('board_drawAndTurn_under100ms', { tag: '@timing' }, async ({ page, browserName }) => {
+  // WebKit limit temporarily raised from 100 to 300 ms by the user's decision on 2026-11-04,
+  // pending a perf fix (CI WebKit measured 136–231 ms after Phase 6). Chromium and Firefox keep 100.
+  const limit = browserName === 'webkit' ? 300 : 100;
   // Warm the engine with one draw, then measure on a fresh page (see card-test.spec.ts).
   await openBoard(page);
   await drawFromRail(page, 'Player Role');
@@ -187,7 +190,7 @@ test('board_drawAndTurn_under100ms', { tag: '@timing' }, async ({ page }) => {
     };
   });
   expect(drawResult.shown).toBe(true);
-  expect(drawResult.elapsed).toBeLessThan(100);
+  expect(drawResult.elapsed).toBeLessThan(limit);
 
   const turnResult = await page.evaluate(async () => {
     const card = document.querySelector('.react-flow__node [data-testid="card"]')!;
@@ -201,7 +204,7 @@ test('board_drawAndTurn_under100ms', { tag: '@timing' }, async ({ page }) => {
     return { elapsed, changed: after !== before };
   });
   expect(turnResult.changed).toBe(true);
-  expect(turnResult.elapsed).toBeLessThan(100);
+  expect(turnResult.elapsed).toBeLessThan(limit);
 });
 
 /** A tucked card's Lock / Unlock button, beside the card. */
