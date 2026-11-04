@@ -1,5 +1,6 @@
 /**
- * Tests for the grouped rail: group order, the Modifiers row and the pools-off state.
+ * Tests for the grouped rail: group order (no Genres group), the Modifiers row, the
+ * pools-off state, the count pills and the pressed Settings button.
  */
 import { fireEvent, render, screen, within } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
@@ -16,8 +17,8 @@ function renderRail(props: Partial<Parameters<typeof SideRail>[0]> = {}) {
       onDrawHook={noop}
       onAddNote={noop}
       genres={allGenresOn()}
-      onOpenGenres={noop}
       onOpenSettings={noop}
+      settingsOpen={false}
       {...props}
     />,
   );
@@ -31,7 +32,8 @@ describe('SideRail', () => {
       within(rail)
         .getAllByRole('heading')
         .map((h) => h.textContent),
-    ).toEqual(['Core', 'Modifiers', 'Optional', 'Genres']);
+    ).toEqual(['Core', 'Modifiers', 'Optional']);
+    expect(within(rail).queryByRole('button', { name: 'Genres' })).toBeNull();
     expect(
       within(rail)
         .getAllByRole('button', { name: /^Draw A / })
@@ -127,8 +129,8 @@ describe('SideRail', () => {
         onDrawHook={noop}
         onAddNote={noop}
         genres={genres}
-        onOpenGenres={noop}
         onOpenSettings={noop}
+        settingsOpen={false}
       />,
     );
     const pill = screen.getByRole('img', { name: '3 genres on' });
@@ -139,15 +141,27 @@ describe('SideRail', () => {
     expect(
       screen.getByRole('button', { name: 'Draw A Resource' }).hasAttribute('aria-describedby'),
     ).toBe(false);
-    // The line counts the union of the 4 decks; the other 3 still have all 21.
-    expect(screen.getByRole('button', { name: 'Genres' }).textContent).toContain('All genres');
   });
 
-  it('sideRail_genresButton_opensPanelCallback', () => {
-    const onOpenGenres = vi.fn();
-    renderRail({ onOpenGenres });
-    fireEvent.click(screen.getByRole('button', { name: 'Genres' }));
-    expect(onOpenGenres).toHaveBeenCalledTimes(1);
+  it('sideRail_settingsOpen_buttonAriaExpandedTrue', () => {
+    const { rerender } = renderRail();
+    const settings = screen.getByRole('button', { name: 'Settings' });
+    expect(settings.getAttribute('aria-haspopup')).toBe('dialog');
+    expect(settings.getAttribute('aria-expanded')).toBe('false');
+    rerender(
+      <SideRail
+        decksReady
+        onDraw={noop}
+        onDrawHook={noop}
+        onAddNote={noop}
+        genres={allGenresOn()}
+        onOpenSettings={noop}
+        settingsOpen
+      />,
+    );
+    expect(screen.getByRole('button', { name: 'Settings' }).getAttribute('aria-expanded')).toBe(
+      'true',
+    );
   });
 
   it('sideRail_settings_lastAndCallsOnOpenSettings', () => {

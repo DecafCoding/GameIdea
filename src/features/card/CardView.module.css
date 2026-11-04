@@ -1,8 +1,9 @@
 /* CardView: the 200 px card (design 9.4), its cue face, and the center icon with its combined edge. */
 
 /*
- * The data-type attribute picks the deck card color: the tucked type mark and the lock on
- * a tucked strip use it. The face itself is the cream --card-face in every deck.
+ * The data-type attribute picks the deck card color: the tucked type mark, the lock on a
+ * tucked strip and the tint layer use it. The face is the mode's --card-face (design 4.5),
+ * tinted and edged in the deck card color (4.4).
  */
 [data-type='role'] {
   --card-type: var(--deck-role);
@@ -58,6 +59,23 @@
   box-shadow: var(--shadow-card);
   font-family: var(--font-display);
   font-size: 15px;
+}
+
+/*
+ * Design 4.4: the deck tint (the deck card color at 14% over the face) and the 1 px inset
+ * edge in the deck card color, on every card face and tucked face in both modes. A layer of
+ * its own, kept off the card's own box-shadow so the drag shadow (CardNode.module.css .lifted)
+ * and the Redraw All outline never remove it. The face, rings, disc and marks paint above it.
+ */
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: color-mix(in srgb, var(--card-type) 14%, transparent);
+  box-shadow: inset 0 0 0 1px var(--card-type);
 }
 
 /* Tucked faces darken one step per level (design 9.7); deeper levels reuse the 4th. */

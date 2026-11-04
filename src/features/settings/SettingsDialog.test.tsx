@@ -1,12 +1,18 @@
 /**
  * Tests for the Settings dialog: its rows, a change applies at once, the blocked-storage
- * note, the footer version, the Keyboard list, Done and no Cancel.
+ * note, the footer version, the Keyboard list, Done and no Cancel, and the Appearance and
+ * Genres tabs (design 9.10, 9.11).
  */
 import { fireEvent, render, screen, within } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { DEFAULT_SETTINGS } from '@/shared/model';
 import { APP_VERSION } from './keys';
-import { SETTINGS_BLOCKED_TEXT, SettingsDialog } from './SettingsDialog';
+import {
+  MODE_HELP_TEXT,
+  SETTINGS_BLOCKED_TEXT,
+  SETTINGS_CAPTION,
+  SettingsDialog,
+} from './SettingsDialog';
 import { useSettingsStore } from './settingsStore';
 
 beforeEach(() => {
@@ -99,5 +105,75 @@ describe('SettingsDialog', () => {
   it('settingsDialog_noCancelButton', () => {
     renderDialog();
     expect(screen.queryByRole('button', { name: 'Cancel' })).toBeNull();
+  });
+
+  const genresTab = {
+    caption: 'Genres scope line.',
+    footerNote: 'Each deck keeps at least 1 genre.',
+    content: <p>Genres content</p>,
+  };
+
+  it('settingsDialog_open_showsAppearanceTabSelected', () => {
+    renderDialog();
+    expect(screen.getByRole('tab', { name: 'Appearance' }).getAttribute('aria-selected')).toBe(
+      'true',
+    );
+    expect(screen.getByRole('tabpanel').textContent).toContain('Mode');
+  });
+
+  it('settingsDialog_tabs_haveTabRolesAndAriaSelected', () => {
+    render(<SettingsDialog open onClose={() => undefined} genresTab={genresTab} />);
+    const tablist = screen.getByRole('tablist', { name: 'Settings' });
+    const tabs = within(tablist).getAllByRole('tab');
+    expect(tabs.map((t) => t.textContent)).toEqual(['Appearance', 'Genres']);
+    expect(tabs.map((t) => t.getAttribute('aria-selected'))).toEqual(['true', 'false']);
+    const panel = screen.getByRole('tabpanel');
+    expect(tabs[0]!.getAttribute('aria-controls')).toBe(panel.id);
+    expect(panel.getAttribute('aria-labelledby')).toBe(tabs[0]!.id);
+  });
+
+  it('settingsDialog_genresTabClick_showsGenresContentCaptionAndFooter', () => {
+    render(<SettingsDialog open onClose={() => undefined} genresTab={genresTab} />);
+    fireEvent.click(screen.getByRole('tab', { name: 'Genres' }));
+    const genres = screen.getByRole('tab', { name: 'Genres' });
+    expect(genres.getAttribute('aria-selected')).toBe('true');
+    expect(screen.getByRole('tabpanel').textContent).toBe('Genres content');
+    expect(screen.getByRole('tabpanel').getAttribute('aria-labelledby')).toBe(genres.id);
+    expect(screen.getByText('Genres scope line.')).toBeTruthy();
+    expect(screen.getByText('Each deck keeps at least 1 genre.')).toBeTruthy();
+    expect(screen.queryByText(SETTINGS_CAPTION)).toBeNull();
+    expect(screen.queryByText(`GameIdea ${APP_VERSION}`, { exact: false })).toBeNull();
+  });
+
+  it('settingsDialog_noGenresTab_genresTabAriaDisabledWithTooltip', () => {
+    renderDialog();
+    const genres = screen.getByRole('tab', { name: 'Genres' });
+    expect(genres.getAttribute('aria-disabled')).toBe('true');
+    expect(genres.getAttribute('title')).toBe('Open a board to change its genres.');
+    fireEvent.click(genres);
+    expect(screen.getByRole('tab', { name: 'Appearance' }).getAttribute('aria-selected')).toBe(
+      'true',
+    );
+    expect(screen.getByRole('tabpanel').textContent).toContain('Mode');
+  });
+
+  it('settingsDialog_reopen_returnsToAppearance', () => {
+    const { rerender } = render(
+      <SettingsDialog open onClose={() => undefined} genresTab={genresTab} />,
+    );
+    fireEvent.click(screen.getByRole('tab', { name: 'Genres' }));
+    rerender(<SettingsDialog open={false} onClose={() => undefined} genresTab={genresTab} />);
+    rerender(<SettingsDialog open onClose={() => undefined} genresTab={genresTab} />);
+    expect(screen.getByRole('tab', { name: 'Appearance' }).getAttribute('aria-selected')).toBe(
+      'true',
+    );
+  });
+
+  it('settingsDialog_modeHelp_isNewText', () => {
+    renderDialog();
+    expect(MODE_HELP_TEXT).toBe(
+      'Dark or light screens. Cards are dark in dark mode and cream in light mode.',
+    );
+    expect(screen.getByText(MODE_HELP_TEXT)).toBeTruthy();
   });
 });

@@ -77,10 +77,11 @@ test('notes_editTitle_keepsTitleAfterClickOutside', async ({ page }) => {
 });
 
 test('notes_bodyAndHeader_useNotePaper', async ({ page }) => {
+  // The dark-mode (default) --note-bg #2E2A22 (design 4.5).
   await openBoard(page, fixtureBoard([], [fixtureNote({ x: 96, y: 96, text: 'Body' })]));
-  expectRgbNear(await backgroundRgb(note(page)), [0xfb, 0xf6, 0xe4]);
+  expectRgbNear(await backgroundRgb(note(page)), [0x2e, 0x2a, 0x22]);
   const header = note(page).locator('[data-note-title]').locator('..');
-  expectRgbNear(await backgroundRgb(header), [0xfb, 0xf6, 0xe4]);
+  expectRgbNear(await backgroundRgb(header), [0x2e, 0x2a, 0x22]);
 });
 
 test('notes_resizeHandle_changesSizeWithinBounds', async ({ page }) => {

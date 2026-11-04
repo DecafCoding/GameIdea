@@ -1,8 +1,10 @@
 /**
  * Browser tests for the 6 mode × theme color combinations (design 4.1 to 4.3, 9.1): both
- * screens take their chrome from the tokens of the chosen combination; cards, notes,
- * badges, deck colors and the Hook Card look the same in every combination; warning colors
- * stay fixed in Blue and Green; light-mode outlines use the light --accent-text.
+ * screens take their chrome from the tokens of the chosen combination; the card face, the
+ * note and the Hook Card fill follow the mode only (design 4.5); badges and center icons look
+ * the same in every combination; every card carries its deck edge and 14% tint and the Hook
+ * Card none (4.4); warning colors stay fixed in Blue and Green; light-mode outlines and the
+ * Hook label use the mode's --accent-text.
  */
 import type { Locator, Page } from '@playwright/test';
 import { expect, test } from './test';
@@ -61,14 +63,63 @@ function themedBoard() {
   };
 }
 
-/** The fixed-look colors: card face, note paper, badge fill, Hook Card fill, deck ring. */
+/** The colors that never change: badge fill and center icon (type disc) fill. */
 async function fixedLook(page: Page): Promise<number[][]> {
   return [
-    await backgroundRgb(cardById(page, 'setting-1')),
-    await backgroundRgb(page.getByTestId('note')),
     await backgroundRgb(page.getByTestId('connector-badge').first()),
-    await backgroundRgb(page.getByRole('article', { name: 'Hook Card' })),
+    await backgroundRgb(cardById(page, 'setting-1').getByTestId('type-disc')),
   ];
+}
+
+/** Design 4.5: card face, note paper and Hook Card fill by mode. */
+const MODE_LOOK: Record<Mode, { face: Rgb; note: Rgb; hook: Rgb }> = {
+  dark: { face: [42, 47, 56], note: [46, 42, 34], hook: [42, 47, 56] },
+  light: { face: [244, 240, 230], note: [251, 246, 228], hook: [255, 255, 255] },
+};
+
+/** Design 4.2: --accent-text by mode and theme color (the Hook label). */
+const ACCENT_TEXT: Record<Mode, Record<Accent, Rgb>> = {
+  dark: { orange: [0xf6, 0xb0, 0x8a], blue: [0xa9, 0xc8, 0xff], green: [0x8f, 0xdd, 0xb5] },
+  light: { orange: [0xb4, 0x53, 0x1a], blue: [0x2b, 0x5f, 0xb8], green: [0x1f, 0x7a, 0x4f] },
+};
+
+/** Design 4.4: the deck card colors of the themed board's cards. */
+const DECK_RGB: Record<string, Rgb> = {
+  'setting-1': [0x7a, 0x5a, 0x3a],
+  'role-1': [0x2f, 0x5f, 0xb8],
+  'goal-1': [0x23, 0x76, 0x6c],
+};
+
+/** The ::before layer of an element: its background as [r, g, b, alpha], content and box-shadow. */
+async function tintLayer(locator: Locator) {
+  return locator.evaluate((el) => {
+    const style = getComputedStyle(el, '::before');
+    const bg = style.backgroundColor;
+    // Browsers report a color-mix() result as rgba(…) or color(srgb r g b / a).
+    let rgba: number[] = [0, 0, 0, 0];
+    const srgb = /color\(srgb\s+([\d.e-]+)\s+([\d.e-]+)\s+([\d.e-]+)(?:\s*\/\s*([\d.e-]+))?\)/.exec(
+      bg,
+    );
+    const rgb = /rgba?\(([\d.]+),\s*([\d.]+),\s*([\d.]+)(?:,\s*([\d.]+))?\)/.exec(bg);
+    if (srgb) {
+      rgba = [+srgb[1]! * 255, +srgb[2]! * 255, +srgb[3]! * 255, srgb[4] ? +srgb[4] : 1];
+    } else if (rgb) {
+      rgba = [+rgb[1]!, +rgb[2]!, +rgb[3]!, rgb[4] ? +rgb[4] : 1];
+    }
+    return { rgba, content: style.content, boxShadow: style.boxShadow, raw: bg };
+  });
+}
+
+/** Checks the layer is the deck color at 14% with a 1 px inset edge in the deck color. */
+async function expectDeckTint(locator: Locator, deck: Rgb) {
+  const layer = await tintLayer(locator);
+  const [r, g, b, a] = layer.rgba;
+  [r, g, b].forEach((value, i) =>
+    expect(Math.abs(value! - deck[i]!), layer.raw).toBeLessThanOrEqual(2),
+  );
+  expect(Math.abs(a! - 0.14), layer.raw).toBeLessThanOrEqual(0.01);
+  expect(layer.boxShadow).toContain('inset');
+  expect(layer.boxShadow.replace(/\s/g, '')).toContain(`rgb(${deck.join(',')})`);
 }
 
 const MODES: Mode[] = ['dark', 'light'];
@@ -109,10 +160,16 @@ for (const mode of MODES) {
         expectRgbNear(await colorRgb(newBoard), ON_ACCENT);
       });
 
-      test(`theme_${mode}_${accent}_cardsNotesBadgesHookUnchanged`, async ({ page }) => {
+      test(`theme_${mode}_${accent}_cardsNotesHookFollowModeOnly`, async ({ page }) => {
         await openBoard(page, themedBoard());
+        expectRgbNear(await backgroundRgb(cardById(page, 'setting-1')), MODE_LOOK[mode].face);
+        expectRgbNear(await backgroundRgb(page.getByTestId('note')), MODE_LOOK[mode].note);
+        expectRgbNear(
+          await backgroundRgb(page.getByRole('article', { name: 'Hook Card' })),
+          MODE_LOOK[mode].hook,
+        );
         const look = await fixedLook(page);
-        // The dark orange baseline, read on the same page.
+        // The dark orange baseline, read on the same page: badges and center icons never change.
         await page.evaluate(() => {
           document.documentElement.dataset.mode = 'dark';
           document.documentElement.dataset.theme = 'orange';
@@ -120,9 +177,54 @@ for (const mode of MODES) {
         const baseline = await fixedLook(page);
         look.forEach((rgb, i) => expectRgbNear(rgb, baseline[i]!));
       });
+
+      test(`theme_${mode}_${accent}_everyCardHasDeckTintAndHookNone`, async ({ page }) => {
+        await openBoard(page, themedBoard());
+        for (const [id, deck] of Object.entries(DECK_RGB)) {
+          await expectDeckTint(cardById(page, id), deck);
+        }
+        const hook = await tintLayer(page.getByRole('article', { name: 'Hook Card' }));
+        expect(hook.content === 'none' || hook.rgba[3] === 0, hook.raw).toBe(true);
+      });
+
+      test(`theme_${mode}_${accent}_hookLabelUsesModeAccentText`, async ({ page }) => {
+        await openBoard(page, themedBoard());
+        const hook = page.getByRole('article', { name: 'Hook Card' });
+        expectRgbNear(
+          await colorRgb(hook.getByText('Hook', { exact: true })),
+          ACCENT_TEXT[mode][accent],
+        );
+        const note = page.getByTestId('note');
+        if (mode === 'dark') {
+          await expect(note).toHaveCSS('border-top-width', '1px');
+          expectRgbNear(await colorRgb(note, 'border-top-color'), [74, 68, 54]);
+        } else {
+          await expect(note).toHaveCSS('border-top-style', 'none');
+        }
+      });
     });
   }
 }
+
+test.describe('tint while dragging', () => {
+  test.use({ settings: { mode: 'dark', accent: 'orange' } });
+
+  test('theme_drag_tintStaysOnLiftedCard', async ({ page }) => {
+    await openBoard(page, themedBoard());
+    const card = cardById(page, 'setting-1');
+    const box = (await card.boundingBox())!;
+    await page.mouse.move(box.x + 30, box.y + 30);
+    await page.mouse.down();
+    await page.mouse.move(box.x + 50, box.y + 50, { steps: 4 });
+    await page.mouse.move(box.x + 70, box.y + 70, { steps: 4 });
+    await expect(page.locator('.react-flow__node[data-id="setting-1"] [data-card]')).toHaveCSS(
+      'box-shadow',
+      /0px 22px 44px/,
+    );
+    await expectDeckTint(card, DECK_RGB['setting-1']!);
+    await page.mouse.up();
+  });
+});
 
 /** Makes every IndexedDB put fail once the flag is set, so the next save fails. */
 async function failSavesFromNowOn(page: Page) {

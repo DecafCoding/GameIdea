@@ -47,7 +47,7 @@ test('board_emptyBoard_showsPanelAndZeroCounts', async ({ page }) => {
   );
   await expect(page.getByTestId('start-here')).toHaveText('Start Here');
   await expect(badge(page)).toContainText('0 cards');
-  await expect(rail(page).getByRole('button', { name: 'Genres' })).toContainText('All genres');
+  await expect(rail(page).getByRole('button', { name: 'Genres' })).toHaveCount(0);
   await expect(page.getByRole('link', { name: 'Board List' })).toBeVisible();
   await expect(page.getByRole('textbox', { name: 'Board Name' })).toHaveValue('Test Board');
   await expect(page.getByRole('button', { name: 'Undo' })).toBeDisabled();
@@ -165,7 +165,10 @@ test('board_poolsBlocked_bannerThenRetry', async ({ page }) => {
   await expect(canvasCards(page)).toHaveCount(1);
 });
 
-test('board_drawAndTurn_under100ms', { tag: '@timing' }, async ({ page }) => {
+test('board_drawAndTurn_under100ms', { tag: '@timing' }, async ({ page, browserName }) => {
+  // WebKit limit temporarily raised from 100 to 300 ms by the user's decision on 2026-11-04,
+  // pending a perf fix (CI WebKit measured 136–231 ms after Phase 6). Chromium and Firefox keep 100.
+  const limit = browserName === 'webkit' ? 300 : 100;
   // Warm the engine with one draw, then measure on a fresh page (see card-test.spec.ts).
   await openBoard(page);
   await drawFromRail(page, 'Player Role');
@@ -187,7 +190,7 @@ test('board_drawAndTurn_under100ms', { tag: '@timing' }, async ({ page }) => {
     };
   });
   expect(drawResult.shown).toBe(true);
-  expect(drawResult.elapsed).toBeLessThan(100);
+  expect(drawResult.elapsed).toBeLessThan(limit);
 
   const turnResult = await page.evaluate(async () => {
     const card = document.querySelector('.react-flow__node [data-testid="card"]')!;
@@ -201,7 +204,7 @@ test('board_drawAndTurn_under100ms', { tag: '@timing' }, async ({ page }) => {
     return { elapsed, changed: after !== before };
   });
   expect(turnResult.changed).toBe(true);
-  expect(turnResult.elapsed).toBeLessThan(100);
+  expect(turnResult.elapsed).toBeLessThan(limit);
 });
 
 /** A tucked card's Lock / Unlock button, beside the card. */
@@ -550,10 +553,10 @@ test('tokens_shell_rendersAtLockedValues', async ({ page }) => {
   for (const name of ['Zoom Out', 'Reset Zoom', 'Zoom In', 'Fit']) {
     expect((await boxOf(page.getByRole('button', { name, exact: true }))).height).toBe(44);
   }
-  // The note body is note paper, --note-bg (design 9.12).
-  await expect(page.getByTestId('note')).toHaveCSS('background-color', 'rgb(251, 246, 228)');
-  // A tucked Goal: the first tucked paper step, --card-tucked-1 (design 9.7).
-  expectRgbNear(await backgroundRgb(cardById(page, 'goal-1')), [241, 236, 224]);
+  // The note body is note paper, the dark-mode --note-bg (design 9.12, 4.5).
+  await expect(page.getByTestId('note')).toHaveCSS('background-color', 'rgb(46, 42, 34)');
+  // A tucked Goal: --card-tucked-1, #2A2F38 in dark mode (design 9.7, 4.5).
+  expectRgbNear(await backgroundRgb(cardById(page, 'goal-1')), [42, 47, 56]);
 
   await cardById(page, 'role-1').click({ position: { x: 30, y: 30 } });
   const selected = page.locator('.react-flow__node[data-id="role-1"] [data-selected]');

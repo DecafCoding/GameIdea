@@ -15,7 +15,9 @@ interface NewBoardDialogProps {
   onCreate: (name: string) => void;
 }
 
-export const NEW_BOARD_HELP_TEXT = 'All 21 genres start on. Change them in the Genres panel.';
+/** The help line under the name field (design 9.3, 2026-11-04). */
+export const NEW_BOARD_HELP_TEXT =
+  'All 21 genres start on. Change them in Settings, on the Genres tab.';
 
 export function NewBoardDialog({ open, onCancel, onCreate }: NewBoardDialogProps) {
   const [draft, setDraft] = useState('');

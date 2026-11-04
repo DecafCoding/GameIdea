@@ -1,11 +1,10 @@
 /**
- * Genres feature: the public entry for the Genres panel rules and genre counts.
+ * Genres feature: the public entry for the Genres tab, its rules and the genre counts.
  */
 export {
   allOn,
   canTurnOffDeckGenre,
   canTurnOffPicked,
-  genreCountText,
   genresOnLabel,
   normalize,
   pickedGenres,
@@ -14,5 +13,4 @@ export {
   togglePicked,
 } from './genreRules';
 export { GenreCount } from './GenreCount';
-export { GenresButton } from './GenresButton';
-export { GENRES_FOOTER_TEXT, GENRES_HELP_TEXT, GenresPanel } from './GenresPanel';
+export { GENRES_FOOTER_TEXT, GENRES_SCOPE_TEXT, GenresTab } from './GenresTab';

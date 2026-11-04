@@ -1,10 +1,10 @@
 /**
- * GenresPanel: the Genres panel (design 9.10) on the shared Dialog. The top row picks
- * genres for all 4 genre-tagged decks; each deck row turns a picked genre off or on for
- * that deck only. Each deck keeps at least 1 genre. Every click applies and saves at once
- * (onChange), so there is no Cancel; Done, × and Esc only close. The parent mounts it only
- * while open, so the top row starts from the board's genres on every open (design 13:
- * picked is view state, never stored).
+ * GenresTab: the Genres tab of the Settings dialog (design 9.10). app/ mounts it inside
+ * SettingsDialog; it has no dialog of its own. The top row picks genres for all 4
+ * genre-tagged decks; each deck row turns a picked genre off or on for that deck only. Each
+ * deck keeps at least 1 genre. Every click applies and saves at once (onChange). It mounts
+ * only while the tab shows, so the top row starts from the board's genres each time
+ * (design 13: picked is view state, never stored).
  */
 import { useState } from 'react';
 import { iconFor } from '@/features/card';
@@ -16,7 +16,7 @@ import {
   type DeckGenres,
   type Genre,
 } from '@/shared/model';
-import { Button, Dialog, Icon } from '@/shared/ui';
+import { Icon } from '@/shared/ui';
 import {
   allOn,
   canTurnOffDeckGenre,
@@ -25,21 +25,21 @@ import {
   toggleDeckGenre,
   togglePicked,
 } from './genreRules';
-import styles from './GenresPanel.module.css';
+import styles from './GenresTab.module.css';
 
-export const GENRES_HELP_TEXT =
-  'Pick genres at the top. Each genre you pick shows on the 4 genre decks below, already on. Turn one off to keep it out of that deck. A change applies to the next draw only. Cards on the board keep their cues.';
+/** The scope line under the Settings tab bar on the Genres tab (design 9.10, verbatim). */
+export const GENRES_SCOPE_TEXT =
+  'These genres apply to this board only. Pick genres at the top. Each genre you pick shows on the 4 genre decks below, already on. Turn one off to keep it out of that deck. A change applies to the next draw only. Cards on the board keep their cues. The other 7 decks do not use genre.';
 
 export const GENRES_FOOTER_TEXT = 'Each deck keeps at least 1 genre.';
 
-interface GenresPanelProps {
+interface GenresTabProps {
   genres: DeckGenres;
   /** Called with the new genres after each click that changes them. */
   onChange: (genres: DeckGenres) => void;
-  onClose: () => void;
 }
 
-export function GenresPanel({ genres, onChange, onClose }: GenresPanelProps) {
+export function GenresTab({ genres, onChange }: GenresTabProps) {
   const [picked, setPicked] = useState<Genre[]>(() => pickedGenres(genres));
 
   const apply = (next: DeckGenres) => {
@@ -47,20 +47,7 @@ export function GenresPanel({ genres, onChange, onClose }: GenresPanelProps) {
   };
 
   return (
-    <Dialog
-      open
-      size="panel"
-      showClose
-      title="Genres"
-      caption={GENRES_HELP_TEXT}
-      footerNote={GENRES_FOOTER_TEXT}
-      onClose={onClose}
-      actions={
-        <Button variant="primary" data-autofocus onClick={onClose}>
-          Done
-        </Button>
-      }
-    >
+    <>
       <section className={styles.top} aria-label="All 4 Decks">
         <div className={styles.topHeader}>
           <h3 className={styles.groupLabel}>All 4 Decks</h3>
@@ -128,6 +115,6 @@ export function GenresPanel({ genres, onChange, onClose }: GenresPanelProps) {
           </div>
         </div>
       ))}
-    </Dialog>
+    </>
   );
 }

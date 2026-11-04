@@ -1,5 +1,5 @@
 /**
- * Tests for the pure Genres panel rules.
+ * Tests for the pure Genres tab rules.
  */
 import { describe, expect, it } from 'vitest';
 import { allGenresOn, GENRE_DECKS, GENRES, type DeckGenres, type Genre } from '@/shared/model';
@@ -7,7 +7,6 @@ import {
   allOn,
   canTurnOffDeckGenre,
   canTurnOffPicked,
-  genreCountText,
   genresOnLabel,
   normalize,
   pickedGenres,
@@ -91,13 +90,6 @@ describe('genreRules', () => {
   it('allOn_alreadyAllOn_sameObject', () => {
     const genres = frozen(allGenresOn());
     expect(allOn(genres)).toBe(genres);
-  });
-
-  it('genreCountText_counts_allSingularPlural', () => {
-    expect(genreCountText(1)).toBe('1 genre');
-    expect(genreCountText(3)).toBe('3 genres');
-    expect(genreCountText(20)).toBe('20 genres');
-    expect(genreCountText(21)).toBe('All genres');
   });
 
   it('genresOnLabel_counts_singularPlural', () => {

@@ -119,58 +119,11 @@
 }
 
 /*
- * Panel: the Genres panel (design 9.10): 1040 wide, radius 14, --shadow-dialog, fill
- * --surface. Header padding 24 28 8, the body scrolls (padding 0 28), footer padding
- * 18 28 22 with a top border. It fits the viewport, so header and footer stay in view.
- */
-.panel {
-  width: min(1040px, calc(100% - 32px)); /* design 9.10; no token */
-  max-width: none;
-  max-height: calc(100vh - 32px);
-  padding: 0;
-  border-radius: var(--radius-dialog);
-  background: var(--surface);
-  box-shadow: var(--shadow-dialog);
-}
-
-.panel[open] {
-  gap: 0;
-}
-
-.panel .header {
-  padding: 24px 28px 8px; /* design 9.10; no token */
-}
-
-.panel .title {
-  font-size: 22px;
-  font-weight: 700;
-}
-
-.panel .caption {
-  max-width: 760px; /* design 9.10; no token */
-  line-height: 1.5;
-}
-
-.panel .body {
-  flex: 1 1 auto;
-  min-height: 0;
-  overflow-y: auto;
-  padding: 0 28px; /* design 9.10; no token */
-  color: var(--text);
-}
-
-.panel .actions {
-  align-items: center;
-  padding: 18px 28px 22px; /* design 9.10; no token */
-  border-top: 1px solid var(--border);
-}
-
-/*
- * Settings: the Settings dialog (design 9.11): 760 wide, padding 24 28 22, radius 14,
- * --shadow-dialog. The body scrolls when the window is short.
+ * Settings: the Settings dialog (design 9.11): 900 wide (was 760), padding 24 28 22,
+ * radius 14, --shadow-dialog. The body scrolls when the window is short.
  */
 .settings {
-  width: min(760px, calc(100% - 32px)); /* design 9.11; no token */
+  width: min(900px, calc(100% - 32px)); /* design 9.11; no token */
   max-width: none;
   max-height: calc(100vh - 32px);
   padding: 24px 28px 22px; /* design 9.11; no token */
@@ -183,6 +136,18 @@
   font-weight: 700;
 }
 
+.settings .headerRow {
+  padding-bottom: 10px; /* design 9.11 header; no token */
+}
+
+/* The scope line sits 14 below the tab bar: 10 here plus the header gap of 4 (design 9.11). */
+.settings .caption {
+  margin-top: 10px; /* design 9.11; no token */
+  color: var(--text-muted);
+  font-size: 13px; /* design 9.11; no token */
+  line-height: 1.5;
+}
+
 .settings .body {
   flex: 1 1 auto;
   min-height: 0;
@@ -192,11 +157,16 @@
 
 .settings .actions {
   align-items: center;
+  border-top: 1px solid var(--border);
+  padding-top: 16px; /* design 9.10 footer; no token */
+}
+
+.settings .footerNote {
+  font-size: 12px; /* design 9.10; no token */
 }
 
 /* Open: fade in with a 0.98 to 1.0 scale (design 9.8; no token for 150 ms ease-out). */
 .wide[open],
-.panel[open],
 .settings[open] {
   animation: dialogIn 150ms ease-out;
 }
@@ -210,7 +180,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .wide[open],
-  .panel[open],
   .settings[open] {
     animation: none;
   }

@@ -1,30 +1,27 @@
 /**
- * Tests for the Genres panel: chips, deck rows, the last-genre guard, All On and closing.
+ * Tests for the Genres tab body: chips, deck rows, the last-genre guard and All On.
  */
 import { fireEvent, render, screen, within } from '@testing-library/react';
 import { useState } from 'react';
 import { describe, expect, it, vi } from 'vitest';
 import { allGenresOn, GENRE_DECKS, type DeckGenres } from '@/shared/model';
-import { GENRES_HELP_TEXT, GenresPanel } from './GenresPanel';
+import { GenresTab } from './GenresTab';
 
 function Harness({
   initial,
   onChange = () => undefined,
-  onClose = () => undefined,
 }: {
   initial: DeckGenres;
   onChange?: (genres: DeckGenres) => void;
-  onClose?: () => void;
 }) {
   const [genres, setGenres] = useState(initial);
   return (
-    <GenresPanel
+    <GenresTab
       genres={genres}
       onChange={(next) => {
         setGenres(next);
         onChange(next);
       }}
-      onClose={onClose}
     />
   );
 }
@@ -39,20 +36,18 @@ function firstChange(onChange: ReturnType<typeof vi.fn>): DeckGenres {
 const top = () => within(screen.getByRole('region', { name: 'All 4 Decks' }));
 const row = (name: string) => within(screen.getByRole('group', { name }));
 
-describe('GenresPanel', () => {
-  it('genresPanel_open_showsTitleHelp21ChipsAnd4DeckRows', () => {
+describe('GenresTab', () => {
+  it('genresTab_render_shows21ChipsAnd4DeckRows', () => {
     render(<Harness initial={allGenresOn()} />);
-    expect(screen.getByRole('dialog', { name: 'Genres' })).toBeTruthy();
-    expect(screen.getByText(GENRES_HELP_TEXT)).toBeTruthy();
     expect(top().getAllByRole('button', { pressed: true })).toHaveLength(21);
     for (const name of ['Mechanic', 'Resource', 'Progression', 'Constraint']) {
       expect(row(name).getAllByRole('button', { pressed: true })).toHaveLength(21);
     }
     expect(screen.queryByRole('group', { name: 'Goal' })).toBeNull();
-    expect(screen.getByText('Each deck keeps at least 1 genre.')).toBeTruthy();
+    expect(screen.queryByRole('dialog')).toBeNull();
   });
 
-  it('genresPanel_topChipOff_callsOnChangeWithoutItInAllDecks', () => {
+  it('genresTab_topChipOff_callsOnChangeWithoutItInAllDecks', () => {
     const onChange = vi.fn();
     render(<Harness initial={allGenresOn()} onChange={onChange} />);
     fireEvent.click(top().getByRole('button', { name: 'Roguelike' }));
@@ -62,7 +57,7 @@ describe('GenresPanel', () => {
     expect(row('Mechanic').queryByRole('button', { name: 'Roguelike' })).toBeNull();
   });
 
-  it('genresPanel_topChipOn_addsToEveryDeckRow', () => {
+  it('genresTab_topChipOn_addsToEveryDeckRow', () => {
     const initial = { ...allGenresOn(), mechanic: ['puzzle' as const] };
     initial.resource = ['puzzle'];
     initial.progression = ['puzzle'];
@@ -75,7 +70,7 @@ describe('GenresPanel', () => {
     expect(row('Constraint').getByRole('button', { name: 'Horror', pressed: true })).toBeTruthy();
   });
 
-  it('genresPanel_deckChipOff_changesOnlyThatDeck', () => {
+  it('genresTab_deckChipOff_changesOnlyThatDeck', () => {
     const onChange = vi.fn();
     render(<Harness initial={allGenresOn()} onChange={onChange} />);
     fireEvent.click(row('Resource').getByRole('button', { name: 'Puzzle' }));
@@ -86,7 +81,7 @@ describe('GenresPanel', () => {
     expect(top().getByRole('button', { name: 'Puzzle', pressed: true })).toBeTruthy();
   });
 
-  it('genresPanel_lastDeckGenre_isDisabled', () => {
+  it('genresTab_lastDeckGenre_isDisabled', () => {
     const initial = { ...allGenresOn(), mechanic: ['rpg' as const] };
     const onChange = vi.fn();
     render(<Harness initial={initial} onChange={onChange} />);
@@ -99,7 +94,7 @@ describe('GenresPanel', () => {
     expect(onChange).not.toHaveBeenCalled();
   });
 
-  it('genresPanel_allOn_resetsToAll21', () => {
+  it('genresTab_allOn_resetsToAll21', () => {
     const initial = { ...allGenresOn(), mechanic: ['rpg' as const] };
     const onChange = vi.fn();
     render(<Harness initial={initial} onChange={onChange} />);
@@ -108,23 +103,14 @@ describe('GenresPanel', () => {
     expect(row('Mechanic').getAllByRole('button', { pressed: true })).toHaveLength(21);
   });
 
-  it('genresPanel_allOnWhenAllOn_noChange', () => {
+  it('genresTab_allOnWhenAllOn_noChange', () => {
     const onChange = vi.fn();
     render(<Harness initial={allGenresOn()} onChange={onChange} />);
     fireEvent.click(screen.getByRole('button', { name: 'All On' }));
     expect(onChange).not.toHaveBeenCalled();
   });
 
-  it('genresPanel_doneCloseAndEsc_callOnClose', () => {
-    const onClose = vi.fn();
-    render(<Harness initial={allGenresOn()} onClose={onClose} />);
-    fireEvent.click(screen.getByRole('button', { name: 'Done' }));
-    fireEvent.click(screen.getByRole('button', { name: 'Close' }));
-    fireEvent(screen.getByRole('dialog'), new Event('cancel', { cancelable: true }));
-    expect(onClose).toHaveBeenCalledTimes(3);
-  });
-
-  it('genresPanel_deckOffEverywhere_topChipStaysWhileOpen', () => {
+  it('genresTab_deckOffEverywhere_topChipStaysWhileOpen', () => {
     render(<Harness initial={allGenresOn()} />);
     for (const name of ['Mechanic', 'Resource', 'Progression', 'Constraint']) {
       fireEvent.click(row(name).getByRole('button', { name: 'Shooter' }));

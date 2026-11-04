@@ -25,6 +25,13 @@ describe('NewBoardDialog', () => {
     expect(screen.getByRole('button', { name: 'Cancel' })).toBeTruthy();
   });
 
+  it('newBoardDialog_helpLine_pointsAtGenresTab', () => {
+    renderDialog();
+    expect(
+      screen.getByText('All 21 genres start on. Change them in Settings, on the Genres tab.'),
+    ).toBeTruthy();
+  });
+
   it('newBoardDialog_emptyOrSpacesName_makeBoardDisabled', () => {
     renderDialog();
     expect((makeBoard() as HTMLButtonElement).disabled).toBe(true);

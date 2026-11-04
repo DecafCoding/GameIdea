@@ -73,7 +73,7 @@
   min-height: 44px;
   margin-top: auto;
   padding: 4px 10px;
-  border: 0;
+  border: 1px solid transparent; /* no layout shift when pressed */
   border-radius: var(--radius-button);
   background: transparent;
   color: var(--text-soft);
@@ -86,6 +86,13 @@
 .settings:hover {
   background: var(--surface-raised);
   color: var(--text);
+}
+
+/* Pressed while the Settings dialog is open (design 8.2, 2026-11-04). Borders keep --accent
+   in both modes (design 4.2). */
+.settings[aria-expanded='true'] {
+  border-color: var(--accent);
+  background: var(--surface-raised);
 }
 
 /* Narrow fallback: the rail sits above the canvas. */

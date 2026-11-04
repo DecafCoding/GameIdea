@@ -70,17 +70,6 @@ describe('Dialog', () => {
     expect(document.activeElement).toBe(screen.getByRole('textbox', { name: 'Field' }));
   });
 
-  it('dialog_panel_hasPanelClass', () => {
-    render(
-      <Dialog open size="panel" title="Genres" onClose={() => undefined} actions={null}>
-        Body
-      </Dialog>,
-    );
-    const dialog = screen.getByRole('dialog', { name: 'Genres' });
-    expect(dialog.className).toMatch(/panel/);
-    expect(dialog.className).not.toMatch(/wide/);
-  });
-
   it('dialog_showClose_closeButtonCallsOnClose', () => {
     const onClose = vi.fn();
     render(
@@ -115,6 +104,41 @@ describe('Dialog', () => {
     );
     const note = screen.getByText('Each deck keeps at least 1 genre.');
     expect(note.parentElement).toBe(screen.getByRole('button', { name: 'Done' }).parentElement);
+  });
+
+  it('dialog_tabs_renderBetweenTitleAndCaption', () => {
+    render(
+      <Dialog
+        open
+        size="settings"
+        title="Settings"
+        caption="A scope line."
+        tabs={<div role="tablist" aria-label="Tabs" />}
+        onClose={() => undefined}
+        actions={null}
+      >
+        Body
+      </Dialog>,
+    );
+    const heading = screen.getByRole('heading', { name: 'Settings' });
+    const tablist = screen.getByRole('tablist');
+    const caption = screen.getByText('A scope line.');
+    expect(
+      heading.compareDocumentPosition(tablist) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+    expect(
+      tablist.compareDocumentPosition(caption) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+  });
+
+  it('dialog_noTabs_rendersAsBefore', () => {
+    render(
+      <Dialog open title="Title" caption="A caption." onClose={() => undefined} actions={null}>
+        Body
+      </Dialog>,
+    );
+    expect(screen.queryByRole('tablist')).toBeNull();
+    expect(screen.getByText('A caption.')).toBeTruthy();
   });
 
   it('button_danger_hasDangerClass', () => {
