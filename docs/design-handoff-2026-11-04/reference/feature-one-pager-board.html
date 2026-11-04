@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Feature — One-Pager Board</title>
+  <style>
+    :root { --fg:#1a1a1a; --muted:#666; --accent:#2563eb; --done:#16a34a; --rule:#e5e7eb; }
+    body { font:16px/1.6 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; color:var(--fg); max-width:60rem; margin:2rem auto; padding:0 1.25rem; }
+    h1 { font-size:2rem; border-bottom:2px solid var(--rule); padding-bottom:.3rem; }
+    h2 { font-size:1.5rem; margin-top:2.5rem; border-bottom:1px solid var(--rule); padding-bottom:.2rem; }
+    h3 { font-size:1.2rem; margin-top:1.75rem; }
+    code, pre { font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+    pre { background:#f6f8fa; padding:1rem; border-radius:6px; overflow:auto; }
+    table { border-collapse:collapse; width:100%; margin:1rem 0; }
+    th, td { border:1px solid var(--rule); padding:.5rem .75rem; text-align:left; vertical-align:top; }
+    th { background:#f6f8fa; }
+    ul.checklist { list-style:none; padding-left:0; }
+    ul.checklist > li::before { content:"☐ "; color:var(--muted); }
+    ul.checklist > li[data-checked="true"]::before { content:"☑ "; color:var(--done); }
+    .meta { color:var(--muted); font-size:.9rem; }
+  </style>
+</head>
+<body>
+
+<h1>Feature — One-Pager Board</h1>
+<p class="meta">2026-11-04 · Extends GameIdea (working name), as planned in <a href="mvp-plan.html">mvp-plan.html</a>. Written from the <code>/dev-add-feature</code> run. Lands in Phase 7.</p>
+<p><strong>Visual authority:</strong> the visuals of this feature are not yet in <a href="design-system.html">design-system.html</a>. That covers the Concept panel, its lanes and chips, the resize handle, the board kind choice in New Board, the rail on a One-Pager board and the One-Pager empty state. <code>/dev-ui-update</code> adds them from the user's mockups before Phase 7 starts. After that, the design doc wins on every visual detail.</p>
+
+<h2>Summary and motivation</h2>
+<p>A game idea often has more than one Resource, Setting, Mechanic or Goal. Today every card goes into one vertical train under a Hook Card. At about 10 cards the train is too tall to see or edit. The hook sentence also becomes a paragraph instead of a hook.</p>
+<p>This feature adds a second board kind, the One-Pager board. It holds exactly 1 game. It has 1 Hook Card with a short Hook Train, and 1 Concept panel for every other card. The Concept panel groups its cards by deck as small chips, so many cards take little space.</p>
+<p>The current board becomes the Free Form board. It does not change.</p>
+
+<h2>Fit with the existing application</h2>
+<p>The feature branches the core loop. On a One-Pager board, the user still draws, turns rings, combines and tucks under the Hook Card. The user also commits settled cards to the Concept panel. The hook sentence reads only the Hook Train, as today.</p>
+<p>The name "One-Pager" comes from the game industry. A one-pager is a single page that opens with the high concept and then lists what the game has. Here the board itself is that page, because the board holds 1 game only.</p>
+<p>The feature partly answers 2 rows of the competitive scan: "Send a saved idea to a design document" and "Visual board to develop an idea".</p>
+<p>Related docs: <a href="mvp-plan.html">mvp-plan.html</a>, <a href="prd.html">prd.html</a>, <a href="architecture.html">architecture.html</a>, <a href="competitive-scan.html">competitive-scan.html</a>, <a href="feature-modifier-decks.html">feature-modifier-decks.html</a>, <a href="feature-settings-and-theme.html">feature-settings-and-theme.html</a>.</p>
+
+<h2>Scope</h2>
+
+<h3>In this feature</h3>
+<ul class="checklist">
+  <li data-checked="true">2 board kinds: Free Form (the current board, unchanged) and One-Pager. The user picks the kind in the New Board dialog. The names are "One-Pager" and "Free Form" in every place.</li>
+  <li data-checked="true">A One-Pager board starts with its 1 Hook Card already placed. It can never have a second Hook Card.</li>
+  <li data-checked="true">The Hook Card on a One-Pager board has Copy Hook and Redraw All only. It has no Duplicate and no Discard.</li>
+  <li data-checked="true">The Hook Train: the stack under the Hook Card, with the same tuck rules and hook sentence as today.</li>
+  <li data-checked="true">The Concept panel: 1 for each One-Pager board, at a fixed place to the right of the Hook Card. It moves when the Hook Card moves. It has no link line, because the board has only 1 Hook Card and 1 Concept panel.</li>
+  <li data-checked="true">The panel width is resizable with a handle on its right edge. The height grows with its content. The width is saved with the board.</li>
+  <li data-checked="true">Lanes: 1 lane for each deck that has a card in the panel, in rail order. A lane shows only while it has a card. During a drag, the lane for the dragged card's deck shows.</li>
+  <li data-checked="true">Chips: each Concept card shows as a chip with its active cue. Chips wrap side by side in their lane, in drop order.</li>
+  <li data-checked="true">A card dropped anywhere on the panel goes into the lane of its deck. Any deck can go into the panel. A Hook Card and a note cannot.</li>
+  <li data-checked="true">Chips are settled. A chip has no buttons: no rotate, lock, redraw or discard.</li>
+  <li data-checked="true">A double-click on a chip moves its card out of the panel to an open place on the canvas beside the panel. A drag of a chip onto the canvas also moves it out. Out of the panel, the card is a full card again.</li>
+  <li data-checked="true">A Modifier dropped on a Player Role, Resource or Setting chip combines with it, by the rules of <a href="feature-modifier-decks.html">feature-modifier-decks.html</a>. The adjective that faces down at drop time is the one used. The drop hint names the result, for example "Stolen Salt". A Modifier dropped on the panel but not on such a chip stays on the canvas.</li>
+  <li data-checked="true">Redraw All changes only the Hook Train. It never changes Concept cards.</li>
+  <li data-checked="true">Loose cards and notes sit on the open canvas, as on a Free Form board.</li>
+  <li data-checked="true">The text file of a One-Pager board has a Concept section: a bullet list for each deck, in lane order.</li>
+  <li data-checked="true">The board list shows a One-Pager label on One-Pager boards.</li>
+  <li data-checked="true">The footer on a One-Pager board reads, for example, "15 cards · 1 hook · 1 concept". It does not count loose cards.</li>
+  <li data-checked="true">Board format version 2, with an upgrade step. Every existing board becomes a Free Form board.</li>
+</ul>
+
+<h3>Deferred</h3>
+<ul class="checklist">
+  <li data-checked="false">A One-Pager export or a Copy One-Pager item. The text file covers the need for now.</li>
+  <li data-checked="false">Make One-Pager: a Hook Card item on a Free Form board that makes a new One-Pager board from that stack.</li>
+  <li data-checked="false">More than 1 train on a One-Pager board, for example for levels.</li>
+  <li data-checked="false">Order changes inside a lane. To change the order, the user moves chips out and drops them back in.</li>
+  <li data-checked="false">Keyboard moves into and out of the Concept panel. Tuck is mouse-only today.</li>
+</ul>
+
+<h3>Never</h3>
+<ul class="checklist">
+  <li data-checked="false">A change of kind on an existing board, in either direction.</li>
+  <li data-checked="false">A second Hook Card or a second Concept panel on a One-Pager board.</li>
+  <li data-checked="false">A Playground box. The open canvas does that job.</li>
+  <li data-checked="false">Side tucks and sentence columns. The brainstorm ruled them out: side tucks looked too busy, and sentence columns do not make the train shorter.</li>
+</ul>
+
+<h2>Blast radius</h2>
+<table>
+  <tr><th>Place</th><th>Change</th></tr>
+  <tr><td><code>shared/model/</code></td><td><code>FORMAT_VERSION</code> becomes 2. <code>Board</code> gains <code>kind</code> and <code>conceptWidth?</code>. <code>Card</code> gains <code>inConcept</code>.</td></tr>
+  <tr><td><code>shared/storage/db.ts</code></td><td>Dexie schema version 2, with an upgrade of each saved board record.</td></tr>
+  <tr><td><code>shared/store/newBoard.ts</code></td><td>A new board takes a kind. A One-Pager board starts with its Hook Card and a default panel width.</td></tr>
+  <tr><td><code>features/export/</code></td><td><code>UPGRADES[1]</code> in <code>upgrade.ts</code>. New fields and One-Pager checks in <code>schema.ts</code>. The Concept section in <code>textFile.ts</code>.</td></tr>
+  <tr><td><code>features/boards/</code></td><td>The kind choice in <code>NewBoardDialog.tsx</code>. The One-Pager label from <code>summary.ts</code>.</td></tr>
+  <tr><td><code>features/canvas/</code></td><td>The Concept panel node, its resize and its place beside the Hook Card. Drop routing in <code>dropZones.ts</code>. Pop-out with <code>findOpenSpot</code> in <code>placement.ts</code>. Redraw All in <code>boardActions.ts</code> skips Concept cards. Stack and reading code skip Concept cards.</td></tr>
+  <tr><td><code>features/card/</code></td><td>A chip view of a card: deck icon and active text, with no ring control and no strip.</td></tr>
+  <tr><td><code>features/hook/</code></td><td>The Hook Card menu hides Duplicate and Discard on a One-Pager board.</td></tr>
+  <tr><td><code>app/board/</code></td><td>The rail Hook Card button and the empty state on a One-Pager board. The footer counts.</td></tr>
+  <tr><td>Tests</td><td>New unit and Playwright tests. New fixtures: a One-Pager board, a version 1 board file and bad One-Pager files.</td></tr>
+</table>
+<p>If this is wrong, the biggest risk is the format. A bad upgrade step can make saved boards fail to load. The tests for the upgrade come first in the build plan.</p>
+
+<h2>Data model changes</h2>
+<pre><code>Board
+  formatVersion: 2
+  kind: 'free' | 'onePager'          required
+  conceptWidth?: number              One-Pager boards only. The Concept panel width in px.
+  ...every version 1 field
+
+Card
+  inConcept: boolean                 required. True while the card is in the Concept panel.
+  ...every version 1 field</code></pre>
+
+<h3>Rules</h3>
+<ul>
+  <li>A One-Pager board has exactly 1 Hook Card.</li>
+  <li>A card with <code>inConcept: true</code> has <code>tuckedUnder: null</code>. Its <code>x</code> and <code>y</code> stay stored and are not used while it is in the panel.</li>
+  <li>A Hook Card never has <code>inConcept: true</code>.</li>
+  <li>On a Free Form board, every card has <code>inConcept: false</code>, and <code>conceptWidth</code> is absent.</li>
+  <li>Chip order in a lane is <code>z</code>, from low to high. A card gets a new top <code>z</code> when it goes into the panel, as a tuck does today. No new order field is needed.</li>
+  <li>An On Top Modifier keeps its <code>onTopOf</code> on a Concept card. It has no place of its own, as today.</li>
+  <li>When a card moves out of the panel, <code>inConcept</code> becomes false and the card gets a new <code>x</code> and <code>y</code> on the canvas.</li>
+</ul>
+
+<h3>Migration and rollback</h3>
+<ul>
+  <li><strong>IndexedDB:</strong> Dexie schema version 2. Its upgrade sets <code>formatVersion: 2</code> and <code>kind: 'free'</code> on each board record, and <code>inConcept: false</code> on each card. The <code>boardIndex</code> table does not change. The board list already loads each full board for its summary.</li>
+  <li><strong>Board files:</strong> <code>UPGRADES[1]</code> in <code>features/export/upgrade.ts</code> does the same change to a version 1 file on import. It does not set <code>conceptWidth</code>, because every version 1 board is Free Form.</li>
+  <li><strong>Rollback:</strong> after the Dexie upgrade runs, an older build cannot open the database. The user exports the real boards on port 4174 before the first run of the Phase 7 build. A version 2 board file does not import into an older build.</li>
+</ul>
+
+<h2>Interfaces and contracts</h2>
+
+<h3>New Board dialog</h3>
+<p>The dialog asks for the name and the kind: One-Pager or Free Form. The layout and the default kind come from <code>/dev-ui-update</code>.</p>
+
+<h3>Drop routing on a One-Pager board</h3>
+<table>
+  <tr><th>Dragged</th><th>Dropped on</th><th>Result</th></tr>
+  <tr><td>Any deck card except a Modifier</td><td>Anywhere on the Concept panel</td><td>Goes into the lane of its deck. Its lane shows during the drag.</td></tr>
+  <tr><td>A Modifier</td><td>A Player Role, Resource or Setting chip</td><td>Combines with that chip. The hint names the result.</td></tr>
+  <tr><td>A Modifier</td><td>Another place on the panel</td><td>Stays on the canvas where it was released.</td></tr>
+  <tr><td>A Hook Card or a note</td><td>The Concept panel</td><td>Not allowed. No drop hint shows.</td></tr>
+  <tr><td>A chip</td><td>The canvas</td><td>Leaves the panel and becomes a full card at the drop point.</td></tr>
+  <tr><td>A chip</td><td>A card in the Hook Train</td><td>Leaves the panel and tucks there, by the normal tuck rules.</td></tr>
+</table>
+<p>A card that has cards tucked under it brings them with it into the panel. Each of them becomes a chip in its own lane.</p>
+
+<h3>Chip actions</h3>
+<ul>
+  <li>Double-click: the card leaves the panel and goes to an open place beside the panel, from <code>findOpenSpot</code>.</li>
+  <li>Drag: as in the drop table.</li>
+  <li>No other action. The ring of a chip cannot turn.</li>
+</ul>
+
+<h3>Undo and save</h3>
+<ul>
+  <li>Each of these is 1 undo step and 1 save: a drop into the panel, a pop-out, a drag out, a combine onto a chip, and a panel resize. A resize saves once, on release, as a note resize does.</li>
+  <li>Redraw All stays 1 undo step. It changes no Concept card.</li>
+</ul>
+
+<h3>Text file</h3>
+<pre><code>Hook
+You are a reanimated lighthouse keeper who must trade using stolen memories to keep the light on, but the tide rises every night.
+
+Concept
+Mechanics
+- repair
+Resources
+- stolen salt
+- favors</code></pre>
+<p>The Concept section comes after the hook and before Notes. The lanes come in rail order and the chips in lane order. Each bullet is the card's words on the board, with its merged and On Top adjectives. The exact headings come from the existing text file format.</p>
+
+<h3>Board list and footer</h3>
+<ul>
+  <li>A One-Pager board shows a One-Pager label and its hook sentence.</li>
+  <li>The footer counts all cards, the Hook Card and the Concept panel. It does not count loose cards.</li>
+</ul>
+
+<h2>Architecture fit</h2>
+<p><strong>Outcome: it fits.</strong> No amendment and no local exception.</p>
+<table>
+  <tr><th>Decision</th><th>How the feature uses it</th></tr>
+  <tr><td><code>board-file-format</code>, <code>schema-shape</code>, <code>schema-versions</code></td><td>The format changes through 1 upgrade step, as these decisions expect. Dexie version 2 and <code>UPGRADES[1]</code>.</td></tr>
+  <tr><td><code>import-checks</code>, <code>import-policy</code></td><td>Zod rejects a One-Pager file with 0 or 2 or more Hook Cards, a Concept card with <code>tuckedUnder</code> set, and a Hook Card in Concept. The user sees the normal import error. The file is not repaired, because a repair hides data loss.</td></tr>
+  <tr><td><code>module-layout</code>, <code>import-rules</code></td><td>The panel is a React Flow node in <code>features/canvas/</code>. The chip view is in <code>features/card/</code>. The kind choice is in <code>features/boards/</code>. No new folder.</td></tr>
+  <tr><td><code>hook-sentence</code></td><td>No change. Concept cards are in no stack, so the pure builder never sees them.</td></tr>
+  <tr><td><code>undo-history</code>, <code>save-transaction</code></td><td>Each panel action is 1 undo step and 1 save.</td></tr>
+  <tr><td><code>nfr-targets</code></td><td>No new library. A chip draws less than a full card, so the 200-card target is not at risk.</td></tr>
+</table>
+
+<h2>Compatibility and rollout</h2>
+<ul>
+  <li>Every existing board opens as a Free Form board and behaves as before.</li>
+  <li>There is no feature flag. The app has 1 user and runs locally.</li>
+  <li>Before the first Phase 7 build runs on port 4174, the user exports each real board as a board file.</li>
+  <li>Phase 6 (Themed Cards) comes first, so the chips and the panel are built once against the final card tokens in both modes.</li>
+</ul>
+
+<h2>Testing and regression plan</h2>
+
+<h3>Unit tests (Vitest)</h3>
+<ul>
+  <li>The Dexie version 2 upgrade and <code>UPGRADES[1]</code>: version 1 records and files become Free Form boards with every card <code>inConcept: false</code>.</li>
+  <li>Zod: a good One-Pager file passes. Each bad case fails: 0 Hook Cards, 2 Hook Cards, a Concept card with <code>tuckedUnder</code>, and a Hook Card in Concept.</li>
+  <li>Drop routing: each deck goes to its own lane. A Modifier combines only on a Player Role, Resource or Setting chip.</li>
+  <li>Lane order follows rail order. Chip order follows <code>z</code>.</li>
+  <li>Pop-out places the card at an open spot. Drag out and pop-out set <code>inConcept</code> to false.</li>
+  <li>Redraw All leaves every Concept card unchanged.</li>
+  <li>Stack order and hook sentences skip Concept cards.</li>
+  <li>The text file Concept section, and the footer counts.</li>
+  <li>A new One-Pager board has exactly 1 Hook Card.</li>
+</ul>
+
+<h3>Browser tests (Playwright, 3 engines)</h3>
+<ul>
+  <li>Make a One-Pager board from New Board. It opens with its Hook Card.</li>
+  <li>Drop a card into the panel. Pop it out by double-click. Drag it back in and drag it out. Undo restores each step.</li>
+  <li>Combine a Modifier onto a chip. The chip reads with the adjective.</li>
+  <li>Resize the panel and reload. The width stays.</li>
+  <li>Move the Hook Card. The panel moves with it.</li>
+  <li>Import a version 1 board file. It opens as a Free Form board.</li>
+</ul>
+
+<h3>Regression</h3>
+<ul>
+  <li>Every existing unit and browser test passes on Free Form boards.</li>
+  <li>The 200-card and 11-card stack speed checks still pass.</li>
+</ul>
+
+<h2>Build plan</h2>
+<p>Phase 7: One-Pager Board. It comes after Phase 6: Themed Cards, which <code>/dev-ui-update</code> adds. The design for this feature must be in <a href="design-system.html">design-system.html</a> before Phase 7 starts.</p>
+<ol>
+  <li>Model fields, Dexie version 2, <code>UPGRADES[1]</code> and their tests. This is the riskiest part, so it comes first.</li>
+  <li>Zod checks for the new fields and the One-Pager rules.</li>
+  <li>Board kind in the store and the New Board dialog. A One-Pager board starts with its Hook Card. The Hook Card menu, the rail and the empty state for that kind.</li>
+  <li>The Concept panel node beside the Hook Card, lanes and the chip view.</li>
+  <li>Drop routing into the panel, Modifier combine on chips, and Redraw All skipping Concept.</li>
+  <li>Pop-out by double-click, drag out and panel resize.</li>
+  <li>The text file Concept section, the board list label and the footer counts.</li>
+  <li>Playwright tests and the regression run.</li>
+</ol>
+
+<h2>Done criteria</h2>
+<ul>
+  <li>Every existing board opens unchanged as a Free Form board after the upgrade. Every existing test passes.</li>
+  <li>New Board makes a One-Pager board or a Free Form board.</li>
+  <li>On a One-Pager board, the user can drop each deck into the panel, combine a Modifier onto a chip, pop a card out by double-click and by drag, and resize the panel. Each action is 1 undo step.</li>
+  <li>Redraw All leaves the Concept panel unchanged.</li>
+  <li>The text file shows the Concept section.</li>
+  <li>A bad One-Pager board file fails on import with the normal message, and nothing changes.</li>
+  <li>The speed, size and privacy targets in <a href="architecture.html">architecture.html</a> still pass.</li>
+</ul>
+
+<h2>Open risks and assumptions</h2>
+
+<h3>Risks</h3>
+<ul>
+  <li><strong>The first format upgrade.</strong> It is the first real use of the upgrade path. A mistake can stop saved boards from loading. The tests come first, and the user exports real boards before the first run.</li>
+  <li><strong>Settled chips can feel rigid.</strong> A chip cannot turn. To change one, the user moves it out. If this feels slow in use, a later change can add a pop-over editor.</li>
+  <li><strong>Drop targets in a small panel.</strong> A Modifier must hit a chip, and chips are small. The drop hint must show clearly which chip is the target.</li>
+</ul>
+
+<h3>Assumptions</h3>
+<ul>
+  <li>A chip can be dragged out as well as popped out by double-click.</li>
+  <li>A card with cards tucked under it brings them into the panel, each in its own lane.</li>
+  <li>The panel width has a minimum and a maximum. <code>/dev-ui-update</code> sets the values.</li>
+  <li>Phase 6 (Themed Cards) lands before Phase 7.</li>
+</ul>
+
+</body>
+</html>

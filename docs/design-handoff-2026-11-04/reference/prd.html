@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PRD — GameIdea</title>
+  <style>
+    :root { --fg:#1a1a1a; --muted:#666; --accent:#2563eb; --done:#16a34a; --rule:#e5e7eb; }
+    body { font:16px/1.6 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; color:var(--fg); max-width:60rem; margin:2rem auto; padding:0 1.25rem; }
+    h1 { font-size:2rem; border-bottom:2px solid var(--rule); padding-bottom:.3rem; }
+    h2 { font-size:1.5rem; margin-top:2.5rem; border-bottom:1px solid var(--rule); padding-bottom:.2rem; }
+    h3 { font-size:1.2rem; margin-top:1.75rem; }
+    code, pre { font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+    pre { background:#f6f8fa; padding:1rem; border-radius:6px; overflow:auto; }
+    table { border-collapse:collapse; width:100%; margin:1rem 0; }
+    th, td { border:1px solid var(--rule); padding:.5rem .75rem; text-align:left; }
+    th { background:#f6f8fa; }
+    ul.checklist { list-style:none; padding-left:0; }
+    ul.checklist > li::before { content:"☐ "; color:var(--muted); }
+    ul.checklist > li[data-checked="true"]::before { content:"☑ "; color:var(--done); }
+    .meta { color:var(--muted); font-size:.9rem; }
+  </style>
+</head>
+<body>
+
+<h1>PRD — GameIdea (working name)</h1>
+<p class="meta">Written 2026-11-02 by /dev-create-prd from <code>docs/</code>. Sources, in order of authority on the topics each owns:
+<a href="architecture.html">architecture.html</a> (stack, storage, pattern, layout, boundaries, deployment),
+<a href="mvp-plan.html">mvp-plan.html</a> (problem, users, scope, data model, interfaces, milestones),
+<a href="design-system.html">design-system.html</a> (everything visual),
+<a href="feature-modifier-decks.html">feature-modifier-decks.html</a> and
+<a href="feature-settings-and-theme.html">feature-settings-and-theme.html</a> (feature specs),
+<a href="competitive-scan.html">competitive-scan.html</a> (prior art) and <code>concept.md</code> (concept).
+This PRD cites those documents. Where it and they differ, they win.</p>
+
+<!-- ============================================================ -->
+<h2 id="summary">1. Executive Summary</h2>
+
+<p>GameIdea is a browser-only canvas app that helps a solo or hobby game developer, or a game jam entrant, find a game idea small enough to build. The user draws game concept cards from 11 decks (Player Role, Mechanic, Goal, Conflict, Resource, Modifier, Setting, Mood, Twist, Progression, Constraint). Each card shows several random cues on a ring around a center icon; the user turns the ring to pick the active cue. The user tucks cards under a <strong>Hook Card</strong>, and connector badges on each seam join the stack into a one- or two-sentence game hook that the user copies with one click.</p>
+
+<p>The competitive scan shows four gaps in current tools: random word lists give nonsense, AI tools give generic ideas, most tools stop at a word list, and saving needs an account or credits. GameIdea answers with curated cue pools, genre filtering on the 4 decks where genre matters, a rotate-and-lock control that lets the user steer a random draw, a stack that reads as a sentence, and local saving with no account and no cost.</p>
+
+<p><strong>MVP goal:</strong> in one session the user draws, tunes and copies a hook they would actually build. The M2 pass bar makes this measurable: at least 12 of 20 hooks the user draws are ideas the user would build.</p>
+
+<p>GameIdea is a separate repository that starts from a copy of the user's TheForge story-card app (<code>~/repos/theforge</code>). It keeps TheForge's stack, canvas, storage and look, and replaces the story decks with game concept decks.</p>
+
+<!-- ============================================================ -->
+<h2 id="mission">2. Mission</h2>
+
+<p><strong>Mission:</strong> turn a few random, well-made cues into a game hook a developer wants to build, with no account, no cost and no data leaving the computer.</p>
+
+<h3>Core principles</h3>
+<ol>
+  <li><strong>Steer the dice, don't just roll them.</strong> Rotation, lock, Redraw and genre settings let the user aim randomness rather than accept it.</li>
+  <li><strong>End at a hook, not a word list.</strong> The stack always reads as a sentence. The sentence is computed, never stored, and never shows a blank slot.</li>
+  <li><strong>The user owns the words.</strong> Cues come from the user's own libraries, converted without changing their text. No copied cue lists, no AI.</li>
+  <li><strong>Local and private.</strong> Everything stays in the browser. No sign-in, no usage data, no requests to any other address.</li>
+  <li><strong>Nothing changes behind the user's back.</strong> Cards keep a copy of their cues; genre or pool changes affect only the next draw.</li>
+</ol>
+
+<!-- ============================================================ -->
+<h2 id="scope">3. MVP Scope</h2>
+<p>Scope is owned by <a href="mvp-plan.html#scope">mvp-plan.html, Scope</a>. This section restates it by category.</p>
+
+<h3>Core Functionality</h3>
+<ul class="checklist">
+  <li data-checked="true">11 decks with 4-cue cards (Player Role, Mechanic, Resource, Modifier, Setting, Mood) and 2-cue cards (Goal, Conflict, Twist, Progression, Constraint)</li>
+  <li data-checked="true">The Modifier deck draws as 3 decks (Role, Resource, Setting) from one pool, filtered by targets — <a href="feature-modifier-decks.html">feature-modifier-decks.html</a></li>
+  <li data-checked="true">The ring control: rings show on hover; a click on a ring half turns it one step; R turns the outer or only ring, Shift+R the inner ring. Card body and center icon stay still. The cue at the bottom edge is active.</li>
+  <li data-checked="true">Modifier combine on Player Role, Resource and Setting: combine, swap, On Top and Split. A base card holds 1 merged ring and 1 on-top Modifier card.</li>
+  <li data-checked="true">The Hook Card: head of a stack, shows the computed sentence, hover menu with Copy, Redraw All and Discard</li>
+  <li data-checked="true">Connector badges with default and alternative words; "a" / "an" follows the next word</li>
+  <li data-checked="true">Lock on each card; Redraw All skips locked cards</li>
+  <li data-checked="true">Card strip on a selected card: Split, Redraw, Discard, Lock</li>
+  <li data-checked="true">Redraw keeps place, tucks, lock state and a merged adjective ring</li>
+  <li data-checked="true">Discard with undo</li>
+  <li data-checked="true">Free tuck (any card under any card, except a Hook Card never tucks under a card), with hints for each deck's normal place</li>
+  <li data-checked="true">Infinite canvas: pan, zoom, place, move</li>
+  <li data-checked="true">Free-text notes with an editable title</li>
+  <li data-checked="true">Genre settings: 21 genres on the 4 genre-tagged decks (Mechanic, Resource, Progression, Constraint), set together and per deck; next draw only</li>
+  <li data-checked="true">Grouped left rail: Hook Card, Core, Modifiers (3 icon buttons), Optional, Genres with its count line, Add note, Settings</li>
+  <li data-checked="true">Settings: Dark/Light mode, Theme color (Orange, Blue, Green), Snap to grid, Keyboard list, version footer — <a href="feature-settings-and-theme.html">feature-settings-and-theme.html</a></li>
+  <li data-checked="true">Board list: make, open, rename, delete; New Board asks for a name and, from Phase 7, the board kind (One-Pager or Free Form)</li>
+  <li data-checked="true">Undo and redo for the open session</li>
+  <li data-checked="true">One-Pager board: a second board kind beside Free Form, with 1 Hook Card, a short Hook Train and a Concept panel of chips in deck lanes — <a href="feature-one-pager-board.html">feature-one-pager-board.html</a></li>
+</ul>
+
+<h3>Technical</h3>
+<ul class="checklist">
+  <li data-checked="true">Autosave after each change; warning on save failure; warning when one board is open in 2 tabs</li>
+  <li data-checked="true">11 JSON cue pools from a one-time split of <code>docs/libraries/decks.json</code>, with 2 grammar rules (Constraint lead word lowercased, Setting leading article dropped). The JSON files are the source afterwards.</li>
+  <li data-checked="true">Pool floors enforced by the split and a unit test: 10 cues per genre per tagged deck; 20 cues per Modifier deck</li>
+  <li data-checked="true">Design tokens for all chrome colors, with a lint check against hard-coded colors</li>
+  <li data-checked="true">Desktop browsers only, mouse and keyboard</li>
+</ul>
+
+<h3>Integration</h3>
+<ul class="checklist">
+  <li data-checked="true">Export to a text file (holds each hook) and a board file; import of a board file as a new board</li>
+  <li data-checked="true">Copy to clipboard as plain text, with a select-and-copy dialog fallback</li>
+  <li data-checked="false">AI help to expand a hook</li>
+  <li data-checked="false">Comparable shipped games for a hook ("X meets Y")</li>
+  <li data-checked="false">Shared code package between TheForge and GameIdea</li>
+  <li data-checked="false">Server code and a database for pools and boards</li>
+  <li data-checked="false">Usage data</li>
+</ul>
+
+<h3>Deployment</h3>
+<ul class="checklist">
+  <li data-checked="true">Local run at fixed ports: 5174 (dev), 4174 (built), 4444 (HTTPS on the LAN)</li>
+  <li data-checked="true">GitHub Actions CI on each pull request</li>
+  <li data-checked="false">A public website on a free host</li>
+  <li data-checked="false">Tablet and touch input</li>
+</ul>
+
+<h3>Deferred product features</h3>
+<ul class="checklist">
+  <li data-checked="false">Hook Card apart from its stack, pointing at it with a line</li>
+  <li data-checked="false">An editable sentence or stored "angle" line on the Hook Card</li>
+  <li data-checked="false">Genres beyond the 21</li>
+  <li data-checked="false">A Modifier on Mechanic or Mood cards; more than 1 on-top Modifier</li>
+  <li data-checked="false">A "System" mode, more theme colors, a Settings button on the board list, settings that follow the user across browsers</li>
+  <li data-checked="false">Top 10 and Other scan rows not marked In or Partial in the scan</li>
+</ul>
+
+<h3>Never, not this product</h3>
+<ul class="checklist">
+  <li data-checked="false">A Format filter, deck or tag (platform, player count, session length)</li>
+  <li data-checked="false">A Style filter, deck or tag (art style, view)</li>
+  <li data-checked="false">Copying cue text from other idea generators or card decks</li>
+  <li data-checked="false">A grid size setting (the grid stays at 24 px)</li>
+  <li data-checked="false">A rule that limits a modifier to its deck's card type</li>
+  <li data-checked="false">Settings stored in a board, a board file or the undo history</li>
+</ul>
+
+<!-- ============================================================ -->
+<h2 id="stories">4. User Stories</h2>
+
+<ol>
+  <li><strong>As a game jam entrant, I want to draw a full concept stack in a minute, so that I can start building before the jam clock runs out.</strong><br>
+  Example: the user clicks Hook Card, Player Role, Mechanic, Resource, Goal and Conflict, tucks them in order, and reads "You are a lighthouse keeper who must trade using memories to keep the light on, but the tide rises every night."</li>
+
+  <li><strong>As a hobby developer, I want to turn a card's ring to choose among its cues, so that I steer the idea instead of accepting the first random word.</strong><br>
+  Example: a Mechanic card shows dig, trade, hide and cook. The user presses R twice and "trade" moves to the bottom edge; the Hook Card sentence updates in under 100 ms.</li>
+
+  <li><strong>As a developer who knows what I build, I want to limit Mechanic, Resource, Progression and Constraint to my genres, so that draws fit games I can make.</strong><br>
+  Example: the user turns on only Roguelike and Deckbuilder &amp; Cards in the Genres panel. The rail shows "2 genres" and a count pill on each of the 4 deck buttons. Cards already on the board do not change.</li>
+
+  <li><strong>As a user, I want to add an adjective to a role, resource or setting, so that a plain noun becomes a hook with a twist.</strong><br>
+  Example: the user drops "stolen" from the Resource Modifier deck on "memories" — the card reads "stolen memories". Dropping "tall" on the top zone of a merged "frozen pilot" gives "tall frozen pilot".</li>
+
+  <li><strong>As a user, I want to lock the cards I like and redraw the rest, so that I keep what works and reroll what doesn't.</strong><br>
+  Example: the user locks the Player Role and Mechanic, then clicks Redraw All on the Hook Card. Every unlocked card is replaced in place, keeping its tucks; each new card shows a green outline for 1 second. One Undo brings every old card back.</li>
+
+  <li><strong>As a user, I want to copy the hook with one click, so that I can paste it into my notes or a jam submission.</strong><br>
+  Example: the user hovers the Hook Card and clicks Copy. The item shows "Copied" for 2 seconds. If the clipboard write fails, a dialog shows the sentence selected for Ctrl+C.</li>
+
+  <li><strong>As a returning user, I want my boards saved without an account, so that I can come back to an idea later.</strong><br>
+  Example: the user closes the tab, reopens <code>http://localhost:4174</code>, and finds the board in the board list with its cards, notes and view. A board file export makes a backup that imports as a new board.</li>
+
+  <li><strong>As a user who works in a bright room, I want Light mode and a theme color, so that the app is comfortable to use.</strong><br>
+  Example: the user opens Settings, picks Light and Green. The chrome and canvas turn light at once; cards, badges and the Hook Card look the same. After a reload there is no dark frame.</li>
+
+  <li><strong>As a developer with a bigger idea, I want a One-Pager board, so that extra cards sit in a compact Concept panel instead of a long train.</strong><br>
+  Example: the user makes a One-Pager board, builds a 5-card Hook Train, then drops 3 Resources and 2 Settings on the Concept panel. They show as chips in a Resources lane and a Settings lane. A double-click on "salt" moves it back to the canvas.</li>
+</ol>
+
+<h3>Technical user stories</h3>
+<ol start="10">
+  <li><strong>As the pool author, I want a pool edit that breaks a floor to fail CI, so that a draw can never come up short.</strong><br>
+  Example: the user removes Fighting tags from Progression cues until Fighting has 9. The pool unit test fails the pull request.</li>
+  <li><strong>As the developer, I want the hook sentence builder to be a pure function, so that every grammar rule is unit-tested without a canvas.</strong><br>
+  Example: a test passes a stack of cards in reading order and asserts the exact string, including "a" / "an" and new sentences for Mood, Twist and Progression.</li>
+</ol>
+
+<!-- ============================================================ -->
+<h2 id="architecture">5. Core Architecture &amp; Patterns</h2>
+
+<p><em>Architecture is settled in <a href="architecture.html">architecture.html</a>; this section summarizes it.</em></p>
+
+<h3>Pattern — <code>architecture-pattern</code></h3>
+<p>Feature folders (Vertical Slice). Each feature has one folder holding its screen parts, state actions, logic and tests. Shared code goes to <code>shared/</code> only for genuine cross-cutting needs. The whole app runs in the browser; there is no server code and no database server.</p>
+
+<h3>Module layout — <code>module-layout</code></h3>
+<pre><code>src/
+  app/              app shell, the 2 screens, start-up
+  features/
+    draw/           deck buttons, grouped rail, draw logic (distinct cues), genre filter
+    card/           card view, rings, rotate, cue text, lock control, type icons
+    canvas/         React Flow setup, pan, zoom, drag, tuck, tuck hints,
+                    connector badges and their word rules for the 12 card types
+    hook/           Hook Card: sentence builder, Copy and its fallback dialog, Redraw All
+    genres/         Genres panel, genre counts on deck buttons
+    notes/          free-text notes with editable titles
+    boards/         board list: make, open, rename, delete
+    export/         text file (with hooks), board file, import and its checks
+    settings/       Settings dialog, Keyboard list, footer (feature-settings-and-theme.html)
+  shared/
+    model/          types: Board, Card, Cue, Note, Pool, Genre, board format version
+    store/          the Zustand store with zundo
+    storage/        the one storage module: Dexie, persistent storage, 2-tab warning
+    pools/          loads the 11 pool JSON files by web address
+    ui/             general parts, for example buttons and dialogs
+public/
+  pools/            the 11 pool JSON files
+  icons/            deck icons, the 3 Modifier icons and the Hook Card icon
+tests/e2e/          Playwright browser tests</code></pre>
+<p class="meta"><code>features/settings/</code> comes from feature-settings-and-theme.html, which fits the existing pattern. Unit tests sit beside the code as <code>*.test.ts</code> / <code>*.test.tsx</code>.</p>
+
+<h3>Import direction — <code>import-rules</code></h3>
+<ul>
+  <li><code>app/</code> can import <code>features/</code> and <code>shared/</code>.</li>
+  <li>A feature can import <code>shared/</code>. It uses another feature only through that feature's <code>index.ts</code>.</li>
+  <li><code>shared/</code> never imports <code>features/</code> or <code>app/</code>.</li>
+  <li>Only <code>shared/storage/</code> touches IndexedDB / Dexie (and, per the settings feature, local storage).</li>
+  <li>Only <code>features/canvas/</code> imports React Flow. Only <code>features/export/</code> imports Zod. Only <code>features/hook/</code> calls the Clipboard API.</li>
+</ul>
+
+<h3>Related settled decisions</h3>
+<ul>
+  <li><code>hook-sentence</code> — the sentence builder in <code>features/hook/</code> is a pure function of the stack in reading order.</li>
+  <li><code>storage-seam</code> — the rest of the app uses only <code>listBoards</code>, <code>loadBoard</code>, <code>saveBoard</code>, <code>deleteBoard</code>, <code>onBoardChangedElsewhere</code>. The settings feature adds <code>loadSettings</code>, <code>saveSettings</code>, <code>onSettingsChangedElsewhere</code> as a recorded local exception.</li>
+  <li><code>save-transaction</code>, <code>tab-sync</code>, <code>undo-history</code>, <code>import-policy</code>, <code>schema-versions</code> — see section 8 and architecture.html.</li>
+</ul>
+
+<!-- ============================================================ -->
+<h2 id="features">6. Tools/Features</h2>
+
+<h3>6.1 Decks and draws</h3>
+<table>
+  <tr><th>Group</th><th>Deck</th><th>Cues per card</th><th>Cue form</th><th>Genre-tagged</th></tr>
+  <tr><td>Core</td><td>Player Role</td><td>4</td><td>1–3 words, character only ("lighthouse keeper")</td><td>No</td></tr>
+  <tr><td>Core</td><td>Mechanic</td><td>4</td><td>Verb, or verb + object ("trade")</td><td>Yes</td></tr>
+  <tr><td>Core</td><td>Resource</td><td>4</td><td>1–2 words ("memories")</td><td>Yes</td></tr>
+  <tr><td>Core</td><td>Goal</td><td>2</td><td>Up to 8 words ("keep the light on")</td><td>No</td></tr>
+  <tr><td>Core</td><td>Conflict</td><td>2</td><td>Up to 8 words ("the tide rises every night")</td><td>No</td></tr>
+  <tr><td>Modifiers</td><td>Modifier (Role, Resource, Setting)</td><td>4</td><td>1 word ("stolen")</td><td>No</td></tr>
+  <tr><td>Optional</td><td>Setting</td><td>4</td><td>1–3 words, place only ("frozen prairie")</td><td>No</td></tr>
+  <tr><td>Optional</td><td>Mood</td><td>4</td><td>1 word ("lonely")</td><td>No</td></tr>
+  <tr><td>Optional</td><td>Twist</td><td>2</td><td>Up to 8 words ("the villain is right")</td><td>No</td></tr>
+  <tr><td>Optional</td><td>Progression</td><td>2</td><td>Up to 8 words ("the crew grows")</td><td>Yes</td></tr>
+  <tr><td>Optional</td><td>Constraint</td><td>2</td><td>Up to 8 words ("no combat")</td><td>Yes</td></tr>
+</table>
+<p>Draw rules (from mvp-plan.html, Rules):</p>
+<ul>
+  <li>A draw picks distinct cues; one card never shows the same cue twice.</li>
+  <li>Genre-tagged decks draw only cues sharing at least one genre with the deck's current genres. Each deck keeps at least 1 genre on, so at least 10 cues are always available.</li>
+  <li>A Modifier draw uses only cues whose <code>targets</code> include the button's deck, and stores it in <code>modDeck</code>.</li>
+  <li>A card stores a copy of its cues. Pool and genre changes never change cards on the board.</li>
+</ul>
+
+<h3>6.2 Card and ring control</h3>
+<ul>
+  <li>A 4-cue ring turns in 90° steps; a 2-cue ring in 180° steps. The active cue is at the bottom edge, right side up.</li>
+  <li>Rings show on hover. A click on the left or right half of a ring turns it one step. R / Shift+R turn the outer / inner ring.</li>
+  <li>Card strip on selection: Split, Redraw, Discard, Lock. Lock and unlock are each one undo step.</li>
+  <li>Redraw: a new card of the same deck (and same <code>modDeck</code>) in the same place, keeping tucks, lock, merged adjective ring and on-top card.</li>
+</ul>
+
+<h3>6.3 Modifier combine</h3>
+<table>
+  <tr><th>Drop a Modifier on</th><th>Zones</th><th>Result</th></tr>
+  <tr><td>A base card (Role, Resource, Setting) with no merged ring</td><td>Anywhere</td><td>Merge into <code>rings[1]</code>; the Modifier card is deleted</td></tr>
+  <tr><td>A merged base card with no on-top card</td><td>Center: swap. Top: add on top.</td><td>Swap (old ring becomes a card beside it) or On Top (<code>onTopOf</code>)</td></tr>
+  <tr><td>A merged base card with an on-top card</td><td>Center only</td><td>Swap</td></tr>
+</table>
+<p>Split moves <code>rings[1]</code> into a new Modifier card beside the base card; an on-top card stays on top. Each step carries <code>modDeck</code> so the deck icon survives. Full spec: <a href="feature-modifier-decks.html">feature-modifier-decks.html</a>.</p>
+
+<h3>6.4 Hook Card and sentence</h3>
+<ul>
+  <li>The Hook Card is always the head of its stack; it cannot tuck under a card.</li>
+  <li>Hover menu: Copy (plain text; "Copied" for 2 s; dialog fallback), Redraw All (one undo step; skips locked cards; new cards outlined for 1 s), Discard.</li>
+  <li>The sentence reads the stack top to bottom; siblings under one card read in canvas order, top first. Each card adds its badge word then its active text. On a combined card: on-top adjective, merged adjective, noun.</li>
+  <li>Missing decks are left out — never a blank slot. If the top card is not a Player Role, the sentence starts with that card's badge word. Mood, Twist and Progression start a new sentence.</li>
+</ul>
+
+<h3>6.5 Connector badges</h3>
+<table>
+  <tr><th>Badge above</th><th>Default</th><th>Other choices</th></tr>
+  <tr><td>Player Role (under the Hook Card)</td><td>You are a / an</td><td>You play a / an</td></tr>
+  <tr><td>Same deck as the card above (not Modifier)</td><td>and (Player Role: and a / an)</td><td>Player Role: with a / an</td></tr>
+  <tr><td>Mechanic</td><td>who must</td><td>who can only, who learns to</td></tr>
+  <tr><td>Goal</td><td>to</td><td>until, so you can</td></tr>
+  <tr><td>Conflict</td><td>but</td><td>while, even though</td></tr>
+  <tr><td>Resource</td><td>using</td><td>while managing, spending</td></tr>
+  <tr><td>Setting</td><td>in the</td><td>aboard the, inside the</td></tr>
+  <tr><td>Mood</td><td>It feels</td><td>The tone is</td></tr>
+  <tr><td>Twist</td><td>Except</td><td>The catch:</td></tr>
+  <tr><td>Progression</td><td>As you play,</td><td>Over time,</td></tr>
+  <tr><td>Constraint</td><td>with</td><td>and</td></tr>
+</table>
+<p>A card keeps its chosen word while it fits the pair. A badge word change is one undo step. Non-default choices may change during the M2 hook test.</p>
+
+<h3>6.6 Canvas, tuck and notes</h3>
+<ul>
+  <li>Infinite canvas with pan, zoom, place and move; 24 px dot grid.</li>
+  <li>Free tuck with hints for normal places: Player Role under the Hook Card, then Mechanic, Resource, Goal, Conflict. A tucked card moves with its parent.</li>
+  <li>Snap to grid (default on) for drops of free cards and notes; Alt held places freely; tuck, combine and On Top drops ignore snap.</li>
+  <li>Notes: free text with editable title; Add note places one at the free grid spot nearest the view center, open for typing.</li>
+  <li>Start guide on an empty board disappears when the first card lands.</li>
+</ul>
+
+<h3>6.7 Genres panel</h3>
+<p>One row sets all 4 genre-tagged decks together; below it, one row each for Mechanic, Resource, Progression and Constraint. Every listed deck keeps at least 1 genre. Changes apply to the next draw only and are not in undo history. A new board starts with all 21 genres on. The rail shows a count line under Genres ("3 genres" / "All genres") and a count pill on each tagged deck button, hidden at 21.</p>
+
+<h3>6.8 Boards, save, export and import</h3>
+<ul>
+  <li>Board list: make (name only, never empty), open, rename (Enter / Esc), delete (always asks, not undoable), import.</li>
+  <li>Autosave after each finished change; a drag saves once on drop. A small mark shows waiting or failed saves.</li>
+  <li>Export menu: text file (cards, hooks and notes in plain words) and board file (<code>&lt;board-name&gt;.gameidea.json</code>, the BoardRecord with <code>formatVersion</code>).</li>
+  <li>Import always makes a new board; a duplicate name gets "(imported)"; a bad file is rejected with a message and nothing changes.</li>
+</ul>
+
+<h3>6.9 Settings and theme</h3>
+<p>Mode (Dark / Light), Theme color (Orange / Blue / Green), Snap to grid, Keyboard list (R, Shift+R, Ctrl+Z, Ctrl+Shift+Z) and footer "GameIdea &lt;version&gt; · No account. No data leaves this computer." Defaults: Dark, Orange, Snap on. Stored in local storage key <code>gameidea.settings</code> per address and port; applied via <code>&lt;html data-mode data-theme&gt;</code> before first render. Full spec: <a href="feature-settings-and-theme.html">feature-settings-and-theme.html</a>.</p>
+
+<h3>6.10 Visual design</h3>
+<p>All tokens, sizes and screens are owned by <a href="design-system.html">design-system.html</a>: the TheForge base with 9 closed deviations, the 11 deck colors and icons, the dark 240 × 200 Hook Card, and the screen-to-phase map (section 16). This PRD does not restate tokens.</p>
+
+<!-- ============================================================ -->
+<h2 id="stack">7. Technology Stack</h2>
+<p><em>Copied from <a href="architecture.html#stack">architecture.html, Stack, Storage and Deployment</a>. Versions are pinned exactly in package.json and match TheForge.</em></p>
+<table>
+  <tr><th>Concern</th><th>Choice</th><th>Decision</th></tr>
+  <tr><td>Language and build</td><td>TypeScript 6.0.3 (strict), Vite 8.3.5 with @vitejs/plugin-react; Node.js 24 LTS for build tools; npm</td><td><code>stack-language</code></td></tr>
+  <tr><td>UI framework</td><td>React 19.3.1, React DOM 19.3.1</td><td><code>ui-framework</code></td></tr>
+  <tr><td>Canvas</td><td>@xyflow/react 12.12.0</td><td><code>canvas-library</code></td></tr>
+  <tr><td>State and undo</td><td>Zustand 5.0.16, zundo 2.3.0</td><td><code>state-store</code></td></tr>
+  <tr><td>Storage</td><td>IndexedDB via Dexie 4.4.7, database <code>gameidea</code>; persistent storage request at start-up</td><td><code>storage-engine</code>, <code>persistent-storage</code></td></tr>
+  <tr><td>Import checks</td><td>Zod 4.6.7</td><td><code>import-checks</code></td></tr>
+  <tr><td>Fonts</td><td>@fontsource/inter 5.3.0, @fontsource/space-grotesk 5.3.0, bundled</td><td><code>fonts</code></td></tr>
+  <tr><td>Screens</td><td>Address hash, no router library: <code>#/</code> and <code>#/board/{id}</code></td><td><code>routing</code></td></tr>
+  <tr><td>Tests and code tools</td><td>Vitest 5.0.5, Playwright 1.64.1 (Chromium, Firefox, WebKit), ESLint, Prettier</td><td><code>test-tools</code></td></tr>
+  <tr><td>Cue pools</td><td>11 JSON files in <code>public/pools/</code>, loaded by web address</td><td><code>pool-files</code></td></tr>
+  <tr><td>Icons</td><td>Lucide SVGs and a custom Hook Card icon, vendored in <code>public/icons/</code></td><td>design-system.html §14</td></tr>
+  <tr><td>Source control and CI</td><td>git, GitHub <code>DecafCoding/GameIdea</code>; GitHub Actions on each pull request</td><td><code>source-control</code>, <code>ci</code></td></tr>
+</table>
+<p>There are no third-party integrations and no external services.</p>
+
+<!-- ============================================================ -->
+<h2 id="security">8. Security &amp; Configuration</h2>
+<ul>
+  <li><strong>Authentication:</strong> none. There are no users or accounts.</li>
+  <li><strong>Configuration:</strong> none, and no secrets (<code>local-run</code>). The only user preferences are the Settings record in local storage.</li>
+  <li><strong>Data:</strong> boards in IndexedDB, one record per board, per address and port. Port 4174 boards are separate from 5174 boards, so development never touches real work.</li>
+  <li><strong>Privacy and security posture</strong> (<code>nfr-targets</code>): no request to any address other than the app's own; no third-party scripts; fonts and icons bundled. A Playwright network test enforces both.</li>
+  <li><strong>Secure context:</strong> ports 4174 and 5174 on localhost and 4444 over HTTPS (mkcert certificate in <code>.certs/</code>, git-ignored) allow the Clipboard API and persistent storage.</li>
+  <li><strong>Failure handling</strong> (<code>outside-code</code>): IndexedDB failure → warning and export offer; persistent storage refused → works as normal; no BroadcastChannel → no 2-tab warning; pool load failure → error with Retry, boards still open; local storage blocked → default settings with a note.</li>
+  <li><strong>Deployment:</strong> local only (<code>local-run</code>). Ports are locked; a busy port stops the command. A public static site is deferred.</li>
+</ul>
+<table>
+  <tr><th>Command</th><th>Address</th><th>Use</th></tr>
+  <tr><td><code>npm start</code></td><td>http://localhost:4174</td><td>Build and serve; the user's real work</td></tr>
+  <tr><td><code>npm run dev</code></td><td>http://localhost:5174</td><td>Development with live reload</td></tr>
+  <tr><td><code>npm run start:lan</code></td><td>https://&lt;LAN address&gt;:4444</td><td>Same build over HTTPS for other devices on the LAN</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2 id="api">9. API Specification</h2>
+<p>There is no network API. The internal contracts are:</p>
+
+<h3>Storage seam (<code>storage-seam</code>, plus the settings exception)</h3>
+<pre><code>shared/storage
+  listBoards()                         → board index rows
+  loadBoard(id)                        → BoardRecord
+  saveBoard(record)                    → done or error
+  deleteBoard(id)                      → done or error
+  onBoardChangedElsewhere(handler)     called with a board id
+  loadSettings()                       → Settings (sync, defaults on any fault) + canSave
+  saveSettings(settings)               → done or blocked
+  onSettingsChangedElsewhere(handler)  called with Settings</code></pre>
+
+<h3>BoardRecord and board file (<code>schema-shape</code>, <code>board-file-format</code>)</h3>
+<pre><code>BoardRecord
+  formatVersion: 2
+  id, name, createdAt, updatedAt
+  kind:   'free' | 'onePager'
+  conceptWidth?: number   (onePager only)
+  view:   { panX, panY, zoom }
+  genres: { mechanic, resource, progression, constraint: Genre[] }
+  cards:  Card[]   { id, type, modDeck?, rings[], x, y, z, tuckedUnder, onTopOf, locked, inConcept, connector? }
+  notes:  Note[]   { id, title, text, x, y, width, height }</code></pre>
+<p>Full field rules: <a href="mvp-plan.html#data-model">mvp-plan.html, Data model</a>.</p>
+
+<h3>Pool file (<code>pool-files</code>)</h3>
+<pre><code>{
+  "type": "mechanic",
+  "cues": [
+    { "id": "mechanic-0001", "text": "trade", "genres": ["roguelike", "life-sim", "strategy"] }
+  ]
+}
+// genres: mechanic, resource, progression, constraint only
+// targets: modifier only, required — e.g. { "id": "...", "text": "stolen", "targets": ["role","resource"] }</code></pre>
+<p class="meta">The <code>id</code> format above is illustrative; the split assigns stable ids.</p>
+
+<h3>Hook sentence builder (<code>hook-sentence</code>)</h3>
+<pre><code>buildHookSentence(stack: StackEntry[]): string
+// StackEntry = { type, connector, activeText }  in reading order
+// pure: no React, no React Flow, no I/O</code></pre>
+
+<!-- ============================================================ -->
+<h2 id="success">10. Success Criteria</h2>
+
+<h3>MVP success definition</h3>
+<p>The user draws 20 stacks and at least 12 hooks are ideas the user would build, and every done criterion in mvp-plan.html and both feature briefs passes.</p>
+
+<h3>Functional requirements</h3>
+<ul class="checklist">
+  <li data-checked="false">M2 pass bar: at least 16 of 20 cards in each core deck and 20 of 25 in each Modifier deck have a usable cue; at least 12 of 20 hooks are ideas the user would build</li>
+  <li data-checked="false">All 11 pools match their libraries cue for cue after the 2 split rules</li>
+  <li data-checked="false">The Hook Card shows the correct sentence for a full stack and for every failure case in State and failure; Copy puts it on the clipboard as plain text</li>
+  <li data-checked="false">A genre change affects only the next draw</li>
+  <li data-checked="false">Redraw All replaces every unlocked card and leaves locked cards</li>
+  <li data-checked="false">All 8 Required scan rows work in Chrome, Edge, Firefox and Safari (7 In in full, the Partial row at the scan's stated scope)</li>
+  <li data-checked="false">Every carried-over feature in Scope works</li>
+  <li data-checked="false">An exported board file imports with no data lost; the text file holds each hook</li>
+  <li data-checked="false">The Modifier and Settings feature done criteria pass</li>
+  <li data-checked="false">One command runs the app at 4174; another serves HTTPS at 4444</li>
+</ul>
+
+<h3>Quality indicators (<code>nfr-targets</code>)</h3>
+<table>
+  <tr><th>Area</th><th>Target</th><th>Check</th></tr>
+  <tr><td>Draw, rotate, Hook Card update</td><td>&lt; 100 ms</td><td>Playwright timing test</td></tr>
+  <tr><td>Canvas</td><td>≥ 50 fps pan and drag with 200 cards</td><td>Performance trace on the 200-card fixture</td></tr>
+  <tr><td>Long stack</td><td>11-card stack drags at the canvas target</td><td>Trace on the 11-card fixture, start of M2</td></tr>
+  <tr><td>First load</td><td>&lt; 2 s on 25 Mbps</td><td>Lighthouse</td></tr>
+  <tr><td>App size</td><td>JS ≤ 250 KB compressed</td><td>Build size check</td></tr>
+  <tr><td>Pools</td><td>≤ 100 KB compressed for all 11</td><td>Build size check</td></tr>
+  <tr><td>Save</td><td>&lt; 50 ms for a 200-card board</td><td>Unit test</td></tr>
+  <tr><td>Genre floor</td><td>≥ 10 cues per genre per tagged pool</td><td>Unit test on public/pools/</td></tr>
+  <tr><td>Privacy</td><td>No requests off the app's own address</td><td>Playwright network test</td></tr>
+</table>
+
+<h3>User experience goals</h3>
+<ul>
+  <li>A complete hook in one session, from an empty board, with no setup.</li>
+  <li>Every action is one undo step; Discard needs no dialog.</li>
+  <li>Each notice names what happened and offers one action.</li>
+  <li>Theme and mode never change a card face, note, badge, deck color or the Hook Card.</li>
+</ul>
+
+<!-- ============================================================ -->
+<h2 id="phases">11. Implementation Phases</h2>
+<p>The phases are the milestones M1–M5 in <a href="mvp-plan.html#milestones">mvp-plan.html</a>, with design work timed by <a href="design-system.html">design-system.html</a> section 16. M2 comes early because draw quality is the biggest risk.</p>
+
+<h3 class="phase" data-phase="1">Phase 1: Copy and rename</h3>
+<p class="meta">M1 · estimate: 2–3 days</p>
+<p><strong>Goal:</strong> a renamed, story-free copy of TheForge running at the GameIdea ports, with the full token set, fonts, icons and shell in place.</p>
+<ul class="checklist">
+  <li data-checked="false">Copy the TheForge code into this repository; rename app, database (<code>gameidea</code>) and page title; set ports 5174, 4174, 4444</li>
+  <li data-checked="false">Remove story pools, story card types, Setting kinds and kind-based connector rules; drop the copied board-format upgrade steps and restart at formatVersion 1</li>
+  <li data-checked="false">Move every hard-coded chrome color into a token; add the lint check for hex and rgba in CSS modules</li>
+  <li data-checked="false">Full token set from design-system.html (2 modes, 3 theme colors, no switch yet), bundled fonts, Lucide icons and the Hook Card icon in <code>public/icons/</code>, shell at locked sizes</li>
+  <li data-checked="false">CI on GitHub Actions: lint, type check, unit tests, Playwright, size checks</li>
+</ul>
+<p><strong>Validation:</strong> copied tests pass; the app runs at 4174; a search of <code>src/</code> finds no TheForge story type names (character, motivation, description) and no Setting kind names; the color lint check passes.</p>
+
+<h3 class="phase" data-phase="2">Phase 2: Hook test</h3>
+<p class="meta">M2 · estimate: 1.5–2 weeks</p>
+<p><strong>Goal:</strong> prove that stacks of core and Modifier cards read as hooks worth building.</p>
+<ul class="checklist">
+  <li data-checked="false">11-card stack drag test first; if it fails, amend <code>canvas-library</code> before continuing</li>
+  <li data-checked="false">The split of <code>decks.json</code> into JSON pools for the 5 core decks and the Modifier, with the 2 grammar rules, targets mapping, stable ids and floor checks; pool unit tests</li>
+  <li data-checked="false">New card types and data model (incl. <code>modDeck</code>, <code>onTopOf</code>) and the Zod import check</li>
+  <li data-checked="false">Cards, rings, hover, rotate (click, R, Shift+R), lock, card strip, Redraw, Discard</li>
+  <li data-checked="false">Hook Card with hover menu (Copy with fallback dialog, Redraw All, Discard) and the pure sentence builder</li>
+  <li data-checked="false">Connector badges with the word menu; tuck hints and drag</li>
+  <li data-checked="false">3 Modifier decks, combine, swap, On Top, Split and the drop zones</li>
+  <li data-checked="false">The grouped rail with the Hook Card button and the Modifiers row; save mark and notices</li>
+</ul>
+<p><strong>Validation:</strong> the user draws 20 stacks — at least 16 of 20 cards usable in each core deck, 20 of 25 in each Modifier deck, and at least 12 of 20 hooks the user would build. Modifier feature done criteria pass.</p>
+
+<h3 class="phase" data-phase="3">Phase 3: Full core pools and genres</h3>
+<p class="meta">M3 · estimate: 3–5 days</p>
+<p><strong>Goal:</strong> finished core and Modifier pools with genre filtering on Mechanic and Resource.</p>
+<ul class="checklist">
+  <li data-checked="false">Finished core and Modifier libraries converted to JSON; Mechanic and Resource carry genre tags</li>
+  <li data-checked="false">Genre filter in draws (at least 1 genre per deck; next draw only; not in undo)</li>
+  <li data-checked="false">Genres panel; genre count pills on the tagged deck buttons; the count line under Genres</li>
+</ul>
+<p><strong>Validation:</strong> every converted pool matches its library cue for cue after the split rules; genre filtering works; every genre has at least 10 cues in Mechanic and Resource.</p>
+
+<h3 class="phase" data-phase="4">Phase 4: Optional decks</h3>
+<p class="meta">M4 · estimate: 2–3 days</p>
+<p><strong>Goal:</strong> all 11 decks drawable.</p>
+<ul class="checklist">
+  <li data-checked="false">Setting, Mood, Twist, Progression and Constraint pools converted to JSON; Progression and Constraint carry genre tags</li>
+  <li data-checked="false">The 5 optional deck buttons in the Optional group; their badges and sentence rules (Mood, Twist, Progression start a new sentence)</li>
+</ul>
+<p><strong>Validation:</strong> every converted pool matches its library cue for cue after the split rules; every genre has at least 10 cues in Progression and Constraint.</p>
+
+<h3 class="phase" data-phase="5">Phase 5: Export and finish</h3>
+<p class="meta">M5 · estimate: 1 week</p>
+<p><strong>Goal:</strong> export, settings and theming live; every done criterion passes.</p>
+<ul class="checklist">
+  <li data-checked="false">Text export holds each hook; board file export and import round-trip</li>
+  <li data-checked="false">Settings record, the 3 storage actions and no-flash start-up</li>
+  <li data-checked="false">Settings dialog, Keyboard list, version footer, blocked-storage note; Light mode and Blue / Green themes live</li>
+  <li data-checked="false">Snap to grid with Alt bypass; Add note; Settings and Add note in the rail</li>
+  <li data-checked="false">Board list and empty board restyled in every theme</li>
+  <li data-checked="false">Full check of carried-over features; HTTPS on the LAN at 4444</li>
+</ul>
+<p><strong>Validation:</strong> all done criteria in mvp-plan.html and both feature briefs pass; speed, size and privacy targets pass.</p>
+
+<h3 class="phase" data-phase="7">Phase 7: One-Pager Board</h3>
+<p class="meta">M7 · Phase 6 is reserved for Themed Cards, which <code>/dev-ui-update</code> adds. Phase 7 starts after Phase 6 and after the One-Pager visuals are in design-system.html. See <a href="feature-one-pager-board.html">feature-one-pager-board.html</a>.</p>
+<p><strong>Goal:</strong> a One-Pager board kind with a Hook Train and a Concept panel, on board format version 2, with every existing board kept as a Free Form board.</p>
+<ul class="checklist">
+  <li data-checked="false">Model fields <code>kind</code>, <code>conceptWidth</code> and <code>inConcept</code>; Dexie schema version 2 and <code>UPGRADES[1]</code>, with tests first</li>
+  <li data-checked="false">Zod checks: reject a One-Pager file with 0 or 2+ Hook Cards, a tucked Concept card or a Hook Card in Concept</li>
+  <li data-checked="false">Board kind in New Board (One-Pager or Free Form); a One-Pager board starts with its Hook Card; Hook Card menu with Copy Hook and Redraw All only</li>
+  <li data-checked="false">Concept panel beside the Hook Card: deck lanes in rail order, chips in drop order, drop routing, Modifier combine on chips</li>
+  <li data-checked="false">Pop-out by double-click, drag out, panel resize; Redraw All skips Concept</li>
+  <li data-checked="false">Concept section in the text file, One-Pager label in the board list, footer counts</li>
+</ul>
+<p><strong>Validation:</strong> the done criteria in feature-one-pager-board.html pass; every existing test passes on Free Form boards; speed, size and privacy targets pass.</p>
+
+<!-- ============================================================ -->
+<h2 id="future">12. Future Considerations</h2>
+<ul>
+  <li>A public static site on a free host, from the same build output.</li>
+  <li>A server behind the storage seam for boards and pools.</li>
+  <li>AI help to expand a hook; comparable games ("X meets Y").</li>
+  <li>An editable or "angle" line on the Hook Card; a Hook Card apart from its stack.</li>
+  <li>Modifiers on Mechanic or Mood; multiple on-top Modifiers; genre tags on Modifier cues.</li>
+  <li>More genres, theme colors and a System mode; settings that follow the user.</li>
+  <li>Tablet and touch input.</li>
+  <li>A shared package with TheForge.</li>
+</ul>
+
+<!-- ============================================================ -->
+<h2 id="risks">13. Risks &amp; Mitigations</h2>
+<table>
+  <tr><th>Risk</th><th>Mitigation</th></tr>
+  <tr><td>Draw quality: random stacks read as nonsense (top complaint in the scan)</td><td>Curated user-written pools, genre filter, rotation, lock; Phase 2 tests it early with a fixed pass bar</td></tr>
+  <tr><td>Long stacks drag poorly in React Flow (6–11 cards in one parent chain)</td><td>11-card stack test at the start of Phase 2; fallback is a canvas-owned stack layout via an amendment to <code>canvas-library</code></td></tr>
+  <tr><td>Story code left in the copy causes odd bugs</td><td>Phase 1 pass bar searches <code>src/</code> for story type and Setting kind names</td></tr>
+  <tr><td>Sentence grammar: some cue and badge pairs read badly</td><td>Cue forms, the 2 split rules, badge alternatives; tuned during Phase 2</td></tr>
+  <tr><td>Lost browser data (cleared data, Safari eviction)</td><td>Persistent storage request; board file export; import always makes a new board</td></tr>
+  <tr><td>The first board format upgrade (version 1 to 2) stops saved boards from loading</td><td>Upgrade tests come first in Phase 7; the user exports real boards on port 4174 before the first Phase 7 build</td></tr>
+  <tr><td>Hard-coded colors break Light mode</td><td>Phase 1 tokens-only rule and lint check on every pull request</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2 id="appendix">14. Appendix</h2>
+
+<h3>Related documents</h3>
+<ul>
+  <li><a href="mvp-plan.html">mvp-plan.html</a> — scope, data model, interfaces, milestones, done criteria</li>
+  <li><a href="architecture.html">architecture.html</a> — every technical decision</li>
+  <li><a href="design-system.html">design-system.html</a> — visual authority; <code>docs/design-handoff/</code> — mockups and screenshots (record only)</li>
+  <li><a href="feature-modifier-decks.html">feature-modifier-decks.html</a>, <a href="feature-settings-and-theme.html">feature-settings-and-theme.html</a></li>
+  <li><a href="competitive-scan.html">competitive-scan.html</a> — prior art</li>
+  <li><code>concept.md</code> — the original concept</li>
+  <li><code>docs/libraries/</code> — <code>decks.json</code>, <code>genres.json</code> and the Markdown libraries (record after the split)</li>
+</ul>
+
+<h3>Key dependencies</h3>
+<ul>
+  <li>TheForge source at <code>~/repos/theforge</code> (start point for Phase 1)</li>
+  <li>mkcert for the port 4444 certificate</li>
+  <li>GitHub repository <code>DecafCoding/GameIdea</code> and GitHub Actions</li>
+</ul>
+
+<h3>Repository structure</h3>
+<p>See section 5 (<code>module-layout</code>). Planning docs live in <code>docs/</code>; phase plans will live in <code>docs/phases/</code>.</p>
+
+</body>
+</html>

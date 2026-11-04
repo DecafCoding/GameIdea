@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>GameIdea decks</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
+<style>
+body{margin:0;background:#1B1E24}
+a{color:#ECEAE4}a:hover{color:#FFFFFF}
+.i{fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.tile{display:flex;gap:14px;padding:16px;border-radius:12px;background:#23272F;border:1px solid #30353F}
+.dot{width:44px;height:44px;border-radius:10px;background:#1B1E24;border:1px solid #30353F;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;flex:0 0 44px}
+.nm{font-family:'Space Grotesk',system-ui,sans-serif;font-weight:600;font-size:16px}
+.gp{font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#A9ADB6}
+.mn{font-size:13px;color:#C9CCD2;line-height:1.45}
+.ex{font-size:12px;color:#A9ADB6}
+.tag{display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:11px;border:1px solid #4A505C;font-size:11px;font-weight:600;color:#ECEAE4}
+.hex{font-family:ui-monospace,monospace;font-size:11px;color:#A9ADB6}
+</style>
+</helmet>
+<div style="width: 1440px; height: 760px; box-sizing: border-box; padding: 48px 56px; background: #1B1E24; color: #ECEAE4; font-family: Inter, system-ui, sans-serif; font-size: 14px; display: flex; flex-direction: column; gap: 28px">
+
+  <div style="display: flex; flex-direction: column; gap: 6px">
+    <h1 style="margin: 0; font-family: 'Space Grotesk', system-ui, sans-serif; font-weight: 700; font-size: 28px">The decks</h1>
+    <p style="margin: 0; color: #A9ADB6; max-width: 900px; line-height: 1.5">13 decks and the Hook Card. The 3 Modifier decks share one color, and each has its own icon. Each deck has one color and one icon. The card color shows on the center icon, the ring and the connector badge. It passes 4.5:1 with white text. The rail and panels draw the icon alone in a lighter rail tint, so it reads on the dark buttons.</p>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px">
+
+    <div class="tile" style="border-color: {{accent}}">
+      <span class="dot" style="color: {{accent}}"><svg class="i" width="22" height="22" viewBox="0 0 24 24" style="stroke-width: 2.6" aria-hidden="true"><path d="M15 3v11a5 5 0 0 1-10 0v-3l3 3"/></svg></span>
+      <div style="display: flex; flex-direction: column; gap: 4px"><span class="gp">Head of stack</span><span class="nm">Hook Card</span><span class="mn">Reads the stack as one sentence.</span><span class="ex">No cues · Copy · Redraw All</span></div>
+    </div>
+
+    <div class="tile">
+      <span class="dot" style="color: #6F9BEA"><svg class="i" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>
+      <div style="display: flex; flex-direction: column; gap: 4px"><span class="gp">Core</span><span class="nm">Player Role</span><span class="mn">Who the player is.</span><span class="ex">4 cues · "lighthouse keeper"</span><span class="hex">Card #2F5FB8 · Rail #6F9BEA</span></div>
+    </div>
+
+    <div class="tile">
+      <span class="dot" style="color: #E0A040"><svg class="i" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M17 2l4 4-4 4"/><path d="M3 11V9a3 3 0 0 1 3-3h15"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v2a3 3 0 0 1-3 3H3"/></svg></span>
+      <div style="display: flex; flex-direction: column; gap: 4px"><span class="gp">Core</span><span class="nm">Mechanic</span><span class="mn">The action the player does again and again.</span><span class="ex">4 cues · "trade"</span><span style="display: flex; gap: 6px; align-items: center"><span class="tag">Genre tagged</span><span class="hex">Card #9A5C08 · Rail #E0A040</span></span></div>
+    </div>
+
+    <div class="tile">
+      <span class="dot" style="color: #79B85E"><svg class="i" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><rect width="16" height="10" x="2" y="7" rx="2" ry="2"/><path d="M22 11v2"/></svg></span>
+      <div style="display: flex; flex-direction: column; gap: 4px"><span class="gp">Core</span><span class="nm">Resource</span><span class="mn">The thing the player manages and can run out of.</span><span class="ex">4 cues · "memories"</span><span style="display: flex; gap: 6px; align-items: center"><span class="tag">Genre tagged</span><span class="hex">Card #3A7226 · Rail #79B85E</span></span></div>
+    </div>
+
+    <div class="tile">
+      <span class="dot" style="color: #4FB3A6"><svg class="i" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4"/><path d="M5 4h12l-2.5 4L17 12H5"/></svg></span>
+      <div style="display: flex; flex-direction: column; gap: 4px"><span class="gp">Core</span><span class="nm">Goal</span><span class="mn">The end state that means the player wins.</span><span class="ex">2 cues · "keep the light on"</span><span class="hex">Card #23766C · Rail #4FB3A6</span></div>
+    </div>
+
+    <div class="tile">
+      <span class="dot" style="color: #EE7A5E"><svg class="i" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></span>
+      <div style="display: flex; flex-direction: column; gap: 4px"><span class="gp">Core</span><span class="nm">Conflict</span><span class="mn">The force that stops the player.</span><span class="ex">2 cues · "the tide rises every night"</span><span class="hex">Card #B53A23 · Rail #EE7A5E</span></div>
+    </div>
+
+    <div class="tile">
+      <span class="dot" style="color: #A88BE6; gap: 1px"><svg class="i" width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6"/><path d="M22 11h-6"/></svg><svg class="i" width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 9v6"/><path d="M12.543 6H16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-3.605"/><path d="M22 14v-4"/><path d="M7 12h6"/><path d="M7.606 18H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h3.606"/></svg><svg class="i" width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M19.914 11.105A7.298 7.298 0 0 0 20 10a8 8 0 0 0-16 0c0 4.993 5.539 10.193 7.399 11.799a1 1 0 0 0 1.202 0 32 32 0 0 0 .824-.738"/><circle cx="12" cy="10" r="3"/><path d="M16 18h6"/><path d="M19 15v6"/></svg></span>
+      <div style="display: flex; flex-direction: column; gap: 4px"><span class="gp">Modifiers</span><span class="nm">3 Modifier decks</span><span class="mn">One for each of Player Role, Resource and Setting. Any of them combines with any of those 3 cards.</span><span class="ex">4 cues · "stolen"</span><span class="hex">Card #6E48B5 · Rail #A88BE6</span></div>
+    </div>
+
+    <div class="tile">
+      <span class="dot" style="color: #C49A6C"><svg class="i" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+      <div style="display: flex; flex-direction: column; gap: 4px"><span class="gp">Optional</span><span class="nm">Setting</span><span class="mn">Where and when the game takes place.</span><span class="ex">4 cues · "frozen prairie"</span><span class="hex">Card #7A5A3A · Rail #C49A6C</span></div>
+    </div>
+
+    <div class="tile">
+      <span class="dot" style="color: #E07AAE"><svg class="i" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 14.5s1.5 2 4 2 4-2 4-2"/><path d="M9 9.5h.01M15 9.5h.01"/></svg></span>
+      <div style="display: flex; flex-direction: column; gap: 4px"><span class="gp">Optional</span><span class="nm">Mood</span><span class="mn">The feeling the game gives the player.</span><span class="ex">4 cues · "lonely"</span><span class="hex">Card #A63D72 · Rail #E07AAE</span></div>
+    </div>
+
+    <div class="tile">
+      <span class="dot" style="color: #B8BC4A"><svg class="i" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg></span>
+      <div style="display: flex; flex-direction: column; gap: 4px"><span class="gp">Optional</span><span class="nm">Twist</span><span class="mn">One fact or rule that turns an expectation around.</span><span class="ex">2 cues · "the villain is right"</span><span class="hex">Card #66691A · Rail #B8BC4A</span></div>
+    </div>
+
+    <div class="tile">
+      <span class="dot" style="color: #4FAED6"><svg class="i" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></span>
+      <div style="display: flex; flex-direction: column; gap: 4px"><span class="gp">Optional</span><span class="nm">Progression</span><span class="mn">How the player or the world changes over time.</span><span class="ex">2 cues · "the crew grows"</span><span style="display: flex; gap: 6px; align-items: center"><span class="tag">Genre tagged</span><span class="hex">Card #1D6F93 · Rail #4FAED6</span></span></div>
+    </div>
+
+    <div class="tile">
+      <span class="dot" style="color: #A3AAB6"><svg class="i" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m14.5 9.5-5 5"/><path d="m9.5 9.5 5 5"/></svg></span>
+      <div style="display: flex; flex-direction: column; gap: 4px"><span class="gp">Optional</span><span class="nm">Constraint</span><span class="mn">A design limit on the whole game.</span><span class="ex">2 cues · "no combat"</span><span style="display: flex; gap: 6px; align-items: center"><span class="tag">Genre tagged</span><span class="hex">Card #555B66 · Rail #A3AAB6</span></span></div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#E8742E","options":["#E8742E","#4C8DF6","#3FB37F"]},"$preview":{"width":1440,"height":760}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? '#E8742E' };
+  }
+}
+</script>
+</body>
+</html>

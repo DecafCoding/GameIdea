@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Feature — Settings and theme</title>
+  <style>
+    :root { --fg:#1a1a1a; --muted:#666; --accent:#2563eb; --done:#16a34a; --rule:#e5e7eb; }
+    body { font:16px/1.6 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; color:var(--fg); max-width:60rem; margin:2rem auto; padding:0 1.25rem; }
+    h1 { font-size:2rem; border-bottom:2px solid var(--rule); padding-bottom:.3rem; }
+    h2 { font-size:1.5rem; margin-top:2.5rem; border-bottom:1px solid var(--rule); padding-bottom:.2rem; }
+    h3 { font-size:1.2rem; margin-top:1.75rem; }
+    code, pre { font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+    pre { background:#f6f8fa; padding:1rem; border-radius:6px; overflow:auto; }
+    table { border-collapse:collapse; width:100%; margin:1rem 0; }
+    th, td { border:1px solid var(--rule); padding:.5rem .75rem; text-align:left; vertical-align:top; }
+    th { background:#f6f8fa; }
+    ul.checklist { list-style:none; padding-left:0; }
+    ul.checklist > li::before { content:"☐ "; color:var(--muted); }
+    ul.checklist > li[data-checked="true"]::before { content:"☑ "; color:var(--done); }
+    .meta { color:var(--muted); font-size:.9rem; }
+  </style>
+</head>
+<body>
+
+<h1>Feature — Settings and theme</h1>
+<p class="meta">2026-11-02 · Extends GameIdea (working name), as planned in <a href="mvp-plan.html">mvp-plan.html</a>. Written from the <code>/dev-add-feature</code> run. Updated 2026-11-02 by <code>/dev-ui-update</code>.</p>
+<p><strong>Visual authority:</strong> <a href="design-system.html">design-system.html</a> holds every token value, size and screen spec for this feature (sections 4, 8.2 and 9.11). Where this brief and the design doc disagree on a visual detail, the design doc wins.</p>
+
+<h2>Summary and motivation</h2>
+<p>A Settings dialog gives the user 3 settings: Mode (Dark or Light), Theme color (Orange, Blue or Green) and Snap to grid (on or off). The dialog also lists the keyboard shortcuts and shows the app version. The settings apply to every board in the browser. A change applies at once.</p>
+<p>The reason is polish before other people use the app. The public site stays deferred, so "other people" means people who use the LAN build at port 4444. A new user can find the ring keys in the Keyboard list. A new user also gets a tidy board with no setup, because snap is on by default.</p>
+<p>The feature also records 3 rail changes from the same mockups: an Add note button, a genre count line under Genres, and genre counts on the 4 genre-tagged deck buttons.</p>
+
+<h2>Fit with the existing application</h2>
+<p>The feature does not change the core loop. It adds one dialog beside it and changes how the canvas places a dropped card or note.</p>
+<p>It reverses 2 rules of the inherited TheForge design: "one theme, no light theme and no theme switch", and "one accent, ember orange". The new rule is one accent at a time, chosen by the user. Warnings keep a fixed warm color.</p>
+<p>No app code exists yet. The work lands in M5, with one guard rule in M1. Related docs: <a href="mvp-plan.html">mvp-plan.html</a>, <a href="architecture.html">architecture.html</a>, <a href="competitive-scan.html">competitive-scan.html</a>, <a href="feature-modifier-decks.html">feature-modifier-decks.html</a>. The token values are in <a href="design-system.html">design-system.html</a>.</p>
+
+<h2>Scope</h2>
+
+<h3>In this feature</h3>
+<ul class="checklist">
+  <li data-checked="true">A Settings dialog, opened from a Settings button at the bottom of the board rail. It has no Cancel. A change applies at once. Done and the close button close it.</li>
+  <li data-checked="true">Mode: Dark or Light. Light turns all chrome, the canvas ground and the dot grid light. Chrome means the top bar, the rail, dialogs, panels, the card strip, the zoom strip and the board list. Cards, notes, the Hook Card, connector badges and the 11 deck colors look the same in both modes.</li>
+  <li data-checked="true">Theme color: Orange, Blue or Green. It replaces the accent everywhere the accent marks an action or a selection. That covers the app mark, primary buttons, the selection outline, focus outlines, drop targets, slot hints, toggles, the Hook Card border, the rail Hook Card button and the genre counts.</li>
+  <li data-checked="true">A fixed warning color, split out from the old <code>--accent-text</code>. Warning text, the warning icon, "Save failed" and the Discard label use it in every theme color.</li>
+  <li data-checked="true">Snap to grid: on or off. With snap on, a dropped free card or note puts its top-left corner on the nearest 24 px grid dot. Alt held at the drop places it freely. A tucked card keeps its normal tuck place under its parent card. A note resize is always free.</li>
+  <li data-checked="true">A Keyboard list: R, Shift+R, Ctrl+Z and Ctrl+Shift+Z with their actions</li>
+  <li data-checked="true">A footer: "GameIdea &lt;version&gt; · No account. No data leaves this computer." The version comes from <code>package.json</code>.</li>
+  <li data-checked="true">Defaults for a new browser: Dark, Orange, Snap on</li>
+  <li data-checked="true">Settings saved in browser local storage, for each address and port. Other open tabs update at once.</li>
+  <li data-checked="true">A one-line note in the dialog when local storage is blocked</li>
+  <li data-checked="true">Rail: an Add note button. It places a new note at the free 24 px grid spot nearest the center of the view, opens it ready to type, and is one undo step.</li>
+  <li data-checked="true">Rail: the Genres button shows the number of genres on in the board row, for example "3 genres", or "All genres" when all 21 are on.</li>
+  <li data-checked="true">Rail: each of the 4 genre-tagged deck buttons shows its number of genres on. The count is hidden when all 21 are on. It replaces the "small mark" in the MVP plan.</li>
+  <li data-checked="true">M1 guard: no chrome color is written outside the design tokens. A lint check finds hex and rgba values in CSS modules.</li>
+</ul>
+
+<h3>Deferred</h3>
+<ul class="checklist">
+  <li data-checked="false">A "System" mode that follows the operating system setting</li>
+  <li data-checked="false">More theme colors than Orange, Blue and Green</li>
+  <li data-checked="false">A Settings button on the board list screen</li>
+  <li data-checked="false">Settings that go with the user to another browser or device</li>
+</ul>
+
+<h3>Never</h3>
+<ul class="checklist">
+  <li data-checked="false">A grid size setting. The grid stays at 24 px, because the placement rules (the 24 px margin and the 288 px "beside the card" spot) depend on it.</li>
+  <li data-checked="false">Snap that moves items already on the board when the user turns it on</li>
+  <li data-checked="false">Settings stored in a board record, a board file or the text export</li>
+  <li data-checked="false">Settings changes in the undo history</li>
+  <li data-checked="false">Card faces that change with Mode or Theme color</li>
+</ul>
+
+<h2>Blast radius</h2>
+<table>
+  <tr><th>Part</th><th>Change</th></tr>
+  <tr><td><code>features/settings/</code> (new)</td><td>The Settings dialog, the Keyboard list, the footer and the blocked-storage note. A small Zustand settings store, separate from the board store, with no zundo.</td></tr>
+  <tr><td><code>shared/storage/</code></td><td>3 new actions: <code>loadSettings()</code>, <code>saveSettings(settings)</code> and <code>onSettingsChangedElsewhere(handler)</code>. The listener uses the browser's storage change event.</td></tr>
+  <tr><td><code>app/</code></td><td>Reads the settings at start-up and sets the mode and color on the page root before the first render. Both screens follow them.</td></tr>
+  <tr><td><code>features/canvas/</code></td><td>Snap during the drag and on drop for free cards and notes, with the Alt bypass. The dot grid takes its color from the mode tokens.</td></tr>
+  <tr><td><code>features/draw/</code> (rail)</td><td>Settings button at the bottom. Add note button. Genre counts on the 4 genre-tagged deck buttons.</td></tr>
+  <tr><td><code>features/genres/</code></td><td>The genre count line under the Genres button</td></tr>
+  <tr><td><code>features/notes/</code></td><td>A "new note at a spot" action for Add note. It opens the note ready to type.</td></tr>
+  <tr><td>Design tokens</td><td>A light token set for chrome and canvas. 3 accent sets. A fixed warning color token. Values in <a href="design-system.html">design-system.html</a> section 4.</td></tr>
+  <tr><td>Build</td><td>Puts the <code>package.json</code> version into the app. A lint check for hard-coded chrome colors (M1).</td></tr>
+  <tr><td>Unchanged</td><td>BoardRecord, the board file and its Zod check, the text export, undo, the pools and the Hook sentence builder</td></tr>
+</table>
+<p>If the feature is wrong, the worst case is unreadable chrome in one mode or color, or cards that land on the wrong spot. No board data is at risk.</p>
+
+<h2>Data model changes</h2>
+<p>Board data does not change. One new record lives in local storage, outside the board database.</p>
+<pre><code>Settings                  (local storage key "gameidea.settings", one per address and port)
+  version: 1
+  mode:    dark | light               default dark
+  accent:  orange | blue | green      default orange
+  snap:    boolean                    default true</code></pre>
+<h3>Rules</h3>
+<ul>
+  <li>A missing record, a field with an unknown value, or JSON that does not parse gives the default for that field. It does not cause an error.</li>
+  <li>Each change writes the whole record.</li>
+  <li>The settings never go into a BoardRecord, a board file or the text export.</li>
+  <li>The settings are not in the undo history.</li>
+</ul>
+<h3>Migration and rollback</h3>
+<p>No boards exist, and the board format does not change, so there is no migration. A later change to Settings raises <code>version</code>. An unknown version is read field by field with the defaults rule. Rollback means removing the feature. A leftover local storage key does no harm.</p>
+
+<h2>Interfaces and contracts</h2>
+
+<h3>Storage seam additions</h3>
+<pre><code>shared/storage
+  loadSettings()                        → Settings   (synchronous, defaults on any fault)
+                                          and whether the browser can save settings
+  saveSettings(settings)                → done or blocked
+  onSettingsChangedElsewhere(handler)   called with Settings when another tab saves</code></pre>
+
+<h3>Theme contract</h3>
+<pre><code>&lt;html data-mode="dark|light" data-theme="orange|blue|green"&gt;</code></pre>
+<p>The app sets these 2 attributes before the first render. All chrome colors come from tokens that the 2 attributes select. Card, note, badge and deck tokens do not depend on them.</p>
+
+<h3>Snap contract</h3>
+<ul>
+  <li>Snap places the drop of a free card or a note. A free card is a card that is not tucked and not on top of another card.</li>
+  <li>During a drag, the dragged card or note also moves dot to dot on the grid, so the user sees the snap (user 2026-11-03). Alt held during the drag moves it freely.</li>
+  <li>The top-left corner goes to the nearest multiple of 24 on each axis, in canvas coordinates. It uses the existing <code>GRID</code> constant in <code>features/canvas/</code>.</li>
+  <li>Alt held at the drop skips snap; the drop then follows the pointer even if the drag snapped before Alt went down.</li>
+  <li>A drop that makes a tuck, a combine or an On Top uses those rules, and snap does not apply.</li>
+  <li>A drop is one undo step, with or without snap.</li>
+</ul>
+
+<h3>Settings dialog</h3>
+<table>
+  <tr><th>Section</th><th>Control</th><th>Help text (from the mockup, can change)</th></tr>
+  <tr><td>Appearance</td><td>Mode: Dark, Light</td><td>Dark or light screens. The cards look the same in both.</td></tr>
+  <tr><td>Appearance</td><td>Theme color: Orange, Blue, Green</td><td>The color of buttons, selection, the Hook Card border and the genre counts.</td></tr>
+  <tr><td>Canvas</td><td>Snap to grid: toggle</td><td>Cards and notes line up with the dot grid when you drop them. Hold Alt while you drag to place freely.</td></tr>
+  <tr><td>Keyboard</td><td>List only</td><td>R: turn the outer ring, or the only ring, one step. Shift+R: turn the inner ring of a combined card. Ctrl+Z: undo. Ctrl+Shift+Z: redo.</td></tr>
+  <tr><td>Footer</td><td>Done button</td><td>GameIdea &lt;version&gt; · No account. No data leaves this computer.</td></tr>
+</table>
+<p>The Theme color help text names selection as well as the mockup's list, because the color marks selection too. When local storage is blocked, the dialog shows: "This browser does not save settings. They reset when the page reloads."</p>
+
+<h3>Rail</h3>
+<p>Top to bottom: Hook Card, Core, Modifiers, Optional, Genres (with its count line), Add note, and Settings at the bottom.</p>
+
+<h2>Architecture fit</h2>
+<p><b>Outcome 2: it fits, with one local exception.</b></p>
+<p>It leans on these decisions in <a href="architecture.html">architecture.html</a>:</p>
+<ul>
+  <li><code>state-store</code>: the settings store is a second Zustand store, with no zundo.</li>
+  <li><code>architecture-pattern</code> and <code>module-layout</code>: <code>features/settings/</code> is a new feature folder in the existing pattern.</li>
+  <li><code>import-rules</code>: canvas and the rail reach settings only through <code>features/settings/index.ts</code>. Only <code>shared/storage/</code> touches browser storage.</li>
+  <li><code>undo-history</code>: unchanged. Settings stay out of it, like a genre change.</li>
+  <li><code>nfr-targets</code>: local storage makes no network request, so the privacy test still holds.</li>
+</ul>
+<p><b>Local exception.</b> It departs from <code>storage-seam</code> (moderate to reverse). The seam grows from 5 board actions to 8, with the 3 settings actions above. Local storage is used because it reads at once, so a Light user never sees a dark frame at load. IndexedDB reads arrive too late for that. If more kinds of browser preferences join the seam, the 5-action rule stops being true. Then <code>/dev-architecture</code> should split the seam into board actions and preference actions. <code>docs/architecture.html</code> is not edited for this exception.</p>
+
+<h2>Compatibility and rollout</h2>
+<p>No boards or users exist, so there is no data to keep and no flag. Turning snap on moves nothing that is already on the board. Each port keeps its own settings, the same as its boards, so development at 5174 does not change the settings at 4174.</p>
+
+<h2>Testing and regression plan</h2>
+<h3>Unit tests (Vitest)</h3>
+<ul>
+  <li>Settings parsing: a missing record, bad JSON and unknown values all give the defaults, field by field.</li>
+  <li>Snap math: the nearest 24 px point, negative coordinates, and the Alt bypass.</li>
+  <li>Snap does not apply to a tuck, combine or On Top drop.</li>
+  <li>Genre counts: the board row count, a count for each deck, hidden at 21, and "All genres".</li>
+  <li>Add note placement uses the free-spot rule.</li>
+</ul>
+<h3>Browser tests (Playwright, 3 engines)</h3>
+<ul>
+  <li>Mode and Theme color on both screens. Each of the 6 combinations renders with no hard-coded chrome color.</li>
+  <li>Cards, notes, badges and the Hook Card are the same in every combination.</li>
+  <li>Warning text, "Save failed" and Discard keep the fixed warning color in Blue and Green.</li>
+  <li>A reload keeps the settings. A Light reload shows no dark frame.</li>
+  <li>A second tab updates in less than 1 second.</li>
+  <li>Blocked local storage gives the defaults and the note.</li>
+  <li>Add note.</li>
+</ul>
+<h3>Regression</h3>
+<ul>
+  <li>The existing drag, tuck, combine and On Top tests run with snap on and with snap off.</li>
+  <li>The speed, size and privacy tests in <code>nfr-targets</code> still pass.</li>
+  <li>The M1 lint check runs on each pull request.</li>
+</ul>
+
+<h2>Build plan</h2>
+<h3>M1: Copy and rename (one addition)</h3>
+<ol>
+  <li>Move every hard-coded chrome color in the copied code into a token, for example the dialog shade in <code>Dialog.module.css</code>.</li>
+  <li>Add the lint check that finds hex and rgba values in CSS modules. Card and deck tokens are the only allowed place for them.</li>
+  <li>Add the full token set from <a href="design-system.html">design-system.html</a>: the light token set, the 3 accent sets and the warning color split, as data with no switch yet.</li>
+</ol>
+<h3>M5: Export and finish (the feature)</h3>
+<ol>
+  <li>Settings record, parsing and the 3 storage actions. This proves the no-flash start-up first, because it is the riskiest part.</li>
+  <li>The theme attributes on the page root, set from the settings. The tokens they select are already in place from M1.</li>
+  <li>The Settings dialog, the Keyboard list, the footer version and the blocked-storage note.</li>
+  <li>Snap on drop with the Alt bypass.</li>
+  <li>The rail changes: Settings and Add note.</li>
+  <li>The tests in the testing plan.</li>
+</ol>
+<p>Moved earlier on 2026-11-02: the genre counts and the genre count line are built in M3, and the grouped rail in M2. Only Settings and Add note stay in M5.</p>
+
+<h2>Done criteria</h2>
+<ul>
+  <li>Settings opens from the rail and has Mode, Theme color, Snap to grid, the Keyboard list, and a footer with the real version.</li>
+  <li>All 6 combinations of Mode and color render both screens with no hard-coded chrome color, and the M1 lint check passes. Cards, notes, badges, deck colors and the Hook Card look the same in every combination.</li>
+  <li>In Blue and Green, warning text, "Save failed" and Discard keep the fixed warning color.</li>
+  <li>With snap on, a dropped free card or note sits on a 24 px dot. With Alt held, it sits where it was dropped. A tucked card keeps its tuck place. With snap off, every drop is free.</li>
+  <li>Settings survive a reload. A second open tab updates in less than 1 second. A Light reload never shows a dark frame.</li>
+  <li>With local storage blocked, the app runs on the defaults and the dialog shows the note.</li>
+  <li>Add note, the Genres line and the deck counts work as settled.</li>
+  <li>The speed, size and privacy targets in <a href="architecture.html">architecture.html</a> still pass.</li>
+</ul>
+
+<h2>Open risks and assumptions</h2>
+<h3>Risks</h3>
+<ul>
+  <li>Card contrast in Light mode. The cards were designed for a dark table. On a light ground they can lose their edge. Resolved 2026-11-02: the card face is only 1.07:1 against the light canvas, so <code>--shadow-card</code> alone sets the edge. It reads clearly in the light mockups. The shadow stays as it is and must not be softened.</li>
+  <li>Accent contrast. Blue and Green must pass contrast on both a dark and a light ground, as fills and as text. Resolved 2026-11-02: fills with dark text pass (5.1 to 6.3:1), accent text passes in both modes, and dark-mode outlines pass. Light-mode outlines in <code>--accent</code> fail (2.4 to 2.9:1), so in light mode the selection and focus outlines use the light <code>--accent-text</code>.</li>
+  <li>The Keyboard list can drift from the real key handlers. A browser test checks that each listed key does what the list says.</li>
+  <li>Hard-coded colors added after M1 break Light mode. The lint check guards this.</li>
+</ul>
+<h3>Assumptions</h3>
+<ul>
+  <li>The mockups were final-ish. <code>/dev-ui-update</code> settled text and spacing on 2026-11-02 in <a href="design-system.html">design-system.html</a>.</li>
+  <li>The Keyboard list shows Ctrl. Cmd also works on a Mac, as in TheForge. The list does not show Cmd.</li>
+  <li>The footer shows the <code>package.json</code> version as it is, with no build number.</li>
+  <li>The mockups are in the repo at <code>docs/design-handoff/</code>.</li>
+</ul>
+
+</body>
+</html>
