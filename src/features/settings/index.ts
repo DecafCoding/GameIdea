@@ -12,5 +12,12 @@ export {
   useSettings,
   type SettingsPatch,
 } from './settingsStore';
-export { SettingsDialog, SETTINGS_BLOCKED_TEXT, SETTINGS_CAPTION } from './SettingsDialog';
+export {
+  MODE_HELP_TEXT,
+  SettingsDialog,
+  SETTINGS_BLOCKED_TEXT,
+  SETTINGS_CAPTION,
+  type GenresTabSlot,
+} from './SettingsDialog';
+export { GENRES_DISABLED_TEXT } from './SettingsTabs';
 export { APP_VERSION, FOOTER_TEXT, KEYBOARD_SHORTCUTS } from './keys';

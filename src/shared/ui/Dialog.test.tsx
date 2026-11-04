@@ -70,17 +70,6 @@ describe('Dialog', () => {
     expect(document.activeElement).toBe(screen.getByRole('textbox', { name: 'Field' }));
   });
 
-  it('dialog_panel_hasPanelClass', () => {
-    render(
-      <Dialog open size="panel" title="Genres" onClose={() => undefined} actions={null}>
-        Body
-      </Dialog>,
-    );
-    const dialog = screen.getByRole('dialog', { name: 'Genres' });
-    expect(dialog.className).toMatch(/panel/);
-    expect(dialog.className).not.toMatch(/wide/);
-  });
-
   it('dialog_showClose_closeButtonCallsOnClose', () => {
     const onClose = vi.fn();
     render(

@@ -105,8 +105,9 @@ describe('BoardScreen', () => {
     render(<BoardScreen />);
     const rail = within(screen.getByRole('complementary', { name: 'Decks' }));
     expect(rail.queryByRole('img', { name: /genres? on$/ })).toBeNull();
-    fireEvent.click(rail.getByRole('button', { name: 'Genres' }));
-    const dialog = within(screen.getByRole('dialog', { name: 'Genres' }));
+    fireEvent.click(rail.getByRole('button', { name: 'Settings' }));
+    const dialog = within(screen.getByRole('dialog', { name: 'Settings' }));
+    fireEvent.click(dialog.getByRole('tab', { name: 'Genres' }));
     const allDecks = within(dialog.getByRole('region', { name: 'All 4 Decks' }));
     const seq = useBoardStore.getState().saveSeq;
     fireEvent.click(allDecks.getByRole('button', { name: 'Roguelike' }));
@@ -129,7 +130,7 @@ describe('BoardScreen', () => {
     expect(useBoardStore.temporal.getState().pastStates).toHaveLength(0);
     expect(screen.getByRole('button', { name: 'Undo' })).toHaveProperty('disabled', true);
     fireEvent.click(dialog.getByRole('button', { name: 'Done' }));
-    expect(screen.queryByRole('dialog', { name: 'Genres' })).toBeNull();
+    expect(screen.queryByRole('dialog', { name: 'Settings' })).toBeNull();
   });
 
   it('boardScreen_renameBlank_keepsOldName', () => {

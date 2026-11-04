@@ -1,5 +1,5 @@
 /**
- * Genres feature: the public entry for the Genres panel rules and genre counts.
+ * Genres feature: the public entry for the Genres tab, its rules and the genre counts.
  */
 export {
   allOn,
@@ -15,5 +15,4 @@ export {
 } from './genreRules';
 export { GenreCount } from './GenreCount';
 export { GenresButton } from './GenresButton';
-export { GenresPanel } from './GenresPanel';
 export { GENRES_FOOTER_TEXT, GENRES_SCOPE_TEXT, GenresTab } from './GenresTab';

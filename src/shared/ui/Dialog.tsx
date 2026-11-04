@@ -3,9 +3,8 @@
  * browser traps focus, closes on Esc through the cancel event and returns focus on close.
  * The parent owns open; Esc calls onClose and the parent sets open to false.
  * A child marked data-autofocus gets focus at open.
- * size: wide is the New Board dialog (design 9.8); panel is the Genres panel (design 9.10),
- * a wide dialog whose body scrolls between a fixed header and footer; settings is the
- * Settings dialog (design 9.11), 900 wide; default is the delete dialog. tabs sit under the
+ * size: wide is the New Board dialog (design 9.8); settings is the Settings dialog
+ * (design 9.11), 900 wide, whose body scrolls between a fixed header and footer; default is the delete dialog. tabs sit under the
  * title row and the caption under the tabs. showClose adds a × button beside the title;
  * footerNote sits at the left of the actions row.
  */
@@ -16,7 +15,6 @@ import { Icon } from './Icon';
 const SIZE_CLASS = {
   default: styles.dialog,
   wide: `${styles.dialog} ${styles.wide}`,
-  panel: `${styles.dialog} ${styles.panel}`,
   settings: `${styles.dialog} ${styles.settings}`,
 };
 
@@ -28,7 +26,7 @@ interface DialogProps {
   children: ReactNode;
   /** The buttons, right aligned under the body. */
   actions: ReactNode;
-  size?: 'default' | 'wide' | 'panel' | 'settings';
+  size?: 'default' | 'wide' | 'settings';
   /** A line of muted text right under the title. */
   caption?: string;
   /** A 44 px × button beside the title that calls onClose. */

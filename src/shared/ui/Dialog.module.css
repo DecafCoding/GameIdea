@@ -119,53 +119,6 @@
 }
 
 /*
- * Panel: the Genres panel (design 9.10): 1040 wide, radius 14, --shadow-dialog, fill
- * --surface. Header padding 24 28 8, the body scrolls (padding 0 28), footer padding
- * 18 28 22 with a top border. It fits the viewport, so header and footer stay in view.
- */
-.panel {
-  width: min(1040px, calc(100% - 32px)); /* design 9.10; no token */
-  max-width: none;
-  max-height: calc(100vh - 32px);
-  padding: 0;
-  border-radius: var(--radius-dialog);
-  background: var(--surface);
-  box-shadow: var(--shadow-dialog);
-}
-
-.panel[open] {
-  gap: 0;
-}
-
-.panel .header {
-  padding: 24px 28px 8px; /* design 9.10; no token */
-}
-
-.panel .title {
-  font-size: 22px;
-  font-weight: 700;
-}
-
-.panel .caption {
-  max-width: 760px; /* design 9.10; no token */
-  line-height: 1.5;
-}
-
-.panel .body {
-  flex: 1 1 auto;
-  min-height: 0;
-  overflow-y: auto;
-  padding: 0 28px; /* design 9.10; no token */
-  color: var(--text);
-}
-
-.panel .actions {
-  align-items: center;
-  padding: 18px 28px 22px; /* design 9.10; no token */
-  border-top: 1px solid var(--border);
-}
-
-/*
  * Settings: the Settings dialog (design 9.11): 900 wide (was 760), padding 24 28 22,
  * radius 14, --shadow-dialog. The body scrolls when the window is short.
  */
@@ -214,7 +167,6 @@
 
 /* Open: fade in with a 0.98 to 1.0 scale (design 9.8; no token for 150 ms ease-out). */
 .wide[open],
-.panel[open],
 .settings[open] {
   animation: dialogIn 150ms ease-out;
 }
@@ -228,7 +180,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .wide[open],
-  .panel[open],
   .settings[open] {
     animation: none;
   }

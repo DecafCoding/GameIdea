@@ -200,3 +200,44 @@
   color: var(--text-soft);
   font-size: 13px;
 }
+
+/*
+ * Tab bar (design 9.11, 2026-11-04): gap 4, bottom border 1 --border, margin-bottom 4. A tab
+ * is 44 tall, padding 0 14, 14/600 --text-muted, with a 2 px bottom border that sits on the
+ * bar's border (margin-bottom −1). Selected: --text and an --accent underline (the light-mode
+ * outline rule in 4.2 uses --accent-text). Disabled: --text-disabled.
+ */
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid var(--border);
+}
+
+.tab {
+  height: var(--button-h);
+  margin-bottom: -1px;
+  padding: 0 14px; /* design 9.11; no token */
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tab[aria-selected='true'] {
+  border-bottom-color: var(--accent);
+  color: var(--text);
+}
+
+:global([data-mode='light']) .tab[aria-selected='true'] {
+  border-bottom-color: var(--accent-text);
+}
+
+.tab[aria-disabled='true'] {
+  color: var(--text-disabled);
+  cursor: not-allowed;
+}

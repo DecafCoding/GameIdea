@@ -1,7 +1,8 @@
 /**
  * Browser tests for the Settings dialog (design 9.11): it opens from the rail with its rows
  * and the package.json version, a change applies at once and is not an undo step, Done and
- * × close it, and each key in the Keyboard list does what the list says.
+ * × close it, each key in the Keyboard list does what the list says, and the dialog is 900
+ * wide with the Appearance and Genres tabs, whose change is not an undo step.
  */
 import { readFileSync } from 'node:fs';
 import type { Page } from '@playwright/test';
@@ -195,4 +196,28 @@ test('settings_blockedStorage_defaultsAndNote', async ({ page }) => {
   // A change still applies for this page.
   await dialog(page).getByRole('radio', { name: 'Light' }).click();
   await expect(html).toHaveAttribute('data-mode', 'light');
+});
+
+test('settings_dialog_is900WideWithTwoTabs', async ({ page }) => {
+  await openBoard(page);
+  await openSettings(page);
+  expect((await boxOf(dialog(page))).width).toBe(900);
+  await expect(dialog(page).getByRole('tab')).toHaveText(['Appearance', 'Genres']);
+  await expect(dialog(page).getByRole('tab', { name: 'Appearance' })).toHaveAttribute(
+    'aria-selected',
+    'true',
+  );
+});
+
+test('settings_tabChange_notAnUndoStep', async ({ page }) => {
+  await openBoard(page);
+  await openSettings(page);
+  await dialog(page).getByRole('tab', { name: 'Genres' }).click();
+  await expect(dialog(page).getByRole('tab', { name: 'Genres' })).toHaveAttribute(
+    'aria-selected',
+    'true',
+  );
+  await dialog(page).getByRole('tab', { name: 'Appearance' }).click();
+  await dialog(page).getByRole('button', { name: 'Done' }).click();
+  await expect(page.getByRole('button', { name: 'Undo' })).toBeDisabled();
 });

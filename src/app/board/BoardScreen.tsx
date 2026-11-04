@@ -4,9 +4,10 @@
  * panel. Deck buttons draw into open space near the center of the view with the draw
  * motion, using only cues that share a genre with that deck's list on the board. The board
  * is the open board in the store, which the route loads from storage;
- * Ctrl+Z and Ctrl+Shift+Z undo and redo. The rail's Genres button opens the Genres panel;
- * a genre change saves but is never an undo step. The rail's Settings button opens the
- * Settings dialog; a settings change is never part of the board or its undo history.
+ * Ctrl+Z and Ctrl+Shift+Z undo and redo. The rail's Settings button opens the Settings
+ * dialog; a settings change is never part of the board or its undo history. Genres live on
+ * the Settings Genres tab, which this screen fills with the board's GenresTab (design 9.10);
+ * a genre change saves but is never an undo step.
  */
 import { useState } from 'react';
 import {
@@ -22,7 +23,7 @@ import {
 } from '@/features/canvas';
 import { drawCard } from '@/features/draw';
 import { downloadBoardFile } from '@/features/export';
-import { GenresPanel } from '@/features/genres';
+import { GENRES_FOOTER_TEXT, GENRES_SCOPE_TEXT, GenresTab } from '@/features/genres';
 import { addNote, NOTE_SIZE } from '@/features/notes';
 import { SettingsDialog } from '@/features/settings';
 import { GENRE_DECKS, newId, type Deck, type GenreDeck, type ModDeck } from '@/shared/model';
@@ -74,8 +75,6 @@ function BoardScreenBody({
   const canvas = useCanvasApi();
   // The board id on which something was drawn or added this session: the panel stays away.
   const [startedOn, setStartedOn] = useState<string | null>(null);
-  // The board id the Genres panel was opened on; it closes when another board opens.
-  const [genresOpenOn, setGenresOpenOn] = useState<string | null>(null);
   const [settingsOpen, setSettingsOpen] = useState(false);
 
   const ready = status === 'ready' && pools !== null;
@@ -130,7 +129,7 @@ function BoardScreenBody({
         onDrawHook={drawHook}
         onAddNote={addNoteNow}
         genres={board.genres}
-        onOpenGenres={() => setGenresOpenOn(board.id)}
+        onOpenGenres={() => setSettingsOpen(true)}
         onOpenSettings={() => setSettingsOpen(true)}
       />
       <div className={styles.region} data-testid="canvas-region">
@@ -174,14 +173,16 @@ function BoardScreenBody({
         <BoardCanvas pools={pools} />
         {showPanel && <EmptyBoardPanel />}
       </div>
-      {genresOpenOn === board.id && (
-        <GenresPanel
-          genres={board.genres}
-          onChange={setGenres}
-          onClose={() => setGenresOpenOn(null)}
-        />
-      )}
-      <SettingsDialog open={settingsOpen} onClose={() => setSettingsOpen(false)} />
+      <SettingsDialog
+        open={settingsOpen}
+        onClose={() => setSettingsOpen(false)}
+        genresTab={{
+          caption: GENRES_SCOPE_TEXT,
+          footerNote: GENRES_FOOTER_TEXT,
+          // Keyed by board, so the tab rebuilds its picked row when another board opens.
+          content: <GenresTab key={board.id} genres={board.genres} onChange={setGenres} />,
+        }}
+      />
     </main>
   );
 }
