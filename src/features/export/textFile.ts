@@ -1,18 +1,28 @@
 /**
  * The text file: the board in plain words, downloaded as <board-name>.txt. The board
  * name, then a Hooks section (each non-empty hook sentence in reading order, one
- * paragraph each, a blank line between), then a Cards section (stacks top to bottom, then left to right; tucked cards
+ * paragraph each, a blank line between), then on a One-Pager board a Concept section (each
+ * lane's plural deck name in rail order, then "- <words>" per chip in lane order, merged
+ * and On Top adjectives included, a blank line between lanes; left out when the panel is
+ * empty), then a Cards section (stacks top to bottom, then left to right; tucked cards
  * indented 2 spaces per level; only the active cue or pair), then a Notes section (each
  * note: its title line, then its text).
  * A Modifier tucked under a card with nothing tucked under it joins its parent's line
  * ("Player Role: exiled navigator, devout"). An On Top Modifier is never its own line: it
  * reads inside its base card's words ("Player Role: tall frozen pilot"). A Hook Card line
- * reads "Hook Card", with its stack indented under it. A Modifier line names its Modifier deck. LF line ends and one final
+ * reads "Hook Card", with its stack indented under it. Concept cards are never in Cards. A Modifier line names its Modifier deck. LF line ends and one final
  * newline.
  */
 import { activeText } from '@/features/card';
-import { cardText, childrenOf, hookSentences, isOnTop, isRoot } from '@/features/canvas';
-import { DECK_NAME, MOD_DECK_NAME, type Board, type Card } from '@/shared/model';
+import {
+  cardText,
+  childrenOf,
+  conceptLanes,
+  hookSentences,
+  isOnTop,
+  isRoot,
+} from '@/features/canvas';
+import { DECK_LANE_NAME, DECK_NAME, MOD_DECK_NAME, type Board, type Card } from '@/shared/model';
 import { downloadFile, safeFileBase } from './download';
 
 /** "<name>.txt", with characters Windows does not allow in a file name replaced. */
@@ -49,10 +59,21 @@ function cardLines(board: Board): string[] {
     }
   };
   const roots = board.cards
-    .filter((card) => isRoot(board, card.id) && !isOnTop(board, card))
+    // Concept cards are listed in the Concept section, not here.
+    .filter((card) => isRoot(board, card.id) && !isOnTop(board, card) && !card.inConcept)
     .sort((a, b) => a.y - b.y || a.x - b.x || a.z - b.z);
   for (const root of roots) visit(root, 0);
   return lines;
+}
+
+/** Each Concept lane: its name, then 1 bullet per chip; empty on a Free Form board. */
+function conceptBlocks(board: Board): string[] {
+  if (board.kind !== 'onePager') return [];
+  return conceptLanes(board).map((lane) =>
+    [DECK_LANE_NAME[lane.deck], ...lane.cards.map((card) => `- ${cardText(board, card)}`)].join(
+      '\n',
+    ),
+  );
 }
 
 function noteBlocks(board: Board): string[] {
@@ -71,6 +92,8 @@ export function boardText(board: Board): string {
   const sections = [board.name];
   const hooks = hookSentences(board);
   if (hooks.length > 0) sections.push(['Hooks', '', hooks.join('\n\n')].join('\n'));
+  const concept = conceptBlocks(board);
+  if (concept.length > 0) sections.push(['Concept', '', concept.join('\n\n')].join('\n'));
   const cards = cardLines(board);
   if (cards.length > 0) sections.push(['Cards', '', ...cards].join('\n'));
   const notes = noteBlocks(board);

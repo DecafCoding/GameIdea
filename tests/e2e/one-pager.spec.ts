@@ -7,10 +7,11 @@
  * board list label and the text file show the One-Pager parts. A version 1 database and a
  * version 1 board file open as Free Form boards, and a bad One-Pager file is refused.
  */
+import { readFile } from 'node:fs/promises';
 import type { Locator, Page } from '@playwright/test';
 import { expect, test } from './test';
 import type { Board, Card } from '@/shared/model';
-import { fixtureCard, onePagerBoard } from '@/test/fixtures/boards';
+import { fixtureCard, onePagerBoard, version1BoardFile } from '@/test/fixtures/boards';
 import {
   boxOf,
   canvasCards,
@@ -21,6 +22,7 @@ import {
   rail,
   storedBoards,
 } from './board-helpers';
+import { exportFile } from './export-helpers';
 import { backgroundRgb, type DeckName } from './helpers';
 
 test.beforeEach(async ({ page }) => {
@@ -458,5 +460,157 @@ test.describe('chip actions', () => {
     await page.keyboard.press('Control+z');
     await expect.poll(async () => Math.round((await boxOf(panel(page))).width)).toBe(232);
     await expect(page.getByRole('button', { name: 'Undo' })).toBeDisabled();
+  });
+});
+
+test.describe('outputs', () => {
+  test('onePager_footer_countsTrainPlusConcept', async ({ page }) => {
+    await openBoard(page, onePagerBoard());
+    // Train 2 + Concept 4; not the Hook Card, the loose Modifier or the note.
+    await expect(page.getByTestId('count-badge')).toHaveText('6 cards · 1 hook · 1 concept');
+    await dragTo(page, cardById(page, 'modifier-1'), await emptyPanelPoint(page));
+    await expect(page.getByTestId('count-badge')).toHaveText('6 cards · 1 hook · 1 concept');
+  });
+
+  test('onePager_boardList_showsOnePagerLabel', async ({ page }) => {
+    await openBoard(page, onePagerBoard());
+    await page.goto('/#/');
+    await createBoardFromList(page);
+    await page.goto('/#/');
+    const rows = page.getByRole('list', { name: 'Saved Boards' }).getByRole('listitem');
+    await expect(rows).toHaveCount(2);
+    const onePager = rows.filter({ hasText: 'One Pager' });
+    await expect(onePager.getByTestId('board-kind-label')).toHaveText('One-Pager');
+    await expect(
+      rows.filter({ hasText: 'Free Board' }).getByTestId('board-kind-label'),
+    ).toHaveCount(0);
+  });
+
+  test('onePager_textFile_hasConceptSection', async ({ page }) => {
+    await openBoard(page, onePagerBoard());
+    const download = await exportFile(page, 'Text File');
+    const text = await readFile(await download.path(), 'utf8');
+    expect(text).toContain(
+      'Hooks\n\nYou are a navigator who must trade.\n\nConcept\n\n' +
+        'Mechanics\n- climb\n\nResources\n- memories\n- rope\n\nSettings\n- outpost\n\nCards\n\n',
+    );
+  });
+});
+
+/** On the board list: makes a Free Form board named "Free Board" and waits for it to open. */
+async function createBoardFromList(page: Page) {
+  await page.getByRole('button', { name: 'New Board' }).first().click();
+  const dialog = page.getByRole('dialog', { name: 'New Board' });
+  await dialog.getByRole('textbox', { name: 'Name' }).fill('Free Board');
+  await dialog.getByRole('button', { name: 'Make Board' }).click();
+  await page.waitForURL(/#\/board\//);
+  await expect(page.locator('main[aria-label="Board"]')).toBeVisible();
+}
+
+const importButton = (page: Page) =>
+  page.getByRole('button', { name: 'Import Board File' }).first();
+
+/** Chooses a file through Import Board File on the board list. */
+async function importFile(page: Page, name: string, buffer: Buffer) {
+  const choosing = page.waitForEvent('filechooser');
+  await importButton(page).click();
+  const chooser = await choosing;
+  await chooser.setFiles({ name, buffer, mimeType: 'application/json' });
+}
+
+test.describe('upgrade and import', () => {
+  test('upgrade_version1Database_opensAsFreeForm', async ({ page }) => {
+    // A same-origin page that runs no app code, so nothing opens the database first.
+    await page.goto('/pools/role.json');
+    const file = version1BoardFile();
+    await page.evaluate(
+      async (record) => {
+        await new Promise<void>((resolve, reject) => {
+          // Dexie's native version is the declared version × 10: version 1 is 10.
+          const request = indexedDB.open('gameidea', 10);
+          request.onupgradeneeded = () => {
+            const db = request.result;
+            db.createObjectStore('boards', { keyPath: 'id' });
+            const index = db.createObjectStore('boardIndex', { keyPath: 'id' });
+            index.createIndex('updatedAt', 'updatedAt');
+          };
+          request.onerror = () => reject(new Error('open failed'));
+          request.onsuccess = () => {
+            const db = request.result;
+            const tx = db.transaction(['boards', 'boardIndex'], 'readwrite');
+            tx.objectStore('boards').put({ ...record, id: 'v1-board' });
+            tx.objectStore('boardIndex').put({
+              id: 'v1-board',
+              name: record.name,
+              createdAt: record.createdAt,
+              updatedAt: record.updatedAt,
+            });
+            tx.oncomplete = () => {
+              db.close();
+              resolve();
+            };
+            tx.onerror = () => reject(new Error('write failed'));
+          };
+        });
+      },
+      file as Record<string, string>,
+    );
+    await page.goto('/#/board/v1-board');
+    await expect(page.locator('main[aria-label="Board"]')).toBeVisible();
+    await expect(canvasCards(page)).toHaveCount((file.cards as unknown[]).length - 1);
+    await expect(panel(page)).toHaveCount(0);
+    await expect(rail(page).getByRole('button', { name: 'Draw A Hook Card' })).toBeEnabled();
+    const [board] = await storedBoards(page);
+    expect(board!.formatVersion).toBe(2);
+    expect(board!.kind).toBe('free');
+    expect(board!.cards.every((card) => card.inConcept === false)).toBe(true);
+  });
+
+  test('import_version1BoardFile_opensAsFreeForm', async ({ page }) => {
+    await page.goto('/#/');
+    await importFile(
+      page,
+      'Round Trip.gameidea.json',
+      Buffer.from(JSON.stringify(version1BoardFile())),
+    );
+    await expect(page.getByRole('status')).toHaveText('Board imported.');
+    await page.getByRole('link', { name: 'Round Trip' }).click();
+    await expect(page.locator('main[aria-label="Board"]')).toBeVisible();
+    await expect(panel(page)).toHaveCount(0);
+    const [board] = await storedBoards(page);
+    expect(board!.kind).toBe('free');
+    expect(board!.formatVersion).toBe(2);
+    expect(board!.cards.every((card) => card.inConcept === false)).toBe(true);
+  });
+
+  test('import_badOnePagerFile_bannerAndNothingChanged', async ({ page }) => {
+    await openBoard(page, onePagerBoard());
+    await page.goto('/#/');
+    const before = await storedBoards(page);
+    const bad = onePagerWith([fixtureCard('hook', { id: 'hook-2', x: 900, y: 900, z: 40 })]);
+    await importFile(page, 'Bad.gameidea.json', Buffer.from(JSON.stringify(bad)));
+    await expect(page.getByRole('alert')).toContainText(
+      'This file is not a GameIdea board file. Nothing changed.',
+    );
+    expect(await storedBoards(page)).toEqual(before);
+  });
+
+  test('import_onePagerFile_roundTrips', async ({ page }) => {
+    await openBoard(page, { ...onePagerBoard(), conceptWidth: 400 });
+    const download = await exportFile(page, 'Board File');
+    const buffer = await readFile(await download.path());
+    await page.goto('/#/');
+    await importFile(page, 'One Pager.gameidea.json', buffer);
+    await expect(page.getByRole('status')).toContainText('Board imported.');
+    const stored = await storedBoards(page);
+    expect(stored).toHaveLength(2);
+    const imported = stored.find((b) => b.id !== 'one-pager')!;
+    expect(imported.kind).toBe('onePager');
+    expect(imported.conceptWidth).toBe(400);
+    expect(imported.cards).toEqual(stored.find((b) => b.id === 'one-pager')!.cards);
+    await page.goto(`/#/board/${encodeURIComponent(imported.id)}`);
+    await expect(panel(page)).toBeVisible();
+    await expect(lane(page, 'Resources').getByTestId('chip')).toHaveText(['memories', 'rope']);
+    expect(Math.round((await boxOf(panel(page))).width)).toBe(400);
   });
 });

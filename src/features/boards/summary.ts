@@ -1,14 +1,16 @@
 /**
- * Board card summary (design 9.3): card and note counts, the Hook Cards and their
+ * Board card summary (design 9.3): the board kind, card and note counts, the Hook Cards and their
  * sentences, the first hook for the preview, the deck dots, and the meta line
  * "Edited 10 minutes ago · 8 cards · 1 hook" with a relative time.
  */
 import { hookSentences } from '@/features/canvas';
-import { CARD_TYPES, type Board, type CardType } from '@/shared/model';
+import { CARD_TYPES, type Board, type BoardKind, type CardType } from '@/shared/model';
 
 export interface BoardSummary {
   id: string;
   name: string;
+  /** Free Form or One-Pager: a One-Pager board shows its label on the board list. */
+  kind: BoardKind;
   updatedAt: string;
   cardCount: number;
   noteCount: number;
@@ -28,6 +30,7 @@ export function summarize(board: Board): BoardSummary {
   return {
     id: board.id,
     name: board.name,
+    kind: board.kind,
     updatedAt: board.updatedAt,
     cardCount: board.cards.length,
     noteCount: board.notes.length,

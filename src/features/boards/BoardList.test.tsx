@@ -15,7 +15,7 @@ import {
 import { allGenresOn } from '@/shared/model';
 import { listBoards, loadBoard, saveBoard } from '@/shared/storage';
 import { resetDbForTests } from '@/shared/storage/db';
-import { fixtureBoard, fixtureCard, fixtureNote } from '@/test/fixtures/boards';
+import { fixtureBoard, fixtureCard, fixtureNote, onePagerBoard } from '@/test/fixtures/boards';
 import { BoardList, IMPORT_NOTICE_MS } from './BoardList';
 import { NO_HOOK_CARD_TEXT } from './BoardCard';
 
@@ -211,6 +211,22 @@ describe('BoardList', () => {
     );
     const dots = [...card.querySelectorAll('[data-type]')].map((d) => d.getAttribute('data-type'));
     expect(dots).toEqual(['hook', 'role', 'goal']);
+  });
+
+  it('boardList_onePager_showsLabel', async () => {
+    await saveBoard({ ...onePagerBoard(), updatedAt: minutesAgo(3) });
+    renderList();
+    const card = (await screen.findByRole('link', { name: 'One Pager' })).closest('li')!;
+    const label = within(card).getByTestId('board-kind-label');
+    expect(label.textContent).toBe('One-Pager');
+    expect(label.getAttribute('data-board-kind')).toBe('onePager');
+  });
+
+  it('boardList_freeForm_noLabel', async () => {
+    await seedThree();
+    renderList();
+    await screen.findByRole('link', { name: 'Salvage Run' });
+    expect(screen.queryByTestId('board-kind-label')).toBeNull();
   });
 
   it('boardList_emptyHookCardOnly_noPreviewBox', async () => {

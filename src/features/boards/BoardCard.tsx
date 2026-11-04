@@ -5,6 +5,7 @@
  * board menu (Rename, Export Board File, Delete). Rename turns the name into a field in
  * place: Enter saves, Esc cancels, a click outside the card also saves, and an empty name
  * keeps the old one. A just-imported card is highlighted and its meta line says "Imported".
+ * A One-Pager board shows a "One-Pager" label after its name, in the count pill style.
  */
 import {
   useCallback,
@@ -15,6 +16,7 @@ import {
   type KeyboardEvent,
   type RefObject,
 } from 'react';
+import { BOARD_KIND_NAME } from '@/shared/model';
 import { Icon } from '@/shared/ui';
 import { BoardMenu } from './BoardMenu';
 import { metaLine, type BoardSummary } from './summary';
@@ -67,9 +69,24 @@ export function BoardCard({
     <li ref={card} className={classes} data-highlighted={highlighted || undefined}>
       <div className={styles.top}>
         {draft === null ? (
-          <a className={styles.name} href={href}>
-            {summary.name}
-          </a>
+          summary.kind === 'onePager' ? (
+            <div className={styles.titleRow}>
+              <a className={styles.name} href={href}>
+                {summary.name}
+              </a>
+              <span
+                className={styles.kindLabel}
+                data-testid="board-kind-label"
+                data-board-kind="onePager"
+              >
+                {BOARD_KIND_NAME.onePager}
+              </span>
+            </div>
+          ) : (
+            <a className={styles.name} href={href}>
+              {summary.name}
+            </a>
+          )
         ) : (
           <RenameField draft={draft} card={card} onChange={setDraft} onDone={finishRename} />
         )}

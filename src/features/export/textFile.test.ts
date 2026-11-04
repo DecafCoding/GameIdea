@@ -9,6 +9,7 @@ import {
   fixtureCard,
   fixtureNote,
   fixtureStack,
+  onePagerBoard,
   secondModifier,
 } from '@/test/fixtures/boards';
 import { boardText, textFileName } from './textFile';
@@ -154,5 +155,50 @@ describe('textFile', () => {
   it('textFileName_badCharacters_replaced', () => {
     expect(textFileName('Salvage: Run?')).toBe('Salvage- Run-.txt');
     expect(textFileName(' ')).toBe('Untitled Board.txt');
+  });
+
+  it('boardText_onePager_conceptAfterHooksBeforeCards', () => {
+    expect(boardText(onePagerBoard())).toBe(
+      'One Pager\n\n' +
+        'Hooks\n\nYou are a navigator who must trade.\n\n' +
+        'Concept\n\n' +
+        'Mechanics\n- climb\n\n' +
+        'Resources\n- memories\n- rope\n\n' +
+        'Settings\n- outpost\n\n' +
+        'Cards\n\n' +
+        'Hook Card\n  Player Role: navigator\n    Mechanic: trade\n' +
+        'Player Role Modifier: exiled\n',
+    );
+  });
+
+  it('boardText_onePager_cardsSectionSkipsConcept', () => {
+    const cards = boardText(onePagerBoard()).split('Cards\n\n')[1]!;
+    for (const word of ['memories', 'rope', 'outpost', 'climb']) {
+      expect(cards).not.toContain(word);
+    }
+  });
+
+  it('boardText_conceptBullets_includeMergedAndOnTopAdjectives', () => {
+    const board = onePagerBoard();
+    const text = boardText({
+      ...board,
+      cards: [
+        ...board.cards,
+        combinedCard('setting', { id: 'setting-m', z: 30, inConcept: true }),
+        secondModifier({ id: 'top-1', onTopOf: 'setting-m' }),
+      ],
+    });
+    expect(text).toContain('Settings\n- outpost\n- devout exiled outpost\n');
+    expect(text.split('Cards\n\n')[1]).not.toContain('devout');
+  });
+
+  it('boardText_freeForm_noConceptSection', () => {
+    expect(boardText(named(fixtureBoard([combinedCard('role')])))).not.toContain('Concept');
+  });
+
+  it('boardText_onePagerEmptyPanel_noConceptSection', () => {
+    const board = onePagerBoard();
+    const empty = { ...board, cards: board.cards.filter((card) => !card.inConcept) };
+    expect(boardText(empty)).not.toContain('Concept');
   });
 });

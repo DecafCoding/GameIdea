@@ -2,7 +2,13 @@
  * Tests for the board row summary and the relative time.
  */
 import { describe, expect, it } from 'vitest';
-import { fixtureBoard, fixtureCard, fixtureNote, fixtureStack } from '@/test/fixtures/boards';
+import {
+  fixtureBoard,
+  fixtureCard,
+  fixtureNote,
+  fixtureStack,
+  onePagerBoard,
+} from '@/test/fixtures/boards';
 import { editedAgo, metaLine, summarize } from './summary';
 
 const NOW = new Date(2026, 5, 15, 12, 0, 0);
@@ -19,6 +25,7 @@ describe('summary', () => {
     expect(summarize(board)).toEqual({
       id: 'fixture-board',
       name: 'Fixture Board',
+      kind: 'free',
       updatedAt: board.updatedAt,
       cardCount: 4,
       noteCount: 1,
@@ -35,6 +42,10 @@ describe('summary', () => {
       fixtureCard('role', { z: 2, tuckedUnder: 'hook-1' }),
       fixtureCard('goal', { z: 3, tuckedUnder: 'role-1' }),
     ]);
+
+  it('summarize_onePager_kindOnePager', () => {
+    expect(summarize(onePagerBoard()).kind).toBe('onePager');
+  });
 
   it('summarize_hookStack_firstHookIsSentence', () => {
     const summary = summarize(hookBoard());
