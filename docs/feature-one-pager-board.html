@@ -25,7 +25,7 @@
 
 <h1>Feature — One-Pager Board</h1>
 <p class="meta">2026-11-04 · Extends GameIdea (working name), as planned in <a href="mvp-plan.html">mvp-plan.html</a>. Written from the <code>/dev-add-feature</code> run. Lands in Phase 7.</p>
-<p><strong>Visual authority:</strong> the visuals of this feature are not yet in <a href="design-system.html">design-system.html</a>. That covers the Concept panel, its lanes and chips, the resize handle, the board kind choice in New Board, the rail on a One-Pager board and the One-Pager empty state. <code>/dev-ui-update</code> adds them from the user's mockups before Phase 7 starts. After that, the design doc wins on every visual detail.</p>
+<p><strong>Visual authority:</strong> <a href="design-system.html#s-onepager">design-system.html, 9.15</a> holds the look of the Concept panel, lanes, chips, resize handle and chip drop target, added from the 2026-11-04 handoff. The board kind choice in New Board, the One-Pager empty state, the rail Hook Card button on a One-Pager board and the board list label are not drawn yet (design-system section 15). Where this brief and the design doc disagree on a visual detail, the design doc wins.</p>
 
 <h2>Summary and motivation</h2>
 <p>A game idea often has more than one Resource, Setting, Mechanic or Goal. Today every card goes into one vertical train under a Hook Card. At about 10 cards the train is too tall to see or edit. The hook sentence also becomes a paragraph instead of a hook.</p>
@@ -47,9 +47,9 @@
   <li data-checked="true">The Hook Card on a One-Pager board has Copy Hook and Redraw All only. It has no Duplicate and no Discard.</li>
   <li data-checked="true">The Hook Train: the stack under the Hook Card, with the same tuck rules and hook sentence as today.</li>
   <li data-checked="true">The Concept panel: 1 for each One-Pager board, at a fixed place to the right of the Hook Card. It moves when the Hook Card moves. It has no link line, because the board has only 1 Hook Card and 1 Concept panel.</li>
-  <li data-checked="true">The panel width is resizable with a handle on its right edge. The height grows with its content. The width is saved with the board.</li>
+  <li data-checked="true">The panel width is resizable with a handle on its right edge, from 232 to 640 with no snap. The height grows with its content. The width is saved with the board.</li>
   <li data-checked="true">Lanes: 1 lane for each deck that has a card in the panel, in rail order. A lane shows only while it has a card. During a drag, the lane for the dragged card's deck shows.</li>
-  <li data-checked="true">Chips: each Concept card shows as a chip with its active cue. Chips wrap side by side in their lane, in drop order.</li>
+  <li data-checked="true">Chips: each Concept card shows as a chip with its active text and no icon. Chips wrap side by side in their lane, in drop order. A chip is never wider than its lane, and long text wraps onto more lines. Each lane has a label with the deck icon and the plural deck name.</li>
   <li data-checked="true">A card dropped anywhere on the panel goes into the lane of its deck. Any deck can go into the panel. A Hook Card and a note cannot.</li>
   <li data-checked="true">Chips are settled. A chip has no buttons: no rotate, lock, redraw or discard.</li>
   <li data-checked="true">A double-click on a chip moves its card out of the panel to an open place on the canvas beside the panel. A drag of a chip onto the canvas also moves it out. Out of the panel, the card is a full card again.</li>
@@ -58,7 +58,7 @@
   <li data-checked="true">Loose cards and notes sit on the open canvas, as on a Free Form board.</li>
   <li data-checked="true">The text file of a One-Pager board has a Concept section: a bullet list for each deck, in lane order.</li>
   <li data-checked="true">The board list shows a One-Pager label on One-Pager boards.</li>
-  <li data-checked="true">The footer on a One-Pager board reads, for example, "15 cards · 1 hook · 1 concept". It does not count loose cards.</li>
+  <li data-checked="true">The footer on a One-Pager board reads, for example, "12 cards · 1 hook · 1 concept". The card count is the Hook Train plus the Concept cards. It does not count the Hook Card or loose cards.</li>
   <li data-checked="true">Board format version 2, with an upgrade step. Every existing board becomes a Free Form board.</li>
 </ul>
 
@@ -88,7 +88,7 @@
   <tr><td><code>features/export/</code></td><td><code>UPGRADES[1]</code> in <code>upgrade.ts</code>. New fields and One-Pager checks in <code>schema.ts</code>. The Concept section in <code>textFile.ts</code>.</td></tr>
   <tr><td><code>features/boards/</code></td><td>The kind choice in <code>NewBoardDialog.tsx</code>. The One-Pager label from <code>summary.ts</code>.</td></tr>
   <tr><td><code>features/canvas/</code></td><td>The Concept panel node, its resize and its place beside the Hook Card. Drop routing in <code>dropZones.ts</code>. Pop-out with <code>findOpenSpot</code> in <code>placement.ts</code>. Redraw All in <code>boardActions.ts</code> skips Concept cards. Stack and reading code skip Concept cards.</td></tr>
-  <tr><td><code>features/card/</code></td><td>A chip view of a card: deck icon and active text, with no ring control and no strip.</td></tr>
+  <tr><td><code>features/card/</code></td><td>A chip view of a card: active text with no icon, no ring control and no strip.</td></tr>
   <tr><td><code>features/hook/</code></td><td>The Hook Card menu hides Duplicate and Discard on a One-Pager board.</td></tr>
   <tr><td><code>app/board/</code></td><td>The rail Hook Card button and the empty state on a One-Pager board. The footer counts.</td></tr>
   <tr><td>Tests</td><td>New unit and Playwright tests. New fixtures: a One-Pager board, a version 1 board file and bad One-Pager files.</td></tr>
@@ -169,7 +169,7 @@ Resources
 <h3>Board list and footer</h3>
 <ul>
   <li>A One-Pager board shows a One-Pager label and its hook sentence.</li>
-  <li>The footer counts all cards, the Hook Card and the Concept panel. It does not count loose cards.</li>
+  <li>The footer reads "N cards · 1 hook · 1 concept". N is the Hook Train plus the Concept cards. It does not count the Hook Card or loose cards.</li>
 </ul>
 
 <h2>Architecture fit</h2>
@@ -260,7 +260,6 @@ Resources
 <ul>
   <li>A chip can be dragged out as well as popped out by double-click.</li>
   <li>A card with cards tucked under it brings them into the panel, each in its own lane.</li>
-  <li>The panel width has a minimum and a maximum. <code>/dev-ui-update</code> sets the values.</li>
   <li>Phase 6 (Themed Cards) lands before Phase 7.</li>
 </ul>
 

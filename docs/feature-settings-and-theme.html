@@ -26,6 +26,7 @@
 <h1>Feature — Settings and theme</h1>
 <p class="meta">2026-11-02 · Extends GameIdea (working name), as planned in <a href="mvp-plan.html">mvp-plan.html</a>. Written from the <code>/dev-add-feature</code> run. Updated 2026-11-02 by <code>/dev-ui-update</code>.</p>
 <p><strong>Visual authority:</strong> <a href="design-system.html">design-system.html</a> holds every token value, size and screen spec for this feature (sections 4, 8.2 and 9.11). Where this brief and the design doc disagree on a visual detail, the design doc wins.</p>
+<p><strong>Superseded in part, 2026-11-04.</strong> The design handoff <code>docs/design-handoff-2026-11-04/</code> changes 3 rules of this brief from Phase 6. The mode now changes card faces, tucked faces, notes and the Hook Card fill (badges, rings and deck colors still never change). The rail Genres button and its count line are removed, and genres move into a Genres tab of the Settings dialog. The dialog is 900 wide. The lines below that state the old rules are marked.</p>
 
 <h2>Summary and motivation</h2>
 <p>A Settings dialog gives the user 3 settings: Mode (Dark or Light), Theme color (Orange, Blue or Green) and Snap to grid (on or off). The dialog also lists the keyboard shortcuts and shows the app version. The settings apply to every board in the browser. A change applies at once.</p>
@@ -42,7 +43,7 @@
 <h3>In this feature</h3>
 <ul class="checklist">
   <li data-checked="true">A Settings dialog, opened from a Settings button at the bottom of the board rail. It has no Cancel. A change applies at once. Done and the close button close it.</li>
-  <li data-checked="true">Mode: Dark or Light. Light turns all chrome, the canvas ground and the dot grid light. Chrome means the top bar, the rail, dialogs, panels, the card strip, the zoom strip and the board list. Cards, notes, the Hook Card, connector badges and the 11 deck colors look the same in both modes.</li>
+  <li data-checked="true">Mode: Dark or Light. Light turns all chrome, the canvas ground and the dot grid light. Chrome means the top bar, the rail, dialogs, panels, the card strip, the zoom strip and the board list. Cards, notes, the Hook Card, connector badges and the 11 deck colors look the same in both modes. <em>Superseded 2026-11-04 from Phase 6: see <a href="design-system.html">design-system.html</a> 4.5, 8.2, 9.10 and 9.11.</em></li>
   <li data-checked="true">Theme color: Orange, Blue or Green. It replaces the accent everywhere the accent marks an action or a selection. That covers the app mark, primary buttons, the selection outline, focus outlines, drop targets, slot hints, toggles, the Hook Card border, the rail Hook Card button and the genre counts.</li>
   <li data-checked="true">A fixed warning color, split out from the old <code>--accent-text</code>. Warning text, the warning icon, "Save failed" and the Discard label use it in every theme color.</li>
   <li data-checked="true">Snap to grid: on or off. With snap on, a dropped free card or note puts its top-left corner on the nearest 24 px grid dot. Alt held at the drop places it freely. A tucked card keeps its normal tuck place under its parent card. A note resize is always free.</li>
@@ -52,7 +53,7 @@
   <li data-checked="true">Settings saved in browser local storage, for each address and port. Other open tabs update at once.</li>
   <li data-checked="true">A one-line note in the dialog when local storage is blocked</li>
   <li data-checked="true">Rail: an Add note button. It places a new note at the free 24 px grid spot nearest the center of the view, opens it ready to type, and is one undo step.</li>
-  <li data-checked="true">Rail: the Genres button shows the number of genres on in the board row, for example "3 genres", or "All genres" when all 21 are on.</li>
+  <li data-checked="true">Rail: the Genres button shows the number of genres on in the board row, for example "3 genres", or "All genres" when all 21 are on. <em>Superseded 2026-11-04 from Phase 6: see <a href="design-system.html">design-system.html</a> 4.5, 8.2, 9.10 and 9.11.</em></li>
   <li data-checked="true">Rail: each of the 4 genre-tagged deck buttons shows its number of genres on. The count is hidden when all 21 are on. It replaces the "small mark" in the MVP plan.</li>
   <li data-checked="true">M1 guard: no chrome color is written outside the design tokens. A lint check finds hex and rgba values in CSS modules.</li>
 </ul>
@@ -133,7 +134,7 @@
 <h3>Settings dialog</h3>
 <table>
   <tr><th>Section</th><th>Control</th><th>Help text (from the mockup, can change)</th></tr>
-  <tr><td>Appearance</td><td>Mode: Dark, Light</td><td>Dark or light screens. The cards look the same in both.</td></tr>
+  <tr><td>Appearance</td><td>Mode: Dark, Light</td><td>Dark or light screens. The cards look the same in both. <em>Superseded 2026-11-04 from Phase 6: see <a href="design-system.html">design-system.html</a> 4.5, 8.2, 9.10 and 9.11.</em></td></tr>
   <tr><td>Appearance</td><td>Theme color: Orange, Blue, Green</td><td>The color of buttons, selection, the Hook Card border and the genre counts.</td></tr>
   <tr><td>Canvas</td><td>Snap to grid: toggle</td><td>Cards and notes line up with the dot grid when you drop them. Hold Alt while you drag to place freely.</td></tr>
   <tr><td>Keyboard</td><td>List only</td><td>R: turn the outer ring, or the only ring, one step. Shift+R: turn the inner ring of a combined card. Ctrl+Z: undo. Ctrl+Shift+Z: redo.</td></tr>
@@ -142,7 +143,7 @@
 <p>The Theme color help text names selection as well as the mockup's list, because the color marks selection too. When local storage is blocked, the dialog shows: "This browser does not save settings. They reset when the page reloads."</p>
 
 <h3>Rail</h3>
-<p>Top to bottom: Hook Card, Core, Modifiers, Optional, Genres (with its count line), Add note, and Settings at the bottom.</p>
+<p>Top to bottom: Hook Card, Core, Modifiers, Optional, Genres (with its count line), Add note, and Settings at the bottom. <em>Superseded 2026-11-04 from Phase 6: see <a href="design-system.html">design-system.html</a> 4.5, 8.2, 9.10 and 9.11.</em></p>
 
 <h2>Architecture fit</h2>
 <p><b>Outcome 2: it fits, with one local exception.</b></p>
@@ -171,7 +172,7 @@
 <h3>Browser tests (Playwright, 3 engines)</h3>
 <ul>
   <li>Mode and Theme color on both screens. Each of the 6 combinations renders with no hard-coded chrome color.</li>
-  <li>Cards, notes, badges and the Hook Card are the same in every combination.</li>
+  <li>Cards, notes, badges and the Hook Card are the same in every combination. <em>Superseded 2026-11-04 from Phase 6: see <a href="design-system.html">design-system.html</a> 4.5, 8.2, 9.10 and 9.11.</em></li>
   <li>Warning text, "Save failed" and Discard keep the fixed warning color in Blue and Green.</li>
   <li>A reload keeps the settings. A Light reload shows no dark frame.</li>
   <li>A second tab updates in less than 1 second.</li>
@@ -206,7 +207,7 @@
 <h2>Done criteria</h2>
 <ul>
   <li>Settings opens from the rail and has Mode, Theme color, Snap to grid, the Keyboard list, and a footer with the real version.</li>
-  <li>All 6 combinations of Mode and color render both screens with no hard-coded chrome color, and the M1 lint check passes. Cards, notes, badges, deck colors and the Hook Card look the same in every combination.</li>
+  <li>All 6 combinations of Mode and color render both screens with no hard-coded chrome color, and the M1 lint check passes. Cards, notes, badges, deck colors and the Hook Card look the same in every combination. <em>Superseded 2026-11-04 from Phase 6: see <a href="design-system.html">design-system.html</a> 4.5, 8.2, 9.10 and 9.11.</em></li>
   <li>In Blue and Green, warning text, "Save failed" and Discard keep the fixed warning color.</li>
   <li>With snap on, a dropped free card or note sits on a 24 px dot. With Alt held, it sits where it was dropped. A tucked card keeps its tuck place. With snap off, every drop is free.</li>
   <li>Settings survive a reload. A second open tab updates in less than 1 second. A Light reload never shows a dark frame.</li>

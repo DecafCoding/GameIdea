@@ -32,7 +32,7 @@ src/
     canvas/         React Flow setup, pan, zoom, drag, tuck, tuck hints, snap,
                     connector badges and their word rules for the 12 card types
     hook/           Hook Card: sentence builder (pure), selectable sentence, icon menu (Copy Hook and its fallback dialog, Redraw All, Duplicate, Discard)
-    genres/         Genres panel, genre counts
+    genres/         Genres tab content (inside Settings from Phase 6), genre counts
     notes/          free-text notes with editable titles, Add note
     boards/         board list: make, open, rename, delete
     export/         text file (with hooks), board file, import and its Zod checks
@@ -104,7 +104,7 @@ Import rules (`import-rules` in `docs/architecture.html`). Do not break them:
 - **Board file format is expensive to change.** `formatVersion` starts at 1 with no upgrade steps. A shape change needs an upgrade step. Import always creates a new board; a duplicate name gets "(imported)".
 - **Undo.** zundo, up to 100 steps per board, session only; clears on board change, reload and when another tab changes the board. Every user action is one step (Redraw All included). Genre and settings changes are never in undo.
 - **2 tabs.** After a save, post the board id on a BroadcastChannel; a tab showing that board reloads and shows the notice.
-- **Theme.** Settings set `<html data-mode data-theme>` before first render (local storage, so no dark flash). Only chrome and accent tokens follow them. Cards, notes, badges, deck colors and the Hook Card never change. Light-mode outlines use `--accent-text`.
+- **Theme.** Settings set `<html data-mode data-theme>` before first render (local storage, so no dark flash). The theme color changes only the accent. From Phase 6 the mode also changes card faces, tucked faces, notes and the Hook Card fill (`docs/design-system.html` 4.5). Badges, rings, center icons and deck colors never change. Light-mode outlines use `--accent-text`.
 - **Snap** applies only to the drop of a free card or note, to the 24 px grid. Alt skips it. Tuck, combine and On Top drops ignore it.
 
 ## Configuration

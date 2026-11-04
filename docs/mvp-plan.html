@@ -92,8 +92,8 @@
   <li data-checked="true">Free tuck: any card can tuck under any card, except that a Hook Card cannot tuck under a card. The app shows a hint for the normal place of each deck.</li>
   <li data-checked="true">Infinite canvas with pan, zoom, place and move</li>
   <li data-checked="true">Free-text notes with an editable title</li>
-  <li data-checked="true">Genre settings: the 21 genres in the Genres table, on the 4 genre-tagged decks only (Mechanic, Resource, Progression, Constraint). The Genres panel sets the genres of those 4 decks together and one by one. The user can change them at any time. A change affects the next draw only. The other 7 decks ignore genre.</li>
-  <li data-checked="true">A left rail in labeled groups: Hook Card, Core, Modifiers (3 icon buttons), Optional, Genres with its count line, Add note, and Settings at the bottom</li>
+  <li data-checked="true">Genre settings: the 21 genres in the Genres table, on the 4 genre-tagged decks only (Mechanic, Resource, Progression, Constraint). The Genres panel sets the genres of those 4 decks together and one by one. The user can change them at any time. A change affects the next draw only. The other 7 decks ignore genre. From M6 the genres are set in the Genres tab of the Settings dialog, which is disabled when no board is open.</li>
+  <li data-checked="true">A left rail in labeled groups: Hook Card, Core, Modifiers (3 icon buttons), Optional, Add note, and Settings at the bottom. The Genres button and its count line were removed in M6.</li>
   <li data-checked="true">Settings: Dark or Light mode, Theme color (Orange, Blue, Green), Snap to grid on or off, the Keyboard list and the version footer. The settings apply to every board in the browser. See <a href="feature-settings-and-theme.html">feature-settings-and-theme.html</a>.</li>
   <li data-checked="true">Board list with multiple boards: make, open, rename and delete. The New Board dialog asks for a name and, from M7, the board kind (One-Pager or Free Form).</li>
   <li data-checked="true">Autosave after each change, a warning when a save fails, and a warning when one board is open in 2 tabs</li>
@@ -274,14 +274,14 @@ Genre                     (21 values. Meanings are in the Genres table.
   <li>Core: Player Role, Mechanic, Resource, Goal, Conflict</li>
   <li>Modifiers: 3 icon buttons, Role, Resource and Setting, each with a hover label</li>
   <li>Optional: Setting, Mood, Twist, Progression, Constraint</li>
-  <li>Genres, which opens the Genres panel. A line under it shows the number of genres on in the board row, for example "3 genres", or "All genres".</li>
   <li>Add note, which places a new note at the free grid spot nearest the center of the view</li>
   <li>Settings, at the bottom, which opens the Settings dialog</li>
 </ol>
 <p>Each genre-tagged deck button shows a genre count: its number of genres on. The count is hidden when all 21 are on.</p>
+<p>From M6 there is no Genres button in the rail. Genres are set in the Settings dialog, on the Genres tab. See <a href="design-system.html#s-genres">design-system.html, 9.10</a>.</p>
 
-<h3>Genres panel</h3>
-<p>One row sets the genres of the 4 genre-tagged decks together. Below it, Mechanic, Resource, Progression and Constraint each have their own row. The other 7 decks do not appear, because genre does not change their draws. Every listed deck keeps at least 1 genre. A change applies to the next draw only.</p>
+<h3>Genres tab</h3>
+<p>The Genres tab of the Settings dialog, from M6. Before M6 it was its own Genres panel. One row sets the genres of the 4 genre-tagged decks together. Below it, Mechanic, Resource, Progression and Constraint each have their own row. The other 7 decks do not appear, because genre does not change their draws. Every listed deck keeps at least 1 genre. A change applies to the next draw only.</p>
 
 <h3>Connector badges</h3>
 <p>A badge sits on the seam above a tucked card, in that card's type color. The word depends on the card's deck. The user clicks a badge to choose another word.</p>
@@ -307,8 +307,8 @@ Genre                     (21 values. Meanings are in the Genres table.
 </ul>
 
 <h3>Visual design</h3>
-<p>The visual design is locked in <a href="design-system.html">design-system.html</a>, which is the authority for every token, size and screen. The look carries over from TheForge, with 9 deliberate deviations listed there.</p>
-<p>The app has 2 modes, Dark and Light, and 3 theme colors. Only the chrome and the accent change. Cards, notes, badges, deck colors and the Hook Card look the same in every mode and theme color, and warnings keep a fixed color. In light mode, selection and focus outlines use the darker accent text color, so they pass contrast. See <a href="feature-settings-and-theme.html">feature-settings-and-theme.html</a>.</p>
+<p>The visual design is locked in <a href="design-system.html">design-system.html</a>, which is the authority for every token, size and screen. The look carries over from TheForge, with 11 deliberate deviations listed there.</p>
+<p>The app has 2 modes, Dark and Light, and 3 theme colors. The theme color changes the accent. From M6, the mode changes the chrome, card faces, notes and the Hook Card fill: cards and notes are dark in dark mode and cream in light mode, and the Hook Card is white in light mode. Deck colors, rings and badges never change, and warnings keep a fixed color. Every card has a thin edge and a 14% tint in its deck color. In light mode, selection and focus outlines use the darker accent text color, so they pass contrast. See <a href="feature-settings-and-theme.html">feature-settings-and-theme.html</a>.</p>
 
 <h3>Outputs</h3>
 <ul>
@@ -411,9 +411,11 @@ Genre                     (21 values. Meanings are in the Genres table.
   <li>Pass bar: all done criteria pass.</li>
 </ul>
 
-<h3>M6: Themed Cards</h3>
+<h3>M6: Card Themes And Settings Tabs</h3>
 <ul>
-  <li>Reserved. Cards, chips and the Hook Card get a light and a dark version. <code>/dev-ui-update</code> defines it from the user's mockups.</li>
+  <li>Card faces, tucked faces, notes and the Hook Card follow the mode. Every card gets the deck edge and tint.</li>
+  <li>The Settings dialog gets 2 tabs, Appearance and Genres, and is 900 wide. The Genres panel becomes the Genres tab. The rail loses the Genres button.</li>
+  <li>Pass bar: every card, note and Hook Card renders at the design-system values in both modes and all 3 theme colors. See <a href="design-system.html">design-system.html</a> sections 4.5, 9.10 and 9.11.</li>
 </ul>
 
 <h3>M7: One-Pager Board</h3>
@@ -485,5 +487,6 @@ Genre                     (21 values. Meanings are in the Genres table.
 <p class="meta">2026-11-02: Added Settings and theme: Dark or Light mode, 3 theme colors, Snap to grid on or off, a Keyboard list and a version footer. The grid stays at 24 px, and a grid size setting is never built. The rail gains Add note, Settings and genre counts, which replace the small mark. M1 gains a tokens-only rule with a lint check. M5 builds the feature. Changed Scope, Data model, Left rail, Visual design, State and failure, M1, M5 and Done criteria. Changed by <code>/dev-add-feature</code>. See <a href="feature-settings-and-theme.html">feature-settings-and-theme.html</a>.</p>
 <p class="meta">2026-11-02: Folded in the design handoff <code>docs/design-handoff/</code> (version 1) through <code>/dev-ui-update</code>. <a href="design-system.html">design-system.html</a> is now the visual authority. The core order is Player Role, Mechanic, Resource, Goal, Conflict, in the rail, the tuck hints and the hook sentence. The Hook Card menu shows on hover, with Copy, Redraw All and Discard. "and" joins any 2 cards of the same deck except Modifiers. "Genre count" replaces "genre mark". 5 feedback details were added. Design work moved earlier: tokens, fonts, icons and the shell to M1, the grouped rail to M2, genre counts to M3. Changed Scope, Example hook, Screens, Left rail, Connector badges, Hints, Visual design and M1 to M5. Changed by the user's decisions in the conflict sweep.</p>
 <p class="meta">2026-11-04: Added the One-Pager board, a second board kind beside Free Form. It has 1 Hook Card with a short Hook Train and 1 Concept panel for the other cards. Board gains <code>kind</code> and <code>conceptWidth</code>, and Card gains <code>inConcept</code>, in board format version 2. Added M6 (reserved for Themed Cards) and M7. Changed Scope, Data model, Rules, Milestones and Done criteria. Changed by <code>/dev-add-feature</code>. See <a href="feature-one-pager-board.html">feature-one-pager-board.html</a>.</p>
+<p class="meta">2026-11-04: Folded in the design handoff <code>docs/design-handoff-2026-11-04/</code> (version 2) through <code>/dev-ui-update</code>. M6 is now Card Themes And Settings Tabs: cards, notes and the Hook Card follow the mode, every card gets a deck-color edge and tint, and genres move into a Settings tab, so the rail loses the Genres button. The One-Pager Concept panel visuals are in design-system.html 9.15. Changed Scope, Left rail, Genres panel (now Genres tab), Visual design and M6. Changed by the user's decisions in the run.</p>
 </body>
 </html>
