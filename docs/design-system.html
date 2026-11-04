@@ -124,7 +124,7 @@
     <td><code>docs/design-handoff-2026-11-04/</code> v2</td>
     <td><ul>
         <li>The One-Pager board: the Concept panel, lanes, chips, resize handle and the chip drop target (9.15).</li>
-        <li>Card tint: a 1 px deck-color edge and a 14% deck-color tint on every card (4.4).</li>
+        <li>Card tint: a 1 px deck-color edge and a deck-color tint on every card, 14% in dark mode and 7% in light mode (4.4).</li>
         <li>Settings tabs: Appearance and Genres (9.11).</li>
         <li>Card face, Hook Card and note tokens for each mode (4.5). New token <code>--note-border</code>. Dark-mode values for <code>--zone-text</code>, <code>--note-bg</code> and <code>--note-label</code>.</li>
         <li>Deviations 10 and 11 (section 3). Typography roles for tabs, the Concept header, lane labels, chips and the count pill. The resize grip icon.</li>
@@ -261,7 +261,7 @@
 <table>
   <tr><th>Use</th><th>Value</th><th>Where</th></tr>
   <tr><td>Card edge</td><td>Inset 1 px in the deck card color</td><td>Every card face and tucked face, on every board, in both modes</td></tr>
-  <tr><td>Card tint</td><td>Deck card color at 14%, laid over the face (for example <code>box-shadow: inset 0 0 0 999px</code>)</td><td>Same as the edge</td></tr>
+  <tr><td>Card tint</td><td>Deck card color at <code>--card-tint</code> (14% dark, 7% light; lowered from 14% in light mode on 2026-11-04 at the user's request), laid over the face (for example <code>box-shadow: inset 0 0 0 999px</code>)</td><td>Same as the edge</td></tr>
   <tr><td>Chip border</td><td>1 px in the deck card color</td><td>Concept chips (9.15)</td></tr>
   <tr><td>Chip fill</td><td>Deck card color at 28%</td><td>Concept chips</td></tr>
   <tr><td>Lane label</td><td>Deck rail color in dark mode, deck card color in light mode (the rail-icon rule)</td><td>Concept lane labels</td></tr>
@@ -483,7 +483,7 @@
 <h3 id="s-cards">9.4 Cards <span class="tag">Cards</span> <span class="tag">RotationHover</span> <span class="tag">Decks</span></h3>
 <table>
   <tr><th>Part</th><th>Spec</th></tr>
-  <tr><td>Card</td><td>200 × 200, radius 7 (<code>--radius-card</code>), <code>--card-face</code> for the mode, <code>--shadow-card</code>. The deck edge and 14% tint (4.4) sit over the face on every card <span class="tag">user 2026-11-04</span>.</td></tr>
+  <tr><td>Card</td><td>200 × 200, radius 7 (<code>--radius-card</code>), <code>--card-face</code> for the mode, <code>--shadow-card</code>. The deck edge and tint (4.4, 14% dark, 7% light) sit over the face on every card <span class="tag">user 2026-11-04</span>.</td></tr>
   <tr><td>4-cue card</td><td>Player Role, Mechanic, Resource, Modifier (all 3), Setting, Mood. One cue on each edge. Top cue 14 from the top, turned 180°. Side cues are centered on a 24-tall line, turned 90° (left) or −90° (right). The active cue is at the bottom: 12 from the bottom, padding 0 12, Display 14/700, line height 1.25, <code>--card-cue-active</code>. Inactive cues are Display 15/600 <code>--card-cue</code>. A step turns 90°.</td></tr>
   <tr><td>2-cue card</td><td>Goal, Conflict, Twist, Progression, Constraint. One cue on the top half (turned 180°) and one on the bottom. Cues 28 from the top and bottom. Divider: 1 tall at y 99, inset 20, <code>--card-divider</code>. A step turns 180°. Cues run up to 8 words, in up to 2 lines up to 180 wide (172 on 4-cue cards' top and bottom edges). A tucked card's bottom cue is up to 160 wide, clear of the corner marks <span class="tag">user 2026-11-03</span>, was 172 and 140.</td></tr>
   <tr><td>Center icon</td><td>48 circle at (76, 76), in the deck card color. Icon 24, white.</td></tr>
