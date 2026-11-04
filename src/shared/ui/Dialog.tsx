@@ -5,8 +5,9 @@
  * A child marked data-autofocus gets focus at open.
  * size: wide is the New Board dialog (design 9.8); panel is the Genres panel (design 9.10),
  * a wide dialog whose body scrolls between a fixed header and footer; settings is the
- * Settings dialog (design 9.11), 760 wide; default is the delete dialog. showClose adds a × button beside the title; footerNote sits at the left of the
- * actions row.
+ * Settings dialog (design 9.11), 900 wide; default is the delete dialog. tabs sit under the
+ * title row and the caption under the tabs. showClose adds a × button beside the title;
+ * footerNote sits at the left of the actions row.
  */
 import { useEffect, useId, useRef, type ReactNode } from 'react';
 import styles from './Dialog.module.css';
@@ -34,6 +35,8 @@ interface DialogProps {
   showClose?: boolean;
   /** Muted text at the left of the actions row. */
   footerNote?: ReactNode;
+  /** A tab bar under the title row, above the caption (design 9.11). */
+  tabs?: ReactNode;
 }
 
 export function Dialog({
@@ -46,6 +49,7 @@ export function Dialog({
   caption,
   showClose = false,
   footerNote,
+  tabs,
 }: DialogProps) {
   const ref = useRef<HTMLDialogElement>(null);
   const titleId = useId();
@@ -85,6 +89,7 @@ export function Dialog({
                 </button>
               )}
             </div>
+            {tabs}
             {caption && <p className={styles.caption}>{caption}</p>}
           </div>
           <div className={styles.body}>{children}</div>

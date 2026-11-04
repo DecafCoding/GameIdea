@@ -166,11 +166,11 @@
 }
 
 /*
- * Settings: the Settings dialog (design 9.11): 760 wide, padding 24 28 22, radius 14,
- * --shadow-dialog. The body scrolls when the window is short.
+ * Settings: the Settings dialog (design 9.11): 900 wide (was 760), padding 24 28 22,
+ * radius 14, --shadow-dialog. The body scrolls when the window is short.
  */
 .settings {
-  width: min(760px, calc(100% - 32px)); /* design 9.11; no token */
+  width: min(900px, calc(100% - 32px)); /* design 9.11; no token */
   max-width: none;
   max-height: calc(100vh - 32px);
   padding: 24px 28px 22px; /* design 9.11; no token */
@@ -183,6 +183,18 @@
   font-weight: 700;
 }
 
+.settings .headerRow {
+  padding-bottom: 10px; /* design 9.11 header; no token */
+}
+
+/* The scope line sits 14 below the tab bar: 10 here plus the header gap of 4 (design 9.11). */
+.settings .caption {
+  margin-top: 10px; /* design 9.11; no token */
+  color: var(--text-muted);
+  font-size: 13px; /* design 9.11; no token */
+  line-height: 1.5;
+}
+
 .settings .body {
   flex: 1 1 auto;
   min-height: 0;
@@ -192,6 +204,12 @@
 
 .settings .actions {
   align-items: center;
+  border-top: 1px solid var(--border);
+  padding-top: 16px; /* design 9.10 footer; no token */
+}
+
+.settings .footerNote {
+  font-size: 12px; /* design 9.10; no token */
 }
 
 /* Open: fade in with a 0.98 to 1.0 scale (design 9.8; no token for 150 ms ease-out). */

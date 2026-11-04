@@ -117,6 +117,41 @@ describe('Dialog', () => {
     expect(note.parentElement).toBe(screen.getByRole('button', { name: 'Done' }).parentElement);
   });
 
+  it('dialog_tabs_renderBetweenTitleAndCaption', () => {
+    render(
+      <Dialog
+        open
+        size="settings"
+        title="Settings"
+        caption="A scope line."
+        tabs={<div role="tablist" aria-label="Tabs" />}
+        onClose={() => undefined}
+        actions={null}
+      >
+        Body
+      </Dialog>,
+    );
+    const heading = screen.getByRole('heading', { name: 'Settings' });
+    const tablist = screen.getByRole('tablist');
+    const caption = screen.getByText('A scope line.');
+    expect(
+      heading.compareDocumentPosition(tablist) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+    expect(
+      tablist.compareDocumentPosition(caption) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+  });
+
+  it('dialog_noTabs_rendersAsBefore', () => {
+    render(
+      <Dialog open title="Title" caption="A caption." onClose={() => undefined} actions={null}>
+        Body
+      </Dialog>,
+    );
+    expect(screen.queryByRole('tablist')).toBeNull();
+    expect(screen.getByText('A caption.')).toBeTruthy();
+  });
+
   it('button_danger_hasDangerClass', () => {
     render(<Button variant="danger">Delete Board</Button>);
     expect(screen.getByRole('button', { name: 'Delete Board' }).className).toMatch(/danger/);
