@@ -51,17 +51,17 @@
 <!-- ============================================================ -->
 <h2 id="status">1. Status and authority</h2>
 <table>
-  <tr><th>Date</th><td>2026-11-02</td></tr>
-  <tr><th>Bundles consolidated</th><td><code>docs/design-handoff/</code>, version 1, 2026-11-02</td></tr>
+  <tr><th>Date</th><td>2026-11-04</td></tr>
+  <tr><th>Bundles consolidated</th><td><code>docs/design-handoff/</code>, version 1, 2026-11-02 · <code>docs/design-handoff-2026-11-04/</code>, version 2, 2026-11-04 (supersedes version 1 section by section)</td></tr>
   <tr><th>Fidelity</th><td>High-fidelity static mockups. Menus and popovers are drawn open on purpose. Hover and drag states are separate frames.</td></tr>
   <tr><th>Base</th><td>The TheForge visual design (the user's story-card app). GameIdea has no separate published design system.</td></tr>
 </table>
 <p>Standing rules:</p>
 <ul>
   <li><strong>This document wins over the handoff bundle.</strong> The bundle stays in the repo as a record and for pictures.</li>
-  <li>Inside the bundle, its <code>README.md</code> wins over the mockups, and <code>_ds/gameidea/styles.css</code> wins over <code>tokens.json</code> for values.</li>
-  <li>The bundle has no <code>reference/</code> folder. The plan docs in <code>docs/</code> are current. Any future <code>reference/</code> copy is frozen, and <code>docs/</code> wins over it.</li>
-  <li>Decisions the user made during this run (2026-11-02) are marked <span class="tag">user 2026-11-02</span>. They win over the bundle.</li>
+  <li>Inside a bundle, its <code>README.md</code> wins over its mockups. For version 1, <code>_ds/gameidea/styles.css</code> wins over <code>tokens.json</code> for values. Version 2 has no <code>_ds/</code> folder, and its <code>tokens.json</code> is its only token file.</li>
+  <li>The version 2 bundle has a <code>reference/</code> folder. Those copies are frozen. The plan docs in <code>docs/</code> are current and win over them.</li>
+  <li>Decisions the user made in a run are marked with a tag such as <span class="tag">user 2026-11-04</span>. They win over the bundles.</li>
 </ul>
 
 <!-- ============================================================ -->
@@ -119,6 +119,42 @@
         <li>Plain cards show their strip menu when selected (click). Now: on hover.</li>
       </ul></td>
   </tr>
+  <tr>
+    <td>2026-11-04</td>
+    <td><code>docs/design-handoff-2026-11-04/</code> v2</td>
+    <td><ul>
+        <li>The One-Pager board: the Concept panel, lanes, chips, resize handle and the chip drop target (9.15).</li>
+        <li>Card tint: a 1 px deck-color edge and a 14% deck-color tint on every card (4.4).</li>
+        <li>Settings tabs: Appearance and Genres (9.11).</li>
+        <li>Card face, Hook Card and note tokens for each mode (4.5). New token <code>--note-border</code>. Dark-mode values for <code>--zone-text</code>, <code>--note-bg</code> and <code>--note-label</code>.</li>
+        <li>Deviations 10 and 11 (section 3). Typography roles for tabs, the Concept header, lane labels, chips and the count pill. The resize grip icon.</li>
+      </ul></td>
+    <td><ul>
+        <li>Deviation 4: the Hook Card is white in light mode. Its "Hook" label uses the current mode's <code>--accent-text</code>.</li>
+        <li>Deviation 8 and contract 10.9: mode changes card faces, tucked faces, the note and the Hook Card fill.</li>
+        <li>Dark-mode tucked cards share one face. Light-mode tucked cards keep the 4 shades.</li>
+        <li>The Settings dialog is 900 wide (was 760). The Mode help text changes.</li>
+        <li>The rail loses the GENRES group and the Genres button (8.2).</li>
+        <li>The New Board help line points at the Genres tab.</li>
+      </ul>
+      <p>Settled by the user in this run <span class="tag">user 2026-11-04</span>:</p>
+      <ul>
+        <li>Every card on every board gets the deck edge and tint, not only the Concept frames. The proposed <code>--card-edge</code> (<code>#3A404B</code>) is not needed.</li>
+        <li>The README's proposed token names are kept.</li>
+        <li>The Genres tab is disabled when Settings opens with no board open.</li>
+        <li>The One-Pager footer does not count loose cards: "12 cards · 1 hook · 1 concept".</li>
+        <li>The Concept panel resizes freely from 232 to 640 wide. Chips size to their text, wrap long text, and are never wider than their lane.</li>
+        <li>Card themes and the Settings tabs land together in Phase 6. The One-Pager board lands in Phase 7.</li>
+      </ul></td>
+    <td><ul>
+        <li>The folded Hook Train, the Expand Stack button, the Hook Card count pill, the collapsed Concept button and the "· folded" footer suffix (README 9.3, 9.9, 12.1–12.3, <code>Stack4ChipsCollapsed</code>). Dropped by the user: the feature has no fold or collapse.</li>
+        <li>The Concept width snap to 1 or 2 columns (README 9.7, decision 9, contract 5). Dropped by the user: chips now size to their text, so the panel resizes freely.</li>
+        <li>The <code>Stack4ChipsFull</code> footer "15 cards", which counts loose cards.</li>
+        <li>The Genres panel as its own dialog, 1040 wide (old 9.10), and the rail Genres button.</li>
+        <li>The Genres tab footer line about Generic cues (drawn again in <code>Genres</code>). It stays dropped, as on 2026-11-02.</li>
+      </ul>
+      <p>The mockups are older than this document in 6 places (README section 12). This document wins: card radius 7, the wrench Mechanic icon, icon strip menus, the tucked icon in the corner, no Generic line, and the New Board help line. <code>ExpTuckIcons</code> is a record only.</p></td>
+  </tr>
 </table>
 
 <!-- ============================================================ -->
@@ -140,17 +176,20 @@
   <li><strong>Rail buttons have no icon circle.</strong> The icon is drawn in its deck rail color, and buttons are 36 px tall, not 44 px. Reason: the rail holds every deck button and must fit on one screen, and mouse-only desktop use makes 36 px acceptable.</li>
   <li><strong>Deck colors are darkened for white text.</strong> Every card color passes 4.5:1 with white badge text, and each deck has a lighter rail color for dark surfaces. Reason: accessibility.</li>
   <li><strong>GameIdea decks replace the TheForge story decks.</strong> There are 11 decks; the Modifier deck draws as 3 rail buttons (Role, Resource, Setting) that share one purple and differ by icon.</li>
-  <li><strong>A dark Hook Card</strong> heads each stack: 240 × 200, theme color border, and it stays dark in light mode. Reason: it must stand apart from the cream cue cards.</li>
+  <li><strong>The Hook Card</strong> heads each stack: 240 × 200 with a 2 px theme color border. It is dark (<code>#2A2F38</code>) in dark mode and white (<code>#FFFFFF</code>) in light mode <span class="tag">2026-11-04</span>. Reason: cards follow the mode now, so the border carries the Hook Card's identity in both modes.</li>
   <li><strong>Hook Card actions sit in a strip menu</strong> above the card, not on the card. Reason: less clutter, and it matches the other cards. It opens on hover <span class="tag">user 2026-11-02</span>.</li>
   <li><strong>Connector badges are pills in the lower card's color.</strong> This was TheForge's option C.</li>
   <li><strong>Genre counts replace a genre mark.</strong> A 15 px pill in the theme color on the 4 genre decks shows how many genres are on.</li>
-  <li><strong>Themes.</strong> There are Dark and Light modes, and Orange, Blue and Green theme colors; Orange dark is the default. Only the base and the accent change between themes. Deck colors, cards, notes, badges and the Hook Card stay the same. This reverses TheForge's "one theme, one accent" rule.</li>
+  <li><strong>Themes.</strong> There are Dark and Light modes, and Orange, Blue and Green theme colors; Orange dark is the default. The theme color changes only the accent. The mode changes the chrome, card faces, tucked faces, the note and the Hook Card fill <span class="tag">2026-11-04</span>. Deck colors, rings, badges and center icons never change. This reverses TheForge's "one theme, one accent" rule. Reason: cream cards on a dark canvas were too bright, and the user asked for dark cards.</li>
   <li><strong>A Settings button</strong> with a gear icon sits at the bottom of the rail.</li>
+  <li><strong>Concept chips</strong> are text-sized pills with radius 8, not cards <span class="tag">2026-11-04</span>. Reason: many settled cards must fit beside the Hook Card on a One-Pager board.</li>
+  <li><strong>Genres live in a Settings tab</strong>, not in their own panel and rail button <span class="tag">2026-11-04</span>. Reason: fewer rail items, and genres are a setting the user changes rarely.</li>
 </ol>
+<p class="meta">The list was closed at 9 items on 2026-11-02. The 2026-11-04 handoff changed 4 and 8 and added 10 and 11, with the user's agreement. It is closed again at 11.</p>
 
 <!-- ============================================================ -->
 <h2 id="color">4. Color</h2>
-<p>The theme contract sets 2 attributes on <code>&lt;html&gt;</code> before the first render: the mode (<code>dark | light</code>) and the theme color (<code>orange | blue | green</code>). The attributes are <code>data-mode</code> and <code>data-theme</code> <span class="tag">user 2026-11-02</span>. All chrome colors come from tokens that these 2 attributes select. Card, note, badge, Hook Card and deck tokens do not depend on them.</p>
+<p>The theme contract sets 2 attributes on <code>&lt;html&gt;</code> before the first render: the mode (<code>dark | light</code>) and the theme color (<code>orange | blue | green</code>). The attributes are <code>data-mode</code> and <code>data-theme</code> <span class="tag">user 2026-11-02</span>. All chrome colors come from tokens that these 2 attributes select. The card face, Hook Card and note tokens (4.5) follow <code>data-mode</code> only <span class="tag">2026-11-04</span>. Deck, ring, badge and center icon colors (4.4) depend on neither attribute.</p>
 
 <h3>4.1 Mode base (chrome and canvas)</h3>
 <table>
@@ -161,7 +200,7 @@
   <tr><td><code>--surface-raised</code></td><td><span class="sw" style="background:#2B303A"></span>#2B303A</td><td><span class="sw" style="background:#EFEBE3"></span>#EFEBE3</td><td>Raised controls on a surface</td></tr>
   <tr><td><code>--surface-selected</code></td><td><span class="sw" style="background:#343A45"></span>#343A45</td><td><span class="sw" style="background:#E6E1D6"></span>#E6E1D6</td><td>Selected or pressed item in a menu or segmented control</td></tr>
   <tr><td><code>--border</code></td><td><span class="sw" style="background:#30353F"></span>#30353F</td><td><span class="sw" style="background:#DDD8CE"></span>#DDD8CE</td><td>Default 1 px border and dividers</td></tr>
-  <tr><td><code>--border-strong</code></td><td><span class="sw" style="background:#4A505C"></span>#4A505C</td><td><span class="sw" style="background:#BDB7AB"></span>#BDB7AB</td><td>Genres button, Add note dashed border</td></tr>
+  <tr><td><code>--border-strong</code></td><td><span class="sw" style="background:#4A505C"></span>#4A505C</td><td><span class="sw" style="background:#BDB7AB"></span>#BDB7AB</td><td>Add note dashed border, Concept count pill and resize handle border</td></tr>
   <tr><td><code>--text</code></td><td><span class="sw" style="background:#ECEAE4"></span>#ECEAE4</td><td><span class="sw" style="background:#1B1E24"></span>#1B1E24</td><td>Body text</td></tr>
   <tr><td><code>--text-soft</code></td><td><span class="sw" style="background:#C9CCD2"></span>#C9CCD2</td><td><span class="sw" style="background:#3A3F49"></span>#3A3F49</td><td>Secondary text one step above muted: hook previews, deck meanings, the Settings rail label</td></tr>
   <tr><td><code>--text-muted</code></td><td><span class="sw" style="background:#A9ADB6"></span>#A9ADB6</td><td><span class="sw" style="background:#5E636D"></span>#5E636D</td><td>Group labels, descriptions, meta lines</td></tr>
@@ -184,7 +223,7 @@
   <tr><td><code>--accent-hook-button</code>, light</td><td>#FBE9DD</td><td>#E2ECFD</td><td>#E0F3E9</td><td>Rail Hook Card button fill</td></tr>
   <tr><td><code>--on-accent</code></td><td colspan="3">#1B1E24 in every theme</td><td>Text and icons on an accent fill</td></tr>
 </table>
-<p><strong>Accent text rule.</strong> Never set paragraph text in <code>--accent</code>. Text in the accent hue uses <code>--accent-text</code> for the current mode. The "Hook" label on the Hook Card always uses the <em>dark-mode</em> <code>--accent-text</code>, because the Hook Card is dark in every mode.</p>
+<p><strong>Accent text rule.</strong> Never set paragraph text in <code>--accent</code>. Text in the accent hue uses <code>--accent-text</code> for the current mode. This includes the "Hook" label on the Hook Card, which is dark in dark mode and white in light mode <span class="tag">2026-11-04</span>.</p>
 <p><strong>Outline rule</strong> <span class="tag">user 2026-11-02</span>. In dark mode, selection and focus outlines use <code>--accent</code>. In light mode they use the light-mode <code>--accent-text</code> (<code>#B4531A</code>, <code>#2B5FB8</code>, <code>#1F7A4F</code>), because <code>--accent</code> on the light ground is only 2.4 to 2.9:1. Fills, toggles, borders and the Hook Card border keep <code>--accent</code> in both modes.</p>
 
 <h3>4.3 Fixed warning and status colors</h3>
@@ -218,25 +257,40 @@
   <tr><td>Progression</td><td><span class="sw" style="background:#1D6F93"></span>#1D6F93</td><td><span class="sw" style="background:#4FAED6"></span>#4FAED6</td><td>#144E67</td><td>trending-up</td></tr>
   <tr><td>Constraint</td><td><span class="sw" style="background:#555B66"></span>#555B66</td><td><span class="sw" style="background:#A3AAB6"></span>#A3AAB6</td><td>#3B4047</td><td>shield-x</td></tr>
 </table>
-
-<h3>4.5 Cards, Hook Card, note (same in every mode and theme)</h3>
+<p><strong>Deck color on cards and chips</strong> <span class="tag">2026-11-04</span>. These are alphas of the deck <strong>card</strong> color, not separate tokens:</p>
 <table>
-  <tr><th>Token</th><th>Value</th><th>Use</th></tr>
-  <tr><td><code>--card-face</code></td><td><span class="sw" style="background:#F4F0E6"></span>#F4F0E6</td><td>Card face; ring divider lines and arrows</td></tr>
-  <tr><td><code>--card-tucked-1</code> … <code>-4</code></td><td>#F1ECE0 · #EFE9DC · #ECE6D8 · #E9E3D4</td><td>Faces of tucked cards, 1 to 4 levels down (deeper levels reuse <code>-4</code>)</td></tr>
-  <tr><td><code>--card-cue</code></td><td><span class="sw" style="background:#5A5E68"></span>#5A5E68</td><td>Inactive cue text</td></tr>
-  <tr><td><code>--card-cue-active</code></td><td>#1B1E24</td><td>Active (bottom-edge) cue text</td></tr>
-  <tr><td><code>--card-adjective</code></td><td>#6E48B5</td><td>Inactive adjective text on a combined card</td></tr>
-  <tr><td><code>--card-adjective-active</code></td><td><span class="sw" style="background:#5B3F99"></span>#5B3F99</td><td>Active adjective text</td></tr>
-  <tr><td><code>--card-divider</code></td><td><span class="sw" style="background:#D5CFC0"></span>#D5CFC0</td><td>2-cue card divider</td></tr>
-  <tr><td><code>--zone-text</code></td><td><span class="sw" style="background:#4A2E86"></span>#4A2E86</td><td>Label inside a Modifier drop zone</td></tr>
-  <tr><td><code>--slot-fill-alpha</code></td><td>0.18</td><td>Tuck slot fill: deck card color at this alpha</td></tr>
-  <tr><td><code>--hook-bg</code></td><td><span class="sw" style="background:#2A2F38"></span>#2A2F38</td><td>Hook Card fill</td></tr>
-  <tr><td><code>--hook-text</code></td><td>#ECEAE4</td><td>Hook Card sentence</td></tr>
-  <tr><td><code>--note-bg</code></td><td><span class="sw" style="background:#FBF6E4"></span>#FBF6E4</td><td>Note paper</td></tr>
-  <tr><td><code>--note-label</code></td><td><span class="sw" style="background:#6B6355"></span>#6B6355</td><td>Note title label</td></tr>
-  <tr><td><code>--note-text</code></td><td>#1B1E24</td><td>Note text</td></tr>
+  <tr><th>Use</th><th>Value</th><th>Where</th></tr>
+  <tr><td>Card edge</td><td>Inset 1 px in the deck card color</td><td>Every card face and tucked face, on every board, in both modes</td></tr>
+  <tr><td>Card tint</td><td>Deck card color at 14%, laid over the face (for example <code>box-shadow: inset 0 0 0 999px</code>)</td><td>Same as the edge</td></tr>
+  <tr><td>Chip border</td><td>1 px in the deck card color</td><td>Concept chips (9.15)</td></tr>
+  <tr><td>Chip fill</td><td>Deck card color at 28%</td><td>Concept chips</td></tr>
+  <tr><td>Lane label</td><td>Deck rail color in dark mode, deck card color in light mode (the rail-icon rule)</td><td>Concept lane labels</td></tr>
 </table>
+
+<h3>4.5 Cards, Hook Card, note (by mode)</h3>
+<p>These tokens follow <code>data-mode</code> <span class="tag">2026-11-04</span>. The theme color does not change them.</p>
+<table>
+  <tr><th>Token</th><th>Dark</th><th>Light</th><th>Use</th></tr>
+  <tr><td><code>--card-face</code></td><td><span class="sw" style="background:#2A2F38"></span>#2A2F38</td><td><span class="sw" style="background:#F4F0E6"></span>#F4F0E6</td><td>Card face; ring divider lines and arrows; combined-card dot border</td></tr>
+  <tr><td><code>--card-tucked-1</code> … <code>-4</code></td><td>#2A2F38 for all 4</td><td>#F1ECE0 · #EFE9DC · #ECE6D8 · #E9E3D4</td><td>Faces of tucked cards, 1 to 4 levels down (deeper levels reuse <code>-4</code>)</td></tr>
+  <tr><td><code>--card-cue</code></td><td><span class="sw" style="background:#A9ADB6"></span>#A9ADB6</td><td><span class="sw" style="background:#5A5E68"></span>#5A5E68</td><td>Inactive cue text</td></tr>
+  <tr><td><code>--card-cue-active</code></td><td>#ECEAE4</td><td>#1B1E24</td><td>Active (bottom-edge) cue text</td></tr>
+  <tr><td><code>--card-adjective</code></td><td><span class="sw" style="background:#A88BE6"></span>#A88BE6</td><td>#6E48B5</td><td>Inactive adjective text on a combined card</td></tr>
+  <tr><td><code>--card-adjective-active</code></td><td>#A88BE6</td><td><span class="sw" style="background:#5B3F99"></span>#5B3F99</td><td>Active adjective text</td></tr>
+  <tr><td><code>--card-divider</code></td><td><span class="sw" style="background:#4A505C"></span>#4A505C</td><td><span class="sw" style="background:#D5CFC0"></span>#D5CFC0</td><td>2-cue card divider</td></tr>
+  <tr><td><code>--zone-text</code></td><td><span class="sw" style="background:#C9B6F0"></span>#C9B6F0</td><td><span class="sw" style="background:#4A2E86"></span>#4A2E86</td><td>Label inside a Modifier drop zone</td></tr>
+  <tr><td><code>--shadow-card</code></td><td>0 6px 18px rgba(0, 0, 0, 0.35)</td><td>0 6px 18px rgba(0, 0, 0, 0.35)</td><td>Card at rest, with the tint and edge (4.4)</td></tr>
+  <tr><td><code>--slot-fill-alpha</code></td><td colspan="2">0.18 in both modes</td><td>Tuck slot fill: deck card color at this alpha</td></tr>
+  <tr><td><code>--hook-bg</code></td><td><span class="sw" style="background:#2A2F38"></span>#2A2F38</td><td><span class="sw" style="background:#FFFFFF"></span>#FFFFFF</td><td>Hook Card fill</td></tr>
+  <tr><td><code>--hook-text</code></td><td>#ECEAE4</td><td>#1B1E24</td><td>Hook Card sentence</td></tr>
+  <tr><td><code>--shadow-hook</code></td><td>0 10px 26px rgba(0, 0, 0, 0.5)</td><td>0 8px 22px rgba(0, 0, 0, 0.18)</td><td>Hook Card</td></tr>
+  <tr><td><code>--note-bg</code></td><td><span class="sw" style="background:#2E2A22"></span>#2E2A22</td><td><span class="sw" style="background:#FBF6E4"></span>#FBF6E4</td><td>Note paper</td></tr>
+  <tr><td><code>--note-border</code></td><td><span class="sw" style="background:#4A4436"></span>1 px #4A4436</td><td>none</td><td>Note edge</td></tr>
+  <tr><td><code>--note-label</code></td><td><span class="sw" style="background:#C9BFA6"></span>#C9BFA6</td><td><span class="sw" style="background:#6B6355"></span>#6B6355</td><td>Note title label</td></tr>
+  <tr><td><code>--note-text</code></td><td>#ECEAE4</td><td>#1B1E24</td><td>Note text</td></tr>
+  <tr><td><code>--shadow-note</code></td><td>0 8px 22px rgba(0, 0, 0, 0.45)</td><td>0 8px 22px rgba(0, 0, 0, 0.4)</td><td>Note</td></tr>
+</table>
+<p class="meta">Dark-mode values that reuse chrome values: face = the old <code>--hook-bg</code>; cue = <code>--text-muted</code>; active cue = <code>--text</code>; adjective = <code>--rail-modifier</code>; divider = <code>--border-strong</code>. The tokens.json dark shadow <code>inset 0 0 0 1px #3A404B</code> applied only to an untinted card. Every card is tinted <span class="tag">user 2026-11-04</span>, so the dark card uses <code>shadowWithTint</code>, which equals <code>--shadow-card</code>.</p>
 
 <!-- ============================================================ -->
 <h2 id="space">5. Spacing, radius, elevation</h2>
@@ -247,12 +301,12 @@
   <tr><td><code>--radius-pill</code></td><td>11</td><td>Connector badge (22 tall)</td></tr>
   <tr><td><code>--radius-panel</code></td><td>12</td><td>Board cards, notes, small dialogs, export menu</td></tr>
   <tr><td><code>--radius-card</code></td><td>7</td><td>Cards, the Hook Card, the tuck hint slots <span class="tag">user 2026-11-03</span>, was 14</td></tr>
-  <tr><td><code>--radius-dialog</code></td><td>14</td><td>Genres panel, Settings dialog</td></tr>
-  <tr><td colspan="3">Other radii in use: 5 (key caps), 6 (logo tile, board name field), 7 (menu buttons, segment buttons), 9 (segmented control), 10 (menus, banners, zoom control), 13 (switch), 18 (genre top chips).</td></tr>
+  <tr><td><code>--radius-dialog</code></td><td>14</td><td>Settings dialog</td></tr>
+  <tr><td colspan="3">Other radii in use: 5 (key caps), 6 (logo tile, board name field), 7 (menu buttons, segment buttons), 8 (Concept chips, resize handle), 9 (segmented control), 10 (menus, banners, zoom control), 11 (Concept count pill), 12 (Concept panel), 13 (switch), 18 (genre top chips).</td></tr>
 </table>
 <table>
   <tr><th>Elevation token</th><th>Value</th><th>Use</th></tr>
-  <tr><td><code>--shadow-card</code></td><td>0 6px 18px rgba(0, 0, 0, 0.35)</td><td>Cards at rest. In light mode this shadow is the only edge between a card and the canvas (face to canvas 1.07:1). Do not soften it.</td></tr>
+  <tr><td><code>--shadow-card</code></td><td>0 6px 18px rgba(0, 0, 0, 0.35)</td><td>Cards at rest in both modes. In light mode the shadow and the 1 px deck edge (4.4) separate a card from the canvas. Do not soften it.</td></tr>
   <tr><td><code>--shadow-card-raised</code></td><td>0 8px 22px rgba(0, 0, 0, 0.4)</td><td>Selected card</td></tr>
   <tr><td><code>--shadow-drag</code></td><td>0 22px 44px rgba(0, 0, 0, 0.55)</td><td>Dragged card</td></tr>
   <tr><td><code>--shadow-menu</code></td><td>0 16px 40px rgba(0, 0, 0, 0.5)</td><td>Strip menus, board menu, export menu, badge word menu</td></tr>
@@ -269,9 +323,14 @@
 <table>
   <tr><th>Role</th><th>Family · size / weight</th><th>Notes</th></tr>
   <tr><td>Page title (board list)</td><td>Display 28/700</td><td></td></tr>
-  <tr><td>Dialog title</td><td>Display 22/700</td><td>Genres, Settings, empty-board guide</td></tr>
+  <tr><td>Dialog title</td><td>Display 22/700</td><td>Settings, empty-board guide</td></tr>
+  <tr><td>Settings tab</td><td>Inter 14/600</td><td>Appearance, Genres. <code>--text-muted</code>; selected <code>--text</code></td></tr>
+  <tr><td>Concept chip</td><td>Inter 13/600, line height 18</td><td><code>--text</code>. Wraps inside its lane</td></tr>
+  <tr><td>Concept header</td><td>Display 12/600, 0.08em, uppercase</td><td>"Concept", <code>--text-muted</code></td></tr>
+  <tr><td>Lane label</td><td>Inter 12/600</td><td>Plural deck name, lane color (4.4)</td></tr>
+  <tr><td>Concept count pill</td><td>Inter 11/600</td><td>"7 Cards", <code>--text</code></td></tr>
   <tr><td>App name, board card name</td><td>Display 17/700 · 17/600</td><td></td></tr>
-  <tr><td>Cue text</td><td>Display 15/600</td><td><code>--card-cue</code></td></tr>
+  <tr><td>Cue text</td><td>Display 15/600</td><td><code>--card-cue</code> (by mode, 4.5)</td></tr>
   <tr><td>Active cue</td><td>Display 14/700, line height 1.25</td><td><code>--card-cue-active</code></td></tr>
   <tr><td>Board name field</td><td>Inter 15/600</td><td>Top bar</td></tr>
   <tr><td>Note text</td><td>Inter 15, line height 1.5</td><td></td></tr>
@@ -284,7 +343,7 @@
   <tr><td>Hook preview (board card)</td><td>Inter 13, line height 1.5</td><td><code>--text-soft</code></td></tr>
   <tr><td>Save mark, top chips</td><td>Inter 13</td><td></td></tr>
   <tr><td>Hook label, note label</td><td>Display 12/600, 0.08em, uppercase</td><td></td></tr>
-  <tr><td>Meta, subtitle, chip</td><td>Inter 12/400</td><td>Board card meta, Genres subtitle, card count chip</td></tr>
+  <tr><td>Meta, subtitle, chip</td><td>Inter 12/400</td><td>Board card meta, card count chip</td></tr>
   <tr><td>Slot and zone labels</td><td>Inter 12/600 (slot) · 12/700 (zone)</td><td></td></tr>
   <tr><td>Rail group label</td><td>Display 11/600, 0.08em, uppercase</td><td><code>--text-muted</code></td></tr>
   <tr><td>Connector badge</td><td>Inter 11/600, white</td><td></td></tr>
@@ -298,7 +357,8 @@
   <li><strong>Set:</strong> Lucide-style stroke icons on a 24 px grid, stroke 2.2, round caps and joins, no fill.</li>
   <li><strong>Sizes:</strong> 18 in the rail and the top bar (Undo, Redo); 16 for the Export icon, the logo tile and the badge-menu check; 24 in a card center (on a 48 circle); 20 in banners and the export menu; 15 for the full-card lock; 14 for the tucked-card lock button; 13 for the Hook Card header; 12 for the Export chevron.</li>
   <li><strong>Deck icons:</strong> see 4.4. The Hook Card icon is custom (a hook), drawn in the same stroke style.</li>
-  <li><strong>Other icons in use, by role:</strong> gear (Settings), sliders (Genres), lines (Add note), undo, redo, download (Export), chevron down, lock, check, close (×), plus, minus, more (board menu), warning, retry, import. The mockups draw them as inline paths without names; pick the matching Lucide names when vendoring.</li>
+  <li><strong>Other icons in use, by role:</strong> gear (Settings), lines (Add note), grip with 2 vertical lines (Concept resize handle, 14) <span class="tag">2026-11-04</span>, deck icons at 14 (Concept lane labels), undo, redo, download (Export), chevron down, lock, check, close (×), plus, minus, more (board menu), warning, retry, import. The mockups draw them as inline paths without names; pick the matching Lucide names when vendoring.</li>
+  <li><strong>Removed:</strong> sliders, with the rail Genres button <span class="tag">2026-11-04</span>.</li>
   <li><strong>Reserved:</strong> none.</li>
 </ul>
 
@@ -327,7 +387,6 @@
   <tr><td>CORE</td><td>Player Role, Mechanic <span class="tag">count</span>, Resource <span class="tag">count</span>, Goal, Conflict</td></tr>
   <tr><td>MODIFIERS</td><td>One row of 3 icon buttons: Player Role modifier, Resource modifier, Setting modifier. Each has a hover label and an aria-label.</td></tr>
   <tr><td>OPTIONAL</td><td>Setting, Mood, Twist, Progression <span class="tag">count</span>, Constraint <span class="tag">count</span></td></tr>
-  <tr><td>GENRES</td><td>Genres button with a count subtitle</td></tr>
   <tr><td>(none)</td><td>Add note</td></tr>
   <tr><td>(bottom)</td><td>Settings</td></tr>
 </table>
@@ -338,17 +397,17 @@
   <tr><td>Hook Card button</td><td>Same size. Border 1 <code>--accent</code>, fill <code>--accent-hook-button</code>, margin-top 4. Icon in <code>--accent</code>, stroke 2.6.</td></tr>
   <tr><td>Modifier row</td><td>3-column grid, gap 4. Each button is a deck button with the icon centered, padding 4, and no label.</td></tr>
   <tr><td>Genre count pill</td><td>15 tall, min 16 wide, padding 0 4, radius 8, border 1 <code>--accent</code>, fill accent at 18%, text 9/600 <code>--accent-text</code>. It sits at the right edge (margin-left auto). It shows on Mechanic, Resource, Progression and Constraint only, and is hidden when all 21 genres are on <span class="tag">user 2026-11-02</span>. aria-label "N genres on".</td></tr>
-  <tr><td>Genres button</td><td>2 lines: "Genres" 14/600, then a subtitle 12/400 <code>--text-muted</code> ("3 genres", or "All genres" when all 21 are on). Border 1 <code>--border-strong</code>, transparent fill, sliders icon.</td></tr>
   <tr><td>Add note</td><td>Deck-button size, dashed border 1 <code>--border-strong</code>, margin-top 6.</td></tr>
-  <tr><td>Settings</td><td>Transparent, no border, gear icon, label in <code>--text-soft</code>, margin-top auto so it sits at the bottom.</td></tr>
+  <tr><td>Settings</td><td>Transparent, no border, gear icon, label in <code>--text-soft</code>, margin-top auto so it sits at the bottom. While the Settings dialog is open it shows pressed: fill <code>--surface-raised</code>, border 1 <code>--accent</code> <span class="tag">2026-11-04</span>.</td></tr>
 </table>
+<p class="meta">The GENRES group and the Genres button were removed on 2026-11-04. Genres are on the Settings Genres tab (9.11). On a One-Pager board the rail is the same as on a Free Form board, except as noted in 9.15.</p>
 
 <h3>8.3 Canvas</h3>
 <table>
   <tr><th>Part</th><th>Spec</th></tr>
   <tr><td>Ground</td><td><code>--canvas</code>. Dot grid: 1.2 px dots every 24 px, offset 12, in <code>--canvas-dot</code>.</td></tr>
   <tr><td>Zoom control</td><td>16 from the bottom and right. Padding 4, radius 10, fill <code>--surface</code>, border 1. Buttons 44: zoom out (−), the percentage, zoom in (+), Fit.</td></tr>
-  <tr><td>Card count chip</td><td>16 from the bottom and left of the canvas. Padding 8 12, radius 8, text 12. Text "8 cards · 1 note" (singular and plural forms).</td></tr>
+  <tr><td>Card count chip</td><td>16 from the bottom and left of the canvas. Padding 8 12, radius 8, text 12. Free Form board: "8 cards · 1 note" (singular and plural forms). One-Pager board: see 9.15.</td></tr>
 </table>
 
 <!-- ============================================================ -->
@@ -357,7 +416,7 @@
 
 <h3 id="s-board">9.1 Board screen <span class="tag">Main</span> <span class="tag">Theme*</span></h3>
 <p>Layout: top bar (8.1), left rail (8.2), canvas (8.3) filling the rest. The reference frame shows a full hook stack (Hook Card, Player Role combined with a Modifier, Mechanic, Resource combined, Goal locked, Conflict), a selected Twist card with its strip menu, a loose Player Role Modifier card, and a note.</p>
-<p>Theme frames: the same layout in each of the 6 mode × theme combinations. Between them, only the chrome (mode base) and the accent change. The cards, notes, badges, deck colors and the Hook Card fill are identical.</p>
+<p>Theme frames: the same layout in each of the 6 mode × theme combinations. The theme color changes only the accent. The mode changes the chrome, the card faces, the note and the Hook Card fill (4.5). Badges, rings, center icons and deck colors are identical in all 6.</p>
 
 <h3 id="s-empty">9.2 Empty board <span class="tag">EmptyBoard</span></h3>
 <ul>
@@ -376,7 +435,8 @@
   </li>
   <li>"Start here" tag: 16 from the left of the canvas and 14 from the top, pointing at the Hook Card button. Padding 8 12, radius 8, 13/600.</li>
   <li>The guide goes away when the first card is on the board.</li>
-  <li>The card count chip reads "0 cards". A new board has all 21 genres on, so no genre counts show and the Genres line reads "All genres". The EmptyBoard frame draws "21" pills and "All 21 genres"; this document wins.</li>
+  <li>The card count chip reads "0 cards". A new board has all 21 genres on, so no genre counts show.</li>
+  <li>This is the Free Form empty board. The One-Pager empty state is not drawn (section 15).</li>
 </ul>
 
 <h3 id="s-list">9.3 Board list <span class="tag">BoardList</span> <span class="tag">ListStates</span></h3>
@@ -404,7 +464,8 @@
     <ul>
       <li>Title "New board".</li>
       <li>A Name field, 44 tall.</li>
-      <li>The help line "All 21 genres start on. Change them in the Genres panel."</li>
+      <li>The help line "All 21 genres start on. Change them in Settings, on the Genres tab." <span class="tag">2026-11-04</span></li>
+      <li>The board kind choice (One-Pager or Free Form) is not drawn (section 15).</li>
       <li>Buttons: Cancel and Make board (primary). Make board stays disabled until the name has text.</li>
     </ul>
   </li>
@@ -422,7 +483,7 @@
 <h3 id="s-cards">9.4 Cards <span class="tag">Cards</span> <span class="tag">RotationHover</span> <span class="tag">Decks</span></h3>
 <table>
   <tr><th>Part</th><th>Spec</th></tr>
-  <tr><td>Card</td><td>200 × 200, radius 7 (<code>--radius-card</code>), <code>--card-face</code>, <code>--shadow-card</code>.</td></tr>
+  <tr><td>Card</td><td>200 × 200, radius 7 (<code>--radius-card</code>), <code>--card-face</code> for the mode, <code>--shadow-card</code>. The deck edge and 14% tint (4.4) sit over the face on every card <span class="tag">user 2026-11-04</span>.</td></tr>
   <tr><td>4-cue card</td><td>Player Role, Mechanic, Resource, Modifier (all 3), Setting, Mood. One cue on each edge. Top cue 14 from the top, turned 180°. Side cues are centered on a 24-tall line, turned 90° (left) or −90° (right). The active cue is at the bottom: 12 from the bottom, padding 0 12, Display 14/700, line height 1.25, <code>--card-cue-active</code>. Inactive cues are Display 15/600 <code>--card-cue</code>. A step turns 90°.</td></tr>
   <tr><td>2-cue card</td><td>Goal, Conflict, Twist, Progression, Constraint. One cue on the top half (turned 180°) and one on the bottom. Cues 28 from the top and bottom. Divider: 1 tall at y 99, inset 20, <code>--card-divider</code>. A step turns 180°. Cues run up to 8 words, in up to 2 lines up to 180 wide (172 on 4-cue cards' top and bottom edges). A tucked card's bottom cue is up to 160 wide, clear of the corner marks <span class="tag">user 2026-11-03</span>, was 172 and 140.</td></tr>
   <tr><td>Center icon</td><td>48 circle at (76, 76), in the deck card color. Icon 24, white.</td></tr>
@@ -437,8 +498,8 @@
 <h3 id="s-hook">9.5 Hook Card <span class="tag">HookCard</span> <span class="tag">Decks</span></h3>
 <table>
   <tr><th>Part</th><th>Spec</th></tr>
-  <tr><td>Card</td><td>240 × 200, radius 7 (<code>--radius-card</code>), border 2 <code>--accent</code>, fill <code>--hook-bg</code>, padding 14 16 16, gap 10. Dark in every mode.</td></tr>
-  <tr><td>Header</td><td>A 24 dot in <code>--accent</code> with the hook icon 13 in <code>--on-accent</code>. The label "Hook", Display 12/600, 0.08em, uppercase, in the dark-mode <code>--accent-text</code>.</td></tr>
+  <tr><td>Card</td><td>240 × 200, radius 7 (<code>--radius-card</code>), border 2 <code>--accent</code>, fill <code>--hook-bg</code>, <code>--shadow-hook</code>, padding 14 16 16, gap 10. Dark in dark mode, white in light mode <span class="tag">2026-11-04</span>. No deck tint.</td></tr>
+  <tr><td>Header</td><td>A 24 dot in <code>--accent</code> with the hook icon 13 in <code>--on-accent</code>. The label "Hook", Display 12/600, 0.08em, uppercase, in <code>--accent-text</code> for the current mode.</td></tr>
   <tr><td>Sentence</td><td>14, line height 1.45, <code>--hook-text</code>. Computed from the stack on each change.</td></tr>
   <tr><td>Stack</td><td>Stack cards sit 20 in from the Hook Card's left edge, and tuck below it by the standard tuck rule (9.7).</td></tr>
   <tr><td>Hover menu <span class="tag">user 2026-11-02</span></td><td>It uses the card strip menu spec (9.4). It shows while the pointer is over the Hook Card or the menu, and hides when the pointer leaves both. Items are 44 px icon buttons with no text, each with an <code>aria-label</code> and a tooltip: Copy Hook (<code>hook</code>, <span class="tag">user 2026-11-03</span>), Redraw All (<code>playing-cards-fan</code>), Duplicate (<code>copy</code>, copies the whole stack beside it, <span class="tag">user 2026-11-03</span>), Discard (<code>trash</code>, <code>--danger-text</code>). The sentence on the card is also selectable text, copied with the pointer and Ctrl+C <span class="tag">user 2026-11-03</span>. Copy Hook and Redraw All are disabled until a card is tucked under the Hook Card.</td></tr>
@@ -475,7 +536,7 @@
 
 <h3 id="s-tuck">9.7 Tuck hint and drag <span class="tag">Tuck</span></h3>
 <ul>
-  <li><strong>Tuck:</strong> each lower card's top is 56 below the top of the card above it, so a 56 strip of the upper card shows. Tucked faces darken one step per level (<code>--card-tucked-1</code> to <code>-4</code>).</li>
+  <li><strong>Tuck:</strong> each lower card's top is 56 below the top of the card above it, so a 56 strip of the upper card shows. In light mode, tucked faces darken one step per level (<code>--card-tucked-1</code> to <code>-4</code>). In dark mode, every tucked face is <code>#2A2F38</code> <span class="tag">2026-11-04</span>. The deck edge and tint apply to tucked cards too.</li>
   <li><strong>Normal order under a Hook Card</strong> <span class="tag">user 2026-11-02</span>: Player Role, Mechanic, Resource, Goal, Conflict. The slot follows the last card of that order in the stack. Any card can still tuck under any card.</li>
   <li><strong>Slot:</strong> it shows whenever a drop would tuck: a card dragged over any card, a stack or a Hook Card, in any order, and a card in the normal order dragged into the 72 band under a stack <span class="tag">user 2026-11-03</span>. It marks where the card will land. A tuck adds the card as the target's last child (a Modifier as its first), so over a card in the middle of a stack the slot shows after that card's own tucked cards, and over a Hook Card it shows under the stack's last card.
     <ul>
@@ -495,7 +556,7 @@
 <ol type="A">
   <li><strong>Over a plain card:</strong> the whole card is the zone.
     <ul>
-      <li>Zone: dashed border 2 in <code>--deck-modifier</code>, Modifier color at 16% fill, and the label "Drop to combine" 12/700 in <code>--zone-text</code>.</li>
+      <li>Zone: dashed border 2 in <code>--deck-modifier</code>, Modifier color at 16% fill, and the label "Drop to combine" 12/700 in <code>--zone-text</code> for the mode.</li>
       <li>On drop: the Modifier card goes away, and its 4 adjectives become the inner ring.</li>
     </ul>
   </li>
@@ -519,21 +580,14 @@
   <li>Redraw All is one undo step.</li>
 </ul>
 
-<h3 id="s-genres">9.10 Genres panel <span class="tag">Genres</span></h3>
+<h3 id="s-genres">9.10 Genres tab <span class="tag">Genres</span></h3>
+<p>The Genres panel is now the Genres tab of the Settings dialog (9.11) <span class="tag">2026-11-04</span>. It has no dialog of its own and no rail button.</p>
 <ul>
-  <li><strong>Dialog:</strong> 1040 wide, radius 14, <code>--shadow-dialog</code>, fill <code>--surface</code>, over <code>--scrim</code>.</li>
-  <li><strong>Header:</strong> padding 24 28 8.
+  <li><strong>Scope line</strong> (as 9.11): "These genres apply to this board only. Pick genres at the top. Each genre you pick shows on the 4 genre decks below, already on. Turn one off to keep it out of that deck. A change applies to the next draw only. Cards on the board keep their cues. The other 7 decks do not use genre."</li>
+  <li><strong>Top section, "All 4 decks":</strong> padding 16 0, gap 12. The label "All 4 decks" and an "All on" button, 36 tall, ghost style. There is no "All off". The 21 genre chips, 36 tall, padding 0 12, radius 18, 13.
     <ul>
-      <li>Title "Genres", Display 22/700.</li>
-      <li>Help text: "Pick genres at the top. Each genre you pick shows on the 4 genre decks below, already on. Turn one off to keep it out of that deck. A change applies to the next draw only. Cards on the board keep their cues."</li>
-      <li>A close button (×).</li>
-    </ul>
-  </li>
-  <li><strong>Top section, "All 4 decks":</strong> the 21 genre chips, 36 tall, padding 0 12, radius 18, 13.
-    <ul>
-      <li>On: border <code>--accent</code>, accent at 18% fill.</li>
-      <li>On: text <code>--text</code> 600. Off: border 1 <code>--border-strong</code>, transparent fill, text <code>--text-muted</code> 500.</li>
-      <li>An "All on" button. There is no "All off".</li>
+      <li>On: border <code>--accent</code>, accent at 18% fill, text <code>--text</code> 600.</li>
+      <li>Off: border 1 <code>--border-strong</code>, transparent fill, text <code>--text-muted</code> 500.</li>
     </ul>
   </li>
   <li><strong>Deck rows</strong> for Mechanic, Resource, Progression and Constraint.
@@ -542,16 +596,28 @@
       <li>Chips: 32 tall, padding 0 10, 12. A row shows only the genres picked at the top, each on by default, and each can be turned off or on again.</li>
     </ul>
   </li>
-  <li><strong>Rule:</strong> each deck keeps at least 1 genre. The last chip that is on cannot be turned off. The footer note reads "Each deck keeps at least 1 genre."</li>
-  <li><strong>Footer:</strong> padding 18 28 22, top border 1, with a Done button 44 (primary).</li>
+  <li><strong>Rule:</strong> each deck keeps at least 1 genre. The last chip that is on cannot be turned off.</li>
+  <li><strong>Footer:</strong> top border 1, padding-top 16. The note "Each deck keeps at least 1 genre." 12 <code>--text-muted</code>, and Done (44, primary). There is no Generic line.</li>
+  <li><strong>No board open</strong> <span class="tag">user 2026-11-04</span>: when Settings opens from the Board list, the Genres tab is disabled: <code>--text-disabled</code>, <code>aria-disabled="true"</code>, and a tooltip "Open a board to change its genres." The dialog shows the Appearance tab.</li>
   <li>The other 7 decks do not appear.</li>
 </ul>
 
 <h3 id="s-settings">9.11 Settings dialog <span class="tag">Settings</span></h3>
-<p>Dialog: 760 wide, padding 24 28 22, radius 14, over <code>--scrim</code>. Title "Settings" with a close button. Sub-line: "These settings apply to every board in this browser. A change applies at once." There is no Cancel.</p>
+<p>Dialog: 900 wide (was 760) <span class="tag">2026-11-04</span>, padding 24 28 22, radius 14, over <code>--scrim</code>. Header: title "Settings" Display 22/700 and a close button 44 × 44, padding-bottom 10. There is no Cancel.</p>
+<ul>
+  <li><strong>Tab bar</strong> <span class="tag">2026-11-04</span>: Appearance, Genres. Gap 4, bottom border 1 <code>--border</code>, margin-bottom 4. <code>role="tablist"</code>.
+    <ul>
+      <li>Tab: 44 tall, padding 0 14, 14/600 <code>--text-muted</code>, bottom border 2 transparent, margin-bottom −1. <code>role="tab"</code>, <code>aria-selected</code>.</li>
+      <li>Selected tab: <code>--text</code>, bottom border 2 <code>--accent</code> (light mode: the outline rule in 4.2).</li>
+      <li>The dialog opens on Appearance. A tab change is instant and is not an undo step.</li>
+    </ul>
+  </li>
+  <li><strong>Scope line</strong> under the tabs: 13, line height 1.5, <code>--text-muted</code>, margin-top 14. Appearance: "These settings apply to every board in this browser. A change applies at once." Genres: see 9.10.</li>
+</ul>
+<p>Appearance tab:</p>
 <table>
   <tr><th>Section</th><th>Control</th><th>Help text</th></tr>
-  <tr><td>Appearance</td><td>Mode: segmented Dark · Light</td><td>Dark or light screens. The cards look the same in both.</td></tr>
+  <tr><td>Appearance</td><td>Mode: segmented Dark · Light</td><td>Dark or light screens. Cards are dark in dark mode and cream in light mode. <span class="tag">2026-11-04</span></td></tr>
   <tr><td>Appearance</td><td>Theme color: segmented Orange · Blue · Green, each with a color dot 14</td><td>The color of buttons, selection, the Hook Card border and the genre counts. <span class="tag">user 2026-11-02</span></td></tr>
   <tr><td>Canvas</td><td>Snap to grid: switch</td><td>Cards and notes line up with the dot grid when you drop them. Hold Alt while you drag to place freely.</td></tr>
   <tr><td>Keyboard</td><td>Key list (read-only)</td><td>R: Turn the outer ring, or the only ring, one step · Shift+R: Turn the inner ring of a combined card · Ctrl+Z: Undo · Ctrl+Shift+Z: Redo</td></tr>
@@ -561,13 +627,13 @@
   <li><strong>Switch:</strong> 44 × 26, radius 13, knob 20. On: <code>--accent</code> track.</li>
   <li><strong>Segmented control:</strong> padding 3, radius 9, fill <code>--bg</code>, border 1 <code>--border</code>. Buttons 36 tall, padding 0 12, radius 7, 13/500 <code>--text-muted</code>. Selected: fill <code>--surface-selected</code>, <code>--text</code>, 600.</li>
   <li><strong>Key list:</strong> 2 columns, the first 150 wide. Key caps 12, padding 2 7, radius 5, border 1.</li>
-  <li><strong>Footer:</strong> "GameIdea &lt;version&gt; · No account. No data leaves this computer." in <code>--text-muted</code>, and a Done button (primary).</li>
+  <li><strong>Footer:</strong> "GameIdea &lt;version&gt; · No account. No data leaves this computer." in <code>--text-muted</code>, and a Done button (primary, 44 tall, padding 0 20).</li>
   <li><strong>Blocked storage:</strong> a one-line note: "This browser does not save settings. They reset when the page reloads."</li>
 </ul>
 
 <h3 id="s-states">9.12 Note <span class="tag">Main</span></h3>
 <ul>
-  <li>300 wide (default). Padding 16 18, radius 12, gap 8, fill <code>--note-bg</code>, <code>--shadow-card-raised</code>.</li>
+  <li>300 wide (default). Padding 16 18, radius 12, gap 8, fill <code>--note-bg</code>, border <code>--note-border</code>, <code>--shadow-note</code>. All by mode (4.5) <span class="tag">2026-11-04</span>.</li>
   <li>Label (title): Display 12/600, uppercase, <code>--note-label</code>. Text: 15, line height 1.5, <code>--note-text</code>.</li>
   <li>Add note places a new note at the free 24 px grid spot nearest the center of the view, open and ready to type.</li>
   <li>The editing state is not designed (section 15).</li>
@@ -603,18 +669,37 @@
 <h3>9.14 Deck reference <span class="tag">Decks</span></h3>
 <p>The frame is a reference sheet, not a screen. Each deck shows its group, meaning, cue count, an example cue, whether it is genre-tagged, the card color, the rail color and the icon. All of these are captured in 4.4 and in <code>mvp-plan.html</code> Decks.</p>
 
+<h3 id="s-onepager">9.15 One-Pager board <span class="tag">Stack4ChipsFull</span> <span class="tag">Stack4ChipsDrag</span></h3>
+<p>Behavior is owned by <a href="feature-one-pager-board.html">feature-one-pager-board.html</a>: drop routing, pop-out by double-click, drag out, Modifier combine on a chip, and 1 undo step for each action. This section owns the look <span class="tag">2026-11-04</span>.</p>
+<p>Layout: the shell as on a Free Form board. The Hook Card and its Hook Train as in 9.5 and 9.7. The Concept panel beside the Hook Card. Loose cards on the canvas as in 9.4.</p>
+<table>
+  <tr><th>Part</th><th>Spec</th></tr>
+  <tr><td>Panel place</td><td>Left = Hook Card left + 240 + 56. Top = Hook Card top. It moves with the Hook Card.</td></tr>
+  <tr><td>Panel</td><td>Width 232 by default, resizable from 232 to 640 with no snap <span class="tag">user 2026-11-04</span>. Padding 16, radius 12, gap 12. Fill <code>--surface</code>, border 1 <code>--border</code>, shadow 0 8px 22px rgba(0, 0, 0, 0.4). The height grows with the content.</td></tr>
+  <tr><td>Header</td><td>"Concept", Display 12/600, 0.08em, uppercase, <code>--text-muted</code>. Then a count pill: 22 tall, padding 0 9, radius 11, border 1 <code>--border-strong</code>, 11/600 <code>--text</code>, "7 Cards" ("1 Card" for one). Gap 8.</td></tr>
+  <tr><td>Lane</td><td>A label, then the chips, gap 6. Lanes come in rail order. A deck with no card has no lane.</td></tr>
+  <tr><td>Lane label</td><td>Deck icon 14 and the plural deck name ("Mechanics", "Resources", "Settings", "Mood", "Twist"), 12/600, gap 6, in the lane color (4.4).</td></tr>
+  <tr><td>Chips</td><td>Wrap side by side in the lane, gap 8, in drop order.</td></tr>
+  <tr><td>Chip</td><td>Min 36 tall, padding 8 12, radius 8, border 1 in the deck card color, fill the deck card color at 28%, text 13/600 line height 18 <code>--text</code>. No icon. The chip is as wide as its text and never wider than its lane. Longer text wraps, and the chip grows by 18 for each extra line <span class="tag">user 2026-11-04</span>. A combined card reads with its adjectives ("stolen salt"). Chips have no buttons and no strip menu.</td></tr>
+  <tr><td>Resize handle</td><td>24 × 44, radius 8, border 1 <code>--border-strong</code>, fill <code>--surface</code>, grip icon 14 <code>--text-muted</code>. On the right edge, centered on the panel height, 12 outside the edge. Cursor <code>ew-resize</code>. aria-label "Resize Concept". The width saves once, on release.</td></tr>
+  <tr><td>Modifier drop target</td><td>A Modifier dragged over a Player Role, Resource or Setting chip: that chip gets an outline 2 in <code>#6E48B5</code> (<code>--deck-modifier</code>), offset 3. The dragged card uses the drag style in 9.7. No lane highlight and no "Add to …" box show.</td></tr>
+  <tr><td>Light mode</td><td>Panel fill <code>#FFFFFF</code> and border <code>#DDD8CE</code> (the light <code>--surface</code> and <code>--border</code>). Chip text <code>#1B1E24</code>. Lane labels in the deck card color.</td></tr>
+  <tr><td>Card count chip</td><td>"12 cards · 1 hook · 1 concept". The card count is the Hook Train plus the Concept cards. It does not count the Hook Card or loose cards <span class="tag">user 2026-11-04</span>.</td></tr>
+</table>
+<p class="meta">Dropped from the bundle by the user: the folded Hook Train, Expand Stack, the Hook Card count pill, the collapsed Concept button (<code>Stack4ChipsCollapsed</code>) and the 1-or-2-column snap. See the Handoff log.</p>
+
 <!-- ============================================================ -->
 <h2 id="contracts">10. Cross-cutting interaction contracts</h2>
 <ol>
   <li><strong>Rings show on hover only.</strong> The card body and center icon never rotate. A click on a ring half turns that ring one step; R turns the outer or only ring, and Shift+R turns the inner ring.</li>
   <li><strong>Every card shows its strip menu on hover</strong>, plain cards and the Hook Card alike <span class="tag">user 2026-11-03</span>. A click selects a plain card (outline, Delete, Esc).</li>
-  <li><strong>Every user action is one undo step:</strong> draw, rotate, tuck, combine, swap, On Top, split, redraw, Redraw All, lock and unlock, discard, a badge word change, a drop with or without snap, and Add note. Settings and genre changes are not in the undo history.</li>
+  <li><strong>Every user action is one undo step:</strong> draw, rotate, tuck, combine, swap, On Top, split, redraw, Redraw All, lock and unlock, discard, a badge word change, a drop with or without snap, Add note, and on a One-Pager board a drop into Concept, a pop-out, a drag out and a Concept resize. Settings, Settings tab changes and genre changes are not in the undo history.</li>
   <li><strong>Nothing changes cards already on the board</strong> except a direct action on them. A genre change affects the next draw only.</li>
   <li><strong>The Hook sentence is computed, never stored,</strong> and never shows a blank slot.</li>
   <li><strong>Destructive actions:</strong> Discard is undoable and has no dialog. Delete board is not undoable and always asks.</li>
   <li><strong>Snap to grid</strong> applies only to the drop of a free card or note. Alt held at the drop places it freely. Tuck, combine and On Top drops ignore snap.</li>
   <li><strong>Each notice names what happened and offers one action.</strong></li>
-  <li><strong>Theme and mode</strong> never change a card face, note, badge, deck color or the Hook Card fill.</li>
+  <li><strong>Theme and mode</strong> <span class="tag">2026-11-04</span>: the theme color changes only the accent. The mode changes the chrome, card faces, tucked faces, the note and the Hook Card fill. Neither changes a badge, ring, center icon or deck color.</li>
 </ol>
 
 <!-- ============================================================ -->
@@ -648,9 +733,11 @@
   <li>Every deck card color passes 4.5:1 with white text (badges, center icons).</li>
   <li>Measured 2026-11-02: accent fills with <code>--on-accent</code> text 5.1 to 6.3:1; <code>--accent-text</code> on its mode's surface 5.0:1 or better; dark-mode accent outlines 4.6 to 5.7:1; light-mode outlines follow the rule in 4.2.</li>
   <li>Accent-colored text uses <code>--accent-text</code> for the current mode, never <code>--accent</code>.</li>
+  <li>Measured 2026-11-04: dark card text <code>#ECEAE4</code> on <code>#2A2F38</code> 11.2:1, <code>#A9ADB6</code> 6.0:1, <code>#A88BE6</code> 4.8:1. Tinted cards: the inactive cue is 5.3:1 or better in dark mode and 4.7:1 or better in light mode, for every deck. Dark note text 11.9:1, label 7.8:1. Light Hook Card sentence 16.7:1, label 5.0 to 6.1:1. Chip text 9.6:1 or better (dark) and 10.7:1 or better (light).</li>
+  <li>Concept chips are 36 tall, below the 44 px target. This is the same mouse-only desktop deviation as the rail buttons. The resize handle is 44 tall with an aria-label. Settings tabs are 44 tall with <code>role="tab"</code> and <code>aria-selected</code>.</li>
   <li>Hit targets are 44 px, except rail deck buttons at 36 px (deviation 1, mouse-only desktop).</li>
   <li>Icon-only buttons carry an aria-label: the Modifier buttons, Undo, Redo, zoom, Close, Dismiss, the board menu and genre counts ("N genres on").</li>
-  <li>Not specified: focus ring width and offset, keyboard access to the Hook Card menu and the ring halves, reduced motion, and screen-reader text for the Hook sentence (section 15).</li>
+  <li>Not specified: focus ring width and offset, keyboard access to the Hook Card menu, the ring halves, Concept chips and the resize handle, focus style on tabs, reduced motion, and screen-reader text for the Hook sentence (section 15).</li>
 </ul>
 
 <!-- ============================================================ -->
@@ -662,7 +749,8 @@ BoardList     boards: { id, name, editedAt, cardCount, hookCount, firstHook?, de
               renamingId? · menuOpenId? · newBoardDialog: { open, name } · deleteDialog: { boardId? }
 Board         saveState: saved|saving|failed · canUndo · canRedo · exportMenuOpen
               banner?: saveFailed|otherTab|poolsFailed|hookCannotTuck|badImport
-              rail: { genreCount: {mechanic,resource,progression,constraint}, boardGenreCount | all }
+              kind: free|onePager
+              rail: { genreCount: {mechanic,resource,progression,constraint} }
               showGuide = cards.length === 0
               selectedCardId? · hoveredCard?: { id, ring: outer|inner, half: left|right }
               stripMenuFor?: cardId (hover) · copiedUntil?: timestamp
@@ -670,8 +758,10 @@ Board         saveState: saved|saving|failed · canUndo · canRedo · exportMenu
               newCardOutlineUntil?: { [cardId]: timestamp }
               badgeMenu?: { cardId } · clipboardFallback?: { text }
               zoom · cardCount · noteCount
-GenresPanel   open · picked: Genre[] · perDeck: { [deck]: Genre[] }
-Settings      open
+              concept? (onePager): { width: 232..640, lanes: { deck, chips: cardId[] }[],
+                                     dropTargetChipId?, resizing? }
+Settings      open · tab: appearance|genres · genresTabEnabled = a board is open
+GenresTab     picked: Genre[] · perDeck: { [deck]: Genre[] }
 </pre>
 
 <!-- ============================================================ -->
@@ -698,20 +788,32 @@ Settings      open
   <li>Keyboard access to the card hover menus and to ring halves.</li>
   <li>The strip menus' show delay. Hide is 1 s after the pointer leaves card and menu <span class="tag">user 2026-11-03</span>.</li>
   <li>The import flow before a bad-file error (the file picker is the browser's).</li>
+  <li>The New Board dialog with the board kind choice (One-Pager or Free Form) <span class="tag">2026-11-04</span>.</li>
+  <li>The One-Pager empty state, and the rail Hook Card button on a One-Pager board (hidden or disabled).</li>
+  <li>The board list "One-Pager" label.</li>
+  <li>The Concept panel while it is resized, and at a width above 232.</li>
+  <li>A lane appearing during a drag, for a deck the panel does not have yet.</li>
+  <li>The drop hint that names a combine result on a chip, for example "Stolen Salt".</li>
+  <li>A chip being dragged out, and a pop-out by double-click.</li>
+  <li>The Concept panel in dark mode during a drag, and in light mode at rest.</li>
+  <li>Settings, both tabs, in light mode.</li>
+  <li>The component frames (<code>Cards</code>, <code>HookCard</code>, <code>Combine</code> and the others) in light mode, and every frame with the deck tint except the 3 Concept frames.</li>
 </ol>
 <h3>Open questions</h3>
-<p>None. The 8 questions from the first draft were settled by the user on 2026-11-02 (see the Handoff log).</p>
+<p>None. The 8 questions from the first draft were settled on 2026-11-02, and the 5 questions of the 2026-11-04 bundle were settled on 2026-11-04 (see the Handoff log).</p>
 
 <!-- ============================================================ -->
 <h2 id="phases">16. Screen → phase map</h2>
-<p>Keyed to the milestones in <code>mvp-plan.html</code>. There is no <code>docs/prd.html</code> yet. The timing below was agreed by the user on 2026-11-02.</p>
+<p>Keyed to the milestones in <code>mvp-plan.html</code> and the phases in <code>prd.html</code> (M<em>n</em> = Phase <em>n</em>). M1 to M5 were agreed on 2026-11-02, and M6 and M7 on 2026-11-04.</p>
 <table>
   <tr><th>Milestone</th><th>Design work</th><th>Sections</th></tr>
   <tr><td>M1: Copy and rename</td><td>The full token set from <code>styles.css</code> (both modes and all 3 theme colors as data, with no switch yet); bundled fonts; the Lucide icon set and the hook icon in <code>public/icons/</code>; the shell at locked sizes (top bar, rail width, 36 px rail buttons); the lint check on hard-coded chrome colors.</td><td>4, 5, 6, 7, 8.1, 8.3, 14</td></tr>
   <tr><td>M2: Hook test</td><td>Cards, rings and hover; lock; card strip menu; the Hook Card and its hover menu, Copy, the clipboard fallback and Redraw All; connector badges and the word menu; tuck hint and drag; Modifier combine zones; the grouped rail with the Hook Card button and the Modifiers row; the save mark and notices.</td><td>8.2, 9.1, 9.4–9.9, 9.13</td></tr>
-  <tr><td>M3: Full core pools and genres</td><td>The Genres panel; genre count pills on the 4 genre decks; the Genres button count line.</td><td>8.2, 9.10</td></tr>
+  <tr><td>M3: Full core pools and genres</td><td>The Genres panel; genre count pills on the 4 genre decks; the Genres button count line. (The panel and the button move into Settings in M6.)</td><td>8.2, 9.10</td></tr>
   <tr><td>M4: Optional decks</td><td>The 5 optional deck buttons fill the Optional group.</td><td>8.2</td></tr>
   <tr><td>M5: Export and finish</td><td>The Settings dialog, the Mode and Theme color switches (Light mode and the Blue and Green themes go live), Snap to grid, Add note, the export menu check, the Board list in every theme.</td><td>9.2, 9.3, 9.11, 9.12, 9.13</td></tr>
+  <tr><td>M6: Card Themes And Settings Tabs</td><td>Card face, tucked face, Hook Card and note tokens by mode; the deck edge and tint on every card; the Settings tabs with the Genres tab (disabled with no board open); the rail without the Genres button; the 900 wide dialog; the new Mode help text and New Board help line.</td><td>3, 4.4, 4.5, 8.2, 9.4, 9.5, 9.7, 9.8, 9.10, 9.11, 9.12, 10</td></tr>
+  <tr><td>M7: One-Pager Board</td><td>The Concept panel, lanes, chips, resize handle and chip drop target; the One-Pager card count chip. The board kind choice, the empty state and the board list label once they are drawn (section 15).</td><td>9.15</td></tr>
 </table>
 <p class="meta">The Board list (9.3) and Empty board (9.2) are carried over from TheForge in M1 and restyled to these specs by M5 at the latest.</p>
 

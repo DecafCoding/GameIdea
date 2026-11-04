@@ -78,8 +78,8 @@ This PRD cites those documents. Where it and they differ, they win.</p>
   <li data-checked="true">Infinite canvas: pan, zoom, place, move</li>
   <li data-checked="true">Free-text notes with an editable title</li>
   <li data-checked="true">Genre settings: 21 genres on the 4 genre-tagged decks (Mechanic, Resource, Progression, Constraint), set together and per deck; next draw only</li>
-  <li data-checked="true">Grouped left rail: Hook Card, Core, Modifiers (3 icon buttons), Optional, Genres with its count line, Add note, Settings</li>
-  <li data-checked="true">Settings: Dark/Light mode, Theme color (Orange, Blue, Green), Snap to grid, Keyboard list, version footer — <a href="feature-settings-and-theme.html">feature-settings-and-theme.html</a></li>
+  <li data-checked="true">Grouped left rail: Hook Card, Core, Modifiers (3 icon buttons), Optional, Add note, Settings. The Genres button and its count line leave the rail in Phase 6.</li>
+  <li data-checked="true">Settings: Dark/Light mode, Theme color (Orange, Blue, Green), Snap to grid, Keyboard list, version footer — <a href="feature-settings-and-theme.html">feature-settings-and-theme.html</a>. From Phase 6: 2 tabs, Appearance and Genres, and cards that follow the mode — <a href="design-system.html">design-system.html</a></li>
   <li data-checked="true">Board list: make, open, rename, delete; New Board asks for a name and, from Phase 7, the board kind (One-Pager or Free Form)</li>
   <li data-checked="true">Undo and redo for the open session</li>
   <li data-checked="true">One-Pager board: a second board kind beside Free Form, with 1 Hook Card, a short Hook Train and a Concept panel of chips in deck lanes — <a href="feature-one-pager-board.html">feature-one-pager-board.html</a></li>
@@ -144,7 +144,7 @@ This PRD cites those documents. Where it and they differ, they win.</p>
   Example: a Mechanic card shows dig, trade, hide and cook. The user presses R twice and "trade" moves to the bottom edge; the Hook Card sentence updates in under 100 ms.</li>
 
   <li><strong>As a developer who knows what I build, I want to limit Mechanic, Resource, Progression and Constraint to my genres, so that draws fit games I can make.</strong><br>
-  Example: the user turns on only Roguelike and Deckbuilder &amp; Cards in the Genres panel. The rail shows "2 genres" and a count pill on each of the 4 deck buttons. Cards already on the board do not change.</li>
+  Example: the user opens Settings, picks the Genres tab and turns on only Roguelike and Deckbuilder &amp; Cards. Each of the 4 deck buttons in the rail shows a count pill. Cards already on the board do not change.</li>
 
   <li><strong>As a user, I want to add an adjective to a role, resource or setting, so that a plain noun becomes a hook with a twist.</strong><br>
   Example: the user drops "stolen" from the Resource Modifier deck on "memories" — the card reads "stolen memories". Dropping "tall" on the top zone of a merged "frozen pilot" gives "tall frozen pilot".</li>
@@ -159,7 +159,7 @@ This PRD cites those documents. Where it and they differ, they win.</p>
   Example: the user closes the tab, reopens <code>http://localhost:4174</code>, and finds the board in the board list with its cards, notes and view. A board file export makes a backup that imports as a new board.</li>
 
   <li><strong>As a user who works in a bright room, I want Light mode and a theme color, so that the app is comfortable to use.</strong><br>
-  Example: the user opens Settings, picks Light and Green. The chrome and canvas turn light at once; cards, badges and the Hook Card look the same. After a reload there is no dark frame.</li>
+  Example: the user opens Settings, picks Light and Green. The chrome, canvas, cards and notes turn light at once, and the Hook Card turns white; deck colors and badges stay the same. After a reload there is no dark frame.</li>
 
   <li><strong>As a developer with a bigger idea, I want a One-Pager board, so that extra cards sit in a compact Concept panel instead of a long train.</strong><br>
   Example: the user makes a One-Pager board, builds a 5-card Hook Train, then drops 3 Resources and 2 Settings on the Concept panel. They show as chips in a Resources lane and a Settings lane. A double-click on "salt" moves it back to the canvas.</li>
@@ -300,8 +300,8 @@ tests/e2e/          Playwright browser tests</code></pre>
   <li>Start guide on an empty board disappears when the first card lands.</li>
 </ul>
 
-<h3>6.7 Genres panel</h3>
-<p>One row sets all 4 genre-tagged decks together; below it, one row each for Mechanic, Resource, Progression and Constraint. Every listed deck keeps at least 1 genre. Changes apply to the next draw only and are not in undo history. A new board starts with all 21 genres on. The rail shows a count line under Genres ("3 genres" / "All genres") and a count pill on each tagged deck button, hidden at 21.</p>
+<h3>6.7 Genres tab</h3>
+<p>From Phase 6 the genres are set on the Genres tab of the Settings dialog (it was its own panel), disabled when no board is open — <a href="design-system.html#s-genres">design-system.html 9.10</a>. One row sets all 4 genre-tagged decks together; below it, one row each for Mechanic, Resource, Progression and Constraint. Every listed deck keeps at least 1 genre. Changes apply to the next draw only and are not in undo history. A new board starts with all 21 genres on. Each tagged deck button in the rail shows a count pill, hidden at 21. The Genres button and its count line leave the rail in Phase 6.</p>
 
 <h3>6.8 Boards, save, export and import</h3>
 <ul>
@@ -315,7 +315,7 @@ tests/e2e/          Playwright browser tests</code></pre>
 <p>Mode (Dark / Light), Theme color (Orange / Blue / Green), Snap to grid, Keyboard list (R, Shift+R, Ctrl+Z, Ctrl+Shift+Z) and footer "GameIdea &lt;version&gt; · No account. No data leaves this computer." Defaults: Dark, Orange, Snap on. Stored in local storage key <code>gameidea.settings</code> per address and port; applied via <code>&lt;html data-mode data-theme&gt;</code> before first render. Full spec: <a href="feature-settings-and-theme.html">feature-settings-and-theme.html</a>.</p>
 
 <h3>6.10 Visual design</h3>
-<p>All tokens, sizes and screens are owned by <a href="design-system.html">design-system.html</a>: the TheForge base with 9 closed deviations, the 11 deck colors and icons, the dark 240 × 200 Hook Card, and the screen-to-phase map (section 16). This PRD does not restate tokens.</p>
+<p>All tokens, sizes and screens are owned by <a href="design-system.html">design-system.html</a>: the TheForge base with 11 closed deviations, the 11 deck colors and icons, card faces and the 240 × 200 Hook Card by mode, the deck-color tint on every card, the One-Pager Concept panel, and the screen-to-phase map (section 16). This PRD does not restate tokens.</p>
 
 <!-- ============================================================ -->
 <h2 id="stack">7. Technology Stack</h2>
@@ -437,7 +437,7 @@ tests/e2e/          Playwright browser tests</code></pre>
   <li>A complete hook in one session, from an empty board, with no setup.</li>
   <li>Every action is one undo step; Discard needs no dialog.</li>
   <li>Each notice names what happened and offers one action.</li>
-  <li>Theme and mode never change a card face, note, badge, deck color or the Hook Card.</li>
+  <li>The theme color changes only the accent. The mode changes the chrome, card faces, notes and the Hook Card fill. Neither changes a badge, ring or deck color.</li>
 </ul>
 
 <!-- ============================================================ -->
@@ -503,8 +503,21 @@ tests/e2e/          Playwright browser tests</code></pre>
 </ul>
 <p><strong>Validation:</strong> all done criteria in mvp-plan.html and both feature briefs pass; speed, size and privacy targets pass.</p>
 
+<h3 class="phase" data-phase="6">Phase 6: Card Themes And Settings Tabs</h3>
+<p class="meta">M6 · From the 2026-11-04 design handoff. See <a href="design-system.html">design-system.html</a> sections 3, 4.4, 4.5, 8.2, 9.10, 9.11 and 16.</p>
+<p><strong>Goal:</strong> cards, notes and the Hook Card follow the mode, every card shows its deck color, and genres move into a Settings tab.</p>
+<ul class="checklist">
+  <li data-checked="false">Card face, tucked face, Hook Card and note tokens for each mode; the Hook Card label in the current mode's accent text</li>
+  <li data-checked="false">The deck-color edge and 14% tint on every card and tucked card</li>
+  <li data-checked="false">Settings dialog 900 wide with Appearance and Genres tabs; the new Mode help text</li>
+  <li data-checked="false">Genres panel content moved into the Genres tab; the tab disabled when no board is open; the rail Genres button and count line removed</li>
+  <li data-checked="false">The New Board help line points at the Genres tab; the Settings rail button shows pressed while the dialog is open</li>
+  <li data-checked="false">The theme rule in CLAUDE.md, README.md and the lint check matched to the new card tokens</li>
+</ul>
+<p><strong>Validation:</strong> every card, note and the Hook Card render at the design-system values in both modes and all 3 theme colors; the contrast values in design-system section 12 hold; every existing test passes; speed, size and privacy targets pass.</p>
+
 <h3 class="phase" data-phase="7">Phase 7: One-Pager Board</h3>
-<p class="meta">M7 · Phase 6 is reserved for Themed Cards, which <code>/dev-ui-update</code> adds. Phase 7 starts after Phase 6 and after the One-Pager visuals are in design-system.html. See <a href="feature-one-pager-board.html">feature-one-pager-board.html</a>.</p>
+<p class="meta">M7 · Phase 7 starts after Phase 6. The Concept panel look is in <a href="design-system.html#s-onepager">design-system.html 9.15</a>; the board kind choice, the One-Pager empty state and the board list label are still to be drawn (section 15). See <a href="feature-one-pager-board.html">feature-one-pager-board.html</a>.</p>
 <p><strong>Goal:</strong> a One-Pager board kind with a Hook Train and a Concept panel, on board format version 2, with every existing board kept as a Free Form board.</p>
 <ul class="checklist">
   <li data-checked="false">Model fields <code>kind</code>, <code>conceptWidth</code> and <code>inConcept</code>; Dexie schema version 2 and <code>UPGRADES[1]</code>, with tests first</li>

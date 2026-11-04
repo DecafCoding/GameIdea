@@ -317,3 +317,7 @@ No change from design doc section 14. Fonts are bundled with `@fontsource`. The 
 - Packaging change: each `data-props` color list now holds the 3 theme colors. The canvas had old placeholder colors there. No design value changed.
 - `screenshots/` holds a render of each frame and the frame index.
 - `reference/` holds copies of the plan docs and the design doc as they were on 2026-11-04. They are frozen. `docs/` wins over them.
+
+## Consolidated
+
+This bundle was consolidated into `docs/design-system.html` on 2026-11-04 by `/dev-ui-update`. The design doc is now authoritative. The `reference/` copies are historical, and `docs/` wins over them. The user dropped the folded stack, the collapsed Concept panel and the 1-or-2-column snap, and settled the 5 open questions. See the design doc's Handoff log.
