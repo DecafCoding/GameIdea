@@ -468,7 +468,7 @@ npx playwright test tests/e2e/one-pager.spec.ts</code></pre>
   <li data-checked="false">Level 2: <code>npm test</code> exits 0</li>
   <li data-checked="false">Level 3: <code>npm run test:e2e</code> (3 engines) and the timing project pass</li>
   <li data-checked="false">Level 4: build, size, grep checks and the One-Pager spec pass</li>
-  <li data-checked="false">Execution notes recorded in this doc's Notes</li>
+  <li data-checked="true">Execution notes recorded in this doc's Notes</li>
   <li data-checked="false">PR open with the checked Acceptance Criteria and Notes</li>
 </ul>
 
@@ -515,7 +515,13 @@ npx playwright test tests/e2e/one-pager.spec.ts</code></pre>
 </ul>
 
 <h3>Execution notes</h3>
-<p>(Filled during execution: JS size, timings, tests changed.)</p>
+<ul>
+  <li><strong>Size:</strong> JavaScript 211.1 KB gzip of 250 KB; pools 48.6 KB of 100 KB.</li>
+  <li><strong>Timing:</strong> every @timing test passed in Chromium, Firefox and WebKit at the existing limits (WebKit 300 ms limits from Phase 6 unchanged). First load at 25 Mbps: board list 446 ms, board with pools 607 ms.</li>
+  <li><strong>Browser runs:</strong> the full suite ran against the built app served on port 5174 (a local-only Playwright config), never on port 4174, so the Dexie version 2 upgrade never touched the user's real boards. network.spec.ts hard-codes the 4174 origin; it was run with the origin set to 5174 and passed in all 3 engines. CI runs the suite unchanged on 4174.</li>
+  <li><strong>Existing tests changed:</strong> upgrade.test.ts (version 1 now upgrades; UPGRADES has step 1), db.test.ts (schema version 2), boardStore.test.ts and boardActions.test.ts (kind and inConcept in literal expectations), CardView, RingControl and rings tests (inConcept in card literals), NewBoardDialog.test.tsx (onCreate gets the kind), summary.test.ts (kind), tokens.test.ts (the new grip icon).</li>
+  <li><strong>Deviations:</strong> the Concept node has no React Flow width; its content sets the width and React Flow measures it, so the live resize needs no node update. The drag-out ghost has a --surface backing so the 28% chip fill reads the same as in the panel. Tasks 6 and 7, and 8 to 11, were committed together because their code is shared.</li>
+</ul>
 
 </body>
 </html>
