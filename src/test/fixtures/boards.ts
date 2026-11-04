@@ -290,15 +290,11 @@ export function roundTripBoard(): Board {
  * tests, the Dexie upgrade test and Playwright share it.
  */
 export function version1BoardFile(): Record<string, unknown> {
-  const board = roundTripBoard();
-  const { kind: _kind, ...rest } = board;
-  return JSON.parse(
-    JSON.stringify({
-      ...rest,
-      formatVersion: 1,
-      cards: board.cards.map(({ inConcept: _inConcept, ...card }) => card),
-    }),
-  ) as Record<string, unknown>;
+  const file = JSON.parse(JSON.stringify(roundTripBoard())) as Record<string, unknown>;
+  file.formatVersion = 1;
+  delete file.kind;
+  for (const card of file.cards as Record<string, unknown>[]) delete card.inConcept;
+  return file;
 }
 
 /**

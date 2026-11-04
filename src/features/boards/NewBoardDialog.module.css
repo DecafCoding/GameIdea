@@ -1,6 +1,15 @@
-/* New Board dialog body (design 9.3): the Name label, the 44 px Name field and the help line. */
+/*
+ * New Board dialog body (design 9.3): the Name label, the 44 px Name field and its help
+ * line, then the Kind label, the segmented kind choice and its help line, 14 apart.
+ */
 
 .form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.block {
   display: flex;
   flex-direction: column;
   gap: 8px;

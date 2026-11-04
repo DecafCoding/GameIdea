@@ -1,10 +1,11 @@
 /**
- * Tests for the name-only New Board dialog: Make Board stays disabled until the trimmed name
- * has text, Enter and Make Board pass the trimmed name, Cancel and Esc make nothing.
+ * Tests for the New Board dialog: Make Board stays disabled until the trimmed name has
+ * text, Enter and Make Board pass the trimmed name and the kind (default Free Form), the
+ * kind choice works by click and arrow key, Cancel and Esc make nothing.
  */
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import { NEW_BOARD_HELP_TEXT, NewBoardDialog } from './NewBoardDialog';
+import { NEW_BOARD_HELP_TEXT, NEW_BOARD_KIND_HELP_TEXT, NewBoardDialog } from './NewBoardDialog';
 
 function renderDialog() {
   const onCancel = vi.fn();
@@ -44,14 +45,14 @@ describe('NewBoardDialog', () => {
     fireEvent.change(nameField(), { target: { value: '  Salvage Run  ' } });
     expect((makeBoard() as HTMLButtonElement).disabled).toBe(false);
     fireEvent.click(makeBoard());
-    expect(onCreate).toHaveBeenCalledWith('Salvage Run');
+    expect(onCreate).toHaveBeenCalledWith('Salvage Run', 'free');
   });
 
   it('newBoardDialog_enterInNameField_submits', () => {
     const { onCreate } = renderDialog();
     fireEvent.change(nameField(), { target: { value: 'Drift' } });
     fireEvent.submit(nameField().closest('form')!);
-    expect(onCreate).toHaveBeenCalledWith('Drift');
+    expect(onCreate).toHaveBeenCalledWith('Drift', 'free');
   });
 
   it('newBoardDialog_enterWithSpacesOnly_makesNothing', () => {
@@ -67,5 +68,34 @@ describe('NewBoardDialog', () => {
     fireEvent(screen.getByRole('dialog'), new Event('cancel'));
     expect(onCancel).toHaveBeenCalledTimes(2);
     expect(onCreate).not.toHaveBeenCalled();
+  });
+
+  it('newBoardDialog_default_freeFormChecked', () => {
+    renderDialog();
+    expect(screen.getByRole('radiogroup', { name: 'Board Kind' })).toBeTruthy();
+    const free = screen.getByRole('radio', { name: 'Free Form' });
+    expect(free.getAttribute('aria-checked')).toBe('true');
+    expect(screen.getByRole('radio', { name: 'One-Pager' }).getAttribute('aria-checked')).toBe(
+      'false',
+    );
+    expect(screen.getByText(NEW_BOARD_KIND_HELP_TEXT)).toBeTruthy();
+  });
+
+  it('newBoardDialog_pickOnePager_createsWithOnePager', () => {
+    const { onCreate } = renderDialog();
+    fireEvent.change(nameField(), { target: { value: 'Jam Game' } });
+    fireEvent.click(screen.getByRole('radio', { name: 'One-Pager' }));
+    fireEvent.click(makeBoard());
+    expect(onCreate).toHaveBeenCalledWith('Jam Game', 'onePager');
+  });
+
+  it('newBoardDialog_arrowKey_switchesKind', () => {
+    renderDialog();
+    fireEvent.keyDown(screen.getByRole('radiogroup', { name: 'Board Kind' }), {
+      key: 'ArrowLeft',
+    });
+    expect(screen.getByRole('radio', { name: 'One-Pager' }).getAttribute('aria-checked')).toBe(
+      'true',
+    );
   });
 });

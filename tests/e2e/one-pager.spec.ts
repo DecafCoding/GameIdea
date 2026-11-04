@@ -1,0 +1,28 @@
+/**
+ * Browser tests for One-Pager boards (docs/feature-one-pager-board.html, design 9.15):
+ * New Board makes either kind, a One-Pager board starts with its 1 Hook Card, and its
+ * Hook Card menu and rail stop a second Hook Card.
+ */
+import { expect, test } from './test';
+import { canvasCards, openBoard, storedBoards } from './board-helpers';
+
+test.beforeEach(async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+});
+
+test('onePager_newBoard_opensWithItsHookCard', async ({ page }) => {
+  await openBoard(page, undefined, 'One-Pager');
+  await expect(canvasCards(page)).toHaveCount(1);
+  await expect(page.locator('.react-flow__node [data-card][data-type="hook"]')).toHaveCount(1);
+  await expect
+    .poll(async () => (await storedBoards(page)).map((b) => [b.kind, b.conceptWidth]))
+    .toEqual([['onePager', 232]]);
+  const [board] = await storedBoards(page);
+  expect(board!.cards.filter((card) => card.type === 'hook')).toHaveLength(1);
+});
+
+test('onePager_newBoardDefault_isFreeForm', async ({ page }) => {
+  await openBoard(page);
+  await expect(page.getByTestId('start-here')).toBeVisible();
+  await expect.poll(async () => (await storedBoards(page)).map((b) => b.kind)).toEqual(['free']);
+});

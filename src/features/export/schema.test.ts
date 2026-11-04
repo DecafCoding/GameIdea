@@ -306,19 +306,22 @@ describe('boardSchema One-Pager rules', () => {
   });
 
   it('boardSchema_onePagerNoWidth_passes', () => {
-    const { conceptWidth: _width, ...board } = onePagerBoard();
+    const board: Partial<Board> = onePagerBoard();
+    delete board.conceptWidth;
     const result = boardSchema.safeParse(board);
     expect(result.success).toBe(true);
     expect(result.data?.conceptWidth).toBeUndefined();
   });
 
   it('boardSchema_missingKind_fails', () => {
-    const { kind: _kind, ...board } = fixtureBoard([]);
+    const board: Partial<Board> = fixtureBoard([]);
+    delete board.kind;
     rejects(board);
   });
 
   it('boardSchema_missingInConcept_fails', () => {
-    const { inConcept: _inConcept, ...card } = fixtureCard('goal');
+    const card: Partial<Card> = fixtureCard('goal');
+    delete card.inConcept;
     rejects({ ...fixtureBoard([]), cards: [card] });
   });
 });
