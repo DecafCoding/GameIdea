@@ -2,8 +2,9 @@
  * newBoard: builds a new board at the current format version, with all 21 genres on in
  * every genre-tagged deck. The New Board dialog passes the name and the kind; tests and
  * other callers get "Untitled Board", Free Form. A Free Form board starts empty and has no
- * conceptWidth key. A One-Pager board starts with its 1 Hook Card at ONE_PAGER_HOOK_SPOT
- * and the default Concept width (docs/feature-one-pager-board.html).
+ * conceptWidth key. A One-Pager board starts with its 1 Hook Card at ONE_PAGER_HOOK_SPOT,
+ * its 1 Core Loop card at ONE_PAGER_LOOP_SPOT (z 2, no loopText) and the default Concept
+ * width (docs/feature-one-pager-board.html, docs/feature-core-loop-card.html).
  */
 import {
   allGenresOn,
@@ -20,9 +21,22 @@ export const NEW_BOARD_NAME = 'Untitled Board';
 /** Where a new One-Pager board's Hook Card sits: on the 24 px grid, in view at zoom 1. */
 export const ONE_PAGER_HOOK_SPOT = { x: 96, y: 96 } as const;
 
+/**
+ * Where a new One-Pager board's Core Loop card sits: the Concept panel's right edge at its
+ * default width (96 + 240 + 56 + 232), plus 56 (design 9.16).
+ */
+export const ONE_PAGER_LOOP_SPOT = { x: 680, y: 96 } as const;
+
 /** A new board, unpanned at zoom 1, with the given name (default above) and kind. */
 export function newBoard(
-  options: { id?: string; now?: string; name?: string; kind?: BoardKind; hookId?: string } = {},
+  options: {
+    id?: string;
+    now?: string;
+    name?: string;
+    kind?: BoardKind;
+    hookId?: string;
+    loopId?: string;
+  } = {},
 ): Board {
   const now = options.now ?? new Date().toISOString();
   const board: Board = {
@@ -50,5 +64,17 @@ export function newBoard(
     locked: false,
     inConcept: false,
   };
-  return { ...board, conceptWidth: CONCEPT_WIDTH.default, cards: [hook] };
+  const loop: Card = {
+    id: options.loopId ?? newId(),
+    type: 'loop',
+    x: ONE_PAGER_LOOP_SPOT.x,
+    y: ONE_PAGER_LOOP_SPOT.y,
+    z: 2,
+    tuckedUnder: null,
+    rings: [],
+    onTopOf: null,
+    locked: false,
+    inConcept: false,
+  };
+  return { ...board, conceptWidth: CONCEPT_WIDTH.default, cards: [hook, loop] };
 }

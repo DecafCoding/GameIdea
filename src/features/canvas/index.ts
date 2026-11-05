@@ -17,6 +17,8 @@ export {
   putOnTopOf,
   redrawAll,
   redrawCard,
+  resetLoopText,
+  setLoopText,
   splitCard,
   swapOnto,
   turnCardOnBoard,
@@ -24,5 +26,5 @@ export {
 export { conceptCards, conceptLanes, onePagerCardCount, type ConceptLane } from './concept';
 export { CanvasProvider, useCanvasApi, type CanvasApi, type CanvasNotice } from './CanvasProvider';
 export { boardRects, CARD_SIZE, cardSize, findOpenSpot, HOOK_WIDTH, snapToGrid } from './placement';
-export { cardText, hookSentences, isOnTop, onTopCardOf } from './reading';
+export { cardText, hookSentences, isOnTop, loopSteps, onTopCardOf } from './reading';
 export { childrenOf, isRoot } from './stack';

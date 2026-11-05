@@ -1,5 +1,6 @@
 /**
  * Shared model types: boards, cards with rings, cues, notes, pools and genres.
+ * The Core Loop card (type loop) is a card with no rings and an optional loopText.
  * Types and constants, plus allGenresOn, newId, parseSettings (the Settings record) and
  * upgradeBoardV1 (the format 1 to 2 step), no other logic. See docs/architecture.html (schema-shape)
  * and docs/feature-dual-ring-cards.html for the ring rules.
@@ -11,6 +12,9 @@
  * user board existed. Version 2 (Phase 7) added Board.kind, Board.conceptWidth and
  * Card.inConcept, with 1 upgrade step (upgradeBoardV1) run by both UPGRADES[1] for board
  * files and Dexie schema version 2 for saved records.
+ * Phase 9 added the loop card type and Card.loopText inside version 2 with no upgrade step
+ * (user decision 2026-11-05, the app is in test); a later change that removes, renames or
+ * must rewrite saved fields adds Dexie version(3) and UPGRADES[2].
  */
 export const FORMAT_VERSION = 2;
 
@@ -46,8 +50,11 @@ export const DECKS = [
 ] as const;
 export type Deck = (typeof DECKS)[number];
 
-/** The 12 card types: the Hook Card, which no deck draws, and the 11 decks. */
-export const CARD_TYPES = ['hook', ...DECKS] as const;
+/**
+ * The 13 card types: the Hook Card, the 11 decks and the Core Loop card. No deck draws
+ * hook or loop.
+ */
+export const CARD_TYPES = ['hook', ...DECKS, 'loop'] as const;
 export type CardType = (typeof CARD_TYPES)[number];
 
 /** The 3 Modifier decks, named by the card type their adjectives target. */
@@ -158,6 +165,7 @@ export const DECK_NAME: Record<CardType, string> = {
   twist: 'Twist',
   progression: 'Progression',
   constraint: 'Constraint',
+  loop: 'Core Loop',
 };
 
 /**
@@ -209,7 +217,8 @@ export interface Card {
   z: number;
   tuckedUnder: string | null;
   /**
-   * Player Role, Resource, Setting: [nouns] or [nouns, adjectives]. A Hook Card: none.
+   * Player Role, Resource, Setting: [nouns] or [nouns, adjectives]. A Hook Card or a
+   * Core Loop card: none.
    * Every other deck: one ring.
    */
   rings: Ring[];
@@ -233,6 +242,11 @@ export interface Card {
    * and x, y are kept but unused. Always false on a Free Form board.
    */
   inConcept: boolean;
+  /**
+   * Only on a loop card. Absent: the edit field shows the live text. Present: the field
+   * shows this text; card changes never touch it.
+   */
+  loopText?: string;
 }
 
 export interface Note {

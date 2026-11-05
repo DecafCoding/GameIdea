@@ -1,0 +1,43 @@
+/* LoopMenu: the Hook Card menu values (design 9.5, 9.16): padding 4, radius 10, border 1, --surface, 44 px icon items. */
+.menu {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  box-shadow: var(--shadow-menu);
+}
+
+/* Hidden but mounted, so "Copied" and the fallback dialog outlive the pointer leaving. */
+.hidden {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--button-h);
+  min-height: var(--button-h);
+  padding: 0;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.button:hover:not(:disabled) {
+  background: var(--surface-raised);
+}
+
+.button:disabled {
+  color: var(--text-disabled);
+  cursor: default;
+}
+
+.copied {
+  color: var(--success-text);
+}

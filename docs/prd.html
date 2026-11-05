@@ -84,6 +84,8 @@ This PRD cites those documents. Where it and they differ, they win.</p>
   <li data-checked="true">Undo and redo for the open session</li>
   <li data-checked="true">One-Pager board: a second board kind beside Free Form, with 1 Hook Card, a short Hook Train and a Concept panel of chips in deck lanes — <a href="feature-one-pager-board.html">feature-one-pager-board.html</a></li>
   <li data-checked="true">Deal Stack on the Hook Card menu: deals the 5 base decks in core order and, on a One-Pager board, 2 Details chips each of 7 decks; fills only missing slots; no repeated cues; disabled when full. From Phase 8 — <a href="feature-deal-a-stack.html">feature-deal-a-stack.html</a></li>
+  <li data-checked="true">Core Loop card on One-Pager boards: a live, deck-colored template "[Mechanic] → earn [Resource] → [Progression] → to [Goal]" above an editable text that starts as the template and keeps the user's edits; Copy Loop and Reset From Cards; a Core Loop section in the text file. From Phase 9 — <a href="feature-core-loop-card.html">feature-core-loop-card.html</a></li>
+  <li data-checked="true">An ownership line on the Boards page: "Every idea you make here is yours to use, with no credit needed." From Phase 9</li>
 </ul>
 
 <h3>Technical</h3>
@@ -170,10 +172,16 @@ This PRD cites those documents. Where it and they differ, they win.</p>
 
   <li><strong>As a One-Pager user, I want a deal to fill the Details panel too, so that I see several options for each part of the game at once.</strong><br>
   Example: the train already has a Player Role and a Goal, and the Resources lane has 1 chip. Deal Stack adds Mechanic and Resource between them and Conflict after Goal, 1 more Resource chip and 2 chips in each other Details lane. No chip repeats a cue already on the board.</li>
+
+  <li><strong>As a One-Pager user, I want a Core Loop card filled from my cards, so that I can write down what the player does again and again.</strong><br>
+  Example: the user deals a stack on a new One-Pager board. The Core Loop card shows "summon → earn clues → hub grows → to finish a week of chores". The user edits the text to "summon spirits → earn clues → open new rooms". A later ring turn changes the template only. Reset From Cards brings the live text back.</li>
+
+  <li><strong>As a game jam entrant, I want the app to say that my ideas are mine, so that I can use them without asking.</strong><br>
+  Example: the Boards page help text ends with "Every idea you make here is yours to use, with no credit needed."</li>
 </ol>
 
 <h3>Technical user stories</h3>
-<ol start="10">
+<ol start="14">
   <li><strong>As the pool author, I want a pool edit that breaks a floor to fail CI, so that a draw can never come up short.</strong><br>
   Example: the user removes Fighting tags from Progression cues until Fighting has 9. The pool unit test fails the pull request.</li>
   <li><strong>As the developer, I want the hook sentence builder to be a pure function, so that every grammar rule is unit-tested without a canvas.</strong><br>
@@ -279,6 +287,7 @@ tests/e2e/          Playwright browser tests</code></pre>
   <li>Hover menu: Copy (plain text; "Copied" for 2 s; dialog fallback), Deal Stack (from Phase 8; fills missing slots; one undo step; disabled when full — <a href="feature-deal-a-stack.html">feature-deal-a-stack.html</a>), Redraw All (one undo step; skips locked cards; new cards outlined for 1 s), Discard.</li>
   <li>The sentence reads the stack top to bottom; siblings under one card read in canvas order, top first. Each card adds its badge word then its active text. On a combined card: on-top adjective, merged adjective, noun.</li>
   <li>Missing decks are left out — never a blank slot. If the top card is not a Player Role, the sentence starts with that card's badge word. Mood, Twist and Progression start a new sentence.</li>
+  <li>From Phase 9, a One-Pager board also has 1 Core Loop card (type <code>loop</code>). It is a free card that never joins a stack, and the hook sentence never reads it. Its template is a pure function of the board; <code>Card.loopText</code> stores the user's edit. Full spec: <a href="feature-core-loop-card.html">feature-core-loop-card.html</a>.</li>
 </ul>
 
 <h3>6.5 Connector badges</h3>
@@ -548,6 +557,19 @@ tests/e2e/          Playwright browser tests</code></pre>
 </ul>
 <p><strong>Validation:</strong> the done criteria in feature-deal-a-stack.html pass; every existing test passes on both board kinds; speed, size and privacy targets pass.</p>
 
+<h3 class="phase" data-phase="9">Phase 9: Core Loop Card</h3>
+<p class="meta">M9 · Phase 9 starts after Phase 8. See <a href="feature-core-loop-card.html">feature-core-loop-card.html</a>; card look, icon and Boards page copy in <a href="design-system.html">design-system.html</a> 9.3 and 9.16.</p>
+<p><strong>Goal:</strong> every new One-Pager board has a Core Loop card with a live template from its cards and an editable text the user owns, and the Boards page tells the user their ideas are theirs.</p>
+<ul class="checklist">
+  <li data-checked="true"><code>loop</code> card type and optional <code>Card.loopText</code>; Zod check; stack, reading, tuck, drop and Concept code skip the loop card; no format version change; tests first</li>
+  <li data-checked="true"><code>loopSteps</code> and <code>buildLoopText</code> as pure functions: stack card first, then the first Details chip; missing steps left out; tests first</li>
+  <li data-checked="true"><code>newBoard</code> places 1 Core Loop card at (680, 96) on a One-Pager board; edit commits on blur as 1 undo step and 1 save; an empty edit and Reset From Cards remove <code>loopText</code></li>
+  <li data-checked="true">Core Loop card view in <code>features/loop/</code>: deck-colored template, edit field, Copy Loop (with the copy fallback) and Reset From Cards; <code>repeat</code> icon vendored from Lucide</li>
+  <li data-checked="true">Core Loop section in the text file after Hooks</li>
+  <li data-checked="true">Ownership line at the end of the Boards page help text</li>
+</ul>
+<p><strong>Validation:</strong> the done criteria in feature-core-loop-card.html pass; every existing test passes on both board kinds; speed, size and privacy targets pass.</p>
+
 <!-- ============================================================ -->
 <h2 id="future">12. Future Considerations</h2>
 <ul>
@@ -582,7 +604,7 @@ tests/e2e/          Playwright browser tests</code></pre>
   <li><a href="mvp-plan.html">mvp-plan.html</a> — scope, data model, interfaces, milestones, done criteria</li>
   <li><a href="architecture.html">architecture.html</a> — every technical decision</li>
   <li><a href="design-system.html">design-system.html</a> — visual authority; <code>docs/design-handoff/</code> — mockups and screenshots (record only)</li>
-  <li><a href="feature-modifier-decks.html">feature-modifier-decks.html</a>, <a href="feature-settings-and-theme.html">feature-settings-and-theme.html</a>, <a href="feature-one-pager-board.html">feature-one-pager-board.html</a>, <a href="feature-deal-a-stack.html">feature-deal-a-stack.html</a></li>
+  <li><a href="feature-modifier-decks.html">feature-modifier-decks.html</a>, <a href="feature-settings-and-theme.html">feature-settings-and-theme.html</a>, <a href="feature-one-pager-board.html">feature-one-pager-board.html</a>, <a href="feature-deal-a-stack.html">feature-deal-a-stack.html</a>, <a href="feature-core-loop-card.html">feature-core-loop-card.html</a></li>
   <li><a href="competitive-scan.html">competitive-scan.html</a> — prior art</li>
   <li><code>concept.md</code> — the original concept</li>
   <li><code>docs/libraries/</code> — <code>decks.json</code>, <code>genres.json</code> and the Markdown libraries (record after the split)</li>

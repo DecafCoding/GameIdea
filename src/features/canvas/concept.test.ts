@@ -11,6 +11,7 @@ import {
   fixtureCard,
   onePagerBoard,
   secondModifier,
+  onePagerWithLoop,
 } from '@/test/fixtures/boards';
 import { dropCard } from './boardActions';
 import {
@@ -369,5 +370,28 @@ describe('Concept actions', () => {
       { concept: { panel: true, chipId: null } },
     );
     expect(get(moved, 'hook-1')).toMatchObject({ x: 120, y: 120 });
+  });
+});
+
+describe('Concept and the Core Loop card', () => {
+  it('enterConcept_loopCard_throws', () => {
+    expect(() => enterConcept(onePagerWithLoop(), 'loop-1')).toThrow();
+  });
+
+  it('conceptDrop_loop_stay', () => {
+    const board = onePagerWithLoop();
+    const loop = board.cards.find((card) => card.id === 'loop-1')!;
+    expect(conceptDrop(board, loop, { panel: true, chipId: null })).toEqual({ kind: 'stay' });
+    expect(conceptDrop(board, loop, { panel: true, chipId: 'resource-c1' })).toEqual({
+      kind: 'stay',
+    });
+  });
+
+  it('conceptLanes_withLoopCard_unchanged', () => {
+    expect(conceptLanes(onePagerWithLoop())).toEqual(conceptLanes(onePagerBoard()));
+  });
+
+  it('onePagerCardCount_withLoopCard_unchanged', () => {
+    expect(onePagerCardCount(onePagerWithLoop())).toBe(onePagerCardCount(onePagerBoard()));
   });
 });

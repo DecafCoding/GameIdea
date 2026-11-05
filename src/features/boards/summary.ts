@@ -1,7 +1,8 @@
 /**
  * Board card summary (design 9.3): the board kind, card and note counts, the Hook Cards and their
  * sentences, the first hook for the preview, the deck dots, and the meta line
- * "Edited 10 minutes ago · 8 cards · 1 hook" with a relative time.
+ * "Edited 10 minutes ago · 8 cards · 1 hook" with a relative time. The Core Loop card is not
+ * a card in the meta line and has no deck dot.
  */
 import { hookSentences } from '@/features/canvas';
 import { CARD_TYPES, type Board, type BoardKind, type CardType } from '@/shared/model';
@@ -26,13 +27,15 @@ export interface BoardSummary {
 
 export function summarize(board: Board): BoardSummary {
   const hooks = hookSentences(board);
-  const types = new Set(board.cards.map((card) => card.type));
+  // The Core Loop card is not a card in the meta line and has no deck dot.
+  const cards = board.cards.filter((card) => card.type !== 'loop');
+  const types = new Set(cards.map((card) => card.type));
   return {
     id: board.id,
     name: board.name,
     kind: board.kind,
     updatedAt: board.updatedAt,
-    cardCount: board.cards.length,
+    cardCount: cards.length,
     noteCount: board.notes.length,
     hookCardCount: board.cards.filter((card) => card.type === 'hook').length,
     hooks,

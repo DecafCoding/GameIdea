@@ -20,6 +20,7 @@ export const TYPE_ICON: Record<CardType, IconName> = {
   twist: 'rotate-ccw',
   progression: 'trending-up',
   constraint: 'shield-x',
+  loop: 'repeat',
 };
 
 /** The icon of each Modifier deck (design 4.4). */

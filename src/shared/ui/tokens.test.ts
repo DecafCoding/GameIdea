@@ -134,6 +134,7 @@ const ICONS: IconName[] = [
   'grip',
   'square-arrow-down',
   'drama',
+  'repeat',
 ];
 
 describe('design tokens', () => {

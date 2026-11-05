@@ -8,6 +8,7 @@ import {
   fixtureNote,
   fixtureStack,
   onePagerBoard,
+  onePagerWithLoop,
 } from '@/test/fixtures/boards';
 import { editedAgo, metaLine, summarize } from './summary';
 
@@ -133,5 +134,14 @@ describe('summary', () => {
     expect(metaLine({ ...summary, updatedAt: ago(1000) }, NOW, 'Imported')).toBe(
       'Imported just now · 2 cards · no hook yet',
     );
+  });
+});
+
+describe('summary and the Core Loop card', () => {
+  it('summarize_loopCard_notCountedNoDot', () => {
+    const withLoop = summarize(onePagerWithLoop());
+    const without = summarize(onePagerBoard());
+    expect(withLoop.cardCount).toBe(without.cardCount);
+    expect(withLoop.deckTypes).toEqual(without.deckTypes);
   });
 });

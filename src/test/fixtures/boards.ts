@@ -31,6 +31,7 @@ export const CUES = {
   progression: ['new islands open', 'tools get sharper'],
   constraint: ['no jumping', 'only one hand'],
   hook: [],
+  loop: [],
 } as const;
 
 function cuesFor(type: CardType): Cue[] {
@@ -46,7 +47,7 @@ export function fixtureCard(type: CardType, overrides: Partial<Card> = {}): Card
     y: 0,
     z: 1,
     tuckedUnder: null,
-    rings: type === 'hook' ? [] : [{ cues: cuesFor(type), activeIndex: 0 }],
+    rings: type === 'hook' || type === 'loop' ? [] : [{ cues: cuesFor(type), activeIndex: 0 }],
     ...(type === 'modifier' ? { modDeck: 'role' as const } : {}),
     onTopOf: null,
     locked: false,
@@ -342,5 +343,18 @@ export function onePagerBoard(): Board {
     name: 'One Pager',
     kind: 'onePager',
     conceptWidth: 232,
+  };
+}
+
+/**
+ * The One-Pager fixture plus its Core Loop card loop-1 at (680, 96), z 9, with no loopText.
+ * Its live loop text is "trade → earn memories": the train Mechanic, then the first Resource
+ * chip by z; there is no Progression or Goal.
+ */
+export function onePagerWithLoop(): Board {
+  const board = onePagerBoard();
+  return {
+    ...board,
+    cards: [...board.cards, fixtureCard('loop', { id: 'loop-1', x: 680, y: 96, z: 9 })],
   };
 }

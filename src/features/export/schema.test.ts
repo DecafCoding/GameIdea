@@ -20,6 +20,7 @@ import {
   fixtureStack,
   onePagerBoard,
 } from '@/test/fixtures/boards';
+import { newBoard } from '@/shared/store';
 import { boardFileJson } from './boardFile';
 import { parseBoardFile } from './importBoard';
 import { boardSchema } from './schema';
@@ -27,7 +28,9 @@ import { boardSchema } from './schema';
 function mixedBoard(): Board {
   return fixtureBoard(
     [
-      ...CARD_TYPES.map((type, i) => fixtureCard(type, { id: `${type}-x`, x: i * 300 })),
+      ...CARD_TYPES.filter((type) => type !== 'loop').map((type, i) =>
+        fixtureCard(type, { id: `${type}-x`, x: i * 300 }),
+      ),
       combinedCard('setting', { id: 'setting-combined' }),
       ...fixtureStack(0, 600),
     ],
@@ -157,7 +160,8 @@ describe('boardSchema', () => {
       ],
     });
     const board = fixtureBoard([
-      ...CARD_TYPES.map((type, i) =>
+      // A Free Form board: the Core Loop card is One-Pager only.
+      ...CARD_TYPES.filter((type) => type !== 'loop').map((type, i) =>
         fixtureCard(type, { id: `${type}-x`, x: i * 300, locked: type === 'goal' }),
       ),
       fixtureCard('modifier', { id: 'mod-resource', modDeck: 'resource' }),
@@ -323,5 +327,104 @@ describe('boardSchema One-Pager rules', () => {
     const card: Partial<Card> = fixtureCard('goal');
     delete card.inConcept;
     rejects({ ...fixtureBoard([]), cards: [card] });
+  });
+});
+
+/** The One-Pager fixture plus a Core Loop card loop-1 with the given overrides. */
+function withLoop(overrides: Partial<Card> = {}): Board {
+  const board = onePagerBoard();
+  return {
+    ...board,
+    cards: [
+      ...board.cards,
+      fixtureCard('loop', { id: 'loop-1', x: 680, y: 96, z: 9, ...overrides }),
+    ],
+  };
+}
+
+describe('boardSchema Core Loop rules', () => {
+  it('schema_onePagerWithLoopCard_roundTrips', () => {
+    for (const board of [withLoop(), withLoop({ loopText: 'summon → earn clues' })]) {
+      expect(parseBoardFile(boardFileJson(board))).toEqual(board);
+    }
+  });
+
+  it('schema_loopTextOnOtherType_rejects', () => {
+    const board = withLoop();
+    rejects({
+      ...board,
+      cards: board.cards.map((card) =>
+        card.id === 'role-t1' ? { ...card, loopText: 'my loop' } : card,
+      ),
+    });
+  });
+
+  it('schema_blankLoopText_rejects', () => {
+    rejects(withLoop({ loopText: '   ' }));
+    rejects(withLoop({ loopText: '' }));
+  });
+
+  it('schema_loopTextKeepsSpaces_notTrimmed', () => {
+    const board = withLoop({ loopText: ' my loop ' });
+    expect(parseBoardFile(boardFileJson(board))).toEqual(board);
+  });
+
+  it('schema_loopCardWithRings_rejects', () => {
+    rejects(withLoop({ rings: fixtureCard('mood').rings }));
+  });
+
+  it('schema_loopCardTucked_rejects', () => {
+    rejects(withLoop({ tuckedUnder: 'hook-1' }));
+  });
+
+  it('schema_cardTuckedUnderLoop_rejects', () => {
+    const board = withLoop();
+    rejects({
+      ...board,
+      cards: [...board.cards, fixtureCard('goal', { id: 'goal-1', tuckedUnder: 'loop-1' })],
+    });
+  });
+
+  it('schema_loopCardInConcept_rejects', () => {
+    rejects(withLoop({ inConcept: true }));
+  });
+
+  it('schema_loopCardOnTopOf_rejects', () => {
+    rejects(withLoop({ onTopOf: 'role-t1' }));
+    const board = withLoop();
+    rejects({
+      ...board,
+      cards: [...board.cards, fixtureCard('modifier', { id: 'mod-top', onTopOf: 'loop-1' })],
+    });
+  });
+
+  it('schema_loopCardConnector_rejects', () => {
+    rejects(withLoop({ connector: 'and then' }));
+  });
+
+  it('schema_loopCardModDeck_rejects', () => {
+    rejects(withLoop({ modDeck: 'role' }));
+  });
+
+  it('schema_twoLoopCards_rejects', () => {
+    const board = withLoop();
+    rejects({
+      ...board,
+      cards: [...board.cards, fixtureCard('loop', { id: 'loop-2', x: 960, y: 96, z: 10 })],
+    });
+  });
+
+  it('schema_loopCardOnFreeForm_rejects', () => {
+    rejects(fixtureBoard([fixtureCard('loop', { id: 'loop-1' })]));
+  });
+
+  it('schema_newOnePagerBoard_accepts', () => {
+    const board = newBoard({ kind: 'onePager' });
+    expect(parseBoardFile(boardFileJson(board))).toEqual(board);
+  });
+
+  it('schema_onePagerWithoutLoopCard_accepts', () => {
+    const board = onePagerBoard();
+    expect(parseBoardFile(boardFileJson(board))).toEqual(board);
   });
 });

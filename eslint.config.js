@@ -132,6 +132,19 @@ export default tseslint.config(
       ),
     },
   },
+  // The canvas imports the loop feature; the loop feature never imports the canvas (no cycle).
+  {
+    files: ['src/features/loop/**'],
+    rules: {
+      'no-restricted-imports': restrict(
+        [dexie, reactFlow, zustand, zundo, zod],
+        [
+          ...featureImportsUp,
+          { group: ['@/features/canvas'], message: 'features/loop never imports the canvas.' },
+        ],
+      ),
+    },
+  },
   {
     files: ['src/features/export/**'],
     rules: {

@@ -2,7 +2,9 @@
  * Board actions: each user action as one pure Board → Board recipe, the unit that the
  * store's changeBoard commits (one undo step and one save in Phase 4). Never mutates its
  * input; every change returns a new board with a new cards array. Deal Stack (dealStack,
- * canDeal) fills a Hook Card's missing deal slots in one recipe.
+ * canDeal) fills a Hook Card's missing deal slots in one recipe. setLoopText and
+ * resetLoopText edit the Core Loop card's stored text, each 1 recipe, so 1 undo step and
+ * 1 save; Redraw All, Deal Stack and ring turns never touch loopText.
  */
 import {
   combine,
@@ -15,6 +17,7 @@ import {
   type TurnDirection,
 } from '@/features/card';
 import { cueKey } from '@/features/draw';
+import { buildLoopText } from '@/features/loop';
 import { newId, type Board, type Card, type Deck } from '@/shared/model';
 import {
   combineOntoChip,
@@ -33,7 +36,7 @@ import {
   snapToGrid,
   type Point,
 } from './placement';
-import { onTopCardOf } from './reading';
+import { loopSteps, onTopCardOf } from './reading';
 import {
   childrenOf,
   descendantsOf,
@@ -456,4 +459,42 @@ export function turnCardOnBoard(
   direction: TurnDirection,
 ): Board {
   return replaceCard(board, turnCard(cardAt(board, cardId), slot, direction));
+}
+
+function loopCardAt(board: Board, cardId: string): Card {
+  const card = cardAt(board, cardId);
+  if (card.type !== 'loop') throw new Error('Only a Core Loop card has loop text.');
+  return card;
+}
+
+/** The Core Loop card without its loopText key (removed, never set to undefined). */
+function withoutLoopText(card: Card): Card {
+  const { loopText: _drop, ...rest } = card;
+  void _drop;
+  return rest;
+}
+
+/**
+ * Commits the Core Loop edit field (on blur). The shown text is the stored loopText, else
+ * the live text. A blank text removes loopText, so the field follows the cards again; a
+ * text equal to the shown text changes nothing; any other text is stored exactly as typed.
+ * Returns the same board when nothing changes, so no undo step and no save. Throws unless
+ * the card is a Core Loop card.
+ */
+export function setLoopText(board: Board, cardId: string, text: string): Board {
+  const card = loopCardAt(board, cardId);
+  if (text.trim() === '') {
+    return card.loopText === undefined ? board : replaceCard(board, withoutLoopText(card));
+  }
+  const shown = card.loopText ?? buildLoopText(loopSteps(board)).text;
+  return text === shown ? board : replaceCard(board, { ...card, loopText: text });
+}
+
+/**
+ * Reset From Cards: removes the Core Loop card's loopText, so the field shows the live text
+ * again. The same board when there is none. Throws unless the card is a Core Loop card.
+ */
+export function resetLoopText(board: Board, cardId: string): Board {
+  const card = loopCardAt(board, cardId);
+  return card.loopText === undefined ? board : replaceCard(board, withoutLoopText(card));
 }

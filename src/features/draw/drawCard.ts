@@ -134,6 +134,7 @@ export function drawFor(
   options: DrawOptions = {},
 ): Card {
   if (card.type === 'hook') throw new Error('A Hook Card is never drawn from a pool.');
+  if (card.type === 'loop') throw new Error('A Core Loop card is never drawn from a pool.');
   const type = card.type;
   const filter: DrawFilter = isGenreDeck(type)
     ? { genres: genres[type] }

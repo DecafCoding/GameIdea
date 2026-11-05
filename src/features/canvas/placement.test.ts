@@ -2,7 +2,7 @@
  * Tests for the open-spot search.
  */
 import { describe, expect, it } from 'vitest';
-import { fixtureBoard, fixtureCard, onePagerBoard } from '@/test/fixtures/boards';
+import { fixtureBoard, fixtureCard, onePagerBoard, onePagerWithLoop } from '@/test/fixtures/boards';
 import { besideSpot, boardRects, cardSize, findOpenSpot, snapToGrid } from './placement';
 
 const SIZE = { width: 200, height: 200 };
@@ -42,6 +42,12 @@ describe('cardSize', () => {
   });
 });
 
+describe('cardSize of the Core Loop card', () => {
+  it('cardSize_loop_240by200', () => {
+    expect(cardSize(fixtureCard('loop'))).toEqual({ width: 240, height: 200 });
+  });
+});
+
 describe('snapToGrid', () => {
   it('snapToGrid_nearestPoint', () => {
     expect(snapToGrid({ x: 37, y: 61 })).toEqual({ x: 48, y: 72 });
@@ -66,5 +72,14 @@ describe('boardRects on a One-Pager board', () => {
     const board = onePagerBoard();
     // Hook Card, 2 train cards, the loose Modifier and the note: no Concept card.
     expect(boardRects(board)).toHaveLength(5);
+  });
+});
+
+describe('boardRects with a Core Loop card', () => {
+  it('boardRects_loopCard_occupied', () => {
+    const board = onePagerWithLoop();
+    expect(boardRects(board)).toContainEqual({ x: 680, y: 96, width: 240, height: 200 });
+    const spot = findOpenSpot({ x: 680, y: 96 }, boardRects(board), { width: 200, height: 200 });
+    expect(spot).not.toEqual({ x: 680, y: 96 });
   });
 });

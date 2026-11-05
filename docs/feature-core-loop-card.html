@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Feature — Core Loop Card</title>
+  <style>
+    :root { --fg:#1a1a1a; --muted:#666; --accent:#2563eb; --done:#16a34a; --rule:#e5e7eb; }
+    body { font:16px/1.6 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; color:var(--fg); max-width:60rem; margin:2rem auto; padding:0 1.25rem; }
+    h1 { font-size:2rem; border-bottom:2px solid var(--rule); padding-bottom:.3rem; }
+    h2 { font-size:1.5rem; margin-top:2.5rem; border-bottom:1px solid var(--rule); padding-bottom:.2rem; }
+    h3 { font-size:1.2rem; margin-top:1.75rem; }
+    code, pre { font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+    pre { background:#f6f8fa; padding:1rem; border-radius:6px; overflow:auto; }
+    table { border-collapse:collapse; width:100%; margin:1rem 0; }
+    th, td { border:1px solid var(--rule); padding:.5rem .75rem; text-align:left; vertical-align:top; }
+    th { background:#f6f8fa; }
+    ul.checklist { list-style:none; padding-left:0; }
+    ul.checklist > li::before { content:"☐ "; color:var(--muted); }
+    ul.checklist > li[data-checked="true"]::before { content:"☑ "; color:var(--done); }
+    .meta { color:var(--muted); font-size:.9rem; }
+  </style>
+
+<h1>Feature — Core Loop Card</h1>
+<p class="meta">2026-11-05 · Extends GameIdea (working name), as planned in <a href="mvp-plan.html">mvp-plan.html</a>. Written from the <code>/dev-add-feature</code> run. Lands in Phase 9.</p>
+<p><strong>Visual authority:</strong> <a href="design-system.html">design-system.html</a> holds the card look, the icon and the Boards page copy. Where this brief and the design doc disagree on a visual detail, the design doc wins.</p>
+
+<h2>Summary and motivation</h2>
+<p>After the hook and the Details panel are full, the user has a concept. The next design step is the core loop: what the player does again and again, and why. Today the app has no place for it.</p>
+<p>This feature adds a Core Loop card to every new One-Pager board. Its top part is a live template filled from the board's cards. Its lower part is text the user can edit. The text starts as the live template and becomes the user's own after the first edit.</p>
+<p>The phase also adds 1 line to the Boards page. It tells the user that the ideas they make are theirs to use.</p>
+
+<h2>Fit with the existing application</h2>
+<p>The feature extends the core loop at its end. The user deals or draws a stack, fills the Details panel, then reads and edits the Core Loop card. Every earlier step works as today.</p>
+<p>It widens the scan row "Turn the draw into a pitch: hook, stakes and angle". That row stays Partial, because an editable angle line is still left out. It closes the scan row "State that the user owns the generated ideas". It adds to the row "Send a saved idea to a design document", because the text file now holds the loop.</p>
+<p>Related docs: <a href="mvp-plan.html">mvp-plan.html</a>, <a href="prd.html">prd.html</a>, <a href="architecture.html">architecture.html</a>, <a href="design-system.html">design-system.html</a>, <a href="competitive-scan.html">competitive-scan.html</a>, <a href="feature-one-pager-board.html">feature-one-pager-board.html</a>, <a href="feature-deal-a-stack.html">feature-deal-a-stack.html</a>.</p>
+
+<h2>Scope</h2>
+
+<h3>In this feature</h3>
+<ul class="checklist">
+  <li data-checked="true">A new card type, <code>loop</code>, shown as the Core Loop card. It is 240 px wide and uses the Hook Card style.</li>
+  <li data-checked="true">A new One-Pager board starts with exactly 1 Core Loop card at (680, 96). That is to the right of the Details panel at its default width, with the 56 px gap.</li>
+  <li data-checked="true">The card is free. The user can drag it. Its drop snaps to the 24 px grid like any free card, and Alt skips the snap.</li>
+  <li data-checked="true">Top part: the live template "[Mechanic] → earn [Resource] → [Progression] → to [Goal]". It is read-only and always current. Each filled step shows in its deck color. A missing step is left out.</li>
+  <li data-checked="true">Lower part: an editable text area. It shows the live text until the first edit. After that it shows the stored text, and card changes do not touch it.</li>
+  <li data-checked="true">A card menu with 2 icon buttons: Copy Loop, and Reset From Cards. Reset From Cards shows only when the card has stored text.</li>
+  <li data-checked="true">The text file adds a "Core Loop" section right after the Hooks section.</li>
+  <li data-checked="true">The Boards page help text ends with "Every idea you make here is yours to use, with no credit needed."</li>
+  <li data-checked="true">1 new vendored Lucide icon, <code>repeat</code>.</li>
+</ul>
+
+<h3>Deferred</h3>
+<ul class="checklist">
+  <li data-checked="false">A Core Loop card on Free Form boards.</li>
+  <li data-checked="false">An import step that adds a Core Loop card to an older One-Pager board file.</li>
+  <li data-checked="false">AI help to suggest or improve the loop text.</li>
+  <li data-checked="false">A keyboard shortcut for Copy Loop.</li>
+</ul>
+
+<h3>Never</h3>
+<ul class="checklist">
+  <li data-checked="false">More than 1 Core Loop card on a board. The card has no Duplicate and no Discard.</li>
+  <li data-checked="false">A loop card that a ring turn can overwrite after the user edits it.</li>
+</ul>
+
+<h2>Blast radius</h2>
+<table>
+  <tr><th>Part</th><th>Change</th></tr>
+  <tr><td><code>shared/model/index.ts</code></td><td><code>loop</code> added to <code>CARD_TYPES</code>, with <code>DECK_NAME</code> "Core Loop". New optional field <code>Card.loopText</code>.</td></tr>
+  <tr><td><code>shared/store/newBoard.ts</code></td><td>A One-Pager board also gets 1 Core Loop card at <code>ONE_PAGER_LOOP_SPOT</code> (680, 96).</td></tr>
+  <tr><td><code>features/loop/</code> (new)</td><td>The pure <code>buildLoopText</code>, the Core Loop card view, its menu and its edit field. Its <code>index.ts</code> is the only way in.</td></tr>
+  <tr><td><code>features/canvas/</code></td><td>A <code>loopSteps(board)</code> read in <code>reading.ts</code>. A node type for the loop card in <code>nodes.ts</code> and <code>BoardCanvas.tsx</code>. Stack, reading, tuck, drop-hint, placement and Concept code skip <code>loop</code> cards. <code>setLoopText</code> and <code>resetLoopText</code> as Board → Board recipes.</td></tr>
+  <tr><td><code>features/hook/</code></td><td>No change in behavior. Its <code>index.ts</code> exports the copy function and fallback dialog for Copy Loop, if it does not already.</td></tr>
+  <tr><td><code>features/export/schema.ts</code></td><td>The Zod check accepts <code>type: "loop"</code> and <code>loopText</code>. <code>loopText</code> is allowed only on a <code>loop</code> card.</td></tr>
+  <tr><td><code>features/export/textFile.ts</code></td><td>A "Core Loop" section after Hooks. The loop card is never a line in the Cards section.</td></tr>
+  <tr><td><code>features/boards/BoardList.tsx</code></td><td>The ownership sentence at the end of the help text under "Boards".</td></tr>
+  <tr><td><code>features/boards/summary.ts</code></td><td>The loop card does not count as a card in the board card's meta line.</td></tr>
+  <tr><td><code>shared/ui/Icon.tsx</code>, <code>public/icons/</code></td><td>The <code>repeat</code> icon.</td></tr>
+  <tr><td><code>shared/ui/tokens.css</code></td><td>No new token. The card reuses the Hook Card fill and the deck colors.</td></tr>
+</table>
+<p>If the skip rules are wrong, the loop card can join a stack, take a tuck, or show in the hook sentence. The unit tests on stack and reading code guard this.</p>
+
+<h2>Data model changes</h2>
+<pre><code>CARD_TYPES += 'loop'           // DECK_NAME.loop = 'Core Loop'
+Card.loopText?: string         // only on a loop card
+  absent  -&gt; the edit field shows the live text
+  present -&gt; the edit field shows this text; card changes do not touch it
+A loop card: rings: [], tuckedUnder: null, onTopOf: null, locked: false, inConcept: false</code></pre>
+<p><strong>No migration.</strong> The board format stays at version 2. There is no Dexie <code>version(3)</code> and no <code>UPGRADES[2]</code>. The user confirmed that the app is still in test and the test boards are deleted. The change only adds a value and an optional field, so boards and board files made before it still pass the import check.</p>
+<p><strong>Rollback:</strong> remove the type and the field. A board file made with a loop card then fails the import check of the older app. That is accepted while the app is in test.</p>
+
+<h2>Interfaces and contracts</h2>
+
+<h3>Live template</h3>
+<pre><code>loopSteps(board) -&gt; { mechanic?, resource?, progression?, goal? }   // features/canvas, pure
+  each step: the card in the Hook Card's stack first (reading order, first match),
+             else the first chip by z in that deck's Details lane
+  a combined Resource card gives its adjective and noun, as cardText does
+
+buildLoopText(steps) -&gt; { parts: { deck, lead, text }[], text: string }   // features/loop, pure
+  order and lead words: mechanic "", resource "earn", progression "", goal "to"
+  parts joined by " → "; a missing step is left out
+  no steps -&gt; parts: [], text: ""</code></pre>
+<p>Example: <em>summon → earn clues → hub grows → to finish a week of chores</em>.</p>
+<p>The Progression step has no lead word, because Progression cues have mixed forms. When there are no steps, the top part shows the help text "Deal or draw cards to build the loop." The design doc holds the final wording.</p>
+
+<h3>Edits</h3>
+<ul>
+  <li>The edit field commits when it loses focus, as the note fields do. That is 1 <code>changeBoard</code>, so 1 undo step and 1 save. Typing makes no save on each key.</li>
+  <li>A commit with text the same as the shown text makes no change.</li>
+  <li>A commit with empty or white-space text removes <code>loopText</code>. The field then shows the live text. The card never shows a blank text area.</li>
+  <li>Reset From Cards removes <code>loopText</code> in 1 <code>changeBoard</code>.</li>
+  <li>Redraw All, Deal Stack and ring turns never change <code>loopText</code>.</li>
+</ul>
+
+<h3>Menu</h3>
+<ul>
+  <li>Copy Loop: copies <code>loopText</code> if present, else the live text. It uses the Copy Hook code and its fallback dialog through <code>@/features/hook</code>. It is disabled when both are empty.</li>
+  <li>Reset From Cards: shows only when <code>loopText</code> is present.</li>
+  <li>Each is a 44 px icon button with an <code>aria-label</code> and a tooltip in Title Case.</li>
+</ul>
+
+<h3>Text file</h3>
+<pre><code>Hooks
+
+&lt;hook sentence&gt;
+
+Core Loop
+
+&lt;loopText, or the live text&gt;
+
+Details
+...</code></pre>
+<p>The section is left out when the board has no loop card, or when the text is empty.</p>
+
+<h3>Card</h3>
+<ul>
+  <li>240 px wide, the Hook Card fill for each mode, no deck edge and no deck tint.</li>
+  <li>Label row: the <code>repeat</code> icon and "Core Loop" in <code>--accent-text</code>.</li>
+  <li>Top part: the live template. Each step's text is in its deck color, in the Details chip style.</li>
+  <li>A thin divider, then the edit field.</li>
+  <li>The height starts at 200 px and grows with the text.</li>
+</ul>
+
+<h2>Architecture fit</h2>
+<p><strong>Outcome 2: it fits, with 1 local exception.</strong> No change to <a href="architecture.html">architecture.html</a>.</p>
+<ul>
+  <li><code>hook-sentence</code>: the live text follows the same rule. It is a pure function, computed on each change and never stored.</li>
+  <li><code>module-layout</code> and <code>import-rules</code>: the new <code>features/loop/</code> uses <code>features/canvas</code> and <code>features/hook</code> only through their <code>index.ts</code>. Only <code>features/canvas/</code> imports React Flow. Only <code>features/hook/</code> calls the Clipboard API.</li>
+  <li><code>undo-history</code> and <code>save-transaction</code>: each edit and each reset is 1 <code>changeBoard</code>.</li>
+  <li><code>storage-seam</code> and <code>schema-shape</code>: the loop card is a card in the one board record.</li>
+  <li><code>clipboard</code>: Copy Loop reuses the Copy Hook path and its fallback.</li>
+  <li><code>import-checks</code>: the Zod check gets the new type and field.</li>
+</ul>
+<p><strong>Exception:</strong> <code>board-file-format</code> and <code>schema-versions</code> say that a shape change adds an upgrade step. This change adds a type and an optional field with no step and no version change. The reason: the change only adds, and the app is still in test with no saved boards to upgrade. If a later change removes or renames a field, or must change saved boards, it must add Dexie <code>version(3)</code> and <code>UPGRADES[2]</code> as the decisions say.</p>
+
+<h2>Compatibility and rollout</h2>
+<p>New One-Pager boards get the card. A One-Pager board made before this feature, or imported from an older file, has no Core Loop card. It loads as it is, with no fix. Free Form boards do not change. The feature ships whole in Phase 9 with no flag.</p>
+
+<h2>Testing and regression plan</h2>
+<h3>Unit (Vitest)</h3>
+<ul>
+  <li><code>buildLoopText</code>: all 4 steps, each single missing step, only 1 step, and no steps.</li>
+  <li><code>loopSteps</code>: stack card first, Details chip second, first chip by z, a combined Resource card.</li>
+  <li><code>newBoard</code>: a One-Pager board has 1 Hook Card and 1 loop card at (680, 96). A Free Form board has none.</li>
+  <li>Edit recipes: a commit stores the text, a same-text commit returns the same board, an empty commit removes the field, and reset removes the field.</li>
+  <li>Redraw All and <code>dealStack</code> do not change <code>loopText</code>.</li>
+  <li>Stack, reading, tuck, drop and Concept code skip the loop card. The hook sentence never reads it.</li>
+  <li>Import check: accepts a loop card, rejects <code>loopText</code> on another card type, accepts a One-Pager file with no loop card.</li>
+  <li>Text file: the Core Loop section is placed after Hooks, and the loop card is not in Cards.</li>
+</ul>
+<h3>Browser (Playwright)</h3>
+<ul>
+  <li>A new One-Pager board shows the Core Loop card. A ring turn updates the template and the unedited field.</li>
+  <li>After an edit, a ring turn updates the template only. 1 Undo removes the edit. Reset From Cards brings the live text back.</li>
+  <li>Copy Loop puts the shown text on the clipboard.</li>
+  <li>The Boards page shows the ownership sentence.</li>
+</ul>
+<h3>Regression</h3>
+<ul>
+  <li>Every existing test passes on both board kinds.</li>
+  <li>Speed, size and privacy targets pass.</li>
+</ul>
+
+<h2>Build plan</h2>
+<p>Phase 9 in <a href="prd.html#phases">prd.html</a>. Ordered tasks:</p>
+<ol>
+  <li>The model change, the Zod check and the skip rules in stack, reading and Concept code, with tests first. The skip rules are the riskiest part, so they come first.</li>
+  <li><code>loopSteps</code> and <code>buildLoopText</code> as pure functions, with tests first.</li>
+  <li><code>newBoard</code> places the loop card. The edit and reset recipes.</li>
+  <li>The Core Loop card view, its node type, its menu and the <code>repeat</code> icon.</li>
+  <li>The Core Loop section in the text file.</li>
+  <li>The ownership sentence on the Boards page.</li>
+  <li>Playwright tests, then the full check run.</li>
+</ol>
+
+<h2>Done criteria</h2>
+<ul>
+  <li>A new One-Pager board shows exactly 1 Core Loop card at (680, 96). A Free Form board shows none.</li>
+  <li>The template follows every ring turn, redraw and deal within the 100 ms target. Each step shows in its deck color, and a missing step is left out.</li>
+  <li>The edit field shows the live text until the first edit. After that it keeps the user's text.</li>
+  <li>An edit is 1 undo step and 1 save. An empty edit returns to the live text.</li>
+  <li>Reset From Cards and Copy Loop work, and Copy Loop has the fallback dialog.</li>
+  <li>The loop card never joins a stack and never shows in the hook sentence.</li>
+  <li>The text file has the Core Loop section after Hooks.</li>
+  <li>The Boards page shows "Every idea you make here is yours to use, with no credit needed."</li>
+  <li>Every existing test passes on both board kinds. Speed, size and privacy targets pass.</li>
+</ul>
+
+<h2>Open risks and assumptions</h2>
+<ul>
+  <li>Risk: a Details panel widened past its default can cover the Core Loop card. The card is free, so the user can drag it away.</li>
+  <li>Risk: some cue mixes read badly in the template. The user can edit the text below it.</li>
+  <li>Risk: the change has no upgrade step. A later change to the loop card shape must add one.</li>
+  <li>Assumption: the first matching card in reading order is the right source for each step.</li>
+  <li>Assumption: older One-Pager boards without a loop card are test data only.</li>
+</ul>
+
+</body>
+</html>

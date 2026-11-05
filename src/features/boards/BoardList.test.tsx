@@ -98,6 +98,15 @@ const importedFile = (name: string) =>
   });
 
 describe('BoardList', () => {
+  it('boardList_helpText_endsWithOwnershipLine', async () => {
+    renderList();
+    const caption = await screen.findByText(/^Each board is one place/);
+    expect(caption.textContent.replace(/\s+/g, ' ').trim()).toBe(
+      'Each board is one place to draw cards and build hooks. Boards stay in this browser. ' +
+        'Every idea you make here is yours to use, with no credit needed.',
+    );
+  });
+
   it('boardList_threeBoards_newestFirstWithCaptions', async () => {
     await seedThree();
     renderList();
