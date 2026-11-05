@@ -75,6 +75,8 @@ function BoardScreenBody({
   // The board id on which something was drawn or added this session: the panel stays away.
   const [startedOn, setStartedOn] = useState<string | null>(null);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  // The tab the next Settings open starts on: Genres from a rail Edit Genres button.
+  const [settingsOpenOn, setSettingsOpenOn] = useState<'appearance' | 'genres'>('appearance');
 
   const ready = status === 'ready' && pools !== null;
   const empty = board.cards.length === 0 && board.notes.length === 0;
@@ -139,7 +141,14 @@ function BoardScreenBody({
         hookDisabled={onePager}
         onAddNote={addNoteNow}
         genres={board.genres}
-        onOpenSettings={() => setSettingsOpen(true)}
+        onOpenSettings={() => {
+          setSettingsOpenOn('appearance');
+          setSettingsOpen(true);
+        }}
+        onEditGenres={() => {
+          setSettingsOpenOn('genres');
+          setSettingsOpen(true);
+        }}
         settingsOpen={settingsOpen}
       />
       <div className={styles.region} data-testid="canvas-region">
@@ -185,6 +194,7 @@ function BoardScreenBody({
       </div>
       <SettingsDialog
         open={settingsOpen}
+        openOn={settingsOpenOn}
         onClose={() => setSettingsOpen(false)}
         genresTab={{
           caption: GENRES_SCOPE_TEXT,

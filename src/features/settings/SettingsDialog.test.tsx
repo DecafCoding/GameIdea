@@ -132,6 +132,14 @@ describe('SettingsDialog', () => {
     expect(panel.getAttribute('aria-labelledby')).toBe(tabs[0]!.id);
   });
 
+  it('settingsDialog_genresTab_leadsWithDramaIcon', () => {
+    render(<SettingsDialog open onClose={() => undefined} genresTab={genresTab} />);
+    const genres = screen.getByRole('tab', { name: 'Genres' });
+    expect(genres.firstElementChild?.getAttribute('data-icon')).toBe('drama');
+    const appearance = screen.getByRole('tab', { name: 'Appearance' });
+    expect(appearance.querySelector('[data-icon]')).toBeNull();
+  });
+
   it('settingsDialog_genresTabClick_showsGenresContentCaptionAndFooter', () => {
     render(<SettingsDialog open onClose={() => undefined} genresTab={genresTab} />);
     fireEvent.click(screen.getByRole('tab', { name: 'Genres' }));
@@ -167,6 +175,34 @@ describe('SettingsDialog', () => {
     expect(screen.getByRole('tab', { name: 'Appearance' }).getAttribute('aria-selected')).toBe(
       'true',
     );
+  });
+
+  it('settingsDialog_openOnGenres_startsOnGenresEachOpen', () => {
+    const { rerender } = render(
+      <SettingsDialog
+        open={false}
+        onClose={() => undefined}
+        genresTab={genresTab}
+        openOn="genres"
+      />,
+    );
+    rerender(
+      <SettingsDialog open onClose={() => undefined} genresTab={genresTab} openOn="genres" />,
+    );
+    expect(screen.getByRole('tab', { name: 'Genres' }).getAttribute('aria-selected')).toBe('true');
+    fireEvent.click(screen.getByRole('tab', { name: 'Appearance' }));
+    rerender(
+      <SettingsDialog
+        open={false}
+        onClose={() => undefined}
+        genresTab={genresTab}
+        openOn="genres"
+      />,
+    );
+    rerender(
+      <SettingsDialog open onClose={() => undefined} genresTab={genresTab} openOn="genres" />,
+    );
+    expect(screen.getByRole('tab', { name: 'Genres' }).getAttribute('aria-selected')).toBe('true');
   });
 
   it('settingsDialog_modeHelp_isNewText', () => {

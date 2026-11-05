@@ -62,6 +62,17 @@
   gap: 4px;
 }
 
+/* A genre deck button and its Edit Genres button (user 2026-11-05): a row, gap 4. */
+.deckRow {
+  display: flex;
+  gap: 4px;
+}
+
+.deckRow > :first-child {
+  flex: 1;
+  min-width: 0;
+}
+
 /* Add Note (design 8.2): deck-button size, dashed border 1 --border-strong, margin-top 6. */
 .addNote {
   display: flex;

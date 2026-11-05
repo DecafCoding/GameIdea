@@ -5,12 +5,12 @@
  * at the bottom (margin-top auto; when the rail overflows and scrolls, Settings simply follows
  * Add Note). Genres live on the Settings Genres tab, so there is no Genres group (design 8.2,
  * 2026-11-04). The Settings button shows pressed (aria-expanded) while its dialog is open.
- * Each genre-tagged deck button (Mechanic, Resource, Progression, Constraint) carries a genre
- * count pill (design 8.2), hidden at all 21 genres.
+ * Each genre-tagged deck button (Mechanic, Resource, Progression, Constraint) has an Edit
+ * Genres button to its right (user 2026-11-05): the count of genres on, or the drama icon at
+ * all 21. It opens the Settings Genres tab.
  */
-import { useId } from 'react';
 import { DeckButton, HookButton } from '@/features/draw';
-import { GenreCount, showCount } from '@/features/genres';
+import { GenreButton } from '@/features/genres';
 import {
   GENRE_DECKS,
   MOD_DECKS,
@@ -30,9 +30,11 @@ interface SideRailProps {
   /** True on a One-Pager board: the Hook Card button is off (it keeps 1 Hook Card). */
   hookDisabled?: boolean;
   onAddNote: () => void;
-  /** The open board's deck genres, for the count pills. */
+  /** The open board's deck genres, for the Edit Genres buttons. */
   genres: DeckGenres;
   onOpenSettings: () => void;
+  /** Opens Settings on the Genres tab. */
+  onEditGenres: () => void;
   /** True while the Settings dialog is open: the Settings button shows pressed. */
   settingsOpen: boolean;
 }
@@ -54,24 +56,18 @@ export function SideRail({
   onAddNote,
   genres,
   onOpenSettings,
+  onEditGenres,
   settingsOpen,
 }: SideRailProps) {
-  const idPrefix = useId();
   const button = (type: Deck) => {
     if (!isGenreDeck(type)) {
       return <DeckButton key={type} type={type} disabled={!decksReady} onDraw={onDraw} />;
     }
-    const count = genres[type].length;
-    const pillId = `${idPrefix}-${type}-genres`;
     return (
-      <DeckButton
-        key={type}
-        type={type}
-        disabled={!decksReady}
-        onDraw={onDraw}
-        trailing={<GenreCount id={pillId} count={count} />}
-        describedBy={showCount(count) ? pillId : undefined}
-      />
+      <div key={type} className={styles.deckRow}>
+        <DeckButton type={type} disabled={!decksReady} onDraw={onDraw} />
+        <GenreButton deck={type} count={genres[type].length} onEdit={onEditGenres} />
+      </div>
     );
   };
   return (

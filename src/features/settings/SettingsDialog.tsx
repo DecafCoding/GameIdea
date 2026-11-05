@@ -5,8 +5,8 @@
  * app version. When this browser does not save settings, a one-line note says so. Genres:
  * app/ passes the tab's caption, footer note and content through genresTab, so this feature
  * never imports the genres feature (design 9.10). With no genresTab (no board open) the Genres
- * tab is disabled. The selected tab is local view state: it opens on Appearance, is never
- * stored and is never an undo step (design 9.11, 13).
+ * tab is disabled. The selected tab is local view state: it opens on Appearance (or on
+ * Genres from a rail Edit Genres button), is never stored and is never an undo step (design 9.11, 13).
  */
 import { useId, useState, type ReactNode } from 'react';
 import { ACCENTS, MODES, type Accent, type Mode } from '@/shared/model';
@@ -59,6 +59,8 @@ interface SettingsDialogProps {
   onClose: () => void;
   /** The Genres tab. Without it the Genres tab is disabled. */
   genresTab?: GenresTabSlot;
+  /** The tab each open starts on: Appearance, or Genres from a rail Edit Genres button. */
+  openOn?: SettingsTab;
 }
 
 /** One setting: its name and help text on the left, the control on the right. */
@@ -74,15 +76,21 @@ function Row({ name, help, children }: { name: string; help: string; children: R
   );
 }
 
-export function SettingsDialog({ open, onClose, genresTab }: SettingsDialogProps) {
+export function SettingsDialog({
+  open,
+  onClose,
+  genresTab,
+  openOn = 'appearance',
+}: SettingsDialogProps) {
   const canSave = useCanSaveSettings();
   const idPrefix = useId();
-  const [tab, setTab] = useState<SettingsTab>('appearance');
-  // Every open starts on Appearance (design 9.11): reset while rendering the open change.
+  const [tab, setTab] = useState<SettingsTab>(openOn);
+  // Every open starts on openOn: Appearance (design 9.11) or Genres from an Edit Genres
+  // button (user 2026-11-05). Reset while rendering the open change.
   const [wasOpen, setWasOpen] = useState(open);
   if (open !== wasOpen) {
     setWasOpen(open);
-    if (open) setTab('appearance');
+    if (open) setTab(openOn);
   }
   const shown: SettingsTab = tab === 'genres' && genresTab ? 'genres' : 'appearance';
 

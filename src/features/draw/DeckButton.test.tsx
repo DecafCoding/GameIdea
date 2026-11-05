@@ -6,25 +6,11 @@ import { describe, expect, it, vi } from 'vitest';
 import { DeckButton, HookButton } from './DeckButton';
 
 describe('DeckButton', () => {
-  it('deckButton_trailing_rendersInsideAndKeepsLabel', () => {
-    render(
-      <DeckButton
-        type="mechanic"
-        disabled={false}
-        onDraw={() => undefined}
-        trailing={<span id="pill">3</span>}
-        describedBy="pill"
-      />,
-    );
-    const button = screen.getByRole('button', { name: 'Draw A Mechanic' });
-    expect(button.contains(document.getElementById('pill'))).toBe(true);
-    expect(button.getAttribute('aria-describedby')).toBe('pill');
-  });
-
-  it('deckButton_noTrailing_noDescription', () => {
-    render(<DeckButton type="mechanic" disabled={false} onDraw={() => undefined} />);
-    const button = screen.getByRole('button', { name: 'Draw A Mechanic' });
-    expect(button.hasAttribute('aria-describedby')).toBe(false);
+  it('deckButton_click_drawsItsDeck', () => {
+    const onDraw = vi.fn();
+    render(<DeckButton type="mechanic" disabled={false} onDraw={onDraw} />);
+    fireEvent.click(screen.getByRole('button', { name: 'Draw A Mechanic' }));
+    expect(onDraw).toHaveBeenCalledWith('mechanic', expect.anything(), undefined);
   });
 
   it('hookButton_disabled_noDraw', () => {

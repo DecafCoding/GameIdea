@@ -1,6 +1,6 @@
 /**
- * Genres browser tests (design 8.2, 9.10 and 9.11): the Settings Genres tab, the genre count
- * pills, no rail Genres button, persistence across reload, genre changes kept out of undo,
+ * Genres browser tests (design 8.2, 9.10 and 9.11): the Settings Genres tab, the rail Edit
+ * Genres buttons, no rail Genres button, persistence across reload, genre changes kept out of undo,
  * the last genre guard, and the genre filter on draws with the real pools.
  */
 import { readFileSync } from 'node:fs';
@@ -13,7 +13,7 @@ import type { Board, PoolCue } from '@/shared/model';
 
 /** The Genres tab scope line (design 9.10, verbatim). */
 const GENRES_SCOPE_TEXT =
-  'These genres apply to this board only. Pick genres at the top. Each genre you pick shows on the 4 genre decks below, already on. Turn one off to keep it out of that deck. A change applies to the next draw only. Cards on the board keep their cues. The other 7 decks do not use genre.';
+  'These genres apply to this board only. Pick genres at the top. Each genre you pick shows on the 4 genre decks below, already on. Turn one off to keep it out of that deck. A change applies to the next draw only. Cards on the board keep their cues. The other 7 decks are not filtered by genres.';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 
@@ -30,10 +30,9 @@ function topRow(page: Page) {
   return panel(page).getByRole('region', { name: 'All 4 Decks' });
 }
 
-function pill(page: Page, deck: string) {
-  return rail(page)
-    .getByRole('button', { name: `Draw A ${deck}`, exact: true })
-    .getByRole('img', { name: /genres? on$/ });
+/** The Edit Genres button beside a genre deck button. */
+function genreButton(page: Page, deck: string) {
+  return rail(page).getByRole('button', { name: new RegExp(`^Edit ${deck} Genres, `) });
 }
 
 /** Opens Settings from the rail and selects the Genres tab. */
@@ -60,14 +59,32 @@ async function storedBoardWhen(page: Page, ok: (board: Board) => boolean): Promi
 const cueTexts = (board: Board, id: string) =>
   board.cards.find((c) => c.id === id)!.rings.flatMap((r) => r.cues.map((c) => c.text));
 
-test('genres_newBoard_noPillsAndNoRailGenresButton', async ({ page }) => {
+test('genres_newBoard_dramaIconsAndNoRailGenresButton', async ({ page }) => {
   await openBoard(page);
-  await expect(rail(page).getByRole('img', { name: /genres? on$/ })).toHaveCount(0);
-  await expect(rail(page).getByRole('button', { name: 'Genres' })).toHaveCount(0);
+  for (const deck of ['Mechanic', 'Resource', 'Progression', 'Constraint']) {
+    const button = genreButton(page, deck);
+    await expect(button).toHaveAccessibleName(`Edit ${deck} Genres, all genres on`);
+    await expect(button).toHaveAttribute('title', 'Edit Genres');
+    await expect(button.locator('[data-icon="drama"]')).toHaveCount(1);
+  }
+  await expect(rail(page).getByRole('button', { name: /^Edit (Mood|Twist) Genres/ })).toHaveCount(
+    0,
+  );
+  await expect(rail(page).getByRole('button', { name: 'Genres', exact: true })).toHaveCount(0);
   await expect(rail(page).getByRole('heading', { name: 'Genres' })).toHaveCount(0);
 });
 
-test('genres_tab_turnOffTopChip_updatesPills', async ({ page }) => {
+test('genres_editGenresButton_opensGenresTab', async ({ page }) => {
+  await openBoard(page);
+  await genreButton(page, 'Resource').click();
+  await expect(settingsDialog(page).getByRole('tab', { name: 'Genres' })).toHaveAttribute(
+    'aria-selected',
+    'true',
+  );
+  await expect(topRow(page)).toBeVisible();
+});
+
+test('genres_tab_turnOffTopChip_updatesCounts', async ({ page }) => {
   await openBoard(page);
   await openGenresTab(page);
   await expect(topRow(page).getByRole('button')).toHaveCount(22); // 21 chips and All On
@@ -77,20 +94,18 @@ test('genres_tab_turnOffTopChip_updatesPills', async ({ page }) => {
   await topRow(page).getByRole('button', { name: 'Roguelike', exact: true }).click();
   await settingsDialog(page).getByRole('button', { name: 'Done' }).click();
   await expect(settingsDialog(page)).toHaveCount(0);
-  await expect(pill(page, 'Mechanic')).toHaveText('20');
-  await expect(pill(page, 'Resource')).toHaveText('20');
-  await expect(pill(page, 'Mechanic')).toHaveAccessibleName('20 genres on');
+  await expect(genreButton(page, 'Mechanic')).toHaveText('20');
+  await expect(genreButton(page, 'Resource')).toHaveText('20');
+  await expect(genreButton(page, 'Mechanic')).toHaveAccessibleName(
+    'Edit Mechanic Genres, 20 genres on',
+  );
   for (const deck of ['Progression', 'Constraint']) {
-    await expect(pill(page, deck)).toHaveText('20');
-    await expect(pill(page, deck)).toHaveAccessibleName('20 genres on');
+    await expect(genreButton(page, deck)).toHaveText('20');
+    await expect(genreButton(page, deck)).toHaveAccessibleName(`Edit ${deck} Genres, 20 genres on`);
   }
-  for (const deck of ['Mood', 'Twist']) {
-    await expect(
-      rail(page)
-        .getByRole('button', { name: `Draw A ${deck}`, exact: true })
-        .getByRole('img'),
-    ).toHaveCount(0);
-  }
+  await expect(rail(page).getByRole('button', { name: /^Edit (Mood|Twist) Genres/ })).toHaveCount(
+    0,
+  );
 });
 
 test('genres_settingsGenresTab_showsScopeLineAndFooter', async ({ page }) => {
@@ -104,7 +119,7 @@ test('genres_settingsGenresTab_showsScopeLineAndFooter', async ({ page }) => {
   await expect(dialog).not.toContainText('Generic');
 });
 
-test('genres_deckRow_narrowsOnlyThatDecksPill', async ({ page }) => {
+test('genres_deckRow_narrowsOnlyThatDecksCount', async ({ page }) => {
   await openBoard(page);
   await openGenresTab(page);
   await panel(page)
@@ -113,9 +128,9 @@ test('genres_deckRow_narrowsOnlyThatDecksPill', async ({ page }) => {
     .click();
   await settingsDialog(page).getByRole('button', { name: 'Done' }).click();
   await expect(settingsDialog(page)).toHaveCount(0);
-  await expect(pill(page, 'Constraint')).toHaveText('20');
+  await expect(genreButton(page, 'Constraint')).toHaveText('20');
   for (const deck of ['Mechanic', 'Resource', 'Progression']) {
-    await expect(pill(page, deck)).toHaveCount(0);
+    await expect(genreButton(page, deck)).toHaveAccessibleName(/all genres on$/);
   }
 });
 
@@ -131,8 +146,8 @@ test('genres_change_savesAndSurvivesReload', async ({ page }) => {
   expect(board.genres.mechanic).not.toContain('horror');
   expect(board.genres.resource).toHaveLength(21);
   await page.reload();
-  await expect(pill(page, 'Mechanic')).toHaveText('20');
-  await expect(pill(page, 'Resource')).toHaveCount(0);
+  await expect(genreButton(page, 'Mechanic')).toHaveText('20');
+  await expect(genreButton(page, 'Resource')).toHaveAccessibleName(/all genres on$/);
 });
 
 test('genres_change_notInUndo', async ({ page }) => {
@@ -144,10 +159,10 @@ test('genres_change_notInUndo', async ({ page }) => {
   await topRow(page).getByRole('button', { name: 'Puzzle', exact: true }).click();
   await page.keyboard.press('Escape');
   await expect(settingsDialog(page)).toHaveCount(0);
-  await expect(pill(page, 'Mechanic')).toHaveText('20');
+  await expect(genreButton(page, 'Mechanic')).toHaveText('20');
   await page.keyboard.press('Control+z');
   await expect(canvasCards(page)).toHaveCount(0);
-  await expect(pill(page, 'Mechanic')).toHaveText('20');
+  await expect(genreButton(page, 'Mechanic')).toHaveText('20');
   await expect(page.getByRole('button', { name: 'Undo' })).toBeDisabled();
 });
 
@@ -196,7 +211,7 @@ test('genres_realPools_drawUsesOnlyPickedGenre', async ({ page, context }) => {
   await storedBoardWhen(page, (b) => b.genres.mechanic.join() === 'metroidvania');
 
   await page.reload();
-  await expect(pill(page, 'Mechanic')).toHaveText('1');
+  await expect(genreButton(page, 'Mechanic')).toHaveText('1');
   for (let i = 0; i < 5; i++) {
     await drawFromRail(page, 'Mechanic');
     const board = await storedBoardWhen(page, (b) => b.cards.length === 2);
