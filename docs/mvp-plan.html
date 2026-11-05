@@ -105,6 +105,7 @@
   <li data-checked="true">One-Pager board: a second board kind beside Free Form. It has 1 Hook Card with a short Hook Train and 1 Concept panel that holds the other cards as chips in deck lanes. See <a href="feature-one-pager-board.html">feature-one-pager-board.html</a>.</li>
   <li data-checked="true">Deal Stack on the Hook Card menu: one click deals the 5 base decks under the Hook Card in core order and, on a One-Pager board, 2 Details chips each of Player Role, Resource, Setting, Mood, Twist, Progression and Constraint. It fills only missing slots, never repeats a cue of the same deck, and is disabled when full. From M8. See <a href="feature-deal-a-stack.html">feature-deal-a-stack.html</a>.</li>
   <li data-checked="true">Core Loop card on One-Pager boards: a live, deck-colored template from the board's cards above an editable text that keeps the user's edits, with Copy Loop and Reset From Cards, and an ownership line on the Boards page. From M9. See <a href="feature-core-loop-card.html">feature-core-loop-card.html</a>.</li>
+  <li data-checked="true">Questions panel on One-Pager boards, below the Core Loop card: 1 random question from 60 original questions, Next Question and Save Answer, and a saved list of answers the user can edit and delete. A Questions section in the text file. From M10. See <a href="feature-questions-panel.html">feature-questions-panel.html</a>.</li>
   <li data-checked="true">The visual design in <a href="design-system.html">design-system.html</a>: the TheForge base (tokens, fonts, dark canvas, shell and card look) with 9 deliberate deviations, the 11 deck colors and icons, and the Hook Card.</li>
 </ul>
 
@@ -139,6 +140,8 @@
   id, name, createdAt, updatedAt
   kind: free | onePager   (format version 2. Version 1 boards become free.)
   conceptWidth?: number   (onePager only. The Concept panel width in px.)
+  questions?: Answer[]    (onePager only. Answered questions, newest first: { id, question, answer }.
+                           Added in M10 with no format version change. See feature-questions-panel.html)
   view: { panX, panY, zoom }
   genres: { [deck]: Genre[] }   only for the 4 genre-tagged decks: mechanic,
                                 resource, progression, constraint. 1 or more each.
@@ -242,6 +245,7 @@ Genre                     (21 values. Meanings are in the Genres table.
   <li>A One-Pager board has exactly 1 Hook Card. A Concept card is never tucked. Redraw All never changes a Concept card. See <a href="feature-one-pager-board.html">feature-one-pager-board.html</a>.</li>
   <li>The Hook Card sentence is computed from the stack on each change. It is never stored.</li>
   <li>A One-Pager board made from M9 has exactly 1 Core Loop card. It is a free card that never joins a stack. Its template is computed from the board on each change. Its edit text is stored only after the user edits it. See <a href="feature-core-loop-card.html">feature-core-loop-card.html</a>.</li>
+  <li>A One-Pager board has 1 Questions panel below its Core Loop card. Its place is computed, never stored. The current question is view state. Only answered questions are stored, each with its question text copied in. Next Question never shows an answered question. See <a href="feature-questions-panel.html">feature-questions-panel.html</a>.</li>
   <li>Each pool is a separate data file. The pools are not written into the app code.</li>
 </ul>
 
@@ -442,6 +446,12 @@ Genre                     (21 values. Meanings are in the Genres table.
   <li>Pass bar: the done criteria in <a href="feature-core-loop-card.html">feature-core-loop-card.html</a> pass.</li>
 </ul>
 
+<h3>M10: Questions Panel</h3>
+<ul>
+  <li>The 60 original questions in <code>public/pools/question.json</code>, reviewed by the user. The Questions panel below the Core Loop card, <code>Board.questions</code>, Next Question, Save Answer, edit and delete, and the Questions section in the text file.</li>
+  <li>Pass bar: the done criteria in <a href="feature-questions-panel.html">feature-questions-panel.html</a> pass.</li>
+</ul>
+
 <h3>Cue rules</h3>
 <p>The user writes the libraries. These rules are guidance for the user, and the conversion step reports cues that break them. Pool sizes come from the libraries. The earlier targets of about 150 cues for each core deck and about 80 for each optional deck are guidance only.</p>
 <ul>
@@ -468,6 +478,7 @@ Genre                     (21 values. Meanings are in the Genres table.
   <li>The done criteria in <a href="feature-one-pager-board.html">feature-one-pager-board.html</a> pass.</li>
   <li>The done criteria in <a href="feature-deal-a-stack.html">feature-deal-a-stack.html</a> pass.</li>
   <li>The done criteria in <a href="feature-core-loop-card.html">feature-core-loop-card.html</a> pass.</li>
+  <li>The done criteria in <a href="feature-questions-panel.html">feature-questions-panel.html</a> pass.</li>
   <li>One command runs the app at port 4174. Another command serves HTTPS on the local network at port 4444.</li>
 </ul>
 
@@ -510,5 +521,6 @@ Genre                     (21 values. Meanings are in the Genres table.
 <p class="meta">2026-11-04: Folded in the design handoff <code>docs/design-handoff-2026-11-04/</code> (version 2) through <code>/dev-ui-update</code>. M6 is now Card Themes And Settings Tabs: cards, notes and the Hook Card follow the mode, every card gets a deck-color edge and tint, and genres move into a Settings tab, so the rail loses the Genres button. The One-Pager Concept panel visuals are in design-system.html 9.15. Changed Scope, Left rail, Genres panel (now Genres tab), Visual design and M6. Changed by the user's decisions in the run.</p>
 <p class="meta">2026-11-04: Added Deal A Stack. Deal Stack on the Hook Card menu deals the 5 base decks in core order and, on a One-Pager board, 2 Details chips each of 7 decks. It fills only missing slots, never repeats a cue of the same deck, and is disabled when full. Redraw and Redraw All change their icon to <code>square-arrow-down</code>. No data model change. Added M8. Changed Scope, Rules, Milestones and Done criteria. Changed by <code>/dev-add-feature</code>. See <a href="feature-deal-a-stack.html">feature-deal-a-stack.html</a>.</p>
 <p class="meta">2026-11-05: Added the Core Loop card. Each new One-Pager board gets 1 free Core Loop card. Its top part is a live, deck-colored template "[Mechanic] → earn [Resource] → [Progression] → to [Goal]". Its lower part is an editable text that keeps the user's edits. Card gains the type <code>loop</code> and the optional <code>loopText</code>, with no format version change, because the app is still in test. The Boards page help text gains an ownership line. Added M9. Changed Scope, Data model, Rules, Milestones and Done criteria. Changed by <code>/dev-add-feature</code>. See <a href="feature-core-loop-card.html">feature-core-loop-card.html</a>.</p>
+<p class="meta">2026-11-05: Added the Questions panel. Each One-Pager board shows a Questions panel below its Core Loop card, with 1 random question from 60 original questions, Next Question and Save Answer. Answers are saved in a list the user can edit and delete. Board gains the optional <code>questions</code> field with no format version change, because the app is still in test. The text file gains a Questions section after Core Loop. Added M10. Changed Scope, Data model, Rules, Milestones and Done criteria. Changed by <code>/dev-add-feature</code>. See <a href="feature-questions-panel.html">feature-questions-panel.html</a>.</p>
 </body>
 </html>

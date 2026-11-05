@@ -216,12 +216,12 @@
     <div class="cov">Not in MVP. Deferred in the plan.</div>
   </li>
 
-  <li data-coverage="none">
-    <div class="li-name">Question prompts that test an idea after the draw <span class="badge b-no">Not in MVP</span></div>
+  <li data-coverage="in" data-phase="10">
+    <div class="li-name">Question prompts that test an idea after the draw <span class="badge b-in">In MVP · P10</span></div>
     <div class="li-who">The Art of Game Design: a Deck of Lenses has 113 lens cards. Each card asks key questions about a design. The Serious Games Idea Deck and the Mixed Reality Game Cards use question cards too.</div>
     <div class="li-sent"><b>Sentiment:</b> 4.6 from 18 ratings. "a great tool to hone, adjust, or modify any video or board game design" (<a href="https://apps.apple.com/us/app/agd-lenses/id385531319">App Store</a>). The same page calls the app design "archaic" and asks for "a search function." The app was last updated in 2016.</div>
     <div class="why">Rank 9. Strong praise from professionals, but for a different step. It tests an idea after the draw. The only app is old and gets interface complaints.</div>
-    <div class="cov">Not in MVP.</div>
+    <div class="cov">In MVP, milestone 10. A Questions panel on One-Pager boards shows 1 random question from 60 original questions. The user saves answers in a list on the board, and the text file holds them. No text is copied from the Deck of Lenses. Topics, filters and a search over the questions are deferred. See <a href="feature-questions-panel.html">feature-questions-panel.html</a>.</div>
   </li>
 
   <li data-coverage="partial" data-phase="7">
@@ -229,7 +229,7 @@
     <div class="li-who">Wayline sends ideas to Blueprint to make a game design document. Ludo builds one in its project workspace. Milanote has a game design document template board.</div>
     <div class="li-sent"><b>Sentiment:</b> None found from users. Milanote's guide says long text design documents often "end up unused" (<a href="https://milanote.com/guide/game-design-document">Milanote</a>, vendor claim).</div>
     <div class="why">Rank 10. Common in the paid tools, with no user sentiment found. It extends market-wide signal 2.</div>
-    <div class="cov">Partial, milestone 7. The One-Pager board holds 1 game: its hook and a Concept panel of the other cards by deck. The text file lists both, and from milestone 9 also the Core Loop (<a href="feature-core-loop-card.html">feature-core-loop-card.html</a>). Sending to an outside design document tool, and a One-Pager export, are still left out. See <a href="feature-one-pager-board.html">feature-one-pager-board.html</a>.</div>
+    <div class="cov">Partial, milestone 7. The One-Pager board holds 1 game: its hook and a Concept panel of the other cards by deck. The text file lists both, and from milestone 9 also the Core Loop (<a href="feature-core-loop-card.html">feature-core-loop-card.html</a>), and from milestone 10 the answered questions (<a href="feature-questions-panel.html">feature-questions-panel.html</a>). Sending to an outside design document tool, and a One-Pager export, are still left out. See <a href="feature-one-pager-board.html">feature-one-pager-board.html</a>.</div>
   </li>
 
 </ol>
@@ -350,13 +350,13 @@
   <div class="scroll">
   <table>
     <tr><th>Badge</th><th>Meaning</th><th>Rows</th></tr>
-    <tr><td><span class="badge b-in">In MVP · P#</span></td><td>Built in the plan, at the scope the row describes.</td><td>14</td></tr>
+    <tr><td><span class="badge b-in">In MVP · P#</span></td><td>Built in the plan, at the scope the row describes.</td><td>15</td></tr>
     <tr><td><span class="badge b-part">Partial · P#</span></td><td>In the plan, at a narrower scope than the market version.</td><td>4</td></tr>
-    <tr><td><span class="badge b-no">Not in MVP</span></td><td>In no phase. Still backlog.</td><td>13</td></tr>
+    <tr><td><span class="badge b-no">Not in MVP</span></td><td>In no phase. Still backlog.</td><td>12</td></tr>
     <tr><td><span class="badge b-never">Never</span></td><td>Ruled out by the plan's "never" list. Off the backlog.</td><td>2</td></tr>
   </table>
   </div>
-  <p>Required: 8 rows (8 In). Top 10: 10 rows (4 In, 2 Partial, 3 Not in MVP, 1 Never). Other: 15 rows (2 In, 2 Partial, 10 Not in MVP, 1 Never). Total: 33 rows.</p>
+  <p>Required: 8 rows (8 In). Top 10: 10 rows (5 In, 2 Partial, 2 Not in MVP, 1 Never). Other: 15 rows (2 In, 2 Partial, 10 Not in MVP, 1 Never). Total: 33 rows.</p>
 </div>
 
 <footer>
@@ -371,6 +371,7 @@
     <li>2026-11-04: feature pass from <code>/dev-add-feature</code> (One-Pager board). "Send a saved idea to a design document" moves from Not in MVP to Partial · P7. Updated the note on the "Visual board to develop an idea" row, which stays Partial. Linked <code>docs/feature-one-pager-board.html</code>. 12 In, 5 Partial, 14 Not in MVP, 2 Never, of 33 rows.</li>
     <li>2026-11-04: feature pass from <code>/dev-add-feature</code> (Deal A Stack). "One draw fills a fixed set of concept slots" moves from Partial · P2 to In MVP · P8. Linked <code>docs/feature-deal-a-stack.html</code>. The legend table and tally line are corrected to the badge count, which the One-Pager pass did not update. 13 In, 4 Partial, 14 Not in MVP, 2 Never, of 33 rows. Every Required row is now In.</li>
       <li>2026-11-05: feature pass from <code>/dev-add-feature</code> (Core Loop Card). "State that the user owns the generated ideas" moves from Not in MVP to In MVP · P9. Updated the notes on "Turn the draw into a pitch", which stays Partial, and "Send a saved idea to a design document", which stays Partial. Linked <code>docs/feature-core-loop-card.html</code>. 14 In, 4 Partial, 13 Not in MVP, 2 Never, of 33 rows.</li>
+    <li>2026-11-05: feature pass from <code>/dev-add-feature</code> (Questions Panel). "Question prompts that test an idea after the draw" moves from Not in MVP to In MVP · P10. Updated the note on "Send a saved idea to a design document", which stays Partial. Linked <code>docs/feature-questions-panel.html</code>. 15 In, 4 Partial, 12 Not in MVP, 2 Never, of 33 rows.</li>
   </ul>
   <p><b>Sources</b></p>
   <ul>
