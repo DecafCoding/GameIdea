@@ -161,8 +161,8 @@ test.describe('with pools loaded', () => {
     expect(box?.width).toBe(200);
     expect(box?.height).toBe(200);
     await expect(card).toHaveCSS('border-radius', '7px');
-    // The mode's --card-face (design 4.5): dark #2A2F38 by default, the same for every deck.
-    expectRgbNear(await backgroundRgb(card), [42, 47, 56]);
+    // The mode's --card-face (design 4.5): dark #23272F by default, the same for every deck.
+    expectRgbNear(await backgroundRgb(card), [35, 39, 47]);
 
     const disc = card.getByTestId('type-disc');
     const discBox = await disc.boundingBox();

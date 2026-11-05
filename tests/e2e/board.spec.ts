@@ -555,8 +555,8 @@ test('tokens_shell_rendersAtLockedValues', async ({ page }) => {
   }
   // The note body is note paper, the dark-mode --note-bg (design 9.12, 4.5).
   await expect(page.getByTestId('note')).toHaveCSS('background-color', 'rgb(46, 42, 34)');
-  // A tucked Goal: --card-tucked-1, #2A2F38 in dark mode (design 9.7, 4.5).
-  expectRgbNear(await backgroundRgb(cardById(page, 'goal-1')), [42, 47, 56]);
+  // A tucked Goal: --card-tucked-1, #23272F in dark mode (design 9.7, 4.5).
+  expectRgbNear(await backgroundRgb(cardById(page, 'goal-1')), [35, 39, 47]);
 
   await cardById(page, 'role-1').click({ position: { x: 30, y: 30 } });
   const selected = page.locator('.react-flow__node[data-id="role-1"] [data-selected]');

@@ -131,6 +131,17 @@ describe('contrast (design §12)', () => {
     }
   });
 
+  it('contrast_adjectivesOnTintedFace_atLeast4_5ForEveryDeckAndMode', () => {
+    for (const mode of ['dark', 'light'] as const) {
+      for (const token of ['--card-adjective', '--card-adjective-active']) {
+        for (const deck of CARD_DECKS) {
+          const ratio = contrast(color(mode, token), tintedFace(mode, deck));
+          expect(ratio, `${mode} ${token} ${deck}`).toBeGreaterThanOrEqual(4.5);
+        }
+      }
+    }
+  });
+
   it('contrast_activeCueOnEveryTintedFaceAndTuckedFace_atLeast4_5', () => {
     const faces = [
       '--card-face',
