@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Feature — Questions Panel</title>
+  <style>
+    :root { --fg:#1a1a1a; --muted:#666; --accent:#2563eb; --done:#16a34a; --rule:#e5e7eb; }
+    body { font:16px/1.6 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; color:var(--fg); max-width:60rem; margin:2rem auto; padding:0 1.25rem; }
+    h1 { font-size:2rem; border-bottom:2px solid var(--rule); padding-bottom:.3rem; }
+    h2 { font-size:1.5rem; margin-top:2.5rem; border-bottom:1px solid var(--rule); padding-bottom:.2rem; }
+    h3 { font-size:1.2rem; margin-top:1.75rem; }
+    code, pre { font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+    pre { background:#f6f8fa; padding:1rem; border-radius:6px; overflow:auto; }
+    table { border-collapse:collapse; width:100%; margin:1rem 0; }
+    th, td { border:1px solid var(--rule); padding:.5rem .75rem; text-align:left; vertical-align:top; }
+    th { background:#f6f8fa; }
+    ul.checklist { list-style:none; padding-left:0; }
+    ul.checklist > li::before { content:"☐ "; color:var(--muted); }
+    ul.checklist > li[data-checked="true"]::before { content:"☑ "; color:var(--done); }
+    .meta { color:var(--muted); font-size:.9rem; }
+  </style>
+</head>
+<body>
+
+<h1>Feature — Questions Panel</h1>
+<p class="meta">2026-11-05 · Extends GameIdea (working name), as planned in <a href="mvp-plan.html">mvp-plan.html</a>. Written from the <code>/dev-add-feature</code> run. Lands in Phase 10.</p>
+<p><strong>Visual authority:</strong> <a href="design-system.html">design-system.html</a> 9.17 holds the panel look, the icon and the 2 messages. Where this brief and the design doc disagree on a visual detail, the design doc wins.</p>
+
+<h2>Summary and motivation</h2>
+<p>The app helps the user make a game hook, a Details panel and a core loop. It does not help the user test that idea. Hard questions about the player, the fun, the risk and the scope find the weak parts of an idea early.</p>
+<p>This feature adds a Questions panel to every One-Pager board. The top part shows 1 random question with a Next button and an answer field. Save Answer moves the question and its answer into a list below. The answers are saved on the board and go into the text file.</p>
+<p>The questions are 60 original prompts written for this app. The idea comes from question-card decks such as the Deck of Lenses. No text is copied from any of them.</p>
+
+<h2>Fit with the existing application</h2>
+<p>The feature extends the core loop at its end. The user deals or draws a stack, fills the Details panel, writes the core loop, then answers questions about the idea. Every earlier step works as today.</p>
+<p>It closes the scan row "Question prompts that test an idea after the draw". It adds to the row "Send a saved idea to a design document", because the text file now holds the answers.</p>
+<p>Related docs: <a href="mvp-plan.html">mvp-plan.html</a>, <a href="prd.html">prd.html</a>, <a href="architecture.html">architecture.html</a>, <a href="design-system.html">design-system.html</a>, <a href="competitive-scan.html">competitive-scan.html</a>, <a href="feature-one-pager-board.html">feature-one-pager-board.html</a>, <a href="feature-core-loop-card.html">feature-core-loop-card.html</a>.</p>
+
+<h2>Scope</h2>
+
+<h3>In this feature</h3>
+<ul class="checklist">
+  <li data-checked="true">A Questions panel on One-Pager boards only. 1 panel per board.</li>
+  <li data-checked="true">The panel is joined to the Core Loop card: the same left edge, 240 px wide, a 24 px gap below the card's bottom edge. It moves when the card is dragged or grows. Its place is never saved.</li>
+  <li data-checked="true">Top part: 1 random question, a Next Question button, an answer field and a Save Answer button.</li>
+  <li data-checked="true">Next Question never shows a question already answered on this board. A skipped question does not come back until every other unanswered question was shown.</li>
+  <li data-checked="true">The current question is view state. It is not saved and not in undo. A reload or reopen shows a new random question.</li>
+  <li data-checked="true">Save Answer adds the question and answer to the top of the list. That is 1 undo step and 1 save.</li>
+  <li data-checked="true">The list: newest first. Each answer can be edited in place (commit on blur, 1 undo step) and deleted with a trash button (no dialog, 1 undo step).</li>
+  <li data-checked="true">All answered: the top part shows a message. Next Question and the answer field hide. The list still works.</li>
+  <li data-checked="true">The question pool fails to load: the top part shows an error with Retry. The list still shows and can be edited.</li>
+  <li data-checked="true">A new pool file, <code>public/pools/question.json</code>, with 60 original questions. The user reviews them before the phase ships.</li>
+  <li data-checked="true">The text file adds a "Questions" section right after the Core Loop section.</li>
+  <li data-checked="true">1 new vendored Lucide icon, <code>message-circle-question-mark</code>.</li>
+</ul>
+
+<h3>Deferred</h3>
+<ul class="checklist">
+  <li data-checked="false">A Questions panel on Free Form boards.</li>
+  <li data-checked="false">Question topics or filters, such as only player or only scope questions.</li>
+  <li data-checked="false">Genre tags on questions.</li>
+  <li data-checked="false">A search over the questions.</li>
+  <li data-checked="false">AI help to answer or judge an answer.</li>
+</ul>
+
+<h3>Never</h3>
+<ul class="checklist">
+  <li data-checked="false">A Question card type on the canvas. The user chose the panel over a 12th deck.</li>
+  <li data-checked="false">Question text copied from the Deck of Lenses or any other published deck.</li>
+  <li data-checked="false">Answering the same question twice on 1 board.</li>
+  <li data-checked="false">Reordering the list, or changing a saved question's text.</li>
+</ul>
+
+<h2>Blast radius</h2>
+<table>
+  <tr><th>Part</th><th>Change</th></tr>
+  <tr><td><code>shared/model/index.ts</code></td><td>New optional field <code>Board.questions</code> and its <code>Answer</code> type.</td></tr>
+  <tr><td><code>shared/pools/</code></td><td>A separate load for <code>question.json</code>, with its own failure state. A failed question load does not turn off the deck buttons.</td></tr>
+  <tr><td><code>public/pools/question.json</code> (new)</td><td>60 questions in the deck pool file shape.</td></tr>
+  <tr><td><code>features/questions/</code> (new)</td><td>The pure <code>pickQuestion</code> rule, the Board → Board recipes (add, edit, delete) and the panel content. Its <code>index.ts</code> is the only way in.</td></tr>
+  <tr><td><code>features/canvas/</code></td><td>A node type for the panel in <code>nodes.ts</code> and <code>BoardCanvas.tsx</code>. A pure <code>questionsPlace</code> from the Core Loop card's place and drawn height. The node is not draggable and is not a drop target.</td></tr>
+  <tr><td><code>features/export/schema.ts</code></td><td>The Zod check accepts <code>questions</code> on a One-Pager board and rejects it on a Free Form board.</td></tr>
+  <tr><td><code>features/export/textFile.ts</code></td><td>A "Questions" section after Core Loop.</td></tr>
+  <tr><td><code>shared/ui/Icon.tsx</code>, <code>public/icons/</code></td><td>The <code>message-circle-question-mark</code> icon.</td></tr>
+  <tr><td><code>shared/ui/tokens.css</code></td><td>No new token. The panel reuses the Details panel and Core Loop card styles.</td></tr>
+  <tr><td><code>scripts/check-size.mjs</code></td><td>No change. The new file counts toward the 100 KB pool budget, and 60 questions are far below it.</td></tr>
+</table>
+<p>Cards, stacks, the hook sentence, Details, Deal Stack and Redraw All do not change. If the panel node is wrong, it can cover cards or take drops. The canvas tests guard this.</p>
+
+<h2>Data model changes</h2>
+<pre><code>interface Answer {
+  id: string
+  question: string   // copied from the pool at save time; a pool edit never changes it
+  answer: string     // never empty
+}
+Board.questions?: Answer[]   // One-Pager boards only; newest first; absent = no answers
+                             // the last delete removes the field
+
+question.json: { "type": "question", "cues": [{ "id": "question-0001", "text": "..." }] }</code></pre>
+<p><strong>No migration.</strong> The board format stays at version 2. There is no Dexie <code>version(3)</code> and no <code>UPGRADES[2]</code>. The user confirmed on 2026-11-05 that the app is still in test and saved boards need no migration. The change only adds an optional field, so boards and board files made before it still pass the import check.</p>
+<p><strong>Rollback:</strong> remove the field. A board file with answers then fails the import check of the older app. That is accepted while the app is in test.</p>
+
+<h2>Interfaces and contracts</h2>
+
+<h3>Pick rule</h3>
+<pre><code>pickQuestion(pool, answered, seen, random) -&gt; question | null   // features/questions, pure
+  candidates = pool questions whose text is not in answered
+  none -&gt; null (the all-answered state)
+  unseen = candidates not in seen; empty -&gt; seen is cleared, unseen = candidates
+  returns 1 random unseen question; never the current question when another exists</code></pre>
+<p><code>seen</code> is view state in the panel. It is cleared on reload and on board change.</p>
+
+<h3>Recipes</h3>
+<ul>
+  <li><code>addAnswer(board, question, text)</code>: trims the text. Empty text is refused, and Save Answer is disabled while the field is empty. Adds the item at the top. 1 <code>changeBoard</code>.</li>
+  <li><code>editAnswer(board, id, text)</code>: commits on blur, as the note fields do. Same text, or empty text, returns the same board. Empty text keeps the old answer.</li>
+  <li><code>deleteAnswer(board, id)</code>: removes the item. The question can then show again on Next Question.</li>
+  <li>Redraw All, Deal Stack, ring turns and Core Loop edits never change <code>questions</code>.</li>
+</ul>
+
+<h3>Panel</h3>
+<ul>
+  <li>Header: the <code>message-circle-question-mark</code> icon and "Questions". A count pill "3 Answered" when the list has items.</li>
+  <li>Top part: the question, the answer field (<code>aria-label</code> "Answer"), then Next Question and Save Answer. Both buttons are 44 px tall.</li>
+  <li>List: each item shows the question, then the answer as an editable field. A trash icon button with <code>aria-label</code> "Delete Answer".</li>
+  <li>The panel's place: left = Core Loop card left, top = Core Loop card top + its drawn height + 24. If the board has no Core Loop card, the panel uses the Core Loop card's default place, (680, 96).</li>
+  <li>The panel is not draggable. Cards dropped on it do not tuck, combine or enter it.</li>
+</ul>
+
+<h3>Text file</h3>
+<pre><code>Core Loop
+
+&lt;loop text&gt;
+
+Questions
+
+&lt;question&gt;
+&lt;answer&gt;
+
+&lt;question&gt;
+&lt;answer&gt;
+
+Details
+...</code></pre>
+<p>Items are in list order, newest first. The section is left out when the board has no answers.</p>
+
+<h3>Board file</h3>
+<p>The field goes into the board file with the rest of the board. Import keeps it.</p>
+
+<h2>Architecture fit</h2>
+<p><strong>Outcome 2: it fits, with 1 local exception.</strong> No change to <a href="architecture.html">architecture.html</a>.</p>
+<ul>
+  <li><code>module-layout</code> and <code>import-rules</code>: the new <code>features/questions/</code> imports only <code>shared/</code>. The canvas node uses it through its <code>index.ts</code>. Only <code>features/canvas/</code> imports React Flow.</li>
+  <li><code>pool-files</code> and <code>pool-load-failure</code>: the question file loads by web address from <code>public/pools/</code>. Its failure shows an error with Retry, as the decks do.</li>
+  <li><code>undo-history</code> and <code>save-transaction</code>: each add, edit and delete is 1 <code>changeBoard</code>. Next Question is view state and not in undo.</li>
+  <li><code>storage-seam</code> and <code>schema-shape</code>: the answers live in the one board record.</li>
+  <li><code>import-checks</code>: the Zod check gets the new field.</li>
+  <li><code>tab-sync</code>: an answer change saves the board, so the other tab reloads as for any change.</li>
+  <li><code>nfr-targets</code>: 60 questions add a few KB to the pool budget.</li>
+</ul>
+<p><strong>Exception:</strong> <code>board-file-format</code> and <code>schema-versions</code> say that a shape change adds an upgrade step. This change adds an optional field with no step and no version change. Phase 9 did the same with <code>Card.loopText</code>. The reason: the change only adds, and the app is still in test with no saved boards to upgrade. If a later change removes or renames a field, or must change saved boards, it must add Dexie <code>version(3)</code> and <code>UPGRADES[2]</code> as the decisions say.</p>
+
+<h2>Compatibility and rollout</h2>
+<p>Every One-Pager board shows the panel, old and new. A board with no answers has no <code>questions</code> field. Free Form boards do not change. The feature ships whole in Phase 10 with no flag.</p>
+
+<h2>Testing and regression plan</h2>
+<h3>Unit (Vitest)</h3>
+<ul>
+  <li><code>pickQuestion</code>: skips answered questions, does not repeat a seen question before the cycle ends, clears seen at the end of a cycle, never returns the current question when another exists, and returns null when all are answered.</li>
+  <li>Recipes: add puts the item first, empty text is refused, a same-text or empty edit returns the same board, delete removes the item, the last delete removes the field.</li>
+  <li>Redraw All and <code>dealStack</code> do not change <code>questions</code>.</li>
+  <li><code>questionsPlace</code>: below the Core Loop card with the 24 px gap, follows a moved card, and uses (680, 96) with no Core Loop card.</li>
+  <li>Pool floor: <code>question.json</code> has at least 60 questions, no empty text and no repeated text.</li>
+  <li>Import check: accepts answers on a One-Pager board, rejects them on a Free Form board, and accepts a file with no field.</li>
+  <li>Text file: the Questions section is placed after Core Loop and before Details, newest first, and is left out with no answers.</li>
+</ul>
+<h3>Browser (Playwright)</h3>
+<ul>
+  <li>A One-Pager board shows the panel below the Core Loop card. A Free Form board shows none.</li>
+  <li>Answer a question: it moves to the list, and Next Question never shows it again. 1 Undo removes it.</li>
+  <li>Edit and delete an answer. Each is 1 undo step.</li>
+  <li>Reload: the answers stay, and a new question shows.</li>
+  <li>Drag the Core Loop card: the panel follows.</li>
+  <li>All answered (with a small fixture pool): the message shows. A delete brings the question back.</li>
+  <li>The question file fails to load: the error with Retry shows, the list still works, and the deck buttons still work.</li>
+</ul>
+<h3>Regression</h3>
+<ul>
+  <li>Every existing test passes on both board kinds.</li>
+  <li>Speed, size and privacy targets pass.</li>
+</ul>
+
+<h2>Build plan</h2>
+<p>Phase 10 in <a href="prd.html#phases">prd.html</a>. Ordered tasks:</p>
+<ol>
+  <li>Write the 60 questions in <code>public/pools/question.json</code>, and the pool floor test. The user reviews the questions before the phase merges. Good questions are the riskiest part, so they come first.</li>
+  <li>The model field, the Zod check, the question pool load, <code>pickQuestion</code> and the 3 recipes, with tests first.</li>
+  <li>The panel content in <code>features/questions/</code> and the <code>message-circle-question-mark</code> icon.</li>
+  <li>The canvas node and <code>questionsPlace</code>, joined to the Core Loop card.</li>
+  <li>The Questions section in the text file.</li>
+  <li>Playwright tests, then the full check run.</li>
+</ol>
+
+<h2>Done criteria</h2>
+<ul>
+  <li>Every One-Pager board shows 1 Questions panel, 24 px below the Core Loop card, and it follows the card. A Free Form board shows none.</li>
+  <li>Next Question never shows an answered question, and does not repeat a skipped one before the cycle ends.</li>
+  <li>Save Answer, edit and delete each make 1 undo step and 1 save. Next Question makes none.</li>
+  <li>Answers survive a reload and a board file export and import.</li>
+  <li>The all-answered message and the load error with Retry work as in the design doc.</li>
+  <li>The text file has the Questions section after Core Loop.</li>
+  <li>The user has reviewed and accepted the 60 questions.</li>
+  <li>Every existing test passes on both board kinds. Speed, size and privacy targets pass.</li>
+</ul>
+
+<h2>Open risks and assumptions</h2>
+<ul>
+  <li>Risk: the questions are weak or too general. The user review in task 1 is the gate.</li>
+  <li>Risk: a long answer list makes the panel very tall. The user can pan. A collapse control is left for later if needed.</li>
+  <li>Risk: a widened Details panel can cover the Core Loop card and the Questions panel. The user can drag the Core Loop card away, and the panel follows.</li>
+  <li>Risk: the change has no upgrade step. A later change to the answer shape must add one.</li>
+  <li>Assumption: 60 questions are enough for 1 game. The pool can grow later with no code change.</li>
+  <li>Assumption: a half-typed answer lost on reload is acceptable.</li>
+</ul>
+
+</body>
+</html>

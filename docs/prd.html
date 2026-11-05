@@ -86,6 +86,7 @@ This PRD cites those documents. Where it and they differ, they win.</p>
   <li data-checked="true">Deal Stack on the Hook Card menu: deals the 5 base decks in core order and, on a One-Pager board, 2 Details chips each of 7 decks; fills only missing slots; no repeated cues; disabled when full. From Phase 8 — <a href="feature-deal-a-stack.html">feature-deal-a-stack.html</a></li>
   <li data-checked="true">Core Loop card on One-Pager boards: a live, deck-colored template "[Mechanic] → earn [Resource] → [Progression] → to [Goal]" above an editable text that starts as the template and keeps the user's edits; Copy Loop and Reset From Cards; a Core Loop section in the text file. From Phase 9 — <a href="feature-core-loop-card.html">feature-core-loop-card.html</a></li>
   <li data-checked="true">An ownership line on the Boards page: "Every idea you make here is yours to use, with no credit needed." From Phase 9</li>
+  <li data-checked="true">Questions panel on One-Pager boards, below the Core Loop card: 1 random question from 60 original questions; Next Question skips answered questions; Save Answer adds to a list the user can edit and delete; a Questions section in the text file. From Phase 10 — <a href="feature-questions-panel.html">feature-questions-panel.html</a></li>
 </ul>
 
 <h3>Technical</h3>
@@ -178,6 +179,12 @@ This PRD cites those documents. Where it and they differ, they win.</p>
 
   <li><strong>As a game jam entrant, I want the app to say that my ideas are mine, so that I can use them without asking.</strong><br>
   Example: the Boards page help text ends with "Every idea you make here is yours to use, with no credit needed."</li>
+
+  <li><strong>As a One-Pager user, I want the app to ask me hard questions about my idea, so that I find its weak parts before I build it.</strong><br>
+  Example: the Questions panel below the Core Loop card asks "Why would a player come back tomorrow?". The user clicks Next Question to skip it. The next question asks about scope, and the user types an answer and clicks Save Answer. The question and answer move to the list below, and that question does not show again on this board.</li>
+
+  <li><strong>As a One-Pager user, I want my answers saved with the board and in the text file, so that my thinking stays with the game.</strong><br>
+  Example: the user reloads the board. The 4 answers are still in the list, newest first. The user fixes a typo in one and deletes another. The text file shows a Questions section after Core Loop.</li>
 </ol>
 
 <h3>Technical user stories</h3>
@@ -333,6 +340,9 @@ tests/e2e/          Playwright browser tests</code></pre>
 <h3>6.10 Visual design</h3>
 <p>All tokens, sizes and screens are owned by <a href="design-system.html">design-system.html</a>: the TheForge base with 11 closed deviations, the 11 deck colors and icons, card faces and the 240 × 200 Hook Card by mode, the deck-color tint on every card, the One-Pager Concept panel, and the screen-to-phase map (section 16). This PRD does not restate tokens.</p>
 
+<h3>6.11 Questions panel</h3>
+<p>From Phase 10, a One-Pager board shows 1 Questions panel, 24 px below its Core Loop card. It follows the card and its place is never stored. The top part shows 1 random question from <code>public/pools/question.json</code> (60 original questions), with Next Question and Save Answer. Next Question never shows a question already answered on the board, and is not an undo step. Save Answer, an answer edit and a delete are each 1 undo step and 1 save. Answers are stored in <code>Board.questions</code>, newest first, with the question text copied in. A failed question load shows an error with Retry in the panel and does not stop the deck buttons. Full spec: <a href="feature-questions-panel.html">feature-questions-panel.html</a>; look in <a href="design-system.html">design-system.html</a> 9.17.</p>
+
 <!-- ============================================================ -->
 <h2 id="stack">7. Technology Stack</h2>
 <p><em>Copied from <a href="architecture.html#stack">architecture.html, Stack, Storage and Deployment</a>. Versions are pinned exactly in package.json and match TheForge.</em></p>
@@ -392,6 +402,7 @@ tests/e2e/          Playwright browser tests</code></pre>
   id, name, createdAt, updatedAt
   kind:   'free' | 'onePager'
   conceptWidth?: number   (onePager only)
+  questions?: Answer[]    (onePager only, from Phase 10) { id, question, answer }
   view:   { panX, panY, zoom }
   genres: { mechanic, resource, progression, constraint: Genre[] }
   cards:  Card[]   { id, type, modDeck?, rings[], x, y, z, tuckedUnder, onTopOf, locked, inConcept, connector? }
@@ -569,6 +580,19 @@ tests/e2e/          Playwright browser tests</code></pre>
   <li data-checked="true">Ownership line at the end of the Boards page help text</li>
 </ul>
 <p><strong>Validation:</strong> the done criteria in feature-core-loop-card.html pass; every existing test passes on both board kinds; speed, size and privacy targets pass.</p>
+
+<h3 class="phase" data-phase="10">Phase 10: Questions Panel</h3>
+<p class="meta">M10 · Phase 10 starts after Phase 9. See <a href="feature-questions-panel.html">feature-questions-panel.html</a>; panel look, icons and messages in <a href="design-system.html">design-system.html</a> 9.17.</p>
+<p><strong>Goal:</strong> every One-Pager board has a Questions panel below its Core Loop card, where the user answers original questions that test the idea, and the answers stay with the board and in the text file.</p>
+<ul class="checklist">
+  <li data-checked="false">60 original questions in <code>public/pools/question.json</code> with a pool floor test; the user reviews them before merge</li>
+  <li data-checked="false">Optional <code>Board.questions</code>; Zod check (One-Pager only); a separate question pool load with its own failure state; no format version change; tests first</li>
+  <li data-checked="false"><code>pickQuestion</code> as a pure function (skips answered, no repeat before the cycle ends) and the add, edit and delete recipes as 1 <code>changeBoard</code> each; tests first</li>
+  <li data-checked="false">Questions panel content in <code>features/questions/</code>: question, answer field, Next Question, Save Answer, answer list with edit and delete, all-answered and load-failed states; <code>message-circle-question-mark</code> and trash icons vendored from Lucide</li>
+  <li data-checked="false">Canvas node joined to the Core Loop card through a pure <code>questionsPlace</code>; not draggable and not a drop target</li>
+  <li data-checked="false">Questions section in the text file after Core Loop</li>
+</ul>
+<p><strong>Validation:</strong> the done criteria in feature-questions-panel.html pass; every existing test passes on both board kinds; speed, size and privacy targets pass.</p>
 
 <!-- ============================================================ -->
 <h2 id="future">12. Future Considerations</h2>

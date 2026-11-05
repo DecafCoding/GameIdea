@@ -169,6 +169,13 @@
     <td>The Boards page help text gains a third sentence.</td>
     <td>None.</td>
   </tr>
+  <tr>
+    <td>2026-11-05</td>
+    <td>None (<code>/dev-add-feature</code>, Questions Panel)</td>
+    <td>The Questions panel (9.17). The <code>message-circle-question-mark</code> and trash icons. Phase 10 in the screen → phase map.</td>
+    <td>None.</td>
+    <td>None.</td>
+  </tr>
 </table>
 
 <!-- ============================================================ -->
@@ -371,7 +378,7 @@
   <li><strong>Set:</strong> Lucide-style stroke icons on a 24 px grid, stroke 2.2, round caps and joins, no fill.</li>
   <li><strong>Sizes:</strong> 18 in the rail and the top bar (Undo, Redo); 16 for the Export icon, the logo tile and the badge-menu check; 24 in a card center (on a 48 circle); 20 in banners and the export menu; 15 for the full-card lock; 14 for the tucked-card lock button; 13 for the Hook Card header; 12 for the Export chevron.</li>
   <li><strong>Deck icons:</strong> see 4.4. The Hook Card icon is custom (a hook), drawn in the same stroke style.</li>
-  <li><strong>Other icons in use, by role:</strong> gear (Settings), lines (Add note), grip with 2 vertical lines (Concept resize handle, 14) <span class="tag">2026-11-04</span>, deck icons at 14 (Concept lane labels), undo, redo, download (Export), chevron down, lock, check, close (×), plus, minus, more (board menu), warning, retry, import, <code>playing-cards-fan</code> (Deal Stack), <code>square-arrow-down</code> (Redraw, Redraw All) <span class="tag">user 2026-11-04</span>, <code>repeat</code> (Core Loop card header, 13) <span class="tag">user 2026-11-05</span>. The mockups draw them as inline paths without names; pick the matching Lucide names when vendoring.</li>
+  <li><strong>Other icons in use, by role:</strong> gear (Settings), lines (Add note), grip with 2 vertical lines (Concept resize handle, 14) <span class="tag">2026-11-04</span>, deck icons at 14 (Concept lane labels), undo, redo, download (Export), chevron down, lock, check, close (×), plus, minus, more (board menu), warning, retry, import, <code>playing-cards-fan</code> (Deal Stack), <code>square-arrow-down</code> (Redraw, Redraw All) <span class="tag">user 2026-11-04</span>, <code>repeat</code> (Core Loop card header, 13) <span class="tag">user 2026-11-05</span>, <code>message-circle-question-mark</code> (Questions panel header, 13) and trash (Delete Answer, 16) <span class="tag">user 2026-11-05</span>. The mockups draw them as inline paths without names; pick the matching Lucide names when vendoring.</li>
   <li><strong>Removed:</strong> sliders, with the rail Genres button <span class="tag">2026-11-04</span>.</li>
   <li><strong>Reserved:</strong> none.</li>
 </ul>
@@ -723,6 +730,22 @@
   <tr><td>Clipboard failed</td><td>The Copy Hook fallback dialog (9.5 state D), titled "Copy the loop", with a read-only "Core loop" field.</td></tr>
 </table>
 
+<h3 id="s-questions">9.17 Questions panel <span class="tag">user 2026-11-05</span></h3>
+<p>Behavior is owned by <a href="feature-questions-panel.html">feature-questions-panel.html</a>: the pick rule, the answer recipes, undo and the text file. This section owns the look. It reuses the Details panel (9.15), the Core Loop card (9.16) and the note (9.12) and adds no token.</p>
+<table>
+  <tr><th>Part</th><th>Spec</th></tr>
+  <tr><td>Place</td><td>Only on One-Pager boards, 1 per board. Left = Core Loop card left. Top = Core Loop card top + its drawn height + 24. It moves when the Core Loop card is dragged or grows. With no Core Loop card it uses (680, 96). Not draggable.</td></tr>
+  <tr><td>Panel</td><td>Width 240, the Core Loop card width. The Details panel style: padding 16, radius 12, gap 12, fill <code>--surface</code>, border 1 <code>--border</code>, shadow 0 8px 22px rgba(0, 0, 0, 0.4). The height grows with the content. Light mode as the Details panel.</td></tr>
+  <tr><td>Header</td><td>The <code>message-circle-question-mark</code> icon 13 in <code>--accent-text</code>, then "Questions", Display 12/600, 0.08em, uppercase, <code>--text-muted</code>, gap 6. With 1 or more answers, the Details count pill after it: "3 Answered" ("1 Answered" for one).</td></tr>
+  <tr><td>Question</td><td>15/600, line height 1.4, <code>--text</code>.</td></tr>
+  <tr><td>Answer field</td><td>A text area with the note text style (9.12), 14 line height 1.45, min 3 lines, border 1 <code>--border-strong</code>, radius 8, padding 8 10, focus ring as in 12. <code>aria-label</code> "Answer". It grows with the text.</td></tr>
+  <tr><td>Buttons</td><td>A row, gap 8, each 44 tall. "Next Question" as a secondary button. "Save Answer" as a primary button (fill <code>--accent</code>, text <code>--on-accent</code>), disabled while the field is empty.</td></tr>
+  <tr><td>Divider</td><td>1 line in <code>--border</code>, full width inside the padding, only when the list has items.</td></tr>
+  <tr><td>List item</td><td>Gap 4, items 12 apart, newest first. The question 13/600 <code>--text-muted</code>. The answer as an edit field with no border until focus, 14 line height 1.45, <code>--text</code>, <code>aria-label</code> "Answer". A trash icon button 44, icon 16 <code>--text-muted</code>, <code>aria-label</code> "Delete Answer", at the item's top right.</td></tr>
+  <tr><td>All answered</td><td>In place of the question, field and buttons: "You answered every question. Delete an answer to see its question again." 13, line height 1.45, <code>--text-muted</code>.</td></tr>
+  <tr><td>Load failed</td><td>In place of the question, field and buttons: "The questions did not load. Your saved answers still work." 13, <code>--warn-text</code>, then a "Retry" secondary button, 44 tall.</td></tr>
+</table>
+
 <!-- ============================================================ -->
 <h2 id="contracts">10. Cross-cutting interaction contracts</h2>
 <ol>
@@ -796,6 +819,8 @@ Board         saveState: saved|saving|failed · canUndo · canRedo · exportMenu
               zoom · cardCount · noteCount
               concept? (onePager): { width: 232..640, lanes: { deck, chips: cardId[] }[],
                                      dropTargetChipId?, resizing? }
+              questions? (onePager): { current?: question, seen: question[], draft: string,
+                                       poolState: loading|ready|failed }
 Settings      open · tab: appearance|genres · genresTabEnabled = a board is open
 GenresTab     picked: Genre[] · perDeck: { [deck]: Genre[] }
 </pre>
@@ -852,6 +877,7 @@ GenresTab     picked: Genre[] · perDeck: { [deck]: Genre[] }
   <tr><td>M7: One-Pager Board</td><td>The Concept panel, lanes, chips, resize handle and chip drop target; the One-Pager card count chip. The board kind choice, the empty state and the board list label once they are drawn (section 15).</td><td>9.15</td></tr>
   <tr><td>M8: Deal A Stack</td><td>The Deal Stack item in the Hook Card menu, the <code>square-arrow-down</code> icon on Redraw and Redraw All, and the one-at-a-time reveal.</td><td>7, 9.4, 9.5, 9.9, 11</td></tr>
   <tr><td>M9: Core Loop Card</td><td>The Core Loop card, its template, edit field and hover menu, the <code>repeat</code> icon, and the ownership line on the Boards page.</td><td>7, 9.3, 9.16</td></tr>
+  <tr><td>M10: Questions Panel</td><td>The Questions panel below the Core Loop card: question, answer field, Next Question and Save Answer, the answer list, the all-answered and load-failed states, the <code>message-circle-question-mark</code> and trash icons.</td><td>7, 9.17</td></tr>
 </table>
 <p class="meta">The Board list (9.3) and Empty board (9.2) are carried over from TheForge in M1 and restyled to these specs by M5 at the latest.</p>
 
