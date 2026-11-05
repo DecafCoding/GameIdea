@@ -164,6 +164,13 @@
   </tr>
   <tr>
     <td>2026-11-05</td>
+    <td>User change (no bundle)</td>
+    <td>A contrast test for adjectives on every tinted card face.</td>
+    <td><p>Cards take the Details chip look, which the user prefers in both modes: <code>--card-face</code> is the panel <code>--surface</code> (#23272F dark, #FFFFFF light) and <code>--card-tint</code> is 20% in both modes, a little lighter than the chip's 28% (4.4, 4.5). Tucked faces follow: #23272F in dark mode, #FAFAFA to #EBEBEB in light mode. To keep 4.5:1 on the stronger tint (checked up to 28%), <code>--card-cue</code>, <code>--card-adjective</code> and dark <code>--card-adjective-active</code> moved (12). The Hook Card and the note are unchanged.</p></td>
+    <td>The cream light card face (#F4F0E6) and its tucked shades; the 14% dark and 7% light tint.</td>
+  </tr>
+  <tr>
+    <td>2026-11-05</td>
     <td>None (<code>/dev-add-feature</code>, Core Loop Card)</td>
     <td>The Core Loop card (9.16). The <code>repeat</code> icon. The ownership line on the Boards page (9.3). Phase 9 in the screen → phase map.</td>
     <td>The Boards page help text gains a third sentence.</td>
@@ -282,7 +289,7 @@
 <table>
   <tr><th>Use</th><th>Value</th><th>Where</th></tr>
   <tr><td>Card edge</td><td>Inset 1 px in the deck card color</td><td>Every card face and tucked face, on every board, in both modes</td></tr>
-  <tr><td>Card tint</td><td>Deck card color at <code>--card-tint</code> (14% dark, 7% light; lowered from 14% in light mode on 2026-11-04 at the user's request), laid over the face (for example <code>box-shadow: inset 0 0 0 999px</code>)</td><td>Same as the edge</td></tr>
+  <tr><td>Card tint</td><td>Deck card color at <code>--card-tint</code>, 20% in both modes, laid over the face (for example <code>box-shadow: inset 0 0 0 999px</code>). The card face is the panel <code>--surface</code>, as under a Details chip, with a lighter tint than the chip's 28% <span class="tag">user 2026-11-05</span>. Was 14% dark and 7% light.</td><td>Same as the edge</td></tr>
   <tr><td>Chip border</td><td>1 px in the deck card color</td><td>Concept chips (9.15)</td></tr>
   <tr><td>Chip fill</td><td>Deck card color at 28%</td><td>Concept chips</td></tr>
   <tr><td>Lane label</td><td>Deck rail color in dark mode, deck card color in light mode (the rail-icon rule)</td><td>Concept lane labels</td></tr>
@@ -292,12 +299,12 @@
 <p>These tokens follow <code>data-mode</code> <span class="tag">2026-11-04</span>. The theme color does not change them.</p>
 <table>
   <tr><th>Token</th><th>Dark</th><th>Light</th><th>Use</th></tr>
-  <tr><td><code>--card-face</code></td><td><span class="sw" style="background:#2A2F38"></span>#2A2F38</td><td><span class="sw" style="background:#F4F0E6"></span>#F4F0E6</td><td>Card face; ring divider lines and arrows; combined-card dot border</td></tr>
-  <tr><td><code>--card-tucked-1</code> … <code>-4</code></td><td>#2A2F38 for all 4</td><td>#F1ECE0 · #EFE9DC · #ECE6D8 · #E9E3D4</td><td>Faces of tucked cards, 1 to 4 levels down (deeper levels reuse <code>-4</code>)</td></tr>
-  <tr><td><code>--card-cue</code></td><td><span class="sw" style="background:#A9ADB6"></span>#A9ADB6</td><td><span class="sw" style="background:#5A5E68"></span>#5A5E68</td><td>Inactive cue text</td></tr>
+  <tr><td><code>--card-face</code> <span class="tag">user 2026-11-05</span></td><td><span class="sw" style="background:#23272F"></span>#23272F (was #2A2F38)</td><td><span class="sw" style="background:#FFFFFF"></span>#FFFFFF (was #F4F0E6)</td><td>Card face; ring divider lines and arrows; combined-card dot border</td></tr>
+  <tr><td><code>--card-tucked-1</code> … <code>-4</code></td><td>#23272F for all 4 <span class="tag">user 2026-11-05</span></td><td>#FAFAFA · #F5F5F5 · #F0F0F0 · #EBEBEB <span class="tag">user 2026-11-05</span></td><td>Faces of tucked cards, 1 to 4 levels down (deeper levels reuse <code>-4</code>)</td></tr>
+  <tr><td><code>--card-cue</code> <span class="tag">user 2026-11-05</span></td><td><span class="sw" style="background:#ADB1BA"></span>#ADB1BA (was #A9ADB6)</td><td><span class="sw" style="background:#535760"></span>#535760 (was #5A5E68)</td><td>Inactive cue text</td></tr>
   <tr><td><code>--card-cue-active</code></td><td>#ECEAE4</td><td>#1B1E24</td><td>Active (bottom-edge) cue text</td></tr>
-  <tr><td><code>--card-adjective</code></td><td><span class="sw" style="background:#A88BE6"></span>#A88BE6</td><td>#6E48B5</td><td>Inactive adjective text on a combined card</td></tr>
-  <tr><td><code>--card-adjective-active</code></td><td>#A88BE6</td><td><span class="sw" style="background:#5B3F99"></span>#5B3F99</td><td>Active adjective text</td></tr>
+  <tr><td><code>--card-adjective</code> <span class="tag">user 2026-11-05</span></td><td><span class="sw" style="background:#B298E9"></span>#B298E9 (was #A88BE6)</td><td>#6542A7 (was #6E48B5)</td><td>Inactive adjective text on a combined card</td></tr>
+  <tr><td><code>--card-adjective-active</code></td><td>#B298E9 (was #A88BE6) <span class="tag">user 2026-11-05</span></td><td><span class="sw" style="background:#5B3F99"></span>#5B3F99</td><td>Active adjective text</td></tr>
   <tr><td><code>--card-divider</code></td><td><span class="sw" style="background:#4A505C"></span>#4A505C</td><td><span class="sw" style="background:#D5CFC0"></span>#D5CFC0</td><td>2-cue card divider</td></tr>
   <tr><td><code>--zone-text</code></td><td><span class="sw" style="background:#C9B6F0"></span>#C9B6F0</td><td><span class="sw" style="background:#4A2E86"></span>#4A2E86</td><td>Label inside a Modifier drop zone</td></tr>
   <tr><td><code>--shadow-card</code></td><td>0 6px 18px rgba(0, 0, 0, 0.35)</td><td>0 6px 18px rgba(0, 0, 0, 0.35)</td><td>Card at rest, with the tint and edge (4.4)</td></tr>
@@ -504,7 +511,7 @@
 <h3 id="s-cards">9.4 Cards <span class="tag">Cards</span> <span class="tag">RotationHover</span> <span class="tag">Decks</span></h3>
 <table>
   <tr><th>Part</th><th>Spec</th></tr>
-  <tr><td>Card</td><td>200 × 200, radius 7 (<code>--radius-card</code>), <code>--card-face</code> for the mode, <code>--shadow-card</code>. The deck edge and tint (4.4, 14% dark, 7% light) sit over the face on every card <span class="tag">user 2026-11-04</span>.</td></tr>
+  <tr><td>Card</td><td>200 × 200, radius 7 (<code>--radius-card</code>), <code>--card-face</code> for the mode, <code>--shadow-card</code>. The deck edge and tint (4.4, 20% in both modes) sit over the face on every card <span class="tag">user 2026-11-04</span>, on the same face as a Details chip <span class="tag">user 2026-11-05</span>.</td></tr>
   <tr><td>4-cue card</td><td>Player Role, Mechanic, Resource, Modifier (all 3), Setting, Mood. One cue on each edge. Top cue 14 from the top, turned 180°. Side cues are centered on a 24-tall line, turned 90° (left) or −90° (right). The active cue is at the bottom: 12 from the bottom, padding 0 12, Display 14/700, line height 1.25, <code>--card-cue-active</code>. Inactive cues are Display 15/600 <code>--card-cue</code>. A step turns 90°.</td></tr>
   <tr><td>2-cue card</td><td>Goal, Conflict, Twist, Progression, Constraint. One cue on the top half (turned 180°) and one on the bottom. Cues 28 from the top and bottom. Divider: 1 tall at y 99, inset 20, <code>--card-divider</code>. A step turns 180°. Cues run up to 8 words, in up to 2 lines up to 180 wide (172 on 4-cue cards' top and bottom edges). A tucked card's bottom cue is up to 160 wide, clear of the corner marks <span class="tag">user 2026-11-03</span>, was 172 and 140.</td></tr>
   <tr><td>Center icon</td><td>48 circle at (76, 76), in the deck card color. Icon 24, white.</td></tr>
@@ -793,6 +800,7 @@
   <li>Measured 2026-11-02: accent fills with <code>--on-accent</code> text 5.1 to 6.3:1; <code>--accent-text</code> on its mode's surface 5.0:1 or better; dark-mode accent outlines 4.6 to 5.7:1; light-mode outlines follow the rule in 4.2.</li>
   <li>Accent-colored text uses <code>--accent-text</code> for the current mode, never <code>--accent</code>.</li>
   <li>Measured 2026-11-04: dark card text <code>#ECEAE4</code> on <code>#2A2F38</code> 11.2:1, <code>#A9ADB6</code> 6.0:1, <code>#A88BE6</code> 4.8:1. Tinted cards: the inactive cue is 5.3:1 or better in dark mode and 4.7:1 or better in light mode, for every deck. Dark note text 11.9:1, label 7.8:1. Light Hook Card sentence 16.7:1, label 5.0 to 6.1:1. Chip text 9.6:1 or better (dark) and 10.7:1 or better (light).</li>
+  <li>Measured 2026-11-05, after cards took the chip face: dark <code>#ECEAE4</code> on <code>#23272F</code> 12.4:1, <code>#ADB1BA</code> 7.0:1, <code>#B298E9</code> 6.1:1. Tinted cards (20%), for every deck: inactive cue 5.8:1 or better (dark) and 5.3:1 or better (light); active cue 10.4:1 (dark) and 12.2:1 (light) or better; adjectives 5.1:1 or better in both modes. The inactive cue and adjective tokens moved so they pass 4.5:1 even at the chip's 28%.</li>
   <li>Concept chips are 36 tall, below the 44 px target. This is the same mouse-only desktop deviation as the rail buttons. The resize handle is 44 tall with an aria-label. Settings tabs are 44 tall with <code>role="tab"</code> and <code>aria-selected</code>.</li>
   <li>Hit targets are 44 px, except rail deck buttons at 36 px (deviation 1, mouse-only desktop).</li>
   <li>Icon-only buttons carry an aria-label: the Modifier buttons, Undo, Redo, zoom, Close, Dismiss, the board menu and the Edit Genres buttons ("Edit Mechanic Genres, N genres on").</li>
