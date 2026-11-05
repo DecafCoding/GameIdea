@@ -49,7 +49,8 @@ export type IconName =
   | 'split'
   | 'grip'
   | 'square-arrow-down'
-  | 'drama';
+  | 'drama'
+  | 'repeat';
 
 interface IconProps {
   name: IconName;

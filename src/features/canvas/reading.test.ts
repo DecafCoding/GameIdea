@@ -5,11 +5,19 @@
 import { describe, expect, it } from 'vitest';
 import { iconFor } from '@/features/card';
 import { buildHookSentence } from '@/features/hook';
-import { fixtureBoard, fixtureCard, onePagerBoard } from '@/test/fixtures/boards';
+import {
+  fixtureBoard,
+  fixtureCard,
+  onePagerBoard,
+  onePagerWithLoop,
+  fixtureStack,
+} from '@/test/fixtures/boards';
 import type { Board, Card } from '@/shared/model';
 import { dropCard, splitCard } from './boardActions';
 import { hintFor } from './dropZones';
-import { cardText, hookSentences, isOnTop, onTopCardOf, stackEntries } from './reading';
+import { newBoard } from '@/shared/store';
+import { cardText, hookSentences, isOnTop, loopSteps, onTopCardOf, stackEntries } from './reading';
+import { stackOrder } from './stack';
 
 const cue = (texts: string[]) => ({ cues: texts.map((text) => ({ text })), activeIndex: 0 });
 const get = (board: Board, id: string): Card => board.cards.find((c) => c.id === id)!;
@@ -170,5 +178,75 @@ describe('hookSentences', () => {
 describe('hookSentences on a One-Pager board', () => {
   it('hookSentences_onePager_ignoresConceptCards', () => {
     expect(hookSentences(onePagerBoard())).toEqual(['You are a navigator who must trade.']);
+  });
+});
+
+describe('reading and the Core Loop card', () => {
+  it('loopCard_onePagerFixture_changesNoReading', () => {
+    const board = onePagerWithLoop();
+    expect(hookSentences(board)).toEqual(hookSentences(onePagerBoard()));
+    expect(stackOrder(board, 'hook-1')).toEqual(stackOrder(onePagerBoard(), 'hook-1'));
+  });
+});
+
+describe('loopSteps', () => {
+  const addCards = (board: Board, ...cards: Card[]): Board => ({
+    ...board,
+    cards: [...board.cards, ...cards],
+  });
+
+  it('loopSteps_stackCardFirst', () => {
+    // The train Mechanic reads "trade"; the Mechanic chip reads "climb".
+    expect(loopSteps(onePagerBoard()).mechanic).toBe('trade');
+  });
+
+  it('loopSteps_noStackCard_firstChipByZ', () => {
+    const board = onePagerBoard();
+    const reversed = { ...board, cards: [...board.cards].reverse() };
+    expect(loopSteps(board).resource).toBe('memories');
+    expect(loopSteps(reversed).resource).toBe('memories');
+  });
+
+  it('loopSteps_combinedResource_adjectiveAndNoun', () => {
+    const resource = fixtureCard('resource', {
+      id: 'resource-t1',
+      z: 20,
+      tuckedUnder: 'mechanic-t1',
+      rings: [
+        { cues: fixtureCard('resource').rings[0]!.cues, activeIndex: 0 },
+        { cues: fixtureCard('modifier').rings[0]!.cues, activeIndex: 0, modDeck: 'resource' },
+      ],
+    });
+    const board = addCards(onePagerBoard(), resource);
+    expect(loopSteps(board).resource).toBe(cardText(board, resource));
+    expect(loopSteps(board).resource).toBe('exiled memories');
+  });
+
+  it('loopSteps_firstStackMatchInReadingOrder', () => {
+    const upper = fixtureCard('goal', { id: 'goal-a', z: 20, tuckedUnder: 'mechanic-t1' });
+    const lower = fixtureCard('goal', {
+      id: 'goal-b',
+      z: 21,
+      tuckedUnder: 'goal-a',
+      rings: [{ cues: fixtureCard('goal').rings[0]!.cues, activeIndex: 1 }],
+    });
+    expect(loopSteps(addCards(onePagerBoard(), lower, upper)).goal).toBe('keep the light on');
+  });
+
+  it('loopSteps_looseCard_ignored', () => {
+    const loose = fixtureCard('goal', { id: 'goal-loose', x: 2000, y: 2000, z: 20 });
+    expect(loopSteps(addCards(onePagerBoard(), loose))).not.toHaveProperty('goal');
+  });
+
+  it('loopSteps_freeForm_empty', () => {
+    const hook = fixtureCard('hook', { id: 'hook-1' });
+    const stack = fixtureStack(0, 0).map((card) =>
+      card.tuckedUnder === null ? { ...card, tuckedUnder: 'hook-1' } : card,
+    );
+    expect(loopSteps(fixtureBoard([hook, ...stack]))).toEqual({});
+  });
+
+  it('loopSteps_emptyOnePager_empty', () => {
+    expect(loopSteps(newBoard({ kind: 'onePager' }))).toEqual({});
   });
 });

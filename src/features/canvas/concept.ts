@@ -6,7 +6,8 @@
  * Read side: the panel's place, width, lanes and counts. Write side: each panel action as
  * one Board → Board recipe (enter, leave, pop out, drag out, combine on a chip, resize),
  * committed through one changeBoard, so 1 undo step and 1 save. No React and no React
- * Flow here: the rules must hold if the canvas changes.
+ * Flow here: the rules must hold if the canvas changes. The Core Loop card never enters the
+ * panel and is never a lane or a count.
  */
 import { isCombined, swap } from '@/features/card';
 import { BASE_TYPES, CONCEPT_WIDTH, DECKS, type Board, type Card, type Deck } from '@/shared/model';
@@ -111,6 +112,9 @@ export function enterConcept(board: Board, cardId: string): Board {
   if (board.kind !== 'onePager') throw new Error('Only a One-Pager board has a Concept panel.');
   const card = cardAt(board, cardId);
   if (card.type === 'hook') throw new Error('A Hook Card never goes into the Concept panel.');
+  if (card.type === 'loop') {
+    throw new Error('The Core Loop card never goes into the Concept panel.');
+  }
   const order = stackOrder(board, cardId);
   const oldRoot = rootOf(board, cardId).id;
   const z0 = nextZ(board);
@@ -230,12 +234,12 @@ export function resizeConcept(board: Board, width: number): Board {
 
 /**
  * What a drop over the panel does: null when not over the panel or on a Free Form board.
- * A Hook Card stays where it is dropped; a Modifier on a chip it combines with goes onto
+ * A Hook Card or the Core Loop card stays where it is dropped; a Modifier on a chip it combines with goes onto
  * that chip, and any other Modifier stays on the canvas; every other deck card enters.
  */
 export function conceptDrop(board: Board, dragged: Card, over: ConceptOver): ConceptDrop | null {
   if (board.kind !== 'onePager' || !over.panel) return null;
-  if (dragged.type === 'hook') return { kind: 'stay' };
+  if (dragged.type === 'hook' || dragged.type === 'loop') return { kind: 'stay' };
   if (dragged.type === 'modifier') {
     const chip = over.chipId ? board.cards.find((c) => c.id === over.chipId) : undefined;
     if (chip && chipDropAction(board, dragged, chip)) return { kind: 'chip', chipId: chip.id };

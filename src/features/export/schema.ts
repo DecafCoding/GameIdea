@@ -16,6 +16,11 @@
  * One-Pager rules: exactly 1 Hook Card, no Concept card tucked, no Hook Card in Concept, no
  * card tucked under a Concept card, a width within CONCEPT_WIDTH, and no Concept data on a
  * Free Form board. A One-Pager file with no conceptWidth is allowed (the panel's default).
+ * Core Loop rules: a loop card has no rings, is never tucked, never in Details, never on top
+ * of a card and has no badge word; loopText is only on a loop card, never blank and never
+ * trimmed; no card is tucked under or on top of a loop card; at most 1 loop card, only on a
+ * One-Pager board. A One-Pager file with no loop card is allowed (older files). The loop
+ * type and loopText went into format 2 with no upgrade step (user decision 2026-11-05).
  */
 import { z } from 'zod';
 import {
@@ -54,6 +59,7 @@ const RING_RULES: Record<CardType, { rings: readonly number[]; cues: number }> =
   twist: { rings: [1], cues: 2 },
   progression: { rings: [1], cues: 2 },
   constraint: { rings: [1], cues: 2 },
+  loop: { rings: [0], cues: 0 },
 };
 
 const isBase = (type: CardType) => BASE_TYPES.includes(type);
@@ -72,6 +78,11 @@ const cardSchema = z
     onTopOf: z.string().nullable(),
     locked: z.boolean(),
     inConcept: z.boolean(),
+    // Never .trim(): that would rewrite the user's text. Blank text is refused instead.
+    loopText: z
+      .string()
+      .refine((text) => text.trim() !== '', 'The Core Loop text is blank.')
+      .optional(),
   })
   .superRefine((card, ctx) => {
     const issue = (message: string) => ctx.addIssue({ code: 'custom', message });
@@ -91,6 +102,13 @@ const cardSchema = z
     if (card.type === 'hook') {
       if (card.tuckedUnder !== null) issue('A Hook Card is never tucked.');
       if (card.connector !== undefined) issue('A Hook Card has no badge word.');
+    }
+    if (card.type === 'loop') {
+      if (card.tuckedUnder !== null) issue('A Core Loop card is never tucked.');
+      if (card.inConcept) issue('A Core Loop card is never in Details.');
+      if (card.connector !== undefined) issue('A Core Loop card has no badge word.');
+    } else if (card.loopText !== undefined) {
+      issue(`A ${card.type} card has Core Loop text.`);
     }
     if (card.type === 'modifier' && !card.modDeck) issue('A Modifier card needs its deck.');
     if (card.type !== 'modifier' && card.modDeck) {
@@ -215,6 +233,16 @@ export const boardSchema: z.ZodType<Board> = z
       (board.conceptWidth < CONCEPT_WIDTH.min || board.conceptWidth > CONCEPT_WIDTH.max)
     ) {
       issue('The Details width is out of range.');
+    }
+    // Core Loop rules (docs/feature-core-loop-card.html).
+    const loops = board.cards.filter((card) => card.type === 'loop');
+    if (loops.length > 1) issue('A board has at most 1 Core Loop card.');
+    if (loops.length > 0 && board.kind !== 'onePager') {
+      issue('Only a One-Pager board has a Core Loop card.');
+    }
+    const isLoop = (id: string | null) => id !== null && byId.get(id)?.type === 'loop';
+    if (board.cards.some((card) => isLoop(card.tuckedUnder) || isLoop(card.onTopOf))) {
+      issue('A card is tucked under or on top of a Core Loop card.');
     }
     if (board.cards.some((card) => card.tuckedUnder === card.id)) {
       ctx.addIssue({ code: 'custom', message: 'A card is tucked under itself.' });

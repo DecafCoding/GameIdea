@@ -227,6 +227,7 @@ export function BoardList({ boardHref, onOpen }: BoardListProps) {
           <h1 className={styles.title}>Boards</h1>
           <p className={styles.caption}>
             Each board is one place to draw cards and build hooks. Boards stay in this browser.
+            Every idea you make here is yours to use, with no credit needed.
           </p>
         </div>
         <div className={styles.actions}>

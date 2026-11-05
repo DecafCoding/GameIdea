@@ -162,6 +162,13 @@
     <td><p>The panel's on-screen name is now "Details" (header, region label, resize label, empty help line, footer "12 cards" (just the card count), text file section, New Board help and import errors). Code and board file field names keep <code>concept</code> (<code>inConcept</code>, <code>conceptWidth</code>), so the format is unchanged. The light-mode card tint dropped from 14% to 7% (<code>--card-tint</code>).</p></td>
     <td>"Concept" as a visible label.</td>
   </tr>
+  <tr>
+    <td>2026-11-05</td>
+    <td>None (<code>/dev-add-feature</code>, Core Loop Card)</td>
+    <td>The Core Loop card (9.16). The <code>repeat</code> icon. The ownership line on the Boards page (9.3). Phase 9 in the screen → phase map.</td>
+    <td>The Boards page help text gains a third sentence.</td>
+    <td>None.</td>
+  </tr>
 </table>
 
 <!-- ============================================================ -->
@@ -364,7 +371,7 @@
   <li><strong>Set:</strong> Lucide-style stroke icons on a 24 px grid, stroke 2.2, round caps and joins, no fill.</li>
   <li><strong>Sizes:</strong> 18 in the rail and the top bar (Undo, Redo); 16 for the Export icon, the logo tile and the badge-menu check; 24 in a card center (on a 48 circle); 20 in banners and the export menu; 15 for the full-card lock; 14 for the tucked-card lock button; 13 for the Hook Card header; 12 for the Export chevron.</li>
   <li><strong>Deck icons:</strong> see 4.4. The Hook Card icon is custom (a hook), drawn in the same stroke style.</li>
-  <li><strong>Other icons in use, by role:</strong> gear (Settings), lines (Add note), grip with 2 vertical lines (Concept resize handle, 14) <span class="tag">2026-11-04</span>, deck icons at 14 (Concept lane labels), undo, redo, download (Export), chevron down, lock, check, close (×), plus, minus, more (board menu), warning, retry, import, <code>playing-cards-fan</code> (Deal Stack), <code>square-arrow-down</code> (Redraw, Redraw All) <span class="tag">user 2026-11-04</span>. The mockups draw them as inline paths without names; pick the matching Lucide names when vendoring.</li>
+  <li><strong>Other icons in use, by role:</strong> gear (Settings), lines (Add note), grip with 2 vertical lines (Concept resize handle, 14) <span class="tag">2026-11-04</span>, deck icons at 14 (Concept lane labels), undo, redo, download (Export), chevron down, lock, check, close (×), plus, minus, more (board menu), warning, retry, import, <code>playing-cards-fan</code> (Deal Stack), <code>square-arrow-down</code> (Redraw, Redraw All) <span class="tag">user 2026-11-04</span>, <code>repeat</code> (Core Loop card header, 13) <span class="tag">user 2026-11-05</span>. The mockups draw them as inline paths without names; pick the matching Lucide names when vendoring.</li>
   <li><strong>Removed:</strong> sliders, with the rail Genres button <span class="tag">2026-11-04</span>.</li>
   <li><strong>Reserved:</strong> none.</li>
 </ul>
@@ -452,7 +459,7 @@
   <li>Content: max 1180 wide, centered. Padding 40 24 64, gap 28.
     <ul>
       <li>Title "Boards", Display 28/700.</li>
-      <li>The line "Each board is one place to draw cards and build hooks. Boards stay in this browser."</li>
+      <li>The line "Each board is one place to draw cards and build hooks. Boards stay in this browser. Every idea you make here is yours to use, with no credit needed." <span class="tag">user 2026-11-05</span></li>
       <li>Actions on the right: Import board file (secondary) and New board (primary, <code>--accent</code> fill, <code>--on-accent</code> text).</li>
     </ul>
   </li>
@@ -702,6 +709,20 @@
 </table>
 <p class="meta">Dropped from the bundle by the user: the folded Hook Train, Expand Stack, the Hook Card count pill, the collapsed Concept button (<code>Stack4ChipsCollapsed</code>) and the 1-or-2-column snap. See the Handoff log.</p>
 
+<h3 id="s-loop">9.16 Core Loop card <span class="tag">user 2026-11-05</span></h3>
+<p>Behavior is owned by <a href="feature-core-loop-card.html">feature-core-loop-card.html</a>: the live template, the edit and reset rules, Copy Loop and the text file. This section owns the look. It reuses the Hook Card (9.5) and the Concept chip (9.15) and adds no token.</p>
+<table>
+  <tr><th>Part</th><th>Spec</th></tr>
+  <tr><td>Place</td><td>Only on One-Pager boards, 1 per board. A new board places it at (680, 96): the Concept panel's right edge at its default width, plus 56. It is a free card. Drag, snap and Alt work as for any free card (9.7).</td></tr>
+  <tr><td>Card</td><td>240 wide, min 200 tall, the height grows with the text. Radius 7 (<code>--radius-card</code>), border 2 <code>--accent</code>, fill <code>--hook-bg</code>, <code>--shadow-hook</code>, padding 14 16 16, gap 10. No deck edge and no deck tint. It follows the mode as the Hook Card does.</td></tr>
+  <tr><td>Header</td><td>A 24 dot in <code>--accent</code> with the <code>repeat</code> icon 13 in <code>--on-accent</code>. The label "Core Loop", Display 12/600, 0.08em, uppercase, in <code>--accent-text</code> for the current mode.</td></tr>
+  <tr><td>Template</td><td>Read-only, 13 line height 1.45, <code>--hook-text</code>. The lead words ("earn", "to") and the arrows "→" are in <code>--hook-text</code>. Each step's cue text is 13/600 in its deck's lane color (4.4), the same color as the Concept lane labels. With no steps it reads "Deal or draw cards to build the loop." in <code>--text-muted</code>.</td></tr>
+  <tr><td>Divider</td><td>1 line in <code>--border</code>, full width inside the padding.</td></tr>
+  <tr><td>Edit field</td><td>A text area with the note text style (9.12), 14 line height 1.45, <code>--hook-text</code>, no border until focus, focus ring as in 12. <code>aria-label</code> "Core Loop Text". It grows with the text.</td></tr>
+  <tr><td>Hover menu</td><td>The Hook Card hover menu spec (9.5). Items: Copy Loop (<code>repeat</code> icon, then the <code>check</code> icon in <code>--success-text</code> with "Copied" for 2 s), Reset From Cards (<code>square-arrow-down</code>, shown only after an edit). No Duplicate and no Discard.</td></tr>
+  <tr><td>Clipboard failed</td><td>The Copy Hook fallback dialog (9.5 state D), titled "Copy the loop", with a read-only "Core loop" field.</td></tr>
+</table>
+
 <!-- ============================================================ -->
 <h2 id="contracts">10. Cross-cutting interaction contracts</h2>
 <ol>
@@ -830,6 +851,7 @@ GenresTab     picked: Genre[] · perDeck: { [deck]: Genre[] }
   <tr><td>M6: Card Themes And Settings Tabs</td><td>Card face, tucked face, Hook Card and note tokens by mode; the deck edge and tint on every card; the Settings tabs with the Genres tab (disabled with no board open); the rail without the Genres button; the 900 wide dialog; the new Mode help text and New Board help line.</td><td>3, 4.4, 4.5, 8.2, 9.4, 9.5, 9.7, 9.8, 9.10, 9.11, 9.12, 10</td></tr>
   <tr><td>M7: One-Pager Board</td><td>The Concept panel, lanes, chips, resize handle and chip drop target; the One-Pager card count chip. The board kind choice, the empty state and the board list label once they are drawn (section 15).</td><td>9.15</td></tr>
   <tr><td>M8: Deal A Stack</td><td>The Deal Stack item in the Hook Card menu, the <code>square-arrow-down</code> icon on Redraw and Redraw All, and the one-at-a-time reveal.</td><td>7, 9.4, 9.5, 9.9, 11</td></tr>
+  <tr><td>M9: Core Loop Card</td><td>The Core Loop card, its template, edit field and hover menu, the <code>repeat</code> icon, and the ownership line on the Boards page.</td><td>7, 9.3, 9.16</td></tr>
 </table>
 <p class="meta">The Board list (9.3) and Empty board (9.2) are carried over from TheForge in M1 and restyled to these specs by M5 at the latest.</p>
 

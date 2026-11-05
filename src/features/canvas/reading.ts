@@ -3,12 +3,15 @@
  * board, with its On Top adjective first ("tall frozen pilot"), and a Hook Card's stack in
  * reading order, and every Hook Card's sentence on a board. The sentence builder, the
  * connector badges, the text file and the board list read cards through this file.
+ * loopSteps reads the Core Loop card's 4 step texts: the Hook Card's stack first, then the
+ * first Details chip by z. The Core Loop card itself is never in a stack or a sentence.
  */
 import { activeText } from '@/features/card';
 import { buildHookSentence, type StackEntry } from '@/features/hook';
+import { LOOP_STEPS, type LoopSteps } from '@/features/loop';
 import type { Board, Card } from '@/shared/model';
 import { connectorFor } from './connector';
-import { isRoot, stackOrder } from './stack';
+import { descendantsOf, isRoot, stackOrder } from './stack';
 
 /** The Modifier on top of the base card, or null. */
 export function onTopCardOf(board: Board, baseId: string): Card | null {
@@ -39,7 +42,7 @@ export function stackEntries(board: Board, hookId: string): StackEntry[] {
   const entries: StackEntry[] = [];
   order.forEach((card, i) => {
     const prev = order[i - 1];
-    if (!prev || card.type === 'hook') return;
+    if (!prev || card.type === 'hook' || card.type === 'loop') return;
     const text = cardText(board, card);
     const connector = connectorFor(prev.type, {
       type: card.type,
@@ -63,4 +66,31 @@ export function hookSentences(board: Board): string[] {
     .sort((a, b) => a.y - b.y || a.x - b.x || a.z - b.z)
     .map((hook) => buildHookSentence(stackEntries(board, hook.id)))
     .filter((sentence) => sentence !== '');
+}
+
+/**
+ * The Core Loop card's step texts (docs/feature-core-loop-card.html, Live template). For
+ * each of Mechanic, Resource, Progression and Goal: the first card of that deck under the
+ * One-Pager Hook Card in reading order, else the lowest-z Details chip of that deck. Loose
+ * cards never count. The value is cardText, so a combined Resource gives its adjective and
+ * noun. A missing step has no key. A Free Form board gives {}. The Hook Card is found here,
+ * not through concept.ts, because concept.ts imports this file.
+ */
+export function loopSteps(board: Board): LoopSteps {
+  if (board.kind !== 'onePager') return {};
+  const hook = board.cards.find((card) => card.type === 'hook');
+  const train = hook ? descendantsOf(board, hook.id) : [];
+  const steps: LoopSteps = {};
+  for (const { deck } of LOOP_STEPS) {
+    const card =
+      train.find((c) => c.type === deck) ??
+      board.cards
+        .filter((c) => c.inConcept && c.type === deck)
+        .reduce<Card | undefined>(
+          (low, c) => (low === undefined || c.z < low.z ? c : low),
+          undefined,
+        );
+    if (card) steps[deck] = cardText(board, card);
+  }
+  return steps;
 }

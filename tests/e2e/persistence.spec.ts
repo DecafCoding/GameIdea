@@ -110,7 +110,7 @@ test('boardList_emptyStart_showsHeaderAndNewBoard', async ({ page }) => {
   await expect(page.getByRole('heading', { level: 1, name: 'Boards' })).toBeVisible();
   await expect(
     page.getByText(
-      'Each board is one place to draw cards and build hooks. Boards stay in this browser.',
+      'Each board is one place to draw cards and build hooks. Boards stay in this browser. Every idea you make here is yours to use, with no credit needed.',
     ),
   ).toBeVisible();
   await expect(page.getByRole('button', { name: 'New Board' }).first()).toBeEnabled();

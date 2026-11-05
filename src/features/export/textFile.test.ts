@@ -11,6 +11,7 @@ import {
   fixtureStack,
   onePagerBoard,
   secondModifier,
+  onePagerWithLoop,
 } from '@/test/fixtures/boards';
 import { boardText, textFileName } from './textFile';
 
@@ -202,3 +203,62 @@ describe('textFile', () => {
     expect(boardText(empty)).not.toContain('Details');
   });
 });
+
+describe('textFile and the Core Loop card', () => {
+  it('boardText_loopCard_neverInCards', () => {
+    const text = boardText(onePagerWithLoop());
+    const cards = text.split('\nCards\n')[1]!;
+    expect(cards).toContain('Hook Card');
+    expect(cards).not.toContain('Core Loop');
+  });
+
+  it('boardText_loopCard_coreLoopAfterHooksBeforeDetails', () => {
+    const base = onePagerWithLoop();
+    const board = { ...base, notes: [fixtureNote({ x: 720, y: 96, text: 'Try a night mode.' })] };
+    expect(boardText(board)).toBe(
+      'One Pager\n\n' +
+        'Hooks\n\nYou are a navigator who must trade.\n\n' +
+        'Core Loop\n\ntrade → earn memories\n\n' +
+        'Details\n\n' +
+        'Mechanics\n- climb\n\n' +
+        'Resources\n- memories\n- rope\n\n' +
+        'Settings\n- outpost\n\n' +
+        'Cards\n\n' +
+        'Hook Card\n  Player Role: navigator\n    Mechanic: trade\n' +
+        'Player Role Modifier: exiled\n\n' +
+        'Notes\n\nNote\nTry a night mode.\n',
+    );
+  });
+
+  it('boardText_loopText_usedOverLiveText', () => {
+    const text = boardText(withLoopText('dig → sell the ore'));
+    expect(text).toContain('Core Loop\n\ndig → sell the ore\n\nDetails');
+    expect(text).not.toContain('trade → earn memories');
+  });
+
+  it('boardText_loopTextLines_keptTrimmedAtEnd', () => {
+    const text = boardText(withLoopText('dig deeper   \n  sell the ore  \n'));
+    expect(text).toContain('Core Loop\n\ndig deeper\n  sell the ore\n\nDetails');
+  });
+
+  it('boardText_noLoopCard_noCoreLoopSection', () => {
+    expect(boardText(onePagerBoard())).not.toContain('Core Loop');
+  });
+
+  it('boardText_emptyLoop_noCoreLoopSection', () => {
+    const board = onePagerWithLoop();
+    const bare = {
+      ...board,
+      cards: board.cards.filter((card) => card.type === 'hook' || card.type === 'loop'),
+    };
+    expect(boardText(bare)).not.toContain('Core Loop');
+  });
+});
+
+function withLoopText(loopText: string) {
+  const board = onePagerWithLoop();
+  return {
+    ...board,
+    cards: board.cards.map((card) => (card.id === 'loop-1' ? { ...card, loopText } : card)),
+  };
+}

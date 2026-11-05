@@ -5,6 +5,8 @@
  * tucked card paints under the card above it. Notes sit at zIndex 0 under every card. On a
  * One-Pager board the Concept panel is 1 more node at zIndex 1, beside the Hook Card; its
  * width comes from its content, so React Flow measures it. Concept cards have no node.
+ * The Core Loop card is a 'loop' node ranked with the other roots by z, 240 wide with no
+ * height, so React Flow measures it as it grows with its text.
  * The array is sorted by zIndex, so Tab moves through the cards in z order.
  * After Deal Stack, each dealt card carries its reveal delay (dealDelays): the dealt cards
  * fade in one at a time over about 1 second. The delays are view state, never stored.
@@ -13,7 +15,7 @@ import type { Node } from '@xyflow/react';
 import type { Board, Card } from '@/shared/model';
 import { CONCEPT_NODE_ID, conceptPlace, conceptWidth } from './concept';
 import type { Below } from './connector';
-import { cardSize } from './placement';
+import { cardSize, HOOK_WIDTH } from './placement';
 import { cardText, isOnTop } from './reading';
 import { isRoot, stackOrder } from './stack';
 
@@ -40,10 +42,14 @@ export type NoteNodeData = { noteId: string };
 /** The Concept panel of a One-Pager board: its saved width. */
 export type ConceptNodeData = { width: number };
 
+/** The Core Loop card: its id; the card comes from the store. */
+export type LoopNodeData = { cardId: string };
+
 export type CardFlowNode = Node<CardNodeData, 'card'>;
 export type NoteFlowNode = Node<NoteNodeData, 'note'>;
 export type ConceptFlowNode = Node<ConceptNodeData, 'concept'>;
-export type BoardFlowNode = CardFlowNode | NoteFlowNode | ConceptFlowNode;
+export type LoopFlowNode = Node<LoopNodeData, 'loop'>;
+export type BoardFlowNode = CardFlowNode | NoteFlowNode | ConceptFlowNode | LoopFlowNode;
 
 export interface NodeUi {
   selectedId: string | null;
@@ -87,24 +93,42 @@ export function toNodes(board: Board, ui: NodeUi): BoardFlowNode[] {
   const roots = board.cards
     .filter((card) => isRoot(board, card.id) && !isOnTop(board, card) && !card.inConcept)
     .sort((a, b) => a.z - b.z);
+  // The Core Loop card ranks with the roots; it is never tucked and has no stack.
+  const loops: LoopFlowNode[] = roots.flatMap((root, r): LoopFlowNode[] =>
+    root.type === 'loop'
+      ? [
+          {
+            id: root.id,
+            type: 'loop',
+            position: { x: root.x, y: root.y },
+            width: HOOK_WIDTH,
+            zIndex: (r + 1) * STACK_RANK,
+            selectable: false,
+            data: { cardId: root.id },
+          },
+        ]
+      : [],
+  );
   const cards: CardFlowNode[] = roots.flatMap((root, r) =>
-    stackOrder(board, root.id).map((card, i, order): CardFlowNode => ({
-      id: card.id,
-      type: 'card',
-      position: { x: card.x, y: card.y },
-      ...cardSize(card),
-      zIndex: (r + 1) * STACK_RANK - i,
-      selectable: false,
-      data: {
-        cardId: card.id,
-        depth: i,
-        below: belowCard(board, order[i + 1]),
-        selected: ui.selectedId === card.id,
-        hidden: ui.hiddenIds.has(card.id),
-        fresh: ui.freshIds?.has(card.id) ?? false,
-        reveal: ui.reveal?.get(card.id) ?? null,
-      },
-    })),
+    root.type === 'loop'
+      ? []
+      : stackOrder(board, root.id).map((card, i, order): CardFlowNode => ({
+          id: card.id,
+          type: 'card',
+          position: { x: card.x, y: card.y },
+          ...cardSize(card),
+          zIndex: (r + 1) * STACK_RANK - i,
+          selectable: false,
+          data: {
+            cardId: card.id,
+            depth: i,
+            below: belowCard(board, order[i + 1]),
+            selected: ui.selectedId === card.id,
+            hidden: ui.hiddenIds.has(card.id),
+            fresh: ui.freshIds?.has(card.id) ?? false,
+            reveal: ui.reveal?.get(card.id) ?? null,
+          },
+        })),
   );
   const notes: NoteFlowNode[] = board.notes.map((note) => ({
     id: note.id,
@@ -132,5 +156,8 @@ export function toNodes(board: Board, ui: NodeUi): BoardFlowNode[] {
         },
       ]
     : [];
-  return [...notes, ...concept, ...cards.sort((a, b) => (a.zIndex ?? 0) - (b.zIndex ?? 0))];
+  const ranked: BoardFlowNode[] = [...cards, ...loops].sort(
+    (a, b) => (a.zIndex ?? 0) - (b.zIndex ?? 0),
+  );
+  return [...notes, ...concept, ...ranked];
 }

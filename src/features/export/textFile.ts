@@ -1,7 +1,9 @@
 /**
  * The text file: the board in plain words, downloaded as <board-name>.txt. The board
  * name, then a Hooks section (each non-empty hook sentence in reading order, one
- * paragraph each, a blank line between), then on a One-Pager board a Concept section (each
+ * paragraph each, a blank line between), then a Core Loop section (the Core Loop card's
+ * stored loopText, else its live text; each line trimmed at the end; left out when there is
+ * no Core Loop card or the text is empty), then on a One-Pager board a Concept section (each
  * lane's plural deck name in rail order, then "- <words>" per chip in lane order, merged
  * and On Top adjectives included, a blank line between lanes; left out when the panel is
  * empty), then a Cards section (stacks top to bottom, then left to right; tucked cards
@@ -10,7 +12,8 @@
  * A Modifier tucked under a card with nothing tucked under it joins its parent's line
  * ("Player Role: exiled navigator, devout"). An On Top Modifier is never its own line: it
  * reads inside its base card's words ("Player Role: tall frozen pilot"). A Hook Card line
- * reads "Hook Card", with its stack indented under it. Concept cards are never in Cards. A Modifier line names its Modifier deck. LF line ends and one final
+ * reads "Hook Card", with its stack indented under it. Concept cards and the Core Loop card
+ * are never in Cards. A Modifier line names its Modifier deck. LF line ends and one final
  * newline.
  */
 import { activeText } from '@/features/card';
@@ -21,7 +24,9 @@ import {
   hookSentences,
   isOnTop,
   isRoot,
+  loopSteps,
 } from '@/features/canvas';
+import { buildLoopText } from '@/features/loop';
 import { DECK_LANE_NAME, DECK_NAME, MOD_DECK_NAME, type Board, type Card } from '@/shared/model';
 import { downloadFile, safeFileBase } from './download';
 
@@ -59,8 +64,11 @@ function cardLines(board: Board): string[] {
     }
   };
   const roots = board.cards
-    // Concept cards are listed in the Concept section, not here.
-    .filter((card) => isRoot(board, card.id) && !isOnTop(board, card) && !card.inConcept)
+    // Concept cards are listed in the Concept section, the Core Loop card in its own.
+    .filter(
+      (card) =>
+        isRoot(board, card.id) && !isOnTop(board, card) && !card.inConcept && card.type !== 'loop',
+    )
     .sort((a, b) => a.y - b.y || a.x - b.x || a.z - b.z);
   for (const root of roots) visit(root, 0);
   return lines;
@@ -74,6 +82,18 @@ function conceptBlocks(board: Board): string[] {
       '\n',
     ),
   );
+}
+
+/** The Core Loop text: stored, else live; each line trimmed at the end; '' when none. */
+function loopBlock(board: Board): string {
+  const card = board.cards.find((c) => c.type === 'loop');
+  if (!card) return '';
+  const text = card.loopText ?? buildLoopText(loopSteps(board)).text;
+  return text
+    .split(/\r?\n/)
+    .map((line) => line.trimEnd())
+    .join('\n')
+    .trimEnd();
 }
 
 function noteBlocks(board: Board): string[] {
@@ -92,6 +112,8 @@ export function boardText(board: Board): string {
   const sections = [board.name];
   const hooks = hookSentences(board);
   if (hooks.length > 0) sections.push(['Hooks', '', hooks.join('\n\n')].join('\n'));
+  const loop = loopBlock(board);
+  if (loop !== '') sections.push(['Core Loop', '', loop].join('\n'));
   const concept = conceptBlocks(board);
   if (concept.length > 0) sections.push(['Details', '', concept.join('\n\n')].join('\n'));
   const cards = cardLines(board);

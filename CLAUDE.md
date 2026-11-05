@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-GameIdea (working name) is a browser canvas for solo and hobby game developers and game jam entrants. The user draws game concept cards from 11 decks, turns each card's ring to choose the active cue, combines Modifiers onto Player Role, Resource and Setting cards, tucks cards under a Hook Card, and selects and copies the computed one-sentence game hook. It runs locally in a desktop browser, with no server, no account and no AI.
+GameIdea (working name) is a browser canvas for solo and hobby game developers and game jam entrants. The user draws game concept cards from 11 decks, turns each card's ring to choose the active cue, combines Modifiers onto Player Role, Resource and Setting cards, tucks cards under a Hook Card, and selects and copies the computed one-sentence game hook; on One-Pager boards a Core Loop card turns the cards into an editable core loop line. It runs locally in a desktop browser, with no server, no account and no AI.
 
 **Deck click → draw distinct cues from a pool (genre / target filter) → card on canvas → turn rings / lock / combine / tuck under a Hook Card → computed hook sentence → select and copy → autosave to IndexedDB → export.**
 
@@ -30,9 +30,11 @@ src/
     draw/           deck buttons, grouped rail, draw logic (distinct cues), genre and target filters
     card/           card view, rings, rotate, cue text, lock control, type icons
     canvas/         React Flow setup, pan, zoom, drag, tuck, tuck hints, snap,
-                    connector badges and their word rules for the 12 card types,
-                    the One-Pager Concept panel (pure rules in concept.ts, the panel node)
+                    connector badges and their word rules for the 13 card types,
+                    the One-Pager Concept panel (pure rules in concept.ts, the panel node),
+                    the Core Loop node and loopSteps (reading.ts)
     hook/           Hook Card: sentence builder (pure), selectable sentence, icon menu (Copy Hook and its fallback dialog, Deal Stack, Redraw All, Duplicate, Discard)
+    loop/           Core Loop card: live loop text builder (pure), card view with edit field, icon menu (Copy Loop, Reset From Cards)
     genres/         Genres tab content (on the Settings dialog), genre counts
     notes/          free-text notes with editable titles, Add note
     boards/         board list: make, open, rename, delete
@@ -46,7 +48,7 @@ src/
     ui/             general parts: buttons, dialogs
 public/pools/       role, mechanic, goal, conflict, resource, modifier, setting,
                     mood, twist, progression, constraint .json
-public/icons/       11 deck icons, 3 Modifier icons, Hook Card icon (vendored Lucide SVG)
+public/icons/       11 deck icons, 3 Modifier icons, Hook Card icon, Core Loop repeat icon (vendored Lucide SVG)
 tests/e2e/          Playwright tests
 docs/libraries/     decks.json, genres.json and Markdown libraries — a record after the split
 ```
@@ -102,9 +104,10 @@ Import rules (`import-rules` in `docs/architecture.html`). Do not break them:
 - **Hook sentence is a pure function** in `features/hook/`, computed on every change and never stored. It takes the stack in reading order and must not import React or React Flow. Never output a blank slot. Rules live in `docs/mvp-plan.html` (Hook sentence rules, Connector badges).
 - **Pools.** 11 JSON files in `public/pools/`, made once by a split of `docs/libraries/decks.json`. After the split the JSON is the source; never rerun the split over edited pools. The split changes cue text only by its 2 rules (lowercase the Constraint lead word, drop a leading the/a/an from Setting). Floors: 10 cues per genre per tagged deck, 20 per Modifier deck — enforced by the split and a unit test.
 - **Pool load failure** shows an error with Retry. Boards and saved cards still work; only deck buttons stop.
-- **Board file format is expensive to change.** `formatVersion` is 2, with 1 upgrade step: `UPGRADES[1]` for board files, shared with Dexie schema version 2 for saved records through `upgradeBoardV1` in `shared/model`. A further shape change adds Dexie `version(3)` and `UPGRADES[2]`. Import always creates a new board; a duplicate name gets "(imported)".
+- **Board file format is expensive to change.** `formatVersion` is 2, with 1 upgrade step: `UPGRADES[1]` for board files, shared with Dexie schema version 2 for saved records through `upgradeBoardV1` in `shared/model`. Phase 9 is a recorded exception: the `loop` card type and `Card.loopText` were added inside format 2 with no upgrade step (user decision 2026-11-05, while the app is in test). A later change that removes, renames or must rewrite saved fields adds Dexie `version(3)` and `UPGRADES[2]`. Import always creates a new board; a duplicate name gets "(imported)".
 - **One-Pager boards.** The panel shows as "Details" on screen and in the text file; code and the board file keep the name `concept`. 2 board kinds, `free` (Free Form, every board made before format 2) and `onePager`, set at New Board and never changed. A One-Pager board has exactly 1 Hook Card and 1 Concept panel. Concept cards have `inConcept: true`, `tuckedUnder: null` and chip order by `z`; the panel's place is derived from the Hook Card (left + 296, same top) and only `conceptWidth` (232 to 640) is stored. Stack, reading, drop and placement code skip Concept cards, so the hook sentence never reads them. Each panel action is 1 `changeBoard`. Never use the attribute name `data-kind` (the story-name check bans it); use `data-board-kind`.
 - **Deal Stack.** 1 click on the Hook Card menu fills only the missing slots: the core 5 (Player Role, Mechanic, Resource, Goal, Conflict) under the Hook Card in core order by the insert rule (`insertUnder` in `stack.ts`: the new card tucks under the last earlier-core card, whose non-Modifier children move under it), and on One-Pager boards 2 chips each in the Player Role, Resource, Setting, Mood, Twist, Progression and Constraint Details lanes. `dealStack` and `canDeal` are pure in `features/canvas/boardActions.ts`. Each draw excludes the cues already on the board for that deck (`DrawOptions.excluded`, keyed by `cueKey`), dropping the whole exclusion when the filtered pool is too short. 1 `changeBoard` = 1 undo step and 1 save; a full stack returns the same board. The staggered fade-in is view state only (`dealDelays` in `nodes.ts`). Redraw and Redraw All use the `square-arrow-down` icon; Deal Stack uses `playing-cards-fan`.
+- **Core Loop card.** Card type `loop` with optional `Card.loopText` (only on a loop card, never blank, never trimmed). 1 per One-Pager board, placed by `newBoard` at `ONE_PAGER_LOOP_SPOT` (680, 96); older One-Pager boards have none and get no fix. It has `rings: []` and is a free card (drag and snap as usual), never tucked, never a drop target, never in Details, never in the hook sentence, not counted or dotted on the board list, never selected. `loopSteps` (canvas `reading.ts`, pure: the Hook Card's stack first in reading order, then the first Details chip by z) feeds `buildLoopText` (`features/loop`, pure, computed on every change, never stored). Edits commit on blur through `setLoopText` and Reset From Cards through `resetLoopText` (1 `changeBoard` each; an empty edit removes the field; a no-op returns the same board). Copy Loop goes through `@/features/hook` (`copyHook`, fallback dialog). `features/loop` never imports the canvas (lint-enforced). The text file has a "Core Loop" section after Hooks.
 - **Undo.** zundo, up to 100 steps per board, session only; clears on board change, reload and when another tab changes the board. Every user action is one step (Redraw All and Deal Stack included). Genre and settings changes are never in undo.
 - **2 tabs.** After a save, post the board id on a BroadcastChannel; a tab showing that board reloads and shows the notice.
 - **Theme.** Settings set `<html data-mode data-theme>` before first render (local storage, so no dark flash). The theme color changes only the accent. The mode changes the chrome, card faces, tucked faces, the note and the Hook Card fill (design 4.5). Badges, rings, center icons and deck colors never change. Every card has a 1 px deck-color edge and a deck tint (`--card-tint`: 14% dark, 7% light); the Hook Card has none. Light-mode outlines use `--accent-text`; the Hook label uses the current mode's `--accent-text`.

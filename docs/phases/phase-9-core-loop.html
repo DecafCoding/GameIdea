@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Phase 9: Core Loop Card</title>
+  <style>
+    :root { --fg:#1a1a1a; --muted:#666; --accent:#2563eb; --done:#16a34a; --warn:#dc2626; --rule:#e5e7eb; }
+    body { font:16px/1.6 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; color:var(--fg); max-width:62rem; margin:2rem auto; padding:0 1.25rem; }
+    h1 { font-size:2rem; border-bottom:2px solid var(--rule); padding-bottom:.3rem; }
+    h2 { font-size:1.5rem; margin-top:2.5rem; border-bottom:1px solid var(--rule); padding-bottom:.2rem; }
+    h3.milestone { font-size:1.25rem; margin-top:2rem; color:var(--accent); }
+    h4.task { font-size:1.1rem; margin-top:1.5rem; }
+    dl.phase-meta { display:grid; grid-template-columns:max-content 1fr; gap:.25rem 1rem; }
+    dl.phase-meta dt { font-weight:600; color:var(--muted); }
+    code, pre { font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+    pre { background:#f6f8fa; padding:1rem; border-radius:6px; overflow:auto; }
+    code { background:#f6f8fa; padding:.1rem .3rem; border-radius:4px; }
+    pre code { background:none; padding:0; }
+    ul.checklist { list-style:none; padding-left:0; }
+    ul.checklist > li::before { content:"☐ "; color:var(--muted); }
+    ul.checklist > li[data-checked="true"]::before { content:"☑ "; color:var(--done); }
+    .validate { color:var(--done); font-weight:600; }
+    table { border-collapse:collapse; margin:.5rem 0 1rem; }
+    th, td { border:1px solid var(--rule); padding:.3rem .6rem; text-align:left; vertical-align:top; font-size:.92rem; }
+  </style>
+</head>
+<body>
+
+<h1 data-phase="9">Phase 9: Core Loop Card</h1>
+<p>The following plan should be complete, but validate documentation, codebase patterns, and task sanity before implementing. Pay special attention to naming of existing utils, types, and models — import from the right files.</p>
+
+<h2>Phase Description</h2>
+<p>Phase 9 adds the <strong>Core Loop card</strong> to every new One-Pager board and 1 ownership line to the Boards page:</p>
+<ul>
+  <li><strong>A new card type, <code>loop</code></strong> ("Core Loop"), with an optional <code>Card.loopText</code>. A loop card has <code>rings: []</code>, <code>tuckedUnder: null</code>, <code>onTopOf: null</code>, <code>locked: false</code>, <code>inConcept: false</code>. No format version change, no Dexie <code>version(3)</code>, no <code>UPGRADES[2]</code> (the user's recorded local exception: the app is still in test).</li>
+  <li><strong>Placement:</strong> a new One-Pager board starts with exactly 1 Core Loop card at (680, 96), right of the Details panel at its default width plus the 56 px gap. It is a free card: drag, snap and Alt work as for any free card. It never tucks, never takes a tuck, never enters the Details panel and never shows in the hook sentence.</li>
+  <li><strong>Live template</strong> (top part, read-only, always current): "[Mechanic] → earn [Resource] → [Progression] → to [Goal]". Each step comes from the Hook Card's stack first (reading order, first match), else the first Details chip by z of that deck. Missing steps are left out. Each step's cue text shows in its deck's lane color.</li>
+  <li><strong>Edit field</strong> (lower part): shows the live text until the first edit, then the stored <code>loopText</code>, which card changes never touch. It commits on blur as 1 <code>changeBoard</code> (1 undo step, 1 save). An empty or white-space commit removes <code>loopText</code>.</li>
+  <li><strong>Hover menu:</strong> Copy Loop (reuses the Copy Hook path and its fallback dialog through <code>@/features/hook</code>) and Reset From Cards (only while <code>loopText</code> is stored). No Duplicate, no Discard.</li>
+  <li><strong>Text file:</strong> a "Core Loop" section right after Hooks; the loop card is never a line under Cards.</li>
+  <li><strong>Boards page:</strong> the help text ends with "Every idea you make here is yours to use, with no credit needed."</li>
+  <li><strong>Icon:</strong> the Lucide <code>repeat</code> icon, vendored.</li>
+</ul>
+<p>Behavior authority: <code>docs/feature-core-loop-card.html</code>. Visual authority: <code>docs/design-system.html</code> 9.3 (Boards page line) and 9.16 (the card), reusing 9.5 (Hook Card and its menu), 9.12 (note text style) and 9.15 (Concept lane colors). Older One-Pager boards with no loop card load as they are: no migration, no import fix.</p>
+
+<h2>User Stories</h2>
+<ul>
+  <li>As a game jam entrant with a full hook and Details panel, I want a Core Loop card that already reads "what the player does, earns, grows and aims for" from my cards, so that I can see the core loop in one line without writing it from nothing.</li>
+  <li>As a solo developer, I want to rewrite that loop in my own words and have my text stay put while I keep turning rings and redrawing, so that my edit is never lost to a card change.</li>
+  <li>As a user, I want to copy the loop and find it in the text file after the hooks, so that it reaches my design document with the rest of the concept.</li>
+  <li>As a new user on the Boards page, I want to read that the ideas I make are mine to use, so that I can build on them without worrying about credit.</li>
+</ul>
+
+<h2>Problem Statement</h2>
+<p>After the hook and the Details panel are full, the next design step is the core loop, and the app has no place for it. The scan row "State that the user owns the generated ideas" is open, and the row "Send a saved idea to a design document" lacks the loop.</p>
+
+<h2>Solution Statement</h2>
+<p>Add <code>loop</code> to <code>CARD_TYPES</code> and an optional <code>loopText</code>, extend the Zod check, and make every stack, drop, placement, Concept, summary and text-file path skip loop cards (tests first, because a wrong skip lets the loop card join a stack or the sentence). A pure <code>loopSteps(board)</code> in <code>features/canvas/reading.ts</code> picks the 4 step texts; a pure <code>buildLoopText(steps)</code> in the new <code>features/loop/</code> builds the parts and the plain text. <code>newBoard</code> places the card; <code>setLoopText</code> and <code>resetLoopText</code> are Board → Board recipes in <code>features/canvas/boardActions.ts</code>. The view (<code>LoopCard</code>, <code>LoopMenu</code>) lives in <code>features/loop/</code> and never imports the canvas, as <code>features/hook/</code> does; a new <code>LoopNode</code> in the canvas wires it to the store and a React Flow <code>NodeToolbar</code>. The text file and the Boards page line close the phase.</p>
+
+<h2>Phase Metadata</h2>
+<dl class="phase-meta">
+  <dt>Phase Type</dt><dd data-field="type">New Capability</dd>
+  <dt>Estimated Complexity</dt><dd data-field="complexity">Medium</dd>
+  <dt>Primary Systems Affected</dt><dd data-field="systems">shared/model, shared/store (newBoard), features/loop (new), features/canvas (reading, stack skip rules, drop zones, placement, Concept, nodes, LoopNode, board actions), features/hook (fallback dialog props), features/export (schema, text file), features/boards (summary, help text), features/card (type icon), shared/ui (icon), public/icons, eslint.config.js</dd>
+  <dt>Dependencies</dt><dd data-field="dependencies">Phase 7 (One-Pager board, Details panel); Phase 8 (Deal Stack, used in browser tests); no new library</dd>
+</dl>
+
+<h2>Context References</h2>
+
+<h3>Relevant Codebase Files — READ THESE BEFORE IMPLEMENTING</h3>
+<ul>
+  <li><code>docs/feature-core-loop-card.html</code> (whole file) — Why: the behavior authority: data model, live template contract, edits, menu, text file, tests and done criteria.</li>
+  <li><code>docs/design-system.html</code> 9.3 (Boards help line), 9.5 (Hook Card look, hover menu, state D fallback dialog), 9.12 (note text style), 9.15 (lane colors), 9.16 (Core Loop card) — Why: every visual value of the card; no new token.</li>
+  <li><code>src/shared/model/index.ts</code> (lines 49–51 <code>CARD_TYPES</code>; 147–161 <code>DECK_NAME</code>; 204–236 <code>Card</code>) — Why: add <code>'loop'</code> and <code>loopText</code>.</li>
+  <li><code>src/shared/store/newBoard.ts</code> (lines 20–54) and <code>newBoard.test.ts</code> (lines 14–30) — Why: the One-Pager start cards; the exact-card test that changes.</li>
+  <li><code>src/features/export/schema.ts</code> (lines 43–57 <code>RING_RULES</code>; 61–103 card rules; 190–218 One-Pager rules) and <code>schema.test.ts</code> (lines 27–36 <code>mixedBoard</code>; 150–170 <code>schema_everyCardType_roundTrips</code>) — Why: the new type's ring rule, the loop rules, and the 2 tests that map over <code>CARD_TYPES</code> on a Free Form board.</li>
+  <li><code>src/test/fixtures/boards.ts</code> (lines 14–55 <code>CUES</code>, <code>cuesFor</code>, <code>fixtureCard</code>; 300–350 <code>onePagerBoard</code>) — Why: <code>CUES</code> is indexed by <code>CardType</code>, so it needs a <code>loop</code> key; a loop fixture card has no rings.</li>
+  <li><code>src/features/card/TypeDisc.tsx</code> (lines 10–23 <code>TYPE_ICON</code>) — Why: <code>Record&lt;CardType, IconName&gt;</code> needs <code>loop: 'repeat'</code>.</li>
+  <li><code>src/features/canvas/stack.ts</code> (whole file) and <code>reading.ts</code> (whole file) — Why: where <code>loopSteps</code> goes; <code>cardText</code> gives a combined Resource its adjective and noun; <code>descendantsOf</code> is the reading order.</li>
+  <li><code>src/features/canvas/dropZones.ts</code> (lines 73–82 <code>paintOrder</code>; 116–141 <code>dropAction</code>, <code>hintFor</code>) — Why: the loop card is never a drop target, never tucks and shows no hint.</li>
+  <li><code>src/features/canvas/placement.ts</code> (lines 182–185 <code>cardSize</code>; 242–252 <code>boardRects</code>) — Why: the loop card is 240 wide like the Hook Card and stays an occupied rect.</li>
+  <li><code>src/features/canvas/concept.ts</code> (lines 51–55 <code>onePagerHook</code>; 77–84 <code>conceptLanes</code>; 110–127 <code>enterConcept</code>; 236–245 <code>conceptDrop</code>) — Why: a loop card never enters the panel and stays where it is dropped over it. Note <code>concept.ts</code> imports <code>reading.ts</code>; do not import <code>concept.ts</code> from <code>reading.ts</code>.</li>
+  <li><code>src/features/canvas/boardActions.ts</code> (lines 97–132 <code>dropCard</code>; 245–259 <code>redrawAll</code>; 321–383 <code>dealStack</code>; 446–449 <code>chooseConnector</code> as a same-board no-op pattern) — Why: where <code>setLoopText</code> and <code>resetLoopText</code> go.</li>
+  <li><code>src/features/canvas/nodes.ts</code> (whole file) and <code>nodes.test.ts</code> — Why: a loop card becomes a <code>'loop'</code> node with a width and no height (React Flow measures it, as it does the Concept panel).</li>
+  <li><code>src/features/canvas/CardNode.tsx</code> (lines 84–154 <code>useHoverMenu</code>; 171–219 <code>HookBody</code>) — Why: the hover menu pattern the loop menu reuses; <code>useHoverMenu</code> moves to its own module so both share the one-open-menu rule.</li>
+  <li><code>src/features/canvas/NoteNode.tsx</code> (whole file) — Why: the pattern for a node that wraps a feature view and passes <code>interactiveClassName="nodrag nowheel"</code>.</li>
+  <li><code>src/features/canvas/BoardCanvas.tsx</code> (line 83 <code>nodeTypes</code>; 94–102 <code>DragState</code>; 385–420 <code>onNodeDragStart</code>; 422–424 <code>onNodeDrag</code> early return; 482–518 <code>onNodeDragStop</code>; 635–639 <code>onNodeClick</code>) — Why: the loop node drags through the card drop path, gets no hint and is never selected.</li>
+  <li><code>src/features/hook/index.ts</code>, <code>copyHook.ts</code>, <code>CopyFallbackDialog.tsx</code>, <code>HookMenu.tsx</code> and <code>HookMenu.module.css</code> — Why: Copy Loop reuses <code>copyHook</code>, <code>COPIED_MS</code> and the fallback dialog (which gains <code>title</code> and <code>label</code> props); the loop menu mirrors the Hook menu markup and CSS values.</li>
+  <li><code>src/features/hook/HookCard.tsx</code> and <code>HookCard.module.css</code> — Why: the card shell (border, fill, shadow, padding, gap, header dot and label) the Core Loop card copies.</li>
+  <li><code>src/features/notes/NoteView.tsx</code> (lines 1–40; 159–220 draft, <code>onBlur</code>, Esc) and <code>NoteView.module.css</code> (<code>.text</code>) — Why: the commit-on-blur draft pattern and the note text style.</li>
+  <li><code>src/features/canvas/ConceptNode.tsx</code> (line 149 <code>var(--rail-${lane.deck})</code>) — Why: the lane color each step's text uses.</li>
+  <li><code>src/features/export/textFile.ts</code> (whole file) and <code>textFile.test.ts</code> (lines 160–205) — Why: the Core Loop section and the Cards skip.</li>
+  <li><code>src/features/boards/summary.ts</code> (lines 27–42) and <code>BoardList.tsx</code> (lines 226–231) — Why: card count and deck dots skip the loop card; the help text line.</li>
+  <li><code>src/shared/ui/Icon.tsx</code> (<code>IconName</code>), <code>src/shared/ui/tokens.test.ts</code> (lines 93–136 <code>ICONS</code>; 202–216 icon file tests), <code>public/icons/square-arrow-down.svg</code> — Why: the icon file shape and the 2 lists every icon must be in.</li>
+  <li><code>eslint.config.js</code> (lines 120–135, the <code>features/hook</code> block) — Why: the block to mirror so <code>features/loop</code> never imports the canvas.</li>
+  <li><code>src/shared/store/boardStore.ts</code> (lines 96–104 <code>changeBoard</code>) — Why: a recipe that returns the same board is no undo step and no save.</li>
+  <li><code>tests/e2e/hook.spec.ts</code> (lines 21–31 <code>stubClipboard</code>; 150–170 fallback dialog; 281–306 the @timing pattern), <code>tests/e2e/deal.spec.ts</code> (lines 85–113, the One-Pager deal and its undo to <code>['hook']</code>), <code>tests/e2e/one-pager.spec.ts</code> (lines 28–80 helpers; 85–96), <code>tests/e2e/persistence.spec.ts</code> (lines 108–116), <code>tests/e2e/board-helpers.ts</code> — Why: browser test helpers and the existing tests that see the new card.</li>
+</ul>
+
+<h3>New Files to Create</h3>
+<ul>
+  <li><code>public/icons/repeat.svg</code> — the vendored Lucide <code>repeat</code> icon.</li>
+  <li><code>src/features/loop/index.ts</code> — the only way into the loop feature.</li>
+  <li><code>src/features/loop/buildLoopText.ts</code> and <code>buildLoopText.test.ts</code> — <code>LOOP_STEPS</code>, <code>LoopSteps</code>, <code>LoopPart</code>, <code>buildLoopText</code> (pure).</li>
+  <li><code>src/features/loop/LoopCard.tsx</code>, <code>LoopCard.module.css</code>, <code>LoopCard.test.tsx</code> — the card face: header, template, divider, edit field.</li>
+  <li><code>src/features/loop/LoopMenu.tsx</code>, <code>LoopMenu.module.css</code>, <code>LoopMenu.test.tsx</code> — Copy Loop and Reset From Cards.</li>
+  <li><code>src/features/canvas/useHoverMenu.ts</code> — the hover-menu hook moved out of <code>CardNode.tsx</code>, unchanged.</li>
+  <li><code>src/features/canvas/LoopNode.tsx</code> and <code>LoopNode.module.css</code> — the loop card as a React Flow node with its hover menu.</li>
+  <li><code>tests/e2e/loop.spec.ts</code> — the Core Loop browser tests.</li>
+</ul>
+
+<h3>Relevant Documentation — READ BEFORE IMPLEMENTING</h3>
+<ul>
+  <li><a href="https://lucide.dev/icons/repeat">Lucide: repeat</a> — Why: the source shape (<code>m17 2 4 4-4 4</code>; <code>M3 11v-1a4 4 0 0 1 4-4h14</code>; <code>m7 22-4-4 4-4</code>; <code>M21 13v1a4 4 0 0 1-4 4H3</code>). Write the paths into the file by hand; nothing is fetched at build or run time.</li>
+  <li><a href="https://reactflow.dev/learn/customization/custom-nodes">React Flow: custom nodes</a> and <a href="https://reactflow.dev/api-reference/types/node#width">Node width and height</a> — Why: a node with a width and no height is measured, so the loop card can grow.</li>
+  <li><a href="https://reactflow.dev/api-reference/components/node-toolbar">React Flow: NodeToolbar</a> — Why: the hover menu above the card, as on the Hook Card.</li>
+  <li><a href="https://reactflow.dev/learn/customization/custom-nodes#prevent-dragging--selecting">React Flow: the nodrag and nowheel classes</a> — Why: typing and selecting in the field must not drag the node.</li>
+  <li><a href="https://zod.dev/api#refinements">Zod 4: refinements</a> — Why: <code>loopText</code> must not be blank but must not be trimmed by the check (<code>.trim()</code> transforms).</li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollHeight">MDN: scrollHeight</a> — Why: the auto-growing text area (CSS <code>field-sizing</code> is not in every target engine).</li>
+  <li><code>docs/architecture.html</code> decisions <code>module-layout</code>, <code>import-rules</code>, <code>hook-sentence</code>, <code>clipboard</code>, <code>undo-history</code>, <code>save-transaction</code>, <code>schema-shape</code>, <code>storage-seam</code>, <code>board-file-format</code>, <code>schema-versions</code>, <code>import-checks</code>, <code>import-policy</code>, <code>canvas-library</code>, <code>state-store</code>, <code>nfr-targets</code> — Why: the constraints this phase conforms to, and the 1 recorded exception (see Notes).</li>
+</ul>
+
+<h3>Patterns to Follow</h3>
+<p><strong>Feature view that never imports the canvas</strong> (<code>features/hook/index.ts</code>): "It never imports the canvas: the canvas passes the stack in." The loop feature does the same: the canvas computes the steps and passes parts and texts to <code>LoopCard</code>.</p>
+<p><strong>A node that wraps a feature view</strong> (<code>NoteNode.tsx</code> 12–37): read the record with a per-id store selector, commit with <code>changeBoard</code>, pass <code>interactiveClassName="nodrag nowheel"</code>.</p>
+<p><strong>Hover menu in a NodeToolbar</strong> (<code>CardNode.tsx</code> 185–216):</p>
+<pre><code>const { hover, cardRef, menuRef, enter, leave } = useHoverMenu();
+return (
+  &lt;div ref={cardRef} onPointerEnter={enter} onPointerMove={enter}
+       onPointerLeave={(event) =&gt; leave(event.nativeEvent)}&gt;
+    &lt;HookCard sentence={sentence} empty={empty} /&gt;
+    &lt;NodeToolbar isVisible position={Position.Top} offset={0}&gt;
+      &lt;div ref={menuRef} style={{ paddingBottom: STRIP_GAP, pointerEvents: hover ? undefined : 'none' }}
+           onPointerEnter={enter} onPointerLeave={(event) =&gt; leave(event.nativeEvent)}&gt;
+        &lt;HookMenu ... visible={hover} /&gt;
+      &lt;/div&gt;
+    &lt;/NodeToolbar&gt;
+  &lt;/div&gt;
+);</code></pre>
+<p><strong>Same-board no-op</strong> (<code>boardActions.ts</code> 446–449): <code>return card.connector === word ? board : replaceCard(board, { ...card, connector: word });</code> — a recipe that changes nothing returns the same object, so <code>changeBoard</code> makes no undo step and no save.</p>
+<p><strong>Icon file</strong> (<code>public/icons/square-arrow-down.svg</code>):</p>
+<pre><code>&lt;svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"&gt;
+  &lt;path d="..."/&gt;
+&lt;/svg&gt;</code></pre>
+<p><strong>Conventions:</strong> a short doc comment at the top of each new module, and updated doc comments on every module whose behavior changes (<code>shared/model/index.ts</code>, <code>newBoard.ts</code>, <code>schema.ts</code>, <code>reading.ts</code>, <code>dropZones.ts</code>, <code>placement.ts</code>, <code>concept.ts</code>, <code>nodes.ts</code>, <code>boardActions.ts</code>, <code>BoardCanvas.tsx</code>, <code>CardNode.tsx</code>, <code>CopyFallbackDialog.tsx</code>, <code>textFile.ts</code>, <code>summary.ts</code>); tests named <code>functionName_condition_expectedResult</code>; pure functions never mutate input; no <code>console.log</code>; Title Case UI text ("Core Loop", "Copy Loop", "Reset From Cards"); tokens only, no hard-coded colors; React Flow only in <code>features/canvas/</code>; Zod only in <code>features/export/</code>; the Clipboard API only in <code>features/hook/</code>; never the attribute name <code>data-kind</code>.</p>
+
+<h2>Implementation Plan</h2>
+<p><strong>Rendering:</strong> Milestones</p>
+<p><strong>Rationale:</strong> 12 tasks in 4 layers: the model and the skip rules (the riskiest part, first, tests first, as the brief orders), then the pure live text, the recipes and the text file, then the views and the canvas node, then browser tests and docs. Each layer is unit-tested before the next touches it.</p>
+
+<h3 class="milestone" data-milestone="1">Milestone 1: Model, import check and skip rules</h3>
+<p>The <code>loop</code> type exists, files with it pass or fail the import check by the rules, and no stack, drop, Concept, summary or text-file path can treat it as a deck card.</p>
+<p><strong>Validation checkpoint:</strong> a One-Pager board with a loop card added beside a full fixture round-trips through <code>parseBoardFile(boardFileJson(board))</code>, and on that board <code>hookSentences</code>, <code>stackOrder</code> of the Hook Card, <code>conceptLanes</code>, <code>summarize</code> and the Cards section of <code>boardText</code> are exactly what they are without the loop card — <code>npx vitest run src/features src/shared</code> exits 0 with the test <code>loopCard_onePagerFixture_changesNoReading</code> (in <code>reading.test.ts</code>) included.</p>
+
+<h4 class="task" data-task="1">Task 1: Vendor the Lucide repeat icon</h4>
+<ul>
+  <li><strong>CREATE</strong> <code>public/icons/repeat.svg</code>:
+<pre><code>&lt;svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"&gt;
+  &lt;path d="m17 2 4 4-4 4"/&gt;&lt;path d="M3 11v-1a4 4 0 0 1 4-4h14"/&gt;&lt;path d="m7 22-4-4 4-4"/&gt;&lt;path d="M21 13v1a4 4 0 0 1-4 4H3"/&gt;
+&lt;/svg&gt;</code></pre></li>
+  <li><strong>UPDATE</strong> <code>src/shared/ui/Icon.tsx</code>: add <code>'repeat'</code> to <code>IconName</code>. <code>src/shared/ui/tokens.test.ts</code>: add <code>'repeat'</code> to <code>ICONS</code>.</li>
+  <li><strong>GOTCHA:</strong> <code>icons_everyIconFile_isUsedOrListed</code> fails if the file exists but is not in <code>ICONS</code>, and the reverse.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/shared/ui/tokens.test.ts &amp;&amp; npm run typecheck</code></li>
+</ul>
+
+<h4 class="task" data-task="2">Task 2: Add the loop card type and optional Card.loopText to the model and the Zod import check</h4>
+<ul>
+  <li><strong>ADD</strong> tests first in <code>src/features/export/schema.test.ts</code> (a helper <code>withLoop(overrides)</code> = <code>onePagerBoard()</code> plus <code>fixtureCard('loop', { id: 'loop-1', x: 680, y: 96, z: 9, ...overrides })</code>):
+    <ul>
+      <li><code>schema_onePagerWithLoopCard_roundTrips</code> (with and without <code>loopText: 'summon → earn clues'</code>; <code>parseBoardFile(boardFileJson(board))</code> equals the board).</li>
+      <li><code>schema_loopTextOnOtherType_rejects</code> (a role card with <code>loopText</code>).</li>
+      <li><code>schema_blankLoopText_rejects</code> (<code>'   '</code>); <code>schema_loopTextKeepsSpaces_notTrimmed</code> (<code>' my loop '</code> round-trips unchanged).</li>
+      <li><code>schema_loopCardWithRings_rejects</code>; <code>schema_loopCardTucked_rejects</code>; <code>schema_cardTuckedUnderLoop_rejects</code>; <code>schema_loopCardInConcept_rejects</code>; <code>schema_loopCardOnTopOf_rejects</code> (also a Modifier with <code>onTopOf: 'loop-1'</code>); <code>schema_loopCardConnector_rejects</code>; <code>schema_loopCardModDeck_rejects</code>.</li>
+      <li><code>schema_twoLoopCards_rejects</code>; <code>schema_loopCardOnFreeForm_rejects</code>.</li>
+      <li><code>schema_onePagerWithoutLoopCard_accepts</code> (<code>onePagerBoard()</code> as is: older files still import).</li>
+      <li>UPDATE <code>mixedBoard</code> and <code>schema_everyCardType_roundTrips</code>: map over <code>CARD_TYPES.filter((type) =&gt; type !== 'loop')</code>, because those boards are Free Form.</li>
+    </ul>
+  </li>
+  <li><strong>IMPLEMENT</strong> in <code>src/shared/model/index.ts</code>: <code>CARD_TYPES = ['hook', ...DECKS, 'loop'] as const</code> (the comment: 13 card types: the Hook Card, the 11 decks and the Core Loop card; no deck draws <code>hook</code> or <code>loop</code>); <code>DECK_NAME.loop = 'Core Loop'</code>; <code>Card.loopText?: string</code> with a doc comment ("Only on a loop card. Absent: the edit field shows the live text. Present: the field shows this text; card changes never touch it."). Update the <code>FORMAT_VERSION</code> comment: "Phase 9 added the loop card type and Card.loopText inside version 2 with no upgrade step (user decision 2026-11-05, the app is in test); a later change that removes, renames or must rewrite saved fields adds Dexie version(3) and UPGRADES[2]." Do not change <code>FORMAT_VERSION</code>.</li>
+  <li><strong>IMPLEMENT</strong> in <code>src/features/export/schema.ts</code>: <code>RING_RULES.loop = { rings: [0], cues: 0 }</code>; card field <code>loopText: z.string().refine((text) =&gt; text.trim() !== '', 'The Core Loop text is blank.').optional()</code>; card rules: <code>loopText</code> only on a loop card; a loop card is never tucked, never in Details, never on top of a card, has no connector (its <code>modDeck</code> is already refused by the existing rule). Board rules: no card tucked under or on top of a loop card; at most 1 loop card; a loop card only on a One-Pager board. Update the module doc comment with the loop rules and the no-upgrade note.</li>
+  <li><strong>UPDATE</strong> <code>src/test/fixtures/boards.ts</code>: <code>CUES.loop = []</code>; <code>fixtureCard</code> gives <code>rings: []</code> to <code>hook</code> and <code>loop</code>.</li>
+  <li><strong>UPDATE</strong> <code>src/features/card/TypeDisc.tsx</code>: <code>TYPE_ICON.loop = 'repeat'</code> (the map is <code>Record&lt;CardType, IconName&gt;</code>).</li>
+  <li><strong>GOTCHA:</strong> <code>boardSchema</code> is <code>z.ZodType&lt;Board&gt;</code>, so a drift from <code>Card</code> is a type error — run <code>npm run typecheck</code>. Do not use <code>z.string().trim()</code> for <code>loopText</code>: it rewrites the user's text. Fix every other <code>Record&lt;CardType, …&gt;</code> the type check reports with a value that keeps the loop card out of deck behavior.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/export src/shared &amp;&amp; npm run typecheck</code></li>
+</ul>
+
+<h4 class="task" data-task="3">Task 3: Make stack, drop, placement, Concept, node, summary and Cards-section code skip the loop card</h4>
+<ul>
+  <li><strong>ADD</strong> tests first (fixture: <code>loopOnePager()</code> = <code>onePagerBoard()</code> plus a loop card <code>loop-1</code> at (680, 96), z 9; add it to <code>src/test/fixtures/boards.ts</code> as <code>onePagerWithLoop()</code>):
+    <ul>
+      <li><code>dropZones.test.ts</code>: <code>paintOrder_loopCard_neverATarget</code> (it is skipped, so <code>dropTarget</code> with the pointer over the loop card returns null); <code>dropAction_draggedLoopOverCard_movesOnly</code> (<code>{ kind: 'move' }</code> with no <code>refused</code>); <code>hintFor_draggedLoop_null</code>.</li>
+      <li><code>boardActions.test.ts</code>: <code>dropCard_loopOnHookCard_movesAndNeverTucks</code> (tuckedUnder stays null; snap applies: <code>{ snap: true }</code> lands on the 24 px grid); <code>dropCard_cardOnLoop_movesNotTucks</code> (a Goal dropped with the pointer on the loop card stays a root); <code>dropCard_loopOverPanel_staysWhereReleased</code> (<code>concept: { panel: true, chipId: null }</code> → moved, <code>inConcept</code> false).</li>
+      <li><code>concept.test.ts</code>: <code>enterConcept_loopCard_throws</code>; <code>conceptDrop_loop_stay</code>; <code>conceptLanes_withLoopCard_unchanged</code>; <code>onePagerCardCount_withLoopCard_unchanged</code>.</li>
+      <li><code>placement.test.ts</code>: <code>cardSize_loop_240by200</code>; <code>boardRects_loopCard_occupied</code> (a new card's <code>findOpenSpot</code> at (680, 96) moves off it).</li>
+      <li><code>nodes.test.ts</code>: <code>toNodes_loopCard_noCardNode</code> (no node of type <code>'card'</code> with id <code>loop-1</code>; Task 8 turns it into a <code>'loop'</code> node).</li>
+      <li><code>reading.test.ts</code>: <code>loopCard_onePagerFixture_changesNoReading</code> (<code>hookSentences</code> and <code>stackOrder</code> of <code>hook-1</code> equal those of <code>onePagerBoard()</code>).</li>
+      <li><code>summary.test.ts</code>: <code>summarize_loopCard_notCountedNoDot</code> (<code>cardCount</code> and <code>deckTypes</code> equal those of <code>onePagerBoard()</code>).</li>
+      <li><code>textFile.test.ts</code>: <code>boardText_loopCard_neverInCards</code> (the Cards section has no "Core Loop" line).</li>
+    </ul>
+  </li>
+  <li><strong>IMPLEMENT:</strong>
+    <ul>
+      <li><code>placement.ts</code> <code>cardSize</code>: 240 wide for <code>hook</code> and <code>loop</code>, 200 tall (the loop card's minimum; doc comment says its real height may grow).</li>
+      <li><code>dropZones.ts</code>: <code>paintOrder</code> skips <code>type === 'loop'</code>; <code>dropAction</code> returns <code>{ kind: 'move' }</code> for a dragged loop card (no refusal, no notice); <code>hintFor</code> returns null for it.</li>
+      <li><code>concept.ts</code>: <code>enterConcept</code> throws for a loop card ("The Core Loop card never goes into the Concept panel."); <code>conceptDrop</code> returns <code>{ kind: 'stay' }</code> for it, like a Hook Card.</li>
+      <li><code>nodes.ts</code> <code>toNodes</code>: loop cards get no <code>'card'</code> node (temporary until Task 8; say so in a code comment).</li>
+      <li><code>features/boards/summary.ts</code>: <code>cardCount</code> and <code>deckTypes</code> skip loop cards (doc comment: the Core Loop card is not a card in the meta line and has no dot).</li>
+      <li><code>features/export/textFile.ts</code> <code>cardLines</code>: roots skip loop cards.</li>
+    </ul>
+  </li>
+  <li><strong>GOTCHA:</strong> <code>stackOrder</code>, <code>descendantsOf</code>, <code>redrawAll</code> and <code>dealStack</code> already never reach a loop card because it is never tucked and has no deck; the tests pin that. Do not import <code>concept.ts</code> from <code>reading.ts</code> (concept already imports reading). <code>hookSentences</code> filters on <code>type === 'hook'</code>, so it needs no change.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features src/shared &amp;&amp; npm run typecheck &amp;&amp; npm run lint</code></li>
+</ul>
+
+<h3 class="milestone" data-milestone="2">Milestone 2: Live text, placement, recipes and the text file</h3>
+<p>The live template is computed purely from the board, a new One-Pager board has its loop card, edits and resets are single changes, and the text file carries the loop.</p>
+<p><strong>Validation checkpoint:</strong> starting from <code>newBoard({ kind: 'onePager' })</code>, a <code>dealStack</code> with a seeded fake draw, then <code>setLoopText</code>, then <code>redrawAll</code> and a <code>turnCardOnBoard</code>, keeps <code>loopText</code> exactly, while <code>buildLoopText(loopSteps(board)).text</code> changes; <code>boardText</code> on that board has "Core Loop" right after the hook paragraph — <code>npx vitest run src/features src/shared</code> exits 0 with <code>loop_dealEditRedraw_keepsUserText</code> (in <code>boardActions.test.ts</code>) included.</p>
+
+<h4 class="task" data-task="4">Task 4: Add buildLoopText in the new features/loop and loopSteps in reading.ts as pure functions</h4>
+<ul>
+  <li><strong>ADD</strong> tests first in <code>src/features/loop/buildLoopText.test.ts</code>: <code>buildLoopText_allFourSteps_joinsWithArrowsAndLeads</code> (<code>{ mechanic: 'summon', resource: 'clues', progression: 'hub grows', goal: 'finish a week of chores' }</code> → <code>'summon → earn clues → hub grows → to finish a week of chores'</code>; parts in order mechanic, resource, progression, goal with leads <code>''</code>, <code>'earn'</code>, <code>''</code>, <code>'to'</code>); <code>buildLoopText_eachSingleMissingStep_leftOut</code> (4 cases, no doubled arrow, no leading or trailing arrow); <code>buildLoopText_onlyGoal_leadKept</code> (<code>'to …'</code>); <code>buildLoopText_noSteps_emptyPartsAndText</code>; <code>buildLoopText_doesNotMutateInput</code>.</li>
+  <li><strong>ADD</strong> tests first in <code>src/features/canvas/reading.test.ts</code>: <code>loopSteps_stackCardFirst</code> (a Mechanic in the train and a Mechanic chip: the train one wins); <code>loopSteps_noStackCard_firstChipByZ</code> (2 Resource chips, the lower z wins, whatever the array order); <code>loopSteps_combinedResource_adjectiveAndNoun</code> (as <code>cardText</code>); <code>loopSteps_firstStackMatchInReadingOrder</code> (2 Goals in the train: the higher one); <code>loopSteps_looseCard_ignored</code> (a loose Mechanic root counts for nothing); <code>loopSteps_freeForm_empty</code>; <code>loopSteps_emptyOnePager_empty</code>.</li>
+  <li><strong>CREATE</strong> <code>src/features/loop/buildLoopText.ts</code>:
+<pre><code>/** The 4 loop steps in template order, each with its lead word. */
+export const LOOP_STEPS = [
+  { deck: 'mechanic', lead: '' },
+  { deck: 'resource', lead: 'earn' },
+  { deck: 'progression', lead: '' },
+  { deck: 'goal', lead: 'to' },
+] as const;
+export type LoopDeck = (typeof LOOP_STEPS)[number]['deck'];
+export type LoopSteps = Partial&lt;Record&lt;LoopDeck, string&gt;&gt;;
+export interface LoopPart { deck: LoopDeck; lead: string; text: string }
+export function buildLoopText(steps: LoopSteps): { parts: LoopPart[]; text: string }
+// text: parts.map((p) =&gt; (p.lead ? `${p.lead} ${p.text}` : p.text)).join(' → ')</code></pre>
+  No React, no React Flow; doc comment cites the brief's contract and that the live text is computed on each change and never stored (<code>hook-sentence</code> rule).</li>
+  <li><strong>CREATE</strong> <code>src/features/loop/index.ts</code> exporting <code>buildLoopText</code>, <code>LOOP_STEPS</code> and the types (doc comment: the Core Loop card feature; it never imports the canvas; the canvas passes the steps in).</li>
+  <li><strong>ADD</strong> <code>export function loopSteps(board: Board): LoopSteps</code> to <code>src/features/canvas/reading.ts</code>: the One-Pager Hook Card is found inline (<code>board.kind === 'onePager'</code> and the first <code>type === 'hook'</code> card; do not import <code>concept.ts</code>); for each <code>LOOP_STEPS</code> deck, the first card of that type in <code>descendantsOf(board, hook.id)</code>, else the lowest-z card with <code>inConcept</code> and that type; the value is <code>cardText(board, card)</code>. Free Form: <code>{}</code>. Export it from <code>features/canvas/index.ts</code>.</li>
+  <li><strong>UPDATE</strong> <code>eslint.config.js</code>: a <code>src/features/loop/**</code> block mirroring the <code>features/hook</code> block (same restricted libraries plus <code>{ group: ['@/features/canvas'], message: 'features/loop never imports the canvas.' }</code>).</li>
+  <li><strong>IMPORTS:</strong> <code>reading.ts</code> imports <code>type LoopSteps</code> and <code>LOOP_STEPS</code> from <code>@/features/loop</code> and <code>descendantsOf</code> from <code>./stack</code>.</li>
+  <li><strong>GOTCHA:</strong> keep the step map keys absent (not <code>undefined</code>) for missing steps, so <code>toEqual</code> tests and the text stay clean. The arrow is U+2192 with 1 space each side.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/loop src/features/canvas/reading.test.ts &amp;&amp; npm run typecheck &amp;&amp; npm run lint</code></li>
+</ul>
+
+<h4 class="task" data-task="5">Task 5: Place the Core Loop card on new One-Pager boards and add setLoopText and resetLoopText</h4>
+<ul>
+  <li><strong>ADD</strong> tests first:
+    <ul>
+      <li><code>src/shared/store/newBoard.test.ts</code>: <code>newBoard_onePager_hookAndOneLoopCard</code> (replaces <code>newBoard_onePager_hasExactlyOneHookCard</code>: cards equal the Hook Card as now, then <code>{ id: 'loop-a', type: 'loop', x: 680, y: 96, z: 2, tuckedUnder: null, rings: [], onTopOf: null, locked: false, inConcept: false }</code>, with no <code>loopText</code> key); <code>newBoard_onePager_loopSpotRightOfDefaultPanel</code> (<code>ONE_PAGER_LOOP_SPOT.x === ONE_PAGER_HOOK_SPOT.x + 240 + 56 + CONCEPT_WIDTH.default + 56</code>); <code>newBoard_freeForm_noLoopCard</code>.</li>
+      <li><code>src/features/export/schema.test.ts</code>: <code>schema_newOnePagerBoard_accepts</code> (<code>newBoard({ kind: 'onePager' })</code> passes the import check; Zod stays in <code>features/export</code>).</li>
+      <li><code>src/features/canvas/boardActions.test.ts</code>, <code>describe('loop text')</code>: <code>setLoopText_newText_stored</code>; <code>setLoopText_sameAsShownLive_sameBoard</code> (no <code>loopText</code>, commit the live text → same object); <code>setLoopText_sameAsStored_sameBoard</code>; <code>setLoopText_emptyOrSpaces_removesKey</code> (<code>'loopText' in card</code> is false); <code>setLoopText_emptyWithNoStoredText_sameBoard</code>; <code>setLoopText_keepsTextExactly</code> (leading and trailing spaces, line breaks); <code>resetLoopText_removesKey</code>; <code>resetLoopText_noStoredText_sameBoard</code>; <code>setLoopText_notLoopCard_throws</code>; <code>redrawAll_and_dealStack_keepLoopText</code>; <code>turnCardOnBoard_keepsLoopText</code>; <code>loop_dealEditRedraw_keepsUserText</code> (the milestone checkpoint test); <code>setLoopText_doesNotMutateInput</code>.</li>
+    </ul>
+  </li>
+  <li><strong>IMPLEMENT</strong> in <code>src/shared/store/newBoard.ts</code>: <code>export const ONE_PAGER_LOOP_SPOT = { x: 680, y: 96 } as const</code> (comment: the Concept panel's right edge at its default width, plus 56; design 9.16); option <code>loopId?: string</code>; the One-Pager board gets the loop card at z 2 after the Hook Card. Export <code>ONE_PAGER_LOOP_SPOT</code> from <code>src/shared/store/index.ts</code>. Update the doc comment.</li>
+  <li><strong>IMPLEMENT</strong> in <code>src/features/canvas/boardActions.ts</code>:
+    <ul>
+      <li><code>export function setLoopText(board: Board, cardId: string, text: string): Board</code> — throws unless the card is a loop card; <code>shown = card.loopText ?? buildLoopText(loopSteps(board)).text</code>; a blank text (<code>text.trim() === ''</code>) removes the <code>loopText</code> key (same board when it is already absent); a text equal to <code>shown</code> returns the same board; otherwise stores <code>text</code> as typed.</li>
+      <li><code>export function resetLoopText(board: Board, cardId: string): Board</code> — throws unless a loop card; same board when there is no <code>loopText</code>; otherwise removes the key.</li>
+      <li>Remove the key with object rest (<code>const { loopText: _drop, ...rest } = card</code>), never by setting <code>undefined</code>.</li>
+      <li>Export both from <code>features/canvas/index.ts</code>. Doc comment: each is 1 recipe, so 1 undo step and 1 save; Redraw All, Deal Stack and ring turns never touch <code>loopText</code>.</li>
+    </ul>
+  </li>
+  <li><strong>IMPORTS:</strong> <code>buildLoopText</code> from <code>@/features/loop</code>; <code>loopSteps</code> from <code>./reading</code>.</li>
+  <li><strong>GOTCHA:</strong> after this task a new One-Pager board holds a loop card that has no canvas node yet (Task 3 hid it; Task 8 draws it). <code>BoardScreen.test.tsx</code> <code>boardScreen_onePager_noEmptyGuide</code> must still pass.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/shared src/features &amp;&amp; npm run typecheck &amp;&amp; npm run lint</code></li>
+</ul>
+
+<h4 class="task" data-task="6">Task 6: Add the Core Loop section to the text file after Hooks</h4>
+<ul>
+  <li><strong>ADD</strong> tests first in <code>src/features/export/textFile.test.ts</code>: <code>boardText_loopCard_coreLoopAfterHooksBeforeDetails</code> (exact text of <code>onePagerWithLoop()</code>: name, Hooks, "Core Loop", blank line, the live text, then Details, Cards, Notes); <code>boardText_loopText_usedOverLiveText</code>; <code>boardText_loopTextLines_keptTrimmedAtEnd</code> (a 2-line text with trailing spaces); <code>boardText_noLoopCard_noCoreLoopSection</code>; <code>boardText_emptyLoop_noCoreLoopSection</code> (a loop card on a board with no steps and no text).</li>
+  <li><strong>IMPLEMENT</strong> in <code>src/features/export/textFile.ts</code>: <code>loopBlock(board)</code>: the first loop card; its text is <code>card.loopText ?? buildLoopText(loopSteps(board)).text</code>; each line <code>trimEnd</code>, the whole <code>trimEnd</code>; empty → no section. <code>boardText</code> pushes <code>['Core Loop', '', text].join('\n')</code> right after Hooks. Update the module doc comment.</li>
+  <li><strong>IMPORTS:</strong> <code>loopSteps</code> from <code>@/features/canvas</code>; <code>buildLoopText</code> from <code>@/features/loop</code>.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/export &amp;&amp; npm run typecheck &amp;&amp; npm run lint</code></li>
+</ul>
+
+<h3 class="milestone" data-milestone="3">Milestone 3: Card view, menu, canvas node and the Boards line</h3>
+<p>The Core Loop card shows on the canvas with its template, edit field and hover menu, and the Boards page states ownership.</p>
+<p><strong>Validation checkpoint:</strong> on a dev build, a new One-Pager board shows the Core Loop card at (680, 96) with the empty-state help, and after Deal Stack the template shows 4 colored steps, the field shows the same text, and an edit commits on blur — proved by <code>npx playwright test tests/e2e/one-pager.spec.ts tests/e2e/deal.spec.ts --project=chromium</code> passing after the 1 expected update in <code>deal.spec.ts</code>, plus <code>npm test</code> passing.</p>
+
+<h4 class="task" data-task="7">Task 7: Build the LoopCard and LoopMenu views, with title and label props on the copy fallback dialog</h4>
+<ul>
+  <li><strong>UPDATE</strong> <code>src/features/hook/CopyFallbackDialog.tsx</code>: optional props <code>title</code> (default <code>'Copy The Hook'</code>) and <code>label</code> (default <code>'Hook Sentence'</code>); nothing else changes. Existing Hook tests must pass unchanged.</li>
+  <li><strong>ADD</strong> tests first in <code>src/features/loop/LoopCard.test.tsx</code>: <code>loopCard_header_iconAndLabel</code> (<code>[data-icon="repeat"]</code>, text "Core Loop"); <code>loopCard_parts_eachStepInLaneColor</code> (each step span has <code>data-loop-step</code> = its deck and inline <code>color: var(--rail-&lt;deck&gt;)</code>; leads and arrows are not in those spans); <code>loopCard_noParts_showsHelpText</code> ("Deal or draw cards to build the loop."); <code>loopCard_field_showsLiveTextWithoutLoopText</code>; <code>loopCard_field_showsLoopTextWhenStored</code>; <code>loopCard_typing_noCommitUntilBlur</code>; <code>loopCard_blur_commitsDraftOnce</code>; <code>loopCard_escape_blursAndCommits</code>; <code>loopCard_liveTextChange_updatesUnfocusedField</code>; <code>loopCard_liveTextChange_keepsDraftWhileFocused</code>; <code>loopCard_field_ariaLabelCoreLoopText</code>.</li>
+  <li><strong>ADD</strong> tests first in <code>src/features/loop/LoopMenu.test.tsx</code> (mirror <code>HookMenu.test.tsx</code>): <code>loopMenu_noLoopText_onlyCopyLoop</code>; <code>loopMenu_loopText_copyThenReset</code> (order; icons <code>repeat</code> and <code>square-arrow-down</code>; <code>aria-label</code> and <code>title</code> "Copy Loop" and "Reset From Cards"); <code>loopMenu_emptyText_copyDisabled</code>; <code>loopMenu_copy_writesShownTextAndShowsCopied</code> (check icon, "Copied", back after <code>COPIED_MS</code>); <code>loopMenu_copyBlocked_opensFallbackDialog</code> (dialog "Copy The Loop", field "Core Loop", body <code>COPY_BLOCKED_TEXT</code>); <code>loopMenu_reset_callsHandler</code>; <code>loopMenu_hidden_buttonsNotTabbable</code>.</li>
+  <li><strong>CREATE</strong> <code>src/features/loop/LoopCard.tsx</code> — props: <code>parts: LoopPart[]</code>, <code>liveText: string</code>, <code>loopText?: string</code>, <code>onCommit(text: string)</code>, <code>interactiveClassName?: string</code>. Markup: <code>&lt;article aria-label="Core Loop" data-testid="loop-card" data-loop-card=""&gt;</code> (no <code>data-card</code>, no <code>data-kind</code>); header (24 dot in <code>--accent</code> with <code>repeat</code> 13 in <code>--on-accent</code>; label "Core Loop"); template <code>&lt;p data-testid="loop-template"&gt;</code>; divider; <code>&lt;textarea aria-label="Core Loop Text" rows={1}&gt;</code> with <code>interactiveClassName</code>. The field holds a local draft while focused (set on focus to the shown text), commits on blur, Esc blurs; unfocused it shows <code>loopText ?? liveText</code>. It grows with its text: a layout effect sets <code>height = 'auto'</code>, then <code>scrollHeight</code>, on each value change.</li>
+  <li><strong>CREATE</strong> <code>src/features/loop/LoopCard.module.css</code> from design 9.16: width <code>var(--hook-w)</code>, <code>min-height: var(--hook-h)</code>, height auto; radius <code>--radius-card</code>; border 2 <code>--accent</code>; fill <code>--hook-bg</code>; <code>--shadow-hook</code>; padding 14 16 16; gap 10; header and label as <code>HookCard.module.css</code>; template 13/1.45 <code>--hook-text</code>, step text 600; empty help in <code>--text-muted</code>; divider 1 px <code>--border</code>; field 14/1.45 <code>--hook-text</code>, note font family, transparent fill, no border until focus, the focus ring of design 12, <code>resize: none</code>, <code>overflow: hidden</code>. Tokens only.</li>
+  <li><strong>CREATE</strong> <code>src/features/loop/LoopMenu.tsx</code> and <code>LoopMenu.module.css</code> — props: <code>text</code> (the shown text), <code>hasLoopText</code>, <code>visible</code>, <code>onReset</code>, <code>clipboard?</code>. <code>role="toolbar" aria-label="Core Loop Actions" data-testid="loop-menu"</code>. Copy Loop calls <code>copyHook(text)</code> from <code>@/features/hook</code>; blocked → <code>CopyFallbackDialog</code> with <code>title="Copy The Loop" label="Core Loop"</code>. CSS values copied from <code>HookMenu.module.css</code> (44 px buttons, same fills and states).</li>
+  <li><strong>UPDATE</strong> <code>src/features/loop/index.ts</code>: export <code>LoopCard</code>, <code>LoopMenu</code>.</li>
+  <li><strong>GOTCHA:</strong> the template is a drag handle (not selectable); only the field takes text. Do not call <code>navigator.clipboard</code> in <code>features/loop</code>; always go through <code>copyHook</code>. CSS modules may not hold hex or rgba (the color lint).</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/loop src/features/hook src/shared/ui &amp;&amp; npm run typecheck &amp;&amp; npm run lint</code></li>
+</ul>
+
+<h4 class="task" data-task="8">Task 8: Draw the loop card as a React Flow node with its hover menu</h4>
+<ul>
+  <li><strong>REFACTOR</strong> <code>useHoverMenu</code>, <code>MENU_HIDE_MS</code> and the module-level <code>closeOpenMenu</code> out of <code>CardNode.tsx</code> into <code>src/features/canvas/useHoverMenu.ts</code> unchanged; <code>CardNode.tsx</code> imports it. Export <code>STRIP_GAP</code> from the new module too.</li>
+  <li><strong>ADD</strong> tests first in <code>src/features/canvas/nodes.test.ts</code>: <code>toNodes_loopCard_loopNodeWithWidthNoHeight</code> (type <code>'loop'</code>, width 240, no <code>height</code>, position (680, 96), data <code>{ cardId }</code>); <code>toNodes_loopCard_ranksWithRootsByZ</code>. Replace <code>toNodes_loopCard_noCardNode</code> from Task 3 accordingly.</li>
+  <li><strong>IMPLEMENT</strong> in <code>nodes.ts</code>: <code>LoopNodeData = { cardId: string }</code>, <code>LoopFlowNode = Node&lt;LoopNodeData, 'loop'&gt;</code> in <code>BoardFlowNode</code>; in <code>toNodes</code> a loop root ranks with the other roots by z and becomes a <code>'loop'</code> node with <code>width: HOOK_WIDTH</code>, no height, <code>zIndex: (r + 1) * STACK_RANK</code>, <code>selectable: false</code>. Update the doc comment.</li>
+  <li><strong>CREATE</strong> <code>src/features/canvas/LoopNode.tsx</code> (+ <code>LoopNode.module.css</code> for the node box only): reads the card with a per-id selector; reads the 4 step strings with 4 separate string selectors (<code>useBoardStore((s) =&gt; loopSteps(s.board).mechanic)</code> and so on) so the node re-renders only when a step's words change; <code>useMemo</code> → <code>buildLoopText</code>; renders <code>&lt;LoopCard … onCommit={(text) =&gt; changeBoard((b) =&gt; setLoopText(b, id, text))} interactiveClassName="nodrag nowheel nopan" /&gt;</code> in a hover-menu wrapper with a <code>NodeToolbar</code> holding <code>&lt;LoopMenu text={shown} hasLoopText={card.loopText !== undefined} visible={hover} onReset={() =&gt; changeBoard((b) =&gt; resetLoopText(b, id))} /&gt;</code>. Memo the node. Doc comment.</li>
+  <li><strong>UPDATE</strong> <code>BoardCanvas.tsx</code>: <code>nodeTypes</code> gains <code>loop: LoopNode</code>; <code>onNodeDragStart</code> stores <code>kind: node.type === 'note' ? 'note' : 'card'</code> and raises the dragged loop node by <code>DRAG_RAISE</code> like a card; <code>onNodeDrag</code> keeps its early return for non-card nodes (no hint for the loop card); <code>onNodeDragStop</code> sends the loop card through the card path (<code>dropCard</code> with snap and concept), which Task 3 made a plain move; <code>onNodeClick</code> still selects only <code>'card'</code> nodes, so Delete and R never reach the loop card. Update the doc comment.</li>
+  <li><strong>IMPORTS:</strong> <code>LoopCard</code>, <code>LoopMenu</code>, <code>buildLoopText</code> from <code>@/features/loop</code>; <code>NodeToolbar</code>, <code>Position</code> from <code>@xyflow/react</code>; no <code>zustand</code> import in the canvas (the lint bans it; use <code>useBoardStore</code> only).</li>
+  <li><strong>GOTCHA:</strong> the field must carry <code>nodrag</code>, or a text selection drags the card. A loop node has no height, so React Flow measures it; do not pass <code>cardSize</code> into the node. Keep the R key's <code>hoverStart</code> out of the loop node, so R never turns a loop card.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/canvas &amp;&amp; npm run typecheck &amp;&amp; npm run lint &amp;&amp; npm run build</code></li>
+</ul>
+
+<h4 class="task" data-task="9">Task 9: Add the ownership line to the Boards page help text</h4>
+<ul>
+  <li><strong>ADD</strong> test first in <code>src/features/boards/BoardList.test.tsx</code>: <code>boardList_helpText_endsWithOwnershipLine</code> (the caption reads exactly "Each board is one place to draw cards and build hooks. Boards stay in this browser. Every idea you make here is yours to use, with no credit needed.").</li>
+  <li><strong>UPDATE</strong> <code>src/features/boards/BoardList.tsx</code> (line 229) with that text (design 9.3); <code>tests/e2e/persistence.spec.ts</code> <code>boardList_emptyStart_showsHeaderAndNewBoard</code> expects the full text.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/boards &amp;&amp; npm run lint</code></li>
+</ul>
+
+<h3 class="milestone" data-milestone="4">Milestone 4: Browser tests and docs</h3>
+<p>The done criteria pass in 3 engines with the targets, and CLAUDE.md and the README describe the Core Loop card.</p>
+<p><strong>Validation checkpoint:</strong> <code>npm run test:e2e</code> exits 0 in Chromium, Firefox and WebKit including <code>tests/e2e/loop.spec.ts</code>, the timing projects and <code>network.spec.ts</code>, and <code>npm run size</code> passes.</p>
+
+<h4 class="task" data-task="10">Task 10: Add the Core Loop browser tests and run the full regression with the targets</h4>
+<ul>
+  <li><strong>CREATE</strong> <code>tests/e2e/loop.spec.ts</code> (import <code>test</code>, <code>expect</code> from <code>./test</code>; helpers from <code>./board-helpers</code>; <code>reducedMotion: 'reduce'</code> in <code>beforeEach</code>; locators <code>loopCard = page.getByTestId('loop-card')</code>, <code>template = page.getByTestId('loop-template')</code>, <code>field = page.getByRole('textbox', { name: 'Core Loop Text' })</code>, <code>loopMenu = page.getByTestId('loop-menu')</code>):
+    <ul>
+      <li><code>loop_newOnePager_oneCardAt680x96</code> — the stored board has 1 loop card at (680, 96); 1 visible loop card; the template shows "Deal or draw cards to build the loop."; a new Free Form board has none.</li>
+      <li><code>loop_deal_templateAndFieldShowLiveText</code> — Deal Stack from the Hook Card menu; the template has 4 <code>[data-loop-step]</code> spans in order mechanic, resource, progression, goal; the field value equals the template text.</li>
+      <li><code>loop_ringTurn_updatesTemplateAndUneditedField</code> — after the deal, hover the train Mechanic and press R; the template and the field both change and stay equal.</li>
+      <li><code>loop_edit_oneUndoStepAndOneSave</code> — type into the field, click the empty canvas; the stored <code>loopText</code> is the typed text; 1 Control+Z (focus on the canvas) removes it and the field shows the live text again.</li>
+      <li><code>loop_editedThenRingTurn_templateOnly</code> — edit, then turn the Mechanic: the template changes, the field keeps the typed text; Reset From Cards shows; clicking it brings the live text back, removes <code>loopText</code> and hides the button.</li>
+      <li><code>loop_emptyEdit_returnsToLiveText</code> — clear the field and blur: no <code>loopText</code>, the field shows the live text.</li>
+      <li><code>loop_copyLoop_putsShownTextOnClipboard</code> — stub the clipboard as <code>hook.spec.ts</code> does; Copy Loop writes the shown text and reads "Copied"; with a blocked stub, the dialog "Copy The Loop" shows the text in the "Core Loop" field.</li>
+      <li><code>loop_drag_snapsAndNeverTucks</code> — drag the loop card onto the Hook Card: stored <code>tuckedUnder</code> is null and x, y are on the 24 px grid; drag it over the Details panel: it stays a free card (<code>inConcept</code> false); the hook sentence never contains the loop text.</li>
+      <li><code>loop_noDuplicateDiscardOrSelect</code> — the loop menu has no Duplicate or Discard; click the card body, press Delete: the loop card is still stored.</li>
+      <li><code>loop_oldOnePagerBoard_loadsWithoutLoopCard</code> — <code>openBoard(page, onePagerBoard())</code>: no loop card, the panel and hook work as before.</li>
+      <li><code>loop_textFile_coreLoopAfterHooks</code> — after a deal, export the text file (helpers in <code>export-helpers.ts</code>); "Core Loop" follows the Hooks paragraph.</li>
+      <li><code>boardList_ownershipLine_shown</code> — the Boards page shows the full help text.</li>
+      <li><code>perf_ringTurn_updatesLoopTemplateUnder100ms</code> (<code>{ tag: '@timing' }</code>) — mirror <code>perf_ringTurn_updatesHookUnder100ms</code> on a dealt One-Pager board, reading <code>[data-testid="loop-template"]</code>; limit 100 ms, WebKit 300 ms.</li>
+    </ul>
+  </li>
+  <li><strong>UPDATE</strong> <code>tests/e2e/deal.spec.ts</code> <code>deal_emptyOnePagerHook_dealsTrainAndFourteenChips</code>: after the undo the stored types are <code>['hook', 'loop']</code>.</li>
+  <li><strong>RUN</strong> <code>npm run lint &amp;&amp; npm run format:check &amp;&amp; npm run typecheck &amp;&amp; npm test &amp;&amp; npm run build &amp;&amp; npm run size</code>, then <code>(fuser -k 4174/tcp 2&gt;/dev/null || true); npm run test:e2e</code>.</li>
+  <li><strong>CHECK:</strong> <code>grep -rn "@xyflow" src --include=*.ts --include=*.tsx | grep -v "src/features/canvas/"</code> is empty; <code>grep -rn "clipboard" src/features/loop</code> shows no <code>navigator.clipboard</code>; <code>grep -n "FORMAT_VERSION = 2" src/shared/model/index.ts</code> matches; <code>git diff --name-only main -- src/shared/storage src/features/export/upgrade.ts src/shared/model/upgradeV1.ts</code> is empty.</li>
+  <li><strong>RECORD</strong> in this doc's Notes under "Execution notes": the JS size, the timing results and any existing test that needed a change.</li>
+  <li><strong>GOTCHA:</strong> new rail draws on a One-Pager board now avoid the loop card's rect, so a drawn card may land at another spot than before; tests that find the newest card by selector (as <code>onePager_dropEachDeck_goesToItsLane</code> does) are unaffected, but a test that clicks a fixed screen point might be. The loop card has no <code>data-card</code>, so <code>canvasCards</code> counts are unchanged. Fixture pools have 8 cues per deck; do not assert distinct cues. Keep the WebKit 300 ms limits as they are.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npm run lint &amp;&amp; npm run format:check &amp;&amp; npm run typecheck &amp;&amp; npm test &amp;&amp; npm run build &amp;&amp; npm run size &amp;&amp; (fuser -k 4174/tcp 2&gt;/dev/null || true) &amp;&amp; npm run test:e2e</code></li>
+</ul>
+
+<h4 class="task" data-task="11">Task 11: Update CLAUDE.md and the README for the Core Loop card and features/loop</h4>
+<ul>
+  <li><strong>UPDATE</strong> <code>CLAUDE.md</code>:
+    <ul>
+      <li>Layout block: add <code>loop/            Core Loop card: live loop text builder (pure), card view with edit field, icon menu (Copy Loop, Reset From Cards)</code>; the canvas line says "13 card types" and mentions the loop node.</li>
+      <li>Project Overview: the Core Loop card on One-Pager boards in 1 clause.</li>
+      <li>Key Patterns: a new "Core Loop card" bullet: <code>loop</code> card type and optional <code>Card.loopText</code>; 1 per One-Pager board, placed by <code>newBoard</code> at (680, 96); free card, never tucked, never a drop target, never in Details, never in the hook sentence, not counted on the board list; <code>loopSteps</code> (canvas, pure: stack card first, then the first Details chip by z) and <code>buildLoopText</code> (<code>features/loop</code>, pure, never stored); edits commit on blur through <code>setLoopText</code> and <code>resetLoopText</code> (1 <code>changeBoard</code> each; an empty edit removes the field); Copy Loop goes through <code>@/features/hook</code>; <code>features/loop</code> never imports the canvas.</li>
+      <li>"Board file format" bullet: record the Phase 9 exception (loop type and <code>loopText</code> added inside format 2 with no upgrade step, user decision 2026-11-05 while the app is in test; a later change that removes, renames or rewrites saved fields adds Dexie <code>version(3)</code> and <code>UPGRADES[2]</code>).</li>
+      <li>Icons: <code>public/icons/</code> line mentions the <code>repeat</code> icon if icons are listed. No AI attribution anywhere.</li>
+    </ul>
+  </li>
+  <li><strong>UPDATE</strong> <code>README.md</code>: the status line names Phase 9 (Core Loop card); a usage bullet for the Core Loop card (where it sits, the live template, editing, Copy Loop, Reset From Cards); the text file bullet gains the Core Loop section after Hooks; the source layout list gains <code>src/features/loop/</code>.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>grep -q "Core Loop" CLAUDE.md &amp;&amp; grep -q "features/loop\|loop/ " CLAUDE.md &amp;&amp; grep -q "Core Loop" README.md &amp;&amp; npm run format:check</code></li>
+</ul>
+
+<h3 class="milestone" data-milestone="5">Commit, push, and open PR</h3>
+<h4 class="task" data-task="12">Task 12: Commit, push, and open PR</h4>
+<p>After every prior validation checkpoint has passed:</p>
+<ul>
+  <li><strong>IMPLEMENT:</strong> on branch <code>phase-9-core-loop</code>, stage and commit uncommitted changes with a descriptive message summarizing the phase, in the repository owner's voice; push with <code>git push -u origin phase-9-core-loop</code>; open a PR with <code>gh pr create --head phase-9-core-loop --title "Phase 9: Core Loop Card" --body "&lt;body&gt;"</code>.</li>
+  <li><strong>PR title format:</strong> <code>Phase 9: Core Loop Card</code>.</li>
+  <li><strong>PR body format:</strong> the Acceptance Criteria as a checklist with each box checked off, then a <code>Notes</code> section listing assumptions and trade-offs decided during execution.</li>
+  <li><strong>GOTCHA:</strong> commits are authored solely by the user: no <code>Co-Authored-By</code> trailer, no <code>Claude-Session</code> line, no "Generated with" line and no AI attribution of any kind in the commit message or PR body (CLAUDE.md "Commit Authorship"; the <code>/ship</code> flow rejects them). <code>gh</code> must be installed and authenticated. The uncommitted planning-doc edits on main (the feature brief and the plan doc updates) ride along unchanged in the phase commit.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>gh pr view --json number,title,state,headRefName</code> returns the new PR with <code>"state": "OPEN"</code> and <code>"headRefName": "phase-9-core-loop"</code>.</li>
+</ul>
+
+<h2>Testing Strategy</h2>
+<h3>Unit Tests</h3>
+<ul>
+  <li><strong>Model and import check (first):</strong> loop round-trip with and without text; loopText only on a loop card, never blank, never trimmed; loop shape rules (no rings, never tucked, nothing tucked under it, never on top or under an On Top card, not in Details, no connector, no modDeck); at most 1; One-Pager only; older One-Pager files still accepted; a new One-Pager board passes.</li>
+  <li><strong>Skip rules:</strong> never a drop target; a dragged loop card only moves (snap applies), never tucks, stays outside the panel; enterConcept throws; lanes, counts, sentences, summary and the Cards section unchanged by a loop card.</li>
+  <li><strong>Live text:</strong> buildLoopText for all 4, each missing step, 1 step and none; loopSteps stack first, chip by z, combined Resource, reading order, loose cards ignored, Free Form empty.</li>
+  <li><strong>Recipes:</strong> newBoard places the card; setLoopText store, same-as-shown no-op, empty removes, exact text; resetLoopText; Redraw All, Deal Stack and ring turns keep loopText.</li>
+  <li><strong>Views:</strong> LoopCard header, colored steps, help text, draft and blur commit, Esc, live updates; LoopMenu items, disabled copy, Copied state, fallback dialog title and label; nodes for the loop card; the Boards help text.</li>
+</ul>
+<h3>Integration Tests</h3>
+<ul>
+  <li><code>tests/e2e/loop.spec.ts</code> in Chromium, Firefox and WebKit, plus the @timing template test.</li>
+  <li>Regression: every existing spec on both board kinds, with the 1 planned update in <code>deal.spec.ts</code> and the help text in <code>persistence.spec.ts</code>; <code>canvas-perf.spec.ts</code> (200 cards) and <code>long-stack.spec.ts</code> unchanged.</li>
+</ul>
+<h3>Edge Cases</h3>
+<ul>
+  <li>A board with only Concept chips (no train): every step comes from chips.</li>
+  <li>2 Mechanics in the train: the first in reading order wins; after it is discarded the other takes over.</li>
+  <li>An On Top Modifier on the train Resource: its adjective reads first in the step ("tall frozen …"), as cardText does.</li>
+  <li>A user text equal to the live text: no change, so the field keeps following the cards.</li>
+  <li>The user edits while a Deal Stack reveal runs: the draft stays until blur.</li>
+  <li>A Details panel widened past its default covers the loop card: the card stays a free card and can be dragged away (accepted risk).</li>
+  <li>An imported older One-Pager file: no loop card, nothing added.</li>
+  <li>A hand-made file with a loop card on a Free Form board, 2 loop cards or a blank loopText: refused with the existing not-a-board-file notice.</li>
+  <li>Undo across an edit: Ctrl+Z inside the field is the browser's text undo; on the canvas it undoes the committed edit as 1 step.</li>
+</ul>
+
+<h2>Validation Commands</h2>
+<h3>Level 1: Syntax &amp; Style</h3>
+<pre><code>npm run lint
+npm run format:check
+npm run typecheck</code></pre>
+<h3>Level 2: Unit Tests</h3>
+<pre><code>npm test</code></pre>
+<h3>Level 3: Integration Tests</h3>
+<pre><code>fuser -k 4174/tcp 2&gt;/dev/null || true
+npm run test:e2e</code></pre>
+<h3>Level 4: Manual Validation</h3>
+<pre><code>set -e
+npm run build
+npm run size
+grep -q 'stroke-width="2.2"' public/icons/repeat.svg
+test -f dist/icons/repeat.svg
+grep -q "Core Loop" dist/assets/*.js
+grep -q "yours to use, with no credit needed" dist/assets/*.js
+grep -q "FORMAT_VERSION = 2" src/shared/model/index.ts
+! (grep -rn "@xyflow" src --include=*.ts --include=*.tsx | grep -v "src/features/canvas/")
+! (grep -rn "from 'zod'" src | grep -v "src/features/export/")
+! (grep -rn "navigator.clipboard" src --include=*.ts --include=*.tsx | grep -v "src/features/hook/")
+! (grep -rn "@/features/canvas" src/features/loop)
+test -z "$(git diff --name-only main -- src/shared/storage src/features/export/upgrade.ts src/shared/model/upgradeV1.ts)"
+npx playwright test tests/e2e/loop.spec.ts</code></pre>
+<h3>Level 5: Additional Validation (Optional)</h3>
+<p>None required. First load and network checks are covered by <code>first-load.spec.ts</code> and <code>network.spec.ts</code>.</p>
+
+<h2>Acceptance Criteria</h2>
+<ul class="checklist">
+  <li data-checked="true">A new One-Pager board shows exactly 1 Core Loop card at (680, 96); a new Free Form board shows none; an older One-Pager board or file loads with no loop card and no fix.</li>
+  <li data-checked="true">The template reads "[Mechanic] → earn [Resource] → [Progression] → to [Goal]" from the Hook Card's stack first, then the first Details chip by z; a missing step is left out; each step's text is in its deck's lane color; with no steps it reads "Deal or draw cards to build the loop."</li>
+  <li data-checked="true">The template follows every ring turn, redraw and deal within the 100 ms target (WebKit at its recorded 300 ms limit).</li>
+  <li data-checked="true">The edit field shows the live text until the first edit, then keeps the user's text through ring turns, Redraw All and Deal Stack.</li>
+  <li data-checked="true">An edit commits on blur as 1 undo step and 1 save; typing saves nothing; a commit equal to the shown text changes nothing; an empty or white-space commit returns the field to the live text.</li>
+  <li data-checked="true">Reset From Cards shows only while text is stored and removes it in 1 step; Copy Loop copies the shown text, shows "Copied" for 2 s, is disabled when the text is empty, and opens the "Copy The Loop" fallback dialog when the browser blocks it. No Duplicate, no Discard.</li>
+  <li data-checked="true">The loop card drags and snaps like a free card (Alt skips snap), never tucks, never takes a tuck, never enters the Details panel and never shows in the hook sentence; it is not counted on the board list and has no deck dot.</li>
+  <li data-checked="true">The import check accepts a One-Pager file with or without a loop card, and refuses loopText on another card type, a blank loopText, a malformed loop card, 2 loop cards or a loop card on a Free Form board.</li>
+  <li data-checked="true">The text file has a "Core Loop" section right after Hooks (the stored text, else the live text; left out when empty or when there is no loop card); the loop card is never a line under Cards.</li>
+  <li data-checked="true">The Boards page help text ends with "Every idea you make here is yours to use, with no credit needed."</li>
+  <li data-checked="true">The board format stays at version 2: no Dexie version(3), no UPGRADES[2]; the <code>repeat</code> icon is vendored at stroke 2.2; no new token and no new library.</li>
+  <li data-checked="true">Every existing test passes on both board kinds; speed (100 ms updates, 50 fps with 200 cards), size (≤ 250 KB JS gzip, ≤ 100 KB pools) and privacy (no outside request) targets pass.</li>
+  <li data-checked="true">CLAUDE.md and the README describe the Core Loop card, <code>features/loop/</code> and the format exception.</li>
+</ul>
+
+<h2>Completion Checklist</h2>
+<ul class="checklist">
+  <li data-checked="true">All 12 tasks completed in order, each VALIDATE passing at its completion</li>
+  <li data-checked="true">Each milestone validation checkpoint passed</li>
+  <li data-checked="true">Level 1: lint, format check and type check exit 0</li>
+  <li data-checked="true">Level 2: <code>npm test</code> exits 0</li>
+  <li data-checked="true">Level 3: <code>npm run test:e2e</code> (3 engines and the timing projects) passes</li>
+  <li data-checked="true">Level 4: build, size, icon, grep checks and the loop spec pass</li>
+  <li data-checked="true">Execution notes recorded in this doc's Notes</li>
+  <li data-checked="true">PR open with the checked Acceptance Criteria and Notes</li>
+</ul>
+
+<h2>Notes</h2>
+<h3>Architecture decisions this phase conforms to</h3>
+<p>No decision in <code>docs/architecture.html</code> is <code>data-status="open"</code>. The phase fits with 1 recorded local exception (feature brief "Architecture fit", outcome 2, user decision 2026-11-05), rechecked at planning.</p>
+<ul>
+  <li><code>module-layout</code> (moderate), <code>import-rules</code> (moderate), <code>architecture-pattern</code> (moderate): a new feature folder <code>features/loop/</code> with its <code>index.ts</code> as the only way in. It imports <code>@/features/hook</code> and <code>shared/</code> only; the canvas and the export feature import it through its index. A lint block keeps <code>features/loop</code> from importing the canvas.</li>
+  <li><code>canvas-library</code> (moderate): React Flow stays in <code>features/canvas/</code> (<code>LoopNode</code>, <code>NodeToolbar</code>); the loop view takes its no-drag class names as a prop.</li>
+  <li><code>hook-sentence</code> (cheap): the live loop text follows the same rule: pure, computed on each change, never stored. The hook sentence never reads the loop card.</li>
+  <li><code>clipboard</code> (cheap): Copy Loop reuses <code>copyHook</code> and the fallback dialog; only <code>features/hook/</code> calls the Clipboard API.</li>
+  <li><code>undo-history</code> (cheap), <code>save-transaction</code> (cheap), <code>state-store</code> (moderate): each edit and each reset is 1 <code>changeBoard</code>; a no-op returns the same board; typing is local view state.</li>
+  <li><code>schema-shape</code> (moderate), <code>storage-seam</code> (moderate): the loop card is a card in the one board record; no storage change.</li>
+  <li><code>import-checks</code> (cheap), <code>import-policy</code> (cheap): the Zod check gets the new type, field and rules; import still always makes a new board.</li>
+  <li><code>board-file-format</code> (expensive), <code>schema-versions</code> (cheap): <strong>recorded exception</strong> — the loop type and <code>loopText</code> are added inside format 2 with no upgrade step, no Dexie <code>version(3)</code> and no <code>UPGRADES[2]</code>, because the change only adds and the app is in test (user decision recorded in the feature brief). A later change that removes, renames or must rewrite saved fields adds them as the decisions say.</li>
+  <li><code>nfr-targets</code> (cheap): the template updates inside the 100 ms target (new @timing test); no new library, so size and privacy targets hold.</li>
+</ul>
+
+<h3>Decisions and assumptions</h3>
+<ul>
+  <li>ASSUMPTION: Slug <code>core-loop</code>, branch <code>phase-9-core-loop</code>. Authority: dev-plan-phase slug rules (short form of the PRD phase name "Core Loop Card"; no collision in <code>docs/phases/</code>).</li>
+  <li>ASSUMPTION: The format exception (no <code>FORMAT_VERSION</code> change, no Dexie <code>version(3)</code>, no <code>UPGRADES[2]</code>) is followed although <code>CLAUDE.md</code> says a further shape change adds them; the user's recorded decision in the feature brief and the PRD Phase 9 bullet ("no format version change") win, and Task 11 records the exception in <code>CLAUDE.md</code>. Authority: run brief + feature brief "Architecture fit" + PRD Phase 9.</li>
+  <li>ASSUMPTION: <code>features/loop</code> never imports <code>features/canvas</code>, and a lint block enforces it, like <code>features/hook</code>. The canvas computes the steps and passes them in; the loop feature holds only the pure builder and the views. The brief allows the loop feature to use the canvas through its index but does not require it, and the canvas must import the loop view, so a 2-way feature import would be a cycle. Authority: import-rules + codebase pattern (<code>features/hook</code> "never imports the canvas").</li>
+  <li>ASSUMPTION: <code>LOOP_STEPS</code>, <code>LoopSteps</code>, <code>LoopDeck</code> and <code>LoopPart</code> live in <code>features/loop/buildLoopText.ts</code>, not in <code>shared/model</code> (which holds board types and a short list of named helpers only). <code>reading.ts</code> imports the type and order from <code>@/features/loop</code>. Authority: feature brief Interfaces + module-layout.</li>
+  <li>ASSUMPTION: <code>loopSteps</code> finds the One-Pager Hook Card inline instead of calling <code>onePagerHook</code>, because <code>concept.ts</code> already imports <code>reading.ts</code>. On a Free Form board it returns <code>{}</code> (the loop card exists only on One-Pager boards). Loose cards never count. Authority: feature brief ("stack card first, else the first chip by z") + smallest option.</li>
+  <li>ASSUMPTION: The plain live text has no trailing period ("summon → earn clues → hub grows → to finish a week of chores"); the period in the brief's example ends the brief's sentence. Authority: feature brief contract ("parts joined by ' → '").</li>
+  <li>ASSUMPTION: <code>setLoopText(board, cardId, text)</code> works out the shown text itself (<code>loopText ?? buildLoopText(loopSteps(board)).text</code>), so callers pass only the draft. It stores the text exactly as typed (no trim); a text that is blank after trim removes the key. Authority: feature brief Edits + smallest option.</li>
+  <li>ASSUMPTION: With no steps and no stored text the field is empty and the template shows the help text; "the card never shows a blank text area" is read as "an empty commit never stores an empty text; the field falls back to the live text". No placeholder is added (design 9.16 names none). Authority: design 9.16 + feature brief Edits.</li>
+  <li>ASSUMPTION: The import check also refuses a loop card on a Free Form board, more than 1 loop card, a loop card that is tucked, in Details, on top of a card or has a connector, and any card tucked under or on top of a loop card; <code>loopText</code> must not be blank and is not trimmed. A bad file is refused, never repaired, as the One-Pager rules do. Authority: feature brief Scope ("only on One-Pager boards, 1 per board", "Never: more than 1") + data model + schema.ts One-Pager pattern.</li>
+  <li>ASSUMPTION: <code>cardSize</code> gives the loop card 240 × 200 for placement and drop math, its minimum size; the drawn card may be taller when the text grows. Authority: design 9.16 + smallest option.</li>
+  <li>ASSUMPTION: A dragged loop card is a plain move: no hint, no refusal notice, never a tuck, and over the Details panel it stays where it was released, like a Hook Card. Nothing tucks under it and it is never a drop target. Authority: feature brief Scope ("The card is free") and Never list + concept.ts Hook Card rule.</li>
+  <li>ASSUMPTION: The loop card is never selected (only <code>'card'</code> nodes are), so Delete, Backspace and R never reach it; its menu has no Duplicate and no Discard. Authority: feature brief Never list + design 9.16.</li>
+  <li>ASSUMPTION: The loop card's DOM has <code>data-testid="loop-card"</code> and <code>data-loop-card</code> but no <code>data-card</code>, so the existing browser helpers that count deck and Hook cards (<code>canvasCards</code>) keep their meaning. Never <code>data-kind</code>. Authority: codebase pattern + CLAUDE.md One-Pager bullet.</li>
+  <li>ASSUMPTION: <code>useHoverMenu</code> moves unchanged to <code>features/canvas/useHoverMenu.ts</code> so the Hook Card, deck cards and the loop card share one "only 1 menu open" rule. Authority: codebase pattern + smallest option.</li>
+  <li>ASSUMPTION: The fallback dialog for Copy Loop is titled "Copy The Loop" with a "Core Loop" field, in Title Case as the existing "Copy The Hook" and "Hook Sentence" are (design 9.16 writes "Copy the loop" and "Core loop" in sentence case, as 9.5 writes "Copy the hook"). <code>CopyFallbackDialog</code> gains optional <code>title</code> and <code>label</code> props with the Hook defaults. Authority: CLAUDE.md UI Conventions + codebase pattern.</li>
+  <li>ASSUMPTION: The edit field keeps a local draft while focused and commits on blur; Esc blurs and so commits, as notes do. It grows with its text by a layout effect on <code>scrollHeight</code>, because CSS <code>field-sizing</code> is not in every target engine. Authority: feature brief ("commits when it loses focus, as the note fields do") + design 9.16 ("It grows with the text") + nfr-targets (3 engines).</li>
+  <li>ASSUMPTION: The template is not selectable text and acts as a drag handle; the user copies through Copy Loop or the field. Authority: design 9.16 (template "read-only"; no selection rule) + smallest option.</li>
+  <li>ASSUMPTION: <code>LoopNode</code> reads the 4 step strings with 4 separate store selectors instead of <code>useShallow</code>, because the lint rule keeps <code>zustand</code> imports out of the canvas. Authority: eslint.config.js ownedLibraries + codebase pattern (HookBody's string selector).</li>
+  <li>ASSUMPTION: Text file: the Core Loop text keeps its line breaks, each line trimmed at the end, as the Notes section does; the section is left out when there is no loop card or the text is empty. Authority: feature brief Text file + textFile.ts notes pattern.</li>
+  <li>ASSUMPTION: The board list leaves the loop card out of the card count and the deck dots. Authority: feature brief Blast radius (<code>summary.ts</code>).</li>
+  <li>ASSUMPTION: The new @timing test uses the existing limits: 100 ms in Chromium and Firefox, 300 ms in WebKit (the user's 2026-11-04 temporary raise). Authority: nfr-targets + Phase 8 Notes + codebase pattern.</li>
+  <li>ASSUMPTION: The <code>repeat</code> SVG paths are written by hand from Lucide at stroke 2.2, as the other vendored icons are. Authority: CLAUDE.md (icons bundled, no outside request) + Phase 8 pattern.</li>
+  <li>DECISION: No task edits <code>docs/feature-core-loop-card.html</code>, <code>docs/design-system.html</code>, <code>docs/prd.html</code>, <code>docs/mvp-plan.html</code> or <code>docs/competitive-scan.html</code>; they are the authorities and hold the user's uncommitted edits, which ride along unchanged in the phase commit. The PRD Phase 9 checkboxes are left to dev-execute.</li>
+</ul>
+
+<h3>Execution notes</h3>
+<ul>
+  <li>Size: JavaScript 214.0 KB of 250 KB gzip; pools 48.6 KB of 100 KB gzip (<code>npm run size</code>).</li>
+  <li>Timing (<code>npm run test:e2e</code>, local): <code>perf_ringTurn_updatesLoopTemplateUnder100ms</code> passed in Chromium, Firefox and WebKit (100 / 100 / 300 ms limits). The full run: 856 passed, 8 skipped (the existing Firefox and WebKit frame-rate and first-load skips), 0 failed.</li>
+  <li>Existing tests changed: <code>tests/e2e/deal.spec.ts</code> <code>deal_emptyOnePagerHook_dealsTrainAndFourteenChips</code> (after undo the stored types are <code>['hook', 'loop']</code>); <code>tests/e2e/persistence.spec.ts</code> <code>boardList_emptyStart_showsHeaderAndNewBoard</code> (full help text); <code>src/shared/store/newBoard.test.ts</code> (<code>newBoard_onePager_hasExactlyOneHookCard</code> became <code>newBoard_onePager_hookAndOneLoopCard</code>); <code>src/features/export/schema.test.ts</code> (<code>mixedBoard</code> and <code>schema_everyCardType_roundTrips</code> leave the loop type out, as Free Form boards); <code>src/features/canvas/nodes.test.ts</code> (the Task 3 <code>toNodes_loopCard_noCardNode</code> folded into <code>toNodes_loopCard_loopNodeWithWidthNoHeight</code>).</li>
+  <li>Type check fixes outside the planned files: <code>drawFor</code> in <code>features/draw/drawCard.ts</code> throws for a loop card (as for a Hook Card); <code>stackEntries</code> in <code>reading.ts</code> skips a loop card; the chip ghost in <code>BoardCanvas.tsx</code> never shows for a loop card.</li>
+  <li>The perf test runs on the <code>onePagerWithLoop()</code> fixture (train Mechanic <code>mechanic-t1</code>) rather than a dealt board, so the ring it clicks has a fixed id. A separate <code>loop_copyLoopBlocked_showsFallbackDialog</code> test covers the blocked copy.</li>
+</ul>
+
+</body>
+</html>

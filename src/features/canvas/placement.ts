@@ -1,7 +1,8 @@
 /**
  * Placement: where a new card or note lands. A spot is the nearest free point on the
  * 24 px grid to a start point, keeping a 24 px margin to every card and note. snapToGrid
- * puts a dropped free card or note on the grid. Points are flow coordinates.
+ * puts a dropped free card or note on the grid. Points are flow coordinates. The Core Loop
+ * card is an occupied rect like any free card.
  */
 import type { Board, Card } from '@/shared/model';
 import { isOnTop } from './reading';
@@ -28,9 +29,14 @@ export interface Size {
 
 export interface Rect extends Point, Size {}
 
-/** A card's size on the board: the Hook Card is 240 wide, every other card 200 square. */
+/**
+ * A card's size on the board: the Hook Card and the Core Loop card are 240 wide, every
+ * other card 200 square. 200 is the Core Loop card's minimum height; the drawn card may grow
+ * taller with its text, but placement and drop math use 240 × 200.
+ */
 export function cardSize(card: Pick<Card, 'type'>): Size {
-  return { width: card.type === 'hook' ? HOOK_WIDTH : CARD_SIZE, height: CARD_SIZE };
+  const wide = card.type === 'hook' || card.type === 'loop';
+  return { width: wide ? HOOK_WIDTH : CARD_SIZE, height: CARD_SIZE };
 }
 
 // "+ 0" turns -0 into 0, so a snapped point never stores -0.

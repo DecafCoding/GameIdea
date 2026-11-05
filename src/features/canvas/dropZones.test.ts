@@ -10,8 +10,16 @@ import {
   fixtureStack,
   secondModifier,
   onePagerBoard,
+  onePagerWithLoop,
 } from '@/test/fixtures/boards';
-import { dropAction, dropTarget, hintFor, isNormalPlace, tuckLanding } from './dropZones';
+import {
+  dropAction,
+  dropTarget,
+  hintFor,
+  isNormalPlace,
+  tuckLanding,
+  paintOrder,
+} from './dropZones';
 
 const modifier = fixtureCard('modifier', { x: 900, y: 900, z: 9 });
 
@@ -234,5 +242,35 @@ describe('dropTarget on a One-Pager board', () => {
     // Every Concept card keeps x, y = 0, 0; nothing on the canvas is there.
     const board = onePagerBoard();
     expect(dropTarget(board, 'modifier-1', { x: 50, y: 50 })).toBeNull();
+  });
+});
+
+describe('Core Loop card drops', () => {
+  const withGoal = () => {
+    const board = onePagerWithLoop();
+    return {
+      ...board,
+      cards: [...board.cards, fixtureCard('goal', { id: 'goal-x', x: 2000, y: 2000, z: 10 })],
+    };
+  };
+  const loopOf = (board: ReturnType<typeof onePagerWithLoop>) =>
+    board.cards.find((card) => card.id === 'loop-1')!;
+
+  it('paintOrder_loopCard_neverATarget', () => {
+    const board = withGoal();
+    expect(paintOrder(board).map((card) => card.id)).not.toContain('loop-1');
+    expect(dropTarget(board, 'goal-x', { x: 700, y: 150 })).toBeNull();
+  });
+
+  it('dropAction_draggedLoopOverCard_movesOnly', () => {
+    const board = onePagerWithLoop();
+    const hook = board.cards.find((card) => card.id === 'hook-1')!;
+    expect(dropAction(board, loopOf(board), hook, { x: 150, y: 120 })).toEqual({ kind: 'move' });
+  });
+
+  it('hintFor_draggedLoop_null', () => {
+    const board = onePagerWithLoop();
+    const hook = board.cards.find((card) => card.id === 'hook-1')!;
+    expect(hintFor(board, loopOf(board), hook, { x: 150, y: 120 })).toBeNull();
   });
 });

@@ -16,6 +16,7 @@ import {
   fixtureStack,
   secondModifier,
   onePagerBoard,
+  onePagerWithLoop,
 } from '@/test/fixtures/boards';
 import {
   canDeal,
@@ -32,13 +33,16 @@ import {
   putOnTopOf,
   redrawAll,
   redrawCard,
+  resetLoopText,
+  setLoopText,
   splitCard,
   swapOnto,
   turnCardOnBoard,
 } from './boardActions';
 import { boardRects, CARD_SIZE, HOOK_INSET } from './placement';
 import { conceptLanes } from './concept';
-import { cardText, hookSentences, onTopCardOf } from './reading';
+import { buildLoopText } from '@/features/loop';
+import { cardText, hookSentences, loopSteps, onTopCardOf } from './reading';
 import { descendantsOf, isRoot, stackOrder, TUCK_OFFSET } from './stack';
 
 const find = (board: Board, id: string): Card | undefined => board.cards.find((c) => c.id === id);
@@ -979,5 +983,163 @@ describe('dealStack', () => {
       expect(sentence).not.toMatch(/ {2}/);
       for (const card of train(board)) expect(sentence).toContain(cardText(board, card));
     }
+  });
+});
+
+describe('Core Loop card drops', () => {
+  it('dropCard_loopOnHookCard_movesAndNeverTucks', () => {
+    const board = onePagerWithLoop();
+    const next = dropCard(board, 'loop-1', { x: 150, y: 120 }, { x: 101, y: 107 }, { snap: true });
+    expect(get(next, 'loop-1')).toMatchObject({ tuckedUnder: null, x: 96, y: 96 });
+    expect(descendantsOf(next, 'hook-1')).toEqual(descendantsOf(board, 'hook-1'));
+  });
+
+  it('dropCard_cardOnLoop_movesNotTucks', () => {
+    const base = onePagerWithLoop();
+    const board: Board = {
+      ...base,
+      cards: [...base.cards, fixtureCard('goal', { id: 'goal-x', x: 2000, y: 2000, z: 10 })],
+    };
+    const next = dropCard(board, 'goal-x', { x: 700, y: 150 }, { x: 690, y: 120 });
+    expect(get(next, 'goal-x')).toMatchObject({ tuckedUnder: null, x: 690, y: 120 });
+    expect(get(next, 'loop-1')).toEqual(get(board, 'loop-1'));
+  });
+
+  it('dropCard_loopOverPanel_staysWhereReleased', () => {
+    const next = dropCard(
+      onePagerWithLoop(),
+      'loop-1',
+      { x: 450, y: 150 },
+      { x: 400, y: 300 },
+      { concept: { panel: true, chipId: null } },
+    );
+    expect(get(next, 'loop-1')).toMatchObject({ x: 400, y: 300, inConcept: false });
+  });
+});
+
+describe('loop text', () => {
+  const loopOf = (board: Board) => get(board, 'loop-1');
+  const withText = (text: string): Board => {
+    const board = onePagerWithLoop();
+    return {
+      ...board,
+      cards: board.cards.map((c) => (c.id === 'loop-1' ? { ...c, loopText: text } : c)),
+    };
+  };
+  /** A fake deal draw: distinct cue texts per call. */
+  const dealDraw = () => {
+    let n = 0;
+    return (deck: Deck): Card => {
+      n += 1;
+      const count = ['goal', 'conflict', 'twist', 'progression', 'constraint'].includes(deck)
+        ? 2
+        : 4;
+      return fixtureCard(deck, {
+        id: `dealt-${n}`,
+        z: 0,
+        rings: [
+          {
+            cues: Array.from({ length: count }, (_, i) => ({ text: `${deck} ${n}.${i}` })),
+            activeIndex: 0,
+          },
+        ],
+      });
+    };
+  };
+  const fresh = (card: Card): Card => ({
+    ...card,
+    rings: [{ cues: card.rings[0]!.cues.map((c) => ({ text: `new ${c.text}` })), activeIndex: 0 }],
+  });
+
+  it('setLoopText_newText_stored', () => {
+    const next = setLoopText(onePagerWithLoop(), 'loop-1', 'summon → earn clues');
+    expect(loopOf(next).loopText).toBe('summon → earn clues');
+  });
+
+  it('setLoopText_sameAsShownLive_sameBoard', () => {
+    const board = onePagerWithLoop();
+    const live = buildLoopText(loopSteps(board)).text;
+    expect(live).toBe('trade → earn memories');
+    expect(setLoopText(board, 'loop-1', live)).toBe(board);
+  });
+
+  it('setLoopText_sameAsStored_sameBoard', () => {
+    const board = withText('my loop');
+    expect(setLoopText(board, 'loop-1', 'my loop')).toBe(board);
+  });
+
+  it('setLoopText_emptyOrSpaces_removesKey', () => {
+    for (const text of ['', '   ', '\n\t ']) {
+      const next = setLoopText(withText('my loop'), 'loop-1', text);
+      expect('loopText' in loopOf(next)).toBe(false);
+    }
+  });
+
+  it('setLoopText_emptyWithNoStoredText_sameBoard', () => {
+    const board = onePagerWithLoop();
+    expect(setLoopText(board, 'loop-1', '  ')).toBe(board);
+  });
+
+  it('setLoopText_keepsTextExactly', () => {
+    const text = '  dig deeper  \n  sell the ore \n';
+    expect(loopOf(setLoopText(onePagerWithLoop(), 'loop-1', text)).loopText).toBe(text);
+  });
+
+  it('resetLoopText_removesKey', () => {
+    const next = resetLoopText(withText('my loop'), 'loop-1');
+    expect('loopText' in loopOf(next)).toBe(false);
+  });
+
+  it('resetLoopText_noStoredText_sameBoard', () => {
+    const board = onePagerWithLoop();
+    expect(resetLoopText(board, 'loop-1')).toBe(board);
+  });
+
+  it('setLoopText_notLoopCard_throws', () => {
+    expect(() => setLoopText(onePagerWithLoop(), 'hook-1', 'my loop')).toThrow(/Core Loop/);
+    expect(() => resetLoopText(onePagerWithLoop(), 'role-t1')).toThrow(/Core Loop/);
+  });
+
+  it('redrawAll_and_dealStack_keepLoopText', () => {
+    const board = withText('my loop');
+    const redrawn = redrawAll(board, 'hook-1', fresh).board;
+    expect(redrawn).not.toBe(board);
+    expect(loopOf(redrawn)).toEqual(loopOf(board));
+    const dealt = dealStack(board, 'hook-1', dealDraw()).board;
+    expect(dealt).not.toBe(board);
+    expect(loopOf(dealt)).toEqual(loopOf(board));
+  });
+
+  it('turnCardOnBoard_keepsLoopText', () => {
+    const board = withText('my loop');
+    const next = turnCardOnBoard(board, 'mechanic-t1', 'outer', 'cw');
+    expect(loopOf(next)).toEqual(loopOf(board));
+  });
+
+  it('loop_dealEditRedraw_keepsUserText', () => {
+    const start = newBoard({ kind: 'onePager', hookId: 'hook-1', loopId: 'loop-1' });
+    const dealt = dealStack(start, 'hook-1', dealDraw()).board;
+    const live = buildLoopText(loopSteps(dealt)).text;
+    expect(buildLoopText(loopSteps(dealt)).parts.map((p) => p.deck)).toEqual([
+      'mechanic',
+      'resource',
+      'progression',
+      'goal',
+    ]);
+    const edited = setLoopText(dealt, 'loop-1', 'dig → sell → dig deeper');
+    const redrawn = redrawAll(edited, 'hook-1', fresh).board;
+    const mechanic = descendantsOf(redrawn, 'hook-1').find((c) => c.type === 'mechanic')!;
+    const turned = turnCardOnBoard(redrawn, mechanic.id, 'outer', 'cw');
+    expect(loopOf(turned).loopText).toBe('dig → sell → dig deeper');
+    expect(buildLoopText(loopSteps(turned)).text).not.toBe(live);
+  });
+
+  it('setLoopText_doesNotMutateInput', () => {
+    const board = withText('my loop');
+    const before = JSON.stringify(board);
+    setLoopText(board, 'loop-1', 'another loop');
+    setLoopText(board, 'loop-1', '');
+    resetLoopText(board, 'loop-1');
+    expect(JSON.stringify(board)).toBe(before);
   });
 });

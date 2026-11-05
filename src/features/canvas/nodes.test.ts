@@ -10,6 +10,7 @@ import {
   fixtureStack,
   secondModifier,
   onePagerBoard,
+  onePagerWithLoop,
 } from '@/test/fixtures/boards';
 import { dealDelays, toNodes, type CardNodeData } from './nodes';
 
@@ -148,5 +149,35 @@ describe('dealDelays', () => {
     expect(data('goal-1').reveal).toBe(200);
     expect(data('role-1').reveal).toBeNull();
     expect(data('conflict-1').reveal).toBeNull();
+  });
+});
+
+describe('toNodes with a Core Loop card', () => {
+  it('toNodes_loopCard_loopNodeWithWidthNoHeight', () => {
+    const nodes = toNodes(onePagerWithLoop(), UI);
+    const loop = nodes.find((node) => node.id === 'loop-1')!;
+    expect(loop.type).toBe('loop');
+    expect(loop.width).toBe(240);
+    expect(loop.height).toBeUndefined();
+    expect(loop.position).toEqual({ x: 680, y: 96 });
+    expect(loop.data).toEqual({ cardId: 'loop-1' });
+    expect(nodes.some((node) => node.type === 'card' && node.id === 'loop-1')).toBe(false);
+  });
+
+  it('toNodes_loopCard_ranksWithRootsByZ', () => {
+    // Roots by z: hook-1 (1), modifier-1 (8), loop-1 (9); the loop card paints on top.
+    const nodes = toNodes(onePagerWithLoop(), UI);
+    expect(zOf(nodes, 'loop-1')).toBe(3 * 1000);
+    expect(zOf(nodes, 'modifier-1')).toBe(2 * 1000);
+    const lowered = onePagerWithLoop();
+    const board = {
+      ...lowered,
+      cards: lowered.cards.map((c) => (c.id === 'loop-1' ? { ...c, z: 0 } : c)),
+    };
+    const again = toNodes(board, UI);
+    expect(zOf(again, 'loop-1')).toBe(1000);
+    expect(zOf(again, 'hook-1')).toBe(2000);
+    const ids = again.map((n) => n.id);
+    expect(ids.indexOf('loop-1')).toBeLessThan(ids.indexOf('hook-1'));
   });
 });

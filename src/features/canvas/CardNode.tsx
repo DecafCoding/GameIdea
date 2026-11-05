@@ -9,6 +9,8 @@
  * A tucked card has a Lock / Unlock button just outside its right edge, in its visible
  * bottom band: shown on hover while unlocked, and always while locked.
  * A card Deal Stack just dealt fades in after its reveal delay (data.reveal).
+ * The hover-menu rule (1 open menu at a time) lives in useHoverMenu.ts, shared with the
+ * Core Loop card's node.
  */
 import { NodeToolbar, Position, type NodeProps } from '@xyflow/react';
 import {
@@ -16,8 +18,6 @@ import {
   memo,
   type CSSProperties,
   useContext,
-  useEffect,
-  useRef,
   useState,
   type MouseEvent,
   type WheelEvent,
@@ -40,6 +40,7 @@ import { sameBelow, type CardFlowNode } from './nodes';
 import { HOOK_INSET } from './placement';
 import { stackEntries } from './reading';
 import { childrenOf } from './stack';
+import { STRIP_GAP, useHoverMenu } from './useHoverMenu';
 import styles from './CardNode.module.css';
 
 /** Stable callbacks from the canvas to its card nodes. */
@@ -65,9 +66,6 @@ export interface CardNodeActions {
 
 export const CardNodeContext = createContext<CardNodeActions | null>(null);
 
-/** The strip's bottom sits 4 px above the card's top (user 2026-11-03; design 9.4 said 56). */
-const STRIP_GAP = 4;
-
 /** The paper step for a stack depth: deeper than 4 reuses the 4th step (design 9.7). */
 function paperFor(depth: number): CardPaper {
   if (depth === 0) return 'top';
@@ -79,78 +77,6 @@ function stopRingClick(event: MouseEvent) {
   if (event.target instanceof Element && event.target.closest('[data-ring]')) {
     event.stopPropagation();
   }
-}
-
-/** A menu stays this long after the pointer leaves both the card and the menu (user 2026-11-03). */
-const MENU_HIDE_MS = 1000;
-
-/** Closes the one hover menu now open, so a lingering menu never covers another card. */
-let closeOpenMenu: (() => void) | null = null;
-
-/**
- * Hover state for a card's menu: on while the pointer is over the card or the menu, off
- * MENU_HIDE_MS after it leaves both. Only one menu is open at a time: entering another card
- * closes the last one at once, and so does a press anywhere outside the card and its menu.
- * The menu sits on a transparent bridge (STRIP_GAP tall) that reaches down to the card.
- * Cards also call enter on pointer move, because a browser may not send pointerenter to a
- * card that ends up under a still pointer after a drop.
- */
-function useHoverMenu() {
-  const [hover, setHover] = useState(false);
-  const cardRef = useRef<HTMLDivElement>(null);
-  const menuRef = useRef<HTMLDivElement>(null);
-  const hideTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const close = useRef<() => void>(() => {});
-
-  const clearTimer = () => {
-    if (hideTimer.current) clearTimeout(hideTimer.current);
-    hideTimer.current = null;
-  };
-  // eslint-disable-next-line react-hooks/refs -- set once; read only from event handlers
-  close.current = () => {
-    clearTimer();
-    setHover(false);
-    if (closeOpenMenu === close.current) closeOpenMenu = null;
-  };
-
-  useEffect(() => {
-    if (!hover) return;
-    const onPointerDown = (event: PointerEvent) => {
-      const at = event.target;
-      if (at instanceof Node && (cardRef.current?.contains(at) || menuRef.current?.contains(at))) {
-        return;
-      }
-      close.current();
-    };
-    document.addEventListener('pointerdown', onPointerDown, true);
-    return () => document.removeEventListener('pointerdown', onPointerDown, true);
-  }, [hover]);
-
-  useEffect(
-    () => () => {
-      clearTimer();
-      if (closeOpenMenu === close.current) closeOpenMenu = null;
-    },
-    [],
-  );
-
-  const enter = () => {
-    clearTimer();
-    if (closeOpenMenu !== close.current) {
-      closeOpenMenu?.();
-      closeOpenMenu = close.current;
-    }
-    setHover(true);
-  };
-  const leave = (event: PointerEvent) => {
-    const to = event.relatedTarget;
-    if (to instanceof Node && (cardRef.current?.contains(to) || menuRef.current?.contains(to))) {
-      return;
-    }
-    clearTimer();
-    hideTimer.current = setTimeout(() => close.current(), MENU_HIDE_MS);
-  };
-  return { hover, cardRef, menuRef, enter, leave };
 }
 
 /** Pixels per wheel line, for browsers that report wheel steps in lines (Firefox). */

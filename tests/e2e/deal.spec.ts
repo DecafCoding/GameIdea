@@ -108,7 +108,7 @@ test.describe('deal', () => {
     await page.keyboard.press('Control+z');
     await expect
       .poll(async () => (await storedOnly(page)).cards.map((c) => c.type))
-      .toEqual(['hook']);
+      .toEqual(['hook', 'loop']);
     await expect(panel(page).getByTestId('concept-chip')).toHaveCount(0);
   });
 

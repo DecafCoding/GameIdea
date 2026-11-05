@@ -189,7 +189,7 @@
     <div class="li-who">Summer Engine gives "a concept with a hook and a core loop." Wayline expands an idea for signed-in users. Ludo develops mechanics, characters and story in a project. The free word-list tools stop at the words.</div>
     <div class="li-sent"><b>Sentiment:</b> Vendor claims only. Summer Engine says other generators give "a string of disconnected words" (<a href="https://www.summerengine.com/random-game-idea-generator">Summer Engine</a>). A user says the ideas help even when unused (<a href="https://itssnowyowl.itch.io/game-idea-generator">SnowyOwl comments</a>).</div>
     <div class="why">Rank 5. Market-wide signal 2. Three paid or AI tools sell this step, and no free card tool has it. The hook template in <code>concept.md</code> is this row.</div>
-    <div class="cov">Partial, milestone 2. The Hook Card sentence gives who, what you do and stakes. The angle comes only from Twist or Constraint cards. An editable angle line, a core loop and a concept sheet are left out.</div>
+    <div class="cov">Partial, milestone 2. The Hook Card sentence gives who, what you do and stakes. The angle comes only from Twist or Constraint cards. From milestone 9, a One-Pager board adds a Core Loop card: a live template "[Mechanic] → earn [Resource] → [Progression] → to [Goal]" from the board's cards, and a text the user edits. An editable angle line is still left out. See <a href="feature-core-loop-card.html">feature-core-loop-card.html</a>.</div>
   </li>
 
   <li data-coverage="never">
@@ -200,12 +200,12 @@
     <div class="cov">Never. The plan rules out Format in any form. The user's reason: indie developers already know their format, so it does not narrow a draw. The Constraint deck gives design limits such as "one room".</div>
   </li>
 
-  <li data-coverage="none">
-    <div class="li-name">State that the user owns the generated ideas <span class="badge b-no">Not in MVP</span></div>
+  <li data-coverage="in" data-phase="9">
+    <div class="li-name">State that the user owns the generated ideas <span class="badge b-in">In MVP · P9</span></div>
     <div class="li-who">SnowyOwl answers each request in comments. No comparable states it on the page.</div>
     <div class="li-sent"><b>Sentiment:</b> Three users asked permission. "permission to use this in my game?", "Can I use the idea? I'll credit you," and "would you mind if I published something made from this?" The author replied "any ideas you get from this are completely yours" (<a href="https://itssnowyowl.itch.io/game-idea-generator">SnowyOwl comments</a>).</div>
     <div class="why">Rank 7. Users ask for it directly and repeatedly. It costs one line of text.</div>
-    <div class="cov">Not in MVP. Not discussed in the interview. It costs one line of text and is a cheap later add.</div>
+    <div class="cov">In MVP, milestone 9. The Boards page help text ends with "Every idea you make here is yours to use, with no credit needed." See <a href="feature-core-loop-card.html">feature-core-loop-card.html</a>.</div>
   </li>
 
   <li data-coverage="none">
@@ -229,7 +229,7 @@
     <div class="li-who">Wayline sends ideas to Blueprint to make a game design document. Ludo builds one in its project workspace. Milanote has a game design document template board.</div>
     <div class="li-sent"><b>Sentiment:</b> None found from users. Milanote's guide says long text design documents often "end up unused" (<a href="https://milanote.com/guide/game-design-document">Milanote</a>, vendor claim).</div>
     <div class="why">Rank 10. Common in the paid tools, with no user sentiment found. It extends market-wide signal 2.</div>
-    <div class="cov">Partial, milestone 7. The One-Pager board holds 1 game: its hook and a Concept panel of the other cards by deck. The text file lists both. Sending to an outside design document tool, and a One-Pager export, are still left out. See <a href="feature-one-pager-board.html">feature-one-pager-board.html</a>.</div>
+    <div class="cov">Partial, milestone 7. The One-Pager board holds 1 game: its hook and a Concept panel of the other cards by deck. The text file lists both, and from milestone 9 also the Core Loop (<a href="feature-core-loop-card.html">feature-core-loop-card.html</a>). Sending to an outside design document tool, and a One-Pager export, are still left out. See <a href="feature-one-pager-board.html">feature-one-pager-board.html</a>.</div>
   </li>
 
 </ol>
@@ -350,13 +350,13 @@
   <div class="scroll">
   <table>
     <tr><th>Badge</th><th>Meaning</th><th>Rows</th></tr>
-    <tr><td><span class="badge b-in">In MVP · P#</span></td><td>Built in the plan, at the scope the row describes.</td><td>13</td></tr>
+    <tr><td><span class="badge b-in">In MVP · P#</span></td><td>Built in the plan, at the scope the row describes.</td><td>14</td></tr>
     <tr><td><span class="badge b-part">Partial · P#</span></td><td>In the plan, at a narrower scope than the market version.</td><td>4</td></tr>
-    <tr><td><span class="badge b-no">Not in MVP</span></td><td>In no phase. Still backlog.</td><td>14</td></tr>
+    <tr><td><span class="badge b-no">Not in MVP</span></td><td>In no phase. Still backlog.</td><td>13</td></tr>
     <tr><td><span class="badge b-never">Never</span></td><td>Ruled out by the plan's "never" list. Off the backlog.</td><td>2</td></tr>
   </table>
   </div>
-  <p>Required: 8 rows (8 In). Top 10: 10 rows (3 In, 2 Partial, 4 Not in MVP, 1 Never). Other: 15 rows (2 In, 2 Partial, 10 Not in MVP, 1 Never). Total: 33 rows.</p>
+  <p>Required: 8 rows (8 In). Top 10: 10 rows (4 In, 2 Partial, 3 Not in MVP, 1 Never). Other: 15 rows (2 In, 2 Partial, 10 Not in MVP, 1 Never). Total: 33 rows.</p>
 </div>
 
 <footer>
@@ -370,6 +370,7 @@
     <li>2026-11-02: feature pass from <code>/dev-add-feature</code> (Settings and theme). Added 1 Other row, In MVP · P5, from the interview. Updated the note on the Keyboard shortcuts row, which stays Partial, and linked <code>docs/feature-settings-and-theme.html</code>. 12 In, 4 Partial, 15 Not in MVP, 2 Never, of 33 rows.</li>
     <li>2026-11-04: feature pass from <code>/dev-add-feature</code> (One-Pager board). "Send a saved idea to a design document" moves from Not in MVP to Partial · P7. Updated the note on the "Visual board to develop an idea" row, which stays Partial. Linked <code>docs/feature-one-pager-board.html</code>. 12 In, 5 Partial, 14 Not in MVP, 2 Never, of 33 rows.</li>
     <li>2026-11-04: feature pass from <code>/dev-add-feature</code> (Deal A Stack). "One draw fills a fixed set of concept slots" moves from Partial · P2 to In MVP · P8. Linked <code>docs/feature-deal-a-stack.html</code>. The legend table and tally line are corrected to the badge count, which the One-Pager pass did not update. 13 In, 4 Partial, 14 Not in MVP, 2 Never, of 33 rows. Every Required row is now In.</li>
+      <li>2026-11-05: feature pass from <code>/dev-add-feature</code> (Core Loop Card). "State that the user owns the generated ideas" moves from Not in MVP to In MVP · P9. Updated the notes on "Turn the draw into a pitch", which stays Partial, and "Send a saved idea to a design document", which stays Partial. Linked <code>docs/feature-core-loop-card.html</code>. 14 In, 4 Partial, 13 Not in MVP, 2 Never, of 33 rows.</li>
   </ul>
   <p><b>Sources</b></p>
   <ul>

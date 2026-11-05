@@ -6,6 +6,8 @@
  * Over a merged card with no On Top Modifier, the 52 px top band adds it on top and the
  * rest of the card swaps; with an On Top Modifier, the whole card swaps. A Modifier over
  * any other deck tucks like a normal card.
+ * The Core Loop card is never a drop target and never tucks: a dragged Core Loop card only
+ * moves, with no hint and no refusal notice.
  */
 import { isCombined } from '@/features/card';
 import { BASE_TYPES, type Board, type Card, type CardType } from '@/shared/model';
@@ -75,7 +77,14 @@ export function paintOrder(board: Board): Card[] {
   return (
     board.cards
       // Concept cards have no canvas place, so they are never a drop target on the canvas.
-      .filter((card) => isRoot(board, card.id) && !isOnTop(board, card) && !card.inConcept)
+      // The Core Loop card never takes a tuck, so it is never a target either.
+      .filter(
+        (card) =>
+          isRoot(board, card.id) &&
+          !isOnTop(board, card) &&
+          !card.inConcept &&
+          card.type !== 'loop',
+      )
       .sort((a, b) => b.z - a.z)
       .flatMap((root) => stackOrder(board, root.id))
   );
@@ -119,7 +128,7 @@ export function dropAction(
   target: Card | null,
   point: Point,
 ): DropAction {
-  if (!target) return { kind: 'move' };
+  if (!target || dragged.type === 'loop') return { kind: 'move' };
   if (dragged.type === 'hook') return { kind: 'move', refused: 'hookCannotTuck' };
   if (canCombine(dragged, target)) return { kind: 'combine' };
   if (canSwap(dragged, target)) {
@@ -134,7 +143,7 @@ export function dropAction(
  * where the card will land (user 2026-11-03); before, only the normal place did.
  */
 export function hintFor(board: Board, dragged: Card, target: Card | null, point: Point): DropHint {
-  if (!target || dragged.type === 'hook') return null;
+  if (!target || dragged.type === 'hook' || dragged.type === 'loop') return null;
   if (canCombine(dragged, target)) return 'combine';
   if (canSwap(dragged, target)) return onTopCardOf(board, target.id) ? 'swapOnly' : 'swapZones';
   return dropAction(board, dragged, target, point).kind === 'tuck' ? 'slot' : null;

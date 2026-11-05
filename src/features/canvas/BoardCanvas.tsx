@@ -15,6 +15,8 @@
  * one changeBoard: 1 undo step and 1 save.
  * Deal Stack is 1 changeBoard too; the dealt cards and chips then fade in one at a time
  * over about 1 second from a view-only reveal map (id → delay), never in the store.
+ * The Core Loop card is a 'loop' node: it drags through the card drop path (a plain move,
+ * snap applies, never a tuck), shows no hint and is never selected.
  */
 import '@xyflow/react/dist/base.css';
 import {
@@ -73,6 +75,7 @@ import { CountBadge } from './CountBadge';
 import { DropHints, type DragHint } from './DropHints';
 import { dropAction, dropTarget, hintFor, tuckLanding } from './dropZones';
 import { DEAL_REVEAL_MS, dealDelays, toNodes, type BoardFlowNode } from './nodes';
+import { LoopNode } from './LoopNode';
 import { NoteNode } from './NoteNode';
 import { boardRects, CARD_SIZE, snapToGrid, type Point } from './placement';
 import { cardText } from './reading';
@@ -80,7 +83,7 @@ import { descendantsOf } from './stack';
 import { ZoomStrip } from './ZoomStrip';
 import styles from './BoardCanvas.module.css';
 
-const nodeTypes = { card: CardNode, note: NoteNode, concept: ConceptNode };
+const nodeTypes = { card: CardNode, note: NoteNode, concept: ConceptNode, loop: LoopNode };
 
 /** A drag shorter than this, in screen pixels, is a click and commits nothing. */
 const CLICK_DISTANCE = 4;
@@ -389,13 +392,21 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
       const start = pointerOf(event);
       drag.current = {
         id: node.id,
-        kind: node.type,
+        kind: node.type === 'note' ? 'note' : 'card',
         startX: start.x,
         startY: start.y,
         nodeX: node.position.x,
         nodeY: node.position.y,
       };
       hoverRef.current = null;
+      if (node.type === 'loop') {
+        setDragNodes(
+          derived.map((n) =>
+            n.id === node.id ? { ...n, zIndex: (n.zIndex ?? 0) + DRAG_RAISE } : n,
+          ),
+        );
+        return;
+      }
       if (node.type !== 'card') {
         setDragNodes(derived);
         return;
@@ -698,7 +709,7 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
               color="var(--canvas-dot)"
             />
             <DropHints hint={hint} />
-            {ghost && ghostCard && ghostCard.type !== 'hook' && (
+            {ghost && ghostCard && ghostCard.type !== 'hook' && ghostCard.type !== 'loop' && (
               <ViewportPortal>
                 <div
                   className={styles.ghost}
