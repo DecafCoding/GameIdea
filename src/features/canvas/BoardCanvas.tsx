@@ -17,6 +17,11 @@
  * over about 1 second from a view-only reveal map (id → delay), never in the store.
  * The Core Loop card is a 'loop' node: it drags through the card drop path (a plain move,
  * snap applies, never a tuck), shows no hint and is never selected.
+ * On a One-Pager board the Questions panel is 1 more node below the Core Loop card, placed
+ * from the card's measured height (read from React Flow's store) and moved with the card
+ * during its drag. It is never dragged and never a drop target; a card dropped over it only
+ * moves. Its deck view state (useQuestionDeck) lives here, above the nodes, so panning it
+ * off screen keeps the current question and the draft.
  */
 import '@xyflow/react/dist/base.css';
 import {
@@ -25,6 +30,7 @@ import {
   BackgroundVariant,
   ReactFlow,
   useReactFlow,
+  useStore,
   ViewportPortal,
   type NodeChange,
   type OnNodeDrag,
@@ -42,8 +48,10 @@ import {
 import { ChipView, useRingKeys, type RingSlot, type TurnDirection } from '@/features/card';
 import { drawFor } from '@/features/draw';
 import { moveNote } from '@/features/notes';
+import { answeredQuestions, useQuestionDeck } from '@/features/questions';
 import { getSettings, useSettings } from '@/features/settings';
 import type { Board, Deck, Pools } from '@/shared/model';
+import type { QuestionPoolState } from '@/shared/pools';
 import { useBoardStore } from '@/shared/store';
 import {
   chooseConnector,
@@ -74,16 +82,30 @@ import { ConceptNode, ConceptUiContext, type ConceptHint, type ConceptUi } from 
 import { CountBadge } from './CountBadge';
 import { DropHints, type DragHint } from './DropHints';
 import { dropAction, dropTarget, hintFor, tuckLanding } from './dropZones';
-import { DEAL_REVEAL_MS, dealDelays, toNodes, type BoardFlowNode } from './nodes';
+import {
+  DEAL_REVEAL_MS,
+  dealDelays,
+  placeQuestionsNode,
+  toNodes,
+  type BoardFlowNode,
+} from './nodes';
 import { LoopNode } from './LoopNode';
 import { NoteNode } from './NoteNode';
+import { QuestionsNode, QuestionsUiContext, type QuestionsUi } from './QuestionsNode';
+import { QUESTIONS_NODE_ID } from './questionsPlace';
 import { boardRects, CARD_SIZE, snapToGrid, type Point } from './placement';
 import { cardText } from './reading';
 import { descendantsOf } from './stack';
 import { ZoomStrip } from './ZoomStrip';
 import styles from './BoardCanvas.module.css';
 
-const nodeTypes = { card: CardNode, note: NoteNode, concept: ConceptNode, loop: LoopNode };
+const nodeTypes = {
+  card: CardNode,
+  note: NoteNode,
+  concept: ConceptNode,
+  loop: LoopNode,
+  questions: QuestionsNode,
+};
 
 /** A drag shorter than this, in screen pixels, is a click and commits nothing. */
 const CLICK_DISTANCE = 4;
@@ -124,6 +146,8 @@ function pointerOf(event: MouseEvent | globalThis.MouseEvent | TouchEvent): {
 interface BoardCanvasProps {
   /** The loaded pools, for Redraw; null while they load or after they fail. */
   pools: Pools | null;
+  /** The question pool's load state, for the Questions panel. */
+  questionPool: QuestionPoolState;
 }
 
 /** A chip press that may become a drag out of the Concept panel. */
@@ -191,7 +215,7 @@ function useAltHeld(): boolean {
   return held;
 }
 
-export function BoardCanvas({ pools }: BoardCanvasProps) {
+export function BoardCanvas({ pools, questionPool }: BoardCanvasProps) {
   const board = useBoardStore((state) => state.board);
   const changeBoard = useBoardStore((state) => state.changeBoard);
   const setView = useBoardStore((state) => state.setView);
@@ -231,9 +255,39 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
 
   const selected = selectedId && board.cards.some((c) => c.id === selectedId) ? selectedId : null;
   const hiddenIds = useMemo(() => new Set(flights.map((f) => f.card.id)), [flights]);
-  const derived = useMemo(
+  // The Core Loop card's drawn height, so the Questions panel moves when the card grows.
+  const loopId = board.cards.find((c) => c.type === 'loop')?.id;
+  const measuredLoopHeight = useStore((s) =>
+    loopId ? s.nodeLookup.get(loopId)?.measured.height : undefined,
+  );
+  // The last measured height is kept: new node objects reset React Flow's measure until it
+  // measures again, and following that undefined would move the panel back and forth.
+  const [lastLoop, setLastLoop] = useState<{ id: string; height: number } | null>(null);
+  if (
+    loopId &&
+    measuredLoopHeight !== undefined &&
+    (lastLoop?.id !== loopId || lastLoop.height !== measuredLoopHeight)
+  ) {
+    setLastLoop({ id: loopId, height: measuredLoopHeight });
+  }
+  const loopHeight = lastLoop && lastLoop.id === loopId ? lastLoop.height : undefined;
+  const allNodes = useMemo(
     () => toNodes(board, { selectedId: selected, hiddenIds, freshIds, reveal }),
     [board, selected, hiddenIds, freshIds, reveal],
+  );
+  // Only the Questions node changes with the loop height (see placeQuestionsNode).
+  const derived = useMemo(
+    () => placeQuestionsNode(allNodes, board, loopHeight),
+    [allNodes, board, loopHeight],
+  );
+
+  // The Questions panel's view state: kept here, above the node (see the doc comment).
+  const questions = board.questions;
+  const answered = useMemo(() => answeredQuestions({ questions }), [questions]);
+  const deck = useQuestionDeck(questionPool.questions, answered, board.id);
+  const questionsUi = useMemo<QuestionsUi>(
+    () => ({ deck, status: questionPool.status, retry: questionPool.retry }),
+    [deck, questionPool.status, questionPool.retry],
   );
   const nodes = dragNodes ?? derived;
 
@@ -340,8 +394,11 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
       // The tucked cards under each moved card, read now: the updater may run after a drop
       // has already removed the card from the board.
       const b = useBoardStore.getState().board;
-      // On a One-Pager board the Concept panel moves with the Hook Card during its drag.
+      // On a One-Pager board the Concept panel moves with the Hook Card during its drag,
+      // and the Questions panel with the Core Loop card.
       const hookId = onePagerHook(b)?.id ?? null;
+      const loopCardId =
+        b.kind === 'onePager' ? (b.cards.find((c) => c.type === 'loop')?.id ?? null) : null;
       const tucked = new Map<string, string[]>();
       for (const change of changes) {
         if (change.type !== 'position' || !b.cards.some((c) => c.id === change.id)) continue;
@@ -359,15 +416,19 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
           if (!node) continue;
           const dx = change.position.x - node.position.x;
           const dy = change.position.y - node.position.y;
-          if (change.id === hookId) {
-            const panel = base.find((n) => n.id === CONCEPT_NODE_ID);
-            if (panel) {
-              extra.push({
-                type: 'position',
-                id: CONCEPT_NODE_ID,
-                position: { x: panel.position.x + dx, y: panel.position.y + dy },
-              });
-            }
+          const panelId =
+            change.id === hookId
+              ? CONCEPT_NODE_ID
+              : change.id === loopCardId
+                ? QUESTIONS_NODE_ID
+                : null;
+          const panel = panelId ? base.find((n) => n.id === panelId) : undefined;
+          if (panel) {
+            extra.push({
+              type: 'position',
+              id: panel.id,
+              position: { x: panel.position.x + dx, y: panel.position.y + dy },
+            });
           }
           for (const childId of tucked.get(change.id) ?? []) {
             const child = base.find((n) => n.id === childId);
@@ -387,8 +448,8 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
 
   const onNodeDragStart: OnNodeDrag<BoardFlowNode> = useCallback(
     (event, node) => {
-      // The Concept panel is never dragged.
-      if (node.type === 'concept') return;
+      // The Concept and Questions panels are never dragged.
+      if (node.type === 'concept' || node.type === 'questions') return;
       const start = pointerOf(event);
       drag.current = {
         id: node.id,
@@ -676,53 +737,55 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
     >
       <CardNodeContext.Provider value={actions}>
         <ConceptUiContext.Provider value={conceptUi}>
-          <ReactFlow<BoardFlowNode>
-            nodes={nodes}
-            onNodesChange={onNodesChange}
-            nodeTypes={nodeTypes}
-            zIndexMode="manual"
-            elevateNodesOnSelect={false}
-            nodeDragThreshold={0}
-            nodesConnectable={false}
-            elementsSelectable={false}
-            proOptions={{ hideAttribution: true }}
-            minZoom={0.25}
-            maxZoom={2}
-            deleteKeyCode={null}
-            multiSelectionKeyCode={null}
-            selectionKeyCode={null}
-            onlyRenderVisibleElements
-            snapToGrid={snapOn && !altHeld}
-            snapGrid={SNAP_GRID}
-            defaultViewport={defaultViewport}
-            onMoveEnd={onMoveEnd}
-            onNodeDragStart={onNodeDragStart}
-            onNodeDrag={onNodeDrag}
-            onNodeDragStop={onNodeDragStop}
-            onNodeClick={onNodeClick}
-            onPaneClick={onPaneClick}
-          >
-            <Background
-              variant={BackgroundVariant.Dots}
-              gap={24}
-              size={1.2}
-              color="var(--canvas-dot)"
-            />
-            <DropHints hint={hint} />
-            {ghost && ghostCard && ghostCard.type !== 'hook' && ghostCard.type !== 'loop' && (
-              <ViewportPortal>
-                <div
-                  className={styles.ghost}
-                  style={{ left: ghost.at.x, top: ghost.at.y }}
-                  data-testid="chip-ghost"
-                >
-                  <ChipView text={cardText(board, ghostCard)} deck={ghostCard.type} />
-                </div>
-              </ViewportPortal>
-            )}
-            <ZoomStrip />
-            <CountBadge />
-          </ReactFlow>
+          <QuestionsUiContext.Provider value={questionsUi}>
+            <ReactFlow<BoardFlowNode>
+              nodes={nodes}
+              onNodesChange={onNodesChange}
+              nodeTypes={nodeTypes}
+              zIndexMode="manual"
+              elevateNodesOnSelect={false}
+              nodeDragThreshold={0}
+              nodesConnectable={false}
+              elementsSelectable={false}
+              proOptions={{ hideAttribution: true }}
+              minZoom={0.25}
+              maxZoom={2}
+              deleteKeyCode={null}
+              multiSelectionKeyCode={null}
+              selectionKeyCode={null}
+              onlyRenderVisibleElements
+              snapToGrid={snapOn && !altHeld}
+              snapGrid={SNAP_GRID}
+              defaultViewport={defaultViewport}
+              onMoveEnd={onMoveEnd}
+              onNodeDragStart={onNodeDragStart}
+              onNodeDrag={onNodeDrag}
+              onNodeDragStop={onNodeDragStop}
+              onNodeClick={onNodeClick}
+              onPaneClick={onPaneClick}
+            >
+              <Background
+                variant={BackgroundVariant.Dots}
+                gap={24}
+                size={1.2}
+                color="var(--canvas-dot)"
+              />
+              <DropHints hint={hint} />
+              {ghost && ghostCard && ghostCard.type !== 'hook' && ghostCard.type !== 'loop' && (
+                <ViewportPortal>
+                  <div
+                    className={styles.ghost}
+                    style={{ left: ghost.at.x, top: ghost.at.y }}
+                    data-testid="chip-ghost"
+                  >
+                    <ChipView text={cardText(board, ghostCard)} deck={ghostCard.type} />
+                  </div>
+                </ViewportPortal>
+              )}
+              <ZoomStrip />
+              <CountBadge />
+            </ReactFlow>
+          </QuestionsUiContext.Provider>
         </ConceptUiContext.Provider>
       </CardNodeContext.Provider>
     </div>

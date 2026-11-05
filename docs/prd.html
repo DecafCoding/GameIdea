@@ -586,11 +586,11 @@ tests/e2e/          Playwright browser tests</code></pre>
 <p><strong>Goal:</strong> every One-Pager board has a Questions panel below its Core Loop card, where the user answers original questions that test the idea, and the answers stay with the board and in the text file.</p>
 <ul class="checklist">
   <li data-checked="false">60 original questions in <code>public/pools/question.json</code> with a pool floor test; the user reviews them before merge</li>
-  <li data-checked="false">Optional <code>Board.questions</code>; Zod check (One-Pager only); a separate question pool load with its own failure state; no format version change; tests first</li>
-  <li data-checked="false"><code>pickQuestion</code> as a pure function (skips answered, no repeat before the cycle ends) and the add, edit and delete recipes as 1 <code>changeBoard</code> each; tests first</li>
-  <li data-checked="false">Questions panel content in <code>features/questions/</code>: question, answer field, Next Question, Save Answer, answer list with edit and delete, all-answered and load-failed states; <code>message-circle-question-mark</code> and trash icons vendored from Lucide</li>
-  <li data-checked="false">Canvas node joined to the Core Loop card through a pure <code>questionsPlace</code>; not draggable and not a drop target</li>
-  <li data-checked="false">Questions section in the text file after Core Loop</li>
+  <li data-checked="true">Optional <code>Board.questions</code>; Zod check (One-Pager only); a separate question pool load with its own failure state; no format version change; tests first</li>
+  <li data-checked="true"><code>pickQuestion</code> as a pure function (skips answered, no repeat before the cycle ends) and the add, edit and delete recipes as 1 <code>changeBoard</code> each; tests first</li>
+  <li data-checked="true">Questions panel content in <code>features/questions/</code>: question, answer field, Next Question, Save Answer, answer list with edit and delete, all-answered and load-failed states; <code>message-circle-question-mark</code> and trash icons vendored from Lucide</li>
+  <li data-checked="true">Canvas node joined to the Core Loop card through a pure <code>questionsPlace</code>; not draggable and not a drop target</li>
+  <li data-checked="true">Questions section in the text file after Core Loop</li>
 </ul>
 <p><strong>Validation:</strong> the done criteria in feature-questions-panel.html pass; every existing test passes on both board kinds; speed, size and privacy targets pass.</p>
 

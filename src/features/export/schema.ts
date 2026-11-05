@@ -21,6 +21,11 @@
  * trimmed; no card is tucked under or on top of a loop card; at most 1 loop card, only on a
  * One-Pager board. A One-Pager file with no loop card is allowed (older files). The loop
  * type and loopText went into format 2 with no upgrade step (user decision 2026-11-05).
+ * Questions rules: questions is only on a One-Pager board, holds 1 or more answers (the
+ * last delete removes the field), each with an id and a question and answer that are never
+ * blank and never trimmed; no 2 answers share an id and no question is answered twice. A
+ * file with no questions field is allowed (older files). The field went into format 2
+ * with no upgrade step (user decision 2026-11-05).
  */
 import { z } from 'zod';
 import {
@@ -130,6 +135,13 @@ const noteSchema = z.object({
   height: z.number().positive(),
 });
 
+/** Never .trim(): that would rewrite the user's text. Blank text is refused instead. */
+const answerSchema = z.object({
+  id: z.string().min(1),
+  question: z.string().refine((text) => text.trim() !== '', 'A question is blank.'),
+  answer: z.string().refine((text) => text.trim() !== '', 'An answer is blank.'),
+});
+
 /** True when a card's tuckedUnder chain comes back to a card it has already passed. */
 function hasTuckCycle(cards: readonly { id: string; tuckedUnder: string | null }[]): boolean {
   const parent = new Map(cards.map((card) => [card.id, card.tuckedUnder]));
@@ -170,6 +182,7 @@ export const boardSchema: z.ZodType<Board> = z
     view: z.object({ panX: z.number(), panY: z.number(), zoom: z.number().positive() }),
     cards: z.array(cardSchema),
     notes: z.array(noteSchema),
+    questions: z.array(answerSchema).min(1).optional(),
   })
   .superRefine((board, ctx) => {
     const cardIds = new Set(board.cards.map((card) => card.id));
@@ -243,6 +256,17 @@ export const boardSchema: z.ZodType<Board> = z
     const isLoop = (id: string | null) => id !== null && byId.get(id)?.type === 'loop';
     if (board.cards.some((card) => isLoop(card.tuckedUnder) || isLoop(card.onTopOf))) {
       issue('A card is tucked under or on top of a Core Loop card.');
+    }
+    // Questions rules (docs/feature-questions-panel.html Data model).
+    if (board.questions !== undefined) {
+      if (board.kind !== 'onePager') issue('Only a One-Pager board has questions.');
+      const answers = board.questions;
+      if (new Set(answers.map((item) => item.id)).size !== answers.length) {
+        issue('Two answers have the same id.');
+      }
+      if (new Set(answers.map((item) => item.question)).size !== answers.length) {
+        issue('A question is answered twice.');
+      }
     }
     if (board.cards.some((card) => card.tuckedUnder === card.id)) {
       ctx.addIssue({ code: 'custom', message: 'A card is tucked under itself.' });

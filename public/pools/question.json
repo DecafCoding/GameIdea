@@ -1,0 +1,245 @@
+{
+  "type": "question",
+  "cues": [
+    {
+      "id": "question-0001",
+      "text": "Who is the one player you are making this game for?"
+    },
+    {
+      "id": "question-0002",
+      "text": "Why would a player come back to this game tomorrow?"
+    },
+    {
+      "id": "question-0003",
+      "text": "What does a player need to know before the first minute is fun?"
+    },
+    {
+      "id": "question-0004",
+      "text": "What will a new player try first, and does the game reward it?"
+    },
+    {
+      "id": "question-0005",
+      "text": "When does a player feel clever in this game?"
+    },
+    {
+      "id": "question-0006",
+      "text": "What would make a player quit in the first five minutes?"
+    },
+    {
+      "id": "question-0007",
+      "text": "What can a skilled player do that a new player cannot do yet?"
+    },
+    {
+      "id": "question-0008",
+      "text": "Why would a player tell a friend about this game?"
+    },
+    {
+      "id": "question-0009",
+      "text": "What does the player want, and does the game let them chase it?"
+    },
+    {
+      "id": "question-0010",
+      "text": "How does a player know they are getting better?"
+    },
+    {
+      "id": "question-0011",
+      "text": "What is the single moment you most want the player to feel?"
+    },
+    {
+      "id": "question-0012",
+      "text": "What is fun about the game with the art and sound taken away?"
+    },
+    {
+      "id": "question-0013",
+      "text": "What does the player do in the first ten seconds, and is it fun?"
+    },
+    {
+      "id": "question-0014",
+      "text": "Where does the tension come from, second to second?"
+    },
+    {
+      "id": "question-0015",
+      "text": "What surprises the player the fifth time they play?"
+    },
+    {
+      "id": "question-0016",
+      "text": "Which part of the game would you play for an hour with no goal?"
+    },
+    {
+      "id": "question-0017",
+      "text": "When is the player bored, and what can you do about it?"
+    },
+    {
+      "id": "question-0018",
+      "text": "What should the player feel when they lose?"
+    },
+    {
+      "id": "question-0019",
+      "text": "How does the game feel to control before anything else is added?"
+    },
+    {
+      "id": "question-0020",
+      "text": "What part of this idea makes you smile when you picture it?"
+    },
+    {
+      "id": "question-0021",
+      "text": "What does the player do over and over, in one short sentence?"
+    },
+    {
+      "id": "question-0022",
+      "text": "What is the hardest choice the player makes in one round?"
+    },
+    {
+      "id": "question-0023",
+      "text": "Which choice looks good but is a trap, and how does the player learn that?"
+    },
+    {
+      "id": "question-0024",
+      "text": "What does the player give up each time they pick one option?"
+    },
+    {
+      "id": "question-0025",
+      "text": "Is there one best move, and how will you stop it from taking over?"
+    },
+    {
+      "id": "question-0026",
+      "text": "What changes in the loop after ten minutes of play?"
+    },
+    {
+      "id": "question-0027",
+      "text": "What does the player risk each time they go around the loop?"
+    },
+    {
+      "id": "question-0028",
+      "text": "How does one round feed into the next?"
+    },
+    {
+      "id": "question-0029",
+      "text": "What does the player know at the moment they make a choice?"
+    },
+    {
+      "id": "question-0030",
+      "text": "Which action would you remove if the loop had to be simpler?"
+    },
+    {
+      "id": "question-0031",
+      "text": "What is the one thing that, if it fails, sinks the whole idea?"
+    },
+    {
+      "id": "question-0032",
+      "text": "What can you build in a day to prove the core idea works?"
+    },
+    {
+      "id": "question-0033",
+      "text": "What part of the game have you never built before?"
+    },
+    {
+      "id": "question-0034",
+      "text": "What will players misunderstand the first time they play?"
+    },
+    {
+      "id": "question-0035",
+      "text": "Which rule are you least sure about, and how will you test it?"
+    },
+    {
+      "id": "question-0036",
+      "text": "What would a harsh playtester say after one round?"
+    },
+    {
+      "id": "question-0037",
+      "text": "What happens if the main mechanic is less fun than you hope?"
+    },
+    {
+      "id": "question-0038",
+      "text": "What part depends on content you do not have yet?"
+    },
+    {
+      "id": "question-0039",
+      "text": "Where could a player break the game or get stuck?"
+    },
+    {
+      "id": "question-0040",
+      "text": "What would you change first if the first playtest goes badly?"
+    },
+    {
+      "id": "question-0041",
+      "text": "What can you cut and still have the game?"
+    },
+    {
+      "id": "question-0042",
+      "text": "What is the smallest version someone could play this week?"
+    },
+    {
+      "id": "question-0043",
+      "text": "How many levels, rooms or rounds do you truly need to ship?"
+    },
+    {
+      "id": "question-0044",
+      "text": "Which feature are you adding because it is cool, not because it is needed?"
+    },
+    {
+      "id": "question-0045",
+      "text": "What art can you make with the time and skills you have now?"
+    },
+    {
+      "id": "question-0046",
+      "text": "If you had half the time, what would you keep?"
+    },
+    {
+      "id": "question-0047",
+      "text": "What would you have to learn before you could finish this?"
+    },
+    {
+      "id": "question-0048",
+      "text": "Which system takes the most work, and is it worth it?"
+    },
+    {
+      "id": "question-0049",
+      "text": "What can you reuse from your past projects or from free tools?"
+    },
+    {
+      "id": "question-0050",
+      "text": "What does done look like for this game?"
+    },
+    {
+      "id": "question-0051",
+      "text": "How would you pitch this game in one sentence to a stranger?"
+    },
+    {
+      "id": "question-0052",
+      "text": "What makes this game different from the last one you played?"
+    },
+    {
+      "id": "question-0053",
+      "text": "What image from this game would make someone stop scrolling?"
+    },
+    {
+      "id": "question-0054",
+      "text": "What will a player remember a week after they stop playing?"
+    },
+    {
+      "id": "question-0055",
+      "text": "Why does this idea need to be a game and not a book or a film?"
+    },
+    {
+      "id": "question-0056",
+      "text": "What would the trailer show in its first three seconds?"
+    },
+    {
+      "id": "question-0057",
+      "text": "Which part of the idea would be lost if you made it safer?"
+    },
+    {
+      "id": "question-0058",
+      "text": "Who would love this game, and who would hate it?"
+    },
+    {
+      "id": "question-0059",
+      "text": "What does the theme add that the mechanics alone do not?"
+    },
+    {
+      "id": "question-0060",
+      "text": "What question will players ask each other about this game?"
+    }
+  ]
+}

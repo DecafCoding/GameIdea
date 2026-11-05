@@ -12,7 +12,7 @@ import {
   onePagerBoard,
   onePagerWithLoop,
 } from '@/test/fixtures/boards';
-import { dealDelays, toNodes, type CardNodeData } from './nodes';
+import { dealDelays, placeQuestionsNode, toNodes, type CardNodeData } from './nodes';
 
 const UI = { selectedId: null, hiddenIds: new Set<string>() };
 const zOf = (nodes: ReturnType<typeof toNodes>, id: string) =>
@@ -179,5 +179,59 @@ describe('toNodes with a Core Loop card', () => {
     expect(zOf(again, 'hook-1')).toBe(2000);
     const ids = again.map((n) => n.id);
     expect(ids.indexOf('loop-1')).toBeLessThan(ids.indexOf('hook-1'));
+  });
+});
+
+describe('toNodes with the Questions panel', () => {
+  const panelOf = (nodes: ReturnType<typeof toNodes>) =>
+    nodes.find((node) => node.id === 'questions-panel');
+
+  it('toNodes_onePager_oneQuestionsNodeBelowLoop', () => {
+    const nodes = toNodes(onePagerWithLoop(), UI);
+    expect(nodes.filter((node) => node.type === 'questions')).toHaveLength(1);
+    const panel = panelOf(nodes)!;
+    expect(panel.position).toEqual({ x: 680, y: 96 + 200 + 24 });
+    expect(panel.width).toBe(240);
+    expect(panel.height).toBeUndefined();
+    expect(panel.data).toEqual({});
+    // After the notes and the Concept panel, before every card.
+    const ids = nodes.map((n) => n.id);
+    expect(ids.indexOf('questions-panel')).toBe(ids.indexOf('concept-panel') + 1);
+  });
+
+  it('placeQuestionsNode_loopHeight_movesOnlyQuestionsNode', () => {
+    const board = onePagerWithLoop();
+    const nodes = toNodes(board, UI);
+    const placed = placeQuestionsNode(nodes, board, 340);
+    expect(panelOf(placed)!.position).toEqual({ x: 680, y: 96 + 340 + 24 });
+    placed.forEach((node, i) => {
+      if (node.id === 'questions-panel') expect(node).not.toBe(nodes[i]);
+      else expect(node).toBe(nodes[i]);
+    });
+  });
+
+  it('placeQuestionsNode_samePlaceOrFreeForm_sameArray', () => {
+    const board = onePagerWithLoop();
+    const nodes = toNodes(board, UI);
+    expect(placeQuestionsNode(nodes, board, undefined)).toBe(nodes);
+    expect(placeQuestionsNode(nodes, board, 200)).toBe(nodes);
+    const free = fixtureBoard([fixtureCard('hook')]);
+    const freeNodes = toNodes(free, UI);
+    expect(placeQuestionsNode(freeNodes, free, 340)).toBe(freeNodes);
+  });
+
+  it('toNodes_freeForm_noQuestionsNode', () => {
+    expect(panelOf(toNodes(fixtureBoard([fixtureCard('hook')]), UI))).toBeUndefined();
+  });
+
+  it('toNodes_questionsNode_notDraggableZIndex1', () => {
+    const nodes = toNodes(onePagerWithLoop(), UI);
+    const panel = panelOf(nodes)!;
+    expect(panel.zIndex).toBe(1);
+    expect(panel.draggable).toBe(false);
+    expect(panel.selectable).toBe(false);
+    expect(panel.focusable).toBe(false);
+    const cardZ = nodes.filter((n) => n.type === 'card' || n.type === 'loop').map((n) => n.zIndex!);
+    expect(Math.min(...cardZ)).toBeGreaterThan(1);
   });
 });

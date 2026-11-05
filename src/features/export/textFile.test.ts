@@ -12,6 +12,7 @@ import {
   onePagerBoard,
   secondModifier,
   onePagerWithLoop,
+  onePagerWithAnswers,
 } from '@/test/fixtures/boards';
 import { boardText, textFileName } from './textFile';
 
@@ -262,3 +263,32 @@ function withLoopText(loopText: string) {
     cards: board.cards.map((card) => (card.id === 'loop-1' ? { ...card, loopText } : card)),
   };
 }
+
+describe('textFile and the Questions panel', () => {
+  it('boardText_answers_questionsSectionAfterCoreLoopBeforeDetails', () => {
+    const text = boardText(onePagerWithAnswers());
+    const at = (heading: string) => text.indexOf(`\n${heading}\n\n`);
+    expect(at('Core Loop')).toBeGreaterThan(-1);
+    expect(at('Questions')).toBeGreaterThan(at('Core Loop'));
+    expect(at('Details')).toBeGreaterThan(at('Questions'));
+  });
+
+  it('boardText_answers_newestFirstQuestionThenAnswer', () => {
+    const section = boardText(onePagerWithAnswers()).split('\nQuestions\n\n')[1]!;
+    expect(section.split('\n\nDetails\n')[0]).toBe(
+      'What makes it fun?\nChasing the light.\n\nWho is the player?\nA night owl.',
+    );
+  });
+
+  it('boardText_multiLineAnswer_keepsLinesTrimmedAtEnd', () => {
+    const board = {
+      ...onePagerWithAnswers(),
+      questions: [{ id: 'a', question: 'Why? ', answer: 'One.  \n  Two.\t' }],
+    };
+    expect(boardText(board)).toContain('\nQuestions\n\nWhy?\nOne.\n  Two.\n\nDetails\n');
+  });
+
+  it('boardText_noAnswers_noQuestionsSection', () => {
+    expect(boardText(onePagerWithLoop())).not.toContain('\nQuestions\n');
+  });
+});

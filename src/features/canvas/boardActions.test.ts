@@ -16,6 +16,7 @@ import {
   fixtureStack,
   secondModifier,
   onePagerBoard,
+  onePagerWithAnswers,
   onePagerWithLoop,
 } from '@/test/fixtures/boards';
 import {
@@ -1141,5 +1142,56 @@ describe('loop text', () => {
     setLoopText(board, 'loop-1', '');
     resetLoopText(board, 'loop-1');
     expect(JSON.stringify(board)).toBe(before);
+  });
+});
+
+describe('answers survive other board actions', () => {
+  const fresh = (card: Card): Card => ({
+    ...card,
+    rings: card.rings.map((ring) => ({
+      ...ring,
+      cues: ring.cues.map((c) => ({ text: `new ${c.text}` })),
+    })),
+  });
+  /** A fake deal draw: distinct cue texts per call. */
+  const dealDraw = () => {
+    let n = 0;
+    return (deck: Deck): Card => {
+      n += 1;
+      const count = ['goal', 'conflict', 'twist', 'progression', 'constraint'].includes(deck)
+        ? 2
+        : 4;
+      return fixtureCard(deck, {
+        id: `dealt-${n}`,
+        z: 0,
+        rings: [
+          {
+            cues: Array.from({ length: count }, (_, i) => ({ text: `${deck} ${n}.${i}` })),
+            activeIndex: 0,
+          },
+        ],
+      });
+    };
+  };
+
+  it('redrawAll_onePagerWithAnswers_keepsQuestions', () => {
+    const board = onePagerWithAnswers();
+    const { board: next } = redrawAll(board, 'hook-1', fresh);
+    expect(next).not.toBe(board);
+    expect(next.questions).toBe(board.questions);
+  });
+
+  it('dealStack_onePagerWithAnswers_keepsQuestions', () => {
+    const board = onePagerWithAnswers();
+    const { board: next } = dealStack(board, 'hook-1', dealDraw());
+    expect(next).not.toBe(board);
+    expect(next.questions).toBe(board.questions);
+  });
+
+  it('setLoopText_onePagerWithAnswers_keepsQuestions', () => {
+    const board = onePagerWithAnswers();
+    const next = setLoopText(board, 'loop-1', 'my own loop');
+    expect(next).not.toBe(board);
+    expect(next.questions).toBe(board.questions);
   });
 });

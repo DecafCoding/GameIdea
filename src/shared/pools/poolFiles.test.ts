@@ -3,13 +3,16 @@
  * public/pools/ parses, ids and texts are unique in each pool, every genre has at least
  * 10 cues in each genre-tagged deck, each Modifier deck has at least 20 cues, and the
  * 2 split rules still hold. The pools are edited by hand after the split, so this test
- * is what keeps a later edit from breaking a floor.
+ * is what keeps a later edit from breaking a floor. The folder also holds question.json,
+ * the Questions panel pool (not a deck, not made by the split): at least 60 numbered,
+ * distinct, non-blank questions, each ending in "?" and at most 100 characters.
  */
 import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { DECKS, GENRE_DECKS, GENRES, MOD_DECKS, type Deck, type Pool } from '@/shared/model';
 import { parsePool } from './parsePool';
+import { parseQuestionPool } from './parseQuestionPool';
 
 const DIR = join(process.cwd(), 'public', 'pools');
 
@@ -17,10 +20,16 @@ function load(type: Deck): Pool {
   return parsePool(type, JSON.parse(readFileSync(join(DIR, `${type}.json`), 'utf8')));
 }
 
+function loadQuestions() {
+  return parseQuestionPool(JSON.parse(readFileSync(join(DIR, 'question.json'), 'utf8')));
+}
+
 describe('pool files', () => {
   it('poolFiles_everyDeck_hasOneFileThatParses', () => {
     const files = readdirSync(DIR).filter((file) => file.endsWith('.json'));
-    expect(files.map((file) => file.replace(/\.json$/, '')).sort()).toEqual([...DECKS].sort());
+    expect(files.map((file) => file.replace(/\.json$/, '')).sort()).toEqual(
+      [...DECKS, 'question'].sort(),
+    );
     for (const type of DECKS) expect(load(type).cues.length).toBeGreaterThan(0);
   });
 
@@ -66,5 +75,25 @@ describe('pool files', () => {
   it('poolFiles_settingCues_haveNoLeadingArticle', () => {
     const bad = load('setting').cues.filter((cue) => /^(the|a|an) /i.test(cue.text));
     expect(bad.map((cue) => cue.text)).toEqual([]);
+  });
+});
+
+describe('question pool file', () => {
+  it('questionPool_file_parsesWithAtLeast60Questions', () => {
+    expect(loadQuestions().cues.length).toBeGreaterThanOrEqual(60);
+  });
+
+  it('questionPool_ids_areUniqueAndNumbered', () => {
+    const ids = loadQuestions().cues.map((cue) => cue.id);
+    expect(new Set(ids).size).toBe(ids.length);
+    expect(ids.filter((id) => !/^question-\d{4}$/.test(id))).toEqual([]);
+  });
+
+  it('questionPool_texts_areDistinctNonBlankQuestions', () => {
+    const texts = loadQuestions().cues.map((cue) => cue.text.trim());
+    expect(new Set(texts.map((text) => text.toLowerCase())).size).toBe(texts.length);
+    expect(texts.filter((text) => text === '' || !text.endsWith('?') || text.length > 100)).toEqual(
+      [],
+    );
   });
 });

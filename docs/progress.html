@@ -296,10 +296,27 @@
   </ul>
 </section>
 
-<section class="phase" data-phase="10" data-status="not-planned">
-  <h2>Phase 10: Questions Panel <span class="badge">not planned</span></h2>
-  <p class="meta"><strong>Branch:</strong> <em>to be determined by <code>/dev-plan-phase 10</code></em></p>
-  <p class="meta"><strong>Phase doc:</strong> <em>none yet — run <code>/dev-plan-phase 10</code></em></p>
+<section class="phase" data-phase="10" data-status="complete">
+  <h2>Phase 10: Questions Panel <span class="badge">complete</span></h2>
+  <p class="meta"><strong>Branch:</strong> <code>phase-10-questions</code></p>
+  <p class="meta"><strong>Phase doc:</strong> <code>docs/phases/phase-10-questions.html</code></p>
+  <p class="meta"><strong>Depends on:</strong> Phase 7 (One-Pager board, Details panel); Phase 9 (Core Loop card, ONE_PAGER_LOOP_SPOT); Phase 8 (Deal Stack, used in tests); no new library</p>
+  <p class="meta"><strong>Summary:</strong> Phase 10 adds a Questions panel to every One-Pager board, old and new, joined below its Core Loop card.</p>
+  <ul class="tasks">
+    <li class="task" data-task="1" data-status="done">Task 1: Write the 60 questions in question.json with the pool floor test and the browser fixture</li>
+    <li class="task" data-task="2" data-status="done">Task 2: Load the question pool on its own with loadQuestionPool and useQuestionPool</li>
+    <li class="task" data-task="3" data-status="done">Task 3: Add Answer and the optional Board.questions to the model and the Zod import check</li>
+    <li class="task" data-task="4" data-status="done">Task 4: Create features/questions with the pure pickQuestion rule and its lint block</li>
+    <li class="task" data-task="5" data-status="done">Task 5: Add the addAnswer, editAnswer and deleteAnswer recipes</li>
+    <li class="task" data-task="6" data-status="done">Task 6: Add the Questions section to the text file after Core Loop</li>
+    <li class="task" data-task="7" data-status="done">Task 7: Vendor the Lucide message-circle-question-mark icon</li>
+    <li class="task" data-task="8" data-status="done">Task 8: Build the useQuestionDeck view state and the QuestionsPanel view</li>
+    <li class="task" data-task="9" data-status="done">Task 9: Add the pure questionsPlace and the questions node in toNodes</li>
+    <li class="task" data-task="10" data-status="done">Task 10: Wire the QuestionsNode into the canvas and the question pool into BoardScreen</li>
+    <li class="task" data-task="11" data-status="done">Task 11: Add the Questions browser tests and run the full regression with the targets</li>
+    <li class="task" data-task="12" data-status="done">Task 12: Update CLAUDE.md and the README for the Questions panel and features/questions</li>
+    <li class="task" data-task="13" data-status="done">Task 13: Commit, push, and open PR</li>
+  </ul>
 </section>
 
 </body>

@@ -145,6 +145,19 @@ export default tseslint.config(
       ),
     },
   },
+  // The canvas imports the questions feature; it never imports the canvas (no cycle).
+  {
+    files: ['src/features/questions/**'],
+    rules: {
+      'no-restricted-imports': restrict(
+        [dexie, reactFlow, zustand, zundo, zod],
+        [
+          ...featureImportsUp,
+          { group: ['@/features/canvas'], message: 'features/questions never imports the canvas.' },
+        ],
+      ),
+    },
+  },
   {
     files: ['src/features/export/**'],
     rules: {

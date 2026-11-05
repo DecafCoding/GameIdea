@@ -7,6 +7,12 @@
  * width comes from its content, so React Flow measures it. Concept cards have no node.
  * The Core Loop card is a 'loop' node ranked with the other roots by z, 240 wide with no
  * height, so React Flow measures it as it grows with its text.
+ * On a One-Pager board the Questions panel is 1 more node at zIndex 1 (under every card),
+ * placed by questionsPlace below the Core Loop card's 200 px minimum height, 240 wide with
+ * no height, so React Flow measures it. Not draggable and never stored. placeQuestionsNode
+ * then moves it below the card's drawn height, replacing only that node: React Flow
+ * forgets the measured size of every new node object, so re-deriving every node while the
+ * Core Loop card grows would hide them all for a frame and blur its edit field.
  * The array is sorted by zIndex, so Tab moves through the cards in z order.
  * After Deal Stack, each dealt card carries its reveal delay (dealDelays): the dealt cards
  * fade in one at a time over about 1 second. The delays are view state, never stored.
@@ -16,6 +22,7 @@ import type { Board, Card } from '@/shared/model';
 import { CONCEPT_NODE_ID, conceptPlace, conceptWidth } from './concept';
 import type { Below } from './connector';
 import { cardSize, HOOK_WIDTH } from './placement';
+import { QUESTIONS_NODE_ID, QUESTIONS_WIDTH, questionsPlace } from './questionsPlace';
 import { cardText, isOnTop } from './reading';
 import { isRoot, stackOrder } from './stack';
 
@@ -45,11 +52,16 @@ export type ConceptNodeData = { width: number };
 /** The Core Loop card: its id; the card comes from the store. */
 export type LoopNodeData = { cardId: string };
 
+/** The Questions panel: no data; it reads the board and the deck state itself. */
+export type QuestionsNodeData = Record<string, never>;
+
 export type CardFlowNode = Node<CardNodeData, 'card'>;
 export type NoteFlowNode = Node<NoteNodeData, 'note'>;
 export type ConceptFlowNode = Node<ConceptNodeData, 'concept'>;
 export type LoopFlowNode = Node<LoopNodeData, 'loop'>;
-export type BoardFlowNode = CardFlowNode | NoteFlowNode | ConceptFlowNode | LoopFlowNode;
+export type QuestionsFlowNode = Node<QuestionsNodeData, 'questions'>;
+export type BoardFlowNode =
+  CardFlowNode | NoteFlowNode | ConceptFlowNode | LoopFlowNode | QuestionsFlowNode;
 
 export interface NodeUi {
   selectedId: string | null;
@@ -156,8 +168,45 @@ export function toNodes(board: Board, ui: NodeUi): BoardFlowNode[] {
         },
       ]
     : [];
+  // The Questions panel below the Core Loop card: above notes, below every card.
+  const questionsAt = questionsPlace(board);
+  const questions: QuestionsFlowNode[] = questionsAt
+    ? [
+        {
+          id: QUESTIONS_NODE_ID,
+          type: 'questions',
+          position: questionsAt,
+          width: QUESTIONS_WIDTH,
+          zIndex: 1,
+          draggable: false,
+          selectable: false,
+          focusable: false,
+          data: {},
+        },
+      ]
+    : [];
   const ranked: BoardFlowNode[] = [...cards, ...loops].sort(
     (a, b) => (a.zIndex ?? 0) - (b.zIndex ?? 0),
   );
-  return [...notes, ...concept, ...ranked];
+  return [...notes, ...concept, ...questions, ...ranked];
+}
+
+/**
+ * Moves the Questions panel node below the Core Loop card's drawn height. Returns the same
+ * array when the node is missing or already there; else a copy where only that node is new.
+ */
+export function placeQuestionsNode(
+  nodes: BoardFlowNode[],
+  board: Board,
+  loopHeight: number | undefined,
+): BoardFlowNode[] {
+  const place = questionsPlace(board, loopHeight);
+  const index = nodes.findIndex((node) => node.id === QUESTIONS_NODE_ID);
+  const node = nodes[index];
+  if (!place || !node || (node.position.x === place.x && node.position.y === place.y)) {
+    return nodes;
+  }
+  const next = [...nodes];
+  next[index] = { ...node, position: place };
+  return next;
 }
