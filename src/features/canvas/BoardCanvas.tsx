@@ -61,11 +61,11 @@ import { conceptRectOf, useCanvasUi } from './CanvasProvider';
 import { CardNode, CardNodeContext, type CardNodeActions } from './CardNode';
 import {
   chipResultText,
-  CONCEPT_NODE_ID,
   conceptDrop,
   dragOutOfConcept,
   leaveConcept,
-  onePagerHook,
+  moveConcept,
+  pinConcept,
   popOutOfConcept,
   resizeConcept,
   type ConceptOver,
@@ -96,7 +96,7 @@ const DRAG_RAISE = 1_000_000;
 
 interface DragState {
   id: string;
-  kind: 'card' | 'note';
+  kind: 'card' | 'note' | 'concept';
   startX: number;
   startY: number;
   /** The node's top-left at drag start, for a free (Alt) drop after a snapped drag. */
@@ -340,8 +340,6 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
       // The tucked cards under each moved card, read now: the updater may run after a drop
       // has already removed the card from the board.
       const b = useBoardStore.getState().board;
-      // On a One-Pager board the Concept panel moves with the Hook Card during its drag.
-      const hookId = onePagerHook(b)?.id ?? null;
       const tucked = new Map<string, string[]>();
       for (const change of changes) {
         if (change.type !== 'position' || !b.cards.some((c) => c.id === change.id)) continue;
@@ -359,16 +357,6 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
           if (!node) continue;
           const dx = change.position.x - node.position.x;
           const dy = change.position.y - node.position.y;
-          if (change.id === hookId) {
-            const panel = base.find((n) => n.id === CONCEPT_NODE_ID);
-            if (panel) {
-              extra.push({
-                type: 'position',
-                id: CONCEPT_NODE_ID,
-                position: { x: panel.position.x + dx, y: panel.position.y + dy },
-              });
-            }
-          }
           for (const childId of tucked.get(change.id) ?? []) {
             const child = base.find((n) => n.id === childId);
             if (!child) continue;
@@ -387,12 +375,10 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
 
   const onNodeDragStart: OnNodeDrag<BoardFlowNode> = useCallback(
     (event, node) => {
-      // The Concept panel is never dragged.
-      if (node.type === 'concept') return;
       const start = pointerOf(event);
       drag.current = {
         id: node.id,
-        kind: node.type === 'note' ? 'note' : 'card',
+        kind: node.type === 'note' ? 'note' : node.type === 'concept' ? 'concept' : 'card',
         startX: start.x,
         startY: start.y,
         nodeX: node.position.x,
@@ -514,6 +500,12 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
         changeBoard((b) => moveNote(b, node.id, at.x, at.y));
         return;
       }
+      // The Details panel moves on its own and is never a drop target or a dropped card.
+      if (state.kind === 'concept') {
+        const at = snap ? snapToGrid({ x, y }) : { x, y };
+        changeBoard((b) => moveConcept(b, at.x, at.y));
+        return;
+      }
       const point = flow.screenToFlowPosition(p);
       // A Hook Card dropped on a card only moves; the notice says why (design 9.13).
       const b = useBoardStore.getState().board;
@@ -523,7 +515,7 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
         const action = dropAction(b, dragged, dropTarget(b, node.id, point), point);
         if (action.kind === 'move' && action.refused) setNotice(action.refused);
       }
-      changeBoard((b) => dropCard(b, node.id, point, { x, y }, { snap, concept }));
+      changeBoard((b) => pinConcept(b, dropCard(b, node.id, point, { x, y }, { snap, concept })));
     },
     [changeBoard, flow, setNotice],
   );

@@ -16,8 +16,8 @@ import { CARD_SIZE, findOpenSpot, GRID, HOOK_WIDTH, type Point, type Rect } from
 import { cardText, onTopCardOf } from './reading';
 import { childrenOf, descendantsOf, layoutStack, nextZ, rootOf, stackOrder } from './stack';
 
-/** The gap between the Hook Card's right edge and the panel (design 9.15: 240 + 56). */
-export const CONCEPT_GAP = 56;
+/** The gap between the Hook Card's right edge and the panel (design 9.15: 240 + 28; user 2026-11-05, was 56). */
+export const CONCEPT_GAP = 28;
 /** The React Flow node id of the panel. */
 export const CONCEPT_NODE_ID = 'concept-panel';
 
@@ -55,10 +55,38 @@ export function onePagerHook(board: Board): Card | null {
   return board.cards.find((card) => card.type === 'hook') ?? null;
 }
 
-/** The panel's top-left: the Hook Card's left + 240 + 56, same top. Null on Free Form. */
+/**
+ * The panel's top-left: its saved place once dragged (conceptPos), else the Hook Card's
+ * left + 240 + 28, same top. Null on Free Form.
+ */
 export function conceptPlace(board: Board): Point | null {
   const hook = onePagerHook(board);
-  return hook ? { x: hook.x + HOOK_WIDTH + CONCEPT_GAP, y: hook.y } : null;
+  if (!hook) return null;
+  if (board.conceptPos) return { x: board.conceptPos.x, y: board.conceptPos.y };
+  return { x: hook.x + HOOK_WIDTH + CONCEPT_GAP, y: hook.y };
+}
+
+/**
+ * Keeps the panel where it was when a change moves the Hook Card: a board with no saved
+ * conceptPos gets the place it had before, so the panel never follows the Hook Card.
+ * Returns `after` itself when nothing needs saving.
+ */
+export function pinConcept(before: Board, after: Board): Board {
+  if (before.conceptPos || after.conceptPos) return after;
+  const was = conceptPlace(before);
+  const now = conceptPlace(after);
+  if (!was || !now || (was.x === now.x && was.y === now.y)) return after;
+  return { ...after, conceptPos: was };
+}
+
+/**
+ * Moves the panel to (x, y): 1 changeBoard, 1 undo step, 1 save. The same board on Free
+ * Form or when the place does not change.
+ */
+export function moveConcept(board: Board, x: number, y: number): Board {
+  const place = conceptPlace(board);
+  if (!place || (place.x === x && place.y === y && board.conceptPos)) return board;
+  return { ...board, conceptPos: { x, y } };
 }
 
 function clampWidth(width: number): number {

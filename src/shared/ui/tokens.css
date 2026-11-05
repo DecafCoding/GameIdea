@@ -210,10 +210,10 @@
 }
 
 /* 2026-11-04 handoff (docs/design-system.html 4.5): card, tucked, Hook Card and note tokens follow data-mode. Dark is the default.
- * User 2026-11-05: cards take the Details chip look, the panel --surface with the deck color at 20% (chips stay at 28%), and the text colors moved to keep 4.5:1. */
+ * User 2026-11-05: cards take the Details chip look, the panel --surface with the deck color at 12%; Details chips use the same --card-tint, and the text colors moved to keep 4.5:1. */
 :root {
   --card-face: #23272F;
-  --card-tint: 20%;
+  --card-tint: 12%;
   --card-tucked-1: #23272F;
   --card-tucked-2: #23272F;
   --card-tucked-3: #23272F;
@@ -235,7 +235,7 @@
 }
 [data-mode="light"] {
   --card-face: #FFFFFF;
-  --card-tint: 20%;
+  --card-tint: 12%;
   --card-tucked-1: #FAFAFA;
   --card-tucked-2: #F5F5F5;
   --card-tucked-3: #F0F0F0;

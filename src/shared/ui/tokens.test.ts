@@ -27,7 +27,7 @@ const USER_OVERRIDES = ['--radius-card'];
  */
 const MODE_TOKENS_2026_11_04: Record<string, { dark: string; light: string }> = {
   '--card-face': { dark: '#23272F', light: '#FFFFFF' },
-  '--card-tint': { dark: '20%', light: '20%' },
+  '--card-tint': { dark: '12%', light: '12%' },
   '--card-tucked-1': { dark: '#23272F', light: '#FAFAFA' },
   '--card-tucked-2': { dark: '#23272F', light: '#F5F5F5' },
   '--card-tucked-3': { dark: '#23272F', light: '#F0F0F0' },
@@ -135,6 +135,7 @@ const ICONS: IconName[] = [
   'square-arrow-down',
   'drama',
   'repeat',
+  'list',
 ];
 
 describe('design tokens', () => {

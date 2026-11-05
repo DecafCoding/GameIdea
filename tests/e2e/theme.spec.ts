@@ -2,7 +2,7 @@
  * Browser tests for the 6 mode × theme color combinations (design 4.1 to 4.3, 9.1): both
  * screens take their chrome from the tokens of the chosen combination; the card face, the
  * note and the Hook Card fill follow the mode only (design 4.5); badges and center icons look
- * the same in every combination; every card carries its deck edge and 20% tint and the Hook
+ * the same in every combination; every card carries its deck edge and 12% tint and the Hook
  * Card none (4.4); warning colors stay fixed in Blue and Green; light-mode outlines and the
  * Hook label use the mode's --accent-text.
  */
@@ -110,8 +110,8 @@ async function tintLayer(locator: Locator) {
   });
 }
 
-/** The --card-tint alpha by mode (design 4.5): 20% in both modes, over the Details panel surface. */
-const TINT: Record<Mode, number> = { dark: 0.2, light: 0.2 };
+/** The --card-tint alpha by mode (design 4.5): 12% in both modes, the same as a Details chip. */
+const TINT: Record<Mode, number> = { dark: 0.12, light: 0.12 };
 
 /** Checks the layer is the deck color at the mode's tint with a 1 px inset deck-color edge. */
 async function expectDeckTint(locator: Locator, deck: Rgb, mode: Mode = 'dark') {

@@ -140,7 +140,7 @@ export function toNodes(board: Board, ui: NodeUi): BoardFlowNode[] {
     selectable: false,
     data: { noteId: note.id },
   }));
-  // The Concept panel beside a One-Pager Hook Card: above notes, below every card.
+  // The Concept panel on a One-Pager board: above notes, below every card.
   const place = conceptPlace(board);
   const concept: ConceptFlowNode[] = place
     ? [
@@ -149,7 +149,8 @@ export function toNodes(board: Board, ui: NodeUi): BoardFlowNode[] {
           type: 'concept',
           position: place,
           zIndex: 1,
-          draggable: false,
+          // Dragged on its own (user 2026-11-05); chips and the resize handle are nodrag.
+          draggable: true,
           selectable: false,
           focusable: false,
           data: { width: conceptWidth(board) },

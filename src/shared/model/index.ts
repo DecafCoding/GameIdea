@@ -275,6 +275,12 @@ export interface Board {
   kind: BoardKind;
   /** One-Pager boards only: the Concept panel width (CONCEPT_WIDTH); absent means default. */
   conceptWidth?: number;
+  /**
+   * One-Pager boards only: the Details panel's top-left once the user has dragged it
+   * (user 2026-11-05, added inside format 2 while the app is in test). Absent means the
+   * place beside the Hook Card (conceptPlace). The panel then never follows the Hook Card.
+   */
+  conceptPos?: { x: number; y: number };
   createdAt: string;
   updatedAt: string;
   /**

@@ -18,40 +18,6 @@
   cursor: default;
 }
 
-/* Header: "Concept" and the count pill, gap 8. */
-.header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-/* Section label role: Space Grotesk 12 / 600, uppercase, 0.08em, --text-muted. */
-.title {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-
-/* Count pill: 22 tall, padding 0 9, radius 11, border 1 --border-strong, 11/600 --text. */
-.pill {
-  display: inline-flex;
-  align-items: center;
-  flex: none;
-  box-sizing: border-box;
-  height: 22px;
-  padding: 0 9px;
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius-pill);
-  font-family: var(--font-body);
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--text);
-}
-
 .help {
   margin: 0;
   font-family: var(--font-body);
@@ -143,27 +109,35 @@
 }
 
 /*
- * Resize handle: 24 × 44, radius 8, border 1 --border-strong, fill --surface, grip 14
- * --text-muted, on the right edge, centered on the panel height, 12 outside the edge.
+ * Resize handle: 12 × 44, radius 6, border 1 --border-strong, fill --surface, grip 10
+ * --text-muted, on the right edge, centered on the panel height, 4 outside the edge, so it
+ * fits the 28 gap to the Core Loop card (user 2026-11-05, was 24 wide and 12 outside).
+ * A clear layer widens the hit area to 24.
  */
 .handle {
   position: absolute;
   top: 50%;
-  right: -36px;
+  right: -16px;
   display: flex;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  width: 24px;
+  width: 12px;
   height: 44px;
   padding: 0;
   border: 1px solid var(--border-strong);
-  border-radius: 8px;
+  border-radius: 6px;
   background: var(--surface);
   color: var(--text-muted);
   cursor: ew-resize;
   transform: translateY(-50%);
   touch-action: none;
+}
+
+.handle::before {
+  content: '';
+  position: absolute;
+  inset: 0 -6px;
 }
 
 /* A dealt card (design 9.9, 11): fades in over --t-fade after its turn in the deal. */

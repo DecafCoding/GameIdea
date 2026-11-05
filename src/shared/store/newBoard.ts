@@ -23,9 +23,9 @@ export const ONE_PAGER_HOOK_SPOT = { x: 96, y: 96 } as const;
 
 /**
  * Where a new One-Pager board's Core Loop card sits: the Concept panel's right edge at its
- * default width (96 + 240 + 56 + 232), plus 56 (design 9.16).
+ * default width (96 + 240 + 28 + 232), plus 28, the same gap as Hook Card to panel (design 9.16).
  */
-export const ONE_PAGER_LOOP_SPOT = { x: 680, y: 96 } as const;
+export const ONE_PAGER_LOOP_SPOT = { x: 624, y: 96 } as const;
 
 /** A new board, unpanned at zoom 1, with the given name (default above) and kind. */
 export function newBoard(

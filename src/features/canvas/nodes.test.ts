@@ -107,13 +107,19 @@ describe('toNodes on a One-Pager board', () => {
     const nodes = toNodes({ ...onePagerBoard(), conceptWidth: 300 }, UI);
     const panel = nodes.find((node) => node.id === 'concept-panel')!;
     expect(panel.type).toBe('concept');
-    expect(panel.position).toEqual({ x: 392, y: 96 });
+    expect(panel.position).toEqual({ x: 364, y: 96 });
     expect(panel.data).toEqual({ width: 300 });
     expect(panel.zIndex).toBe(1);
-    expect(panel.draggable).toBe(false);
+    expect(panel.draggable).toBe(true);
     // Above notes, below every card.
     const cardZ = nodes.filter((n) => n.type === 'card').map((n) => n.zIndex ?? 0);
     expect(Math.min(...cardZ)).toBeGreaterThan(1);
+  });
+
+  it('toNodes_onePagerWithConceptPos_panelAtSavedPlace', () => {
+    const nodes = toNodes({ ...onePagerBoard(), conceptPos: { x: 900, y: 480 } }, UI);
+    const panel = nodes.find((node) => node.id === 'concept-panel')!;
+    expect(panel.position).toEqual({ x: 900, y: 480 });
   });
 
   it('toNodes_freeForm_noConceptNode', () => {
@@ -159,7 +165,7 @@ describe('toNodes with a Core Loop card', () => {
     expect(loop.type).toBe('loop');
     expect(loop.width).toBe(240);
     expect(loop.height).toBeUndefined();
-    expect(loop.position).toEqual({ x: 680, y: 96 });
+    expect(loop.position).toEqual({ x: 624, y: 96 });
     expect(loop.data).toEqual({ cardId: 'loop-1' });
     expect(nodes.some((node) => node.type === 'card' && node.id === 'loop-1')).toBe(false);
   });

@@ -19,34 +19,6 @@
   box-shadow: var(--shadow-hook);
 }
 
-.header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-/* A 24 dot in --accent with the hook icon 13 in --on-accent. */
-.dot {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: var(--accent);
-  color: var(--on-accent);
-}
-
-/* "Hook", Display 12/600, 0.08em, uppercase, in the current mode's --accent-text (design 4.2, 9.5). */
-.label {
-  color: var(--accent-text);
-  font-family: var(--font-display);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
 /* The sentence: 14, line height 1.45, --hook-text. Selectable, so it can be copied
    (React Flow turns selection off on nodes). */
 .sentence {
