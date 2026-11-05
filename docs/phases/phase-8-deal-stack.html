@@ -430,7 +430,11 @@ npx playwright test tests/e2e/deal.spec.ts</code></pre>
 
 <h3>Execution notes</h3>
 <ul>
-  <li><em>To be filled by Task 7: JS and pool sizes, timing results, existing tests that changed.</em></li>
+  <li>Sizes (npm run size): JavaScript 212.2 KB of 250 KB gzip; pools 48.6 KB of 100 KB gzip.</li>
+  <li>Timing: <code>perf_dealStack_onePagerUpdatesHookUnder100ms</code> passed in Chromium, Firefox and WebKit (limits as planned: 100 ms, WebKit 300 ms); every existing @timing test passed. Full <code>npm run test:e2e</code>: 811 passed, 8 skipped (the existing frame-rate and first-load tests that run only in Chromium).</li>
+  <li>Existing tests changed: <code>hook_menu_hasIconItems</code> (5 items) and <code>onePager_hookMenu_copyAndRedrawOnly</code> renamed to <code>onePager_hookMenu_copyDealAndRedrawOnly</code>, as planned; the HookMenu and CardStrip unit tests for the new item and icons. Not planned: <code>theme_light_*_everyCardHasDeckTintAndHookNone</code> in <code>tests/e2e/theme.spec.ts</code> already failed on main (it expected the 14% tint in light mode after the light tint became 7%); it now expects 14% dark and 7% light, per CLAUDE.md "Theme".</li>
+  <li>deal_fullStack_disabledUntilACardIsDiscarded clicks near the bottom of the last train card with page.mouse, because a locator click at the card's top-left kept retrying under the Hook Card menu toolbar.</li>
+  <li>Task tracking used progress.html only; the per-task tracking tool was not available in this run.</li>
 </ul>
 
 </body>
