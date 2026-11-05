@@ -47,7 +47,7 @@ test('board_emptyBoard_showsPanelAndZeroCounts', async ({ page }) => {
   );
   await expect(page.getByTestId('start-here')).toHaveText('Start Here');
   await expect(badge(page)).toContainText('0 cards');
-  await expect(rail(page).getByRole('button', { name: 'Genres' })).toHaveCount(0);
+  await expect(rail(page).getByRole('button', { name: 'Genres', exact: true })).toHaveCount(0);
   await expect(page.getByRole('link', { name: 'Board List' })).toBeVisible();
   await expect(page.getByRole('textbox', { name: 'Board Name' })).toHaveValue('Test Board');
   await expect(page.getByRole('button', { name: 'Undo' })).toBeDisabled();

@@ -1,0 +1,33 @@
+/*
+ * GenreButton (user 2026-11-05): a 36 px square beside a genre deck button, radius 8,
+ * border 1 --accent, accent at 18% fill, the count (Inter 13 / 600) or the 18 px drama icon
+ * in --accent-text. It follows the theme color through --accent. 36 px is the recorded rail
+ * deck button deviation from the 44 px hit target.
+ */
+.button {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: var(--rail-button-h);
+  min-height: var(--rail-button-h);
+  padding: 0;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-button);
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+  color: var(--accent-text);
+  font-family: var(--font-body);
+  font-size: 13px; /* user 2026-11-05; no token */
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.button:hover {
+  background: color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+.button:active {
+  transform: scale(0.97);
+}

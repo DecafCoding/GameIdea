@@ -2,11 +2,8 @@
  * DeckButton: one 36 px deck button in the side rail (design 8.2): the deck icon in the
  * deck rail color, with no circle, and the deck name. A Modifier deck button names its
  * Modifier deck and may be icon-only, with the name as its hover label. onDraw gets the
- * button's rect, which is where the draw motion starts. trailing renders last inside the
- * button (the rail puts a genre count pill there) and describedBy describes the button by
- * it; the button keeps its "Draw A …" name, and this feature never imports the genres one.
+ * button's rect, which is where the draw motion starts.
  */
-import type { ReactNode } from 'react';
 import { iconFor } from '@/features/card';
 import { DECK_NAME, MOD_DECK_NAME, type CardType, type Deck, type ModDeck } from '@/shared/model';
 import { Icon } from '@/shared/ui';
@@ -30,28 +27,15 @@ interface DeckButtonProps {
   iconOnly?: boolean;
   disabled: boolean;
   onDraw: (type: Deck, from: DOMRect, modDeck?: ModDeck) => void;
-  /** Rendered last inside the button, such as a genre count pill. */
-  trailing?: ReactNode;
-  /** The id of an element that describes the button (aria-describedby). */
-  describedBy?: string;
 }
 
-export function DeckButton({
-  type,
-  modDeck,
-  iconOnly = false,
-  disabled,
-  onDraw,
-  trailing,
-  describedBy,
-}: DeckButtonProps) {
+export function DeckButton({ type, modDeck, iconOnly = false, disabled, onDraw }: DeckButtonProps) {
   const name = deckLabel(type, modDeck);
   return (
     <button
       type="button"
       className={`${styles.deck} ${iconOnly ? styles.iconOnly : ''}`}
       aria-label={drawLabel(type, modDeck)}
-      aria-describedby={describedBy}
       title={iconOnly ? name : undefined}
       disabled={disabled}
       onClick={(event) => onDraw(type, event.currentTarget.getBoundingClientRect(), modDeck)}
@@ -60,7 +44,6 @@ export function DeckButton({
         <Icon name={iconFor({ type, modDeck })} size={18} />
       </span>
       {!iconOnly && <span className={styles.name}>{name}</span>}
-      {trailing}
     </button>
   );
 }

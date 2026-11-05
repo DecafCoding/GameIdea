@@ -205,7 +205,8 @@
  * Tab bar (design 9.11, 2026-11-04): gap 4, bottom border 1 --border, margin-bottom 4. A tab
  * is 44 tall, padding 0 14, 14/600 --text-muted, with a 2 px bottom border that sits on the
  * bar's border (margin-bottom −1). Selected: --text and an --accent underline (the light-mode
- * outline rule in 4.2 uses --accent-text). Disabled: --text-disabled.
+ * outline rule in 4.2 uses --accent-text). Disabled: --text-disabled. A tab icon (Genres:
+ * drama, 16) sits left of the label, gap 8, in the tab's text color (user 2026-11-05).
  */
 .tabs {
   display: flex;
@@ -215,6 +216,9 @@
 }
 
 .tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   height: var(--button-h);
   margin-bottom: -1px;
   padding: 0 14px; /* design 9.11; no token */

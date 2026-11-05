@@ -186,7 +186,7 @@
   <li><strong>The Hook Card</strong> heads each stack: 240 × 200 with a 2 px theme color border. It is dark (<code>#2A2F38</code>) in dark mode and white (<code>#FFFFFF</code>) in light mode <span class="tag">2026-11-04</span>. Reason: cards follow the mode now, so the border carries the Hook Card's identity in both modes.</li>
   <li><strong>Hook Card actions sit in a strip menu</strong> above the card, not on the card. Reason: less clutter, and it matches the other cards. It opens on hover <span class="tag">user 2026-11-02</span>.</li>
   <li><strong>Connector badges are pills in the lower card's color.</strong> This was TheForge's option C.</li>
-  <li><strong>Genre counts replace a genre mark.</strong> A 15 px pill in the theme color on the 4 genre decks shows how many genres are on.</li>
+  <li><strong>Genre counts replace a genre mark.</strong> A 36 px Edit Genres button in the theme color beside each of the 4 genre decks shows how many genres are on, or the drama icon when all are on <span class="tag">user 2026-11-05</span>.</li>
   <li><strong>Themes.</strong> There are Dark and Light modes, and Orange, Blue and Green theme colors; Orange dark is the default. The theme color changes only the accent. The mode changes the chrome, card faces, tucked faces, the note and the Hook Card fill <span class="tag">2026-11-04</span>. Deck colors, rings, badges and center icons never change. This reverses TheForge's "one theme, one accent" rule. Reason: cream cards on a dark canvas were too bright, and the user asked for dark cards.</li>
   <li><strong>A Settings button</strong> with a gear icon sits at the bottom of the rail.</li>
   <li><strong>Concept chips</strong> are text-sized pills with radius 8, not cards <span class="tag">2026-11-04</span>. Reason: many settled cards must fit beside the Hook Card on a One-Pager board.</li>
@@ -222,8 +222,8 @@
 <h3>4.2 Theme colors (accent)</h3>
 <table>
   <tr><th>Token</th><th>Orange (default)</th><th>Blue</th><th>Green</th><th>Use</th></tr>
-  <tr><td><code>--accent</code></td><td><span class="sw" style="background:#E8742E"></span>#E8742E</td><td><span class="sw" style="background:#4C8DF6"></span>#4C8DF6</td><td><span class="sw" style="background:#3FB37F"></span>#3FB37F</td><td>App mark, primary buttons, selection and focus outlines, drop targets, toggles, the Hook Card border, the rail Hook Card button border, genre count border</td></tr>
-  <tr><td><code>--accent-rgb</code></td><td>232, 116, 46</td><td>76, 141, 246</td><td>63, 179, 127</td><td>For tints: accent at 18% fill (chips, genre count)</td></tr>
+  <tr><td><code>--accent</code></td><td><span class="sw" style="background:#E8742E"></span>#E8742E</td><td><span class="sw" style="background:#4C8DF6"></span>#4C8DF6</td><td><span class="sw" style="background:#3FB37F"></span>#3FB37F</td><td>App mark, primary buttons, selection and focus outlines, drop targets, toggles, the Hook Card border, the rail Hook Card button border, Edit Genres button border</td></tr>
+  <tr><td><code>--accent-rgb</code></td><td>232, 116, 46</td><td>76, 141, 246</td><td>63, 179, 127</td><td>For tints: accent at 18% fill (chips, Edit Genres button)</td></tr>
   <tr><td><code>--accent-text</code>, dark mode</td><td>#F6B08A</td><td>#A9C8FF</td><td>#8FDDB5</td><td>Accent-colored text on dark surfaces</td></tr>
   <tr><td><code>--accent-text</code>, light mode</td><td>#B4531A</td><td>#2B5FB8</td><td>#1F7A4F</td><td>Accent-colored text on light surfaces</td></tr>
   <tr><td><code>--accent-hook-button</code>, dark</td><td>#2A2620</td><td>#1F2533</td><td>#1F2A24</td><td>Rail Hook Card button fill</td></tr>
@@ -354,7 +354,7 @@
   <tr><td>Slot and zone labels</td><td>Inter 12/600 (slot) · 12/700 (zone)</td><td></td></tr>
   <tr><td>Rail group label</td><td>Display 11/600, 0.08em, uppercase</td><td><code>--text-muted</code></td></tr>
   <tr><td>Connector badge</td><td>Inter 11/600, white</td><td></td></tr>
-  <tr><td>Genre count</td><td>Inter 9/600</td><td><code>--accent-text</code></td></tr>
+  <tr><td>Edit Genres count</td><td>Inter 13/600</td><td><code>--accent-text</code></td></tr>
 </table>
 <p><strong>Muted ladder.</strong> GameIdea uses color tokens, not opacity, for text emphasis: <code>--text</code> → <code>--text-soft</code> → <code>--text-muted</code> → <code>--text-disabled</code>.</p>
 
@@ -403,7 +403,7 @@
   <tr><td>Deck button</td><td>Min 36 tall, full width, padding 4 10, radius 8, border 1 <code>--border</code>, fill <code>--bg</code>, gap 10. Icon 18, stroke 2.2, in the deck rail color, with no circle. Label 14/600 <code>--text</code>.</td></tr>
   <tr><td>Hook Card button</td><td>Same size. Border 1 <code>--accent</code>, fill <code>--accent-hook-button</code>, margin-top 4. Icon in <code>--accent</code>, stroke 2.6.</td></tr>
   <tr><td>Modifier row</td><td>3-column grid, gap 4. Each button is a deck button with the icon centered, padding 4, and no label.</td></tr>
-  <tr><td>Genre count pill</td><td>15 tall, min 16 wide, padding 0 4, radius 8, border 1 <code>--accent</code>, fill accent at 18%, text 9/600 <code>--accent-text</code>. It sits at the right edge (margin-left auto). It shows on Mechanic, Resource, Progression and Constraint only, and is hidden when all 21 genres are on <span class="tag">user 2026-11-02</span>. aria-label "N genres on".</td></tr>
+  <tr><td>Edit Genres button</td><td>36 × 36, radius 8, border 1 <code>--accent</code>, fill accent at 18% (30% on hover), content <code>--accent-text</code>. It sits to the right of the deck button, gap 4, on Mechanic, Resource, Progression and Constraint only. It shows the number of genres on (13/600, no pill), or the 18 px <code>drama</code> icon when all 21 are on. Hover label "Edit Genres"; a click opens Settings on the Genres tab. aria-label "Edit Mechanic Genres, 3 genres on" or "…, all genres on" <span class="tag">user 2026-11-05</span>. It replaces the genre count pill (user 2026-11-02).</td></tr>
   <tr><td>Add note</td><td>Deck-button size, dashed border 1 <code>--border-strong</code>, margin-top 6.</td></tr>
   <tr><td>Settings</td><td>Transparent, no border, gear icon, label in <code>--text-soft</code>, margin-top auto so it sits at the bottom. While the Settings dialog is open it shows pressed: fill <code>--surface-raised</code>, border 1 <code>--accent</code> <span class="tag">2026-11-04</span>.</td></tr>
 </table>
@@ -442,7 +442,7 @@
   </li>
   <li>"Start here" tag: 16 from the left of the canvas and 14 from the top, pointing at the Hook Card button. Padding 8 12, radius 8, 13/600.</li>
   <li>The guide goes away when the first card is on the board.</li>
-  <li>The card count chip reads "0 cards". A new board has all 21 genres on, so no genre counts show.</li>
+  <li>The card count chip reads "0 cards". A new board has all 21 genres on, so the Edit Genres buttons show the drama icon.</li>
   <li>This is the Free Form empty board. The One-Pager empty state is not drawn (section 15).</li>
 </ul>
 
@@ -595,9 +595,9 @@
 </ul>
 
 <h3 id="s-genres">9.10 Genres tab <span class="tag">Genres</span></h3>
-<p>The Genres panel is now the Genres tab of the Settings dialog (9.11) <span class="tag">2026-11-04</span>. It has no dialog of its own and no rail button.</p>
+<p>The Genres panel is now the Genres tab of the Settings dialog (9.11) <span class="tag">2026-11-04</span>. It has no dialog of its own. The rail Edit Genres buttons open Settings on this tab <span class="tag">user 2026-11-05</span>.</p>
 <ul>
-  <li><strong>Scope line</strong> (as 9.11): "These genres apply to this board only. Pick genres at the top. Each genre you pick shows on the 4 genre decks below, already on. Turn one off to keep it out of that deck. A change applies to the next draw only. Cards on the board keep their cues. The other 7 decks do not use genre."</li>
+  <li><strong>Scope line</strong> (as 9.11): "These genres apply to this board only. Pick genres at the top. Each genre you pick shows on the 4 genre decks below, already on. Turn one off to keep it out of that deck. A change applies to the next draw only. Cards on the board keep their cues. The other 7 decks are not filtered by genres."</li>
   <li><strong>Top section, "All 4 decks":</strong> padding 16 0, gap 12. The label "All 4 decks" and an "All on" button, 36 tall, ghost style. There is no "All off". The 21 genre chips, 36 tall, padding 0 12, radius 18, 13.
     <ul>
       <li>On: border <code>--accent</code>, accent at 18% fill, text <code>--text</code> 600.</li>
@@ -621,9 +621,9 @@
 <ul>
   <li><strong>Tab bar</strong> <span class="tag">2026-11-04</span>: Appearance, Genres. Gap 4, bottom border 1 <code>--border</code>, margin-bottom 4. <code>role="tablist"</code>.
     <ul>
-      <li>Tab: 44 tall, padding 0 14, 14/600 <code>--text-muted</code>, bottom border 2 transparent, margin-bottom −1. <code>role="tab"</code>, <code>aria-selected</code>.</li>
+      <li>Tab: 44 tall, padding 0 14, 14/600 <code>--text-muted</code>, bottom border 2 transparent, margin-bottom −1. <code>role="tab"</code>, <code>aria-selected</code>. The Genres tab leads with the 16 px <code>drama</code> icon, gap 8, in the tab's text color <span class="tag">user 2026-11-05</span>.</li>
       <li>Selected tab: <code>--text</code>, bottom border 2 <code>--accent</code> (light mode: the outline rule in 4.2).</li>
-      <li>The dialog opens on Appearance. A tab change is instant and is not an undo step.</li>
+      <li>The dialog opens on Appearance from the rail Settings button, and on Genres from a rail Edit Genres button <span class="tag">user 2026-11-05</span>. A tab change is instant and is not an undo step.</li>
     </ul>
   </li>
   <li><strong>Scope line</strong> under the tabs: 13, line height 1.5, <code>--text-muted</code>, margin-top 14. Appearance: "These settings apply to every board in this browser. A change applies at once." Genres: see 9.10.</li>
@@ -632,7 +632,7 @@
 <table>
   <tr><th>Section</th><th>Control</th><th>Help text</th></tr>
   <tr><td>Appearance</td><td>Mode: segmented Dark · Light</td><td>Dark or light screens. Cards are dark in dark mode and cream in light mode. <span class="tag">2026-11-04</span></td></tr>
-  <tr><td>Appearance</td><td>Theme color: segmented Orange · Blue · Green, each with a color dot 14</td><td>The color of buttons, selection, the Hook Card border and the genre counts. <span class="tag">user 2026-11-02</span></td></tr>
+  <tr><td>Appearance</td><td>Theme color: segmented Orange · Blue · Green, each with a color dot 14</td><td>The color of buttons, selection, the Hook Card border and the Edit Genres buttons. <span class="tag">user 2026-11-02</span></td></tr>
   <tr><td>Canvas</td><td>Snap to grid: switch</td><td>Cards and notes line up with the dot grid when you drop them. Hold Alt while you drag to place freely.</td></tr>
   <tr><td>Keyboard</td><td>Key list (read-only)</td><td>R: Turn the outer ring, or the only ring, one step · Shift+R: Turn the inner ring of a combined card · Ctrl+Z: Undo · Ctrl+Shift+Z: Redo</td></tr>
 </table>
@@ -751,7 +751,7 @@
   <li>Measured 2026-11-04: dark card text <code>#ECEAE4</code> on <code>#2A2F38</code> 11.2:1, <code>#A9ADB6</code> 6.0:1, <code>#A88BE6</code> 4.8:1. Tinted cards: the inactive cue is 5.3:1 or better in dark mode and 4.7:1 or better in light mode, for every deck. Dark note text 11.9:1, label 7.8:1. Light Hook Card sentence 16.7:1, label 5.0 to 6.1:1. Chip text 9.6:1 or better (dark) and 10.7:1 or better (light).</li>
   <li>Concept chips are 36 tall, below the 44 px target. This is the same mouse-only desktop deviation as the rail buttons. The resize handle is 44 tall with an aria-label. Settings tabs are 44 tall with <code>role="tab"</code> and <code>aria-selected</code>.</li>
   <li>Hit targets are 44 px, except rail deck buttons at 36 px (deviation 1, mouse-only desktop).</li>
-  <li>Icon-only buttons carry an aria-label: the Modifier buttons, Undo, Redo, zoom, Close, Dismiss, the board menu and genre counts ("N genres on").</li>
+  <li>Icon-only buttons carry an aria-label: the Modifier buttons, Undo, Redo, zoom, Close, Dismiss, the board menu and the Edit Genres buttons ("Edit Mechanic Genres, N genres on").</li>
   <li>Not specified: focus ring width and offset, keyboard access to the Hook Card menu, the ring halves, Concept chips and the resize handle, focus style on tabs, reduced motion, and screen-reader text for the Hook sentence (section 15).</li>
 </ul>
 

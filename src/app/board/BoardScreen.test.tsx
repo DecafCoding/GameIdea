@@ -114,32 +114,36 @@ describe('BoardScreen', () => {
     servePools(false);
     render(<BoardScreen />);
     const rail = within(screen.getByRole('complementary', { name: 'Decks' }));
-    expect(rail.queryByRole('img', { name: /genres? on$/ })).toBeNull();
+    expect(rail.getAllByRole('button', { name: /all genres on$/ })).toHaveLength(4);
     fireEvent.click(rail.getByRole('button', { name: 'Settings' }));
     const dialog = within(screen.getByRole('dialog', { name: 'Settings' }));
     fireEvent.click(dialog.getByRole('tab', { name: 'Genres' }));
     const allDecks = within(dialog.getByRole('region', { name: 'All 4 Decks' }));
     const seq = useBoardStore.getState().saveSeq;
     fireEvent.click(allDecks.getByRole('button', { name: 'Roguelike' }));
-    const pills = rail.getAllByRole('img', { name: '20 genres on' });
-    expect(pills).toHaveLength(4);
-    expect(rail.getByRole('button', { name: 'Draw A Mechanic' }).contains(pills[0] ?? null)).toBe(
-      true,
-    );
-    expect(rail.getByRole('button', { name: 'Draw A Resource' }).contains(pills[1] ?? null)).toBe(
-      true,
-    );
-    expect(
-      rail.getByRole('button', { name: 'Draw A Progression' }).contains(pills[2] ?? null),
-    ).toBe(true);
-    expect(rail.getByRole('button', { name: 'Draw A Constraint' }).contains(pills[3] ?? null)).toBe(
-      true,
-    );
+    for (const deck of ['Mechanic', 'Resource', 'Progression', 'Constraint']) {
+      const button = rail.getByRole('button', { name: `Edit ${deck} Genres, 20 genres on` });
+      expect(button.textContent).toBe('20');
+    }
     expect(useBoardStore.getState().saveSeq).toBe(seq + 1);
     expect(useBoardStore.temporal.getState().pastStates).toHaveLength(0);
     expect(screen.getByRole('button', { name: 'Undo' })).toHaveProperty('disabled', true);
     fireEvent.click(dialog.getByRole('button', { name: 'Done' }));
     expect(screen.queryByRole('dialog', { name: 'Settings' })).toBeNull();
+  });
+
+  it('boardScreen_editGenresButton_opensSettingsOnGenresTab', () => {
+    servePools(false);
+    render(<BoardScreen />);
+    fireEvent.click(screen.getByRole('button', { name: /^Edit Mechanic Genres/ }));
+    const dialog = within(screen.getByRole('dialog', { name: 'Settings' }));
+    expect(dialog.getByRole('tab', { name: 'Genres' }).getAttribute('aria-selected')).toBe('true');
+    fireEvent.click(dialog.getByRole('button', { name: 'Done' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Settings' }));
+    const again = within(screen.getByRole('dialog', { name: 'Settings' }));
+    expect(again.getByRole('tab', { name: 'Appearance' }).getAttribute('aria-selected')).toBe(
+      'true',
+    );
   });
 
   it('boardScreen_renameBlank_keepsOldName', () => {

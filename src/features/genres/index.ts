@@ -1,5 +1,5 @@
 /**
- * Genres feature: the public entry for the Genres tab, its rules and the genre counts.
+ * Genres feature: the public entry for the Genres tab, its rules and the Edit Genres buttons.
  */
 export {
   allOn,
@@ -12,5 +12,5 @@ export {
   toggleDeckGenre,
   togglePicked,
 } from './genreRules';
-export { GenreCount } from './GenreCount';
+export { GenreButton, genreButtonLabel } from './GenreButton';
 export { GENRES_FOOTER_TEXT, GENRES_SCOPE_TEXT, GenresTab } from './GenresTab';

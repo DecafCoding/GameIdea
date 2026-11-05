@@ -3,16 +3,18 @@
  * role="tablist" and role="tab". With no board open the Genres tab is aria-disabled, keeps
  * focus for its tooltip and ignores clicks (design 9.10). Tabs are plain buttons activated
  * by click, Enter or Space; no arrow-key roving focus (design §12 leaves it unspecified).
+ * The Genres tab leads with the drama icon, as on the rail Edit Genres buttons.
  */
+import { Icon, type IconName } from '@/shared/ui';
 import styles from './Settings.module.css';
 
 export type SettingsTab = 'appearance' | 'genres';
 
 export const GENRES_DISABLED_TEXT = 'Open a board to change its genres.';
 
-const TABS: { id: SettingsTab; label: string }[] = [
+const TABS: { id: SettingsTab; label: string; icon?: IconName }[] = [
   { id: 'appearance', label: 'Appearance' },
-  { id: 'genres', label: 'Genres' },
+  { id: 'genres', label: 'Genres', icon: 'drama' },
 ];
 
 interface SettingsTabsProps {
@@ -30,7 +32,7 @@ export const tabId = (idPrefix: string, tab: SettingsTab) => `${idPrefix}-tab-${
 export function SettingsTabs({ tab, onSelect, genresEnabled, idPrefix }: SettingsTabsProps) {
   return (
     <div role="tablist" aria-label="Settings" className={styles.tabs}>
-      {TABS.map(({ id, label }) => {
+      {TABS.map(({ id, label, icon }) => {
         const disabled = id === 'genres' && !genresEnabled;
         return (
           <button
@@ -47,6 +49,7 @@ export function SettingsTabs({ tab, onSelect, genresEnabled, idPrefix }: Setting
               if (!disabled) onSelect(id);
             }}
           >
+            {icon && <Icon name={icon} size={16} />}
             {label}
           </button>
         );

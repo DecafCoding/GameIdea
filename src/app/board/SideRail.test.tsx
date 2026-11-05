@@ -18,6 +18,7 @@ function renderRail(props: Partial<Parameters<typeof SideRail>[0]> = {}) {
       onAddNote={noop}
       genres={allGenresOn()}
       onOpenSettings={noop}
+      onEditGenres={noop}
       settingsOpen={false}
       {...props}
     />,
@@ -71,7 +72,7 @@ describe('SideRail', () => {
     expect(onDraw).toHaveBeenCalledTimes(4);
   });
 
-  it('sideRail_progressionAndConstraint_showPillsWhenNarrowed', () => {
+  it('sideRail_progressionAndConstraint_showCountsWhenNarrowed', () => {
     renderRail({
       genres: {
         ...allGenresOn(),
@@ -79,17 +80,13 @@ describe('SideRail', () => {
         constraint: ['horror'],
       },
     });
-    const progression = screen.getByRole('button', { name: 'Draw A Progression' });
-    const two = within(progression).getByRole('img', { name: '2 genres on' });
-    expect(progression.getAttribute('aria-describedby')).toBe(two.id);
-    const constraint = screen.getByRole('button', { name: 'Draw A Constraint' });
-    const one = within(constraint).getByRole('img', { name: '1 genre on' });
-    expect(constraint.getAttribute('aria-describedby')).toBe(one.id);
-    for (const name of ['Draw A Mood', 'Draw A Twist']) {
-      const button = screen.getByRole('button', { name });
-      expect(within(button).queryByRole('img')).toBeNull();
-      expect(button.hasAttribute('aria-describedby')).toBe(false);
-    }
+    expect(
+      screen.getByRole('button', { name: 'Edit Progression Genres, 2 genres on' }).textContent,
+    ).toBe('2');
+    expect(
+      screen.getByRole('button', { name: 'Edit Constraint Genres, 1 genre on' }).textContent,
+    ).toBe('1');
+    expect(screen.queryByRole('button', { name: /^Edit (Mood|Twist) Genres/ })).toBeNull();
   });
 
   it('sideRail_modifierButtons_drawWithModDeck', () => {
@@ -124,32 +121,31 @@ describe('SideRail', () => {
     expect(onDrawHook).toHaveBeenCalledOnce();
   });
 
-  it('sideRail_genreDecks_showPillsOnlyWhenNarrowed', () => {
-    const { rerender } = renderRail();
-    expect(screen.queryByRole('img', { name: /genres? on$/ })).toBeNull();
-    const genres = {
-      ...allGenresOn(),
-      mechanic: ['puzzle' as const, 'rpg' as const, 'horror' as const],
-    };
-    rerender(
-      <SideRail
-        decksReady
-        onDraw={noop}
-        onDrawHook={noop}
-        onAddNote={noop}
-        genres={genres}
-        onOpenSettings={noop}
-        settingsOpen={false}
-      />,
-    );
-    const pill = screen.getByRole('img', { name: '3 genres on' });
-    expect(pill.textContent).toBe('3');
+  it('sideRail_genreDecks_dramaIconAtAll21CountWhenNarrowed', () => {
+    renderRail({
+      genres: { ...allGenresOn(), mechanic: ['puzzle', 'rpg', 'horror'] },
+    });
+    const buttons = screen.getAllByRole('button', { name: /^Edit .* Genres/ });
+    expect(buttons.map((b) => b.getAttribute('aria-label'))).toEqual([
+      'Edit Mechanic Genres, 3 genres on',
+      'Edit Resource Genres, all genres on',
+      'Edit Progression Genres, all genres on',
+      'Edit Constraint Genres, all genres on',
+    ]);
+    expect(buttons[0]!.textContent).toBe('3');
+    expect(buttons[1]!.querySelector('[data-icon="drama"]')).not.toBeNull();
+    for (const b of buttons) expect(b.getAttribute('title')).toBe('Edit Genres');
     const mechanic = screen.getByRole('button', { name: 'Draw A Mechanic' });
-    expect(mechanic.contains(pill)).toBe(true);
-    expect(mechanic.getAttribute('aria-describedby')).toBe(pill.id);
-    expect(
-      screen.getByRole('button', { name: 'Draw A Resource' }).hasAttribute('aria-describedby'),
-    ).toBe(false);
+    expect(mechanic.nextElementSibling).toBe(buttons[0]);
+  });
+
+  it('sideRail_editGenres_callsOnEditGenres', () => {
+    const onEditGenres = vi.fn();
+    const onOpenSettings = vi.fn();
+    renderRail({ onEditGenres, onOpenSettings });
+    fireEvent.click(screen.getByRole('button', { name: /^Edit Resource Genres/ }));
+    expect(onEditGenres).toHaveBeenCalledOnce();
+    expect(onOpenSettings).not.toHaveBeenCalled();
   });
 
   it('sideRail_settingsOpen_buttonAriaExpandedTrue', () => {
@@ -165,6 +161,7 @@ describe('SideRail', () => {
         onAddNote={noop}
         genres={allGenresOn()}
         onOpenSettings={noop}
+        onEditGenres={noop}
         settingsOpen
       />,
     );

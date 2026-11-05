@@ -29,7 +29,7 @@ import styles from './GenresTab.module.css';
 
 /** The scope line under the Settings tab bar on the Genres tab (design 9.10, verbatim). */
 export const GENRES_SCOPE_TEXT =
-  'These genres apply to this board only. Pick genres at the top. Each genre you pick shows on the 4 genre decks below, already on. Turn one off to keep it out of that deck. A change applies to the next draw only. Cards on the board keep their cues. The other 7 decks do not use genre.';
+  'These genres apply to this board only. Pick genres at the top. Each genre you pick shows on the 4 genre decks below, already on. Turn one off to keep it out of that deck. A change applies to the next draw only. Cards on the board keep their cues. The other 7 decks are not filtered by genres.';
 
 export const GENRES_FOOTER_TEXT = 'Each deck keeps at least 1 genre.';
 

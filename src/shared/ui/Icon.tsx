@@ -48,7 +48,8 @@ export type IconName =
   | 'lock-open'
   | 'split'
   | 'grip'
-  | 'square-arrow-down';
+  | 'square-arrow-down'
+  | 'drama';
 
 interface IconProps {
   name: IconName;
