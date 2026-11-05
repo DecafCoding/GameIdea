@@ -1,6 +1,6 @@
 /**
  * CardStrip: a card's strip menu (design 9.4): 44 px icon buttons with tooltips, Split
- * (combined cards, or a card with an On Top Modifier), Redraw, Duplicate, Lock / Unlock
+ * (combined cards, or a card with an On Top Modifier), Redraw (square-arrow-down), Duplicate, Lock / Unlock
  * (an open lock while unlocked, a closed lock and pressed while locked) and Discard.
  * The canvas shows it on hover, 4 px above the card.
  */
@@ -61,7 +61,7 @@ export function CardStrip({
       )}
       <StripButton
         label="Redraw"
-        icon="playing-cards-fan"
+        icon="square-arrow-down"
         disabled={redrawDisabled}
         onClick={onRedraw}
       />

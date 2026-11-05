@@ -47,7 +47,8 @@ export type IconName =
   | 'playing-cards-fan'
   | 'lock-open'
   | 'split'
-  | 'grip';
+  | 'grip'
+  | 'square-arrow-down';
 
 interface IconProps {
   name: IconName;

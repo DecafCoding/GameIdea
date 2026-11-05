@@ -176,9 +176,10 @@ test('hook_menu_hasIconItems', async ({ page }) => {
   await openBoard(page, hookBoard());
   await openMenu(page);
   const items = menu(page).getByRole('button');
-  await expect(items).toHaveCount(4);
+  await expect(items).toHaveCount(5);
   expect(await items.evaluateAll((els) => els.map((el) => el.getAttribute('aria-label')))).toEqual([
     'Copy Hook',
+    'Deal Stack',
     'Redraw All',
     'Duplicate',
     'Discard',

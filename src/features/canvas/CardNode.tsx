@@ -8,11 +8,13 @@
  * paints above the tucked one, so the badge sits on top of both cards.
  * A tucked card has a Lock / Unlock button just outside its right edge, in its visible
  * bottom band: shown on hover while unlocked, and always while locked.
+ * A card Deal Stack just dealt fades in after its reveal delay (data.reveal).
  */
 import { NodeToolbar, Position, type NodeProps } from '@xyflow/react';
 import {
   createContext,
   memo,
+  type CSSProperties,
   useContext,
   useEffect,
   useRef,
@@ -31,6 +33,7 @@ import {
 import { buildHookSentence, HookCard, HookMenu } from '@/features/hook';
 import { useBoardStore } from '@/shared/store';
 import { Icon } from '@/shared/ui';
+import { canDeal } from './boardActions';
 import { connectorFor } from './connector';
 import { ConnectorBadge } from './ConnectorBadge';
 import { sameBelow, type CardFlowNode } from './nodes';
@@ -54,6 +57,8 @@ export interface CardNodeActions {
   discard: (cardId: string) => void;
   /** Redraws every unlocked card in the Hook Card's stack (one undo step). */
   redrawAll: (hookId: string) => void;
+  /** Fills the Hook Card's missing deal slots (one undo step). */
+  dealStack: (hookId: string) => void;
   /** Saves the connector word on the tucked card below the badge. */
   chooseConnector: (cardId: string, word: string) => void;
 }
@@ -167,7 +172,7 @@ function scrollHookText(event: WheelEvent<HTMLDivElement>) {
  * The Hook Card's face and hover menu: the sentence is computed from the store on each
  * change (a string, so the node re-renders only when the words change) and never stored.
  * The menu shows while the pointer is over the Hook Card or the menu; on a One-Pager board
- * it has only Copy Hook and Redraw All. The wheel over the
+ * it has only Copy Hook, Deal Stack and Redraw All. The wheel over the
  * card scrolls the sentence instead of zooming the canvas.
  */
 function HookBody({ hookId, actions }: { hookId: string; actions: CardNodeActions }) {
@@ -175,6 +180,8 @@ function HookBody({ hookId, actions }: { hookId: string; actions: CardNodeAction
   const empty = useBoardStore((state) => childrenOf(state.board, hookId).length === 0);
   // A One-Pager board keeps exactly 1 Hook Card: no Duplicate and no Discard.
   const onePager = useBoardStore((state) => state.board.kind === 'onePager');
+  // A boolean, so the node re-renders only when it flips.
+  const dealable = useBoardStore((state) => canDeal(state.board, hookId));
   const { hover, cardRef, menuRef, enter, leave } = useHoverMenu();
 
   return (
@@ -199,6 +206,8 @@ function HookBody({ hookId, actions }: { hookId: string; actions: CardNodeAction
             hasStack={!empty}
             poolsReady={actions.canRedraw}
             visible={hover}
+            canDeal={dealable}
+            onDealStack={() => actions.dealStack(hookId)}
             onRedrawAll={() => actions.redrawAll(hookId)}
             onDuplicate={onePager ? undefined : () => actions.duplicate(hookId)}
             onDiscard={onePager ? undefined : () => actions.discard(hookId)}
@@ -232,9 +241,18 @@ function CardNodeView({ data }: NodeProps<CardFlowNode>) {
     data.lifted ? styles.lifted : '',
     data.hidden ? styles.hidden : '',
     data.fresh ? styles.fresh : '',
+    data.reveal !== null ? styles.dealt : '',
   ]
     .filter(Boolean)
     .join(' ');
+  // A dealt card: data-dealt and its fade-in delay (design 9.9, 11).
+  const dealt =
+    data.reveal !== null
+      ? {
+          'data-dealt': '',
+          style: { '--deal-delay': `${data.reveal}ms` } as CSSProperties,
+        }
+      : {};
 
   if (card.type === 'hook') {
     return (
@@ -259,6 +277,7 @@ function CardNodeView({ data }: NodeProps<CardFlowNode>) {
       ref={cardRef}
       className={classes}
       data-selected={data.selected || undefined}
+      {...dealt}
       onPointerEnter={() => {
         actions.hoverStart(id);
         menuEnter();
@@ -345,6 +364,7 @@ function sameData(a: NodeProps<CardFlowNode>, b: NodeProps<CardFlowNode>): boole
     x.selected === y.selected &&
     x.hidden === y.hidden &&
     x.fresh === y.fresh &&
+    x.reveal === y.reveal &&
     x.lifted === y.lifted
   );
 }

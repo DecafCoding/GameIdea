@@ -1,7 +1,7 @@
 /**
  * Tests for the Concept panel body: lanes in rail order with plural names, the count pill,
  * the empty help line, a combined chip's words, and the drag hints (lane placeholder, chip
- * outline and result tag).
+ * outline and result tag) and the Deal Stack reveal on dealt chips.
  */
 import { render, screen, within } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
@@ -91,5 +91,24 @@ describe('ConceptPanel', () => {
       .getAllByTestId('concept-chip')
       .find((item) => item.getAttribute('data-card-id') === 'setting-c1')!;
     expect(within(chip).getByTestId('chip').getAttribute('data-targeted')).toBe('true');
+  });
+});
+
+describe('ConceptPanel reveal', () => {
+  it('conceptPanel_revealDelay_marksDealtChipsWithDelay', () => {
+    const board = onePagerBoard();
+    const { container } = render(
+      <ConceptPanel
+        width={232}
+        lanes={panelLanes(board)}
+        reveal={new Map([['resource-c2', 400]])}
+      />,
+    );
+    const dealt = container.querySelector<HTMLElement>('[data-card-id="resource-c2"]')!;
+    expect(dealt.hasAttribute('data-dealt')).toBe(true);
+    expect(dealt.style.getPropertyValue('--deal-delay')).toBe('400ms');
+    const plain = container.querySelector<HTMLElement>('[data-card-id="resource-c1"]')!;
+    expect(plain.hasAttribute('data-dealt')).toBe(false);
+    expect(plain.style.getPropertyValue('--deal-delay')).toBe('');
   });
 });

@@ -51,7 +51,7 @@ describe('CardStrip', () => {
     }
     expect(buttons.map(iconOf)).toEqual([
       'split',
-      'playing-cards-fan',
+      'square-arrow-down',
       'copy',
       'lock-open',
       'trash',

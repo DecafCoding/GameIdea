@@ -13,6 +13,8 @@
  * by CSS) or stays where it was released. Chips are dragged out with pointer events, not
  * as nodes; a ghost chip follows the pointer. Each drop, pop-out, drag out and resize is
  * one changeBoard: 1 undo step and 1 save.
+ * Deal Stack is 1 changeBoard too; the dealt cards and chips then fade in one at a time
+ * over about 1 second from a view-only reveal map (id → delay), never in the store.
  */
 import '@xyflow/react/dist/base.css';
 import {
@@ -43,6 +45,7 @@ import type { Board, Deck, Pools } from '@/shared/model';
 import { useBoardStore } from '@/shared/store';
 import {
   chooseConnector,
+  dealStack,
   discardCard,
   dropCard,
   duplicateCard,
@@ -69,7 +72,7 @@ import { ConceptNode, ConceptUiContext, type ConceptHint, type ConceptUi } from 
 import { CountBadge } from './CountBadge';
 import { DropHints, type DragHint } from './DropHints';
 import { dropAction, dropTarget, hintFor, tuckLanding } from './dropZones';
-import { toNodes, type BoardFlowNode } from './nodes';
+import { DEAL_REVEAL_MS, dealDelays, toNodes, type BoardFlowNode } from './nodes';
 import { NoteNode } from './NoteNode';
 import { boardRects, CARD_SIZE, snapToGrid, type Point } from './placement';
 import { cardText } from './reading';
@@ -83,6 +86,8 @@ const nodeTypes = { card: CardNode, note: NoteNode, concept: ConceptNode };
 const CLICK_DISTANCE = 4;
 /** How long the new-card outline shows after Redraw All (design 9.9). */
 const FRESH_MS = 1000;
+/** The reveal map clears this long after the deal's last fade starts. */
+const DEAL_CLEAR_MS = DEAL_REVEAL_MS + 200;
 /** Added to the dragged stack's zIndex so it paints above every other card. */
 const DRAG_RAISE = 1_000_000;
 
@@ -211,11 +216,21 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
     [],
   );
 
+  // Cards and chips Deal Stack just dealt: id → fade-in delay (design 9.9, 11).
+  const [reveal, setReveal] = useState<ReadonlyMap<string, number>>(() => new Map());
+  const revealTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(
+    () => () => {
+      if (revealTimer.current) clearTimeout(revealTimer.current);
+    },
+    [],
+  );
+
   const selected = selectedId && board.cards.some((c) => c.id === selectedId) ? selectedId : null;
   const hiddenIds = useMemo(() => new Set(flights.map((f) => f.card.id)), [flights]);
   const derived = useMemo(
-    () => toNodes(board, { selectedId: selected, hiddenIds, freshIds }),
-    [board, selected, hiddenIds, freshIds],
+    () => toNodes(board, { selectedId: selected, hiddenIds, freshIds, reveal }),
+    [board, selected, hiddenIds, freshIds, reveal],
   );
   const nodes = dragNodes ?? derived;
 
@@ -261,6 +276,24 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
         setFreshIds(new Set(redrawn));
         if (freshTimer.current) clearTimeout(freshTimer.current);
         freshTimer.current = setTimeout(() => setFreshIds(new Set()), FRESH_MS);
+      },
+      dealStack: (hookId: string) => {
+        const current = latest.current.pools;
+        if (!current) return;
+        let dealt: string[] = [];
+        changeBoard((b) => {
+          const result = dealStack(b, hookId, (deck, excluded) =>
+            drawFor({ type: deck }, current, b.genres, { excluded }),
+          );
+          dealt = result.dealt;
+          return result.board;
+        });
+        if (dealt.length === 0) return;
+        // Dealt cards get no new-card outline; they fade in instead. Set in the same
+        // handler as the change, so the class is on each new node at its first render.
+        setReveal(dealDelays(dealt));
+        if (revealTimer.current) clearTimeout(revealTimer.current);
+        revealTimer.current = setTimeout(() => setReveal(new Map()), DEAL_CLEAR_MS);
       },
       discard: (id: string) => {
         changeBoard((b) => discardCard(b, id));
@@ -593,8 +626,8 @@ export function BoardCanvas({ pools }: BoardCanvasProps) {
 
   const draggingChipId = ghost?.id ?? null;
   const conceptUi = useMemo<ConceptUi>(
-    () => ({ hint: conceptHint, draggingChipId, popOut, startChipDrag, resize }),
-    [conceptHint, draggingChipId, popOut, startChipDrag, resize],
+    () => ({ hint: conceptHint, draggingChipId, popOut, startChipDrag, resize, reveal }),
+    [conceptHint, draggingChipId, popOut, startChipDrag, resize, reveal],
   );
   const ghostCard = ghost ? board.cards.find((c) => c.id === ghost.id) : undefined;
 

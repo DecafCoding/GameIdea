@@ -1,5 +1,5 @@
 /**
- * Tests for board → React Flow nodes: z order.
+ * Tests for board → React Flow nodes: z order, and the Deal Stack reveal delays.
  */
 import { describe, expect, it } from 'vitest';
 import {
@@ -11,7 +11,7 @@ import {
   secondModifier,
   onePagerBoard,
 } from '@/test/fixtures/boards';
-import { toNodes, type CardNodeData } from './nodes';
+import { dealDelays, toNodes, type CardNodeData } from './nodes';
 
 const UI = { selectedId: null, hiddenIds: new Set<string>() };
 const zOf = (nodes: ReturnType<typeof toNodes>, id: string) =>
@@ -118,5 +118,35 @@ describe('toNodes on a One-Pager board', () => {
   it('toNodes_freeForm_noConceptNode', () => {
     const board = fixtureBoard([fixtureCard('hook')]);
     expect(toNodes(board, UI).some((node) => node.type === 'concept')).toBe(false);
+  });
+});
+
+describe('dealDelays', () => {
+  it('dealDelays_fiveCards_200msApart', () => {
+    expect([...dealDelays(['a', 'b', 'c', 'd', 'e']).values()]).toEqual([0, 200, 400, 600, 800]);
+  });
+
+  it('dealDelays_nineteenCards_about53msApart', () => {
+    const ids = Array.from({ length: 19 }, (_, i) => `c${i}`);
+    const delays = [...dealDelays(ids).values()];
+    expect(delays[0]).toBe(0);
+    expect(delays[1]).toBe(53);
+    expect(delays[18]).toBe(947);
+    for (let i = 1; i < delays.length; i++) expect(delays[i]!).toBeGreaterThan(delays[i - 1]!);
+  });
+
+  it('dealDelays_empty_emptyMap', () => {
+    expect(dealDelays([]).size).toBe(0);
+  });
+
+  it('toNodes_revealDelay_setOnDealtCardsOnly', () => {
+    const nodes = toNodes(fixtureBoard(fixtureStack(0, 0)), {
+      ...UI,
+      reveal: new Map([['goal-1', 200]]),
+    });
+    const data = (id: string) => nodes.find((n) => n.id === id)!.data as CardNodeData;
+    expect(data('goal-1').reveal).toBe(200);
+    expect(data('role-1').reveal).toBeNull();
+    expect(data('conflict-1').reveal).toBeNull();
   });
 });

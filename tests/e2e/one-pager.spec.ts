@@ -101,11 +101,12 @@ test.describe('board kind', () => {
     await expect.poll(async () => (await storedBoards(page)).map((b) => b.kind)).toEqual(['free']);
   });
 
-  test('onePager_hookMenu_copyAndRedrawOnly', async ({ page }) => {
+  test('onePager_hookMenu_copyDealAndRedrawOnly', async ({ page }) => {
     await openBoard(page, undefined, 'One-Pager');
     await hookCard(page).hover({ position: { x: 120, y: 40 } });
     await expect(hookMenu(page)).toBeVisible();
     await expect(hookMenu(page).getByRole('button', { name: 'Copy Hook' })).toBeVisible();
+    await expect(hookMenu(page).getByRole('button', { name: 'Deal Stack' })).toBeVisible();
     await expect(hookMenu(page).getByRole('button', { name: 'Redraw All' })).toBeVisible();
     await expect(hookMenu(page).getByRole('button', { name: 'Duplicate' })).toHaveCount(0);
     await expect(hookMenu(page).getByRole('button', { name: 'Discard' })).toHaveCount(0);

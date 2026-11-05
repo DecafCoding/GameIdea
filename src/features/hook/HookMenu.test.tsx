@@ -1,6 +1,6 @@
 /**
- * Tests for the Hook Card menu: the icon items, disabled items, the "Copied" state and
- * the fallback dialog.
+ * Tests for the Hook Card menu: the icon items, disabled items, Deal Stack, the "Copied"
+ * state and the fallback dialog.
  */
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
@@ -21,6 +21,8 @@ function renderMenu(props: Partial<Parameters<typeof HookMenu>[0]> = {}) {
       hasStack
       poolsReady
       visible
+      canDeal
+      onDealStack={vi.fn()}
       onRedrawAll={noop}
       onDuplicate={noop}
       onDiscard={noop}
@@ -37,16 +39,18 @@ describe('HookMenu', () => {
     renderMenu();
     expect(screen.getAllByRole('button').map((b) => b.getAttribute('aria-label'))).toEqual([
       'Copy Hook',
+      'Deal Stack',
       'Redraw All',
       'Duplicate',
       'Discard',
     ]);
   });
 
-  it('hookMenu_noDuplicateOrDiscardHandlers_showsTwoButtons', () => {
+  it('hookMenu_noDuplicateOrDiscardHandlers_showsThreeButtons', () => {
     renderMenu({ onDuplicate: undefined, onDiscard: undefined });
     expect(screen.getAllByRole('button').map((b) => b.getAttribute('aria-label'))).toEqual([
       'Copy Hook',
+      'Deal Stack',
       'Redraw All',
     ]);
   });
@@ -58,7 +62,13 @@ describe('HookMenu', () => {
       expect(b.textContent).toBe('');
       expect(b.title).toBe(b.getAttribute('aria-label'));
     }
-    expect(buttons.map(iconOf)).toEqual(['hook', 'playing-cards-fan', 'copy', 'trash']);
+    expect(buttons.map(iconOf)).toEqual([
+      'hook',
+      'playing-cards-fan',
+      'square-arrow-down',
+      'copy',
+      'trash',
+    ]);
   });
 
   it('hookMenu_emptyHook_disablesCopyAndRedrawAll', () => {
@@ -69,10 +79,29 @@ describe('HookMenu', () => {
     expect(screen.getByRole('button', { name: 'Discard' })).toHaveProperty('disabled', false);
   });
 
-  it('hookMenu_poolsNotReady_disablesRedrawAllOnly', () => {
+  it('hookMenu_poolsNotReady_disablesDealStackAndRedrawAll', () => {
     renderMenu({ poolsReady: false });
     expect(screen.getByRole('button', { name: 'Copy Hook' })).toHaveProperty('disabled', false);
+    expect(screen.getByRole('button', { name: 'Deal Stack' })).toHaveProperty('disabled', true);
     expect(screen.getByRole('button', { name: 'Redraw All' })).toHaveProperty('disabled', true);
+  });
+
+  it('hookMenu_emptyHook_dealStackEnabled', () => {
+    renderMenu({ hasStack: false, canDeal: true, poolsReady: true });
+    expect(screen.getByRole('button', { name: 'Deal Stack' })).toHaveProperty('disabled', false);
+  });
+
+  it('hookMenu_canDealFalse_disablesDealStack', () => {
+    renderMenu({ canDeal: false });
+    expect(screen.getByRole('button', { name: 'Deal Stack' })).toHaveProperty('disabled', true);
+    expect(screen.getByRole('button', { name: 'Redraw All' })).toHaveProperty('disabled', false);
+  });
+
+  it('hookMenu_dealStackClick_callsOnDealStack', () => {
+    const onDealStack = vi.fn();
+    renderMenu({ onDealStack });
+    fireEvent.click(screen.getByRole('button', { name: 'Deal Stack' }));
+    expect(onDealStack).toHaveBeenCalledTimes(1);
   });
 
   it('hookMenu_afterCopy_showsCopiedCheckFor2s', async () => {
