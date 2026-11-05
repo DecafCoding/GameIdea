@@ -142,7 +142,7 @@
         <li>Every card on every board gets the deck edge and tint, not only the Concept frames. The proposed <code>--card-edge</code> (<code>#3A404B</code>) is not needed.</li>
         <li>The README's proposed token names are kept.</li>
         <li>The Genres tab is disabled when Settings opens with no board open.</li>
-        <li>The One-Pager footer does not count loose cards: "12 cards · 1 hook · 1 details".</li>
+        <li>The One-Pager footer does not count loose cards: "12 cards".</li>
         <li>The Concept panel resizes freely from 232 to 640 wide. Chips size to their text, wrap long text, and are never wider than their lane.</li>
         <li>Card themes and the Settings tabs land together in Phase 6. The One-Pager board lands in Phase 7.</li>
       </ul></td>
@@ -159,7 +159,7 @@
     <td>2026-11-04</td>
     <td>User change (no bundle)</td>
     <td>Merged and On Top Modifier words on a chip use <code>--card-adjective</code>.</td>
-    <td><p>The panel's on-screen name is now "Details" (header, region label, resize label, empty help line, footer "1 details", text file section, New Board help and import errors). Code and board file field names keep <code>concept</code> (<code>inConcept</code>, <code>conceptWidth</code>), so the format is unchanged. The light-mode card tint dropped from 14% to 7% (<code>--card-tint</code>).</p></td>
+    <td><p>The panel's on-screen name is now "Details" (header, region label, resize label, empty help line, footer "12 cards" (just the card count), text file section, New Board help and import errors). Code and board file field names keep <code>concept</code> (<code>inConcept</code>, <code>conceptWidth</code>), so the format is unchanged. The light-mode card tint dropped from 14% to 7% (<code>--card-tint</code>).</p></td>
     <td>"Concept" as a visible label.</td>
   </tr>
 </table>
@@ -691,7 +691,7 @@
   <tr><td>Resize handle</td><td>Label "Resize Details". 24 × 44, radius 8, border 1 <code>--border-strong</code>, fill <code>--surface</code>, grip icon 14 <code>--text-muted</code>. On the right edge, centered on the panel height, 12 outside the edge. Cursor <code>ew-resize</code>. aria-label "Resize Concept". The width saves once, on release.</td></tr>
   <tr><td>Modifier drop target</td><td>A Modifier dragged over a Player Role, Resource or Setting chip: that chip gets an outline 2 in <code>#6E48B5</code> (<code>--deck-modifier</code>), offset 3. The dragged card uses the drag style in 9.7. No lane highlight and no "Add to …" box show.</td></tr>
   <tr><td>Light mode</td><td>Panel fill <code>#FFFFFF</code> and border <code>#DDD8CE</code> (the light <code>--surface</code> and <code>--border</code>). Chip text <code>#1B1E24</code>. Lane labels in the deck card color.</td></tr>
-  <tr><td>Card count chip</td><td>"12 cards · 1 hook · 1 details". The card count is the Hook Train plus the Concept cards. It does not count the Hook Card or loose cards <span class="tag">user 2026-11-04</span>.</td></tr>
+  <tr><td>Card count chip</td><td>"12 cards". The card count is the Hook Train plus the Concept cards. It does not count the Hook Card or loose cards <span class="tag">user 2026-11-04</span>.</td></tr>
 </table>
 <p class="meta">Dropped from the bundle by the user: the folded Hook Train, Expand Stack, the Hook Card count pill, the collapsed Concept button (<code>Stack4ChipsCollapsed</code>) and the 1-or-2-column snap. See the Handoff log.</p>
 
