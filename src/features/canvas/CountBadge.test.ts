@@ -6,11 +6,11 @@ import { countText, onePagerCountText } from './CountBadge';
 
 describe('CountBadge texts', () => {
   it('onePagerCountText_twelve_matchesDesign', () => {
-    expect(onePagerCountText(12)).toBe('12 cards · 1 hook · 1 details');
+    expect(onePagerCountText(12)).toBe('12 cards');
   });
 
   it('onePagerCountText_one_singular', () => {
-    expect(onePagerCountText(1)).toBe('1 card · 1 hook · 1 details');
+    expect(onePagerCountText(1)).toBe('1 card');
   });
 
   it('countText_freeForm_unchanged', () => {

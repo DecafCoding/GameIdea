@@ -467,9 +467,9 @@ test.describe('outputs', () => {
   test('onePager_footer_countsTrainPlusConcept', async ({ page }) => {
     await openBoard(page, onePagerBoard());
     // Train 2 + Concept 4; not the Hook Card, the loose Modifier or the note.
-    await expect(page.getByTestId('count-badge')).toHaveText('6 cards · 1 hook · 1 details');
+    await expect(page.getByTestId('count-badge')).toHaveText('6 cards');
     await dragTo(page, cardById(page, 'modifier-1'), await emptyPanelPoint(page));
-    await expect(page.getByTestId('count-badge')).toHaveText('6 cards · 1 hook · 1 details');
+    await expect(page.getByTestId('count-badge')).toHaveText('6 cards');
   });
 
   test('onePager_boardList_showsOnePagerLabel', async ({ page }) => {

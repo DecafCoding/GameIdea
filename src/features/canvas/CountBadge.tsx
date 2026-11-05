@@ -1,6 +1,6 @@
 /**
  * CountBadge: bottom left of the canvas, "N cards · N notes" (design section 8). Counts
- * tucked cards too. On a One-Pager board it reads "12 cards · 1 hook · 1 details" (design
+ * tucked cards too. On a One-Pager board it reads "12 cards" (design
  * 9.15): the Hook Train plus the Details cards, not the Hook Card, loose cards or notes.
  * aria-live, so screen readers hear the count change.
  */
@@ -15,9 +15,9 @@ export function countText(cards: number, notes: number): string {
   return `${plural(cards, 'card')} · ${plural(notes, 'note')}`;
 }
 
-/** "12 cards · 1 hook · 1 details" */
+/** "12 cards" */
 export function onePagerCountText(cards: number): string {
-  return `${plural(cards, 'card')} · 1 hook · 1 details`;
+  return `${plural(cards, 'card')}`;
 }
 
 export function CountBadge() {
