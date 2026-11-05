@@ -9,7 +9,7 @@
  * interactiveClassName, and passes the parts and texts in.
  */
 import { Fragment, useLayoutEffect, useRef, useState, type KeyboardEvent } from 'react';
-import { Icon } from '@/shared/ui';
+import { PanelTitle } from '@/shared/ui';
 import { LOOP_ARROW, type LoopPart } from './buildLoopText';
 import styles from './LoopCard.module.css';
 
@@ -62,12 +62,7 @@ export function LoopCard({
       data-testid="loop-card"
       data-loop-card=""
     >
-      <header className={styles.header}>
-        <span className={styles.dot}>
-          <Icon name="repeat" size={13} />
-        </span>
-        <span className={styles.label}>Core Loop</span>
-      </header>
+      <PanelTitle icon="repeat" title="Core Loop" />
       <p
         className={`${styles.template} ${parts.length === 0 ? styles.empty : ''}`}
         data-testid="loop-template"

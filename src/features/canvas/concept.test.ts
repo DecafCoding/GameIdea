@@ -25,7 +25,9 @@ import {
   dragOutOfConcept,
   enterConcept,
   leaveConcept,
+  moveConcept,
   onePagerCardCount,
+  pinConcept,
   popOutOfConcept,
   resizeConcept,
   titleCaseWords,
@@ -42,12 +44,57 @@ const withCards = (board: Board, cards: Card[]): Board => ({
 const cue = (texts: string[]) => ({ cues: texts.map((text) => ({ text })), activeIndex: 0 });
 
 describe('Concept read side', () => {
-  it('conceptPlace_hookAt96_panelAt392', () => {
-    expect(conceptPlace(onePagerBoard())).toEqual({ x: 392, y: 96 });
+  it('conceptPlace_hookAt96_panelAt364', () => {
+    expect(conceptPlace(onePagerBoard())).toEqual({ x: 364, y: 96 });
   });
 
   it('conceptPlace_freeForm_null', () => {
     expect(conceptPlace(fixtureBoard([fixtureCard('hook')]))).toBeNull();
+  });
+
+  it('conceptPlace_savedPos_usedAndHookMoveIgnored', () => {
+    const board = { ...onePagerBoard(), conceptPos: { x: 720, y: 480 } };
+    expect(conceptPlace(board)).toEqual({ x: 720, y: 480 });
+    const movedHook = {
+      ...board,
+      cards: board.cards.map((c) => (c.type === 'hook' ? { ...c, x: 0, y: 0 } : c)),
+    };
+    expect(conceptPlace(movedHook)).toEqual({ x: 720, y: 480 });
+  });
+
+  it('moveConcept_newPlace_savesConceptPos', () => {
+    const next = moveConcept(onePagerBoard(), 600, 312);
+    expect(next.conceptPos).toEqual({ x: 600, y: 312 });
+    expect(conceptPlace(next)).toEqual({ x: 600, y: 312 });
+  });
+
+  it('pinConcept_hookMovedWithNoSavedPlace_panelKeepsOldPlace', () => {
+    const before = onePagerBoard();
+    const after = {
+      ...before,
+      cards: before.cards.map((c) => (c.type === 'hook' ? { ...c, x: 480, y: 600 } : c)),
+    };
+    const pinned = pinConcept(before, after);
+    expect(pinned.conceptPos).toEqual({ x: 364, y: 96 });
+    expect(conceptPlace(pinned)).toEqual({ x: 364, y: 96 });
+  });
+
+  it('pinConcept_hookNotMovedOrPlaceSaved_sameBoard', () => {
+    const before = onePagerBoard();
+    expect(pinConcept(before, before)).toBe(before);
+    const saved = { ...before, conceptPos: { x: 600, y: 312 } };
+    const moved = {
+      ...saved,
+      cards: saved.cards.map((c) => (c.type === 'hook' ? { ...c, x: 480 } : c)),
+    };
+    expect(pinConcept(saved, moved)).toBe(moved);
+  });
+
+  it('moveConcept_samePlaceOrFreeForm_sameBoard', () => {
+    const moved = moveConcept(onePagerBoard(), 600, 312);
+    expect(moveConcept(moved, 600, 312)).toBe(moved);
+    const free = fixtureBoard([fixtureCard('hook')]);
+    expect(moveConcept(free, 600, 312)).toBe(free);
   });
 
   it('conceptLanes_mixedDecks_railOrder', () => {
@@ -159,8 +206,8 @@ describe('Concept actions', () => {
   });
 
   it('popOutOfConcept_openSpotBesidePanel_noOverlap', () => {
-    const panel = { x: 392, y: 96, width: 232, height: 300 };
-    const blocker = { x: 648, y: 96, width: 200, height: 200 };
+    const panel = { x: 364, y: 96, width: 232, height: 300 };
+    const blocker = { x: 624, y: 96, width: 200, height: 200 };
     const next = popOutOfConcept(onePagerBoard(), 'setting-c1', panel, [blocker]);
     const card = get(next, 'setting-c1');
     expect(card.inConcept).toBe(false);
@@ -174,7 +221,7 @@ describe('Concept actions', () => {
     }
     expect(card.x).toBeGreaterThanOrEqual(panel.x + panel.width);
     const free = get(popOutOfConcept(onePagerBoard(), 'setting-c1', panel, []), 'setting-c1');
-    expect({ x: free.x, y: free.y }).toEqual({ x: 648, y: 96 });
+    expect({ x: free.x, y: free.y }).toEqual({ x: 624, y: 96 });
   });
 
   it('dragOutOfConcept_onCanvas_fullCardAtDrop', () => {

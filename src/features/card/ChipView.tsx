@@ -1,7 +1,7 @@
 /**
  * ChipView: one Concept chip on a One-Pager board (design 9.15): the card's words only,
  * with no icon, no buttons and no strip menu. A 1 px border in the deck card color and the
- * deck card color at 28% fill. Modifier words at the front read in the adjective purple. It is as wide as its text, never wider than its lane, and
+ * deck card color at --card-tint fill (12%, the same as a card). Modifier words at the front read in the adjective purple. It is as wide as its text, never wider than its lane, and
  * wraps longer text. targeted: the Modifier drop target outline. hidden: kept in the
  * layout but not drawn, while the chip is dragged out. Plain React: no React Flow here.
  */

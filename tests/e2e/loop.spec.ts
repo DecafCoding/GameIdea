@@ -1,6 +1,6 @@
 /**
  * Browser tests for the Core Loop card (docs/feature-core-loop-card.html, design 9.16) on
- * the fixture pools: a new One-Pager board places 1 card at (680, 96), a deal fills the
+ * the fixture pools: a new One-Pager board places 1 card at (624, 96), a deal fills the
  * live template and the field, a ring turn updates both until the first edit, an edit is 1
  * undo step and 1 save, Reset From Cards and an empty edit bring the live text back, Copy
  * Loop and its fallback, the card drags and snaps but never tucks or enters Details, it is
@@ -103,7 +103,7 @@ test('loop_newOnePager_oneCardAt680x96', async ({ page }) => {
   await expect
     .poll(async () => (await storedOnly(page)).cards.filter((c) => c.type === 'loop'))
     .toHaveLength(1);
-  expect(await storedLoop(page)).toMatchObject({ x: 680, y: 96, tuckedUnder: null });
+  expect(await storedLoop(page)).toMatchObject({ x: 624, y: 96, tuckedUnder: null });
   expect(await storedLoop(page)).not.toHaveProperty('loopText');
 
   await page.goto('/');
@@ -215,7 +215,7 @@ test('loop_drag_snapsAndNeverTucks', async ({ page }) => {
   await expect
     .poll(async () => {
       const loop = await storedLoop(page);
-      return loop && loop.x !== 680;
+      return loop && loop.x !== 624;
     })
     .toBe(true);
   const moved = (await storedLoop(page))!;

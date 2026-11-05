@@ -1,5 +1,5 @@
 /**
- * Tests for the Concept panel body: lanes in rail order with plural names, the count pill,
+ * Tests for the Concept panel body: lanes in rail order with plural names, the header,
  * the empty help line, a combined chip's words, and the drag hints (lane placeholder, chip
  * outline and result tag) and the Deal Stack reveal on dealt chips.
  */
@@ -7,7 +7,7 @@ import { render, screen, within } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import type { Board } from '@/shared/model';
 import { combinedCard, onePagerBoard, secondModifier } from '@/test/fixtures/boards';
-import { CONCEPT_EMPTY_TEXT, ConceptPanel, conceptCountText, panelLanes } from './ConceptNode';
+import { CONCEPT_EMPTY_TEXT, ConceptPanel, panelLanes } from './ConceptNode';
 
 function renderPanel(board: Board, hint: Parameters<typeof ConceptPanel>[0]['hint'] = null) {
   return render(<ConceptPanel width={232} lanes={panelLanes(board)} hint={hint} />);
@@ -28,17 +28,17 @@ describe('ConceptPanel', () => {
     ).toEqual(['memories', 'rope']);
   });
 
-  it('conceptPanel_countPill_singularAndPlural', () => {
-    renderPanel(onePagerBoard());
-    expect(screen.getByTestId('concept-count').textContent).toBe('4 Cards');
-    expect(conceptCountText(1)).toBe('1 Card');
-    expect(conceptCountText(0)).toBe('0 Cards');
+  it('conceptPanel_header_listIconAndTitleNoCount', () => {
+    const { container } = renderPanel(onePagerBoard());
+    const header = container.querySelector('header')!;
+    expect(header.querySelector('[data-icon="list"]')).not.toBeNull();
+    expect(header.textContent).toBe('Details');
+    expect(screen.queryByTestId('concept-count')).toBeNull();
   });
 
   it('conceptPanel_empty_showsHelpLine', () => {
     const board = onePagerBoard();
     renderPanel({ ...board, cards: board.cards.filter((card) => !card.inConcept) });
-    expect(screen.getByTestId('concept-count').textContent).toBe('0 Cards');
     expect(screen.getByText(CONCEPT_EMPTY_TEXT)).toBeTruthy();
     expect(screen.getByRole('region', { name: 'Details' })).toBeTruthy();
   });

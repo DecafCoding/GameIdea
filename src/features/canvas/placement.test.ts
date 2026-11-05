@@ -78,8 +78,8 @@ describe('boardRects on a One-Pager board', () => {
 describe('boardRects with a Core Loop card', () => {
   it('boardRects_loopCard_occupied', () => {
     const board = onePagerWithLoop();
-    expect(boardRects(board)).toContainEqual({ x: 680, y: 96, width: 240, height: 200 });
-    const spot = findOpenSpot({ x: 680, y: 96 }, boardRects(board), { width: 200, height: 200 });
-    expect(spot).not.toEqual({ x: 680, y: 96 });
+    expect(boardRects(board)).toContainEqual({ x: 624, y: 96, width: 240, height: 200 });
+    const spot = findOpenSpot({ x: 624, y: 96 }, boardRects(board), { width: 200, height: 200 });
+    expect(spot).not.toEqual({ x: 624, y: 96 });
   });
 });

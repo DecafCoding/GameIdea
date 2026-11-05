@@ -1,0 +1,23 @@
+/* PanelTitle (design 9.5): icon 14 and title, gap 8, both in --accent-text. */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon {
+  display: flex;
+  color: var(--accent-text);
+}
+
+/* "Hook" style: Display 12/600, 0.08em, uppercase, the current mode's --accent-text. */
+.title {
+  margin: 0;
+  color: var(--accent-text);
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
