@@ -195,26 +195,26 @@ export const boardSchema: z.ZodType<Board> = z
         issue('A One-Pager board has exactly 1 Hook Card.');
       }
     } else if (board.cards.some((card) => card.inConcept) || board.conceptWidth !== undefined) {
-      issue('Only a One-Pager board has a Concept panel.');
+      issue('Only a One-Pager board has a Details panel.');
     }
     if (board.cards.some((card) => card.inConcept && card.tuckedUnder !== null)) {
-      issue('A Concept card is never tucked.');
+      issue('A Details card is never tucked.');
     }
     if (board.cards.some((card) => card.inConcept && card.type === 'hook')) {
-      issue('A Hook Card is never in Concept.');
+      issue('A Hook Card is never in Details.');
     }
     if (
       board.cards.some(
         (card) => card.tuckedUnder !== null && byId.get(card.tuckedUnder)?.inConcept === true,
       )
     ) {
-      issue('A card is tucked under a Concept card.');
+      issue('A card is tucked under a Details card.');
     }
     if (
       board.conceptWidth !== undefined &&
       (board.conceptWidth < CONCEPT_WIDTH.min || board.conceptWidth > CONCEPT_WIDTH.max)
     ) {
-      issue('The Concept width is out of range.');
+      issue('The Details width is out of range.');
     }
     if (board.cards.some((card) => card.tuckedUnder === card.id)) {
       ctx.addIssue({ code: 'custom', message: 'A card is tucked under itself.' });

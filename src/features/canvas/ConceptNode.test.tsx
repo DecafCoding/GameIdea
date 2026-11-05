@@ -40,7 +40,7 @@ describe('ConceptPanel', () => {
     renderPanel({ ...board, cards: board.cards.filter((card) => !card.inConcept) });
     expect(screen.getByTestId('concept-count').textContent).toBe('0 Cards');
     expect(screen.getByText(CONCEPT_EMPTY_TEXT)).toBeTruthy();
-    expect(screen.getByRole('region', { name: 'Concept' })).toBeTruthy();
+    expect(screen.getByRole('region', { name: 'Details' })).toBeTruthy();
   });
 
   it('conceptPanel_combinedChip_readsWithAdjective', () => {
@@ -59,6 +59,23 @@ describe('ConceptPanel', () => {
         .getAllByTestId('chip')
         .map((chip) => chip.textContent),
     ).toEqual(['outpost', 'devout exiled outpost']);
+  });
+
+  it('conceptPanel_combinedChip_modifierWordsLead', () => {
+    const board = onePagerBoard();
+    renderPanel({
+      ...board,
+      cards: [
+        ...board.cards,
+        combinedCard('setting', { id: 'setting-m', z: 30, inConcept: true }),
+        secondModifier({ id: 'top-1', onTopOf: 'setting-m' }),
+      ],
+    });
+    const chips = within(screen.getByRole('list', { name: 'Settings' })).getAllByTestId('chip');
+    expect(chips[0]!.querySelector('[data-testid="chip-lead"]')).toBeNull();
+    expect(chips[1]!.querySelector('[data-testid="chip-lead"]')?.textContent).toBe(
+      'devout exiled ',
+    );
   });
 
   it('conceptPanel_laneHint_addsLaneAndPlaceholder', () => {

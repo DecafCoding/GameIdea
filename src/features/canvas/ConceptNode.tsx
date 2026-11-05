@@ -23,13 +23,14 @@ import {
   type PointerEvent,
   type ReactNode,
 } from 'react';
-import { ChipView, TYPE_ICON } from '@/features/card';
+import { ChipView, edgeCues, TYPE_ICON } from '@/features/card';
 import {
   CONCEPT_WIDTH,
   DECK_LANE_NAME,
   DECK_NAME,
   DECKS,
   type Board,
+  type Card,
   type Deck,
 } from '@/shared/model';
 import { useBoardStore } from '@/shared/store';
@@ -40,7 +41,7 @@ import { cardText } from './reading';
 import styles from './ConceptNode.module.css';
 
 /** The help line of an empty panel. */
-export const CONCEPT_EMPTY_TEXT = 'Drop a card here to add it to the concept.';
+export const CONCEPT_EMPTY_TEXT = 'Drop a card here to add it to the details.';
 
 /** "7 Cards", "1 Card". */
 export function conceptCountText(count: number): string {
@@ -69,14 +70,27 @@ export const ConceptUiContext = createContext<ConceptUi | null>(null);
 /** A lane as the panel draws it: chip ids and their words. */
 export interface PanelLane {
   deck: Deck;
-  chips: { id: string; text: string }[];
+  chips: { id: string; text: string; lead: string }[];
+}
+
+/**
+ * The Modifier words at the front of a combined or On Top chip ("devout exiled "), drawn in
+ * the adjective purple so they read as modifiers. A Modifier card's own chip has none.
+ */
+export function modifierLead(card: Card, text: string): string {
+  if (card.type === 'modifier') return '';
+  const noun = edgeCues(card)[0]?.noun.text ?? text;
+  return text.endsWith(noun) ? text.slice(0, text.length - noun.length) : '';
 }
 
 /** The panel's lanes from the board, as plain data. */
 export function panelLanes(board: Board): PanelLane[] {
   return conceptLanes(board).map((lane) => ({
     deck: lane.deck,
-    chips: lane.cards.map((card) => ({ id: card.id, text: cardText(board, card) })),
+    chips: lane.cards.map((card) => {
+      const text = cardText(board, card);
+      return { id: card.id, text, lead: modifierLead(card, text) };
+    }),
   }));
 }
 
@@ -114,11 +128,11 @@ export function ConceptPanel({
       className={styles.panel}
       style={{ width }}
       role="region"
-      aria-label="Concept"
+      aria-label="Details"
       data-testid="concept-panel"
     >
       <header className={styles.header}>
-        <h2 className={styles.title}>Concept</h2>
+        <h2 className={styles.title}>Details</h2>
         <span className={styles.pill} data-testid="concept-count">
           {conceptCountText(count)}
         </span>
@@ -149,6 +163,7 @@ export function ConceptPanel({
                   )}
                   <ChipView
                     text={chip.text}
+                    lead={chip.lead}
                     deck={lane.deck}
                     targeted={targeted}
                     hidden={draggingChipId === chip.id}
@@ -233,8 +248,8 @@ function ConceptNodeView({ data }: NodeProps<ConceptFlowNode>) {
     <button
       type="button"
       className={`${styles.handle} nodrag nopan`}
-      aria-label="Resize Concept"
-      title="Resize Concept"
+      aria-label="Resize Details"
+      title="Resize Details"
       data-testid="concept-resize"
       onPointerDown={onHandleDown}
       onPointerMove={onHandleMove}
