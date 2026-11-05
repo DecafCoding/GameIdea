@@ -5,3 +5,4 @@ export { Banner } from './Banner';
 export { Button } from './Button';
 export { Dialog } from './Dialog';
 export { Icon, type IconName } from './Icon';
+export { PanelTitle } from './PanelTitle';

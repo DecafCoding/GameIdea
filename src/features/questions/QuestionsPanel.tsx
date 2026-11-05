@@ -10,7 +10,7 @@
  */
 import { useLayoutEffect, useRef, useState, type KeyboardEvent } from 'react';
 import type { Answer } from '@/shared/model';
-import { Button, Icon } from '@/shared/ui';
+import { Button, Icon, PanelTitle } from '@/shared/ui';
 import styles from './QuestionsPanel.module.css';
 
 /** The all-answered message (design 9.17). */
@@ -177,17 +177,13 @@ export function QuestionsPanel({
       aria-label="Questions"
       data-testid="questions-panel"
     >
-      <header className={styles.header}>
-        <span className={styles.icon}>
-          <Icon name="message-circle-question-mark" size={13} />
-        </span>
-        <h2 className={styles.title}>Questions</h2>
+      <PanelTitle icon="message-circle-question-mark" title="Questions">
         {answers.length > 0 && (
           <span className={styles.pill} data-testid="questions-count">
             {answeredCountText(answers.length)}
           </span>
         )}
-      </header>
+      </PanelTitle>
       {top()}
       {answers.length > 0 && (
         <>

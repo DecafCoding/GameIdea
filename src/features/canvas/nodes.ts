@@ -8,11 +8,8 @@
  * The Core Loop card is a 'loop' node ranked with the other roots by z, 240 wide with no
  * height, so React Flow measures it as it grows with its text.
  * On a One-Pager board the Questions panel is 1 more node at zIndex 1 (under every card),
- * placed by questionsPlace below the Core Loop card's 200 px minimum height, 240 wide with
- * no height, so React Flow measures it. Not draggable and never stored. placeQuestionsNode
- * then moves it below the card's drawn height, replacing only that node: React Flow
- * forgets the measured size of every new node object, so re-deriving every node while the
- * Core Loop card grows would hide them all for a frame and blur its edit field.
+ * at questionsPlace, 240 wide with no height, so React Flow measures it. It drags on its
+ * own (user 2026-11-05); its fields and buttons are nodrag.
  * The array is sorted by zIndex, so Tab moves through the cards in z order.
  * After Deal Stack, each dealt card carries its reveal delay (dealDelays): the dealt cards
  * fade in one at a time over about 1 second. The delays are view state, never stored.
@@ -152,7 +149,7 @@ export function toNodes(board: Board, ui: NodeUi): BoardFlowNode[] {
     selectable: false,
     data: { noteId: note.id },
   }));
-  // The Concept panel beside a One-Pager Hook Card: above notes, below every card.
+  // The Concept panel on a One-Pager board: above notes, below every card.
   const place = conceptPlace(board);
   const concept: ConceptFlowNode[] = place
     ? [
@@ -161,14 +158,15 @@ export function toNodes(board: Board, ui: NodeUi): BoardFlowNode[] {
           type: 'concept',
           position: place,
           zIndex: 1,
-          draggable: false,
+          // Dragged on its own (user 2026-11-05); chips and the resize handle are nodrag.
+          draggable: true,
           selectable: false,
           focusable: false,
           data: { width: conceptWidth(board) },
         },
       ]
     : [];
-  // The Questions panel below the Core Loop card: above notes, below every card.
+  // The Questions panel: above notes, below every card.
   const questionsAt = questionsPlace(board);
   const questions: QuestionsFlowNode[] = questionsAt
     ? [
@@ -178,7 +176,7 @@ export function toNodes(board: Board, ui: NodeUi): BoardFlowNode[] {
           position: questionsAt,
           width: QUESTIONS_WIDTH,
           zIndex: 1,
-          draggable: false,
+          draggable: true,
           selectable: false,
           focusable: false,
           data: {},
@@ -189,24 +187,4 @@ export function toNodes(board: Board, ui: NodeUi): BoardFlowNode[] {
     (a, b) => (a.zIndex ?? 0) - (b.zIndex ?? 0),
   );
   return [...notes, ...concept, ...questions, ...ranked];
-}
-
-/**
- * Moves the Questions panel node below the Core Loop card's drawn height. Returns the same
- * array when the node is missing or already there; else a copy where only that node is new.
- */
-export function placeQuestionsNode(
-  nodes: BoardFlowNode[],
-  board: Board,
-  loopHeight: number | undefined,
-): BoardFlowNode[] {
-  const place = questionsPlace(board, loopHeight);
-  const index = nodes.findIndex((node) => node.id === QUESTIONS_NODE_ID);
-  const node = nodes[index];
-  if (!place || !node || (node.position.x === place.x && node.position.y === place.y)) {
-    return nodes;
-  }
-  const next = [...nodes];
-  next[index] = { ...node, position: place };
-  return next;
 }

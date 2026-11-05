@@ -304,6 +304,21 @@ describe('boardSchema One-Pager rules', () => {
     rejects({ ...fixtureBoard([]), conceptWidth: 232 });
   });
 
+  it('boardSchema_questionsPos_onePagerPassesFreeFormFails', () => {
+    const result = boardSchema.safeParse({ ...onePagerBoard(), questionsPos: { x: 624, y: 360 } });
+    expect(result.success).toBe(true);
+    expect(result.data?.questionsPos).toEqual({ x: 624, y: 360 });
+    rejects({ ...fixtureBoard([]), questionsPos: { x: 624, y: 360 } });
+  });
+
+  it('boardSchema_conceptPos_onePagerPassesFreeFormFails', () => {
+    const result = boardSchema.safeParse({ ...onePagerBoard(), conceptPos: { x: 600, y: 312 } });
+    expect(result.success).toBe(true);
+    expect(result.data?.conceptPos).toEqual({ x: 600, y: 312 });
+    rejects({ ...fixtureBoard([]), conceptPos: { x: 600, y: 312 } });
+    rejects({ ...onePagerBoard(), conceptPos: { x: 600 } });
+  });
+
   it('boardSchema_conceptWidthOutOfRange_fails', () => {
     rejects({ ...onePagerBoard(), conceptWidth: 231 });
     rejects({ ...onePagerBoard(), conceptWidth: 641 });

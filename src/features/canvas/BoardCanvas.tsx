@@ -17,10 +17,9 @@
  * over about 1 second from a view-only reveal map (id → delay), never in the store.
  * The Core Loop card is a 'loop' node: it drags through the card drop path (a plain move,
  * snap applies, never a tuck), shows no hint and is never selected.
- * On a One-Pager board the Questions panel is 1 more node below the Core Loop card, placed
- * from the card's measured height (read from React Flow's store) and moved with the card
- * during its drag. It is never dragged and never a drop target; a card dropped over it only
- * moves. Its deck view state (useQuestionDeck) lives here, above the nodes, so panning it
+ * On a One-Pager board the Questions panel is 1 more node. It drags on its own and never
+ * follows the Core Loop card (user 2026-11-05); it is never a drop target, and a card
+ * dropped over it only moves. Its deck view state (useQuestionDeck) lives here, above the nodes, so panning it
  * off screen keeps the current question and the draft.
  */
 import '@xyflow/react/dist/base.css';
@@ -30,7 +29,6 @@ import {
   BackgroundVariant,
   ReactFlow,
   useReactFlow,
-  useStore,
   ViewportPortal,
   type NodeChange,
   type OnNodeDrag,
@@ -69,11 +67,11 @@ import { conceptRectOf, useCanvasUi } from './CanvasProvider';
 import { CardNode, CardNodeContext, type CardNodeActions } from './CardNode';
 import {
   chipResultText,
-  CONCEPT_NODE_ID,
   conceptDrop,
   dragOutOfConcept,
   leaveConcept,
-  onePagerHook,
+  moveConcept,
+  pinConcept,
   popOutOfConcept,
   resizeConcept,
   type ConceptOver,
@@ -82,17 +80,11 @@ import { ConceptNode, ConceptUiContext, type ConceptHint, type ConceptUi } from 
 import { CountBadge } from './CountBadge';
 import { DropHints, type DragHint } from './DropHints';
 import { dropAction, dropTarget, hintFor, tuckLanding } from './dropZones';
-import {
-  DEAL_REVEAL_MS,
-  dealDelays,
-  placeQuestionsNode,
-  toNodes,
-  type BoardFlowNode,
-} from './nodes';
+import { DEAL_REVEAL_MS, dealDelays, toNodes, type BoardFlowNode } from './nodes';
 import { LoopNode } from './LoopNode';
 import { NoteNode } from './NoteNode';
 import { QuestionsNode, QuestionsUiContext, type QuestionsUi } from './QuestionsNode';
-import { QUESTIONS_NODE_ID } from './questionsPlace';
+import { moveQuestions, pinQuestions } from './questionsPlace';
 import { boardRects, CARD_SIZE, snapToGrid, type Point } from './placement';
 import { cardText } from './reading';
 import { descendantsOf } from './stack';
@@ -118,7 +110,7 @@ const DRAG_RAISE = 1_000_000;
 
 interface DragState {
   id: string;
-  kind: 'card' | 'note';
+  kind: 'card' | 'note' | 'concept' | 'questions';
   startX: number;
   startY: number;
   /** The node's top-left at drag start, for a free (Alt) drop after a snapped drag. */
@@ -255,30 +247,9 @@ export function BoardCanvas({ pools, questionPool }: BoardCanvasProps) {
 
   const selected = selectedId && board.cards.some((c) => c.id === selectedId) ? selectedId : null;
   const hiddenIds = useMemo(() => new Set(flights.map((f) => f.card.id)), [flights]);
-  // The Core Loop card's drawn height, so the Questions panel moves when the card grows.
-  const loopId = board.cards.find((c) => c.type === 'loop')?.id;
-  const measuredLoopHeight = useStore((s) =>
-    loopId ? s.nodeLookup.get(loopId)?.measured.height : undefined,
-  );
-  // The last measured height is kept: new node objects reset React Flow's measure until it
-  // measures again, and following that undefined would move the panel back and forth.
-  const [lastLoop, setLastLoop] = useState<{ id: string; height: number } | null>(null);
-  if (
-    loopId &&
-    measuredLoopHeight !== undefined &&
-    (lastLoop?.id !== loopId || lastLoop.height !== measuredLoopHeight)
-  ) {
-    setLastLoop({ id: loopId, height: measuredLoopHeight });
-  }
-  const loopHeight = lastLoop && lastLoop.id === loopId ? lastLoop.height : undefined;
-  const allNodes = useMemo(
+  const derived = useMemo(
     () => toNodes(board, { selectedId: selected, hiddenIds, freshIds, reveal }),
     [board, selected, hiddenIds, freshIds, reveal],
-  );
-  // Only the Questions node changes with the loop height (see placeQuestionsNode).
-  const derived = useMemo(
-    () => placeQuestionsNode(allNodes, board, loopHeight),
-    [allNodes, board, loopHeight],
   );
 
   // The Questions panel's view state: kept here, above the node (see the doc comment).
@@ -394,11 +365,6 @@ export function BoardCanvas({ pools, questionPool }: BoardCanvasProps) {
       // The tucked cards under each moved card, read now: the updater may run after a drop
       // has already removed the card from the board.
       const b = useBoardStore.getState().board;
-      // On a One-Pager board the Concept panel moves with the Hook Card during its drag,
-      // and the Questions panel with the Core Loop card.
-      const hookId = onePagerHook(b)?.id ?? null;
-      const loopCardId =
-        b.kind === 'onePager' ? (b.cards.find((c) => c.type === 'loop')?.id ?? null) : null;
       const tucked = new Map<string, string[]>();
       for (const change of changes) {
         if (change.type !== 'position' || !b.cards.some((c) => c.id === change.id)) continue;
@@ -416,20 +382,6 @@ export function BoardCanvas({ pools, questionPool }: BoardCanvasProps) {
           if (!node) continue;
           const dx = change.position.x - node.position.x;
           const dy = change.position.y - node.position.y;
-          const panelId =
-            change.id === hookId
-              ? CONCEPT_NODE_ID
-              : change.id === loopCardId
-                ? QUESTIONS_NODE_ID
-                : null;
-          const panel = panelId ? base.find((n) => n.id === panelId) : undefined;
-          if (panel) {
-            extra.push({
-              type: 'position',
-              id: panel.id,
-              position: { x: panel.position.x + dx, y: panel.position.y + dy },
-            });
-          }
           for (const childId of tucked.get(change.id) ?? []) {
             const child = base.find((n) => n.id === childId);
             if (!child) continue;
@@ -448,12 +400,13 @@ export function BoardCanvas({ pools, questionPool }: BoardCanvasProps) {
 
   const onNodeDragStart: OnNodeDrag<BoardFlowNode> = useCallback(
     (event, node) => {
-      // The Concept and Questions panels are never dragged.
-      if (node.type === 'concept' || node.type === 'questions') return;
       const start = pointerOf(event);
       drag.current = {
         id: node.id,
-        kind: node.type === 'note' ? 'note' : 'card',
+        kind:
+          node.type === 'note' || node.type === 'concept' || node.type === 'questions'
+            ? node.type
+            : 'card',
         startX: start.x,
         startY: start.y,
         nodeX: node.position.x,
@@ -575,6 +528,18 @@ export function BoardCanvas({ pools, questionPool }: BoardCanvasProps) {
         changeBoard((b) => moveNote(b, node.id, at.x, at.y));
         return;
       }
+      // The Details panel moves on its own and is never a drop target or a dropped card.
+      if (state.kind === 'concept') {
+        const at = snap ? snapToGrid({ x, y }) : { x, y };
+        changeBoard((b) => moveConcept(b, at.x, at.y));
+        return;
+      }
+      // The Questions panel moves on its own the same way.
+      if (state.kind === 'questions') {
+        const at = snap ? snapToGrid({ x, y }) : { x, y };
+        changeBoard((b) => moveQuestions(b, at.x, at.y));
+        return;
+      }
       const point = flow.screenToFlowPosition(p);
       // A Hook Card dropped on a card only moves; the notice says why (design 9.13).
       const b = useBoardStore.getState().board;
@@ -584,7 +549,9 @@ export function BoardCanvas({ pools, questionPool }: BoardCanvasProps) {
         const action = dropAction(b, dragged, dropTarget(b, node.id, point), point);
         if (action.kind === 'move' && action.refused) setNotice(action.refused);
       }
-      changeBoard((b) => dropCard(b, node.id, point, { x, y }, { snap, concept }));
+      changeBoard((b) =>
+        pinQuestions(b, pinConcept(b, dropCard(b, node.id, point, { x, y }, { snap, concept }))),
+      );
     },
     [changeBoard, flow, setNotice],
   );

@@ -33,7 +33,7 @@ describe('newBoard kinds', () => {
       {
         id: 'loop-a',
         type: 'loop',
-        x: 680,
+        x: 624,
         y: 96,
         z: 2,
         tuckedUnder: null,
@@ -48,7 +48,7 @@ describe('newBoard kinds', () => {
 
   it('newBoard_onePager_loopSpotRightOfDefaultPanel', () => {
     expect(ONE_PAGER_LOOP_SPOT.x).toBe(
-      ONE_PAGER_HOOK_SPOT.x + 240 + 56 + CONCEPT_WIDTH.default + 56,
+      ONE_PAGER_HOOK_SPOT.x + 240 + 28 + CONCEPT_WIDTH.default + 28,
     );
     expect(ONE_PAGER_LOOP_SPOT.y).toBe(ONE_PAGER_HOOK_SPOT.y);
   });

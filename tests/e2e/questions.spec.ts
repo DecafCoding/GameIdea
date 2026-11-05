@@ -1,9 +1,10 @@
 /**
  * Browser tests for the Questions panel (docs/feature-questions-panel.html, design 9.17) on
- * the fixture question pool of 3 questions: the panel sits 24 px below the Core Loop card
- * on One-Pager boards only, Save Answer moves the question into the list and never shows
+ * the fixture question pool of 3 questions: the panel starts 264 px below the Core Loop
+ * card's top on One-Pager boards only, Save Answer moves the question into the list and never shows
  * it again, Next Question is view state only, edit and delete are 1 undo step each, answers
- * survive a reload and a board file round trip, the panel follows a dragged Core Loop card,
+ * survive a reload and a board file round trip, the panel moves on its own and never
+ * follows the Core Loop card,
  * the all-answered state, a blocked question pool, and the text file section.
  */
 import { readFile } from 'node:fs/promises';
@@ -53,7 +54,7 @@ test.beforeEach(async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
 });
 
-test('questions_onePager_panelBelowLoopCard', async ({ page }) => {
+test('questions_onePager_panelStartsBelowLoopCard', async ({ page }) => {
   await openBoard(page, undefined, 'One-Pager');
   await expect(panel(page)).toHaveCount(1);
   await expect(panel(page)).toBeVisible();
@@ -62,7 +63,7 @@ test('questions_onePager_panelBelowLoopCard', async ({ page }) => {
   const box = await boxOf(panel(page));
   const zoom = loop.width / 240;
   expect(Math.abs(box.x - loop.x)).toBeLessThanOrEqual(1);
-  expect(Math.abs(box.y - (loop.y + loop.height + 24 * zoom))).toBeLessThanOrEqual(1);
+  expect(Math.abs(box.y - (loop.y + 264 * zoom))).toBeLessThanOrEqual(1);
   expect(Math.abs(box.width - 240 * zoom)).toBeLessThanOrEqual(1);
 
   await openBoard(page);
@@ -158,35 +159,55 @@ test('questions_reload_answersStayNewQuestionShows', async ({ page }) => {
   await expect(current(page)).not.toHaveText(question);
 });
 
-test('questions_dragLoopCard_panelFollows', async ({ page }) => {
+test('questions_dragLoopCard_panelStays', async ({ page }) => {
   await openBoard(page, undefined, 'One-Pager');
   await expect(panel(page)).toBeVisible();
+  const before = await boxOf(panel(page));
   const loop = await boxOf(loopCard(page));
   const x = loop.x + 30;
   const y = loop.y + 16;
   await page.mouse.move(x, y);
   await page.mouse.down();
   await page.mouse.move(x + 120, y + 48, { steps: 12 });
-  // During the drag the panel moves with the card.
-  const draggedLoop = await boxOf(loopCard(page));
-  const draggedPanel = await boxOf(panel(page));
-  expect(Math.abs(draggedPanel.x - draggedLoop.x)).toBeLessThanOrEqual(2);
+  // The panel moves on its own (user 2026-11-05): it stays put while the card moves.
+  const during = await boxOf(panel(page));
+  expect(Math.abs(during.x - before.x)).toBeLessThanOrEqual(1);
+  expect(Math.abs(during.y - before.y)).toBeLessThanOrEqual(1);
   await page.mouse.up();
   await expect
     .poll(async () => (await storedBoard(page)).cards.find((c) => c.type === 'loop')!.x)
-    .not.toBe(680);
-  const moved = await boxOf(loopCard(page));
-  const zoom = moved.width / 240;
-  await expect
-    .poll(async () => {
-      const box = await boxOf(panel(page));
-      return (
-        Math.abs(box.x - moved.x) <= 2 &&
-        Math.abs(box.y - (moved.y + moved.height + 24 * zoom)) <= 2
-      );
-    })
-    .toBe(true);
-  expect(moved.x).toBeGreaterThan(loop.x + 60);
+    .not.toBe(624);
+  const after = await boxOf(panel(page));
+  expect(Math.abs(after.x - before.x)).toBeLessThanOrEqual(1);
+  expect(Math.abs(after.y - before.y)).toBeLessThanOrEqual(1);
+  expect((await storedBoard(page)).questionsPos).toEqual({ x: 624, y: 360 });
+});
+
+test('questions_dragPanel_movesAloneOneUndoStep', async ({ page }) => {
+  await openBoard(page, undefined, 'One-Pager');
+  await expect(panel(page)).toBeVisible();
+  const before = await boxOf(panel(page));
+  // Grab the header, away from the field and the buttons.
+  await page.mouse.move(before.x + 150, before.y + 26);
+  await page.mouse.down();
+  await page.mouse.move(before.x + 150 + 240, before.y + 26 + 120, { steps: 10 });
+  await page.mouse.up();
+  await expect.poll(async () => (await storedBoard(page)).questionsPos).toBeDefined();
+  const pos = (await storedBoard(page)).questionsPos!;
+  // Snap is on by default: the drop lands on the 24 px grid.
+  expect(pos.x % 24).toBe(0);
+  expect(pos.y % 24).toBe(0);
+  expect(Math.abs(pos.x - (624 + 240))).toBeLessThanOrEqual(12);
+  expect(Math.abs(pos.y - (360 + 120))).toBeLessThanOrEqual(12);
+  // The Core Loop card did not move.
+  const loop = (await storedBoard(page)).cards.find((c) => c.type === 'loop')!;
+  expect({ x: loop.x, y: loop.y }).toEqual({ x: 624, y: 96 });
+  // The field still takes typing after the move.
+  await field(page).fill('Still works.');
+  await expect(saveButton(page)).toBeEnabled();
+  await field(page).fill('');
+  await undoButton(page).click();
+  await expect.poll(async () => (await storedBoard(page)).questionsPos).toBeUndefined();
 });
 
 test('questions_allAnswered_messageThenDeleteBringsBack', async ({ page }) => {

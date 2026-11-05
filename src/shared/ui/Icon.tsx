@@ -51,7 +51,8 @@ export type IconName =
   | 'square-arrow-down'
   | 'drama'
   | 'repeat'
-  | 'message-circle-question-mark';
+  | 'message-circle-question-mark'
+  | 'list';
 
 interface IconProps {
   name: IconName;

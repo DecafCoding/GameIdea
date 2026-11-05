@@ -176,6 +176,8 @@ export const boardSchema: z.ZodType<Board> = z
     name: z.string().trim().min(1),
     kind: z.enum(BOARD_KINDS),
     conceptWidth: z.number().optional(),
+    conceptPos: z.object({ x: z.number(), y: z.number() }).strict().optional(),
+    questionsPos: z.object({ x: z.number(), y: z.number() }).strict().optional(),
     createdAt: z.iso.datetime(),
     updatedAt: z.iso.datetime(),
     genres: deckGenresSchema,
@@ -225,7 +227,12 @@ export const boardSchema: z.ZodType<Board> = z
       if (board.cards.filter((card) => card.type === 'hook').length !== 1) {
         issue('A One-Pager board has exactly 1 Hook Card.');
       }
-    } else if (board.cards.some((card) => card.inConcept) || board.conceptWidth !== undefined) {
+    } else if (
+      board.cards.some((card) => card.inConcept) ||
+      board.conceptWidth !== undefined ||
+      board.conceptPos !== undefined ||
+      board.questionsPos !== undefined
+    ) {
       issue('Only a One-Pager board has a Details panel.');
     }
     if (board.cards.some((card) => card.inConcept && card.tuckedUnder !== null)) {

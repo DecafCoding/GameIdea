@@ -70,8 +70,8 @@ test('shell_themeAttributes_changeChromeAndCardFace', async ({ page }) => {
   await openBoard(page, fixtureBoard([fixtureCard('role', { x: 96, y: 96 })]));
   const card = cardById(page, 'role-1');
   const logo = topBar(page).getByRole('link', { name: 'Board List' }).locator('span').first();
-  // Dark mode (the default): the dark --card-face #2A2F38 (design 4.5).
-  expectRgbNear(await backgroundRgb(card), [42, 47, 56]);
+  // Dark mode (the default): the dark --card-face #23272F (design 4.5).
+  expectRgbNear(await backgroundRgb(card), [35, 39, 47]);
 
   await rail(page).getByRole('button', { name: 'Settings' }).click();
   const dialog = page.getByRole('dialog', { name: 'Settings' });
@@ -82,10 +82,11 @@ test('shell_themeAttributes_changeChromeAndCardFace', async ({ page }) => {
 
   await expect(topBar(page)).toHaveCSS('background-color', 'rgb(255, 255, 255)');
   await expect(logo).toHaveCSS('background-color', 'rgb(63, 179, 127)');
-  // The mode changes the card face to the light --card-face #F4F0E6; the theme color does not.
+  // The mode changes the card face to the light --card-face #FFFFFF; the theme color does not.
   const face = await card.evaluate((el) => getComputedStyle(el).getPropertyValue('--card-face'));
-  expect(face.trim().toUpperCase()).toBe('#F4F0E6');
-  expectRgbNear(await backgroundRgb(card), [244, 240, 230]);
+  // The minifier may shorten #FFFFFF to #FFF.
+  expect(face.trim().toUpperCase()).toMatch(/^#FFF(FFF)?$/);
+  expectRgbNear(await backgroundRgb(card), [255, 255, 255]);
 });
 
 test('shell_settingsButton_pressedWhileDialogOpen', async ({ page }) => {

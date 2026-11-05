@@ -46,14 +46,11 @@ export function conceptRectOf(flow: ReturnType<typeof useReactFlow>, board: Boar
 }
 
 /**
- * The Questions panel's rect in flow coordinates: its place below the Core Loop card's
- * measured height and its own measured size (before measurement, 240 × 120). Null on a
- * Free Form board.
+ * The Questions panel's rect in flow coordinates: its place (questionsPlace) and its own
+ * measured size (before measurement, 240 × 120). Null on a Free Form board.
  */
 export function questionsRectOf(flow: ReturnType<typeof useReactFlow>, board: Board): Rect | null {
-  const loopId = board.cards.find((card) => card.type === 'loop')?.id;
-  const loopHeight = loopId ? flow.getInternalNode(loopId)?.measured.height : undefined;
-  const place = questionsPlace(board, loopHeight);
+  const place = questionsPlace(board);
   if (!place) return null;
   const measured = flow.getInternalNode(QUESTIONS_NODE_ID)?.measured;
   return {

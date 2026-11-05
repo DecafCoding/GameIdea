@@ -5,7 +5,7 @@
  * slot under the card. The sentence is selectable text (nodrag, nopan), so it is copied
  * with the pointer and Ctrl+C; drag the card by its header.
  */
-import { Icon } from '@/shared/ui';
+import { PanelTitle } from '@/shared/ui';
 import styles from './HookCard.module.css';
 
 /** The New state's help line (design 9.5). */
@@ -21,12 +21,7 @@ interface HookCardProps {
 export function HookCard({ sentence, empty }: HookCardProps) {
   return (
     <article className={styles.hook} aria-label="Hook Card" data-card="" data-type="hook">
-      <header className={styles.header}>
-        <span className={styles.dot}>
-          <Icon name="hook" size={13} />
-        </span>
-        <span className={styles.label}>Hook</span>
-      </header>
+      <PanelTitle icon="hook" title="Hook" />
       <p
         className={`${styles.sentence} nodrag nopan`}
         data-testid="hook-sentence"

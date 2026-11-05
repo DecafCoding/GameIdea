@@ -1,25 +1,51 @@
 /**
- * The Questions panel's place as a pure rule (design 9.17, docs/feature-questions-panel.html
- * Panel): on a One-Pager board, left = the Core Loop card's left, top = its top + its drawn
- * height + 24. The drawn height comes from React Flow's measure; unmeasured, the card's
- * 200 px minimum. A One-Pager board with no Core Loop card (made before Phase 9) uses the
- * Core Loop card's default place, (680, 96). Never stored; null on a Free Form board.
+ * The Questions panel's place as pure rules (design 9.17, user 2026-11-05). The panel moves
+ * freely on its own: once dragged, its place is Board.questionsPos. Until then it sits
+ * QUESTIONS_DROP below the Core Loop card's top (the card's 240 px of room plus 24), at the
+ * card's left; with no Core Loop card (a board made before Phase 9), at the Core Loop
+ * card's default place, the same distance down. The rule never reads the card's drawn
+ * height, so the panel never moves when the card grows, and pinQuestions saves the place
+ * when the Core Loop card moves, so the panel never follows it. Null on Free Form.
  */
 import type { Board } from '@/shared/model';
 import { ONE_PAGER_LOOP_SPOT } from '@/shared/store';
-import { cardSize, HOOK_WIDTH, type Point } from './placement';
+import { HOOK_WIDTH, type Point } from './placement';
 
 /** The React Flow node id of the panel. */
 export const QUESTIONS_NODE_ID = 'questions-panel';
-/** The gap between the Core Loop card's bottom edge and the panel. */
-export const QUESTIONS_GAP = 24;
+/** How far below the Core Loop card's top the panel starts: 240 of room plus a 24 gap. */
+export const QUESTIONS_DROP = 264;
 /** The panel width: the Core Loop card width. */
 export const QUESTIONS_WIDTH = HOOK_WIDTH;
 
 /** The panel's top-left in flow coordinates; null unless the board is a One-Pager board. */
-export function questionsPlace(board: Board, loopHeight?: number): Point | null {
+export function questionsPlace(board: Board): Point | null {
   if (board.kind !== 'onePager') return null;
+  if (board.questionsPos) return { x: board.questionsPos.x, y: board.questionsPos.y };
   const loop = board.cards.find((card) => card.type === 'loop');
-  if (!loop) return { x: ONE_PAGER_LOOP_SPOT.x, y: ONE_PAGER_LOOP_SPOT.y };
-  return { x: loop.x, y: loop.y + (loopHeight ?? cardSize(loop).height) + QUESTIONS_GAP };
+  const anchor = loop ?? ONE_PAGER_LOOP_SPOT;
+  return { x: anchor.x, y: anchor.y + QUESTIONS_DROP };
+}
+
+/**
+ * Keeps the panel where it was when a change moves the Core Loop card: a board with no
+ * saved questionsPos gets the place it had before. Returns `after` itself when nothing
+ * needs saving.
+ */
+export function pinQuestions(before: Board, after: Board): Board {
+  if (before.questionsPos || after.questionsPos) return after;
+  const was = questionsPlace(before);
+  const now = questionsPlace(after);
+  if (!was || !now || (was.x === now.x && was.y === now.y)) return after;
+  return { ...after, questionsPos: was };
+}
+
+/**
+ * Moves the panel to (x, y): 1 changeBoard, 1 undo step, 1 save. The same board on Free
+ * Form or when the saved place does not change.
+ */
+export function moveQuestions(board: Board, x: number, y: number): Board {
+  const place = questionsPlace(board);
+  if (!place || (board.questionsPos && place.x === x && place.y === y)) return board;
+  return { ...board, questionsPos: { x, y } };
 }

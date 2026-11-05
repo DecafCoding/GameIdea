@@ -1,6 +1,6 @@
 /*
  * A Concept chip (design 9.15 and 4.4): min 36 tall, padding 8 12, radius 8, border 1 in
- * the deck card color, fill the deck card color at 28%, text Inter 13/600 line height 18
+ * the deck card color, fill the deck card color at --card-tint (12%, the same as a card), text Inter 13/600 line height 18
  * --text. As wide as its text, never wider than its lane; long words wrap.
  */
 .chip {
@@ -12,7 +12,7 @@
   padding: 8px 12px;
   border: 1px solid var(--chip-deck);
   border-radius: 8px;
-  background: color-mix(in srgb, var(--chip-deck) 28%, transparent);
+  background: color-mix(in srgb, var(--chip-deck) var(--card-tint), transparent);
   color: var(--text);
   font-family: var(--font-body);
   font-size: 13px;

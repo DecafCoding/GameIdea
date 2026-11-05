@@ -347,7 +347,7 @@ export function onePagerBoard(): Board {
 }
 
 /**
- * The One-Pager fixture plus its Core Loop card loop-1 at (680, 96), z 9, with no loopText.
+ * The One-Pager fixture plus its Core Loop card loop-1 at (624, 96), z 9, with no loopText.
  * Its live loop text is "trade → earn memories": the train Mechanic, then the first Resource
  * chip by z; there is no Progression or Goal.
  */
@@ -355,7 +355,7 @@ export function onePagerWithLoop(): Board {
   const board = onePagerBoard();
   return {
     ...board,
-    cards: [...board.cards, fixtureCard('loop', { id: 'loop-1', x: 680, y: 96, z: 9 })],
+    cards: [...board.cards, fixtureCard('loop', { id: 'loop-1', x: 624, y: 96, z: 9 })],
   };
 }
 
@@ -369,6 +369,8 @@ export function onePagerWithAnswers(): Board {
   return {
     ...board,
     cards: board.cards.map((card) => (card.id === 'modifier-1' ? { ...card, x: 960 } : card)),
+    // Dragged up a little, so the whole answer list stays clear of the zoom strip.
+    questionsPos: { x: 624, y: 312 },
     questions: [
       { id: 'answer-2', question: 'What makes it fun?', answer: 'Chasing the light.' },
       { id: 'answer-1', question: 'Who is the player?', answer: 'A night owl.' },

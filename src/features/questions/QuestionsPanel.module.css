@@ -20,31 +20,7 @@
   cursor: default;
 }
 
-/* Header: the icon, "Questions" and the count pill, gap 6. */
-.header {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-/* The message-circle-question-mark icon 13 in --accent-text. */
-.icon {
-  display: flex;
-  color: var(--accent-text);
-}
-
-/* Display 12/600, 0.08em, uppercase, --text-muted. */
-.title {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-
-/* The Details count pill: 22 tall, padding 0 9, radius 11, border 1 --border-strong, 11/600. */
+/* The count pill after the PanelTitle: 22 tall, padding 0 9, radius 11, border 1 --border-strong, 11/600. */
 .pill {
   display: inline-flex;
   align-items: center;

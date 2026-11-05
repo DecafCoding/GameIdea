@@ -1,6 +1,6 @@
 /**
  * ConceptNode: the Concept panel of a One-Pager board as 1 React Flow node beside the Hook
- * Card (design 9.15). A header ("Concept" and the count pill), then 1 lane per deck that has
+ * Card (design 9.15). A header (the list icon and "Details", no count), then 1 lane per deck that has
  * a Concept card, in rail order: a label (deck icon and plural deck name) and the chips in
  * drop order. An empty panel shows a help line. The panel is never dragged or selected.
  * During a drag over the panel, the dragged card's lane shows (added when the panel has
@@ -35,7 +35,7 @@ import {
   type Deck,
 } from '@/shared/model';
 import { useBoardStore } from '@/shared/store';
-import { Icon } from '@/shared/ui';
+import { Icon, PanelTitle } from '@/shared/ui';
 import { conceptLanes } from './concept';
 import type { ConceptFlowNode } from './nodes';
 import { cardText } from './reading';
@@ -43,11 +43,6 @@ import styles from './ConceptNode.module.css';
 
 /** The help line of an empty panel. */
 export const CONCEPT_EMPTY_TEXT = 'Drop a card here to add it to the details.';
-
-/** "7 Cards", "1 Card". */
-export function conceptCountText(count: number): string {
-  return `${count} ${count === 1 ? 'Card' : 'Cards'}`;
-}
 
 /** The drag hint over the panel: the lane to show, or the targeted chip and its result. */
 export interface ConceptHint {
@@ -127,7 +122,6 @@ export function ConceptPanel({
   reveal,
   handle,
 }: ConceptPanelProps) {
-  const count = lanes.reduce((sum, lane) => sum + lane.chips.length, 0);
   const shown = withHintLane(lanes, hint?.lane ?? null);
   return (
     <section
@@ -137,12 +131,7 @@ export function ConceptPanel({
       aria-label="Details"
       data-testid="concept-panel"
     >
-      <header className={styles.header}>
-        <h2 className={styles.title}>Details</h2>
-        <span className={styles.pill} data-testid="concept-count">
-          {conceptCountText(count)}
-        </span>
-      </header>
+      <PanelTitle icon="list" title="Details" />
       {shown.length === 0 && <p className={styles.help}>{CONCEPT_EMPTY_TEXT}</p>}
       {shown.map((lane) => (
         <div key={lane.deck} className={styles.lane} data-lane={lane.deck}>
@@ -272,7 +261,7 @@ function ConceptNodeView({ data }: NodeProps<ConceptFlowNode>) {
         setLive(null);
       }}
     >
-      <Icon name="grip" size={14} />
+      <Icon name="grip" size={10} />
     </button>
   );
 

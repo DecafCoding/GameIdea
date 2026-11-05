@@ -209,18 +209,19 @@
   --radius-card: 7px; /* user 2026-11-03: half of the handoff's 14 */
 }
 
-/* 2026-11-04 handoff (docs/design-system.html 4.5): card, tucked, Hook Card and note tokens follow data-mode. Dark is the default. */
+/* 2026-11-04 handoff (docs/design-system.html 4.5): card, tucked, Hook Card and note tokens follow data-mode. Dark is the default.
+ * User 2026-11-05: cards take the Details chip look, the panel --surface with the deck color at 12%; Details chips use the same --card-tint, and the text colors moved to keep 4.5:1. */
 :root {
-  --card-face: #2A2F38;
-  --card-tint: 14%;
-  --card-tucked-1: #2A2F38;
-  --card-tucked-2: #2A2F38;
-  --card-tucked-3: #2A2F38;
-  --card-tucked-4: #2A2F38;
-  --card-cue: #A9ADB6;
+  --card-face: #23272F;
+  --card-tint: 12%;
+  --card-tucked-1: #23272F;
+  --card-tucked-2: #23272F;
+  --card-tucked-3: #23272F;
+  --card-tucked-4: #23272F;
+  --card-cue: #ADB1BA;
   --card-cue-active: #ECEAE4;
-  --card-adjective: #A88BE6;
-  --card-adjective-active: #A88BE6;
+  --card-adjective: #B298E9;
+  --card-adjective-active: #B298E9;
   --card-divider: #4A505C;
   --zone-text: #C9B6F0;
   --hook-bg: #2A2F38;
@@ -233,15 +234,15 @@
   --shadow-note: 0 8px 22px rgba(0, 0, 0, 0.45);
 }
 [data-mode="light"] {
-  --card-face: #F4F0E6;
-  --card-tint: 7%;
-  --card-tucked-1: #F1ECE0;
-  --card-tucked-2: #EFE9DC;
-  --card-tucked-3: #ECE6D8;
-  --card-tucked-4: #E9E3D4;
-  --card-cue: #5A5E68;
+  --card-face: #FFFFFF;
+  --card-tint: 12%;
+  --card-tucked-1: #FAFAFA;
+  --card-tucked-2: #F5F5F5;
+  --card-tucked-3: #F0F0F0;
+  --card-tucked-4: #EBEBEB;
+  --card-cue: #535760;
   --card-cue-active: #1B1E24;
-  --card-adjective: #6E48B5;
+  --card-adjective: #6542A7;
   --card-adjective-active: #5B3F99;
   --card-divider: #D5CFC0;
   --zone-text: #4A2E86;

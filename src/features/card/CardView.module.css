@@ -62,7 +62,7 @@
 }
 
 /*
- * Design 4.4: the deck tint (the deck card color at --card-tint over the face: 14% dark, 7% light) and the 1 px inset
+ * Design 4.4: the deck tint (the deck card color at --card-tint over the face: 12% in both modes, the same as a Details chip) and the 1 px inset
  * edge in the deck card color, on every card face and tucked face in both modes. A layer of
  * its own, kept off the card's own box-shadow so the drag shadow (CardNode.module.css .lifted)
  * and the Redraw All outline never remove it. The face, rings, disc and marks paint above it.

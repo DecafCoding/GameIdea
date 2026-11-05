@@ -123,29 +123,53 @@ test.describe('panel', () => {
     await openBoard(page, onePagerBoard());
     const hook = await nodeBox(page, 'hook-1');
     const box = await nodeBox(page, 'concept-panel');
-    expect(Math.abs(box.x - (hook.x + 296))).toBeLessThanOrEqual(1);
+    expect(Math.abs(box.x - (hook.x + 268))).toBeLessThanOrEqual(1);
     expect(Math.abs(box.y - hook.y)).toBeLessThanOrEqual(1);
     expect(Math.round((await boxOf(panel(page))).width)).toBe(232);
   });
 
-  test('onePager_moveHookCard_panelFollows', async ({ page }) => {
+  test('onePager_moveHookCard_panelStays', async ({ page }) => {
     await openBoard(page, onePagerBoard());
     const hook = await nodeBox(page, 'hook-1');
     const before = await nodeBox(page, 'concept-panel');
     await page.mouse.move(hook.x + 120, hook.y + 30);
     await page.mouse.down();
     await page.mouse.move(hook.x + 168, hook.y + 102, { steps: 6 });
-    // During the drag the panel keeps its place beside the Hook Card.
+    // The panel moves on its own (user 2026-11-05): it stays put while the Hook Card moves.
     const during = await nodeBox(page, 'concept-panel');
-    const hookDuring = await nodeBox(page, 'hook-1');
-    expect(Math.abs(during.x - (hookDuring.x + 296))).toBeLessThanOrEqual(1);
-    expect(Math.abs(during.y - hookDuring.y)).toBeLessThanOrEqual(1);
+    expect(Math.abs(during.x - before.x)).toBeLessThanOrEqual(1);
+    expect(Math.abs(during.y - before.y)).toBeLessThanOrEqual(1);
     await page.mouse.up();
-    await expect
-      .poll(async () => (await nodeBox(page, 'concept-panel')).x)
-      .toBeCloseTo(before.x + 48, 0);
+    await expect.poll(async () => (await storedCard(page, 'hook-1'))?.x).not.toBe(96);
     const after = await nodeBox(page, 'concept-panel');
-    expect(Math.abs(after.y - (before.y + 72))).toBeLessThanOrEqual(1);
+    expect(Math.abs(after.x - before.x)).toBeLessThanOrEqual(1);
+    expect(Math.abs(after.y - before.y)).toBeLessThanOrEqual(1);
+  });
+
+  test('onePager_dragPanel_movesAloneAndSavesOnce', async ({ page }) => {
+    await openBoard(page, onePagerBoard());
+    const hookBefore = await nodeBox(page, 'hook-1');
+    const before = await nodeBox(page, 'concept-panel');
+    // Grab the header, away from the chips and the resize handle.
+    await page.mouse.move(before.x + 150, before.y + 26);
+    await page.mouse.down();
+    await page.mouse.move(before.x + 150 + 144, before.y + 26 + 240, { steps: 8 });
+    await page.mouse.up();
+    await expect.poll(async () => (await stored(page)).conceptPos).toBeDefined();
+    const pos = (await stored(page)).conceptPos!;
+    // Snap is on by default: the drop lands on the 24 px grid.
+    expect(pos.x % 24).toBe(0);
+    expect(pos.y % 24).toBe(0);
+    expect(Math.abs(pos.x - (364 + 144))).toBeLessThanOrEqual(12);
+    expect(Math.abs(pos.y - (96 + 240))).toBeLessThanOrEqual(12);
+    const hookAfter = await nodeBox(page, 'hook-1');
+    expect(hookAfter.x).toBeCloseTo(hookBefore.x, 0);
+    expect(hookAfter.y).toBeCloseTo(hookBefore.y, 0);
+    // The chips came along with the panel.
+    await expect(panel(page).getByTestId('chip')).toHaveCount(4);
+    // 1 undo step puts it back beside the Hook Card.
+    await page.keyboard.press('Control+z');
+    await expect.poll(async () => (await stored(page)).conceptPos).toBeUndefined();
   });
 
   test('onePager_lanes_railOrderAndChipText', async ({ page }) => {
@@ -157,7 +181,7 @@ test.describe('panel', () => {
     ]);
     expect(await laneTexts(page, 'Resources')).toEqual(['memories', 'rope']);
     expect(await laneTexts(page, 'Mechanics')).toEqual(['climb']);
-    await expect(page.getByTestId('concept-count')).toHaveText('4 Cards');
+    await expect(page.getByTestId('concept-panel').getByTestId('chip')).toHaveCount(4);
   });
 
   test.describe('light mode', () => {
@@ -235,7 +259,7 @@ test.describe('drops', () => {
       await expect(card).toHaveCount(0);
       await expect(lane(page, laneName).getByTestId('chip')).toHaveCount(1);
     }
-    await expect(page.getByTestId('concept-count')).toHaveText('10 Cards');
+    await expect(page.getByTestId('concept-panel').getByTestId('chip')).toHaveCount(10);
     await expect
       .poll(async () => {
         const [board] = await storedBoards(page);
@@ -324,7 +348,7 @@ test.describe('drops', () => {
     await expect(page.getByTestId('concept-slot')).toHaveCount(0);
     await expect(page.getByTestId('chip-result')).toHaveCount(0);
     await page.mouse.up();
-    await expect(page.getByTestId('concept-count')).toHaveText('4 Cards');
+    await expect(page.getByTestId('concept-panel').getByTestId('chip')).toHaveCount(4);
   });
 
   test('onePager_eachDrop_oneUndoStep', async ({ page }) => {

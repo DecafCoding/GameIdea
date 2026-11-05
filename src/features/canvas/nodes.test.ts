@@ -12,7 +12,7 @@ import {
   onePagerBoard,
   onePagerWithLoop,
 } from '@/test/fixtures/boards';
-import { dealDelays, placeQuestionsNode, toNodes, type CardNodeData } from './nodes';
+import { dealDelays, toNodes, type CardNodeData } from './nodes';
 
 const UI = { selectedId: null, hiddenIds: new Set<string>() };
 const zOf = (nodes: ReturnType<typeof toNodes>, id: string) =>
@@ -107,13 +107,19 @@ describe('toNodes on a One-Pager board', () => {
     const nodes = toNodes({ ...onePagerBoard(), conceptWidth: 300 }, UI);
     const panel = nodes.find((node) => node.id === 'concept-panel')!;
     expect(panel.type).toBe('concept');
-    expect(panel.position).toEqual({ x: 392, y: 96 });
+    expect(panel.position).toEqual({ x: 364, y: 96 });
     expect(panel.data).toEqual({ width: 300 });
     expect(panel.zIndex).toBe(1);
-    expect(panel.draggable).toBe(false);
+    expect(panel.draggable).toBe(true);
     // Above notes, below every card.
     const cardZ = nodes.filter((n) => n.type === 'card').map((n) => n.zIndex ?? 0);
     expect(Math.min(...cardZ)).toBeGreaterThan(1);
+  });
+
+  it('toNodes_onePagerWithConceptPos_panelAtSavedPlace', () => {
+    const nodes = toNodes({ ...onePagerBoard(), conceptPos: { x: 900, y: 480 } }, UI);
+    const panel = nodes.find((node) => node.id === 'concept-panel')!;
+    expect(panel.position).toEqual({ x: 900, y: 480 });
   });
 
   it('toNodes_freeForm_noConceptNode', () => {
@@ -159,7 +165,7 @@ describe('toNodes with a Core Loop card', () => {
     expect(loop.type).toBe('loop');
     expect(loop.width).toBe(240);
     expect(loop.height).toBeUndefined();
-    expect(loop.position).toEqual({ x: 680, y: 96 });
+    expect(loop.position).toEqual({ x: 624, y: 96 });
     expect(loop.data).toEqual({ cardId: 'loop-1' });
     expect(nodes.some((node) => node.type === 'card' && node.id === 'loop-1')).toBe(false);
   });
@@ -190,7 +196,7 @@ describe('toNodes with the Questions panel', () => {
     const nodes = toNodes(onePagerWithLoop(), UI);
     expect(nodes.filter((node) => node.type === 'questions')).toHaveLength(1);
     const panel = panelOf(nodes)!;
-    expect(panel.position).toEqual({ x: 680, y: 96 + 200 + 24 });
+    expect(panel.position).toEqual({ x: 624, y: 96 + 264 });
     expect(panel.width).toBe(240);
     expect(panel.height).toBeUndefined();
     expect(panel.data).toEqual({});
@@ -199,36 +205,20 @@ describe('toNodes with the Questions panel', () => {
     expect(ids.indexOf('questions-panel')).toBe(ids.indexOf('concept-panel') + 1);
   });
 
-  it('placeQuestionsNode_loopHeight_movesOnlyQuestionsNode', () => {
-    const board = onePagerWithLoop();
-    const nodes = toNodes(board, UI);
-    const placed = placeQuestionsNode(nodes, board, 340);
-    expect(panelOf(placed)!.position).toEqual({ x: 680, y: 96 + 340 + 24 });
-    placed.forEach((node, i) => {
-      if (node.id === 'questions-panel') expect(node).not.toBe(nodes[i]);
-      else expect(node).toBe(nodes[i]);
-    });
-  });
-
-  it('placeQuestionsNode_samePlaceOrFreeForm_sameArray', () => {
-    const board = onePagerWithLoop();
-    const nodes = toNodes(board, UI);
-    expect(placeQuestionsNode(nodes, board, undefined)).toBe(nodes);
-    expect(placeQuestionsNode(nodes, board, 200)).toBe(nodes);
-    const free = fixtureBoard([fixtureCard('hook')]);
-    const freeNodes = toNodes(free, UI);
-    expect(placeQuestionsNode(freeNodes, free, 340)).toBe(freeNodes);
+  it('toNodes_questionsPos_panelAtSavedPlace', () => {
+    const nodes = toNodes({ ...onePagerWithLoop(), questionsPos: { x: 960, y: 600 } }, UI);
+    expect(panelOf(nodes)!.position).toEqual({ x: 960, y: 600 });
   });
 
   it('toNodes_freeForm_noQuestionsNode', () => {
     expect(panelOf(toNodes(fixtureBoard([fixtureCard('hook')]), UI))).toBeUndefined();
   });
 
-  it('toNodes_questionsNode_notDraggableZIndex1', () => {
+  it('toNodes_questionsNode_draggableZIndex1', () => {
     const nodes = toNodes(onePagerWithLoop(), UI);
     const panel = panelOf(nodes)!;
     expect(panel.zIndex).toBe(1);
-    expect(panel.draggable).toBe(false);
+    expect(panel.draggable).toBe(true);
     expect(panel.selectable).toBe(false);
     expect(panel.focusable).toBe(false);
     const cardZ = nodes.filter((n) => n.type === 'card' || n.type === 'loop').map((n) => n.zIndex!);
