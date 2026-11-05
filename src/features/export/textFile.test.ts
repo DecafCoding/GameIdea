@@ -161,7 +161,7 @@ describe('textFile', () => {
     expect(boardText(onePagerBoard())).toBe(
       'One Pager\n\n' +
         'Hooks\n\nYou are a navigator who must trade.\n\n' +
-        'Concept\n\n' +
+        'Details\n\n' +
         'Mechanics\n- climb\n\n' +
         'Resources\n- memories\n- rope\n\n' +
         'Settings\n- outpost\n\n' +
@@ -193,12 +193,12 @@ describe('textFile', () => {
   });
 
   it('boardText_freeForm_noConceptSection', () => {
-    expect(boardText(named(fixtureBoard([combinedCard('role')])))).not.toContain('Concept');
+    expect(boardText(named(fixtureBoard([combinedCard('role')])))).not.toContain('Details');
   });
 
   it('boardText_onePagerEmptyPanel_noConceptSection', () => {
     const board = onePagerBoard();
     const empty = { ...board, cards: board.cards.filter((card) => !card.inConcept) };
-    expect(boardText(empty)).not.toContain('Concept');
+    expect(boardText(empty)).not.toContain('Details');
   });
 });

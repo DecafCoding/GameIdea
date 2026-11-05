@@ -142,7 +142,7 @@
         <li>Every card on every board gets the deck edge and tint, not only the Concept frames. The proposed <code>--card-edge</code> (<code>#3A404B</code>) is not needed.</li>
         <li>The README's proposed token names are kept.</li>
         <li>The Genres tab is disabled when Settings opens with no board open.</li>
-        <li>The One-Pager footer does not count loose cards: "12 cards · 1 hook · 1 concept".</li>
+        <li>The One-Pager footer does not count loose cards: "12 cards · 1 hook · 1 details".</li>
         <li>The Concept panel resizes freely from 232 to 640 wide. Chips size to their text, wrap long text, and are never wider than their lane.</li>
         <li>Card themes and the Settings tabs land together in Phase 6. The One-Pager board lands in Phase 7.</li>
       </ul></td>
@@ -154,6 +154,13 @@
         <li>The Genres tab footer line about Generic cues (drawn again in <code>Genres</code>). It stays dropped, as on 2026-11-02.</li>
       </ul>
       <p>The mockups are older than this document in 6 places (README section 12). This document wins: card radius 7, the wrench Mechanic icon, icon strip menus, the tucked icon in the corner, no Generic line, and the New Board help line. <code>ExpTuckIcons</code> is a record only.</p></td>
+  </tr>
+  <tr>
+    <td>2026-11-04</td>
+    <td>User change (no bundle)</td>
+    <td>Merged and On Top Modifier words on a chip use <code>--card-adjective</code>.</td>
+    <td><p>The panel's on-screen name is now "Details" (header, region label, resize label, empty help line, footer "1 details", text file section, New Board help and import errors). Code and board file field names keep <code>concept</code> (<code>inConcept</code>, <code>conceptWidth</code>), so the format is unchanged. The light-mode card tint dropped from 14% to 7% (<code>--card-tint</code>).</p></td>
+    <td>"Concept" as a visible label.</td>
   </tr>
 </table>
 
@@ -326,7 +333,7 @@
   <tr><td>Dialog title</td><td>Display 22/700</td><td>Settings, empty-board guide</td></tr>
   <tr><td>Settings tab</td><td>Inter 14/600</td><td>Appearance, Genres. <code>--text-muted</code>; selected <code>--text</code></td></tr>
   <tr><td>Concept chip</td><td>Inter 13/600, line height 18</td><td><code>--text</code>. Wraps inside its lane</td></tr>
-  <tr><td>Concept header</td><td>Display 12/600, 0.08em, uppercase</td><td>"Concept", <code>--text-muted</code></td></tr>
+  <tr><td>Concept header</td><td>Display 12/600, 0.08em, uppercase</td><td>"Details", <code>--text-muted</code></td></tr>
   <tr><td>Lane label</td><td>Inter 12/600</td><td>Plural deck name, lane color (4.4)</td></tr>
   <tr><td>Concept count pill</td><td>Inter 11/600</td><td>"7 Cards", <code>--text</code></td></tr>
   <tr><td>App name, board card name</td><td>Display 17/700 · 17/600</td><td></td></tr>
@@ -380,7 +387,7 @@
 </table>
 
 <h3>8.2 Left rail</h3>
-<p>232 wide, full height under the top bar. Padding 10 12 12, gap 4 between items. Fill <code>--surface</code>, right border 1 <code>--border</code>. Top to bottom:</p>
+<p>232 wide, full height under the top bar. Padding 10 12 12, gap 4 between items. Fill <code>--surface</code>, right border 1 <code>--border</code>. When it scrolls, the scroll bar is the Hook Card's low-profile one: a 4 px rounded thumb in <code>--text</code> at 30% (50% on hover), no track <span class="tag">user 2026-11-04</span>. Top to bottom:</p>
 <table>
   <tr><th>Group label</th><th>Items</th></tr>
   <tr><td>(none)</td><td>Hook Card button</td></tr>
@@ -676,15 +683,15 @@
   <tr><th>Part</th><th>Spec</th></tr>
   <tr><td>Panel place</td><td>Left = Hook Card left + 240 + 56. Top = Hook Card top. It moves with the Hook Card.</td></tr>
   <tr><td>Panel</td><td>Width 232 by default, resizable from 232 to 640 with no snap <span class="tag">user 2026-11-04</span>. Padding 16, radius 12, gap 12. Fill <code>--surface</code>, border 1 <code>--border</code>, shadow 0 8px 22px rgba(0, 0, 0, 0.4). The height grows with the content.</td></tr>
-  <tr><td>Header</td><td>"Concept", Display 12/600, 0.08em, uppercase, <code>--text-muted</code>. Then a count pill: 22 tall, padding 0 9, radius 11, border 1 <code>--border-strong</code>, 11/600 <code>--text</code>, "7 Cards" ("1 Card" for one). Gap 8.</td></tr>
+  <tr><td>Header</td><td>"Details", Display 12/600, 0.08em, uppercase, <code>--text-muted</code>. Then a count pill: 22 tall, padding 0 9, radius 11, border 1 <code>--border-strong</code>, 11/600 <code>--text</code>, "7 Cards" ("1 Card" for one). Gap 8.</td></tr>
   <tr><td>Lane</td><td>A label, then the chips, gap 6. Lanes come in rail order. A deck with no card has no lane.</td></tr>
   <tr><td>Lane label</td><td>Deck icon 14 and the plural deck name ("Mechanics", "Resources", "Settings", "Mood", "Twist"), 12/600, gap 6, in the lane color (4.4).</td></tr>
   <tr><td>Chips</td><td>Wrap side by side in the lane, gap 8, in drop order.</td></tr>
-  <tr><td>Chip</td><td>Min 36 tall, padding 8 12, radius 8, border 1 in the deck card color, fill the deck card color at 28%, text 13/600 line height 18 <code>--text</code>. No icon. The chip is as wide as its text and never wider than its lane. Longer text wraps, and the chip grows by 18 for each extra line <span class="tag">user 2026-11-04</span>. A combined card reads with its adjectives ("stolen salt"). Chips have no buttons and no strip menu.</td></tr>
-  <tr><td>Resize handle</td><td>24 × 44, radius 8, border 1 <code>--border-strong</code>, fill <code>--surface</code>, grip icon 14 <code>--text-muted</code>. On the right edge, centered on the panel height, 12 outside the edge. Cursor <code>ew-resize</code>. aria-label "Resize Concept". The width saves once, on release.</td></tr>
+  <tr><td>Chip</td><td>Min 36 tall, padding 8 12, radius 8, border 1 in the deck card color, fill the deck card color at 28%, text 13/600 line height 18 <code>--text</code>; merged and On Top Modifier words at the front use <code>--card-adjective</code> (purple, as on the card face) <span class="tag">user 2026-11-04</span>. No icon. The chip is as wide as its text and never wider than its lane. Longer text wraps, and the chip grows by 18 for each extra line <span class="tag">user 2026-11-04</span>. A combined card reads with its adjectives ("stolen salt"). Chips have no buttons and no strip menu.</td></tr>
+  <tr><td>Resize handle</td><td>Label "Resize Details". 24 × 44, radius 8, border 1 <code>--border-strong</code>, fill <code>--surface</code>, grip icon 14 <code>--text-muted</code>. On the right edge, centered on the panel height, 12 outside the edge. Cursor <code>ew-resize</code>. aria-label "Resize Concept". The width saves once, on release.</td></tr>
   <tr><td>Modifier drop target</td><td>A Modifier dragged over a Player Role, Resource or Setting chip: that chip gets an outline 2 in <code>#6E48B5</code> (<code>--deck-modifier</code>), offset 3. The dragged card uses the drag style in 9.7. No lane highlight and no "Add to …" box show.</td></tr>
   <tr><td>Light mode</td><td>Panel fill <code>#FFFFFF</code> and border <code>#DDD8CE</code> (the light <code>--surface</code> and <code>--border</code>). Chip text <code>#1B1E24</code>. Lane labels in the deck card color.</td></tr>
-  <tr><td>Card count chip</td><td>"12 cards · 1 hook · 1 concept". The card count is the Hook Train plus the Concept cards. It does not count the Hook Card or loose cards <span class="tag">user 2026-11-04</span>.</td></tr>
+  <tr><td>Card count chip</td><td>"12 cards · 1 hook · 1 details". The card count is the Hook Train plus the Concept cards. It does not count the Hook Card or loose cards <span class="tag">user 2026-11-04</span>.</td></tr>
 </table>
 <p class="meta">Dropped from the bundle by the user: the folded Hook Train, Expand Stack, the Hook Card count pill, the collapsed Concept button (<code>Stack4ChipsCollapsed</code>) and the 1-or-2-column snap. See the Handoff log.</p>
 

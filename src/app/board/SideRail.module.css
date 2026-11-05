@@ -10,6 +10,37 @@
   overflow-y: auto;
   background: var(--surface);
   border-right: 1px solid var(--border);
+  /* The same low-profile scroll bar as the Hook Card sentence: a thin thumb, no track.
+     Firefox uses these; Chromium and WebKit use the rules below (user 2026-11-04). */
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--text) 30%, transparent) transparent;
+}
+
+/* Chromium and WebKit: a 4 px rounded thumb and no track or corner box. Chromium ignores
+   ::-webkit-scrollbar when the standard properties are set, so they reset here. */
+@supports selector(::-webkit-scrollbar) {
+  .rail {
+    scrollbar-width: auto;
+    scrollbar-color: auto;
+  }
+
+  .rail::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .rail::-webkit-scrollbar-track,
+  .rail::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
+  .rail::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    background: color-mix(in srgb, var(--text) 30%, transparent);
+  }
+
+  .rail::-webkit-scrollbar-thumb:hover {
+    background: color-mix(in srgb, var(--text) 50%, transparent);
+  }
 }
 
 /* Group label (design 8.2): Display 11 / 600, uppercase, 0.08em, padding 8 4 2. */

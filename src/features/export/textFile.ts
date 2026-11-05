@@ -93,7 +93,7 @@ export function boardText(board: Board): string {
   const hooks = hookSentences(board);
   if (hooks.length > 0) sections.push(['Hooks', '', hooks.join('\n\n')].join('\n'));
   const concept = conceptBlocks(board);
-  if (concept.length > 0) sections.push(['Concept', '', concept.join('\n\n')].join('\n'));
+  if (concept.length > 0) sections.push(['Details', '', concept.join('\n\n')].join('\n'));
   const cards = cardLines(board);
   if (cards.length > 0) sections.push(['Cards', '', ...cards].join('\n'));
   const notes = noteBlocks(board);

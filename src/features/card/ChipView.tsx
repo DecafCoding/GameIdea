@@ -1,7 +1,7 @@
 /**
  * ChipView: one Concept chip on a One-Pager board (design 9.15): the card's words only,
  * with no icon, no buttons and no strip menu. A 1 px border in the deck card color and the
- * deck card color at 28% fill. It is as wide as its text, never wider than its lane, and
+ * deck card color at 28% fill. Modifier words at the front read in the adjective purple. It is as wide as its text, never wider than its lane, and
  * wraps longer text. targeted: the Modifier drop target outline. hidden: kept in the
  * layout but not drawn, while the chip is dragged out. Plain React: no React Flow here.
  */
@@ -11,6 +11,8 @@ import styles from './ChipView.module.css';
 
 interface ChipViewProps {
   text: string;
+  /** The Modifier words at the front of text, drawn in the adjective purple. */
+  lead?: string;
   deck: Deck;
   /** A Modifier is over this chip and would combine with it. */
   targeted?: boolean;
@@ -18,7 +20,13 @@ interface ChipViewProps {
   hidden?: boolean;
 }
 
-export function ChipView({ text, deck, targeted = false, hidden = false }: ChipViewProps) {
+export function ChipView({
+  text,
+  lead = '',
+  deck,
+  targeted = false,
+  hidden = false,
+}: ChipViewProps) {
   const style = { '--chip-deck': `var(--deck-${deck})` } as CSSProperties;
   return (
     <span
@@ -30,7 +38,16 @@ export function ChipView({ text, deck, targeted = false, hidden = false }: ChipV
       data-targeted={targeted || undefined}
       data-testid="chip"
     >
-      {text}
+      {lead && text.startsWith(lead) ? (
+        <span>
+          <span className={styles.lead} data-testid="chip-lead">
+            {lead}
+          </span>
+          {text.slice(lead.length)}
+        </span>
+      ) : (
+        text
+      )}
     </span>
   );
 }

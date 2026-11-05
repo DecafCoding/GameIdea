@@ -425,7 +425,7 @@ test.describe('chip actions', () => {
   test('onePager_resizePanel_widthSavedAfterReload', async ({ page }) => {
     await openBoard(page, onePagerBoard());
     const handle = page.getByTestId('concept-resize');
-    await expect(handle).toHaveAttribute('aria-label', 'Resize Concept');
+    await expect(handle).toHaveAttribute('aria-label', 'Resize Details');
     const from = await centerOf(handle);
     await page.mouse.move(from.x, from.y);
     await page.mouse.down();
@@ -467,9 +467,9 @@ test.describe('outputs', () => {
   test('onePager_footer_countsTrainPlusConcept', async ({ page }) => {
     await openBoard(page, onePagerBoard());
     // Train 2 + Concept 4; not the Hook Card, the loose Modifier or the note.
-    await expect(page.getByTestId('count-badge')).toHaveText('6 cards · 1 hook · 1 concept');
+    await expect(page.getByTestId('count-badge')).toHaveText('6 cards · 1 hook · 1 details');
     await dragTo(page, cardById(page, 'modifier-1'), await emptyPanelPoint(page));
-    await expect(page.getByTestId('count-badge')).toHaveText('6 cards · 1 hook · 1 concept');
+    await expect(page.getByTestId('count-badge')).toHaveText('6 cards · 1 hook · 1 details');
   });
 
   test('onePager_boardList_showsOnePagerLabel', async ({ page }) => {
@@ -491,7 +491,7 @@ test.describe('outputs', () => {
     const download = await exportFile(page, 'Text File');
     const text = await readFile(await download.path(), 'utf8');
     expect(text).toContain(
-      'Hooks\n\nYou are a navigator who must trade.\n\nConcept\n\n' +
+      'Hooks\n\nYou are a navigator who must trade.\n\nDetails\n\n' +
         'Mechanics\n- climb\n\nResources\n- memories\n- rope\n\nSettings\n- outpost\n\nCards\n\n',
     );
   });

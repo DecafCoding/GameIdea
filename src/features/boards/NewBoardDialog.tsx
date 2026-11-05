@@ -25,7 +25,7 @@ export const NEW_BOARD_HELP_TEXT =
 
 /** The help line under the kind choice. */
 export const NEW_BOARD_KIND_HELP_TEXT =
-  'A One-Pager board holds 1 game: 1 Hook Card and a Concept panel. The kind cannot change later.';
+  'A One-Pager board holds 1 game: 1 Hook Card and a Details panel. The kind cannot change later.';
 
 const KIND_OPTIONS: readonly SegmentedOption<BoardKind>[] = [
   { value: 'onePager', label: 'One-Pager' },

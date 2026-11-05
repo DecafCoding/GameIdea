@@ -22,6 +22,11 @@
   user-select: none;
 }
 
+/* Merged and On Top Modifier words: the mode's adjective purple, as on the card face. */
+.lead {
+  color: var(--card-adjective);
+}
+
 /* The Modifier drop target (design 9.15): outline 2 in --deck-modifier, offset 3. */
 .targeted {
   outline: 2px solid var(--deck-modifier);
