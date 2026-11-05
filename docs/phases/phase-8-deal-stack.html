@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Phase 8: Deal A Stack</title>
+  <style>
+    :root { --fg:#1a1a1a; --muted:#666; --accent:#2563eb; --done:#16a34a; --warn:#dc2626; --rule:#e5e7eb; }
+    body { font:16px/1.6 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; color:var(--fg); max-width:62rem; margin:2rem auto; padding:0 1.25rem; }
+    h1 { font-size:2rem; border-bottom:2px solid var(--rule); padding-bottom:.3rem; }
+    h2 { font-size:1.5rem; margin-top:2.5rem; border-bottom:1px solid var(--rule); padding-bottom:.2rem; }
+    h3.milestone { font-size:1.25rem; margin-top:2rem; color:var(--accent); }
+    h4.task { font-size:1.1rem; margin-top:1.5rem; }
+    dl.phase-meta { display:grid; grid-template-columns:max-content 1fr; gap:.25rem 1rem; }
+    dl.phase-meta dt { font-weight:600; color:var(--muted); }
+    code, pre { font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+    pre { background:#f6f8fa; padding:1rem; border-radius:6px; overflow:auto; }
+    code { background:#f6f8fa; padding:.1rem .3rem; border-radius:4px; }
+    pre code { background:none; padding:0; }
+    ul.checklist { list-style:none; padding-left:0; }
+    ul.checklist > li::before { content:"☐ "; color:var(--muted); }
+    ul.checklist > li[data-checked="true"]::before { content:"☑ "; color:var(--done); }
+    .validate { color:var(--done); font-weight:600; }
+    table { border-collapse:collapse; margin:.5rem 0 1rem; }
+    th, td { border:1px solid var(--rule); padding:.3rem .6rem; text-align:left; vertical-align:top; font-size:.92rem; }
+  </style>
+</head>
+<body>
+
+<h1 data-phase="8">Phase 8: Deal A Stack</h1>
+<p>The following plan should be complete, but validate documentation, codebase patterns, and task sanity before implementing. Pay special attention to naming of existing utils, types, and models — import from the right files.</p>
+
+<h2>Phase Description</h2>
+<p>Phase 8 adds <strong>Deal Stack</strong> to the Hook Card hover menu. One click fills every missing deal slot of that Hook Card:</p>
+<ul>
+  <li><strong>Base deal (both board kinds):</strong> 1 card each of Player Role, Mechanic, Resource, Goal and Conflict in the Hook Train, each in its core-order position.</li>
+  <li><strong>Details deal (One-Pager boards only):</strong> 2 chips each in the Player Role, Resource, Setting, Mood, Twist, Progression and Constraint lanes of the Details panel (14 chips; 19 cards in a full One-Pager deal).</li>
+  <li><strong>Fill rule:</strong> only missing slots are dealt. Nothing the user placed moves out of the train or is replaced.</li>
+  <li><strong>No repeated cues:</strong> a dealt card avoids every cue already showing on a card of the same deck on the board, and the cues dealt earlier in the same deal, with a fallback when the pool is too short.</li>
+  <li><strong>Reveal:</strong> the deal is 1 board change (1 undo step, 1 save); the dealt cards then fade in one at a time over about 1 second, at once with reduced motion.</li>
+  <li><strong>Icons:</strong> Deal Stack takes <code>playing-cards-fan</code>; Redraw (card strip) and Redraw All (Hook Card menu) change to a newly vendored <code>square-arrow-down</code>.</li>
+</ul>
+<p>There is no data model change: dealt cards are ordinary cards, the board format stays at version 2, and no Dexie version or upgrade step is added. Behavior authority: <code>docs/feature-deal-a-stack.html</code>. Visual authority: <code>docs/design-system.html</code> 7, 9.4, 9.5, 9.9 and 11.</p>
+
+<h2>User Stories</h2>
+<ul>
+  <li>As a game jam entrant, I want to deal a full core stack under a Hook Card in one click, so that I see a complete hook sentence in seconds and spend my time turning, locking and redrawing instead of clicking and dragging 11 times.</li>
+  <li>As a solo developer on a One-Pager board, I want the same click to fill the Details panel with 2 cards in each detail lane, so that the one-pager has a starting point in every lane.</li>
+  <li>As a user with a half-built stack, I want a deal to add only the missing cards in their reading positions, so that nothing I placed is lost or reordered.</li>
+  <li>As a user, I want Redraw and Redraw All to look different from Deal Stack, so that I can tell "replace" from "fill" at a glance.</li>
+</ul>
+
+<h2>Problem Statement</h2>
+<p>A full core stack today takes 6 rail clicks and 5 drags, and a One-Pager board needs 14 more draws and drops into the panel. The PRD's first user story asks for a full concept stack in about a minute, and the Required scan row "One draw fills a fixed set of concept slots" is only Partial.</p>
+
+<h2>Solution Statement</h2>
+<p>A pure <code>dealStack(board, hookId, draw)</code> in <code>features/canvas/boardActions.ts</code> computes the missing slots, draws each card through a caller-supplied <code>draw(deck, excluded)</code>, inserts base cards into the train by the core-order insert rule (a small <code>insertUnder</code> helper in <code>stack.ts</code>), adds Details cards with <code>enterConcept</code>, and returns the new board plus the dealt ids in reveal order. <code>canDeal</code> drives the menu item's disabled state. The draw change is an optional <code>excluded</code> set in <code>DrawOptions</code>. The canvas runs the deal as 1 <code>changeBoard</code> and keeps a view-only reveal map (id → delay ms) that the card nodes and Details chips read for a CSS fade with a per-card <code>animation-delay</code>; reduced motion turns the animation off.</p>
+
+<h2>Phase Metadata</h2>
+<dl class="phase-meta">
+  <dt>Phase Type</dt><dd data-field="type">Enhancement</dd>
+  <dt>Estimated Complexity</dt><dd data-field="complexity">Medium</dd>
+  <dt>Primary Systems Affected</dt><dd data-field="systems">features/draw, features/canvas (board actions, stack, nodes, Concept panel, canvas), features/hook (menu), features/card (strip), shared/ui (icons), public/icons</dd>
+  <dt>Dependencies</dt><dd data-field="dependencies">Phase 7 (One-Pager board, Details panel, enterConcept); no new library</dd>
+</dl>
+
+<h2>Context References</h2>
+
+<h3>Relevant Codebase Files — READ THESE BEFORE IMPLEMENTING</h3>
+<ul>
+  <li><code>docs/feature-deal-a-stack.html</code> (whole file) — Why: the behavior authority: slots, "what counts as present", the insert rule, the draw rules, the contract, the menu and reveal, done criteria.</li>
+  <li><code>docs/design-system.html</code> section 7 (icons), 9.4 (card strip menu row), 9.5 (Hook Card hover menu row), 9.9 (Redraw All and Deal Stack), 11 (motion table) — Why: icon names, menu order, reveal timing.</li>
+  <li><code>src/features/draw/drawCard.ts</code> (lines 31–37 <code>DrawOptions</code>; 46–108 <code>drawCard</code>; 72–79 the distinct-cue key; 114–128 <code>drawFor</code>) — Why: where <code>excluded</code> goes; the trimmed, lowercase key the exclusion must reuse.</li>
+  <li><code>src/features/draw/index.ts</code> — Why: the public surface the canvas imports from; add <code>cueKey</code>.</li>
+  <li><code>src/features/canvas/boardActions.ts</code> (lines 229–250 <code>redrawAll</code>) — Why: the pattern for a multi-card recipe with a caller-supplied draw that returns <code>{ board, ids }</code> and the same board on a no-op.</li>
+  <li><code>src/features/canvas/stack.ts</code> (lines 45–55 <code>childrenOf</code> ordering: Modifiers first, then z; 62–71 <code>stackOrder</code>; 77–92 <code>layoutStack</code>; 112–123 <code>tuckCard</code>) — Why: the insert helper must keep child order through z values and re-layout once.</li>
+  <li><code>src/features/canvas/concept.ts</code> (lines 51–55 <code>onePagerHook</code>; 77–84 <code>conceptLanes</code>; 110–127 <code>enterConcept</code>) — Why: Details lane counts and how a card becomes a chip at the end of its lane.</li>
+  <li><code>src/features/canvas/dropZones.ts</code> (line 36 <code>CORE_ORDER</code>) — Why: the core order to reuse; do not define a second copy.</li>
+  <li><code>src/features/canvas/BoardCanvas.tsx</code> (lines 84–85 <code>FRESH_MS</code>; 204–219 <code>freshIds</code> state and <code>toNodes</code> call; 228–273 <code>actions</code>, especially <code>redrawAll</code> at 251–264; 594–598 <code>conceptUi</code>) — Why: where the <code>dealStack</code> action and the reveal state go.</li>
+  <li><code>src/features/canvas/CardNode.tsx</code> (lines 43–59 <code>CardNodeActions</code>; 173–210 <code>HookBody</code> and the <code>HookMenu</code> props; 229–237 node classes; 338–350 <code>sameData</code>) — Why: wire Deal Stack, the reveal class and delay, and keep the memo compare complete.</li>
+  <li><code>src/features/canvas/CardNode.module.css</code> (lines 39–43 <code>.fresh</code>) — Why: where the dealt fade class sits.</li>
+  <li><code>src/features/canvas/nodes.ts</code> (lines 18–31 <code>CardNodeData</code>; 44–49 <code>NodeUi</code>; 70–93 <code>toNodes</code>) — Why: add the reveal delay to node data like <code>fresh</code>.</li>
+  <li><code>src/features/canvas/ConceptNode.tsx</code> (lines 58–66 <code>ConceptUi</code>; 97–106 <code>ConceptPanelProps</code>; 148–172 chip <code>&lt;li&gt;</code>; 266–276 node view) — Why: the chips' reveal.</li>
+  <li><code>src/features/canvas/index.ts</code> — Why: export <code>dealStack</code>, <code>canDeal</code> beside <code>redrawAll</code>.</li>
+  <li><code>src/features/hook/HookMenu.tsx</code> (whole file, 150 lines) — Why: the new item, its enabled rule, and the Redraw All icon swap; update the module doc comment.</li>
+  <li><code>src/features/hook/HookMenu.test.tsx</code> (lines 35–76) — Why: order, icon and disabled tests that change.</li>
+  <li><code>src/features/card/CardStrip.tsx</code> (lines 62–67) and <code>CardStrip.test.tsx</code> (line 54) — Why: the Redraw icon swap.</li>
+  <li><code>src/shared/ui/Icon.tsx</code> (<code>IconName</code> union) and <code>src/shared/ui/tokens.test.ts</code> (lines 92–135 <code>ICONS</code>; 201–214 the icon file tests) — Why: every SVG in <code>public/icons/</code> must be listed and drawn at stroke 2.2.</li>
+  <li><code>public/icons/refresh-cw.svg</code> — Why: the exact SVG file shape to mirror (viewBox, stroke attributes).</li>
+  <li><code>src/shared/ui/tokens.css</code> (line 200 <code>--t-fade: 100ms</code>; 258–267 reduced-motion block) — Why: the fade duration; no new token.</li>
+  <li><code>src/shared/store/boardStore.ts</code> (lines 96–104 <code>changeBoard</code>) — Why: a recipe that returns the same board is no undo step and no save.</li>
+  <li><code>src/test/fixtures/boards.ts</code> (<code>fixtureCard</code> 41, <code>fixtureBoard</code> 91, <code>fixtureStack</code> 111, <code>onePagerBoard</code> 306) — Why: fixtures for the unit tests.</li>
+  <li><code>src/features/canvas/boardActions.test.ts</code> (lines 1–50) and <code>src/features/draw/drawCard.test.ts</code> (lines 1–60) — Why: test style, the seeded <code>mulberry32</code>, <code>expectStacksConsistent</code>.</li>
+  <li><code>tests/e2e/hook.spec.ts</code> (lines 33–62 helpers; 175–186 <code>hook_menu_hasIconItems</code>; 188–213 Redraw All; 280–304 the @timing pattern) and <code>tests/e2e/one-pager.spec.ts</code> (lines 32–34 helpers; 104–112 One-Pager menu; 348–360 Redraw All) — Why: browser tests to mirror and the 2 that change.</li>
+  <li><code>tests/e2e/card-test.spec.ts</code> (lines 184–193) — Why: the pattern for blocking pool loads in a browser test.</li>
+  <li><code>tests/e2e/test.ts</code> — Why: specs get made-up fixture pools of 8 cues per deck (12 Modifier), so repeats fall back in browser tests on decks dealt 3 times (Player Role, Resource).</li>
+</ul>
+
+<h3>New Files to Create</h3>
+<ul>
+  <li><code>public/icons/square-arrow-down.svg</code> — the vendored Lucide <code>square-arrow-down</code> icon in the project stroke style.</li>
+  <li><code>tests/e2e/deal.spec.ts</code> — the Deal Stack browser tests on both board kinds.</li>
+</ul>
+<p>Unit tests go into the existing <code>drawCard.test.ts</code>, <code>stack.test.ts</code>, <code>boardActions.test.ts</code>, <code>nodes.test.ts</code>, <code>ConceptNode.test.tsx</code>, <code>HookMenu.test.tsx</code> and <code>CardStrip.test.tsx</code>.</p>
+
+<h3>Relevant Documentation — READ BEFORE IMPLEMENTING</h3>
+<ul>
+  <li><a href="https://lucide.dev/icons/square-arrow-down">Lucide: square-arrow-down</a> — Why: the source shape (rect 3,3 18×18 rx 2; <code>M12 8v8</code>; <code>m8 12 4 4 4-4</code>). Write the paths into the file by hand; nothing is fetched at build or run time.</li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/animation-delay">MDN: animation-delay</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/animation-fill-mode#both">animation-fill-mode: both</a> — Why: a delayed fade keeps the card hidden until its turn.</li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion">MDN: prefers-reduced-motion</a> — Why: dealt cards show at once.</li>
+  <li><a href="https://playwright.dev/docs/emulation#color-scheme-and-media">Playwright: emulation, reducedMotion</a> — Why: the reduced-motion browser test.</li>
+  <li><code>docs/architecture.html</code> decisions <code>module-layout</code>, <code>import-rules</code>, <code>hook-sentence</code>, <code>undo-history</code>, <code>save-transaction</code>, <code>schema-shape</code>, <code>board-file-format</code>, <code>nfr-targets</code>, <code>pool-load-failure</code> — Why: the constraints this phase conforms to (see Notes).</li>
+</ul>
+
+<h3>Patterns to Follow</h3>
+<p><strong>Multi-card recipe with a caller-supplied draw</strong> (<code>boardActions.ts</code> 236–250):</p>
+<pre><code>export function redrawAll(
+  board: Board,
+  hookId: string,
+  draw: (card: Card) =&gt; Card,
+): { board: Board; redrawn: string[] } {
+  let next = board;
+  const redrawn: string[] = [];
+  for (const card of descendantsOf(board, hookId)) {
+    if (card.locked || card.type === 'hook' || card.inConcept) continue;
+    next = redrawCard(next, card.id, draw(card));
+    redrawn.push(card.id);
+  }
+  return { board: next, redrawn };
+}</code></pre>
+<p><strong>Canvas action: 1 changeBoard, ids captured from inside the recipe, then view state</strong> (<code>BoardCanvas.tsx</code> 251–264):</p>
+<pre><code>redrawAll: (hookId: string) =&gt; {
+  const current = latest.current.pools;
+  if (!current) return;
+  let redrawn: string[] = [];
+  changeBoard((b) =&gt; {
+    const result = redrawAll(b, hookId, (card) =&gt; drawFor(card, current, b.genres));
+    redrawn = result.redrawn;
+    return result.board;
+  });
+  if (redrawn.length === 0) return;
+  setFreshIds(new Set(redrawn));
+  if (freshTimer.current) clearTimeout(freshTimer.current);
+  freshTimer.current = setTimeout(() =&gt; setFreshIds(new Set()), FRESH_MS);
+},</code></pre>
+<p><strong>Distinct-cue key</strong> (<code>drawCard.ts</code> 72–79): <code>cue.text.trim().toLowerCase()</code>. Extract it as <code>cueKey(text)</code> and use it in both places.</p>
+<p><strong>Icon file</strong> (<code>public/icons/refresh-cw.svg</code>):</p>
+<pre><code>&lt;svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"&gt;
+  &lt;path d="..."/&gt;
+&lt;/svg&gt;</code></pre>
+<p><strong>Conventions:</strong> a short doc comment at the top of each module (update the existing ones that change behavior: <code>HookMenu.tsx</code>, <code>CardStrip.tsx</code>, <code>drawCard.ts</code>, <code>boardActions.ts</code>, <code>nodes.ts</code>, <code>ConceptNode.tsx</code>, <code>BoardCanvas.tsx</code>); tests named <code>functionName_condition_expectedResult</code>; pure functions never mutate their input; no <code>console.log</code>; Title Case UI text ("Deal Stack"); no hard-coded colors; React Flow only in <code>features/canvas/</code>.</p>
+
+<h2>Implementation Plan</h2>
+<p><strong>Rendering:</strong> Milestones</p>
+<p><strong>Rationale:</strong> 9 tasks in 3 natural layers: pure rules (draw exclusion, insert helper, deal), then UI (icons, menu item, reveal), then browser tests and docs. The pure layer is tested before any UI touches it, as the brief asks ("tests first", insert rule first).</p>
+
+<h3 class="milestone" data-milestone="1">Milestone 1: Pure deal rules</h3>
+<p>The draw exclusion, the train insert helper and the deal itself, all pure and unit-tested.</p>
+<p><strong>Validation checkpoint:</strong> a <code>dealStack</code> run that uses a real <code>drawFor</code> over parsed <code>public/pools/*.json</code> on an empty One-Pager board yields 19 cards, no repeated cue within any deck, and a train whose <code>hookSentences</code> output has no blank slot — <code>npx vitest run src/features/draw src/features/canvas</code> exits 0 with the test <code>dealStack_realPoolsOnePager_fullDistinctDeal</code> included.</p>
+
+<h4 class="task" data-task="1">Task 1: Add excluded cues to drawCard and drawFor, with a fallback when the pool is short</h4>
+<ul>
+  <li><strong>ADD</strong> tests first in <code>src/features/draw/drawCard.test.ts</code>: <code>drawCard_excluded_neverDrawsExcludedCue</code> (seeded, 50 runs over a 10-cue pool with 4 excluded); <code>drawCard_excludedKey_matchesTrimmedLowercase</code> (exclude <code>"  Pilot "</code>-style keys made by <code>cueKey</code>); <code>drawCard_excludedLeavesTooFew_fallsBackToFilteredPool</code> (6-cue pool, 4 excluded, a 4-cue draw still returns 4 distinct cues); <code>drawCard_excludedWithGenreFilter_fallbackKeepsGenreFilter</code> (the fallback never returns a cue outside the deck's genres); <code>drawFor_excludedOption_passesThrough</code>; <code>drawFor_deckOnly_drawsLikeRail</code> (<code>drawFor({ type: 'mechanic' }, pools, genres)</code> applies the genre filter).</li>
+  <li><strong>IMPLEMENT</strong> in <code>src/features/draw/drawCard.ts</code>:
+    <ul>
+      <li><code>export function cueKey(text: string): string</code> returning <code>text.trim().toLowerCase()</code>; use it for the distinct step.</li>
+      <li><code>DrawOptions.excluded?: ReadonlySet&lt;string&gt;</code> — cue keys not to draw.</li>
+      <li>After the distinct step: <code>const open = excluded ? distinct.filter((c) =&gt; !excluded.has(cueKey(c.text))) : distinct;</code> pick from <code>open</code> when <code>open.length &gt;= need</code>, else from <code>distinct</code> (the whole exclusion is dropped, never partly). The existing "pool too small" error still checks <code>distinct</code>.</li>
+      <li>Widen <code>drawFor</code>'s first parameter to <code>Pick&lt;Card, 'type' | 'modDeck'&gt;</code> so the deal can draw by deck; behavior unchanged for full cards.</li>
+      <li>Update the module doc comment (the exclusion and its fallback; used by the deal).</li>
+    </ul>
+  </li>
+  <li><strong>UPDATE</strong> <code>src/features/draw/index.ts</code>: export <code>cueKey</code>.</li>
+  <li><strong>GOTCHA:</strong> the Fisher–Yates step works on a copy; filtering creates a new array, so do not shuffle <code>pool.cues</code>. Keep the random call count unchanged when <code>excluded</code> is absent so existing seeded tests keep their results.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/draw/drawCard.test.ts &amp;&amp; npm run typecheck</code></li>
+</ul>
+
+<h4 class="task" data-task="2">Task 2: Add insertUnder to stack.ts for inserting a card between a card and its children</h4>
+<ul>
+  <li><strong>ADD</strong> tests first in <code>src/features/canvas/stack.test.ts</code>: <code>insertUnder_chain_newCardReadsBetweenParentAndChild</code> (Role → Goal; insert Mechanic under Role; <code>stackOrder</code> reads Role, Mechanic, Goal; positions 56 px apart); <code>insertUnder_branchedParent_movesEveryNonModifierChildInOrder</code> (P with children A then B; both move under the new card, still A before B); <code>insertUnder_modifierChild_staysWithParent</code> (an uncombined Modifier tucked under P keeps <code>tuckedUnder: P</code> and still reads right after P); <code>insertUnder_underHook_takesHooksFirstChildren</code>; <code>insertUnder_leaf_appendsBelow</code>; <code>insertUnder_doesNotMutateInput</code>.</li>
+  <li><strong>IMPLEMENT</strong> <code>export function insertUnder(board: Board, card: Card, parentId: string): Board</code> in <code>src/features/canvas/stack.ts</code>: the card (not yet on the board) joins with <code>tuckedUnder: parentId</code>, <code>z: nextZ(board)</code>, <code>inConcept: false</code>, <code>onTopOf: null</code>; then every non-Modifier child of the parent (read with <code>childrenOf</code> before the insert, in child order) gets <code>tuckedUnder: card.id</code> and fresh ascending z values (<code>nextZ</code> + i) so its order is kept; then 1 <code>layoutStack</code> on the root. Doc comment names the deal insert rule.</li>
+  <li><strong>GOTCHA:</strong> <code>childrenOf</code> sorts Modifiers first and then by z, so moved children must get new z values above the new card's, in their old order. Do not call <code>tuckCard</code> per child: it re-lays out each time and is not needed.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/canvas/stack.test.ts</code></li>
+</ul>
+
+<h4 class="task" data-task="3">Task 3: Add dealSlots, dealStack and canDeal as pure functions beside redrawAll</h4>
+<ul>
+  <li><strong>ADD</strong> tests first in <code>src/features/canvas/boardActions.test.ts</code>, <code>describe('dealStack')</code>, with a seeded fake <code>draw(deck, excluded)</code> that records every <code>excluded</code> set it receives:
+    <ul>
+      <li><code>dealStack_emptyFreeFormHook_dealsCoreFiveInOrder</code> — train reads role, mechanic, resource, goal, conflict; <code>dealt</code> is those 5 ids in that order; <code>expectStacksConsistent</code>.</li>
+      <li><code>dealStack_emptyOnePagerHook_dealsFiveAndFourteenChips</code> — 5 train cards; 14 Concept cards, 2 in each of the 7 lanes; every Concept card has <code>inConcept: true</code>, <code>tuckedUnder: null</code>; the dealt list is train top to bottom, then lanes role, resource, setting, mood, twist, progression, constraint, each lane in z order.</li>
+      <li><code>dealStack_partialTrain_insertsInCoreOrder</code> — the brief's example: Role, Goal → Role, Mechanic, Resource, Goal, Conflict; plus a table of mixes (each single deck missing; only Conflict present; only Role present; Role and Conflict present).</li>
+      <li><code>dealStack_nonCoreCardInTrain_keptAndOrderPreserved</code> — Role → Twist → Goal: the Twist stays in the train, every original card is still a descendant of the Hook Card, and the original cards keep their relative reading order.</li>
+      <li><code>dealStack_tuckedModifier_staysWithItsCard</code>.</li>
+      <li><code>dealStack_branchedTrain_newCardFollowsPredecessorBranch</code> — the brief's branched-train risk.</li>
+      <li><code>dealStack_presenceCountsAnyDepthOnly</code> — a deep Goal counts; a loose Goal, an On Top Modifier and a Mechanic chip in the Details panel do not count for the train.</li>
+      <li><code>dealStack_laneWithOneChip_getsOne</code>, <code>dealStack_laneWithThreeChips_getsNone</code> (from <code>onePagerBoard()</code>: 2 Resources → none; 1 Setting → 1).</li>
+      <li><code>dealStack_fullStack_returnsSameBoard</code> (reference-equal, <code>dealt</code> empty) and <code>canDeal_fullStack_false</code>; <code>canDeal_emptyHook_true</code>; <code>canDeal_freeFormFullTrain_falseEvenWithNoChips</code>.</li>
+      <li><code>dealStack_excluded_holdsBoardCuesAndEarlierDealCues</code> — the Details Player Role draws receive the train Player Role's cues and any Player Role cues already on the board (loose, train or Concept), as <code>cueKey</code> keys; the 2nd chip of a lane receives the 1st chip's cues.</li>
+      <li><code>dealStack_hookIdNotHook_throws</code>, <code>dealStack_doesNotMutateInput</code>.</li>
+      <li><code>dealStack_realPoolsOnePager_fullDistinctDeal</code> — parse <code>public/pools/*.json</code> as <code>drawCard.test.ts</code> does, deal with <code>drawFor({ type: deck }, pools, allGenresOn(), { excluded, random })</code>; no cue key repeats within a deck; <code>hookSentences(next)</code> for the Hook Card contains no empty slot (no <code>"  "</code> and no trailing connector).</li>
+    </ul>
+  </li>
+  <li><strong>IMPLEMENT</strong> in <code>src/features/canvas/boardActions.ts</code>:
+    <ul>
+      <li><code>export const DEAL_DETAILS: readonly Deck[] = ['role', 'resource', 'setting', 'mood', 'twist', 'progression', 'constraint']</code> and <code>export const DEAL_CHIPS_PER_LANE = 2</code>. The base slots are <code>CORE_ORDER</code> from <code>dropZones.ts</code> (import it; do not copy).</li>
+      <li><code>export function dealSlots(board, hookId): { base: Deck[]; details: Deck[] }</code> — <code>base</code>: the <code>CORE_ORDER</code> decks with no card of that <code>type</code> in <code>descendantsOf(board, hookId)</code>; <code>details</code>: on a One-Pager board only, each <code>DEAL_DETAILS</code> deck repeated <code>max(0, 2 − lane count)</code> times (lane count from <code>conceptLanes</code>), in rail order. Throws when <code>hookId</code> is not a Hook Card.</li>
+      <li><code>export function canDeal(board, hookId): boolean</code> — <code>base.length + details.length &gt; 0</code>.</li>
+      <li><code>export function dealStack(board, hookId, draw: (deck: Deck, excluded: ReadonlySet&lt;string&gt;) =&gt; Card): { board: Board; dealt: string[] }</code>:
+        <ol>
+          <li>No slot missing → <code>{ board, dealt: [] }</code> with the same board object.</li>
+          <li>Build per-deck excluded key sets from <code>rings[0]</code> cues of every card on the board of that <code>type</code> (any place: train, loose, Concept), with <code>cueKey</code>.</li>
+          <li>For each missing base deck in core order: <code>drawn = draw(deck, excluded[deck])</code>; add its <code>rings[0]</code> keys to the set; predecessor <code>P</code> = the last card of <code>descendantsOf(next, hookId)</code> (reading order) whose <code>CORE_ORDER</code> index is lower than the deck's, else the Hook Card; <code>next = insertUnder(next, drawn, P.id)</code>.</li>
+          <li>For each Details deck in <code>details</code> order: draw with its set, add keys, append the card (<code>tuckedUnder: null</code>), then <code>next = enterConcept(next, drawn.id)</code> so it is the last chip of its lane by z.</li>
+          <li><code>dealt</code> = the dealt base ids in <code>descendantsOf(next, hookId)</code> order, then the dealt Details ids in <code>conceptLanes(next)</code> order.</li>
+        </ol>
+      </li>
+      <li>Doc comment: 1 recipe so 1 undo step and 1 save; no change → same board; Concept cards and the hook sentence untouched by design (the sentence reads the train).</li>
+    </ul>
+  </li>
+  <li><strong>UPDATE</strong> <code>src/features/canvas/index.ts</code>: export <code>canDeal</code>, <code>dealStack</code>, <code>dealSlots</code>.</li>
+  <li><strong>IMPORTS:</strong> <code>cueKey</code> from <code>@/features/draw</code> (allowed: a feature uses another through its <code>index.ts</code>; the canvas already imports <code>drawFor</code> from it); <code>conceptLanes</code> from <code>./concept</code> (the module already imports <code>enterConcept</code> from there); <code>CORE_ORDER</code> from <code>./dropZones</code>; <code>insertUnder</code> from <code>./stack</code>.</li>
+  <li><strong>GOTCHA:</strong> <code>concept.ts</code> and <code>boardActions.ts</code> already import each other; only use imported functions inside function bodies (never at module top level) so the cycle stays safe. Dealt cards keep <code>locked: false</code> and no <code>connector</code>. Re-read <code>descendantsOf(next, …)</code> after every insert, because the predecessor of a later deck may be a card dealt a moment ago.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/canvas src/features/draw &amp;&amp; npm run typecheck &amp;&amp; npm run lint</code></li>
+</ul>
+
+<h3 class="milestone" data-milestone="2">Milestone 2: Menu item, icons and reveal</h3>
+<p>The new icon on Redraw and Redraw All, the Deal Stack item wired to 1 <code>changeBoard</code>, and the staggered fade on cards and chips.</p>
+<p><strong>Validation checkpoint:</strong> Deal Stack on an empty Hook Card fills the train and the sentence at once through the real canvas and store, the menu shows 5 items (3 on One-Pager) with the new icons, and the reveal markup is unit-tested — proved by <code>npx playwright test tests/e2e/hook.spec.ts tests/e2e/one-pager.spec.ts --project=chromium</code> passing with the updated menu tests, plus <code>npm test</code> passing.</p>
+
+<h4 class="task" data-task="4">Task 4: Vendor the square-arrow-down icon and use it on Redraw and Redraw All</h4>
+<ul>
+  <li><strong>CREATE</strong> <code>public/icons/square-arrow-down.svg</code>:
+<pre><code>&lt;svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"&gt;
+  &lt;rect width="18" height="18" x="3" y="3" rx="2"/&gt;&lt;path d="M12 8v8"/&gt;&lt;path d="m8 12 4 4 4-4"/&gt;
+&lt;/svg&gt;</code></pre></li>
+  <li><strong>UPDATE</strong> <code>src/shared/ui/Icon.tsx</code>: add <code>'square-arrow-down'</code> to <code>IconName</code>. <code>src/shared/ui/tokens.test.ts</code>: add it to <code>ICONS</code>.</li>
+  <li><strong>UPDATE</strong> <code>src/features/card/CardStrip.tsx</code>: Redraw uses <code>square-arrow-down</code>; <code>CardStrip.test.tsx</code> expects it.</li>
+  <li><strong>UPDATE</strong> <code>src/features/hook/HookMenu.tsx</code>: Redraw All uses <code>square-arrow-down</code>; <code>HookMenu.test.tsx</code> <code>hookMenu_items_areIconsWithTooltips</code> expects <code>['hook', 'square-arrow-down', 'copy', 'trash']</code> for now (Task 5 inserts Deal Stack).</li>
+  <li><strong>GOTCHA:</strong> <code>icons_everyIconFile_isUsedOrListed</code> fails if the SVG exists but is not in <code>ICONS</code>; <code>playing-cards-fan</code> stays in the list (Deal Stack takes it in Task 5).</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>grep -q 'stroke-width="2.2"' public/icons/square-arrow-down.svg &amp;&amp; npx vitest run src/shared/ui/tokens.test.ts src/features/card/CardStrip.test.tsx src/features/hook/HookMenu.test.tsx &amp;&amp; npm run typecheck</code></li>
+</ul>
+
+<h4 class="task" data-task="5">Task 5: Add the Deal Stack item to the Hook Card menu and the dealStack canvas action</h4>
+<ul>
+  <li><strong>ADD</strong> tests first in <code>src/features/hook/HookMenu.test.tsx</code>: order <code>['Copy Hook', 'Deal Stack', 'Redraw All', 'Duplicate', 'Discard']</code>; One-Pager (no Duplicate/Discard handlers) <code>['Copy Hook', 'Deal Stack', 'Redraw All']</code>; icons <code>['hook', 'playing-cards-fan', 'square-arrow-down', 'copy', 'trash']</code>; <code>hookMenu_emptyHook_dealStackEnabled</code> (<code>hasStack: false</code>, <code>canDeal: true</code>, <code>poolsReady: true</code>); <code>hookMenu_canDealFalse_disablesDealStack</code>; <code>hookMenu_poolsNotReady_disablesDealStackAndRedrawAll</code>; <code>hookMenu_dealStackClick_callsOnDealStack</code>. Update <code>renderMenu</code> defaults with <code>canDeal: true</code>, <code>onDealStack: vi.fn()</code>.</li>
+  <li><strong>IMPLEMENT</strong> <code>HookMenu.tsx</code>: props <code>canDeal: boolean</code> and <code>onDealStack: () =&gt; void</code>; a button after Copy Hook with <code>aria-label</code> and <code>title</code> "Deal Stack", <code>Icon name="playing-cards-fan" size={16}</code>, <code>disabled={!canDeal || !poolsReady}</code>, same <code>tabIndex</code> rule. Update the doc comment (5 items on Free Form, 3 on One-Pager; Deal Stack enabled on an empty Hook Card).</li>
+  <li><strong>IMPLEMENT</strong> <code>CardNode.tsx</code>: <code>CardNodeActions.dealStack: (hookId: string) =&gt; void</code>; in <code>HookBody</code>, <code>const dealable = useBoardStore((s) =&gt; canDeal(s.board, hookId))</code> (a boolean, so it re-renders only on change) and pass <code>canDeal={dealable}</code>, <code>onDealStack={() =&gt; actions.dealStack(hookId)}</code>.</li>
+  <li><strong>IMPLEMENT</strong> <code>BoardCanvas.tsx</code> <code>actions.dealStack</code>, mirroring <code>redrawAll</code>: return when pools are null; 1 <code>changeBoard</code> whose recipe runs <code>dealStack(b, hookId, (deck, excluded) =&gt; drawFor({ type: deck }, current, b.genres, { excluded }))</code> and captures <code>dealt</code>; no <code>setFreshIds</code> (dealt cards get no new-card outline). The reveal state comes in Task 6; here the captured <code>dealt</code> list is only kept in a local variable.</li>
+  <li><strong>UPDATE</strong> <code>tests/e2e/hook.spec.ts</code> <code>hook_menu_hasIconItems</code>: 5 items in the new order. <code>tests/e2e/one-pager.spec.ts</code> <code>onePager_hookMenu_copyAndRedrawOnly</code>: rename to <code>onePager_hookMenu_copyDealAndRedrawOnly</code> and also expect Deal Stack visible.</li>
+  <li><strong>GOTCHA:</strong> <code>canDeal</code> throws for a non-Hook id, and <code>HookBody</code> only renders for Hook Cards, so this is safe; but the selector runs on every store change, so keep <code>dealSlots</code> linear (one <code>descendantsOf</code>, one <code>conceptLanes</code>). The deal draws inside the recipe, as Redraw All does; the recipe runs once per call.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/hook src/features/canvas &amp;&amp; npm run typecheck &amp;&amp; npm run lint &amp;&amp; (fuser -k 4174/tcp 2&gt;/dev/null || true) &amp;&amp; npx playwright test tests/e2e/hook.spec.ts tests/e2e/one-pager.spec.ts --project=chromium</code></li>
+</ul>
+
+<h4 class="task" data-task="6">Task 6: Reveal dealt cards and chips one at a time with --t-fade, instant with reduced motion</h4>
+<ul>
+  <li><strong>ADD</strong> tests first: in <code>src/features/canvas/nodes.test.ts</code> <code>dealDelays_fiveCards_200msApart</code> (0, 200, 400, 600, 800), <code>dealDelays_nineteenCards_about53msApart</code>, <code>dealDelays_empty_emptyMap</code>, <code>toNodes_revealDelay_setOnDealtCardsOnly</code>; in <code>ConceptNode.test.tsx</code> <code>conceptPanel_revealDelay_marksDealtChipsWithDelay</code> (the chip <code>&lt;li&gt;</code> has <code>data-dealt</code> and the inline <code>--deal-delay</code>).</li>
+  <li><strong>IMPLEMENT</strong> <code>nodes.ts</code>: <code>export const DEAL_REVEAL_MS = 1000</code>; <code>export function dealDelays(dealt: readonly string[]): ReadonlyMap&lt;string, number&gt;</code> (index × <code>DEAL_REVEAL_MS / dealt.length</code>, rounded); <code>NodeUi.reveal?: ReadonlyMap&lt;string, number&gt;</code>; <code>CardNodeData.reveal: number | null</code>.</li>
+  <li><strong>IMPLEMENT</strong> <code>CardNode.tsx</code>: when <code>data.reveal !== null</code> add <code>styles.dealt</code>, <code>data-dealt</code> and <code>style={{ '--deal-delay': `${data.reveal}ms` }}</code> on the node root; add <code>x.reveal === y.reveal</code> to <code>sameData</code>. <code>CardNode.module.css</code>:
+<pre><code>/* A dealt card (design 9.9, 11): fades in over --t-fade after its turn in the deal. */
+.dealt {
+  animation: dealIn var(--t-fade) linear var(--deal-delay, 0ms) both;
+}
+@keyframes dealIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dealt { animation: none; }
+}</code></pre></li>
+  <li><strong>IMPLEMENT</strong> <code>ConceptNode.tsx</code>: <code>ConceptUi.reveal: ReadonlyMap&lt;string, number&gt;</code>; <code>ConceptPanelProps.reveal?</code>; the chip <code>&lt;li&gt;</code> gets <code>styles.dealt</code>, <code>data-dealt</code> and the same inline variable; the same CSS block in <code>ConceptNode.module.css</code>.</li>
+  <li><strong>IMPLEMENT</strong> <code>BoardCanvas.tsx</code>: <code>const [reveal, setReveal] = useState&lt;ReadonlyMap&lt;string, number&gt;&gt;(() =&gt; new Map())</code> with a timer ref cleared on unmount (mirror <code>freshIds</code>); pass <code>reveal</code> to <code>toNodes</code> and into <code>conceptUi</code>; after a deal with ids, <code>setReveal(dealDelays(dealt))</code> and clear it after <code>DEAL_REVEAL_MS + 200</code> ms. Update the module doc comment.</li>
+  <li><strong>GOTCHA:</strong> the CSS lint bans hard-coded colors only; the keyframes use opacity, so they pass. The class must be on the node at its first render so the animation starts at mount: set the reveal state in the same handler right after <code>changeBoard</code> (React batches both updates into 1 render). Do not touch <code>hidden</code> (that is the draw flight). The hook sentence is not delayed; it is computed from the board.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/canvas &amp;&amp; npm run lint &amp;&amp; npm run typecheck</code></li>
+</ul>
+
+<h3 class="milestone" data-milestone="3">Milestone 3: Browser tests, regression and docs</h3>
+<p>Prove the done criteria in 3 engines, run every target, and update the house docs.</p>
+<p><strong>Validation checkpoint:</strong> <code>npm run lint &amp;&amp; npm run format:check &amp;&amp; npm run typecheck &amp;&amp; npm test &amp;&amp; npm run build &amp;&amp; npm run size &amp;&amp; npm run test:e2e</code> exits 0, including the timing projects and the network check.</p>
+
+<h4 class="task" data-task="7">Task 7: Add the Deal Stack browser tests and run the full regression with the targets</h4>
+<ul>
+  <li><strong>CREATE</strong> <code>tests/e2e/deal.spec.ts</code> (import <code>test</code>, <code>expect</code> from <code>./test</code>; helpers from <code>./board-helpers</code>):
+    <ul>
+      <li><code>deal_emptyFreeFormHook_fullSentenceAndOneUndo</code> — new Free Form board, draw a Hook Card from the rail, hover it, click Deal Stack; the stored board has 5 cards under the Hook Card in core order; the sentence starts "You are a" and is not the empty-state text; 1 <code>Control+z</code> leaves only the Hook Card.</li>
+      <li><code>deal_emptyOnePagerHook_dealsTrainAndFourteenChips</code> — new One-Pager board; Deal Stack; 5 train cards; 7 lanes with 2 chips each; 1 undo removes all 19.</li>
+      <li><code>deal_partialStack_fillsOnlyMissing</code> — a fixture board with Hook → Role → Goal (ids fixed); Deal Stack; the stored order is role-1, a Mechanic, a Resource, goal-1, a Conflict; role-1 and goal-1 keep their rings.</li>
+      <li><code>deal_fullStack_disabledUntilACardIsDiscarded</code> — after a full deal Deal Stack is disabled; select a train card by click and press Delete; Deal Stack is enabled again.</li>
+      <li><code>deal_poolsBlocked_disabled</code> — with <code>page.route('**/pools/*.json', (r) =&gt; r.abort())</code> registered before opening a fixture board with a Hook Card (as <code>card-test.spec.ts</code> 184–193), Deal Stack is disabled.</li>
+      <li><code>deal_reveal_dealtCardsFadeThenSettle</code> — right after the click the dealt nodes carry <code>data-dealt</code> with a <code>--deal-delay</code> rising in train order; within 3 s no node has <code>data-dealt</code>; no dealt card shows the new-card outline (<code>outline-style</code> none).</li>
+      <li><code>deal_reducedMotion_showsAtOnce</code> — <code>test.use({ reducedMotion: 'reduce' })</code> in its own describe; the dealt node's computed <code>animation-name</code> is <code>none</code> and its opacity is 1 at once.</li>
+      <li><code>deal_menuIcons_squareArrowDownOnRedraws</code> — the Hook Card menu's Redraw All and a card strip's Redraw show <code>[data-icon="square-arrow-down"]</code>; Deal Stack shows <code>playing-cards-fan</code>.</li>
+      <li><code>perf_dealStack_onePagerUpdatesHookUnder100ms</code> (<code>{ tag: '@timing' }</code>) — mirror <code>perf_ringTurn_updatesHookUnder100ms</code>: in <code>page.evaluate</code> click the Deal Stack button, wait 2 animation frames, assert the sentence changed, elapsed under the limit (100 ms; WebKit 300 ms, as the existing timing tests).</li>
+    </ul>
+  </li>
+  <li><strong>RUN</strong> <code>npm run lint &amp;&amp; npm run format:check &amp;&amp; npm run typecheck &amp;&amp; npm test &amp;&amp; npm run build &amp;&amp; npm run size</code>, then <code>(fuser -k 4174/tcp 2&gt;/dev/null || true); npm run test:e2e</code> (Chromium, Firefox, WebKit, then the timing projects).</li>
+  <li><strong>CHECK:</strong> <code>tests/e2e/network.spec.ts</code> passes (no outside request); <code>grep -rn "@xyflow" src --include=*.ts --include=*.tsx | grep -v "src/features/canvas/"</code> is empty; <code>git diff --name-only main -- src/shared/model src/shared/storage src/features/export</code> is empty (no format change).</li>
+  <li><strong>RECORD</strong> in this doc's Notes under "Execution notes": the JS size, the timing results and any existing test that needed a change.</li>
+  <li><strong>GOTCHA:</strong> fixture pools have only 8 cues per deck, so Player Role and Resource (3 cards each in a full One-Pager deal) take the repeat fallback in browser tests; do not assert distinct cues across 3 cards in the browser — the unit test on the real pools covers it. Keep the existing WebKit-only 300 ms timing limits exactly as they are.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npm run lint &amp;&amp; npm run format:check &amp;&amp; npm run typecheck &amp;&amp; npm test &amp;&amp; npm run build &amp;&amp; npm run size &amp;&amp; (fuser -k 4174/tcp 2&gt;/dev/null || true) &amp;&amp; npm run test:e2e</code></li>
+</ul>
+
+<h4 class="task" data-task="8">Task 8: Update CLAUDE.md and the README for Deal Stack</h4>
+<ul>
+  <li><strong>UPDATE</strong> <code>CLAUDE.md</code>: the <code>hook/</code> line of the layout block lists Deal Stack in the icon menu; add a Key Patterns bullet "Deal Stack": 1 click fills only missing slots (base 5 in core order under the Hook Card by the insert rule; on One-Pager boards 2 chips each in 7 Details lanes); <code>dealStack</code> and <code>canDeal</code> are pure in <code>features/canvas/boardActions.ts</code>; draws exclude cues already on the board for that deck with a fallback; 1 <code>changeBoard</code> = 1 undo step and 1 save; the reveal is view state only. Also the Redraw and Redraw All icon is <code>square-arrow-down</code>. No AI attribution anywhere.</li>
+  <li><strong>UPDATE</strong> <code>README.md</code> usage: Deal Stack on the Hook Card menu, what it fills on each board kind, and that Lock and Redraw All take it from there.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>grep -q "Deal Stack" CLAUDE.md &amp;&amp; grep -q "Deal Stack" README.md &amp;&amp; npm run format:check</code></li>
+</ul>
+
+<h3 class="milestone" data-milestone="4">Commit, push, and open PR</h3>
+<h4 class="task" data-task="9">Task 9: Commit, push, and open PR</h4>
+<p>After every prior validation checkpoint has passed:</p>
+<ul>
+  <li><strong>IMPLEMENT:</strong> on branch <code>phase-8-deal-stack</code>, stage and commit uncommitted changes with a descriptive message summarizing the phase, in the repository owner's voice; push with <code>git push -u origin phase-8-deal-stack</code>; open a PR with <code>gh pr create --head phase-8-deal-stack --title "Phase 8: Deal A Stack" --body "&lt;body&gt;"</code>.</li>
+  <li><strong>PR title format:</strong> <code>Phase 8: Deal A Stack</code>.</li>
+  <li><strong>PR body format:</strong> the Acceptance Criteria as a checklist with each box checked off, then a <code>Notes</code> section listing assumptions and trade-offs decided during execution.</li>
+  <li><strong>GOTCHA:</strong> commits are authored solely by the user: no <code>Co-Authored-By</code> trailer, no <code>Claude-Session</code> line, no "Generated with" line and no AI attribution of any kind in the commit message or PR body (CLAUDE.md "Commit Authorship"; the <code>/ship</code> flow rejects them). <code>gh</code> must be installed and authenticated.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>gh pr view --json number,title,state,headRefName</code> returns the new PR with <code>"state": "OPEN"</code> and <code>"headRefName": "phase-8-deal-stack"</code>.</li>
+</ul>
+
+<h2>Testing Strategy</h2>
+<h3>Unit Tests</h3>
+<ul>
+  <li><strong>Draw exclusion (first):</strong> excluded keys never drawn; key normalization; fallback when short; fallback keeps the genre and target filters; <code>drawFor</code> by deck.</li>
+  <li><strong>Insert helper:</strong> chain, branch, Modifier child, under the Hook Card, leaf, no mutation, layout consistent.</li>
+  <li><strong>Deal:</strong> empty Free Form, empty One-Pager, every partial mix, non-core cards, tucked Modifiers, branched trains, presence rules, lane fill, full-stack no-op and <code>canDeal</code>, excluded sets, reveal order, real-pool distinct deal with a full sentence.</li>
+  <li><strong>Views:</strong> <code>HookMenu</code> order, icons and enabled rules; <code>CardStrip</code> icon; <code>dealDelays</code> and <code>toNodes</code> reveal data; <code>ConceptPanel</code> reveal markup; icon file tests.</li>
+</ul>
+<h3>Integration Tests</h3>
+<ul>
+  <li><code>tests/e2e/deal.spec.ts</code> in Chromium, Firefox and WebKit, plus the @timing deal test.</li>
+  <li>Regression: every existing spec, with the 2 menu tests updated; <code>canvas-perf.spec.ts</code> (200 cards) and <code>long-stack.spec.ts</code> unchanged.</li>
+</ul>
+<h3>Edge Cases</h3>
+<ul>
+  <li>A train with cards out of core order (Goal above Role): every missing card is inserted after the last earlier-core card in reading order; no card leaves the train.</li>
+  <li>A Hook Card whose first child is a non-core card (Hook → Twist): a dealt Player Role tucks right under the Hook Card and the Twist moves under it.</li>
+  <li>A combined Player Role in the train counts as present; its adjective ring is not part of the Player Role exclusion (it came from a Modifier deck).</li>
+  <li>A Modifier tucked under the Hook Card stays its child and still reads first.</li>
+  <li>A lane with 3 or more chips gets none; a Details lane for a deck outside the 7 (Mechanic, Goal, Conflict, Modifier) is never dealt.</li>
+  <li>Pools still loading, or failed: Deal Stack disabled; the action also returns early.</li>
+  <li>Genre filter narrowed to 1 genre: dealt Mechanic, Resource, Progression and Constraint cues all carry it.</li>
+  <li>A deal while a previous reveal is still running: the new reveal map replaces the old one and its timer restarts.</li>
+  <li>A deal on a Hook Card near other loose cards: the train lays out by the tuck rule and may overlap loose cards, as a normal tuck does.</li>
+</ul>
+
+<h2>Validation Commands</h2>
+<h3>Level 1: Syntax &amp; Style</h3>
+<pre><code>npm run lint
+npm run format:check
+npm run typecheck</code></pre>
+<h3>Level 2: Unit Tests</h3>
+<pre><code>npm test</code></pre>
+<h3>Level 3: Integration Tests</h3>
+<pre><code>fuser -k 4174/tcp 2&gt;/dev/null || true
+npm run test:e2e</code></pre>
+<h3>Level 4: Manual Validation</h3>
+<pre><code>set -e
+npm run build
+npm run size
+grep -q 'stroke-width="2.2"' public/icons/square-arrow-down.svg
+test -f dist/icons/square-arrow-down.svg
+grep -q "Deal Stack" dist/assets/*.js
+! (grep -rn "@xyflow" src --include=*.ts --include=*.tsx | grep -v "src/features/canvas/")
+! (grep -rn "from 'zod'" src | grep -v "src/features/export/")
+test -z "$(git diff --name-only main -- src/shared/model src/shared/storage src/features/export)"
+npx playwright test tests/e2e/deal.spec.ts</code></pre>
+<h3>Level 5: Additional Validation (Optional)</h3>
+<p>None required. First load and network checks are already covered by <code>first-load.spec.ts</code> and <code>network.spec.ts</code>.</p>
+
+<h2>Acceptance Criteria</h2>
+<ul class="checklist">
+  <li data-checked="false">One click on an empty Free Form Hook Card deals Player Role, Mechanic, Resource, Goal and Conflict under it in core order, and the sentence reads as a full hook.</li>
+  <li data-checked="false">One click on an empty One-Pager Hook Card also deals 2 chips each in the Player Role, Resource, Setting, Mood, Twist, Progression and Constraint lanes (19 cards in all).</li>
+  <li data-checked="false">A partial stack gets only its missing cards, each in core-order position by the insert rule; no card the user placed leaves the train, and tucked Modifiers stay with their cards.</li>
+  <li data-checked="false">A Details lane with 1 chip gets 1; a lane with 2 or more gets none; loose cards, On Top Modifiers and Concept cards never count toward the train.</li>
+  <li data-checked="false">No dealt cue repeats a cue on another card of the same deck on the board, unless the filtered pool is too short, when that card falls back to the filtered pool; genre filters apply to dealt cards.</li>
+  <li data-checked="false">Deal Stack is the 2nd Hook Card menu item (<code>playing-cards-fan</code>, aria-label and tooltip "Deal Stack"), enabled on an empty Hook Card, disabled when every slot is full and while the pools are not loaded.</li>
+  <li data-checked="false">A deal is 1 undo step and 1 save; a deal with nothing to fill changes nothing.</li>
+  <li data-checked="false">Dealt cards and chips fade in one at a time in reveal order over about 1 second (<code>--t-fade</code> each, 1000 ms ÷ count apart), show at once with reduced motion, and get no new-card outline.</li>
+  <li data-checked="false">Redraw (card strip) and Redraw All (Hook Card menu) show <code>square-arrow-down</code>, vendored at stroke 2.2.</li>
+  <li data-checked="false">No data model, board file, Dexie or upgrade change; every existing test passes on both board kinds.</li>
+  <li data-checked="false">Speed (deal under 100 ms; 50 fps with 200 cards), size (≤ 250 KB JS gzip, ≤ 100 KB pools) and privacy (no outside request) targets pass.</li>
+  <li data-checked="false">CLAUDE.md and README describe Deal Stack.</li>
+</ul>
+
+<h2>Completion Checklist</h2>
+<ul class="checklist">
+  <li data-checked="false">All 9 tasks completed in order, each VALIDATE passing at its completion</li>
+  <li data-checked="false">Each milestone validation checkpoint passed</li>
+  <li data-checked="false">Level 1: lint, format check and type check exit 0</li>
+  <li data-checked="false">Level 2: <code>npm test</code> exits 0</li>
+  <li data-checked="false">Level 3: <code>npm run test:e2e</code> (3 engines and the timing projects) passes</li>
+  <li data-checked="false">Level 4: build, size, icon, grep checks and the deal spec pass</li>
+  <li data-checked="false">Execution notes recorded in this doc's Notes</li>
+  <li data-checked="false">PR open with the checked Acceptance Criteria and Notes</li>
+</ul>
+
+<h2>Notes</h2>
+<h3>Architecture decisions this phase conforms to</h3>
+<p>No amendment and no local exception (feature brief "Architecture fit", outcome 1, rechecked at planning; no decision in <code>docs/architecture.html</code> is <code>data-status="open"</code>).</p>
+<ul>
+  <li><code>module-layout</code> (moderate), <code>import-rules</code> (moderate): the deal rules live in <code>features/canvas/</code> (<code>boardActions.ts</code>, <code>stack.ts</code>), the exclusion in <code>features/draw/</code>, the menu item in <code>features/hook/</code>, the icon in <code>shared/ui</code> and <code>public/icons/</code>. The canvas imports <code>cueKey</code> and <code>drawFor</code> only through <code>@/features/draw</code>; <code>HookMenu</code> still never imports the canvas (it gets <code>canDeal</code> as a prop). React Flow stays in <code>features/canvas/</code>.</li>
+  <li><code>hook-sentence</code> (cheap): no change; the sentence stays a pure function of the board and updates at once after the deal.</li>
+  <li><code>undo-history</code> (cheap), <code>save-transaction</code> (cheap): the deal is 1 <code>changeBoard</code>, so 1 undo step and 1 save; a no-op returns the same board, so no step and no save. The reveal map is view state, never in the store.</li>
+  <li><code>schema-shape</code> (moderate), <code>board-file-format</code> (expensive): no change; dealt cards are ordinary cards; format version stays 2; no Dexie version, no <code>UPGRADES</code> step.</li>
+  <li><code>nfr-targets</code> (cheap): the board change must finish inside the 100 ms draw target (new @timing test); no new library, so size and privacy targets are unaffected.</li>
+  <li><code>pool-load-failure</code> (cheap): Deal Stack is disabled while pools are not loaded, as Redraw All is.</li>
+</ul>
+
+<h3>Decisions and assumptions</h3>
+<ul>
+  <li>ASSUMPTION: Slug <code>deal-stack</code>, branch <code>phase-8-deal-stack</code>. Authority: dev-plan-phase slug rules (short, from the PRD phase name "Deal A Stack"; no collision in <code>docs/phases/</code>).</li>
+  <li>ASSUMPTION: The exclusion is an optional <code>excluded</code> set inside <code>DrawOptions</code>, not a new positional parameter, so <code>drawCard</code> and <code>drawFor</code> both take it without changing any call site. The fallback drops the whole exclusion for that card (never a partial exclusion). Authority: feature brief Blast radius and Draw rules + codebase pattern (<code>DrawOptions</code> already holds <code>random</code> and <code>createId</code>).</li>
+  <li>ASSUMPTION: <code>drawFor</code>'s first parameter widens to <code>Pick&lt;Card, 'type' | 'modDeck'&gt;</code> so the deal draws "as a rail draw of its deck does" through the same genre logic, with no new draw function. Authority: feature brief ("drawCard and drawFor take an optional set") + smallest reversible option.</li>
+  <li>ASSUMPTION: The exclusion uses only <code>rings[0]</code> of same-type cards. A combined card's <code>rings[1]</code> came from a Modifier deck, so it is not a cue "of the same deck". Every card of that type on the board counts: train, loose and Concept. Authority: feature brief Draw rules ("every cue text on any card of the same deck on the board") + data model (rings[1] = Modifier adjectives).</li>
+  <li>ASSUMPTION: <code>cueKey</code> is extracted from <code>drawCard</code>'s distinct step and exported from <code>features/draw/index.ts</code>, rather than added to <code>shared/model</code>, whose doc comment allows types, constants and a short list of named helpers only. Authority: feature brief ("the same trimmed, lowercase key as the distinct-cue rule") + import-rules + codebase pattern.</li>
+  <li>ASSUMPTION: The insert step is a new <code>insertUnder</code> in <code>stack.ts</code>. It moves <strong>every</strong> non-Modifier child of the predecessor under the new card, in child order, and leaves Modifier children with the predecessor. With a branched predecessor the new card therefore reads right after the predecessor and before both branches. Authority: feature brief Insert rule ("The child that card had in the train moves under the new card"; "Modifier cards tucked under a card stay with that card"; "An insert between a card and its child may need a small helper") + smallest consistent extension to branches.</li>
+  <li>ASSUMPTION: A non-core card that hangs directly under the predecessor (Role → Twist) moves under the new card (Role → Mechanic → Twist). The brief's explicit rule ("tucks under the last train card … whose deck comes earlier in core order"; "the child that card had in the train moves under the new card") is followed. "Cards outside the core 5 … keep their place relative to the card above them" is read as: they are never removed or reordered against the other user cards. Authority: feature brief Insert rule (explicit contract wins over the looser sentence) + unit tests pin it.</li>
+  <li>ASSUMPTION: Base decks are filled in core order and Details decks in rail order, with the 2 chips of a lane drawn one after another. The exclusion therefore grows in that order (the train Player Role is drawn before the Details Player Roles). Authority: feature brief ("The deal handles the missing base decks in core order"; "Details lanes take dealt chips in rail order").</li>
+  <li>ASSUMPTION: Details cards join through <code>enterConcept</code>, so each gets the next top z and sits at the end of its lane. Authority: feature brief Blast radius ("enterConcept for the Details cards") + Open assumptions ("each chip goes to the end of its lane by z").</li>
+  <li>ASSUMPTION: <code>dealStack</code> lives in <code>boardActions.ts</code> beside <code>redrawAll</code>, as the brief names. It reuses <code>CORE_ORDER</code> from <code>dropZones.ts</code> and adds <code>DEAL_DETAILS</code> and <code>DEAL_CHIPS_PER_LANE</code> as named constants there. <code>dealSlots</code> is also exported, for <code>canDeal</code> and the tests. Authority: feature brief Blast radius + codebase pattern (one copy of core order).</li>
+  <li>ASSUMPTION: The reveal is a CSS keyframe fade (<code>opacity</code> 0 → 1 over <code>--t-fade</code>) with an inline <code>--deal-delay</code> custom property per card or chip and <code>animation-fill-mode: both</code>. Reduced motion sets <code>animation: none</code> in each CSS module, because <code>--t-fade: 0ms</code> alone would still keep the delay. The delay map lives in canvas view state and is cleared 200 ms after <code>DEAL_REVEAL_MS</code> (1000 ms). No new token. Authority: design 9.9 and 11 + feature brief Menu and reveal + tokens.css reduced-motion block + smallest option.</li>
+  <li>ASSUMPTION: The reveal delay is <code>index × 1000 / count</code>, rounded to whole ms, with the first card at 0. Authority: feature brief ("the gap between cards is 1000 ms divided by the dealt count, for example 200 ms for 5 cards").</li>
+  <li>ASSUMPTION: The new @timing browser test uses the same limits as the existing timing tests: 100 ms in Chromium and Firefox, and 300 ms in WebKit (the user's 2026-11-04 temporary WebKit raise). Authority: nfr-targets + Phase 6 and 7 Notes (WebKit limits kept as they are) + codebase pattern (<code>perf_ringTurn_updatesHookUnder100ms</code>).</li>
+  <li>ASSUMPTION: Deal Stack sits between Copy Hook and Redraw All on both board kinds; its disabled rule is <code>!canDeal || !poolsReady</code> and does not depend on <code>hasStack</code>. Authority: design 9.5 + feature brief Menu and reveal.</li>
+  <li>ASSUMPTION: The PRD Phase 8 bullets in <code>docs/prd.html</code> are already marked <code>data-checked="true"</code> in the working tree. That is the user's uncommitted edit and is left as it is; dev-execute owns PRD ticks. Authority: run brief (leave the uncommitted doc edits as they are) + pipeline convention (Phase 6 and 7 Notes).</li>
+  <li>DECISION: No task edits <code>docs/feature-deal-a-stack.html</code>, <code>docs/design-system.html</code> or the other plan docs; they are the authorities and hold the user's uncommitted Phase 8 edits. If they are still uncommitted when execution starts, they ride along unchanged in the phase commit; no task edits them.</li>
+</ul>
+
+<h3>Execution notes</h3>
+<ul>
+  <li><em>To be filled by Task 7: JS and pool sizes, timing results, existing tests that changed.</em></li>
+</ul>
+
+</body>
+</html>

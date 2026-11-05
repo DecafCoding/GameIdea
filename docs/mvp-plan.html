@@ -103,6 +103,7 @@
   <li data-checked="true">Desktop browsers only, with mouse and keyboard</li>
   <li data-checked="true">Local run at fixed ports, and HTTPS on the local network</li>
   <li data-checked="true">One-Pager board: a second board kind beside Free Form. It has 1 Hook Card with a short Hook Train and 1 Concept panel that holds the other cards as chips in deck lanes. See <a href="feature-one-pager-board.html">feature-one-pager-board.html</a>.</li>
+  <li data-checked="true">Deal Stack on the Hook Card menu: one click deals the 5 base decks under the Hook Card in core order and, on a One-Pager board, 2 Details chips each of Player Role, Resource, Setting, Mood, Twist, Progression and Constraint. It fills only missing slots, never repeats a cue of the same deck, and is disabled when full. From M8. See <a href="feature-deal-a-stack.html">feature-deal-a-stack.html</a>.</li>
   <li data-checked="true">The visual design in <a href="design-system.html">design-system.html</a>: the TheForge base (tokens, fonts, dark canvas, shell and card look) with 9 deliberate deviations, the 11 deck colors and icons, and the Hook Card.</li>
 </ul>
 
@@ -233,6 +234,7 @@ Genre                     (21 values. Meanings are in the Genres table.
   <li>The first combine moves the Modifier's ring into rings[1], copies its <code>modDeck</code> to the ring and deletes the Modifier card. A base card holds only 1 merged ring. A swap gives the old adjectives to a new Modifier card beside the card, with the ring's <code>modDeck</code>. On Top sets the second Modifier's <code>onTopOf</code> to the base card. That Modifier stays a card and moves with the base card. A base card takes 1 on-top Modifier. Split moves rings[1] back into a new Modifier card beside the card, with its <code>modDeck</code>. An on-top card stays on top. Each ring keeps its own active cue.</li>
   <li>Redraw replaces a card with a new card of the same deck. It takes the old card's place, tucks and lock state. A combined card keeps its adjective ring.</li>
   <li>Redraw All on a Hook Card applies Redraw to every unlocked card in its stack.</li>
+  <li>Deal Stack on a Hook Card adds only missing slots: each missing base deck goes into its core-order position in the train, and each Details deck on a One-Pager board fills to 2 chips. It is 1 undo step. See <a href="feature-deal-a-stack.html">feature-deal-a-stack.html</a>.</li>
   <li>A Hook Card is always the head of its stack. It cannot tuck under a card.</li>
   <li>A One-Pager board has exactly 1 Hook Card. A Concept card is never tucked. Redraw All never changes a Concept card. See <a href="feature-one-pager-board.html">feature-one-pager-board.html</a>.</li>
   <li>The Hook Card sentence is computed from the stack on each change. It is never stored.</li>
@@ -424,6 +426,12 @@ Genre                     (21 values. Meanings are in the Genres table.
   <li>Pass bar: the done criteria in <a href="feature-one-pager-board.html">feature-one-pager-board.html</a> pass.</li>
 </ul>
 
+<h3>M8: Deal A Stack</h3>
+<ul>
+  <li>Deal Stack on the Hook Card menu, the fill and insert rules, excluded cues in the draw, the one-at-a-time reveal and the <code>square-arrow-down</code> icon on Redraw and Redraw All.</li>
+  <li>Pass bar: the done criteria in <a href="feature-deal-a-stack.html">feature-deal-a-stack.html</a> pass.</li>
+</ul>
+
 <h3>Cue rules</h3>
 <p>The user writes the libraries. These rules are guidance for the user, and the conversion step reports cues that break them. Pool sizes come from the libraries. The earlier targets of about 150 cues for each core deck and about 80 for each optional deck are guidance only.</p>
 <ul>
@@ -442,12 +450,13 @@ Genre                     (21 values. Meanings are in the Genres table.
   <li>The Hook Card shows the correct sentence for a full stack and for each failure case in State and failure. Copy puts that sentence on the clipboard as plain text.</li>
   <li>A genre change affects only the next draw. Cards already on the board do not change.</li>
   <li>Redraw All replaces every unlocked card in the stack and leaves locked cards as they are.</li>
-  <li>All 8 Required rows of the scan work in Chrome, Edge, Firefox and Safari on desktop: the 7 In rows in full, and the Partial row (a draw fills a fixed set of concept slots) at the scope the scan states.</li>
+  <li>All 8 Required rows of the scan work in Chrome, Edge, Firefox and Safari on desktop: the 7 In rows in full, and from M8 the row "a draw fills a fixed set of concept slots" in full through Deal Stack.</li>
   <li>Every carried-over feature in the Scope section works.</li>
   <li>The speed and first-load targets pass.</li>
   <li>An exported board file imports again with no data lost, and the text file holds each hook.</li>
   <li>The done criteria in <a href="feature-settings-and-theme.html">feature-settings-and-theme.html</a> pass.</li>
   <li>The done criteria in <a href="feature-one-pager-board.html">feature-one-pager-board.html</a> pass.</li>
+  <li>The done criteria in <a href="feature-deal-a-stack.html">feature-deal-a-stack.html</a> pass.</li>
   <li>One command runs the app at port 4174. Another command serves HTTPS on the local network at port 4444.</li>
 </ul>
 
@@ -488,5 +497,6 @@ Genre                     (21 values. Meanings are in the Genres table.
 <p class="meta">2026-11-02: Folded in the design handoff <code>docs/design-handoff/</code> (version 1) through <code>/dev-ui-update</code>. <a href="design-system.html">design-system.html</a> is now the visual authority. The core order is Player Role, Mechanic, Resource, Goal, Conflict, in the rail, the tuck hints and the hook sentence. The Hook Card menu shows on hover, with Copy, Redraw All and Discard. "and" joins any 2 cards of the same deck except Modifiers. "Genre count" replaces "genre mark". 5 feedback details were added. Design work moved earlier: tokens, fonts, icons and the shell to M1, the grouped rail to M2, genre counts to M3. Changed Scope, Example hook, Screens, Left rail, Connector badges, Hints, Visual design and M1 to M5. Changed by the user's decisions in the conflict sweep.</p>
 <p class="meta">2026-11-04: Added the One-Pager board, a second board kind beside Free Form. It has 1 Hook Card with a short Hook Train and 1 Concept panel for the other cards. Board gains <code>kind</code> and <code>conceptWidth</code>, and Card gains <code>inConcept</code>, in board format version 2. Added M6 (reserved for Themed Cards) and M7. Changed Scope, Data model, Rules, Milestones and Done criteria. Changed by <code>/dev-add-feature</code>. See <a href="feature-one-pager-board.html">feature-one-pager-board.html</a>.</p>
 <p class="meta">2026-11-04: Folded in the design handoff <code>docs/design-handoff-2026-11-04/</code> (version 2) through <code>/dev-ui-update</code>. M6 is now Card Themes And Settings Tabs: cards, notes and the Hook Card follow the mode, every card gets a deck-color edge and tint, and genres move into a Settings tab, so the rail loses the Genres button. The One-Pager Concept panel visuals are in design-system.html 9.15. Changed Scope, Left rail, Genres panel (now Genres tab), Visual design and M6. Changed by the user's decisions in the run.</p>
+<p class="meta">2026-11-04: Added Deal A Stack. Deal Stack on the Hook Card menu deals the 5 base decks in core order and, on a One-Pager board, 2 Details chips each of 7 decks. It fills only missing slots, never repeats a cue of the same deck, and is disabled when full. Redraw and Redraw All change their icon to <code>square-arrow-down</code>. No data model change. Added M8. Changed Scope, Rules, Milestones and Done criteria. Changed by <code>/dev-add-feature</code>. See <a href="feature-deal-a-stack.html">feature-deal-a-stack.html</a>.</p>
 </body>
 </html>

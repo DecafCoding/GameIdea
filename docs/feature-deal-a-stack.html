@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Feature — Deal A Stack</title>
+  <style>
+    :root { --fg:#1a1a1a; --muted:#666; --accent:#2563eb; --done:#16a34a; --rule:#e5e7eb; }
+    body { font:16px/1.6 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; color:var(--fg); max-width:60rem; margin:2rem auto; padding:0 1.25rem; }
+    h1 { font-size:2rem; border-bottom:2px solid var(--rule); padding-bottom:.3rem; }
+    h2 { font-size:1.5rem; margin-top:2.5rem; border-bottom:1px solid var(--rule); padding-bottom:.2rem; }
+    h3 { font-size:1.2rem; margin-top:1.75rem; }
+    code, pre { font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+    pre { background:#f6f8fa; padding:1rem; border-radius:6px; overflow:auto; }
+    table { border-collapse:collapse; width:100%; margin:1rem 0; }
+    th, td { border:1px solid var(--rule); padding:.5rem .75rem; text-align:left; vertical-align:top; }
+    th { background:#f6f8fa; }
+    ul.checklist { list-style:none; padding-left:0; }
+    ul.checklist > li::before { content:"☐ "; color:var(--muted); }
+    ul.checklist > li[data-checked="true"]::before { content:"☑ "; color:var(--done); }
+    .meta { color:var(--muted); font-size:.9rem; }
+  </style>
+</head>
+<body>
+
+<h1>Feature — Deal A Stack</h1>
+<p class="meta">2026-11-04 · Extends GameIdea (working name), as planned in <a href="mvp-plan.html">mvp-plan.html</a>. Written from the <code>/dev-add-feature</code> run. Lands in Phase 8.</p>
+<p><strong>Visual authority:</strong> <a href="design-system.html">design-system.html</a> holds the menu item, the icons and the reveal timing. Where this brief and the design doc disagree on a visual detail, the design doc wins.</p>
+
+<h2>Summary and motivation</h2>
+<p>Today the user builds a stack one card at a time. A full core stack takes 6 rail clicks and 5 drags. The first user story in the PRD asks for a full concept stack in a minute.</p>
+<p>This feature adds Deal Stack to the Hook Card menu. One click fills the 5 base decks under the Hook Card in core order. On a One-Pager board it also fills the Details panel with 2 cards of each of 7 decks.</p>
+<p>A deal fills only the slots that are missing. When every slot is full, Deal Stack is disabled. Lock and Redraw All then do the rest of the work.</p>
+
+<h2>Fit with the existing application</h2>
+<p>The feature extends the core loop at its start. The user deals a stack, then turns rings, locks the cards to keep and uses Redraw All on the rest. Every later step works as today.</p>
+<p>The feature closes the Required scan row "One draw fills a fixed set of concept slots". That row was Partial because a one-click draw of a full stack was left out.</p>
+<p>Related docs: <a href="mvp-plan.html">mvp-plan.html</a>, <a href="prd.html">prd.html</a>, <a href="architecture.html">architecture.html</a>, <a href="design-system.html">design-system.html</a>, <a href="competitive-scan.html">competitive-scan.html</a>, <a href="feature-one-pager-board.html">feature-one-pager-board.html</a>.</p>
+
+<h2>Scope</h2>
+
+<h3>In this feature</h3>
+<ul class="checklist">
+  <li data-checked="true">A Deal Stack item in the Hook Card hover menu, with the <code>playing-cards-fan</code> icon. It shows on both board kinds.</li>
+  <li data-checked="true">The Redraw item on the card strip and the Redraw All item on the Hook Card menu change their icon to <code>square-arrow-down</code>. The icon is vendored from Lucide into <code>public/icons/</code>.</li>
+  <li data-checked="true">Base deal: 1 card each of Player Role, Mechanic, Resource, Goal and Conflict in the Hook Train, in core order.</li>
+  <li data-checked="true">One-Pager deal: the base deal, plus 2 Details chips each of Player Role, Resource, Setting, Mood, Twist, Progression and Constraint. That is 14 Details cards and 19 cards in a full deal.</li>
+  <li data-checked="true">Fill rule: a deal adds only missing cards. Each missing base card goes into its core-order position in the train.</li>
+  <li data-checked="true">No repeated cues: a dealt card never shows a cue that shows on another card of the same deck on the board.</li>
+  <li data-checked="true">Reveal: the deal is 1 board change. The dealt cards then appear one at a time over about 1 second, with a fade and no flight.</li>
+  <li data-checked="true">Deal Stack is disabled when every slot is full, and while the pools are not loaded.</li>
+  <li data-checked="true">A deal is 1 undo step and 1 save.</li>
+</ul>
+
+<h3>Deferred</h3>
+<ul class="checklist">
+  <li data-checked="false">A rail button that makes a new Hook Card and deals under it in 1 click.</li>
+  <li data-checked="false">A user setting for which decks a deal fills, or how many Details cards each deck gets.</li>
+  <li data-checked="false">Modifier cards in a deal.</li>
+  <li data-checked="false">A keyboard shortcut for Deal Stack.</li>
+</ul>
+
+<h3>Never</h3>
+<ul class="checklist">
+  <li data-checked="false">A deal that replaces cards already on the board. Lock and Redraw All do that job.</li>
+  <li data-checked="false">A flight animation for dealt cards.</li>
+</ul>
+
+<h2>Blast radius</h2>
+<table>
+  <tr><th>Part</th><th>Change</th></tr>
+  <tr><td><code>features/canvas/boardActions.ts</code></td><td>New pure function <code>dealStack</code> beside <code>redrawAll</code>. It finds the missing slots, inserts base cards into the train and enters Details cards. It returns the new board and the dealt card ids in reveal order.</td></tr>
+  <tr><td><code>features/canvas/stack.ts</code></td><td>Reused: <code>stackOrder</code>, <code>tuckCard</code>, <code>layoutStack</code>. An insert between a card and its child may need a small helper.</td></tr>
+  <tr><td><code>features/canvas/concept.ts</code></td><td>Reused: <code>conceptLanes</code>, <code>enterConcept</code> for the Details cards.</td></tr>
+  <tr><td><code>features/canvas/BoardCanvas.tsx</code>, <code>CardNode.tsx</code>, <code>ConceptNode.tsx</code></td><td>A <code>dealStack</code> action, and the staggered fade on dealt cards and chips.</td></tr>
+  <tr><td><code>features/draw/drawCard.ts</code></td><td><code>drawCard</code> and <code>drawFor</code> take an optional set of excluded cue texts. If the filtered pool is too short, the draw allows repeats.</td></tr>
+  <tr><td><code>features/hook/HookMenu.tsx</code></td><td>The Deal Stack item, its enabled rule and the Redraw All icon.</td></tr>
+  <tr><td><code>features/card/CardStrip.tsx</code></td><td>The Redraw icon.</td></tr>
+  <tr><td><code>shared/ui/Icon.tsx</code>, <code>public/icons/</code></td><td>The new <code>square-arrow-down</code> icon.</td></tr>
+  <tr><td><code>shared/ui/tokens.css</code></td><td>No new token. The reveal uses <code>--t-fade</code>, which reduced motion sets to 0.</td></tr>
+</table>
+<p>If the fill rule is wrong, the train reads in the wrong order or a card is lost from the train. The unit tests on <code>dealStack</code> guard this.</p>
+
+<h2>Data model changes</h2>
+<p>None. Dealt cards are ordinary cards. Base cards have <code>tuckedUnder</code> set. Details cards have <code>inConcept: true</code>. No field is added. The board format stays at version 2. No Dexie version and no upgrade step are needed. There is nothing to migrate or roll back.</p>
+
+<h2>Interfaces and contracts</h2>
+
+<h3>Deal slots</h3>
+<table>
+  <tr><th>Board kind</th><th>Hook Train (1 each, in core order)</th><th>Details panel (2 each)</th></tr>
+  <tr><td>Free Form</td><td>Player Role, Mechanic, Resource, Goal, Conflict</td><td>None</td></tr>
+  <tr><td>One-Pager</td><td>Player Role, Mechanic, Resource, Goal, Conflict</td><td>Player Role, Resource, Setting, Mood, Twist, Progression, Constraint</td></tr>
+</table>
+
+<h3>What counts as present</h3>
+<ul>
+  <li>A base deck is present when the Hook Card's stack has at least 1 card of that deck, at any depth.</li>
+  <li>A Details deck is full when its lane has 2 or more chips. A lane with 1 chip gets 1 card. A lane with 3 chips gets none.</li>
+  <li>Loose cards on the canvas and On Top Modifier cards do not count.</li>
+</ul>
+
+<h3>Insert rule for base cards</h3>
+<ul>
+  <li>The deal handles the missing base decks in core order.</li>
+  <li>A new card tucks under the last train card, in reading order, whose deck comes earlier in core order. The child that card had in the train moves under the new card, so it reads after it.</li>
+  <li>If the train has no earlier core card, the new card tucks right under the Hook Card. The Hook Card's first child moves under the new card.</li>
+  <li>Cards outside the core 5, for example a Twist the user tucked, keep their place relative to the card above them.</li>
+  <li>Modifier cards tucked under a card stay with that card.</li>
+</ul>
+<p>Example: the train is Player Role, Goal. The deal adds Mechanic and Resource between them and Conflict after Goal. The train reads Player Role, Mechanic, Resource, Goal, Conflict.</p>
+
+<h3>Draw rules for a deal</h3>
+<ul>
+  <li>Each card draws as a rail draw of its deck does. Genre filters apply to Mechanic, Resource, Progression and Constraint.</li>
+  <li>Excluded cues: every cue text on any card of the same deck on the board, plus the cues of cards drawn earlier in the same deal. The compare uses the same trimmed, lowercase key as the distinct-cue rule.</li>
+  <li>If the excluded set leaves too few cues for a card, that card draws from the filtered pool without the exclusion.</li>
+</ul>
+
+<h3>Contract</h3>
+<pre><code>dealStack(board, hookId, draw) -&gt; { board, dealt: CardId[] }
+  draw(deck, excluded: Set&lt;string&gt;) -&gt; Card     // caller has the pools and genres
+  dealt is in reveal order: train top to bottom, then Details lanes in rail order
+  no slot missing -&gt; returns the same board (no undo step, no save)
+
+canDeal(board, hookId) -&gt; boolean                // drives the menu item's disabled state</code></pre>
+
+<h3>Menu and reveal</h3>
+<ul>
+  <li>Hook Card menu order: Copy Hook, Deal Stack, Redraw All, Duplicate, Discard. A One-Pager Hook Card has Copy Hook, Deal Stack and Redraw All.</li>
+  <li>Deal Stack is a 44 px icon button with <code>aria-label</code> and tooltip "Deal Stack". It is enabled on an empty Hook Card.</li>
+  <li>Reveal: each dealt card fades in over <code>--t-fade</code>. The gap between cards is 1000 ms divided by the dealt count, for example 200 ms for 5 cards and about 53 ms for 19. Order is the <code>dealt</code> list.</li>
+  <li>Dealt cards get no Redraw All outline. The reveal shows which cards are new.</li>
+  <li>The hook sentence updates at once, because it is computed from the board.</li>
+  <li>With reduced motion, every dealt card shows at once.</li>
+</ul>
+
+<h2>Architecture fit</h2>
+<p><strong>Outcome 1: it fits.</strong> No exception and no amendment.</p>
+<ul>
+  <li><code>module-layout</code> and <code>import-rules</code>: the deal logic lives in <code>features/canvas/</code>, the draw change in <code>features/draw/</code> and the menu item in <code>features/hook/</code>. No new import direction.</li>
+  <li><code>hook-sentence</code>: the sentence stays a pure function of the board.</li>
+  <li><code>undo-history</code> and <code>save-transaction</code>: the deal is 1 <code>changeBoard</code>, so 1 step and 1 save.</li>
+  <li><code>schema-shape</code> and <code>board-file-format</code>: no change.</li>
+  <li><code>nfr-targets</code>: the board change must finish inside the 100 ms draw target. The 1-second reveal is visual only.</li>
+  <li><code>pool-load-failure</code>: Deal Stack is disabled while the pools are not loaded, as Redraw All is.</li>
+</ul>
+
+<h2>Compatibility and rollout</h2>
+<p>No existing board changes. No board file changes. Boards made before this feature can be dealt like new ones. The feature ships whole in Phase 8 with no flag.</p>
+
+<h2>Testing and regression plan</h2>
+<h3>Unit (Vitest)</h3>
+<ul>
+  <li><code>dealStack</code> on an empty Free Form Hook Card gives 5 cards in core order.</li>
+  <li><code>dealStack</code> on an empty One-Pager Hook Card gives 5 train cards and 14 Details chips, 2 in each of the 7 lanes.</li>
+  <li>Fill rule: each missing-deck mix inserts in core order. Cards outside the core 5 and tucked Modifiers keep their place.</li>
+  <li>Lanes with 1 chip get 1 card. Lanes with 2 or more get none.</li>
+  <li>A full stack returns the same board, and <code>canDeal</code> is false.</li>
+  <li>No dealt cue repeats a cue on another card of the same deck. The fallback runs when the pool is short.</li>
+  <li>Genre filters apply to dealt cards.</li>
+  <li>The <code>dealt</code> list is in reveal order.</li>
+</ul>
+<h3>Browser (Playwright)</h3>
+<ul>
+  <li>One Deal Stack click on an empty Hook Card shows a full sentence. One Undo removes every dealt card.</li>
+  <li>Deal Stack is disabled after a full deal and enabled again after a card is discarded.</li>
+  <li>The menu icons show <code>square-arrow-down</code> on Redraw and Redraw All.</li>
+</ul>
+<h3>Regression</h3>
+<ul>
+  <li>Every existing test passes. Redraw All, Redraw, tuck and the Details panel work as before.</li>
+  <li>Speed, size and privacy targets pass.</li>
+</ul>
+
+<h2>Build plan</h2>
+<p>Phase 8 in <a href="prd.html#phases">prd.html</a>. Ordered tasks:</p>
+<ol>
+  <li>Excluded cues in <code>drawCard</code> and <code>drawFor</code>, with tests first.</li>
+  <li><code>dealStack</code> and <code>canDeal</code> as pure functions, with tests first. The insert rule is the riskiest part, so it comes first.</li>
+  <li>The Deal Stack menu item and the <code>dealStack</code> canvas action.</li>
+  <li>The staggered reveal on cards and chips, with reduced motion.</li>
+  <li>The <code>square-arrow-down</code> icon on Redraw and Redraw All.</li>
+  <li>Playwright tests, then the full check run.</li>
+</ol>
+
+<h2>Done criteria</h2>
+<ul>
+  <li>One click on an empty Free Form Hook Card deals Player Role, Mechanic, Resource, Goal and Conflict in core order. The sentence reads as a full hook.</li>
+  <li>One click on an empty One-Pager Hook Card also deals 2 chips each in the Player Role, Resource, Setting, Mood, Twist, Progression and Constraint lanes.</li>
+  <li>A partial stack gets only its missing cards, each in core-order position. No card the user placed is lost.</li>
+  <li>No dealt cue repeats a cue on another card of the same deck on the board.</li>
+  <li>Deal Stack is disabled when every slot is full and while the pools are not loaded.</li>
+  <li>A deal is 1 undo step and 1 save. The cards appear one at a time over about 1 second, and at once with reduced motion.</li>
+  <li>Redraw and Redraw All show the <code>square-arrow-down</code> icon. Deal Stack shows <code>playing-cards-fan</code>.</li>
+  <li>Every existing test passes. Speed, size and privacy targets pass.</li>
+</ul>
+
+<h2>Open risks and assumptions</h2>
+<ul>
+  <li>Risk: the insert rule on a train with branches (2 cards under 1 card) may read oddly. The rule uses reading order, so a new card goes after the branch that holds its predecessor. Tests cover a branched train.</li>
+  <li>Risk: a full One-Pager deal makes 19 cards. The board change must stay under 100 ms. The 200-card speed test covers the canvas.</li>
+  <li>Assumption: the Details lanes take dealt chips in rail order, and each chip goes to the end of its lane by <code>z</code>.</li>
+  <li>Assumption: the user can still drag cards to change the order after a deal.</li>
+</ul>
+
+</body>
+</html>
