@@ -3,7 +3,10 @@
  * genre-tagged deck, only cues that share a genre with the deck's genres on the board are
  * drawn; a Modifier deck draws only cues whose targets include it; every other deck draws
  * from its full pool (CLAUDE.md "Draws"). Cards copy only cue text, never genres or targets.
- * Used by the deck buttons, Redraw and Redraw All; the caller places the returned card.
+ * Used by the deck buttons, Redraw, Redraw All and Deal Stack; the caller places the
+ * returned card. A draw may exclude cue keys (Deal Stack passes the cues already on the
+ * board for that deck); when too few cues are left, the whole exclusion is dropped for
+ * that card and it draws from the filtered pool.
  */
 import {
   CUES_PER_CARD,
@@ -34,6 +37,13 @@ export interface DrawOptions {
   random?: () => number;
   /** Returns a new card id. Defaults to newId. */
   createId?: () => string;
+  /** Cue keys (see cueKey) not to draw. Dropped as a whole when too few cues are left. */
+  excluded?: ReadonlySet<string>;
+}
+
+/** The distinct-cue key: trimmed, lowercase text. */
+export function cueKey(text: string): string {
+  return text.trim().toLowerCase();
 }
 
 /**
@@ -73,7 +83,7 @@ export function drawCard(
   // 2. Distinct by trimmed, lowercase text; the first cue with a text wins.
   const seen = new Set<string>();
   const distinct = matching.filter((cue) => {
-    const key = cue.text.trim().toLowerCase();
+    const key = cueKey(cue.text);
     if (seen.has(key)) return false;
     seen.add(key);
     return true;
@@ -84,13 +94,18 @@ export function drawCard(
     throw new Error(`The ${type} pool has ${distinct.length} distinct cues; a card needs ${need}.`);
   }
 
-  // 3. Partial Fisher-Yates over the copy: the first `need` slots end up a uniform random pick.
+  // 3. Drop excluded cues, unless too few are left: then the whole exclusion is dropped.
+  const excluded = options.excluded;
+  const open = excluded ? distinct.filter((cue) => !excluded.has(cueKey(cue.text))) : distinct;
+  const from = open.length >= need ? open : distinct;
+
+  // 4. Partial Fisher-Yates over the copy: the first `need` slots end up a uniform random pick.
   for (let i = 0; i < need; i++) {
-    const j = i + Math.floor(random() * (distinct.length - i));
-    [distinct[i], distinct[j]] = [distinct[j]!, distinct[i]!];
+    const j = i + Math.floor(random() * (from.length - i));
+    [from[i], from[j]] = [from[j]!, from[i]!];
   }
 
-  const cues = distinct.slice(0, need).map((cue): Cue => ({ text: cue.text }));
+  const cues = from.slice(0, need).map((cue): Cue => ({ text: cue.text }));
 
   return {
     id: createId(),
@@ -109,10 +124,11 @@ export function drawCard(
 
 /**
  * Draws a card like the given one: the same deck, the same Modifier deck, and the board's
- * genres for a genre-tagged deck. Used by Redraw and Redraw All.
+ * genres for a genre-tagged deck. Used by Redraw and Redraw All, and by Deal Stack with
+ * only a deck ({ type }), which draws as that deck's rail button does.
  */
 export function drawFor(
-  card: Card,
+  card: Pick<Card, 'type' | 'modDeck'>,
   pools: Pools,
   genres: DeckGenres,
   options: DrawOptions = {},

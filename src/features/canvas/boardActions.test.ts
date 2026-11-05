@@ -1,9 +1,13 @@
 /**
  * Tests for the board actions, and the Milestone 2 sequence through the board store.
  */
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { activeText, iconFor, isCombined } from '@/features/card';
-import type { Board, Card } from '@/shared/model';
+import { cueKey, drawFor } from '@/features/draw';
+import { allGenresOn, DECKS, type Board, type Card, type Deck, type Pools } from '@/shared/model';
+import { parsePool } from '@/shared/pools';
 import { newBoard, useBoardStore } from '@/shared/store';
 import {
   combinedCard,
@@ -14,8 +18,11 @@ import {
   onePagerBoard,
 } from '@/test/fixtures/boards';
 import {
+  canDeal,
   chooseConnector,
   combineOnto,
+  dealSlots,
+  dealStack,
   discardCard,
   dropCard,
   duplicateCard,
@@ -29,9 +36,10 @@ import {
   swapOnto,
   turnCardOnBoard,
 } from './boardActions';
-import { boardRects, CARD_SIZE } from './placement';
-import { cardText, onTopCardOf } from './reading';
-import { isRoot, stackOrder, TUCK_OFFSET } from './stack';
+import { boardRects, CARD_SIZE, HOOK_INSET } from './placement';
+import { conceptLanes } from './concept';
+import { cardText, hookSentences, onTopCardOf } from './reading';
+import { descendantsOf, isRoot, stackOrder, TUCK_OFFSET } from './stack';
 
 const find = (board: Board, id: string): Card | undefined => board.cards.find((c) => c.id === id);
 const get = (board: Board, id: string): Card => find(board, id)!;
@@ -671,5 +679,305 @@ describe('chooseConnector', () => {
   it('chooseConnector_sameWord_sameBoard', () => {
     const board = fixtureBoard([fixtureCard('goal', { connector: 'must' })]);
     expect(chooseConnector(board, 'goal-1', 'must')).toBe(board);
+  });
+});
+
+describe('dealStack', () => {
+  /** A fake draw: distinct cue texts per call, and a record of every excluded set. */
+  function fakeDraw() {
+    let n = 0;
+    const calls: { deck: Deck; excluded: string[] }[] = [];
+    const draw = (deck: Deck, excluded: ReadonlySet<string>): Card => {
+      n += 1;
+      calls.push({ deck, excluded: [...excluded].sort() });
+      const count = ['goal', 'conflict', 'twist', 'progression', 'constraint'].includes(deck)
+        ? 2
+        : 4;
+      return fixtureCard(deck, {
+        id: `dealt-${n}`,
+        z: 0,
+        rings: [
+          {
+            cues: Array.from({ length: count }, (_, i) => ({ text: `${deck} ${n}.${i}` })),
+            activeIndex: 0,
+          },
+        ],
+      });
+    };
+    return { draw, calls };
+  }
+
+  /** Every train card sits 20 px in from the Hook Card, 56 px below the card before it. */
+  function expectTrainConsistent(board: Board) {
+    const root = get(board, 'hook-1');
+    stackOrder(board, 'hook-1').forEach((card, i) => {
+      expect(card.x).toBe(i === 0 ? root.x : root.x + HOOK_INSET);
+      expect(card.y).toBe(root.y + i * TUCK_OFFSET);
+    });
+  }
+
+  const hook = (overrides: Partial<Card> = {}) =>
+    fixtureCard('hook', { id: 'hook-1', x: 96, y: 96, z: 1, ...overrides });
+  const train = (board: Board) => descendantsOf(board, 'hook-1');
+  const trainTypes = (board: Board) => train(board).map((c) => c.type);
+  const onePager = (cards: Card[]): Board => ({ ...fixtureBoard(cards), kind: 'onePager' });
+
+  it('dealStack_emptyFreeFormHook_dealsCoreFiveInOrder', () => {
+    const { draw } = fakeDraw();
+    const { board, dealt } = dealStack(fixtureBoard([hook()]), 'hook-1', draw);
+    expect(trainTypes(board)).toEqual(['role', 'mechanic', 'resource', 'goal', 'conflict']);
+    expect(dealt).toEqual(train(board).map((c) => c.id));
+    expect(board.cards.some((c) => c.inConcept)).toBe(false);
+    expectTrainConsistent(board);
+  });
+
+  it('dealStack_emptyOnePagerHook_dealsFiveAndFourteenChips', () => {
+    const { draw } = fakeDraw();
+    const { board, dealt } = dealStack(onePager([hook()]), 'hook-1', draw);
+    expect(trainTypes(board)).toEqual(['role', 'mechanic', 'resource', 'goal', 'conflict']);
+    const lanes = conceptLanes(board);
+    expect(lanes.map((l) => l.deck)).toEqual([
+      'role',
+      'resource',
+      'setting',
+      'mood',
+      'twist',
+      'progression',
+      'constraint',
+    ]);
+    for (const lane of lanes) {
+      expect(lane.cards).toHaveLength(2);
+      for (const card of lane.cards)
+        expect(card).toMatchObject({ inConcept: true, tuckedUnder: null });
+    }
+    expect(dealt).toHaveLength(19);
+    expect(dealt).toEqual([
+      ...train(board).map((c) => c.id),
+      ...lanes.flatMap((l) => l.cards.map((c) => c.id)),
+    ]);
+    expectTrainConsistent(board);
+  });
+
+  it('dealStack_partialTrain_insertsInCoreOrder', () => {
+    const { draw } = fakeDraw();
+    const start = fixtureBoard([
+      hook(),
+      fixtureCard('role', { z: 2, tuckedUnder: 'hook-1' }),
+      fixtureCard('goal', { z: 3, tuckedUnder: 'role-1' }),
+    ]);
+    const { board } = dealStack(start, 'hook-1', draw);
+    expect(trainTypes(board)).toEqual(['role', 'mechanic', 'resource', 'goal', 'conflict']);
+    expect(train(board)[0]!.id).toBe('role-1');
+    expect(train(board)[3]!.id).toBe('goal-1');
+    expect(get(board, 'role-1').rings).toEqual(get(start, 'role-1').rings);
+    expectTrainConsistent(board);
+  });
+
+  const CORE: Deck[] = ['role', 'mechanic', 'resource', 'goal', 'conflict'];
+  const mixes: Deck[][] = [
+    ...CORE.map((missing) => CORE.filter((d) => d !== missing)),
+    ['conflict'],
+    ['role'],
+    ['role', 'conflict'],
+  ];
+  it.each(mixes.map((m) => [m.join('+'), m] as const))(
+    'dealStack_mix_%s_fillsToCoreOrder',
+    (_name, present) => {
+      const cards: Card[] = [hook()];
+      let parent = 'hook-1';
+      present.forEach((deck, i) => {
+        cards.push(fixtureCard(deck, { z: i + 2, tuckedUnder: parent }));
+        parent = `${deck}-1`;
+      });
+      const { board, dealt } = dealStack(fixtureBoard(cards), 'hook-1', fakeDraw().draw);
+      expect(trainTypes(board)).toEqual(CORE);
+      expect(dealt).toHaveLength(5 - present.length);
+      for (const deck of present) expect(train(board).some((c) => c.id === `${deck}-1`)).toBe(true);
+      expectTrainConsistent(board);
+    },
+  );
+
+  it('dealStack_nonCoreCardInTrain_keptAndOrderPreserved', () => {
+    const start = fixtureBoard([
+      hook(),
+      fixtureCard('role', { z: 2, tuckedUnder: 'hook-1' }),
+      fixtureCard('twist', { z: 3, tuckedUnder: 'role-1' }),
+      fixtureCard('goal', { z: 4, tuckedUnder: 'twist-1' }),
+    ]);
+    const { board } = dealStack(start, 'hook-1', fakeDraw().draw);
+    const order = train(board).map((c) => c.id);
+    for (const id of ['role-1', 'twist-1', 'goal-1']) expect(order).toContain(id);
+    const kept = order.filter((id) => ['role-1', 'twist-1', 'goal-1'].includes(id));
+    expect(kept).toEqual(['role-1', 'twist-1', 'goal-1']);
+    expect(train(board)).toHaveLength(6);
+    expectTrainConsistent(board);
+  });
+
+  it('dealStack_tuckedModifier_staysWithItsCard', () => {
+    const start = fixtureBoard([
+      hook(),
+      fixtureCard('role', { z: 2, tuckedUnder: 'hook-1' }),
+      fixtureCard('modifier', { z: 3, tuckedUnder: 'role-1' }),
+      fixtureCard('goal', { z: 4, tuckedUnder: 'role-1' }),
+    ]);
+    const { board } = dealStack(start, 'hook-1', fakeDraw().draw);
+    expect(get(board, 'modifier-1').tuckedUnder).toBe('role-1');
+    expect(train(board).map((c) => c.type)).toEqual([
+      'role',
+      'modifier',
+      'mechanic',
+      'resource',
+      'goal',
+      'conflict',
+    ]);
+  });
+
+  it('dealStack_branchedTrain_newCardFollowsPredecessorBranch', () => {
+    const start = fixtureBoard([
+      hook(),
+      fixtureCard('role', { z: 2, tuckedUnder: 'hook-1' }),
+      fixtureCard('goal', { z: 3, tuckedUnder: 'role-1' }),
+      fixtureCard('twist', { z: 4, tuckedUnder: 'role-1' }),
+    ]);
+    const { board } = dealStack(start, 'hook-1', fakeDraw().draw);
+    const ids = train(board).map((c) => c.id);
+    expect(ids.indexOf('goal-1')).toBeLessThan(ids.indexOf('twist-1'));
+    expect(trainTypes(board).filter((t) => CORE.includes(t as Deck))).toEqual(CORE);
+    expect(train(board)).toHaveLength(6);
+    expectTrainConsistent(board);
+  });
+
+  it('dealStack_presenceCountsAnyDepthOnly', () => {
+    const deep = fixtureBoard([
+      hook(),
+      fixtureCard('role', { z: 2, tuckedUnder: 'hook-1' }),
+      fixtureCard('twist', { z: 3, tuckedUnder: 'role-1' }),
+      fixtureCard('goal', { z: 4, tuckedUnder: 'twist-1' }),
+    ]);
+    expect(dealSlots(deep, 'hook-1').base).toEqual(['mechanic', 'resource', 'conflict']);
+    const outside = onePager([
+      hook(),
+      fixtureCard('goal', { id: 'loose-goal', x: 900, z: 2 }),
+      combinedCard('role', { z: 3, tuckedUnder: 'hook-1' }),
+      fixtureCard('modifier', { z: 4, onTopOf: 'role-1' }),
+      fixtureCard('mechanic', { id: 'chip-m', z: 5, inConcept: true }),
+    ]);
+    expect(dealSlots(outside, 'hook-1').base).toEqual(['mechanic', 'resource', 'goal', 'conflict']);
+  });
+
+  it('dealStack_laneWithOneChip_getsOne', () => {
+    const { board } = dealStack(onePagerBoard(), 'hook-1', fakeDraw().draw);
+    const setting = conceptLanes(board).find((l) => l.deck === 'setting')!;
+    expect(setting.cards).toHaveLength(2);
+    expect(setting.cards[0]!.id).toBe('setting-c1');
+  });
+
+  it('dealStack_laneWithThreeChips_getsNone', () => {
+    const start = onePagerBoard();
+    expect(dealSlots(start, 'hook-1').details.filter((d) => d === 'resource')).toEqual([]);
+    const three: Board = {
+      ...start,
+      cards: [...start.cards, fixtureCard('mood', { id: 'mood-a', z: 20, inConcept: true })],
+    };
+    const more: Board = {
+      ...three,
+      cards: [
+        ...three.cards,
+        fixtureCard('mood', { id: 'mood-b', z: 21, inConcept: true }),
+        fixtureCard('mood', { id: 'mood-c', z: 22, inConcept: true }),
+      ],
+    };
+    expect(dealSlots(more, 'hook-1').details).not.toContain('mood');
+    const { board } = dealStack(start, 'hook-1', fakeDraw().draw);
+    const resource = conceptLanes(board).find((l) => l.deck === 'resource')!;
+    expect(resource.cards.map((c) => c.id)).toEqual(['resource-c1', 'resource-c2']);
+    const mechanic = conceptLanes(board).find((l) => l.deck === 'mechanic')!;
+    expect(mechanic.cards).toHaveLength(1);
+  });
+
+  it('dealStack_fullStack_returnsSameBoard', () => {
+    const { board: full } = dealStack(fixtureBoard([hook()]), 'hook-1', fakeDraw().draw);
+    const again = dealStack(full, 'hook-1', fakeDraw().draw);
+    expect(again.board).toBe(full);
+    expect(again.dealt).toEqual([]);
+  });
+
+  it('canDeal_fullStack_false', () => {
+    const { board: full } = dealStack(onePager([hook()]), 'hook-1', fakeDraw().draw);
+    expect(canDeal(full, 'hook-1')).toBe(false);
+  });
+
+  it('canDeal_emptyHook_true', () => {
+    expect(canDeal(fixtureBoard([hook()]), 'hook-1')).toBe(true);
+    expect(canDeal(onePager([hook()]), 'hook-1')).toBe(true);
+  });
+
+  it('canDeal_freeFormFullTrain_falseEvenWithNoChips', () => {
+    const { board: full } = dealStack(fixtureBoard([hook()]), 'hook-1', fakeDraw().draw);
+    expect(full.kind).toBe('free');
+    expect(canDeal(full, 'hook-1')).toBe(false);
+  });
+
+  it('dealStack_excluded_holdsBoardCuesAndEarlierDealCues', () => {
+    const loose = fixtureCard('role', {
+      id: 'loose-role',
+      x: 900,
+      z: 2,
+      rings: [{ cues: [{ text: '  Pilot ' }, { text: 'Medic' }], activeIndex: 0 }],
+    });
+    const { draw, calls } = fakeDraw();
+    dealStack(onePager([hook(), loose]), 'hook-1', draw);
+    const roles = calls.filter((c) => c.deck === 'role');
+    expect(roles).toHaveLength(3);
+    expect(roles[0]!.excluded).toEqual(['medic', 'pilot']);
+    // The 1st Details Player Role sees the train Player Role's cues (dealt-1).
+    expect(roles[1]!.excluded).toEqual(
+      ['medic', 'pilot', ...[0, 1, 2, 3].map((i) => cueKey(`role 1.${i}`))].sort(),
+    );
+    // The 2nd chip of the lane sees the 1st chip's cues.
+    const firstChip = calls.indexOf(roles[1]!) + 1;
+    for (let i = 0; i < 4; i++) expect(roles[2]!.excluded).toContain(`role ${firstChip}.${i}`);
+  });
+
+  it('dealStack_hookIdNotHook_throws', () => {
+    const board = fixtureBoard([hook(), fixtureCard('role', { x: 900 })]);
+    expect(() => dealStack(board, 'role-1', fakeDraw().draw)).toThrow(/Hook Card/);
+  });
+
+  it('dealStack_doesNotMutateInput', () => {
+    const board = onePagerBoard();
+    const before = JSON.stringify(board);
+    dealStack(board, 'hook-1', fakeDraw().draw);
+    expect(JSON.stringify(board)).toBe(before);
+  });
+
+  it('dealStack_realPoolsOnePager_fullDistinctDeal', () => {
+    const pools = Object.fromEntries(
+      DECKS.map((deck) => {
+        const file = join(process.cwd(), 'public', 'pools', `${deck}.json`);
+        return [deck, parsePool(deck, JSON.parse(readFileSync(file, 'utf8')))];
+      }),
+    ) as unknown as Pools;
+    let seed = 7;
+    const random = () => {
+      seed = (seed * 16807) % 2147483647;
+      return (seed - 1) / 2147483646;
+    };
+    for (let run = 0; run < 10; run++) {
+      const { board, dealt } = dealStack(onePager([hook()]), 'hook-1', (deck, excluded) =>
+        drawFor({ type: deck }, pools, allGenresOn(), { excluded, random }),
+      );
+      expect(dealt).toHaveLength(19);
+      for (const deck of DECKS) {
+        const keys = board.cards
+          .filter((c) => c.type === deck)
+          .flatMap((c) => c.rings[0]!.cues.map((cue) => cueKey(cue.text)));
+        expect(new Set(keys).size).toBe(keys.length);
+      }
+      const [sentence] = hookSentences(board);
+      expect(sentence).toBeTruthy();
+      expect(sentence).not.toMatch(/ {2}/);
+      for (const card of train(board)) expect(sentence).toContain(cardText(board, card));
+    }
   });
 });

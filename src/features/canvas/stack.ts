@@ -122,6 +122,26 @@ export function tuckCard(board: Board, id: string, targetId: string): Board {
   return layoutStack(next, rootOf(next, targetId).id);
 }
 
+/**
+ * The deal insert rule (docs/feature-deal-a-stack.html): a new card, not yet on the board,
+ * tucks under the parent, and every non-Modifier child of the parent moves under the new
+ * card in its old child order (fresh ascending z values above the new card's). Modifier
+ * children stay with the parent. The parent's stack is laid out once.
+ */
+export function insertUnder(board: Board, card: Card, parentId: string): Board {
+  cardAt(board, parentId);
+  const moved = childrenOf(board, parentId).filter((child) => child.type !== 'modifier');
+  const z = nextZ(board);
+  const rank = new Map(moved.map((child, i) => [child.id, i]));
+  const cards = board.cards.map((c) => {
+    const i = rank.get(c.id);
+    return i === undefined ? c : { ...c, tuckedUnder: card.id, z: z + 1 + i };
+  });
+  cards.push({ ...card, tuckedUnder: parentId, z, inConcept: false, onTopOf: null });
+  const next = { ...board, cards };
+  return layoutStack(next, rootOf(next, parentId).id);
+}
+
 /** Takes a tucked card (with its own stack) out of its stack, as a new root at x, y. */
 export function untuckCard(board: Board, id: string, x: number, y: number): Board {
   const oldRoot = rootOf(board, id).id;

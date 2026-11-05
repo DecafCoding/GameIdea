@@ -1,11 +1,14 @@
 /**
- * Tests for the stack logic: order, layout, tuck, untuck, move, removal and next z.
+ * Tests for the stack logic: order, layout, tuck, untuck, move, removal, next z and the
+ * deal insert helper.
  */
 import { describe, expect, it } from 'vitest';
 import type { Board, Card } from '@/shared/model';
 import { fixtureBoard, fixtureCard, fixtureStack } from '@/test/fixtures/boards';
+import { HOOK_INSET } from './placement';
 import {
   childrenOf,
+  insertUnder,
   layoutStack,
   moveCard,
   nextZ,
@@ -147,5 +150,69 @@ describe('layoutStack with a Hook Card', () => {
       [116, 104],
       [116, 160],
     ]);
+  });
+});
+
+describe('insertUnder', () => {
+  const ids = (board: Board, root: string) => stackOrder(board, root).map((c) => c.id);
+
+  it('insertUnder_chain_newCardReadsBetweenParentAndChild', () => {
+    const board = fixtureBoard([
+      fixtureCard('role', { x: 100, y: 100, z: 1 }),
+      fixtureCard('goal', { x: 100, y: 156, z: 2, tuckedUnder: 'role-1' }),
+    ]);
+    const next = insertUnder(board, fixtureCard('mechanic', { z: 0 }), 'role-1');
+    expect(ids(next, 'role-1')).toEqual(['role-1', 'mechanic-1', 'goal-1']);
+    expect(ys(next, ['role-1', 'mechanic-1', 'goal-1'])).toEqual([100, 156, 212]);
+    expect(find(next, 'mechanic-1').x).toBe(100);
+  });
+
+  it('insertUnder_branchedParent_movesEveryNonModifierChildInOrder', () => {
+    const board = fixtureBoard([
+      fixtureCard('role', { id: 'p', z: 1 }),
+      fixtureCard('goal', { id: 'a', z: 2, tuckedUnder: 'p' }),
+      fixtureCard('conflict', { id: 'b', z: 3, tuckedUnder: 'p' }),
+    ]);
+    const next = insertUnder(board, fixtureCard('mechanic', { id: 'n' }), 'p');
+    expect(childrenOf(next, 'p').map((c) => c.id)).toEqual(['n']);
+    expect(childrenOf(next, 'n').map((c) => c.id)).toEqual(['a', 'b']);
+    expect(ids(next, 'p')).toEqual(['p', 'n', 'a', 'b']);
+  });
+
+  it('insertUnder_modifierChild_staysWithParent', () => {
+    const board = fixtureBoard([
+      fixtureCard('role', { id: 'p', z: 1 }),
+      fixtureCard('modifier', { id: 'm', z: 2, tuckedUnder: 'p' }),
+      fixtureCard('goal', { id: 'g', z: 3, tuckedUnder: 'p' }),
+    ]);
+    const next = insertUnder(board, fixtureCard('mechanic', { id: 'n' }), 'p');
+    expect(find(next, 'm').tuckedUnder).toBe('p');
+    expect(find(next, 'g').tuckedUnder).toBe('n');
+    expect(ids(next, 'p')).toEqual(['p', 'm', 'n', 'g']);
+  });
+
+  it('insertUnder_underHook_takesHooksFirstChildren', () => {
+    const board = fixtureBoard([
+      fixtureCard('hook', { x: 96, y: 96, z: 1 }),
+      fixtureCard('goal', { z: 2, tuckedUnder: 'hook-1' }),
+    ]);
+    const next = insertUnder(board, fixtureCard('role'), 'hook-1');
+    expect(ids(next, 'hook-1')).toEqual(['hook-1', 'role-1', 'goal-1']);
+    expect(find(next, 'role-1')).toMatchObject({ x: 96 + HOOK_INSET, y: 152 });
+    expect(find(next, 'goal-1').y).toBe(208);
+  });
+
+  it('insertUnder_leaf_appendsBelow', () => {
+    const board = fixtureBoard(fixtureStack(0, 0));
+    const next = insertUnder(board, fixtureCard('twist'), 'conflict-1');
+    expect(ids(next, 'role-1')).toEqual(['role-1', 'goal-1', 'conflict-1', 'twist-1']);
+    expect(find(next, 'twist-1').y).toBe(168);
+  });
+
+  it('insertUnder_doesNotMutateInput', () => {
+    const board = fixtureBoard(fixtureStack(0, 0));
+    const before = JSON.stringify(board);
+    insertUnder(board, fixtureCard('mechanic'), 'role-1');
+    expect(JSON.stringify(board)).toBe(before);
   });
 });
