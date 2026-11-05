@@ -1,10 +1,11 @@
 /**
  * HookMenu: the Hook Card's hover menu (design 9.5, on the card strip menu spec of 9.4):
- * on a Free Form board 4 icon buttons, Copy Hook, Redraw All, Duplicate (the whole stack)
- * and Discard; on a One-Pager board only Copy Hook and Redraw All, because that board keeps
- * exactly 1 Hook Card (Duplicate and Discard show only when their handler is given). Copy
- * Hook and Redraw All are off until a card is tucked under the Hook Card; Redraw All is
- * also off while the pools are not ready. After a good copy, Copy Hook shows a check and
+ * on a Free Form board 5 icon buttons, Copy Hook, Deal Stack, Redraw All, Duplicate (the
+ * whole stack) and Discard; on a One-Pager board only Copy Hook, Deal Stack and Redraw All,
+ * because that board keeps exactly 1 Hook Card (Duplicate and Discard show only when their
+ * handler is given). Copy Hook and Redraw All are off until a card is tucked under the Hook
+ * Card; Deal Stack is on while any deal slot is missing (so on an empty Hook Card too).
+ * Deal Stack and Redraw All are also off while the pools are not ready. After a good copy, Copy Hook shows a check and
  * reads "Copied" for 2 seconds; a blocked copy opens the fallback dialog. The sentence on
  * the card is also selectable text.
  * The canvas shows the menu while the pointer is over the Hook Card or the menu. The menu
@@ -27,6 +28,9 @@ interface HookMenuProps {
   poolsReady: boolean;
   /** The pointer is over the Hook Card or the menu. */
   visible: boolean;
+  /** A deal would add at least 1 card (canDeal). */
+  canDeal: boolean;
+  onDealStack: () => void;
   onRedrawAll: () => void;
   /** Omitted on a One-Pager board: no Duplicate button. */
   onDuplicate?: () => void;
@@ -43,6 +47,8 @@ export function HookMenu({
   hasStack,
   poolsReady,
   visible,
+  canDeal,
+  onDealStack,
   onRedrawAll,
   onDuplicate,
   onDiscard,
@@ -107,13 +113,24 @@ export function HookMenu({
         <button
           type="button"
           className={styles.button}
+          aria-label="Deal Stack"
+          title="Deal Stack"
+          disabled={!canDeal || !poolsReady}
+          tabIndex={tabIndex}
+          onClick={onDealStack}
+        >
+          <Icon name="playing-cards-fan" size={16} />
+        </button>
+        <button
+          type="button"
+          className={styles.button}
           aria-label="Redraw All"
           title="Redraw All"
           disabled={!hasStack || !poolsReady}
           tabIndex={tabIndex}
           onClick={onRedrawAll}
         >
-          <Icon name="playing-cards-fan" size={16} />
+          <Icon name="square-arrow-down" size={16} />
         </button>
         {onDuplicate && (
           <button

@@ -10,6 +10,7 @@
  * Chips: a double-click pops the card out, and a press and drag takes it out (the canvas
  * tracks the drag). The resize handle on the right edge changes the width live and saves
  * once, on release. ConceptPanel is the plain body, testable without React Flow.
+ * Chips Deal Stack just dealt fade in after their reveal delay (ConceptUi.reveal).
  */
 import { useReactFlow, type NodeProps } from '@xyflow/react';
 import {
@@ -63,6 +64,8 @@ export interface ConceptUi {
   popOut: (cardId: string) => void;
   startChipDrag: (cardId: string, event: PointerEvent<HTMLElement>) => void;
   resize: (width: number) => void;
+  /** Chips Deal Stack just dealt: id → fade-in delay in ms. */
+  reveal: ReadonlyMap<string, number>;
 }
 
 export const ConceptUiContext = createContext<ConceptUi | null>(null);
@@ -101,6 +104,8 @@ interface ConceptPanelProps {
   draggingChipId?: string | null;
   onChipDoubleClick?: (cardId: string) => void;
   onChipPointerDown?: (cardId: string, event: PointerEvent<HTMLElement>) => void;
+  /** Chips Deal Stack just dealt: id → fade-in delay in ms. */
+  reveal?: ReadonlyMap<string, number>;
   /** The resize handle, drawn by the node. */
   handle?: ReactNode;
 }
@@ -119,6 +124,7 @@ export function ConceptPanel({
   draggingChipId = null,
   onChipDoubleClick,
   onChipPointerDown,
+  reveal,
   handle,
 }: ConceptPanelProps) {
   const count = lanes.reduce((sum, lane) => sum + lane.chips.length, 0);
@@ -147,10 +153,17 @@ export function ConceptPanel({
           <ul className={styles.chips} aria-label={DECK_LANE_NAME[lane.deck]}>
             {lane.chips.map((chip) => {
               const targeted = hint?.chipId === chip.id;
+              const delay = reveal?.get(chip.id);
               return (
                 <li
                   key={chip.id}
-                  className={`${styles.chipItem} nodrag nopan`}
+                  className={`${styles.chipItem} ${delay === undefined ? '' : styles.dealt} nodrag nopan`}
+                  data-dealt={delay === undefined ? undefined : ''}
+                  style={
+                    delay === undefined
+                      ? undefined
+                      : ({ '--deal-delay': `${delay}ms` } as CSSProperties)
+                  }
                   data-testid="concept-chip"
                   data-card-id={chip.id}
                   onDoubleClick={() => onChipDoubleClick?.(chip.id)}
@@ -271,6 +284,7 @@ function ConceptNodeView({ data }: NodeProps<ConceptFlowNode>) {
       draggingChipId={ui?.draggingChipId ?? null}
       onChipDoubleClick={ui?.popOut}
       onChipPointerDown={ui?.startChipDrag}
+      reveal={ui?.reveal}
       handle={handle}
     />
   );

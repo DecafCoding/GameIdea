@@ -83,6 +83,7 @@ This PRD cites those documents. Where it and they differ, they win.</p>
   <li data-checked="true">Board list: make, open, rename, delete; New Board asks for a name and, from Phase 7, the board kind (One-Pager or Free Form)</li>
   <li data-checked="true">Undo and redo for the open session</li>
   <li data-checked="true">One-Pager board: a second board kind beside Free Form, with 1 Hook Card, a short Hook Train and a Concept panel of chips in deck lanes — <a href="feature-one-pager-board.html">feature-one-pager-board.html</a></li>
+  <li data-checked="true">Deal Stack on the Hook Card menu: deals the 5 base decks in core order and, on a One-Pager board, 2 Details chips each of 7 decks; fills only missing slots; no repeated cues; disabled when full. From Phase 8 — <a href="feature-deal-a-stack.html">feature-deal-a-stack.html</a></li>
 </ul>
 
 <h3>Technical</h3>
@@ -163,6 +164,12 @@ This PRD cites those documents. Where it and they differ, they win.</p>
 
   <li><strong>As a developer with a bigger idea, I want a One-Pager board, so that extra cards sit in a compact Concept panel instead of a long train.</strong><br>
   Example: the user makes a One-Pager board, builds a 5-card Hook Train, then drops 3 Resources and 2 Settings on the Concept panel. They show as chips in a Resources lane and a Settings lane. A double-click on "salt" moves it back to the canvas.</li>
+
+  <li><strong>As a game jam entrant, I want to deal a full stack with one click, so that I start from a complete hook and spend my time locking and redrawing.</strong><br>
+  Example: the user draws a Hook Card and clicks Deal Stack. Player Role, Mechanic, Resource, Goal and Conflict appear one at a time in about 1 second, and the sentence reads as a full hook. Deal Stack is now disabled. One Undo removes all 5 cards.</li>
+
+  <li><strong>As a One-Pager user, I want a deal to fill the Details panel too, so that I see several options for each part of the game at once.</strong><br>
+  Example: the train already has a Player Role and a Goal, and the Resources lane has 1 chip. Deal Stack adds Mechanic and Resource between them and Conflict after Goal, 1 more Resource chip and 2 chips in each other Details lane. No chip repeats a cue already on the board.</li>
 </ol>
 
 <h3>Technical user stories</h3>
@@ -269,7 +276,7 @@ tests/e2e/          Playwright browser tests</code></pre>
 <h3>6.4 Hook Card and sentence</h3>
 <ul>
   <li>The Hook Card is always the head of its stack; it cannot tuck under a card.</li>
-  <li>Hover menu: Copy (plain text; "Copied" for 2 s; dialog fallback), Redraw All (one undo step; skips locked cards; new cards outlined for 1 s), Discard.</li>
+  <li>Hover menu: Copy (plain text; "Copied" for 2 s; dialog fallback), Deal Stack (from Phase 8; fills missing slots; one undo step; disabled when full — <a href="feature-deal-a-stack.html">feature-deal-a-stack.html</a>), Redraw All (one undo step; skips locked cards; new cards outlined for 1 s), Discard.</li>
   <li>The sentence reads the stack top to bottom; siblings under one card read in canvas order, top first. Each card adds its badge word then its active text. On a combined card: on-top adjective, merged adjective, noun.</li>
   <li>Missing decks are left out — never a blank slot. If the top card is not a Player Role, the sentence starts with that card's badge word. Mood, Twist and Progression start a new sentence.</li>
 </ul>
@@ -411,7 +418,7 @@ tests/e2e/          Playwright browser tests</code></pre>
   <li data-checked="false">The Hook Card shows the correct sentence for a full stack and for every failure case in State and failure; Copy puts it on the clipboard as plain text</li>
   <li data-checked="false">A genre change affects only the next draw</li>
   <li data-checked="false">Redraw All replaces every unlocked card and leaves locked cards</li>
-  <li data-checked="false">All 8 Required scan rows work in Chrome, Edge, Firefox and Safari (7 In in full, the Partial row at the scan's stated scope)</li>
+  <li data-checked="false">All 8 Required scan rows work in Chrome, Edge, Firefox and Safari (7 In in full; from Phase 8 the concept-slots row in full through Deal Stack)</li>
   <li data-checked="false">Every carried-over feature in Scope works</li>
   <li data-checked="false">An exported board file imports with no data lost; the text file holds each hook</li>
   <li data-checked="false">The Modifier and Settings feature done criteria pass</li>
@@ -529,6 +536,18 @@ tests/e2e/          Playwright browser tests</code></pre>
 </ul>
 <p><strong>Validation:</strong> the done criteria in feature-one-pager-board.html pass; every existing test passes on Free Form boards; speed, size and privacy targets pass.</p>
 
+<h3 class="phase" data-phase="8">Phase 8: Deal A Stack</h3>
+<p class="meta">M8 · Phase 8 starts after Phase 7. See <a href="feature-deal-a-stack.html">feature-deal-a-stack.html</a>; menu item, icons and reveal timing in <a href="design-system.html">design-system.html</a> 9.4, 9.5 and 9.9.</p>
+<p><strong>Goal:</strong> one click on the Hook Card menu deals every missing base slot, and on a One-Pager board every missing Details slot, with no data model change.</p>
+<ul class="checklist">
+  <li data-checked="true">Excluded cues in <code>drawCard</code> and <code>drawFor</code>, with a fallback when the pool is short; tests first</li>
+  <li data-checked="true"><code>dealStack</code> and <code>canDeal</code> as pure functions in <code>features/canvas/</code>: base 5 in core-order position, 2 Details chips each of Player Role, Resource, Setting, Mood, Twist, Progression and Constraint on One-Pager boards; tests first</li>
+  <li data-checked="true">Deal Stack item on the Hook Card menu (<code>playing-cards-fan</code>), enabled on an empty Hook Card, disabled when full or while pools are not loaded; 1 undo step and 1 save</li>
+  <li data-checked="true">One-at-a-time reveal over about 1 s with <code>--t-fade</code>, instant with reduced motion</li>
+  <li data-checked="true"><code>square-arrow-down</code> icon vendored from Lucide, on Redraw and Redraw All</li>
+</ul>
+<p><strong>Validation:</strong> the done criteria in feature-deal-a-stack.html pass; every existing test passes on both board kinds; speed, size and privacy targets pass.</p>
+
 <!-- ============================================================ -->
 <h2 id="future">12. Future Considerations</h2>
 <ul>
@@ -563,7 +582,7 @@ tests/e2e/          Playwright browser tests</code></pre>
   <li><a href="mvp-plan.html">mvp-plan.html</a> — scope, data model, interfaces, milestones, done criteria</li>
   <li><a href="architecture.html">architecture.html</a> — every technical decision</li>
   <li><a href="design-system.html">design-system.html</a> — visual authority; <code>docs/design-handoff/</code> — mockups and screenshots (record only)</li>
-  <li><a href="feature-modifier-decks.html">feature-modifier-decks.html</a>, <a href="feature-settings-and-theme.html">feature-settings-and-theme.html</a></li>
+  <li><a href="feature-modifier-decks.html">feature-modifier-decks.html</a>, <a href="feature-settings-and-theme.html">feature-settings-and-theme.html</a>, <a href="feature-one-pager-board.html">feature-one-pager-board.html</a>, <a href="feature-deal-a-stack.html">feature-deal-a-stack.html</a></li>
   <li><a href="competitive-scan.html">competitive-scan.html</a> — prior art</li>
   <li><code>concept.md</code> — the original concept</li>
   <li><code>docs/libraries/</code> — <code>decks.json</code>, <code>genres.json</code> and the Markdown libraries (record after the split)</li>

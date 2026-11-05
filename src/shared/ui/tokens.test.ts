@@ -132,6 +132,7 @@ const ICONS: IconName[] = [
   'lock-open',
   'split',
   'grip',
+  'square-arrow-down',
 ];
 
 describe('design tokens', () => {

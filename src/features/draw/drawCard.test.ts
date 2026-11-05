@@ -1,6 +1,7 @@
 /**
  * Tests for drawCard and drawFor: cue counts, distinct cues, text-only copies, the genre
- * filter on tagged decks, the target filter on the Modifier decks and no mutation.
+ * filter on tagged decks, the target filter on the Modifier decks, the excluded cues with
+ * their fallback, and no mutation.
  */
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -17,7 +18,7 @@ import {
   type PoolCue,
   type Pools,
 } from '@/shared/model';
-import { drawCard, drawFor } from './drawCard';
+import { cueKey, drawCard, drawFor } from './drawCard';
 
 /** mulberry32: a small seeded PRNG so draws repeat across runs. */
 function mulberry32(seed: number): () => number {
@@ -250,6 +251,71 @@ describe('drawCard', () => {
   });
 });
 
+describe('drawCard excluded', () => {
+  const ten = [...six, 'scout', 'smith', 'bard', 'thief'];
+
+  it('drawCard_excluded_neverDrawsExcludedCue', () => {
+    const excluded = new Set(['navigator', 'diplomat', 'gardener', 'captain']);
+    const random = mulberry32(11);
+    for (let i = 0; i < 50; i++) {
+      const drawn = texts(drawCard('role', pool('role', ten), ALL, { random, excluded }));
+      expect(drawn).toHaveLength(4);
+      for (const text of drawn) expect(excluded.has(text)).toBe(false);
+    }
+  });
+
+  it('drawCard_excludedKey_matchesTrimmedLowercase', () => {
+    expect(cueKey('  Pilot ')).toBe('pilot');
+    const spaced = pool('role', ['  Pilot ', 'Medic', 'scout', 'smith', 'bard', 'thief']);
+    const excluded = new Set([cueKey('pilot'), cueKey(' MEDIC')]);
+    const random = mulberry32(3);
+    for (let i = 0; i < 30; i++) {
+      const drawn = texts(drawCard('role', spaced, ALL, { random, excluded })).map(cueKey);
+      expect(drawn).not.toContain('pilot');
+      expect(drawn).not.toContain('medic');
+    }
+  });
+
+  it('drawCard_excludedLeavesTooFew_fallsBackToFilteredPool', () => {
+    const excluded = new Set(['navigator', 'diplomat', 'gardener', 'captain']);
+    const random = mulberry32(8);
+    for (let i = 0; i < 20; i++) {
+      const drawn = texts(drawCard('role', pool('role', six), ALL, { random, excluded }));
+      expect(new Set(drawn).size).toBe(4);
+      for (const text of drawn) expect(six).toContain(text);
+    }
+  });
+
+  it('drawCard_excludedWithGenreFilter_fallbackKeepsGenreFilter', () => {
+    const mixed: Pool = {
+      type: 'mechanic',
+      cues: [
+        ...pool('mechanic', six, ['horror']).cues,
+        ...pool('mechanic', ['dig', 'climb', 'swim', 'fly'], ['puzzle']).cues.map((c, i) => ({
+          ...c,
+          id: `p-${i}`,
+        })),
+      ],
+    };
+    const excluded = new Set(['navigator', 'diplomat', 'gardener']);
+    const random = mulberry32(21);
+    for (let i = 0; i < 20; i++) {
+      const drawn = texts(
+        drawCard('mechanic', mixed, { genres: ['horror'] }, { random, excluded }),
+      );
+      for (const text of drawn) expect(six).toContain(text);
+    }
+  });
+
+  it('drawCard_noExcluded_sameCuesAsBefore', () => {
+    const a = texts(drawCard('role', pool('role', ten), ALL, { random: mulberry32(4) }));
+    const b = texts(
+      drawCard('role', pool('role', ten), ALL, { random: mulberry32(4), excluded: new Set() }),
+    );
+    expect(b).toEqual(a);
+  });
+});
+
 describe('drawFor', () => {
   const pools = {
     modifier: {
@@ -274,5 +340,26 @@ describe('drawFor', () => {
     const like = drawCard('mechanic', pools.mechanic, ALL);
     expect(() => drawFor(like, pools, { ...allGenresOn(), mechanic: ['puzzle'] })).toThrow();
     expect(texts(drawFor(like, pools, allGenresOn()))).toHaveLength(4);
+  });
+
+  it('drawFor_excludedOption_passesThrough', () => {
+    const excluded = new Set(['navigator', 'diplomat']);
+    const random = mulberry32(6);
+    for (let i = 0; i < 20; i++) {
+      const drawn = texts(
+        drawFor({ type: 'mechanic' }, pools, allGenresOn(), { random, excluded }),
+      );
+      expect(drawn).not.toContain('navigator');
+      expect(drawn).not.toContain('diplomat');
+    }
+  });
+
+  it('drawFor_deckOnly_drawsLikeRail', () => {
+    expect(() =>
+      drawFor({ type: 'mechanic' }, pools, { ...allGenresOn(), mechanic: ['puzzle'] }),
+    ).toThrow();
+    const drawn = drawFor({ type: 'mechanic' }, pools, allGenresOn());
+    expect(drawn.type).toBe('mechanic');
+    expect(texts(drawn)).toHaveLength(4);
   });
 });

@@ -364,7 +364,7 @@
   <li><strong>Set:</strong> Lucide-style stroke icons on a 24 px grid, stroke 2.2, round caps and joins, no fill.</li>
   <li><strong>Sizes:</strong> 18 in the rail and the top bar (Undo, Redo); 16 for the Export icon, the logo tile and the badge-menu check; 24 in a card center (on a 48 circle); 20 in banners and the export menu; 15 for the full-card lock; 14 for the tucked-card lock button; 13 for the Hook Card header; 12 for the Export chevron.</li>
   <li><strong>Deck icons:</strong> see 4.4. The Hook Card icon is custom (a hook), drawn in the same stroke style.</li>
-  <li><strong>Other icons in use, by role:</strong> gear (Settings), lines (Add note), grip with 2 vertical lines (Concept resize handle, 14) <span class="tag">2026-11-04</span>, deck icons at 14 (Concept lane labels), undo, redo, download (Export), chevron down, lock, check, close (×), plus, minus, more (board menu), warning, retry, import. The mockups draw them as inline paths without names; pick the matching Lucide names when vendoring.</li>
+  <li><strong>Other icons in use, by role:</strong> gear (Settings), lines (Add note), grip with 2 vertical lines (Concept resize handle, 14) <span class="tag">2026-11-04</span>, deck icons at 14 (Concept lane labels), undo, redo, download (Export), chevron down, lock, check, close (×), plus, minus, more (board menu), warning, retry, import, <code>playing-cards-fan</code> (Deal Stack), <code>square-arrow-down</code> (Redraw, Redraw All) <span class="tag">user 2026-11-04</span>. The mockups draw them as inline paths without names; pick the matching Lucide names when vendoring.</li>
   <li><strong>Removed:</strong> sliders, with the rail Genres button <span class="tag">2026-11-04</span>.</li>
   <li><strong>Reserved:</strong> none.</li>
 </ul>
@@ -499,7 +499,7 @@
   <tr><td>Lock, full card</td><td>30 circle, 10 from the top and right, fill <code>--bg</code>, lock icon 15. The rings still turn on a locked card.</td></tr>
   <tr><td>Lock, tucked strip</td><td>A Lock / Unlock button just outside the card's right edge, centered in the visible 56 px bottom band: a 44 px target with a 14 px icon 4 from the edge, aria-label and tooltip Lock / Unlock. Unlocked it shows <code>lock-open</code> in <code>--text-muted</code>, only while the pointer is over the card or the button (or it has keyboard focus). Locked it always shows <code>lock</code> in <code>--text</code>. One click toggles; it does not select the card. The type glyph (14) stays in the card's bottom-right corner, 4 from the right and the bottom <span class="tag">user 2026-11-03</span>.</td></tr>
   <tr><td>Selected</td><td>Outline 2, offset 3, <code>--shadow-card-raised</code>. Outline color per the outline rule in 4.2.</td></tr>
-  <tr><td>Card strip menu</td><td>It shows while the pointer is over the card or the menu, and hides 1 s after the pointer leaves both; the dragged card and any card tucked under another card show none. One menu is open at a time: hovering another card or pressing outside the card and menu closes it at once <span class="tag">user 2026-11-03</span>. Its bottom sits 4 above the card's top, and a transparent 4 px bridge fills the gap so the pointer can reach it. Padding 4, radius 10, border 1, fill <code>--surface</code>, <code>--shadow-menu</code>, gap 2–4. Buttons are 44 px square icon buttons with no text, radius 7, each with an <code>aria-label</code> and a matching tooltip <span class="tag">user 2026-11-03</span>. Items: Split (<code>split</code>, combined card only), Redraw (<code>playing-cards-fan</code>), Duplicate (<code>copy</code>), Lock / Unlock (<code>lock-open</code> while unlocked, <code>lock</code> while locked, pressed with <code>--surface-raised</code> and <code>--accent-text</code> while locked), Discard (<code>trash</code>, <code>--danger-text</code>). Duplicate copies the card, with its On Top Modifier, to the free spot beside it <span class="tag">user 2026-11-03</span>.</td></tr>
+  <tr><td>Card strip menu</td><td>It shows while the pointer is over the card or the menu, and hides 1 s after the pointer leaves both; the dragged card and any card tucked under another card show none. One menu is open at a time: hovering another card or pressing outside the card and menu closes it at once <span class="tag">user 2026-11-03</span>. Its bottom sits 4 above the card's top, and a transparent 4 px bridge fills the gap so the pointer can reach it. Padding 4, radius 10, border 1, fill <code>--surface</code>, <code>--shadow-menu</code>, gap 2–4. Buttons are 44 px square icon buttons with no text, radius 7, each with an <code>aria-label</code> and a matching tooltip <span class="tag">user 2026-11-03</span>. Items: Split (<code>split</code>, combined card only), Redraw (<code>square-arrow-down</code>, <span class="tag">user 2026-11-04</span>), Duplicate (<code>copy</code>), Lock / Unlock (<code>lock-open</code> while unlocked, <code>lock</code> while locked, pressed with <code>--surface-raised</code> and <code>--accent-text</code> while locked), Discard (<code>trash</code>, <code>--danger-text</code>). Duplicate copies the card, with its On Top Modifier, to the free spot beside it <span class="tag">user 2026-11-03</span>.</td></tr>
 </table>
 
 <h3 id="s-hook">9.5 Hook Card <span class="tag">HookCard</span> <span class="tag">Decks</span></h3>
@@ -509,7 +509,7 @@
   <tr><td>Header</td><td>A 24 dot in <code>--accent</code> with the hook icon 13 in <code>--on-accent</code>. The label "Hook", Display 12/600, 0.08em, uppercase, in <code>--accent-text</code> for the current mode.</td></tr>
   <tr><td>Sentence</td><td>14, line height 1.45, <code>--hook-text</code>. Computed from the stack on each change.</td></tr>
   <tr><td>Stack</td><td>Stack cards sit 20 in from the Hook Card's left edge, and tuck below it by the standard tuck rule (9.7).</td></tr>
-  <tr><td>Hover menu <span class="tag">user 2026-11-02</span></td><td>It uses the card strip menu spec (9.4). It shows while the pointer is over the Hook Card or the menu, and hides when the pointer leaves both. Items are 44 px icon buttons with no text, each with an <code>aria-label</code> and a tooltip: Copy Hook (<code>hook</code>, <span class="tag">user 2026-11-03</span>), Redraw All (<code>playing-cards-fan</code>), Duplicate (<code>copy</code>, copies the whole stack beside it, <span class="tag">user 2026-11-03</span>), Discard (<code>trash</code>, <code>--danger-text</code>). The sentence on the card is also selectable text, copied with the pointer and Ctrl+C <span class="tag">user 2026-11-03</span>. Copy Hook and Redraw All are disabled until a card is tucked under the Hook Card.</td></tr>
+  <tr><td>Hover menu <span class="tag">user 2026-11-02</span></td><td>It uses the card strip menu spec (9.4). It shows while the pointer is over the Hook Card or the menu, and hides when the pointer leaves both. Items are 44 px icon buttons with no text, each with an <code>aria-label</code> and a tooltip: Copy Hook (<code>hook</code>, <span class="tag">user 2026-11-03</span>), Deal Stack (<code>playing-cards-fan</code>, <span class="tag">user 2026-11-04</span>), Redraw All (<code>square-arrow-down</code>, <span class="tag">user 2026-11-04</span>), Duplicate (<code>copy</code>, copies the whole stack beside it, <span class="tag">user 2026-11-03</span>), Discard (<code>trash</code>, <code>--danger-text</code>). The sentence on the card is also selectable text, copied with the pointer and Ctrl+C <span class="tag">user 2026-11-03</span>. Copy Hook and Redraw All are disabled until a card is tucked under the Hook Card. Deal Stack is enabled on an empty Hook Card. It is disabled when every deal slot is full and while the pools are not loaded (see <a href="feature-deal-a-stack.html">feature-deal-a-stack.html</a>) <span class="tag">user 2026-11-04</span>.</td></tr>
 </table>
 <p>States:</p>
 <ol type="A">
@@ -585,6 +585,13 @@
   <li>A combined card keeps its adjective ring and gets a new noun ring. Each card keeps its place, its tucks and its badge word.</li>
   <li>Each new card shows an outline 2 in <code>--new-card-outline</code>, offset −2, for 1 second.</li>
   <li>Redraw All is one undo step.</li>
+</ul>
+<p><strong>Deal Stack</strong> <span class="tag">user 2026-11-04</span>, in the Hook Card menu, fills every missing deal slot. See <a href="feature-deal-a-stack.html">feature-deal-a-stack.html</a> for the slots and the insert rule.</p>
+<ul>
+  <li>The dealt cards appear one at a time in reveal order: the train top to bottom, then the Details lanes in rail order.</li>
+  <li>Each card fades in over <code>--t-fade</code>. The gap between cards is 1000 ms divided by the dealt count, so a deal takes about 1 second. There is no flight.</li>
+  <li>Dealt cards get no new card outline.</li>
+  <li>With reduced motion, every dealt card shows at once.</li>
 </ul>
 
 <h3 id="s-genres">9.10 Genres tab <span class="tag">Genres</span></h3>
@@ -714,6 +721,7 @@
 <table>
   <tr><th>Event</th><th>Spec</th></tr>
   <tr><td>New card outline after Redraw All</td><td>Shows for 1 s, then is removed.</td></tr>
+  <tr><td>Deal Stack reveal <span class="tag">user 2026-11-04</span></td><td>One card at a time, each a <code>--t-fade</code> fade-in, spaced 1000 ms ÷ dealt count. Instant with reduced motion. See 9.9.</td></tr>
   <tr><td>"Copied" label</td><td>2 s, then back to "Copy Hook".</td></tr>
   <tr><td>Dragged card</td><td>Rotate 3°, scale 1.04, <code>--shadow-drag</code>.</td></tr>
   <tr><td>Ring turn, menu show and hide, dialog open</td><td>Not specified (see section 15).</td></tr>
@@ -811,7 +819,7 @@ GenresTab     picked: Genre[] · perDeck: { [deck]: Genre[] }
 
 <!-- ============================================================ -->
 <h2 id="phases">16. Screen → phase map</h2>
-<p>Keyed to the milestones in <code>mvp-plan.html</code> and the phases in <code>prd.html</code> (M<em>n</em> = Phase <em>n</em>). M1 to M5 were agreed on 2026-11-02, and M6 and M7 on 2026-11-04.</p>
+<p>Keyed to the milestones in <code>mvp-plan.html</code> and the phases in <code>prd.html</code> (M<em>n</em> = Phase <em>n</em>). M1 to M5 were agreed on 2026-11-02, and M6, M7 and M8 on 2026-11-04.</p>
 <table>
   <tr><th>Milestone</th><th>Design work</th><th>Sections</th></tr>
   <tr><td>M1: Copy and rename</td><td>The full token set from <code>styles.css</code> (both modes and all 3 theme colors as data, with no switch yet); bundled fonts; the Lucide icon set and the hook icon in <code>public/icons/</code>; the shell at locked sizes (top bar, rail width, 36 px rail buttons); the lint check on hard-coded chrome colors.</td><td>4, 5, 6, 7, 8.1, 8.3, 14</td></tr>
@@ -821,6 +829,7 @@ GenresTab     picked: Genre[] · perDeck: { [deck]: Genre[] }
   <tr><td>M5: Export and finish</td><td>The Settings dialog, the Mode and Theme color switches (Light mode and the Blue and Green themes go live), Snap to grid, Add note, the export menu check, the Board list in every theme.</td><td>9.2, 9.3, 9.11, 9.12, 9.13</td></tr>
   <tr><td>M6: Card Themes And Settings Tabs</td><td>Card face, tucked face, Hook Card and note tokens by mode; the deck edge and tint on every card; the Settings tabs with the Genres tab (disabled with no board open); the rail without the Genres button; the 900 wide dialog; the new Mode help text and New Board help line.</td><td>3, 4.4, 4.5, 8.2, 9.4, 9.5, 9.7, 9.8, 9.10, 9.11, 9.12, 10</td></tr>
   <tr><td>M7: One-Pager Board</td><td>The Concept panel, lanes, chips, resize handle and chip drop target; the One-Pager card count chip. The board kind choice, the empty state and the board list label once they are drawn (section 15).</td><td>9.15</td></tr>
+  <tr><td>M8: Deal A Stack</td><td>The Deal Stack item in the Hook Card menu, the <code>square-arrow-down</code> icon on Redraw and Redraw All, and the one-at-a-time reveal.</td><td>7, 9.4, 9.5, 9.9, 11</td></tr>
 </table>
 <p class="meta">The Board list (9.3) and Empty board (9.2) are carried over from TheForge in M1 and restyled to these specs by M5 at the latest.</p>
 

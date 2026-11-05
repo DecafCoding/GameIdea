@@ -1,7 +1,8 @@
 /**
  * Board actions: each user action as one pure Board → Board recipe, the unit that the
  * store's changeBoard commits (one undo step and one save in Phase 4). Never mutates its
- * input; every change returns a new board with a new cards array.
+ * input; every change returns a new board with a new cards array. Deal Stack (dealStack,
+ * canDeal) fills a Hook Card's missing deal slots in one recipe.
  */
 import {
   combine,
@@ -13,9 +14,16 @@ import {
   type RingSlot,
   type TurnDirection,
 } from '@/features/card';
-import { newId, type Board, type Card } from '@/shared/model';
-import { combineOntoChip, conceptDrop, enterConcept, type ConceptOver } from './concept';
-import { dropAction, dropTarget } from './dropZones';
+import { cueKey } from '@/features/draw';
+import { newId, type Board, type Card, type Deck } from '@/shared/model';
+import {
+  combineOntoChip,
+  conceptDrop,
+  conceptLanes,
+  enterConcept,
+  type ConceptOver,
+} from './concept';
+import { CORE_ORDER, dropAction, dropTarget } from './dropZones';
 import {
   besideSpot,
   boardRects,
@@ -29,6 +37,7 @@ import { onTopCardOf } from './reading';
 import {
   childrenOf,
   descendantsOf,
+  insertUnder,
   isRoot,
   layoutStack,
   moveCard,
@@ -247,6 +256,130 @@ export function redrawAll(
     redrawn.push(card.id);
   }
   return { board: next, redrawn };
+}
+
+/** The Details lanes a One-Pager deal fills, in rail order (docs/feature-deal-a-stack.html). */
+export const DEAL_DETAILS: readonly Deck[] = [
+  'role',
+  'resource',
+  'setting',
+  'mood',
+  'twist',
+  'progression',
+  'constraint',
+];
+/** Chips a Details lane holds after a deal. */
+export const DEAL_CHIPS_PER_LANE = 2;
+
+/** What a deal still has to fill under a Hook Card. */
+export interface DealSlots {
+  /** Core decks with no card anywhere under the Hook Card, in core order. */
+  base: Deck[];
+  /** Details decks, 1 entry per missing chip, in rail order (One-Pager boards only). */
+  details: Deck[];
+}
+
+/**
+ * The missing deal slots of a Hook Card. Base: each core deck (Player Role, Mechanic,
+ * Resource, Goal, Conflict) with no card of that deck at any depth under the Hook Card;
+ * loose cards, On Top Modifiers and Concept cards do not count. Details (One-Pager boards
+ * only): each of the 7 Details decks once per chip its lane lacks below 2. Throws when the
+ * id is not a Hook Card.
+ */
+export function dealSlots(board: Board, hookId: string): DealSlots {
+  if (cardAt(board, hookId).type !== 'hook') throw new Error('Only a Hook Card is dealt.');
+  const present = new Set<string>(descendantsOf(board, hookId).map((card) => card.type));
+  const base = CORE_ORDER.filter((type): type is Deck => type !== 'hook' && !present.has(type));
+  const details: Deck[] = [];
+  if (board.kind === 'onePager') {
+    const counts = new Map(conceptLanes(board).map((lane) => [lane.deck, lane.cards.length]));
+    for (const deck of DEAL_DETAILS) {
+      const missing = Math.max(0, DEAL_CHIPS_PER_LANE - (counts.get(deck) ?? 0));
+      for (let i = 0; i < missing; i++) details.push(deck);
+    }
+  }
+  return { base, details };
+}
+
+/** True when a deal on the Hook Card would add at least 1 card. */
+export function canDeal(board: Board, hookId: string): boolean {
+  const { base, details } = dealSlots(board, hookId);
+  return base.length + details.length > 0;
+}
+
+/**
+ * Deal Stack (design 9.9, docs/feature-deal-a-stack.html): fills only the missing slots.
+ * Each missing core deck is drawn and inserted, in core order, under the last card under
+ * the Hook Card (reading order) whose deck comes earlier in core order, else under the Hook
+ * Card; that card's non-Modifier children move under the new card (insertUnder). On a
+ * One-Pager board each missing Details chip is drawn and entered at the end of its lane.
+ * Each draw gets the cue keys of every card of its deck on the board (rings[0]) plus the
+ * cues dealt before it. One recipe, so 1 undo step and 1 save; with nothing to fill it
+ * returns the same board. The hook sentence reads the train only, so Concept cards never
+ * reach it. dealt lists the new ids in reveal order: train top to bottom, then the lanes.
+ */
+export function dealStack(
+  board: Board,
+  hookId: string,
+  draw: (deck: Deck, excluded: ReadonlySet<string>) => Card,
+): { board: Board; dealt: string[] } {
+  const { base, details } = dealSlots(board, hookId);
+  if (base.length + details.length === 0) return { board, dealt: [] };
+
+  const excluded = new Map<Deck, Set<string>>();
+  const keysOf = (deck: Deck): Set<string> => {
+    let keys = excluded.get(deck);
+    if (!keys) {
+      keys = new Set();
+      for (const card of board.cards) {
+        if (card.type !== deck) continue;
+        for (const cue of card.rings[0]?.cues ?? []) keys.add(cueKey(cue.text));
+      }
+      excluded.set(deck, keys);
+    }
+    return keys;
+  };
+  const drawOne = (deck: Deck): Card => {
+    const keys = keysOf(deck);
+    const drawn = draw(deck, new Set(keys));
+    for (const cue of drawn.rings[0]?.cues ?? []) keys.add(cueKey(cue.text));
+    return { ...drawn, locked: false };
+  };
+
+  let next = board;
+  const dealtBase = new Set<string>();
+  for (const deck of base) {
+    const drawn = drawOne(deck);
+    const rank = CORE_ORDER.indexOf(deck);
+    const before = descendantsOf(next, hookId).filter((card) => {
+      const i = CORE_ORDER.indexOf(card.type);
+      return i >= 0 && i < rank;
+    });
+    const parentId = before.length > 0 ? before[before.length - 1]!.id : hookId;
+    next = insertUnder(next, drawn, parentId);
+    dealtBase.add(drawn.id);
+  }
+
+  const dealtDetails = new Set<string>();
+  for (const deck of details) {
+    const drawn = drawOne(deck);
+    next = {
+      ...next,
+      cards: [...next.cards, { ...drawn, tuckedUnder: null, onTopOf: null, z: nextZ(next) }],
+    };
+    next = enterConcept(next, drawn.id);
+    dealtDetails.add(drawn.id);
+  }
+
+  const dealt = [
+    ...descendantsOf(next, hookId)
+      .filter((card) => dealtBase.has(card.id))
+      .map((card) => card.id),
+    ...conceptLanes(next).flatMap((lane) =>
+      lane.cards.filter((card) => dealtDetails.has(card.id)).map((card) => card.id),
+    ),
+  ];
+  return { board: next, dealt };
 }
 
 /** Lock or unlock: flips the card's lock and keeps everything else. One undo step. */

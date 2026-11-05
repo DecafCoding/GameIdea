@@ -5,7 +5,10 @@
  */
 export { BoardCanvas } from './BoardCanvas';
 export {
+  canDeal,
   combineOnto,
+  dealSlots,
+  dealStack,
   discardCard,
   dropCard,
   lockCard,

@@ -88,3 +88,24 @@
 .lifted .tuckLock[aria-pressed='false'] {
   opacity: 0;
 }
+
+/* A dealt card (design 9.9, 11): fades in over --t-fade after its turn in the deal. */
+.dealt {
+  animation: dealIn var(--t-fade) linear var(--deal-delay, 0ms) both;
+}
+
+@keyframes dealIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dealt {
+    animation: none;
+  }
+}

@@ -110,14 +110,17 @@ async function tintLayer(locator: Locator) {
   });
 }
 
-/** Checks the layer is the deck color at 14% with a 1 px inset edge in the deck color. */
-async function expectDeckTint(locator: Locator, deck: Rgb) {
+/** The --card-tint alpha by mode (design 4.5): 14% dark, 7% light. */
+const TINT: Record<Mode, number> = { dark: 0.14, light: 0.07 };
+
+/** Checks the layer is the deck color at the mode's tint with a 1 px inset deck-color edge. */
+async function expectDeckTint(locator: Locator, deck: Rgb, mode: Mode = 'dark') {
   const layer = await tintLayer(locator);
   const [r, g, b, a] = layer.rgba;
   [r, g, b].forEach((value, i) =>
     expect(Math.abs(value! - deck[i]!), layer.raw).toBeLessThanOrEqual(2),
   );
-  expect(Math.abs(a! - 0.14), layer.raw).toBeLessThanOrEqual(0.01);
+  expect(Math.abs(a! - TINT[mode]), layer.raw).toBeLessThanOrEqual(0.01);
   expect(layer.boxShadow).toContain('inset');
   expect(layer.boxShadow.replace(/\s/g, '')).toContain(`rgb(${deck.join(',')})`);
 }
@@ -181,7 +184,7 @@ for (const mode of MODES) {
       test(`theme_${mode}_${accent}_everyCardHasDeckTintAndHookNone`, async ({ page }) => {
         await openBoard(page, themedBoard());
         for (const [id, deck] of Object.entries(DECK_RGB)) {
-          await expectDeckTint(cardById(page, id), deck);
+          await expectDeckTint(cardById(page, id), deck, mode);
         }
         const hook = await tintLayer(page.getByRole('article', { name: 'Hook Card' }));
         expect(hook.content === 'none' || hook.rgba[3] === 0, hook.raw).toBe(true);
