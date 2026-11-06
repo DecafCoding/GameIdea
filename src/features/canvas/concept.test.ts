@@ -29,7 +29,6 @@ import {
   onePagerCardCount,
   pinConcept,
   popOutOfConcept,
-  resizeConcept,
   titleCaseWords,
 } from './concept';
 import { CARD_SIZE } from './placement';
@@ -350,18 +349,6 @@ describe('Concept actions', () => {
       kind: 'onePager',
     };
     expect(chipResultText(board, 'stolen', 'salt')).toBe('Stolen Salt');
-  });
-
-  it('resizeConcept_clamps232And640', () => {
-    expect(resizeConcept(onePagerBoard(), 100).conceptWidth).toBe(232);
-    expect(resizeConcept(onePagerBoard(), 900).conceptWidth).toBe(640);
-    expect(resizeConcept(onePagerBoard(), 400.4).conceptWidth).toBe(400);
-  });
-
-  it('resizeConcept_sameWidth_sameBoard', () => {
-    const board = onePagerBoard();
-    expect(resizeConcept(board, 232)).toBe(board);
-    expect(resizeConcept(board, 200)).toBe(board);
   });
 
   it('conceptDrop_eachDeck_enter', () => {

@@ -1,7 +1,8 @@
 /*
- * The Concept panel (design 9.15): padding 16, radius 12, gap 12, fill --surface, border 1
- * --border, the raised card shadow (0 8px 22px at 40% black). The height grows with the
- * content; the width comes from the board (232 to 640).
+ * The Concept panel (design 9.15): padding 16, radius 12, gap 12, fill --surface, border 2
+ * --accent as the Hook Card (user 2026-11-05), the raised card shadow (0 8px 22px at 40% black). The height grows with the
+ * content; the width comes from the board (232 to 640). No cursor of its own, so React
+ * Flow's grab cursor shows, as on the Hook Card.
  */
 .panel {
   position: relative;
@@ -10,12 +11,11 @@
   gap: 12px;
   box-sizing: border-box;
   padding: 16px;
-  border: 1px solid var(--border);
+  border: 2px solid var(--accent);
   border-radius: var(--radius-panel);
   background: var(--surface);
   box-shadow: var(--shadow-card-raised);
   color: var(--text);
-  cursor: default;
 }
 
 .help {
@@ -106,38 +106,6 @@
   font-size: 12px;
   font-weight: 600;
   pointer-events: none;
-}
-
-/*
- * Resize handle: 12 × 44, radius 6, border 1 --border-strong, fill --surface, grip 10
- * --text-muted, on the right edge, centered on the panel height, 4 outside the edge, so it
- * fits the 28 gap to the Core Loop card (user 2026-11-05, was 24 wide and 12 outside).
- * A clear layer widens the hit area to 24.
- */
-.handle {
-  position: absolute;
-  top: 50%;
-  right: -16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  width: 12px;
-  height: 44px;
-  padding: 0;
-  border: 1px solid var(--border-strong);
-  border-radius: 6px;
-  background: var(--surface);
-  color: var(--text-muted);
-  cursor: ew-resize;
-  transform: translateY(-50%);
-  touch-action: none;
-}
-
-.handle::before {
-  content: '';
-  position: absolute;
-  inset: 0 -6px;
 }
 
 /* A dealt card (design 9.9, 11): fades in over --t-fade after its turn in the deal. */

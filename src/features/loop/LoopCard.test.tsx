@@ -1,5 +1,5 @@
 /**
- * Tests for the Core Loop card face: header, colored steps, help text, the edit field's
+ * Tests for the Core Loop card face: header, no template, the placeholder help text, the edit field's
  * draft and its single commit on blur.
  */
 import { fireEvent, render, screen } from '@testing-library/react';
@@ -16,9 +16,7 @@ const LIVE = buildLoopText({
 
 function renderCard(props: Partial<Parameters<typeof LoopCard>[0]> = {}) {
   const onCommit = vi.fn();
-  const view = render(
-    <LoopCard parts={LIVE.parts} liveText={LIVE.text} onCommit={onCommit} {...props} />,
-  );
+  const view = render(<LoopCard liveText={LIVE.text} onCommit={onCommit} {...props} />);
   const field = () => screen.getByRole<HTMLTextAreaElement>('textbox', { name: 'Core Loop Text' });
   return { ...view, onCommit, field };
 }
@@ -31,26 +29,17 @@ describe('LoopCard', () => {
     expect(screen.getByRole('article', { name: 'Core Loop' })).toBeTruthy();
   });
 
-  it('loopCard_parts_eachStepInLaneColor', () => {
-    renderCard();
-    const template = screen.getByTestId('loop-template');
-    const steps = [...template.querySelectorAll<HTMLElement>('[data-loop-step]')];
-    expect(steps.map((s) => s.dataset.loopStep)).toEqual([
-      'mechanic',
-      'resource',
-      'progression',
-      'goal',
-    ]);
-    for (const step of steps) {
-      expect(step.style.color).toBe(`var(--rail-${step.dataset.loopStep})`);
-      expect(step.textContent).not.toMatch(/→|^earn |^to /);
-    }
-    expect(template.textContent).toBe(LIVE.text);
+  it('loopCard_noTemplate_onlyHeaderAndField', () => {
+    const { container } = renderCard();
+    expect(screen.queryByTestId('loop-template')).toBeNull();
+    expect(container.querySelector('hr')).toBeNull();
+    expect(container.querySelector('[data-loop-step]')).toBeNull();
   });
 
-  it('loopCard_noParts_showsHelpText', () => {
-    renderCard({ parts: [], liveText: '' });
-    expect(screen.getByTestId('loop-template').textContent).toBe(LOOP_EMPTY_TEXT);
+  it('loopCard_noText_helpTextIsPlaceholder', () => {
+    const { field } = renderCard({ liveText: '' });
+    expect(field().value).toBe('');
+    expect(field().placeholder).toBe(LOOP_EMPTY_TEXT);
   });
 
   it('loopCard_field_showsLiveTextWithoutLoopText', () => {
@@ -94,7 +83,7 @@ describe('LoopCard', () => {
   it('loopCard_liveTextChange_updatesUnfocusedField', () => {
     const { field, rerender, onCommit } = renderCard();
     const next = buildLoopText({ mechanic: 'craft', goal: 'escape' });
-    rerender(<LoopCard parts={next.parts} liveText={next.text} onCommit={onCommit} />);
+    rerender(<LoopCard liveText={next.text} onCommit={onCommit} />);
     expect(field().value).toBe('craft → to escape');
   });
 
@@ -103,9 +92,8 @@ describe('LoopCard', () => {
     fireEvent.focus(field());
     fireEvent.change(field(), { target: { value: 'my draft' } });
     const next = buildLoopText({ mechanic: 'craft' });
-    rerender(<LoopCard parts={next.parts} liveText={next.text} onCommit={onCommit} />);
+    rerender(<LoopCard liveText={next.text} onCommit={onCommit} />);
     expect(field().value).toBe('my draft');
-    expect(screen.getByTestId('loop-template').textContent).toBe('craft');
   });
 
   it('loopCard_field_ariaLabelCoreLoopText', () => {

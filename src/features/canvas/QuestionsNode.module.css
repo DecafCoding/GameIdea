@@ -1,0 +1,5 @@
+/* The Questions node box: the panel's radius, so the highlight outline follows its corners. */
+.node {
+  position: relative;
+  border-radius: var(--radius-panel);
+}

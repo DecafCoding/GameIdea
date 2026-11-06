@@ -33,6 +33,7 @@ import {
   BOARD_KINDS,
   CARD_TYPES,
   CONCEPT_WIDTH,
+  PANEL_WIDTH,
   FORMAT_VERSION,
   GENRES,
   MOD_DECKS,
@@ -88,6 +89,7 @@ const cardSchema = z
       .string()
       .refine((text) => text.trim() !== '', 'The Core Loop text is blank.')
       .optional(),
+    width: z.number().optional(),
   })
   .superRefine((card, ctx) => {
     const issue = (message: string) => ctx.addIssue({ code: 'custom', message });
@@ -114,6 +116,12 @@ const cardSchema = z
       if (card.connector !== undefined) issue('A Core Loop card has no badge word.');
     } else if (card.loopText !== undefined) {
       issue(`A ${card.type} card has Core Loop text.`);
+    }
+    if (card.width !== undefined) {
+      if (card.type !== 'loop') issue(`A ${card.type} card has a width.`);
+      else if (card.width < PANEL_WIDTH.min || card.width > PANEL_WIDTH.max) {
+        issue('The Core Loop width is out of range.');
+      }
     }
     if (card.type === 'modifier' && !card.modDeck) issue('A Modifier card needs its deck.');
     if (card.type !== 'modifier' && card.modDeck) {
@@ -178,6 +186,7 @@ export const boardSchema: z.ZodType<Board> = z
     conceptWidth: z.number().optional(),
     conceptPos: z.object({ x: z.number(), y: z.number() }).strict().optional(),
     questionsPos: z.object({ x: z.number(), y: z.number() }).strict().optional(),
+    questionsWidth: z.number().optional(),
     createdAt: z.iso.datetime(),
     updatedAt: z.iso.datetime(),
     genres: deckGenresSchema,
@@ -231,7 +240,8 @@ export const boardSchema: z.ZodType<Board> = z
       board.cards.some((card) => card.inConcept) ||
       board.conceptWidth !== undefined ||
       board.conceptPos !== undefined ||
-      board.questionsPos !== undefined
+      board.questionsPos !== undefined ||
+      board.questionsWidth !== undefined
     ) {
       issue('Only a One-Pager board has a Details panel.');
     }
@@ -253,6 +263,12 @@ export const boardSchema: z.ZodType<Board> = z
       (board.conceptWidth < CONCEPT_WIDTH.min || board.conceptWidth > CONCEPT_WIDTH.max)
     ) {
       issue('The Details width is out of range.');
+    }
+    if (
+      board.questionsWidth !== undefined &&
+      (board.questionsWidth < PANEL_WIDTH.min || board.questionsWidth > PANEL_WIDTH.max)
+    ) {
+      issue('The Questions width is out of range.');
     }
     // Core Loop rules (docs/feature-core-loop-card.html).
     const loops = board.cards.filter((card) => card.type === 'loop');

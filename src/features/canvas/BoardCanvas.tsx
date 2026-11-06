@@ -73,7 +73,6 @@ import {
   moveConcept,
   pinConcept,
   popOutOfConcept,
-  resizeConcept,
   type ConceptOver,
 } from './concept';
 import { ConceptNode, ConceptUiContext, type ConceptHint, type ConceptUi } from './ConceptNode';
@@ -83,13 +82,22 @@ import { dropAction, dropTarget, hintFor, tuckLanding } from './dropZones';
 import { DEAL_REVEAL_MS, dealDelays, toNodes, type BoardFlowNode } from './nodes';
 import { LoopNode } from './LoopNode';
 import { NoteNode } from './NoteNode';
+import { resizePanel, type PanelEdge, type PanelKind } from './panelResize';
 import { QuestionsNode, QuestionsUiContext, type QuestionsUi } from './QuestionsNode';
+import { PanelHighlightContext } from './usePanelClick';
 import { moveQuestions, pinQuestions } from './questionsPlace';
 import { boardRects, CARD_SIZE, snapToGrid, type Point } from './placement';
 import { cardText } from './reading';
 import { descendantsOf } from './stack';
 import { ZoomStrip } from './ZoomStrip';
 import styles from './BoardCanvas.module.css';
+
+/** The panel node types; a click on one highlights it for resize (usePanelClick). */
+const PANEL_OF_NODE: Partial<Record<string, PanelKind>> = {
+  concept: 'concept',
+  loop: 'loop',
+  questions: 'questions',
+};
 
 const nodeTypes = {
   card: CardNode,
@@ -215,6 +223,8 @@ export function BoardCanvas({ pools, questionPool }: BoardCanvasProps) {
   const flow = useReactFlow();
 
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  // The panel clicked for resize (user 2026-11-05): view state, never stored.
+  const [highlightedPanel, setHighlightedPanel] = useState<PanelKind | null>(null);
   const [dragNodes, setDragNodes] = useState<BoardFlowNode[] | null>(null);
   const [hint, setHint] = useState<DragHint | null>(null);
   const [conceptHint, setConceptHint] = useState<ConceptHint | null>(null);
@@ -248,8 +258,8 @@ export function BoardCanvas({ pools, questionPool }: BoardCanvasProps) {
   const selected = selectedId && board.cards.some((c) => c.id === selectedId) ? selectedId : null;
   const hiddenIds = useMemo(() => new Set(flights.map((f) => f.card.id)), [flights]);
   const derived = useMemo(
-    () => toNodes(board, { selectedId: selected, hiddenIds, freshIds, reveal }),
-    [board, selected, hiddenIds, freshIds, reveal],
+    () => toNodes(board, { selectedId: selected, hiddenIds, freshIds, reveal, highlightedPanel }),
+    [board, selected, hiddenIds, freshIds, reveal, highlightedPanel],
   );
 
   // The Questions panel's view state: kept here, above the node (see the doc comment).
@@ -345,6 +355,7 @@ export function BoardCanvas({ pools, questionPool }: BoardCanvasProps) {
       if (isTextEntry(event.target)) return;
       if (event.key === 'Escape') {
         setSelectedId(null);
+        setHighlightedPanel(null);
         return;
       }
       if (event.key !== 'Delete' && event.key !== 'Backspace') return;
@@ -659,7 +670,7 @@ export function BoardCanvas({ pools, questionPool }: BoardCanvasProps) {
   );
 
   const resize = useCallback(
-    (width: number) => changeBoard((b) => resizeConcept(b, width)),
+    (edge: PanelEdge, dx: number) => changeBoard((b) => resizePanel(b, 'concept', edge, dx)),
     [changeBoard],
   );
 
@@ -671,14 +682,24 @@ export function BoardCanvas({ pools, questionPool }: BoardCanvasProps) {
   const ghostCard = ghost ? board.cards.find((c) => c.id === ghost.id) : undefined;
 
   // A Hook Card has a hover menu, not a strip: a click selects nothing.
+  // A click on a card clears the panel highlight; a click on a panel sets it (usePanelClick
+  // in each panel node, since React Flow's node click misses some quick presses).
   const onNodeClick = useCallback((_: MouseEvent, node: BoardFlowNode) => {
+    if (PANEL_OF_NODE[node.type ?? '']) return;
+    setHighlightedPanel(null);
     if (node.type !== 'card') return;
     const card = useBoardStore.getState().board.cards.find((c) => c.id === node.id);
     setSelectedId(card?.type === 'hook' ? null : node.id);
   }, []);
 
+  const highlightPanel = useCallback((kind: PanelKind) => {
+    setHighlightedPanel(kind);
+    setSelectedId(null);
+  }, []);
+
   const onPaneClick = useCallback(() => {
     setSelectedId(null);
+    setHighlightedPanel(null);
     // A focused note textarea commits its draft on blur.
     if (document.activeElement instanceof HTMLTextAreaElement) document.activeElement.blur();
     setEditingNoteId(null);
@@ -703,57 +724,59 @@ export function BoardCanvas({ pools, questionPool }: BoardCanvasProps) {
       data-testid="canvas"
     >
       <CardNodeContext.Provider value={actions}>
-        <ConceptUiContext.Provider value={conceptUi}>
-          <QuestionsUiContext.Provider value={questionsUi}>
-            <ReactFlow<BoardFlowNode>
-              nodes={nodes}
-              onNodesChange={onNodesChange}
-              nodeTypes={nodeTypes}
-              zIndexMode="manual"
-              elevateNodesOnSelect={false}
-              nodeDragThreshold={0}
-              nodesConnectable={false}
-              elementsSelectable={false}
-              proOptions={{ hideAttribution: true }}
-              minZoom={0.25}
-              maxZoom={2}
-              deleteKeyCode={null}
-              multiSelectionKeyCode={null}
-              selectionKeyCode={null}
-              onlyRenderVisibleElements
-              snapToGrid={snapOn && !altHeld}
-              snapGrid={SNAP_GRID}
-              defaultViewport={defaultViewport}
-              onMoveEnd={onMoveEnd}
-              onNodeDragStart={onNodeDragStart}
-              onNodeDrag={onNodeDrag}
-              onNodeDragStop={onNodeDragStop}
-              onNodeClick={onNodeClick}
-              onPaneClick={onPaneClick}
-            >
-              <Background
-                variant={BackgroundVariant.Dots}
-                gap={24}
-                size={1.2}
-                color="var(--canvas-dot)"
-              />
-              <DropHints hint={hint} />
-              {ghost && ghostCard && ghostCard.type !== 'hook' && ghostCard.type !== 'loop' && (
-                <ViewportPortal>
-                  <div
-                    className={styles.ghost}
-                    style={{ left: ghost.at.x, top: ghost.at.y }}
-                    data-testid="chip-ghost"
-                  >
-                    <ChipView text={cardText(board, ghostCard)} deck={ghostCard.type} />
-                  </div>
-                </ViewportPortal>
-              )}
-              <ZoomStrip />
-              <CountBadge />
-            </ReactFlow>
-          </QuestionsUiContext.Provider>
-        </ConceptUiContext.Provider>
+        <PanelHighlightContext.Provider value={highlightPanel}>
+          <ConceptUiContext.Provider value={conceptUi}>
+            <QuestionsUiContext.Provider value={questionsUi}>
+              <ReactFlow<BoardFlowNode>
+                nodes={nodes}
+                onNodesChange={onNodesChange}
+                nodeTypes={nodeTypes}
+                zIndexMode="manual"
+                elevateNodesOnSelect={false}
+                nodeDragThreshold={0}
+                nodesConnectable={false}
+                elementsSelectable={false}
+                proOptions={{ hideAttribution: true }}
+                minZoom={0.25}
+                maxZoom={2}
+                deleteKeyCode={null}
+                multiSelectionKeyCode={null}
+                selectionKeyCode={null}
+                onlyRenderVisibleElements
+                snapToGrid={snapOn && !altHeld}
+                snapGrid={SNAP_GRID}
+                defaultViewport={defaultViewport}
+                onMoveEnd={onMoveEnd}
+                onNodeDragStart={onNodeDragStart}
+                onNodeDrag={onNodeDrag}
+                onNodeDragStop={onNodeDragStop}
+                onNodeClick={onNodeClick}
+                onPaneClick={onPaneClick}
+              >
+                <Background
+                  variant={BackgroundVariant.Dots}
+                  gap={24}
+                  size={1.2}
+                  color="var(--canvas-dot)"
+                />
+                <DropHints hint={hint} />
+                {ghost && ghostCard && ghostCard.type !== 'hook' && ghostCard.type !== 'loop' && (
+                  <ViewportPortal>
+                    <div
+                      className={styles.ghost}
+                      style={{ left: ghost.at.x, top: ghost.at.y }}
+                      data-testid="chip-ghost"
+                    >
+                      <ChipView text={cardText(board, ghostCard)} deck={ghostCard.type} />
+                    </div>
+                  </ViewportPortal>
+                )}
+                <ZoomStrip />
+                <CountBadge />
+              </ReactFlow>
+            </QuestionsUiContext.Provider>
+          </ConceptUiContext.Provider>
+        </PanelHighlightContext.Provider>
       </CardNodeContext.Provider>
     </div>
   );

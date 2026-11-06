@@ -9,14 +9,12 @@
  */
 import type { Board } from '@/shared/model';
 import { ONE_PAGER_LOOP_SPOT } from '@/shared/store';
-import { HOOK_WIDTH, type Point } from './placement';
+import type { Point } from './placement';
 
 /** The React Flow node id of the panel. */
 export const QUESTIONS_NODE_ID = 'questions-panel';
 /** How far below the Core Loop card's top the panel starts: 240 of room plus a 24 gap. */
 export const QUESTIONS_DROP = 264;
-/** The panel width: the Core Loop card width. */
-export const QUESTIONS_WIDTH = HOOK_WIDTH;
 
 /** The panel's top-left in flow coordinates; null unless the board is a One-Pager board. */
 export function questionsPlace(board: Board): Point | null {

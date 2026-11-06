@@ -1,5 +1,6 @@
 /*
- * LoopCard (design 9.16): 240 wide, min 200 tall and growing with the text. Radius 7
+ * LoopCard (design 9.16): 240 wide until resized (the canvas sets --panel-w); as tall as its
+ * header and text, with no minimum (user 2026-11-05, was min 200). Radius 7
  * (--radius-card), border 2 --accent, fill --hook-bg, --shadow-hook, padding 14 16 16,
  * gap 10, as the Hook Card (9.5). No deck edge and no deck tint. Follows the mode.
  */
@@ -9,43 +10,13 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: var(--hook-w);
-  min-height: var(--hook-h);
+  width: var(--panel-w, var(--hook-w));
   height: auto;
   padding: 14px 16px 16px;
   border: 2px solid var(--accent);
   border-radius: var(--radius-card);
   background: var(--hook-bg);
   box-shadow: var(--shadow-hook);
-}
-
-/* The live template: 13, line height 1.45, --hook-text. Read-only: a drag handle. */
-.template {
-  margin: 0;
-  color: var(--hook-text);
-  font-family: var(--font-body);
-  font-size: 13px;
-  line-height: 1.45;
-  overflow-wrap: anywhere;
-}
-
-/* With no steps: the help text in --text-muted. */
-.empty {
-  color: var(--text-muted);
-}
-
-/* Each step's cue text: 13/600; its lane color comes inline (var(--rail-<deck>)). */
-.step {
-  font-weight: 600;
-}
-
-/* 1 line in --border, full width inside the padding. */
-.divider {
-  width: 100%;
-  height: 0;
-  margin: 0;
-  border: 0;
-  border-top: 1px solid var(--border);
 }
 
 /* The edit field: the note text style (9.12) at 14/1.45 in --hook-text, no border until
@@ -70,6 +41,11 @@
   overflow: hidden;
   resize: none;
   cursor: text;
+}
+
+.field::placeholder {
+  color: var(--text-muted);
+  opacity: 1;
 }
 
 .field:focus {

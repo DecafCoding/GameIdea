@@ -61,6 +61,12 @@ async function centerOf(locator: Locator) {
 }
 
 /** A point inside the panel, below its last lane and clear of every chip. */
+/** Clicks the Details title, which highlights the panel and shows its resize edges. */
+async function highlightDetails(page: Page) {
+  await panel(page).getByRole('heading', { name: 'Details' }).click();
+  await expect(panel(page)).toHaveAttribute('data-highlighted', '');
+}
+
 async function emptyPanelPoint(page: Page) {
   const box = await boxOf(panel(page));
   return { x: box.x + box.width - 20, y: box.y + 14 };
@@ -452,7 +458,10 @@ test.describe('chip actions', () => {
 
   test('onePager_resizePanel_widthSavedAfterReload', async ({ page }) => {
     await openBoard(page, onePagerBoard());
-    const handle = page.getByTestId('concept-resize');
+    // No edge until a click highlights the panel (user 2026-11-05).
+    await expect(panel(page).getByTestId('resize-right')).toHaveCount(0);
+    await highlightDetails(page);
+    const handle = panel(page).getByTestId('resize-right');
     await expect(handle).toHaveAttribute('aria-label', 'Resize Details');
     const from = await centerOf(handle);
     await page.mouse.move(from.x, from.y);
@@ -479,7 +488,8 @@ test.describe('chip actions', () => {
     await page.keyboard.press('Control+z');
     await expect(chip(page, 'setting-c1')).toBeVisible();
 
-    const handle = await centerOf(page.getByTestId('concept-resize'));
+    await highlightDetails(page);
+    const handle = await centerOf(panel(page).getByTestId('resize-right'));
     await page.mouse.move(handle.x, handle.y);
     await page.mouse.down();
     await page.mouse.move(handle.x + 60, handle.y, { steps: 4 });

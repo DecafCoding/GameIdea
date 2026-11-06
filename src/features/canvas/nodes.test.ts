@@ -108,7 +108,7 @@ describe('toNodes on a One-Pager board', () => {
     const panel = nodes.find((node) => node.id === 'concept-panel')!;
     expect(panel.type).toBe('concept');
     expect(panel.position).toEqual({ x: 364, y: 96 });
-    expect(panel.data).toEqual({ width: 300 });
+    expect(panel.data).toEqual({ width: 300, highlighted: false });
     expect(panel.zIndex).toBe(1);
     expect(panel.draggable).toBe(true);
     // Above notes, below every card.
@@ -166,7 +166,7 @@ describe('toNodes with a Core Loop card', () => {
     expect(loop.width).toBe(240);
     expect(loop.height).toBeUndefined();
     expect(loop.position).toEqual({ x: 624, y: 96 });
-    expect(loop.data).toEqual({ cardId: 'loop-1' });
+    expect(loop.data).toEqual({ cardId: 'loop-1', highlighted: false });
     expect(nodes.some((node) => node.type === 'card' && node.id === 'loop-1')).toBe(false);
   });
 
@@ -199,7 +199,7 @@ describe('toNodes with the Questions panel', () => {
     expect(panel.position).toEqual({ x: 624, y: 96 + 264 });
     expect(panel.width).toBe(240);
     expect(panel.height).toBeUndefined();
-    expect(panel.data).toEqual({});
+    expect(panel.data).toEqual({ width: 240, highlighted: false });
     // After the notes and the Concept panel, before every card.
     const ids = nodes.map((n) => n.id);
     expect(ids.indexOf('questions-panel')).toBe(ids.indexOf('concept-panel') + 1);
@@ -223,5 +223,38 @@ describe('toNodes with the Questions panel', () => {
     expect(panel.focusable).toBe(false);
     const cardZ = nodes.filter((n) => n.type === 'card' || n.type === 'loop').map((n) => n.zIndex!);
     expect(Math.min(...cardZ)).toBeGreaterThan(1);
+  });
+});
+
+describe('toNodes with a highlighted panel', () => {
+  const dataOf = (nodes: ReturnType<typeof toNodes>, id: string) =>
+    nodes.find((node) => node.id === id)!.data as { highlighted: boolean };
+
+  it('toNodes_highlightedPanel_onlyThatNodeHighlighted', () => {
+    const board = onePagerWithLoop();
+    for (const [kind, id] of [
+      ['concept', 'concept-panel'],
+      ['loop', 'loop-1'],
+      ['questions', 'questions-panel'],
+    ] as const) {
+      const nodes = toNodes(board, { ...UI, highlightedPanel: kind });
+      expect(dataOf(nodes, id).highlighted, kind).toBe(true);
+      const others = ['concept-panel', 'loop-1', 'questions-panel'].filter((o) => o !== id);
+      for (const other of others) expect(dataOf(nodes, other).highlighted).toBe(false);
+    }
+  });
+
+  it('toNodes_savedWidths_loopAndQuestionsNodesUseThem', () => {
+    const base = onePagerWithLoop();
+    const board = {
+      ...base,
+      questionsWidth: 400,
+      cards: base.cards.map((c) => (c.id === 'loop-1' ? { ...c, width: 320 } : c)),
+    };
+    const nodes = toNodes(board, UI);
+    expect(nodes.find((n) => n.id === 'loop-1')!.width).toBe(320);
+    const panel = nodes.find((n) => n.id === 'questions-panel')!;
+    expect(panel.width).toBe(400);
+    expect(panel.data).toEqual({ width: 400, highlighted: false });
   });
 });

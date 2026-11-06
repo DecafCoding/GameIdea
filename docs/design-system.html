@@ -192,6 +192,41 @@
   </tr>
   <tr>
     <td>2026-11-05</td>
+    <td>User change (no bundle)</td>
+    <td>The card field <code>width</code> (Core Loop card only) and the board field <code>questionsWidth</code>, inside format 2 with no upgrade step while the app is in test.</td>
+    <td><p>The Hook Card, Core Loop card, Details panel and Questions panel read as 1 family: the Details and Questions panels take the Hook Card's 2 <code>--accent</code> border and its grab cursor (9.15, 9.17). A click highlights the Details panel, the Core Loop card or the Questions panel (never the Hook Card), and its left or right edge then resizes it (9.15, 9.16, 9.17).</p></td>
+    <td>The Details resize handle and its grip icon; the 1 <code>--border</code> panel border; the fixed 240 Core Loop and Questions widths.</td>
+  </tr>
+  <tr>
+    <td>2026-11-05</td>
+    <td>User change (no bundle)</td>
+    <td>None.</td>
+    <td><p>The Core Loop card drops its read-only template and divider and keeps only the edit field, which shows the live text until the first edit; the help text becomes the field's placeholder (9.16).</p></td>
+    <td>The colored live template on the Core Loop card.</td>
+  </tr>
+  <tr>
+    <td>2026-11-05</td>
+    <td>User change (no bundle)</td>
+    <td>None.</td>
+    <td><p>The Core Loop card shrinks to fit its text (no 200 minimum), and its empty placeholder reads "Add cards to the Hook" (9.16).</p></td>
+    <td>The 200 minimum height and the old placeholder.</td>
+  </tr>
+  <tr>
+    <td>2026-11-05</td>
+    <td>User change (no bundle)</td>
+    <td>None.</td>
+    <td><p>The Questions header drops its "N Answered" count pill, as the Details header did (9.17).</p></td>
+    <td>The Questions count pill.</td>
+  </tr>
+  <tr>
+    <td>2026-11-05</td>
+    <td>User change (no bundle)</td>
+    <td>None.</td>
+    <td><p>The Core Loop card's height follows its text at the current width, so a resize makes it taller or shorter (9.16).</p></td>
+    <td>None.</td>
+  </tr>
+  <tr>
+    <td>2026-11-05</td>
     <td>None (<code>/dev-add-feature</code>, Core Loop Card)</td>
     <td>The Core Loop card (9.16). The <code>repeat</code> icon. The ownership line on the Boards page (9.3). Phase 9 in the screen → phase map.</td>
     <td>The Boards page help text gains a third sentence.</td>
@@ -249,7 +284,7 @@
   <tr><td><code>--surface-raised</code></td><td><span class="sw" style="background:#2B303A"></span>#2B303A</td><td><span class="sw" style="background:#EFEBE3"></span>#EFEBE3</td><td>Raised controls on a surface</td></tr>
   <tr><td><code>--surface-selected</code></td><td><span class="sw" style="background:#343A45"></span>#343A45</td><td><span class="sw" style="background:#E6E1D6"></span>#E6E1D6</td><td>Selected or pressed item in a menu or segmented control</td></tr>
   <tr><td><code>--border</code></td><td><span class="sw" style="background:#30353F"></span>#30353F</td><td><span class="sw" style="background:#DDD8CE"></span>#DDD8CE</td><td>Default 1 px border and dividers</td></tr>
-  <tr><td><code>--border-strong</code></td><td><span class="sw" style="background:#4A505C"></span>#4A505C</td><td><span class="sw" style="background:#BDB7AB"></span>#BDB7AB</td><td>Add note dashed border, Questions count pill and resize handle border</td></tr>
+  <tr><td><code>--border-strong</code></td><td><span class="sw" style="background:#4A505C"></span>#4A505C</td><td><span class="sw" style="background:#BDB7AB"></span>#BDB7AB</td><td>Add note dashed border</td></tr>
   <tr><td><code>--text</code></td><td><span class="sw" style="background:#ECEAE4"></span>#ECEAE4</td><td><span class="sw" style="background:#1B1E24"></span>#1B1E24</td><td>Body text</td></tr>
   <tr><td><code>--text-soft</code></td><td><span class="sw" style="background:#C9CCD2"></span>#C9CCD2</td><td><span class="sw" style="background:#3A3F49"></span>#3A3F49</td><td>Secondary text one step above muted: hook previews, deck meanings, the Settings rail label</td></tr>
   <tr><td><code>--text-muted</code></td><td><span class="sw" style="background:#A9ADB6"></span>#A9ADB6</td><td><span class="sw" style="background:#5E636D"></span>#5E636D</td><td>Group labels, descriptions, meta lines</td></tr>
@@ -351,7 +386,7 @@
   <tr><td><code>--radius-panel</code></td><td>12</td><td>Board cards, notes, small dialogs, export menu</td></tr>
   <tr><td><code>--radius-card</code></td><td>7</td><td>Cards, the Hook Card, the tuck hint slots <span class="tag">user 2026-11-03</span>, was 14</td></tr>
   <tr><td><code>--radius-dialog</code></td><td>14</td><td>Settings dialog</td></tr>
-  <tr><td colspan="3">Other radii in use: 5 (key caps), 6 (logo tile, board name field), 7 (menu buttons, segment buttons), 8 (Concept chips), 6 (resize handle), 9 (segmented control), 10 (menus, banners, zoom control), 11 (Questions count pill), 12 (Concept panel), 13 (switch), 18 (genre top chips).</td></tr>
+  <tr><td colspan="3">Other radii in use: 5 (key caps), 6 (logo tile, board name field), 7 (menu buttons, segment buttons), 8 (Concept chips), 9 (segmented control), 10 (menus, banners, zoom control), 12 (Concept panel), 13 (switch), 18 (genre top chips).</td></tr>
 </table>
 <table>
   <tr><th>Elevation token</th><th>Value</th><th>Use</th></tr>
@@ -377,7 +412,6 @@
   <tr><td>Concept chip</td><td>Inter 13/600, line height 18</td><td><code>--text</code>. Wraps inside its lane</td></tr>
   <tr><td>Concept header</td><td>Display 12/600, 0.08em, uppercase</td><td>"Details", <code>--text-muted</code></td></tr>
   <tr><td>Lane label</td><td>Inter 12/600</td><td>Plural deck name, lane color (4.4)</td></tr>
-  <tr><td>Questions count pill</td><td>Inter 11/600</td><td>"3 Answered", <code>--text</code></td></tr>
   <tr><td>App name, board card name</td><td>Display 17/700 · 17/600</td><td></td></tr>
   <tr><td>Cue text</td><td>Display 15/600</td><td><code>--card-cue</code> (by mode, 4.5)</td></tr>
   <tr><td>Active cue</td><td>Display 14/700, line height 1.25</td><td><code>--card-cue-active</code></td></tr>
@@ -406,7 +440,7 @@
   <li><strong>Set:</strong> Lucide-style stroke icons on a 24 px grid, stroke 2.2, round caps and joins, no fill.</li>
   <li><strong>Sizes:</strong> 18 in the rail and the top bar (Undo, Redo); 16 for the Export icon, the logo tile and the badge-menu check; 24 in a card center (on a 48 circle); 20 in banners and the export menu; 15 for the full-card lock; 14 for the tucked-card lock button; 13 for the Hook Card header; 12 for the Export chevron.</li>
   <li><strong>Deck icons:</strong> see 4.4. The Hook Card icon is custom (a hook), drawn in the same stroke style.</li>
-  <li><strong>Other icons in use, by role:</strong> gear (Settings), lines (Add note), grip with 2 vertical lines (Concept resize handle, 10) <span class="tag">2026-11-04</span>, deck icons at 14 (Concept lane labels), undo, redo, download (Export), chevron down, lock, check, close (×), plus, minus, more (board menu), warning, retry, import, <code>playing-cards-fan</code> (Deal Stack), <code>square-arrow-down</code> (Redraw, Redraw All) <span class="tag">user 2026-11-04</span>, <code>repeat</code> (Core Loop card header, 14), <code>list</code> (Details header, 14) <span class="tag">user 2026-11-05</span>, <code>message-circle-question-mark</code> (Questions panel header, 14) and trash (Delete Answer, 16) <span class="tag">user 2026-11-05</span>. The mockups draw them as inline paths without names; pick the matching Lucide names when vendoring.</li>
+  <li><strong>Other icons in use, by role:</strong> gear (Settings), lines (Add note), deck icons at 14 (Concept lane labels), undo, redo, download (Export), chevron down, lock, check, close (×), plus, minus, more (board menu), warning, retry, import, <code>playing-cards-fan</code> (Deal Stack), <code>square-arrow-down</code> (Redraw, Redraw All) <span class="tag">user 2026-11-04</span>, <code>repeat</code> (Core Loop card header, 14), <code>list</code> (Details header, 14) <span class="tag">user 2026-11-05</span>, <code>message-circle-question-mark</code> (Questions panel header, 14) and trash (Delete Answer, 16) <span class="tag">user 2026-11-05</span>. The mockups draw them as inline paths without names; pick the matching Lucide names when vendoring.</li>
   <li><strong>Removed:</strong> sliders, with the rail Genres button <span class="tag">2026-11-04</span>.</li>
   <li><strong>Reserved:</strong> none.</li>
 </ul>
@@ -730,16 +764,17 @@
 <p>Layout: the shell as on a Free Form board. The Hook Card and its Hook Train as in 9.5 and 9.7. The Concept panel beside the Hook Card. Loose cards on the canvas as in 9.4.</p>
 <table>
   <tr><th>Part</th><th>Spec</th></tr>
-  <tr><td>Panel place</td><td>It starts beside the Hook Card: left = Hook Card left + 240 + 28 (was 56), top = Hook Card top. It moves freely and on its own <span class="tag">user 2026-11-05</span>: drag it by any part that is not a chip or the resize handle. A drop snaps to the 24 grid like a free card (Alt skips it), is 1 undo step and 1 save, and is stored as <code>conceptPos</code>. It never follows the Hook Card: the first time the Hook Card moves, the panel keeps the place it had. It is never a drop target for its own drag. Was: fixed beside the Hook Card and moved with it.</td></tr>
-  <tr><td>Panel</td><td>Width 232 by default, resizable from 232 to 640 with no snap <span class="tag">user 2026-11-04</span>. Padding 16, radius 12, gap 12. Fill <code>--surface</code>, border 1 <code>--border</code>, shadow 0 8px 22px rgba(0, 0, 0, 0.4). The height grows with the content.</td></tr>
+  <tr><td>Panel place</td><td>It starts beside the Hook Card: left = Hook Card left + 240 + 28 (was 56), top = Hook Card top. It moves freely and on its own <span class="tag">user 2026-11-05</span>: drag it by any part that is not a chip or a resize edge. A drop snaps to the 24 grid like a free card (Alt skips it), is 1 undo step and 1 save, and is stored as <code>conceptPos</code>. It never follows the Hook Card: the first time the Hook Card moves, the panel keeps the place it had. It is never a drop target for its own drag. Was: fixed beside the Hook Card and moved with it.</td></tr>
+  <tr><td>Panel</td><td>Width 232 by default, resizable from 232 to 640 with no snap <span class="tag">user 2026-11-04</span>. Padding 16, radius 12, gap 12. Fill <code>--surface</code>, border 2 <code>--accent</code>, the Hook Card's outline <span class="tag">user 2026-11-05</span> (was 1 <code>--border</code>), shadow 0 8px 22px rgba(0, 0, 0, 0.4). The height grows with the content.</td></tr>
   <tr><td>Header</td><td>The <code>list</code> icon 14 in <code>--accent-text</code>, then "Details": the title in Display 12/600, 0.08em, uppercase, line height 24, in <code>--accent-text</code> for the current mode. Gap 8. The same header (<code>PanelTitle</code>) on the Hook Card, Core Loop card, Details panel and Questions panel <span class="tag">user 2026-11-05</span>. No count pill <span class="tag">user 2026-11-05</span>. Was "Details" in <code>--text-muted</code> with a "7 Cards" count pill.</td></tr>
   <tr><td>Lane</td><td>A label, then the chips, gap 6. Lanes come in rail order. A deck with no card has no lane.</td></tr>
   <tr><td>Lane label</td><td>Deck icon 14 and the plural deck name ("Mechanics", "Resources", "Settings", "Mood", "Twist"), 12/600, gap 6, in the lane color (4.4).</td></tr>
   <tr><td>Chips</td><td>Wrap side by side in the lane, gap 8, in drop order.</td></tr>
   <tr><td>Chip</td><td>Min 36 tall, padding 8 12, radius 8, border 1 in the deck card color, fill the deck card color at <code>--card-tint</code> (12%, was 28%) <span class="tag">user 2026-11-05</span>, text 13/600 line height 18 <code>--text</code>; merged and On Top Modifier words at the front use <code>--card-adjective</code> (purple, as on the card face) <span class="tag">user 2026-11-04</span>. No icon. The chip is as wide as its text and never wider than its lane. Longer text wraps, and the chip grows by 18 for each extra line <span class="tag">user 2026-11-04</span>. A combined card reads with its adjectives ("stolen salt"). Chips have no buttons and no strip menu.</td></tr>
-  <tr><td>Resize handle</td><td>Label "Resize Details". 12 × 44, radius 6, border 1 <code>--border-strong</code>, fill <code>--surface</code>, grip icon 10 <code>--text-muted</code>. On the right edge, centered on the panel height, 4 outside the edge, so it fits the 28 gap; a clear layer makes the hit area 24 wide <span class="tag">user 2026-11-05</span>. Was 24 × 44, radius 8, grip 14, 12 outside. Cursor <code>ew-resize</code>. aria-label "Resize Concept". The width saves once, on release.</td></tr>
+  <tr><td>Highlight and resize</td><td>A click on the panel where it can be dragged (not on a chip, field or button) highlights it: the card selection outline, 2 <code>--accent</code> (light mode <code>--accent-text</code>), offset 3. A click on a card, the canvas or Esc clears it; only 1 panel is highlighted at a time <span class="tag">user 2026-11-05</span>. While highlighted, the left and right edges resize it: a clear strip 12 wide centered on each edge, the full height, cursor <code>ew-resize</code>, aria-label "Resize Details". A right-edge drag keeps the left side still; a left-edge drag keeps the right side still. The width shows live and saves once, on release, as 1 undo step; no snap. Only the width changes; the height still grows with the content.</td></tr>
+  <tr><td>Cursor</td><td>The grab cursor over every part that drags the panel, as on the Hook Card (React Flow's draggable node cursor; the panel sets no cursor of its own) <span class="tag">user 2026-11-05</span>. Chips keep grab; fields keep text.</td></tr>
   <tr><td>Modifier drop target</td><td>A Modifier dragged over a Player Role, Resource or Setting chip: that chip gets an outline 2 in <code>#6E48B5</code> (<code>--deck-modifier</code>), offset 3. The dragged card uses the drag style in 9.7. No lane highlight and no "Add to …" box show.</td></tr>
-  <tr><td>Light mode</td><td>Panel fill <code>#FFFFFF</code> and border <code>#DDD8CE</code> (the light <code>--surface</code> and <code>--border</code>). Chip text <code>#1B1E24</code>. Lane labels in the deck card color.</td></tr>
+  <tr><td>Light mode</td><td>Panel fill <code>#FFFFFF</code> (the light <code>--surface</code>), border <code>--accent</code> as the Hook Card. Chip text <code>#1B1E24</code>. Lane labels in the deck card color.</td></tr>
   <tr><td>Card count chip</td><td>"12 cards". The card count is the Hook Train plus the Concept cards. It does not count the Hook Card or loose cards <span class="tag">user 2026-11-04</span>.</td></tr>
 </table>
 <p class="meta">Dropped from the bundle by the user: the folded Hook Train, Expand Stack, the Hook Card count pill, the collapsed Concept button (<code>Stack4ChipsCollapsed</code>) and the 1-or-2-column snap. See the Handoff log.</p>
@@ -749,11 +784,11 @@
 <table>
   <tr><th>Part</th><th>Spec</th></tr>
   <tr><td>Place</td><td>Only on One-Pager boards, 1 per board. A new board places it at (624, 96): the Concept panel's right edge at its default width, plus 28, the same gap as Hook Card to panel <span class="tag">user 2026-11-05</span>. Was (680, 96). Boards made before keep their Core Loop card where it is. It is a free card. Drag, snap and Alt work as for any free card (9.7).</td></tr>
-  <tr><td>Card</td><td>240 wide, min 200 tall, the height grows with the text. Radius 7 (<code>--radius-card</code>), border 2 <code>--accent</code>, fill <code>--hook-bg</code>, <code>--shadow-hook</code>, padding 14 16 16, gap 10. No deck edge and no deck tint. It follows the mode as the Hook Card does.</td></tr>
+  <tr><td>Card</td><td>240 wide until resized, 240 to 640, stored on the card as <code>width</code> <span class="tag">user 2026-11-05</span>; as tall as the header and the text at the current width, with no minimum, so a resize changes the height too <span class="tag">user 2026-11-05</span> (was min 200). Placement and the Questions panel's start place still count 200, so a short card never moves the panel. Radius 7 (<code>--radius-card</code>), border 2 <code>--accent</code>, fill <code>--hook-bg</code>, <code>--shadow-hook</code>, padding 14 16 16, gap 10. No deck edge and no deck tint. It follows the mode as the Hook Card does.</td></tr>
   <tr><td>Header</td><td>The <code>repeat</code> icon 14 in <code>--accent-text</code>, with no circle, then "Core Loop": the title in Display 12/600, 0.08em, uppercase, line height 24, in <code>--accent-text</code> for the current mode. Gap 8. The same header (<code>PanelTitle</code>) on the Hook Card, Core Loop card, Details panel and Questions panel <span class="tag">user 2026-11-05</span>. Was a 24 dot in <code>--accent</code>.</td></tr>
-  <tr><td>Template</td><td>Read-only, 13 line height 1.45, <code>--hook-text</code>. The lead words ("earn", "to") and the arrows "→" are in <code>--hook-text</code>. Each step's cue text is 13/600 in its deck's lane color (4.4), the same color as the Concept lane labels. With no steps it reads "Deal or draw cards to build the loop." in <code>--text-muted</code>.</td></tr>
-  <tr><td>Divider</td><td>1 line in <code>--border</code>, full width inside the padding.</td></tr>
-  <tr><td>Edit field</td><td>A text area with the note text style (9.12), 14 line height 1.45, <code>--hook-text</code>, no border until focus, focus ring as in 12. <code>aria-label</code> "Core Loop Text". It grows with the text.</td></tr>
+  <tr><td>Template</td><td>Removed <span class="tag">user 2026-11-05</span>: no read-only template and no divider; the card is the header, then the edit field. Was: the live template, 13 line height 1.45, <code>--hook-text</code>, each step's cue text 13/600 in its lane color, then a 1 <code>--border</code> divider.</td></tr>
+  <tr><td>Edit field</td><td>A text area with the note text style (9.12), 14 line height 1.45, <code>--hook-text</code>, no border until focus, focus ring as in 12. <code>aria-label</code> "Core Loop Text". It shows the live text until the first edit; with no steps, the placeholder "Add cards to the Hook" in <code>--text-muted</code> <span class="tag">user 2026-11-05</span> (was "Deal or draw cards to build the loop."). It grows with the text.</td></tr>
+  <tr><td>Highlight and resize</td><td>A click on the panel where it can be dragged (not on a chip, field or button) highlights it: the card selection outline, 2 <code>--accent</code> (light mode <code>--accent-text</code>), offset 3. A click on a card, the canvas or Esc clears it; only 1 panel is highlighted at a time <span class="tag">user 2026-11-05</span>. While highlighted, the left and right edges resize it: a clear strip 12 wide centered on each edge, the full height, cursor <code>ew-resize</code>, aria-label "Resize Core Loop". A right-edge drag keeps the left side still; a left-edge drag keeps the right side still. The width shows live and saves once, on release, as 1 undo step; no snap. Only the width changes; the height still grows with the content.</td></tr>
   <tr><td>Hover menu</td><td>The Hook Card hover menu spec (9.5). Items: Copy Loop (<code>repeat</code> icon, then the <code>check</code> icon in <code>--success-text</code> with "Copied" for 2 s), Reset From Cards (<code>square-arrow-down</code>, shown only after an edit). No Duplicate and no Discard.</td></tr>
   <tr><td>Clipboard failed</td><td>The Copy Hook fallback dialog (9.5 state D), titled "Copy the loop", with a read-only "Core loop" field.</td></tr>
 </table>
@@ -763,8 +798,9 @@
 <table>
   <tr><th>Part</th><th>Spec</th></tr>
   <tr><td>Place</td><td>Only on One-Pager boards, 1 per board. It starts at the Core Loop card's left, 264 below its top (the card's 240 of room plus 24), or 264 below (624, 96) with no Core Loop card. It moves freely and on its own <span class="tag">user 2026-11-05</span>: drag it by any part that is not a field or a button. A drop snaps to the 24 grid (Alt skips it), is 1 undo step and 1 save, and is stored as <code>questionsPos</code>. It never follows the Core Loop card, and it does not move when the card grows. Was: below the Core Loop card's drawn height, moving with it, not draggable.</td></tr>
-  <tr><td>Panel</td><td>Width 240, the Core Loop card width. The Details panel style: padding 16, radius 12, gap 12, fill <code>--surface</code>, border 1 <code>--border</code>, shadow 0 8px 22px rgba(0, 0, 0, 0.4). The height grows with the content. Light mode as the Details panel.</td></tr>
-  <tr><td>Header</td><td>The <code>message-circle-question-mark</code> icon 14 in <code>--accent-text</code>, then "Questions": the title in Display 12/600, 0.08em, uppercase, line height 24, in <code>--accent-text</code> for the current mode. Gap 8. The same header (<code>PanelTitle</code>) on the Hook Card, Core Loop card, Details panel and Questions panel <span class="tag">user 2026-11-05</span>. With 1 or more answers, a count pill after it: 22 tall, padding 0 9, radius 11, border 1 <code>--border-strong</code>, 11/600 <code>--text</code>, "3 Answered" ("1 Answered" for one). Was the icon 13 and the title in <code>--text-muted</code>, gap 6.</td></tr>
+  <tr><td>Panel</td><td>Width 240 until resized, 240 to 640, stored as <code>questionsWidth</code> <span class="tag">user 2026-11-05</span>. The Details panel style: padding 16, radius 12, gap 12, fill <code>--surface</code>, border 2 <code>--accent</code> (the Hook Card's outline, was 1 <code>--border</code>), the grab cursor as on the Hook Card, shadow 0 8px 22px rgba(0, 0, 0, 0.4). The height grows with the content. Light mode as the Details panel.</td></tr>
+  <tr><td>Header</td><td>The <code>message-circle-question-mark</code> icon 14 in <code>--accent-text</code>, then "Questions": the title in Display 12/600, 0.08em, uppercase, line height 24, in <code>--accent-text</code> for the current mode. Gap 8. The same header (<code>PanelTitle</code>) on the Hook Card, Core Loop card, Details panel and Questions panel <span class="tag">user 2026-11-05</span>. No count pill <span class="tag">user 2026-11-05</span>. Was a "3 Answered" pill after the title (22 tall, radius 11, border 1 <code>--border-strong</code>, 11/600). Was the icon 13 and the title in <code>--text-muted</code>, gap 6.</td></tr>
+  <tr><td>Highlight and resize</td><td>A click on the panel where it can be dragged (not on a chip, field or button) highlights it: the card selection outline, 2 <code>--accent</code> (light mode <code>--accent-text</code>), offset 3. A click on a card, the canvas or Esc clears it; only 1 panel is highlighted at a time <span class="tag">user 2026-11-05</span>. While highlighted, the left and right edges resize it: a clear strip 12 wide centered on each edge, the full height, cursor <code>ew-resize</code>, aria-label "Resize Questions". A right-edge drag keeps the left side still; a left-edge drag keeps the right side still. The width shows live and saves once, on release, as 1 undo step; no snap. Only the width changes; the height still grows with the content.</td></tr>
   <tr><td>Question</td><td>15/600, line height 1.4, <code>--text</code>.</td></tr>
   <tr><td>Answer field</td><td>A text area with the note text style (9.12), 14 line height 1.45, min 3 lines, border 1 <code>--border-strong</code>, radius 8, padding 8 10, focus ring as in 12. <code>aria-label</code> "Answer". It grows with the text.</td></tr>
   <tr><td>Buttons</td><td>A row, gap 8, each 44 tall. "Next Question" as a secondary button. "Save Answer" as a primary button (fill <code>--accent</code>, text <code>--on-accent</code>), disabled while the field is empty.</td></tr>
@@ -822,10 +858,10 @@
   <li>Accent-colored text uses <code>--accent-text</code> for the current mode, never <code>--accent</code>.</li>
   <li>Measured 2026-11-04: dark card text <code>#ECEAE4</code> on <code>#2A2F38</code> 11.2:1, <code>#A9ADB6</code> 6.0:1, <code>#A88BE6</code> 4.8:1. Tinted cards: the inactive cue is 5.3:1 or better in dark mode and 4.7:1 or better in light mode, for every deck. Dark note text 11.9:1, label 7.8:1. Light Hook Card sentence 16.7:1, label 5.0 to 6.1:1. Chip text 9.6:1 or better (dark) and 10.7:1 or better (light).</li>
   <li>Measured 2026-11-05, after cards took the chip face: dark <code>#ECEAE4</code> on <code>#23272F</code> 12.4:1, <code>#ADB1BA</code> 7.0:1, <code>#B298E9</code> 6.1:1. Tinted cards and chips (12%), for every deck: inactive cue 6.2:1 or better (dark) and 6.0:1 or better (light); active cue and chip text 11.2:1 (dark) and 13.9:1 (light) or better; adjectives 5.5:1 or better in both modes. The inactive cue and adjective tokens moved so they pass 4.5:1 even at 28%.</li>
-  <li>Concept chips are 36 tall, below the 44 px target. This is the same mouse-only desktop deviation as the rail buttons. The resize handle is 44 tall with an aria-label. Settings tabs are 44 tall with <code>role="tab"</code> and <code>aria-selected</code>.</li>
+  <li>Concept chips are 36 tall, below the 44 px target. This is the same mouse-only desktop deviation as the rail buttons. The resize edges are 12 wide, full height, with an aria-label, and show only on a highlighted panel. Settings tabs are 44 tall with <code>role="tab"</code> and <code>aria-selected</code>.</li>
   <li>Hit targets are 44 px, except rail deck buttons at 36 px (deviation 1, mouse-only desktop).</li>
   <li>Icon-only buttons carry an aria-label: the Modifier buttons, Undo, Redo, zoom, Close, Dismiss, the board menu and the Edit Genres buttons ("Edit Mechanic Genres, N genres on").</li>
-  <li>Not specified: focus ring width and offset, keyboard access to the Hook Card menu, the ring halves, Concept chips and the resize handle, focus style on tabs, reduced motion, and screen-reader text for the Hook sentence (section 15).</li>
+  <li>Not specified: focus ring width and offset, keyboard access to the Hook Card menu, the ring halves, Concept chips and the resize edges, focus style on tabs, reduced motion, and screen-reader text for the Hook sentence (section 15).</li>
 </ul>
 
 <!-- ============================================================ -->

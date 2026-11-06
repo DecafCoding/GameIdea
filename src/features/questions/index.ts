@@ -6,7 +6,6 @@
 export { addAnswer, answeredQuestions, deleteAnswer, editAnswer } from './answers';
 export { pickQuestion, type Pick, type PickInput } from './pickQuestion';
 export {
-  answeredCountText,
   QUESTIONS_DONE_TEXT,
   QUESTIONS_FAILED_TEXT,
   QuestionsPanel,

@@ -78,7 +78,7 @@ test('questions_saveAnswer_movesToListAndNeverShowsAgain', async ({ page }) => {
   await expect(items(page)).toHaveCount(1);
   await expect(items(page).first()).toContainText(question);
   await expect(listField(page, (await storedBoardAnswerId(page))!)).toHaveValue('A night owl.');
-  await expect(page.getByTestId('questions-count')).toHaveText('1 Answered');
+  await expect(page.getByTestId('questions-count')).toHaveCount(0);
   await expect(field(page)).toHaveValue('');
   await expect(current(page)).not.toHaveText(question);
   expect((await storedBoard(page)).questions).toEqual([
@@ -220,7 +220,7 @@ test('questions_allAnswered_messageThenDeleteBringsBack', async ({ page }) => {
   );
   await expect(field(page)).toHaveCount(0);
   await expect(nextButton(page)).toHaveCount(0);
-  await expect(page.getByTestId('questions-count')).toHaveText('3 Answered');
+  await expect(page.getByTestId('questions-count')).toHaveCount(0);
 
   const last = items(page).first();
   const freed = (await last.locator('p').first().textContent())!;

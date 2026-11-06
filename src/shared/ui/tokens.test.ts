@@ -131,7 +131,6 @@ const ICONS: IconName[] = [
   'playing-cards-fan',
   'lock-open',
   'split',
-  'grip',
   'square-arrow-down',
   'drama',
   'repeat',

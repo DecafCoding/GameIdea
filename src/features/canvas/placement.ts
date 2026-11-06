@@ -30,13 +30,13 @@ export interface Size {
 export interface Rect extends Point, Size {}
 
 /**
- * A card's size on the board: the Hook Card and the Core Loop card are 240 wide, every
- * other card 200 square. 200 is the Core Loop card's minimum height; the drawn card may grow
- * taller with its text, but placement and drop math use 240 × 200.
+ * A card's size on the board: the Hook Card is 240 wide, the Core Loop card its saved width
+ * (240 until resized), every other card 200 square. The drawn Core Loop card is as tall as
+ * its text (shorter or taller than 200), but placement and drop math use 200 tall.
  */
-export function cardSize(card: Pick<Card, 'type'>): Size {
-  const wide = card.type === 'hook' || card.type === 'loop';
-  return { width: wide ? HOOK_WIDTH : CARD_SIZE, height: CARD_SIZE };
+export function cardSize(card: Pick<Card, 'type' | 'width'>): Size {
+  if (card.type === 'loop') return { width: card.width ?? HOOK_WIDTH, height: CARD_SIZE };
+  return { width: card.type === 'hook' ? HOOK_WIDTH : CARD_SIZE, height: CARD_SIZE };
 }
 
 // "+ 0" turns -0 into 0, so a snapped point never stores -0.
