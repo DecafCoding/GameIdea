@@ -311,6 +311,15 @@ describe('boardSchema One-Pager rules', () => {
     rejects({ ...fixtureBoard([]), questionsPos: { x: 624, y: 360 } });
   });
 
+  it('boardSchema_questionsWidth_rangeAndOnePagerOnly', () => {
+    const result = boardSchema.safeParse({ ...onePagerBoard(), questionsWidth: 400 });
+    expect(result.success).toBe(true);
+    expect(result.data?.questionsWidth).toBe(400);
+    rejects({ ...onePagerBoard(), questionsWidth: 239 });
+    rejects({ ...onePagerBoard(), questionsWidth: 641 });
+    rejects({ ...fixtureBoard([]), questionsWidth: 300 });
+  });
+
   it('boardSchema_conceptPos_onePagerPassesFreeFormFails', () => {
     const result = boardSchema.safeParse({ ...onePagerBoard(), conceptPos: { x: 600, y: 312 } });
     expect(result.success).toBe(true);
@@ -372,6 +381,21 @@ describe('boardSchema Core Loop rules', () => {
       cards: board.cards.map((card) =>
         card.id === 'role-t1' ? { ...card, loopText: 'my loop' } : card,
       ),
+    });
+  });
+
+  it('schema_loopWidth_roundTripsAndRangeChecked', () => {
+    const board = withLoop({ width: 320 });
+    expect(parseBoardFile(boardFileJson(board))).toEqual(board);
+    rejects(withLoop({ width: 239 }));
+    rejects(withLoop({ width: 641 }));
+  });
+
+  it('schema_widthOnOtherCardType_rejects', () => {
+    const board = withLoop();
+    rejects({
+      ...board,
+      cards: board.cards.map((card) => (card.id === 'role-t1' ? { ...card, width: 300 } : card)),
     });
   });
 

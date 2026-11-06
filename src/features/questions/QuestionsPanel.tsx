@@ -1,6 +1,6 @@
 /**
  * QuestionsPanel: the Questions panel view (design 9.17, docs/feature-questions-panel.html
- * Panel). A header with the question icon, "Questions" and an "N Answered" pill; the top
+ * Panel). A header with the question icon and "Questions" (no count, user 2026-11-05); the top
  * part (the current question, the answer field, Next Question and Save Answer, or the
  * all-answered message, or the load-failed message with Retry); then the answer list,
  * newest first, each answer editable in place (a local draft that commits once on blur,
@@ -19,11 +19,6 @@ export const QUESTIONS_DONE_TEXT =
 
 /** The load-failed message (design 9.17). */
 export const QUESTIONS_FAILED_TEXT = 'The questions did not load. Your saved answers still work.';
-
-/** The count pill text: "1 Answered", "3 Answered". */
-export function answeredCountText(count: number): string {
-  return `${count} Answered`;
-}
 
 interface QuestionsPanelProps {
   status: 'loading' | 'ready' | 'failed';
@@ -177,13 +172,7 @@ export function QuestionsPanel({
       aria-label="Questions"
       data-testid="questions-panel"
     >
-      <PanelTitle icon="message-circle-question-mark" title="Questions">
-        {answers.length > 0 && (
-          <span className={styles.pill} data-testid="questions-count">
-            {answeredCountText(answers.length)}
-          </span>
-        )}
-      </PanelTitle>
+      <PanelTitle icon="message-circle-question-mark" title="Questions" />
       {top()}
       {answers.length > 0 && (
         <>

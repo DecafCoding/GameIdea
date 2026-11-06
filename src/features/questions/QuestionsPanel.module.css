@@ -1,6 +1,8 @@
 /*
- * QuestionsPanel (design 9.17): 240 wide, the Details panel style (9.15): padding 16,
- * radius 12, gap 12, fill --surface, border 1 --border, the raised card shadow. The height
+ * QuestionsPanel (design 9.17): 240 wide until resized (the canvas sets --panel-w), the
+ * Details panel style (9.15): padding 16, radius 12, gap 12, fill --surface, border 2
+ * --accent as the Hook Card (user 2026-11-05), the raised card shadow. No cursor of its
+ * own, so React Flow's grab cursor shows. The height
  * grows with the content. The values are copied from ConceptNode.module.css, since a CSS
  * module is not shared across features. Tokens only.
  */
@@ -10,30 +12,12 @@
   flex-direction: column;
   gap: 12px;
   box-sizing: border-box;
-  width: var(--hook-w);
+  width: var(--panel-w, var(--hook-w));
   padding: 16px;
-  border: 1px solid var(--border);
+  border: 2px solid var(--accent);
   border-radius: var(--radius-panel);
   background: var(--surface);
   box-shadow: var(--shadow-card-raised);
-  color: var(--text);
-  cursor: default;
-}
-
-/* The count pill after the PanelTitle: 22 tall, padding 0 9, radius 11, border 1 --border-strong, 11/600. */
-.pill {
-  display: inline-flex;
-  align-items: center;
-  flex: none;
-  box-sizing: border-box;
-  height: 22px;
-  margin-left: 2px;
-  padding: 0 9px;
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius-pill);
-  font-family: var(--font-body);
-  font-size: 11px;
-  font-weight: 600;
   color: var(--text);
 }
 

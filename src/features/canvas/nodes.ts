@@ -5,10 +5,12 @@
  * tucked card paints under the card above it. Notes sit at zIndex 0 under every card. On a
  * One-Pager board the Concept panel is 1 more node at zIndex 1, beside the Hook Card; its
  * width comes from its content, so React Flow measures it. Concept cards have no node.
- * The Core Loop card is a 'loop' node ranked with the other roots by z, 240 wide with no
- * height, so React Flow measures it as it grows with its text.
+ * The Core Loop card is a 'loop' node ranked with the other roots by z, its saved width
+ * (240 until resized) with no height, so React Flow measures it as it grows with its text.
+ * A click highlights the Details panel, the Core Loop card or the Questions panel for
+ * resize (NodeUi.highlightedPanel, view state); the node data carries the flag.
  * On a One-Pager board the Questions panel is 1 more node at zIndex 1 (under every card),
- * at questionsPlace, 240 wide with no height, so React Flow measures it. It drags on its
+ * at questionsPlace, its saved width (240 until resized) with no height, so React Flow measures it. It drags on its
  * own (user 2026-11-05); its fields and buttons are nodrag.
  * The array is sorted by zIndex, so Tab moves through the cards in z order.
  * After Deal Stack, each dealt card carries its reveal delay (dealDelays): the dealt cards
@@ -18,8 +20,9 @@ import type { Node } from '@xyflow/react';
 import type { Board, Card } from '@/shared/model';
 import { CONCEPT_NODE_ID, conceptPlace, conceptWidth } from './concept';
 import type { Below } from './connector';
-import { cardSize, HOOK_WIDTH } from './placement';
-import { QUESTIONS_NODE_ID, QUESTIONS_WIDTH, questionsPlace } from './questionsPlace';
+import { type PanelKind, questionsWidth } from './panelResize';
+import { cardSize } from './placement';
+import { QUESTIONS_NODE_ID, questionsPlace } from './questionsPlace';
 import { cardText, isOnTop } from './reading';
 import { isRoot, stackOrder } from './stack';
 
@@ -43,14 +46,14 @@ export type BelowCard = Below & { id: string };
 
 export type NoteNodeData = { noteId: string };
 
-/** The Concept panel of a One-Pager board: its saved width. */
-export type ConceptNodeData = { width: number };
+/** The Concept panel of a One-Pager board: its saved width; highlighted for resize. */
+export type ConceptNodeData = { width: number; highlighted: boolean };
 
-/** The Core Loop card: its id; the card comes from the store. */
-export type LoopNodeData = { cardId: string };
+/** The Core Loop card: its id (the card comes from the store); highlighted for resize. */
+export type LoopNodeData = { cardId: string; highlighted: boolean };
 
-/** The Questions panel: no data; it reads the board and the deck state itself. */
-export type QuestionsNodeData = Record<string, never>;
+/** The Questions panel: its saved width; highlighted for resize. It reads the rest itself. */
+export type QuestionsNodeData = { width: number; highlighted: boolean };
 
 export type CardFlowNode = Node<CardNodeData, 'card'>;
 export type NoteFlowNode = Node<NoteNodeData, 'note'>;
@@ -67,6 +70,8 @@ export interface NodeUi {
   freshIds?: ReadonlySet<string>;
   /** Cards Deal Stack just dealt: id → fade-in delay in ms. */
   reveal?: ReadonlyMap<string, number>;
+  /** The panel clicked for resize (user 2026-11-05), else null. */
+  highlightedPanel?: PanelKind | null;
 }
 
 export const STACK_RANK = 1000;
@@ -110,10 +115,10 @@ export function toNodes(board: Board, ui: NodeUi): BoardFlowNode[] {
             id: root.id,
             type: 'loop',
             position: { x: root.x, y: root.y },
-            width: HOOK_WIDTH,
+            width: cardSize(root).width,
             zIndex: (r + 1) * STACK_RANK,
             selectable: false,
-            data: { cardId: root.id },
+            data: { cardId: root.id, highlighted: ui.highlightedPanel === 'loop' },
           },
         ]
       : [],
@@ -162,7 +167,7 @@ export function toNodes(board: Board, ui: NodeUi): BoardFlowNode[] {
           draggable: true,
           selectable: false,
           focusable: false,
-          data: { width: conceptWidth(board) },
+          data: { width: conceptWidth(board), highlighted: ui.highlightedPanel === 'concept' },
         },
       ]
     : [];
@@ -174,12 +179,12 @@ export function toNodes(board: Board, ui: NodeUi): BoardFlowNode[] {
           id: QUESTIONS_NODE_ID,
           type: 'questions',
           position: questionsAt,
-          width: QUESTIONS_WIDTH,
+          width: questionsWidth(board),
           zIndex: 1,
           draggable: true,
           selectable: false,
           focusable: false,
-          data: {},
+          data: { width: questionsWidth(board), highlighted: ui.highlightedPanel === 'questions' },
         },
       ]
     : [];

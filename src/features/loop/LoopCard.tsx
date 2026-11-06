@@ -1,23 +1,20 @@
 /**
  * LoopCard: the Core Loop card face (design 9.16, docs/feature-core-loop-card.html). A
- * header with the repeat icon and "Core Loop", the live template (each step's cue text in
- * its deck's lane color, lead words and arrows in the card text color), a divider and the
- * edit field. The field shows the stored loopText, else the live text. While focused it
- * holds a local draft that commits once on blur (Esc blurs), as the note fields do; it
- * grows with its text. The template is read-only and acts as a drag handle; only the field
- * takes text. No React Flow here: the canvas passes its no-drag class names through
- * interactiveClassName, and passes the parts and texts in.
+ * header with the repeat icon and "Core Loop", then the edit field (the read-only live
+ * template above it was removed, user 2026-11-05). The field shows the stored loopText,
+ * else the live text; with neither, the help text shows as its placeholder. While focused
+ * it holds a local draft that commits once on blur (Esc blurs), as the note fields do; it
+ * is as tall as its text at the current width. The header and padding are the drag handle. No React Flow here: the
+ * canvas passes its no-drag class names through interactiveClassName, and the texts in.
  */
-import { Fragment, useLayoutEffect, useRef, useState, type KeyboardEvent } from 'react';
+import { useLayoutEffect, useRef, useState, type KeyboardEvent } from 'react';
 import { PanelTitle } from '@/shared/ui';
-import { LOOP_ARROW, type LoopPart } from './buildLoopText';
 import styles from './LoopCard.module.css';
 
-/** The template's help text with no steps (design 9.16). */
-export const LOOP_EMPTY_TEXT = 'Deal or draw cards to build the loop.';
+/** The field's placeholder with no steps and no edit (design 9.16, user 2026-11-05). */
+export const LOOP_EMPTY_TEXT = 'Add cards to the Hook';
 
 interface LoopCardProps {
-  parts: LoopPart[];
   /** The live text: buildLoopText(...).text. */
   liveText: string;
   /** The stored text, if the user has edited the field. */
@@ -26,26 +23,29 @@ interface LoopCardProps {
   onCommit: (text: string) => void;
   /** Extra class names for the edit field. */
   interactiveClassName?: string;
+  /** The card's drawn width; a change refits the field's height to its text. */
+  width?: number;
 }
 
 export function LoopCard({
-  parts,
   liveText,
   loopText,
   onCommit,
   interactiveClassName = '',
+  width,
 }: LoopCardProps) {
   const [draft, setDraft] = useState<string | null>(null);
   const field = useRef<HTMLTextAreaElement>(null);
   const value = draft ?? loopText ?? liveText;
 
-  // The field grows with its text (CSS field-sizing is not in every target engine).
+  // The field is as tall as its text (CSS field-sizing is not in every target engine): it
+  // fits again when the text changes and when the card's width changes, as on a resize.
   useLayoutEffect(() => {
     const el = field.current;
     if (!el) return;
     el.style.height = 'auto';
     el.style.height = `${el.scrollHeight}px`;
-  }, [value]);
+  }, [value, width]);
 
   function onKeyDown(event: KeyboardEvent<HTMLTextAreaElement>) {
     if (event.key === 'Escape') {
@@ -63,31 +63,11 @@ export function LoopCard({
       data-loop-card=""
     >
       <PanelTitle icon="repeat" title="Core Loop" />
-      <p
-        className={`${styles.template} ${parts.length === 0 ? styles.empty : ''}`}
-        data-testid="loop-template"
-      >
-        {parts.length === 0
-          ? LOOP_EMPTY_TEXT
-          : parts.map((part, i) => (
-              <Fragment key={part.deck}>
-                {i > 0 && LOOP_ARROW}
-                {part.lead && `${part.lead} `}
-                <span
-                  className={styles.step}
-                  data-loop-step={part.deck}
-                  style={{ color: `var(--rail-${part.deck})` }}
-                >
-                  {part.text}
-                </span>
-              </Fragment>
-            ))}
-      </p>
-      <hr className={styles.divider} />
       <textarea
         ref={field}
         className={`${styles.field} ${interactiveClassName}`}
         aria-label="Core Loop Text"
+        placeholder={LOOP_EMPTY_TEXT}
         rows={1}
         value={value}
         onFocus={() => setDraft(loopText ?? liveText)}

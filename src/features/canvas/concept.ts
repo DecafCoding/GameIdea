@@ -251,16 +251,6 @@ export function chipResultText(board: Board, modifierId: string, chipId: string)
 }
 
 /**
- * Resize: the panel width, rounded and kept within 232 to 640. The same board when the
- * width does not change, so a release at the same width is no undo step and no save.
- */
-export function resizeConcept(board: Board, width: number): Board {
-  if (board.kind !== 'onePager') throw new Error('Only a One-Pager board has a Concept panel.');
-  const next = clampWidth(width);
-  return next === conceptWidth(board) ? board : { ...board, conceptWidth: next };
-}
-
-/**
  * What a drop over the panel does: null when not over the panel or on a Free Form board.
  * A Hook Card or the Core Loop card stays where it is dropped; a Modifier on a chip it combines with goes onto
  * that chip, and any other Modifier stays on the canvas; every other deck card enters.

@@ -1,7 +1,8 @@
 /**
  * Browser tests for the Core Loop card (docs/feature-core-loop-card.html, design 9.16) on
- * the fixture pools: a new One-Pager board places 1 card at (624, 96), a deal fills the
- * live template and the field, a ring turn updates both until the first edit, an edit is 1
+ * the fixture pools: a new One-Pager board places 1 card at (624, 96) with no template
+ * (the help text is the field's placeholder), a deal fills the field, a ring turn updates
+ * it until the first edit, an edit is 1
  * undo step and 1 save, Reset From Cards and an empty edit bring the live text back, Copy
  * Loop and its fallback, the card drags and snaps but never tucks or enters Details, it is
  * never selected, an older One-Pager board loads without it, the text file has the Core
@@ -35,9 +36,12 @@ async function stubClipboard(page: Page, blocked = false) {
 }
 
 const loopCard = (page: Page) => page.getByTestId('loop-card');
-const template = (page: Page) => page.getByTestId('loop-template');
 const field = (page: Page) => page.getByRole('textbox', { name: 'Core Loop Text' });
 const loopMenu = (page: Page) => page.getByTestId('loop-menu');
+/** The field's text: the live loop text until the first edit. */
+const shown = (page: Page) => field(page).inputValue();
+/** A full live loop text: 4 steps. */
+const FULL_LOOP = / → earn .+ → .+ → to /;
 const hookCard = (page: Page) => page.locator('.react-flow__node [data-card][data-type="hook"]');
 const hookMenu = (page: Page) => page.getByTestId('hook-menu');
 const sentence = (page: Page) => page.getByTestId('hook-sentence');
@@ -63,7 +67,7 @@ async function dealtOnePager(page: Page) {
   await hookCard(page).hover({ position: { x: 120, y: 40 } });
   await expect(hookMenu(page)).toBeVisible();
   await hookMenu(page).getByRole('button', { name: 'Deal Stack' }).click();
-  await expect(template(page).locator('[data-loop-step]')).toHaveCount(4);
+  await expect(field(page)).toHaveValue(FULL_LOOP);
 }
 
 /** The train Mechanic's id, from the stored board. */
@@ -99,7 +103,10 @@ test('loop_newOnePager_oneCardAt680x96', async ({ page }) => {
   await openBoard(page, undefined, 'One-Pager');
   await expect(loopCard(page)).toHaveCount(1);
   await expect(loopCard(page)).toBeVisible();
-  await expect(template(page)).toHaveText('Deal or draw cards to build the loop.');
+  // No template above the field (user 2026-11-05): the help text is the placeholder.
+  await expect(page.getByTestId('loop-template')).toHaveCount(0);
+  await expect(field(page)).toHaveValue('');
+  await expect(field(page)).toHaveAttribute('placeholder', 'Add cards to the Hook');
   await expect
     .poll(async () => (await storedOnly(page)).cards.filter((c) => c.type === 'loop'))
     .toHaveLength(1);
@@ -111,29 +118,23 @@ test('loop_newOnePager_oneCardAt680x96', async ({ page }) => {
   await expect(loopCard(page)).toHaveCount(0);
 });
 
-test('loop_deal_templateAndFieldShowLiveText', async ({ page }) => {
+test('loop_deal_fieldShowsLiveText', async ({ page }) => {
   await dealtOnePager(page);
-  const steps = template(page).locator('[data-loop-step]');
-  expect(
-    await steps.evaluateAll((els) => els.map((el) => el.getAttribute('data-loop-step'))),
-  ).toEqual(['mechanic', 'resource', 'progression', 'goal']);
-  const text = await template(page).textContent();
-  expect(text).toMatch(/ → earn .+ → .+ → to /);
-  await expect(field(page)).toHaveValue(text!);
+  expect(await shown(page)).toMatch(FULL_LOOP);
+  await expect(loopCard(page).locator('[data-loop-step]')).toHaveCount(0);
 });
 
-test('loop_ringTurn_updatesTemplateAndUneditedField', async ({ page }) => {
+test('loop_ringTurn_updatesUneditedField', async ({ page }) => {
   await dealtOnePager(page);
-  const before = await template(page).textContent();
+  const before = await shown(page);
   await turnMechanic(page);
-  await expect(template(page)).not.toHaveText(before!);
-  const after = await template(page).textContent();
-  await expect(field(page)).toHaveValue(after!);
+  await expect(field(page)).not.toHaveValue(before);
+  expect(await shown(page)).toMatch(FULL_LOOP);
 });
 
 test('loop_edit_oneUndoStepAndOneSave', async ({ page }) => {
   await dealtOnePager(page);
-  const live = await template(page).textContent();
+  const live = await shown(page);
   await field(page).click();
   await field(page).fill('dig → sell the ore → dig deeper');
   // Typing saves nothing.
@@ -145,19 +146,23 @@ test('loop_edit_oneUndoStepAndOneSave', async ({ page }) => {
 
   await page.keyboard.press('Control+z');
   await expect.poll(async () => (await storedLoop(page))?.loopText).toBeUndefined();
-  await expect(field(page)).toHaveValue(live!);
+  await expect(field(page)).toHaveValue(live);
 });
 
-test('loop_editedThenRingTurn_templateOnly', async ({ page }) => {
+test('loop_editedThenRingTurn_fieldKeepsEdit', async ({ page }) => {
   await dealtOnePager(page);
+  const live = await shown(page);
   await field(page).click();
   await field(page).fill('my own loop');
   await clickEmptyCanvas(page);
   await expect.poll(async () => (await storedLoop(page))?.loopText).toBe('my own loop');
 
-  const before = await template(page).textContent();
+  const mechanicId = await trainMechanicId(page);
+  const activeOf = async () =>
+    (await storedOnly(page)).cards.find((c) => c.id === mechanicId)!.rings[0]!.activeIndex;
+  const was = await activeOf();
   await turnMechanic(page);
-  await expect(template(page)).not.toHaveText(before!);
+  await expect.poll(activeOf).not.toBe(was);
   await expect(field(page)).toHaveValue('my own loop');
 
   await openLoopMenu(page);
@@ -165,12 +170,15 @@ test('loop_editedThenRingTurn_templateOnly', async ({ page }) => {
   await expect(reset).toBeVisible();
   await reset.click();
   await expect.poll(async () => (await storedLoop(page))?.loopText).toBeUndefined();
-  await expect(field(page)).toHaveValue((await template(page).textContent())!);
+  // The live text after the turn, not the text before it.
+  await expect(field(page)).toHaveValue(FULL_LOOP);
+  await expect(field(page)).not.toHaveValue(live);
   await expect(loopMenu(page).getByRole('button', { name: 'Reset From Cards' })).toHaveCount(0);
 });
 
 test('loop_emptyEdit_returnsToLiveText', async ({ page }) => {
   await dealtOnePager(page);
+  const live = await shown(page);
   await field(page).click();
   await field(page).fill('my own loop');
   await clickEmptyCanvas(page);
@@ -180,13 +188,13 @@ test('loop_emptyEdit_returnsToLiveText', async ({ page }) => {
   await field(page).fill('');
   await clickEmptyCanvas(page);
   await expect.poll(async () => (await storedLoop(page))?.loopText).toBeUndefined();
-  await expect(field(page)).toHaveValue((await template(page).textContent())!);
+  await expect(field(page)).toHaveValue(live);
 });
 
 test('loop_copyLoop_putsShownTextOnClipboard', async ({ page }) => {
   await stubClipboard(page);
   await dealtOnePager(page);
-  const text = await template(page).textContent();
+  const text = await shown(page);
   await openLoopMenu(page);
   await loopMenu(page).getByRole('button', { name: 'Copy Loop' }).click();
   await expect(loopMenu(page).getByRole('button', { name: 'Copied' })).toBeVisible();
@@ -196,19 +204,19 @@ test('loop_copyLoop_putsShownTextOnClipboard', async ({ page }) => {
 test('loop_copyLoopBlocked_showsFallbackDialog', async ({ page }) => {
   await stubClipboard(page, true);
   await dealtOnePager(page);
-  const text = await template(page).textContent();
+  const text = await shown(page);
   await openLoopMenu(page);
   await loopMenu(page).getByRole('button', { name: 'Copy Loop' }).click();
   const dialog = page.getByRole('dialog', { name: 'Copy The Loop' });
   await expect(dialog).toBeVisible();
-  await expect(dialog.getByRole('textbox', { name: 'Core Loop' })).toHaveValue(text!);
+  await expect(dialog.getByRole('textbox', { name: 'Core Loop' })).toHaveValue(text);
   await dialog.getByRole('button', { name: 'Close' }).click();
   await expect(dialog).toHaveCount(0);
 });
 
 test('loop_drag_snapsAndNeverTucks', async ({ page }) => {
   await dealtOnePager(page);
-  const loopText = await template(page).textContent();
+  const loopText = await shown(page);
   // Onto the Hook Card: a plain move, snapped to the grid.
   const hook = await boxOf(hookCard(page));
   await dragTo(page, loopCard(page), { x: hook.x + 130, y: hook.y + 30 }, { x: 30, y: 16 });
@@ -235,7 +243,7 @@ test('loop_drag_snapsAndNeverTucks', async ({ page }) => {
     .toBe(true);
   expect(await storedLoop(page)).toMatchObject({ inConcept: false, tuckedUnder: null });
   await expect(loopCard(page)).toBeVisible();
-  await expect(sentence(page)).not.toContainText(loopText!);
+  await expect(sentence(page)).not.toContainText(loopText);
 });
 
 test('loop_noDuplicateDiscardOrSelect', async ({ page }) => {
@@ -245,7 +253,7 @@ test('loop_noDuplicateDiscardOrSelect', async ({ page }) => {
     .getByRole('button')
     .evaluateAll((els) => els.map((el) => el.getAttribute('aria-label')));
   expect(labels).toEqual(['Copy Loop']);
-  await template(page).click();
+  await loopCard(page).getByRole('heading', { name: 'Core Loop' }).click();
   await page.keyboard.press('Delete');
   await page.keyboard.press('Backspace');
   await expect(loopCard(page)).toHaveCount(1);
@@ -264,7 +272,7 @@ test('loop_oldOnePagerBoard_loadsWithoutLoopCard', async ({ page }) => {
 test('loop_textFile_coreLoopAfterHooks', async ({ page }) => {
   await dealtOnePager(page);
   const hook = await sentence(page).textContent();
-  const loop = await template(page).textContent();
+  const loop = await shown(page);
   const download = await exportFile(page, 'Text File');
   const text = await readFile(await download.path(), 'utf8');
   expect(text).toContain(`Hooks\n\n${hook}\n\nCore Loop\n\n${loop}\n\nDetails\n`);
@@ -283,21 +291,23 @@ test(
     const limit = browserName === 'webkit' ? 300 : 100;
     await openBoard(page, onePagerWithLoop());
     await page.evaluate(() => document.fonts.ready);
-    const before = await template(page).textContent();
+    const before = await shown(page);
     // Warm the engine with one turn first.
     await cardById(page, 'mechanic-t1').hover({ position: { x: 120, y: 180 } });
     await page.keyboard.press('r');
-    await expect(template(page)).not.toHaveText(before!);
+    await expect(field(page)).not.toHaveValue(before);
     const result = await page.evaluate(async () => {
-      const loop = document.querySelector('[data-testid="loop-template"]')!;
+      const loop = document.querySelector<HTMLTextAreaElement>(
+        'textarea[aria-label="Core Loop Text"]',
+      )!;
       const ring = document.querySelector<HTMLButtonElement>(
         '.react-flow__node[data-id="mechanic-t1"] [aria-label="Turn Cues Right"]',
       )!;
-      const was = loop.textContent;
+      const was = loop.value;
       const start = performance.now();
       ring.click();
       await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
-      return { elapsed: performance.now() - start, changed: loop.textContent !== was };
+      return { elapsed: performance.now() - start, changed: loop.value !== was };
     });
     expect(result.changed).toBe(true);
     expect(result.elapsed).toBeLessThan(limit);

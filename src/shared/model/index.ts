@@ -34,6 +34,12 @@ export const BOARD_KIND_NAME: Record<BoardKind, string> = {
 export const CONCEPT_WIDTH = { min: 232, max: 640, default: 232 } as const;
 
 /**
+ * The Core Loop card and Questions panel width range and default, in flow pixels (user
+ * 2026-11-05: both resize by an edge once highlighted, inside format 2 while in test).
+ */
+export const PANEL_WIDTH = { min: 240, max: 640, default: 240 } as const;
+
+/**
  * The 11 decks, in rail order: the core decks in design order, the Modifier deck, then
  * the optional decks.
  */
@@ -249,6 +255,11 @@ export interface Card {
    * shows this text; card changes never touch it.
    */
   loopText?: string;
+  /**
+   * Only on a loop card: its width once resized (PANEL_WIDTH, user 2026-11-05, inside
+   * format 2 while in test). Absent means 240.
+   */
+  width?: number;
 }
 
 export interface Note {
@@ -289,6 +300,11 @@ export interface Board {
    * Absent means the place below the Core Loop card (questionsPlace).
    */
   questionsPos?: { x: number; y: number };
+  /**
+   * One-Pager boards only: the Questions panel width once resized (PANEL_WIDTH, user
+   * 2026-11-05, inside format 2 while in test). Absent means 240.
+   */
+  questionsWidth?: number;
   createdAt: string;
   updatedAt: string;
   /**

@@ -25,7 +25,8 @@ import { useBoardStore } from '@/shared/store';
 import { CONCEPT_NODE_ID, conceptPlace, conceptWidth } from './concept';
 import { DrawFlight, type Flight } from './DrawFlight';
 import { boardRects, type Point, type Rect } from './placement';
-import { QUESTIONS_NODE_ID, QUESTIONS_WIDTH, questionsPlace } from './questionsPlace';
+import { questionsWidth } from './panelResize';
+import { QUESTIONS_NODE_ID, questionsPlace } from './questionsPlace';
 
 /** The panel's height before React Flow has measured it. */
 const UNMEASURED_PANEL_HEIGHT = 120;
@@ -47,7 +48,7 @@ export function conceptRectOf(flow: ReturnType<typeof useReactFlow>, board: Boar
 
 /**
  * The Questions panel's rect in flow coordinates: its place (questionsPlace) and its own
- * measured size (before measurement, 240 × 120). Null on a Free Form board.
+ * measured size (before measurement, its saved width × 120). Null on a Free Form board.
  */
 export function questionsRectOf(flow: ReturnType<typeof useReactFlow>, board: Board): Rect | null {
   const place = questionsPlace(board);
@@ -55,7 +56,7 @@ export function questionsRectOf(flow: ReturnType<typeof useReactFlow>, board: Bo
   const measured = flow.getInternalNode(QUESTIONS_NODE_ID)?.measured;
   return {
     ...place,
-    width: measured?.width ?? QUESTIONS_WIDTH,
+    width: measured?.width ?? questionsWidth(board),
     height: measured?.height ?? UNMEASURED_PANEL_HEIGHT,
   };
 }

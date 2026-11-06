@@ -1,5 +1,5 @@
 /**
- * Tests for the Questions panel view: its states, the count pill, the disabled Save Answer,
+ * Tests for the Questions panel view: its states, no count in the header, the disabled Save Answer,
  * the single commit on blur, Esc and delete.
  */
 import { fireEvent, render, screen, within } from '@testing-library/react';
@@ -73,9 +73,9 @@ describe('QuestionsPanel', () => {
     expect(onNext).toHaveBeenCalledTimes(1);
   });
 
-  it('questionsPanel_answers_listNewestFirstWithCountPill', () => {
+  it('questionsPanel_answers_listNewestFirstNoCount', () => {
     const { rerender } = renderPanel({ answers: ANSWERS.slice(1) });
-    expect(screen.getByTestId('questions-count').textContent).toBe('1 Answered');
+    expect(screen.queryByTestId('questions-count')).toBeNull();
     rerender(
       <QuestionsPanel
         status="ready"
@@ -91,7 +91,8 @@ describe('QuestionsPanel', () => {
         onDelete={vi.fn()}
       />,
     );
-    expect(screen.getByTestId('questions-count').textContent).toBe('2 Answered');
+    expect(screen.queryByTestId('questions-count')).toBeNull();
+    expect(screen.getByRole('banner').textContent).toBe('Questions');
     const items = screen.getAllByTestId('answer-item');
     expect(items.map((item) => item.dataset.answerId)).toEqual(['answer-2', 'answer-1']);
     expect(items[0]!.textContent).toContain('What makes it fun?');

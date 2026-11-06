@@ -2,42 +2,38 @@
  * ConceptNode: the Concept panel of a One-Pager board as 1 React Flow node beside the Hook
  * Card (design 9.15). A header (the list icon and "Details", no count), then 1 lane per deck that has
  * a Concept card, in rail order: a label (deck icon and plural deck name) and the chips in
- * drop order. An empty panel shows a help line. The panel is never dragged or selected.
+ * drop order. An empty panel shows a help line. The panel drags on its own; a click
+ * highlights it, and then its left or right edge resizes it (ResizeEdges, user 2026-11-05).
  * During a drag over the panel, the dragged card's lane shows (added when the panel has
  * none) and ends in a "<Deck> goes here" placeholder; a Modifier over a chip it combines
  * with outlines that chip and names the result above it. Hints are view state from the
  * canvas, never in the store.
  * Chips: a double-click pops the card out, and a press and drag takes it out (the canvas
- * tracks the drag). The resize handle on the right edge changes the width live and saves
- * once, on release. ConceptPanel is the plain body, testable without React Flow.
+ * tracks the drag). An edge drag changes the width live and saves once, on release.
+ * ConceptPanel is the plain body, testable without React Flow.
  * Chips Deal Stack just dealt fade in after their reveal delay (ConceptUi.reveal).
  */
-import { useReactFlow, type NodeProps } from '@xyflow/react';
+import type { NodeProps } from '@xyflow/react';
 import {
   createContext,
   memo,
   useContext,
   useMemo,
-  useRef,
   useState,
   type CSSProperties,
   type PointerEvent,
   type ReactNode,
 } from 'react';
 import { ChipView, edgeCues, TYPE_ICON } from '@/features/card';
-import {
-  CONCEPT_WIDTH,
-  DECK_LANE_NAME,
-  DECK_NAME,
-  DECKS,
-  type Board,
-  type Card,
-  type Deck,
-} from '@/shared/model';
+import { DECK_LANE_NAME, DECK_NAME, DECKS, type Board, type Card, type Deck } from '@/shared/model';
 import { useBoardStore } from '@/shared/store';
 import { Icon, PanelTitle } from '@/shared/ui';
 import { conceptLanes } from './concept';
 import type { ConceptFlowNode } from './nodes';
+import { PANEL_RANGE, type EdgeResult, type PanelEdge } from './panelResize';
+import { ResizeEdges } from './ResizeEdges';
+import { usePanelClick } from './usePanelClick';
+import edgeStyles from './ResizeEdges.module.css';
 import { cardText } from './reading';
 import styles from './ConceptNode.module.css';
 
@@ -58,7 +54,8 @@ export interface ConceptUi {
   draggingChipId: string | null;
   popOut: (cardId: string) => void;
   startChipDrag: (cardId: string, event: PointerEvent<HTMLElement>) => void;
-  resize: (width: number) => void;
+  /** An edge release: which edge and how far it moved, in flow pixels. */
+  resize: (edge: PanelEdge, dx: number) => void;
   /** Chips Deal Stack just dealt: id → fade-in delay in ms. */
   reveal: ReadonlyMap<string, number>;
 }
@@ -101,8 +98,14 @@ interface ConceptPanelProps {
   onChipPointerDown?: (cardId: string, event: PointerEvent<HTMLElement>) => void;
   /** Chips Deal Stack just dealt: id → fade-in delay in ms. */
   reveal?: ReadonlyMap<string, number>;
-  /** The resize handle, drawn by the node. */
-  handle?: ReactNode;
+  /** The left-side move during a left-edge resize, in flow pixels. */
+  shift?: number;
+  /** Clicked for resize: the highlight outline. */
+  highlighted?: boolean;
+  /** The resize edges, drawn by the node while highlighted. */
+  edges?: ReactNode;
+  /** The press that starts a click, which highlights the panel (usePanelClick). */
+  onPointerDown?: (event: PointerEvent<HTMLElement>) => void;
 }
 
 /** The lanes to draw: the board's, plus an empty lane for the hinted deck when it has none. */
@@ -120,13 +123,18 @@ export function ConceptPanel({
   onChipDoubleClick,
   onChipPointerDown,
   reveal,
-  handle,
+  shift = 0,
+  highlighted = false,
+  edges,
+  onPointerDown,
 }: ConceptPanelProps) {
   const shown = withHintLane(lanes, hint?.lane ?? null);
   return (
     <section
-      className={styles.panel}
-      style={{ width }}
+      className={`${styles.panel} ${highlighted ? edgeStyles.highlight : ''}`}
+      style={shift === 0 ? { width } : { width, transform: `translateX(${shift}px)` }}
+      data-highlighted={highlighted ? '' : undefined}
+      onPointerDown={onPointerDown}
       role="region"
       aria-label="Details"
       data-testid="concept-panel"
@@ -191,90 +199,42 @@ export function ConceptPanel({
           </ul>
         </div>
       ))}
-      {handle}
+      {edges}
     </section>
   );
 }
 
-interface ResizeDrag {
-  pointerId: number;
-  startX: number;
-  width: number;
-  zoom: number;
-}
-
-const clampWidth = (width: number) =>
-  Math.min(CONCEPT_WIDTH.max, Math.max(CONCEPT_WIDTH.min, Math.round(width)));
-
 function ConceptNodeView({ data }: NodeProps<ConceptFlowNode>) {
   const ui = useContext(ConceptUiContext);
-  const flow = useReactFlow();
   // A string, so the panel re-renders only when a lane, chip or chip's words change.
   const key = useBoardStore((state) => JSON.stringify(panelLanes(state.board)));
   const lanes = useMemo(() => JSON.parse(key) as PanelLane[], [key]);
-  const [live, setLive] = useState<number | null>(null);
-  const resize = useRef<ResizeDrag | null>(null);
+  const [live, setLive] = useState<EdgeResult | null>(null);
+  const click = usePanelClick('concept');
 
-  function widthAt(event: PointerEvent<HTMLButtonElement>): number {
-    const drag = resize.current!;
-    return clampWidth(drag.width + (event.clientX - drag.startX) / drag.zoom);
-  }
-
-  function onHandleDown(event: PointerEvent<HTMLButtonElement>) {
-    if (event.button !== 0) return;
-    event.stopPropagation();
-    event.currentTarget.setPointerCapture?.(event.pointerId);
-    resize.current = {
-      pointerId: event.pointerId,
-      startX: event.clientX,
-      width: data.width,
-      zoom: flow.getZoom(),
-    };
-    setLive(data.width);
-  }
-
-  function onHandleMove(event: PointerEvent<HTMLButtonElement>) {
-    if (resize.current?.pointerId !== event.pointerId) return;
-    setLive(widthAt(event));
-  }
-
-  function onHandleUp(event: PointerEvent<HTMLButtonElement>) {
-    if (resize.current?.pointerId !== event.pointerId) return;
-    const width = widthAt(event);
-    resize.current = null;
-    setLive(null);
-    ui?.resize(width);
-  }
-
-  const handle = (
-    <button
-      type="button"
-      className={`${styles.handle} nodrag nopan`}
-      aria-label="Resize Details"
-      title="Resize Details"
-      data-testid="concept-resize"
-      onPointerDown={onHandleDown}
-      onPointerMove={onHandleMove}
-      onPointerUp={onHandleUp}
-      onPointerCancel={() => {
-        resize.current = null;
-        setLive(null);
-      }}
-    >
-      <Icon name="grip" size={10} />
-    </button>
-  );
+  const edges = data.highlighted ? (
+    <ResizeEdges
+      label="Details"
+      width={data.width}
+      range={PANEL_RANGE.concept}
+      onLive={setLive}
+      onCommit={(edge, dx) => ui?.resize(edge, dx)}
+    />
+  ) : null;
 
   return (
     <ConceptPanel
-      width={live ?? data.width}
+      width={live?.width ?? data.width}
+      shift={live?.shift ?? 0}
+      highlighted={data.highlighted}
       lanes={lanes}
       hint={ui?.hint ?? null}
       draggingChipId={ui?.draggingChipId ?? null}
       onChipDoubleClick={ui?.popOut}
       onChipPointerDown={ui?.startChipDrag}
       reveal={ui?.reveal}
-      handle={handle}
+      edges={edges}
+      onPointerDown={click.onPointerDown}
     />
   );
 }

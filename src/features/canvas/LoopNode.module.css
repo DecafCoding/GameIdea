@@ -1,6 +1,6 @@
-/* The Core Loop node box: 240 wide (design 9.16); the height follows the card's text. */
+/* The Core Loop node box: 240 wide until resized (--panel-w); the height follows the text. */
 .node {
   position: relative;
-  width: var(--hook-w);
+  width: var(--panel-w, var(--hook-w));
   border-radius: var(--radius-card);
 }
