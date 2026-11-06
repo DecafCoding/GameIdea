@@ -3,7 +3,10 @@
  * name, then a Hooks section (each non-empty hook sentence in reading order, one
  * paragraph each, a blank line between), then a Core Loop section (the Core Loop card's
  * stored loopText, else its live text; each line trimmed at the end; left out when there is
- * no Core Loop card or the text is empty), then on a One-Pager board a Concept section (each
+ * no Core Loop card or the text is empty), then a Questions section (each answer in list
+ * order, newest first: its question line, then its answer lines trimmed at the end, a blank
+ * line between answers; left out when there are no answers), then on a One-Pager board a
+ * Details section (each
  * lane's plural deck name in rail order, then "- <words>" per chip in lane order, merged
  * and On Top adjectives included, a blank line between lanes; left out when the panel is
  * empty), then a Cards section (stacks top to bottom, then left to right; tucked cards
@@ -96,6 +99,13 @@ function loopBlock(board: Board): string {
     .trimEnd();
 }
 
+/** 1 block per answer in list order: the question line, then the answer lines. */
+function questionBlocks(board: Board): string[] {
+  return (board.questions ?? []).map((item) =>
+    [item.question.trim(), ...item.answer.split(/\r?\n/).map((line) => line.trimEnd())].join('\n'),
+  );
+}
+
 function noteBlocks(board: Board): string[] {
   return board.notes
     .filter((note) => note.text.trim() !== '')
@@ -114,6 +124,10 @@ export function boardText(board: Board): string {
   if (hooks.length > 0) sections.push(['Hooks', '', hooks.join('\n\n')].join('\n'));
   const loop = loopBlock(board);
   if (loop !== '') sections.push(['Core Loop', '', loop].join('\n'));
+  const questions = questionBlocks(board);
+  if (questions.length > 0) {
+    sections.push(['Questions', '', questions.join('\n\n')].join('\n'));
+  }
   const concept = conceptBlocks(board);
   if (concept.length > 0) sections.push(['Details', '', concept.join('\n\n')].join('\n'));
   const cards = cardLines(board);

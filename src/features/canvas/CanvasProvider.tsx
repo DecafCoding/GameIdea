@@ -3,7 +3,8 @@
  * board screen shares with the canvas: the note being edited, the draw-motion flights and
  * the canvas notice.
  * useCanvasApi gives app/ the canvas functions without importing React Flow, including the
- * rects new cards and notes must avoid (the Concept panel's measured rect among them).
+ * rects new cards and notes must avoid (the Concept and Questions panels' measured rects
+ * among them).
  * None of this state enters the board store (it is never an undo step or a save).
  */
 import { ReactFlowProvider, useReactFlow } from '@xyflow/react';
@@ -24,6 +25,7 @@ import { useBoardStore } from '@/shared/store';
 import { CONCEPT_NODE_ID, conceptPlace, conceptWidth } from './concept';
 import { DrawFlight, type Flight } from './DrawFlight';
 import { boardRects, type Point, type Rect } from './placement';
+import { QUESTIONS_NODE_ID, QUESTIONS_WIDTH, questionsPlace } from './questionsPlace';
 
 /** The panel's height before React Flow has measured it. */
 const UNMEASURED_PANEL_HEIGHT = 120;
@@ -39,6 +41,21 @@ export function conceptRectOf(flow: ReturnType<typeof useReactFlow>, board: Boar
   return {
     ...place,
     width: measured?.width ?? conceptWidth(board),
+    height: measured?.height ?? UNMEASURED_PANEL_HEIGHT,
+  };
+}
+
+/**
+ * The Questions panel's rect in flow coordinates: its place (questionsPlace) and its own
+ * measured size (before measurement, 240 × 120). Null on a Free Form board.
+ */
+export function questionsRectOf(flow: ReturnType<typeof useReactFlow>, board: Board): Rect | null {
+  const place = questionsPlace(board);
+  if (!place) return null;
+  const measured = flow.getInternalNode(QUESTIONS_NODE_ID)?.measured;
+  return {
+    ...place,
+    width: measured?.width ?? QUESTIONS_WIDTH,
     height: measured?.height ?? UNMEASURED_PANEL_HEIGHT,
   };
 }
@@ -125,8 +142,8 @@ export interface CanvasApi {
   notice: CanvasNotice | null;
   dismissNotice: () => void;
   /**
-   * Every card and note rect, plus the measured Concept panel on a One-Pager board, so new
-   * draws, notes and Hook Cards land off the panel.
+   * Every card and note rect, plus the measured Concept and Questions panels on a One-Pager
+   * board, so new draws, notes and Hook Cards land off the panels.
    */
   occupiedRects: () => Rect[];
   /** The Concept panel's rect, or null on a Free Form board. */
@@ -168,8 +185,10 @@ export function useCanvasApi(): CanvasApi {
       dismissNotice: () => setNotice(null),
       occupiedRects: () => {
         const board = useBoardStore.getState().board;
-        const panel = conceptRectOf(flow, board);
-        return panel ? [...boardRects(board), panel] : boardRects(board);
+        const panels = [conceptRectOf(flow, board), questionsRectOf(flow, board)].filter(
+          (rect): rect is Rect => rect !== null,
+        );
+        return [...boardRects(board), ...panels];
       },
       conceptRect: () => conceptRectOf(flow, useBoardStore.getState().board),
     }),

@@ -8,6 +8,8 @@
  * dialog; a settings change is never part of the board or its undo history. Genres live on
  * the Settings Genres tab, which this screen fills with the board's GenresTab (design 9.10);
  * a genre change saves but is never an undo step.
+ * The question pool loads here on its own and goes to the canvas for the Questions panel;
+ * its failure shows only in the panel, never as a banner, and never turns off the decks.
  */
 import { useState } from 'react';
 import {
@@ -26,7 +28,7 @@ import { GENRES_FOOTER_TEXT, GENRES_SCOPE_TEXT, GenresTab } from '@/features/gen
 import { addNote, NOTE_SIZE } from '@/features/notes';
 import { SettingsDialog } from '@/features/settings';
 import { GENRE_DECKS, newId, type Deck, type GenreDeck, type ModDeck } from '@/shared/model';
-import { usePools } from '@/shared/pools';
+import { usePools, useQuestionPool } from '@/shared/pools';
 import { useBoardStore, useSaveStatus } from '@/shared/store';
 import { Banner } from '@/shared/ui';
 import { EmptyBoardPanel } from './EmptyBoardPanel';
@@ -68,6 +70,8 @@ function BoardScreenBody({
   useUndoKeys();
   const saveFailed = useSaveStatus((state) => state.status === 'failed');
   const { status, pools, retry } = usePools();
+  // The question pool loads on its own: its failure shows in the Questions panel only.
+  const questionPool = useQuestionPool();
   const board = useBoardStore((state) => state.board);
   const changeBoard = useBoardStore((state) => state.changeBoard);
   const setGenres = useBoardStore((state) => state.setGenres);
@@ -189,7 +193,7 @@ function BoardScreenBody({
             )}
           </div>
         )}
-        <BoardCanvas pools={pools} />
+        <BoardCanvas pools={pools} questionPool={questionPool} />
         {showPanel && <EmptyBoardPanel />}
       </div>
       <SettingsDialog

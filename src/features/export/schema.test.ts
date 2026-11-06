@@ -19,6 +19,7 @@ import {
   fixtureNote,
   fixtureStack,
   onePagerBoard,
+  onePagerWithAnswers,
 } from '@/test/fixtures/boards';
 import { newBoard } from '@/shared/store';
 import { boardFileJson } from './boardFile';
@@ -303,6 +304,13 @@ describe('boardSchema One-Pager rules', () => {
     rejects({ ...fixtureBoard([]), conceptWidth: 232 });
   });
 
+  it('boardSchema_questionsPos_onePagerPassesFreeFormFails', () => {
+    const result = boardSchema.safeParse({ ...onePagerBoard(), questionsPos: { x: 624, y: 360 } });
+    expect(result.success).toBe(true);
+    expect(result.data?.questionsPos).toEqual({ x: 624, y: 360 });
+    rejects({ ...fixtureBoard([]), questionsPos: { x: 624, y: 360 } });
+  });
+
   it('boardSchema_conceptPos_onePagerPassesFreeFormFails', () => {
     const result = boardSchema.safeParse({ ...onePagerBoard(), conceptPos: { x: 600, y: 312 } });
     expect(result.success).toBe(true);
@@ -434,5 +442,51 @@ describe('boardSchema Core Loop rules', () => {
   it('schema_onePagerWithoutLoopCard_accepts', () => {
     const board = onePagerBoard();
     expect(parseBoardFile(boardFileJson(board))).toEqual(board);
+  });
+});
+
+describe('boardSchema Questions rules', () => {
+  const withAnswers = (questions: unknown): unknown => ({ ...onePagerWithAnswers(), questions });
+  const answer = (id: string, question: string, text: string) => ({ id, question, answer: text });
+
+  it('schema_onePagerWithQuestions_roundTrips', () => {
+    const board = onePagerWithAnswers();
+    expect(parseBoardFile(boardFileJson(board))).toEqual(board);
+  });
+
+  it('schema_noQuestionsField_accepted', () => {
+    const board: Board = onePagerWithAnswers();
+    delete board.questions;
+    expect(parseBoardFile(boardFileJson(board))).toEqual(board);
+  });
+
+  it('schema_questionsOnFreeForm_rejected', () => {
+    rejects({ ...fixtureBoard([]), questions: [answer('a', 'Why?', 'Because.')] });
+  });
+
+  it('schema_emptyQuestionsArray_rejected', () => {
+    rejects(withAnswers([]));
+  });
+
+  it('schema_blankAnswer_rejected', () => {
+    rejects(withAnswers([answer('a', 'Why?', '  ')]));
+    rejects(withAnswers([answer('a', 'Why?', '')]));
+  });
+
+  it('schema_blankQuestion_rejected', () => {
+    rejects(withAnswers([answer('a', ' ', 'Because.')]));
+  });
+
+  it('schema_answerWithSpaces_notTrimmed', () => {
+    const board = { ...onePagerWithAnswers(), questions: [answer('a', ' Why? ', ' Because. ')] };
+    expect(parseBoardFile(boardFileJson(board))).toEqual(board);
+  });
+
+  it('schema_repeatedAnswerId_rejected', () => {
+    rejects(withAnswers([answer('a', 'Why?', 'One.'), answer('a', 'How?', 'Two.')]));
+  });
+
+  it('schema_sameQuestionTwice_rejected', () => {
+    rejects(withAnswers([answer('a', 'Why?', 'One.'), answer('b', 'Why?', 'Two.')]));
   });
 });

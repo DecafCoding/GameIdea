@@ -135,6 +135,7 @@ const ICONS: IconName[] = [
   'square-arrow-down',
   'drama',
   'repeat',
+  'message-circle-question-mark',
   'list',
 ];
 

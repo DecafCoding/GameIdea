@@ -213,6 +213,9 @@ test.describe('panel', () => {
     }, centeredBoard);
     await page.goto('/#/board/one-pager-centered');
     await page.reload();
+    // The hash change above can send the not-yet-saved board to the list before the reload
+    // runs; after the reload the board is saved, so open it again.
+    await page.goto('/#/board/one-pager-centered');
     await expect(panel(page)).toBeVisible();
     await expect(rail(page).getByRole('button', { name: 'Draw A Goal' })).toBeEnabled();
     const centered = await centerOf(panel(page));

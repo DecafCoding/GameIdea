@@ -1,0 +1,17 @@
+{
+  "type": "question",
+  "cues": [
+    {
+      "id": "question-test-01",
+      "text": "Who is the player?"
+    },
+    {
+      "id": "question-test-02",
+      "text": "What makes it fun?"
+    },
+    {
+      "id": "question-test-03",
+      "text": "What could go wrong?"
+    }
+  ]
+}

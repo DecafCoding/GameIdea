@@ -9,6 +9,7 @@ import {
   fixtureCard,
   fixtureNote,
   onePagerBoard,
+  onePagerWithAnswers,
   roundTripBoard,
   version1BoardFile,
 } from '@/test/fixtures/boards';
@@ -132,6 +133,12 @@ describe('importedBoard', () => {
     expect(result.kind).toBe('onePager');
     expect(result.conceptWidth).toBe(400);
     expect(result.cards).toEqual(onePagerBoard().cards);
+  });
+
+  it('importBoard_onePagerWithAnswers_keepsQuestions', () => {
+    const parsed = parseBoardFile(boardFileJson(onePagerWithAnswers()))!;
+    const { board: result } = importedBoard(parsed, [], options);
+    expect(result.questions).toEqual(onePagerWithAnswers().questions);
   });
 
   it('importedBoard_keepsCardsNotesViewCreatedAt', () => {

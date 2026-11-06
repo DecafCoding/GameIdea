@@ -1,5 +1,5 @@
 /**
- * Shared model types: boards, cards with rings, cues, notes, pools and genres.
+ * Shared model types: boards, cards with rings, cues, notes, answers, pools and genres.
  * The Core Loop card (type loop) is a card with no rings and an optional loopText.
  * Types and constants, plus allGenresOn, newId, parseSettings (the Settings record) and
  * upgradeBoardV1 (the format 1 to 2 step), no other logic. See docs/architecture.html (schema-shape)
@@ -15,6 +15,8 @@
  * Phase 9 added the loop card type and Card.loopText inside version 2 with no upgrade step
  * (user decision 2026-11-05, the app is in test); a later change that removes, renames or
  * must rewrite saved fields adds Dexie version(3) and UPGRADES[2].
+ * Phase 10 added Board.questions inside version 2 with no upgrade step (user decision
+ * 2026-11-05).
  */
 export const FORMAT_VERSION = 2;
 
@@ -281,6 +283,12 @@ export interface Board {
    * place beside the Hook Card (conceptPlace). The panel then never follows the Hook Card.
    */
   conceptPos?: { x: number; y: number };
+  /**
+   * One-Pager boards only: the Questions panel's top-left once the user has dragged it or
+   * moved the Core Loop card (user 2026-11-05, inside format 2 while the app is in test).
+   * Absent means the place below the Core Loop card (questionsPlace).
+   */
+  questionsPos?: { x: number; y: number };
   createdAt: string;
   updatedAt: string;
   /**
@@ -291,6 +299,20 @@ export interface Board {
   view: BoardView;
   cards: Card[];
   notes: Note[];
+  /**
+   * One-Pager boards only: the Questions panel answers, newest first. Absent means no
+   * answers; the last delete removes the field.
+   */
+  questions?: Answer[];
+}
+
+/** One answered question on a One-Pager board. */
+export interface Answer {
+  id: string;
+  /** Copied from the pool at save time; a pool edit never changes it. */
+  question: string;
+  /** Never blank. */
+  answer: string;
 }
 
 export type BoardRecord = Board;
@@ -319,6 +341,18 @@ export interface Pool {
 }
 
 export type Pools = Record<Deck, Pool>;
+
+/** A question as it sits in the question pool file. */
+export interface QuestionPoolCue {
+  id: string;
+  text: string;
+}
+
+/** The Questions panel pool, public/pools/question.json; not a deck. */
+export interface QuestionPool {
+  type: 'question';
+  cues: QuestionPoolCue[];
+}
 
 export { newId } from './newId';
 export { upgradeBoardV1 } from './upgradeV1';

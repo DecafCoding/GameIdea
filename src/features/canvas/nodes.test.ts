@@ -187,3 +187,41 @@ describe('toNodes with a Core Loop card', () => {
     expect(ids.indexOf('loop-1')).toBeLessThan(ids.indexOf('hook-1'));
   });
 });
+
+describe('toNodes with the Questions panel', () => {
+  const panelOf = (nodes: ReturnType<typeof toNodes>) =>
+    nodes.find((node) => node.id === 'questions-panel');
+
+  it('toNodes_onePager_oneQuestionsNodeBelowLoop', () => {
+    const nodes = toNodes(onePagerWithLoop(), UI);
+    expect(nodes.filter((node) => node.type === 'questions')).toHaveLength(1);
+    const panel = panelOf(nodes)!;
+    expect(panel.position).toEqual({ x: 624, y: 96 + 264 });
+    expect(panel.width).toBe(240);
+    expect(panel.height).toBeUndefined();
+    expect(panel.data).toEqual({});
+    // After the notes and the Concept panel, before every card.
+    const ids = nodes.map((n) => n.id);
+    expect(ids.indexOf('questions-panel')).toBe(ids.indexOf('concept-panel') + 1);
+  });
+
+  it('toNodes_questionsPos_panelAtSavedPlace', () => {
+    const nodes = toNodes({ ...onePagerWithLoop(), questionsPos: { x: 960, y: 600 } }, UI);
+    expect(panelOf(nodes)!.position).toEqual({ x: 960, y: 600 });
+  });
+
+  it('toNodes_freeForm_noQuestionsNode', () => {
+    expect(panelOf(toNodes(fixtureBoard([fixtureCard('hook')]), UI))).toBeUndefined();
+  });
+
+  it('toNodes_questionsNode_draggableZIndex1', () => {
+    const nodes = toNodes(onePagerWithLoop(), UI);
+    const panel = panelOf(nodes)!;
+    expect(panel.zIndex).toBe(1);
+    expect(panel.draggable).toBe(true);
+    expect(panel.selectable).toBe(false);
+    expect(panel.focusable).toBe(false);
+    const cardZ = nodes.filter((n) => n.type === 'card' || n.type === 'loop').map((n) => n.zIndex!);
+    expect(Math.min(...cardZ)).toBeGreaterThan(1);
+  });
+});

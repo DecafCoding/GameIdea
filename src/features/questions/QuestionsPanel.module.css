@@ -1,0 +1,205 @@
+/*
+ * QuestionsPanel (design 9.17): 240 wide, the Details panel style (9.15): padding 16,
+ * radius 12, gap 12, fill --surface, border 1 --border, the raised card shadow. The height
+ * grows with the content. The values are copied from ConceptNode.module.css, since a CSS
+ * module is not shared across features. Tokens only.
+ */
+.panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-sizing: border-box;
+  width: var(--hook-w);
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-panel);
+  background: var(--surface);
+  box-shadow: var(--shadow-card-raised);
+  color: var(--text);
+  cursor: default;
+}
+
+/* The count pill after the PanelTitle: 22 tall, padding 0 9, radius 11, border 1 --border-strong, 11/600. */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  box-sizing: border-box;
+  height: 22px;
+  margin-left: 2px;
+  padding: 0 9px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.top {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* The current question: 15/600, line height 1.4, --text. */
+.question {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+
+/* The answer field: the note text style (9.12) at 14/1.45, min 3 lines, border 1
+   --border-strong, radius 8, padding 8 10; grows with its text. */
+.field {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 8px 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  overflow: hidden;
+  resize: none;
+  cursor: text;
+}
+
+/* A row, gap 8, each button 44 tall. */
+.buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.buttons > * {
+  flex: 1;
+  padding: 0 8px;
+}
+
+/* All answered: 13, line height 1.45, --text-muted. */
+.done {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--text-muted);
+}
+
+/* Load failed: 13, --warn-text, then a Retry secondary button. */
+.failed {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--warn-text);
+}
+
+/* 1 line in --border, full width inside the padding. */
+.divider {
+  width: 100%;
+  height: 0;
+  margin: 0;
+  border: 0;
+  border-top: 1px solid var(--border);
+}
+
+/* Items 12 apart, newest first. */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Gap 4; the right padding clears the 44 px trash button at the top right. */
+.item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-right: 36px;
+}
+
+/* The question: 13/600 --text-muted. */
+.itemQuestion {
+  margin: 0;
+  min-height: 22px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--text-muted);
+  overflow-wrap: anywhere;
+}
+
+/* The answer as an edit field: no border until focus, 14/1.45, --text. */
+.itemField {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  min-height: 0;
+  margin: 0;
+  padding: 2px 4px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  overflow: hidden;
+  resize: none;
+  cursor: text;
+}
+
+/* The focus ring (design 12). */
+.field:focus,
+.itemField:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 0;
+}
+
+/* Light mode: outlines use --accent-text, since --accent is too faint on light ground (design 4.2). */
+:global([data-mode='light']) .field:focus,
+:global([data-mode='light']) .itemField:focus {
+  outline-color: var(--accent-text);
+}
+
+/* A 44 px trash button at the item's top right, icon 16 in --text-muted. */
+.trash {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--button-h);
+  height: var(--button-h);
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.trash:hover {
+  color: var(--text);
+}

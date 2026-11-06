@@ -358,3 +358,22 @@ export function onePagerWithLoop(): Board {
     cards: [...board.cards, fixtureCard('loop', { id: 'loop-1', x: 624, y: 96, z: 9 })],
   };
 }
+
+/**
+ * The Core Loop fixture with 2 answers, newest first: answer-2 "What makes it fun?" and
+ * answer-1 "Who is the player?" (texts from the browser fixture question pool). modifier-1
+ * moves to x 960, out of the Questions panel's area below the Core Loop card.
+ */
+export function onePagerWithAnswers(): Board {
+  const board = onePagerWithLoop();
+  return {
+    ...board,
+    cards: board.cards.map((card) => (card.id === 'modifier-1' ? { ...card, x: 960 } : card)),
+    // Dragged up a little, so the whole answer list stays clear of the zoom strip.
+    questionsPos: { x: 624, y: 312 },
+    questions: [
+      { id: 'answer-2', question: 'What makes it fun?', answer: 'Chasing the light.' },
+      { id: 'answer-1', question: 'Who is the player?', answer: 'A night owl.' },
+    ],
+  };
+}

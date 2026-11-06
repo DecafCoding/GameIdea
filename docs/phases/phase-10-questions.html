@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Phase 10: Questions Panel</title>
+  <style>
+    :root { --fg:#1a1a1a; --muted:#666; --accent:#2563eb; --done:#16a34a; --warn:#dc2626; --rule:#e5e7eb; }
+    body { font:16px/1.6 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; color:var(--fg); max-width:62rem; margin:2rem auto; padding:0 1.25rem; }
+    h1 { font-size:2rem; border-bottom:2px solid var(--rule); padding-bottom:.3rem; }
+    h2 { font-size:1.5rem; margin-top:2.5rem; border-bottom:1px solid var(--rule); padding-bottom:.2rem; }
+    h3.milestone { font-size:1.25rem; margin-top:2rem; color:var(--accent); }
+    h4.task { font-size:1.1rem; margin-top:1.5rem; }
+    dl.phase-meta { display:grid; grid-template-columns:max-content 1fr; gap:.25rem 1rem; }
+    dl.phase-meta dt { font-weight:600; color:var(--muted); }
+    code, pre { font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+    pre { background:#f6f8fa; padding:1rem; border-radius:6px; overflow:auto; }
+    code { background:#f6f8fa; padding:.1rem .3rem; border-radius:4px; }
+    pre code { background:none; padding:0; }
+    ul.checklist { list-style:none; padding-left:0; }
+    ul.checklist > li::before { content:"☐ "; color:var(--muted); }
+    ul.checklist > li[data-checked="true"]::before { content:"☑ "; color:var(--done); }
+    .validate { color:var(--done); font-weight:600; }
+    table { border-collapse:collapse; margin:.5rem 0 1rem; }
+    th, td { border:1px solid var(--rule); padding:.3rem .6rem; text-align:left; vertical-align:top; font-size:.92rem; }
+  </style>
+</head>
+<body>
+
+<h1 data-phase="10">Phase 10: Questions Panel</h1>
+<p>The following plan should be complete, but validate documentation, codebase patterns, and task sanity before implementing. Pay special attention to naming of existing utils, types, and models — import from the right files.</p>
+
+<h2>Phase Description</h2>
+<p>Phase 10 adds a <strong>Questions panel</strong> to every One-Pager board, old and new, joined below its Core Loop card. It asks hard, original questions that test the game idea, and keeps the user's answers with the board:</p>
+<ul>
+  <li><strong>A new pool file</strong>, <code>public/pools/question.json</code>, with 60 original questions in the deck pool file shape (<code>{ "type": "question", "cues": [{ "id": "question-0001", "text": "..." }] }</code>), loaded by web address through its own load and its own failure state. A failed question load never turns off the deck buttons.</li>
+  <li><strong>A new optional field</strong> <code>Board.questions?: Answer[]</code> (<code>{ id, question, answer }</code>, newest first, One-Pager only, absent when there are no answers). No format version change, no Dexie <code>version(3)</code>, no <code>UPGRADES[2]</code> (the user's recorded exception, as in Phase 9).</li>
+  <li><strong>A pure pick rule</strong> <code>pickQuestion</code>: never an answered question; a skipped question does not come back until every other unanswered question was shown; never the current question when another exists; <code>null</code> when all are answered.</li>
+  <li><strong>3 Board → Board recipes</strong>: <code>addAnswer</code>, <code>editAnswer</code>, <code>deleteAnswer</code>, each 1 <code>changeBoard</code> (1 undo step, 1 save). Next Question is view state only.</li>
+  <li><strong>The panel</strong> (design 9.17): header with the <code>message-circle-question-mark</code> icon, "Questions" and an "N Answered" pill; the current question, an answer field, Next Question and Save Answer; the answer list with in-place edit and a trash button; the all-answered and load-failed states.</li>
+  <li><strong>The canvas node</strong>: placed by a pure <code>questionsPlace</code> from the Core Loop card's place and drawn height (24 px gap), following the card while it is dragged or grows; not draggable, not a drop target, never stored.</li>
+  <li><strong>The text file</strong>: a "Questions" section right after Core Loop and before Details.</li>
+</ul>
+<p>Behavior authority: <code>docs/feature-questions-panel.html</code>. Visual authority: <code>docs/design-system.html</code> 9.17, reusing 9.15 (Details panel), 9.16 (Core Loop card) and 9.12 (note text). No new token, no new library.</p>
+
+<h2>User Stories</h2>
+<ul>
+  <li>As a One-Pager user, I want the app to ask me hard questions about my idea, so that I find its weak parts before I build it.</li>
+  <li>As a user, I want to skip a question I cannot answer yet, and never see a question I already answered, so that every question I read is worth my time.</li>
+  <li>As a user, I want my answers saved on the board, editable and deletable, and in the text file, so that they reach my design document with the hook, the loop and the details.</li>
+</ul>
+
+<h2>Problem Statement</h2>
+<p>The app helps the user make a hook, a Details panel and a core loop, but does not help the user test the idea. The scan row "Question prompts that test an idea after the draw" is open, and the row "Send a saved idea to a design document" lacks the answers.</p>
+
+<h2>Solution Statement</h2>
+<p>Ship the 60 questions and their floor test first (the riskiest part). Add <code>Answer</code>, <code>QuestionPool</code> and <code>Board.questions</code> to the model, a hand-written <code>parseQuestionPool</code> plus <code>loadQuestionPool</code> / <code>useQuestionPool</code> in <code>shared/pools/</code> (separate from <code>usePools</code>), and the Zod rules in <code>features/export/schema.ts</code>. A new <code>features/questions/</code> holds the pure <code>pickQuestion</code>, the 3 recipes, the <code>useQuestionDeck</code> view-state hook and the <code>QuestionsPanel</code> view; it never imports the canvas (lint block, as for <code>features/loop</code>). The canvas gets a pure <code>questionsPlace</code>, a <code>'questions'</code> node in <code>toNodes</code>, a <code>QuestionsNode</code> that wires the view to the store, the loop card's measured height through React Flow's <code>useStore</code>, and the follow-during-drag rule mirroring the Details panel and the Hook Card. <code>BoardScreen</code> loads the question pool and passes it to the canvas. The text file gains its section; browser tests and docs close the phase.</p>
+
+<h2>Phase Metadata</h2>
+<dl class="phase-meta">
+  <dt>Phase Type</dt><dd data-field="type">New Capability</dd>
+  <dt>Estimated Complexity</dt><dd data-field="complexity">Medium</dd>
+  <dt>Primary Systems Affected</dt><dd data-field="systems">public/pools (question.json), shared/model, shared/pools, features/questions (new), features/canvas (questionsPlace, nodes, QuestionsNode, BoardCanvas, CanvasProvider), features/export (schema, text file), app/board (BoardScreen), shared/ui (icon), public/icons, eslint.config.js, tests/e2e</dd>
+  <dt>Dependencies</dt><dd data-field="dependencies">Phase 7 (One-Pager board, Details panel); Phase 9 (Core Loop card, ONE_PAGER_LOOP_SPOT); Phase 8 (Deal Stack, used in tests); no new library</dd>
+</dl>
+
+<h2>Context References</h2>
+
+<h3>Relevant Codebase Files — READ THESE BEFORE IMPLEMENTING</h3>
+<ul>
+  <li><code>docs/feature-questions-panel.html</code> (whole file) — Why: the behavior authority: data model, pick rule, recipes, panel contract, text file, tests and done criteria.</li>
+  <li><code>docs/design-system.html</code> 9.17 (<code>#s-questions</code>), 9.15, 9.16, 9.12, 13 (state sketch <code>questions?</code>) — Why: every visual value and both messages; no new token.</li>
+  <li><code>src/shared/model/index.ts</code> (lines 9–19 <code>FORMAT_VERSION</code> comment; 270–289 <code>Board</code>; 300–315 <code>PoolCue</code>, <code>Pool</code>, <code>Pools</code>) — Why: add <code>Answer</code>, <code>QuestionPool</code> and <code>Board.questions</code>; extend the format comment with the Phase 10 exception.</li>
+  <li><code>src/shared/pools/loadPools.ts</code>, <code>parsePool.ts</code>, <code>usePools.ts</code>, <code>index.ts</code> (whole files) — Why: the load, hand-written parse (no Zod outside export) and load-state hook to mirror for the question pool.</li>
+  <li><code>src/shared/pools/poolFiles.test.ts</code> (lines 14–39) — Why: <code>poolFiles_everyDeck_hasOneFileThatParses</code> compares the folder to <code>DECKS</code> and breaks once <code>question.json</code> exists; the floor test goes beside it.</li>
+  <li><code>tests/e2e/test.ts</code> (lines 39–49) and <code>tests/e2e/fixtures/pools/goal.json</code> — Why: every <code>pools/*.json</code> request in a spec is served from the fixtures folder, so <code>fixtures/pools/question.json</code> must exist the moment the app requests it.</li>
+  <li><code>src/features/export/schema.ts</code> (lines 1–25 doc comment; 122–131 <code>noteSchema</code>; 160–250 <code>boardSchema</code> and its <code>superRefine</code>, One-Pager and Core Loop rules; 82–86 the <code>loopText</code> no-trim refine) — Why: the <code>questions</code> field and its rules. Note <code>z.object</code> strips unknown keys today, so without this change an imported file would silently lose its answers.</li>
+  <li><code>src/features/export/textFile.ts</code> (lines 1–20 doc comment; 87–124 <code>loopBlock</code>, <code>noteBlocks</code>, <code>boardText</code>) and <code>textFile.test.ts</code> — Why: the Questions section goes between Core Loop and Details.</li>
+  <li><code>src/features/canvas/nodes.ts</code> (whole file) and <code>nodes.test.ts</code> — Why: the Concept node is the pattern for a fixed, measured, non-draggable panel node.</li>
+  <li><code>src/features/canvas/concept.ts</code> (lines 20–22 <code>CONCEPT_GAP</code>, <code>CONCEPT_NODE_ID</code>; 53–68 <code>onePagerHook</code>, <code>conceptPlace</code>) — Why: a derived panel place from a card's place.</li>
+  <li><code>src/features/canvas/CanvasProvider.tsx</code> (lines 24–44 <code>UNMEASURED_PANEL_HEIGHT</code>, <code>conceptRectOf</code>; 131–177 <code>occupiedRects</code>) — Why: new draws must avoid the Questions panel too.</li>
+  <li><code>src/features/canvas/BoardCanvas.tsx</code> (line 86 <code>nodeTypes</code>; 125–130 props; 194–245 state and <code>derived</code>; 340–386 <code>onNodesChange</code>, where the Details panel follows the Hook Card; 388–395 <code>onNodeDragStart</code> concept early return; 676–690 the providers and <code>ReactFlow</code>) — Why: the wiring points.</li>
+  <li><code>src/features/canvas/LoopNode.tsx</code> (whole file) and <code>NoteNode.tsx</code> — Why: a node that wraps a feature view, reads the store per id and passes <code>interactiveClassName="nodrag nowheel nopan"</code>.</li>
+  <li><code>src/features/canvas/ConceptNode.tsx</code> (lines 48–50 <code>conceptCountText</code>; 130–145 header and pill) and <code>ConceptNode.module.css</code> (lines 1–53 <code>.panel</code>, <code>.header</code>, <code>.title</code>, <code>.pill</code>) — Why: the panel shell and pill values the Questions panel copies (the CSS cannot be imported across features).</li>
+  <li><code>src/features/loop/LoopCard.tsx</code> (lines 38–106 draft, auto-grow, Esc, blur commit), <code>LoopCard.module.css</code> (<code>.field</code>), <code>src/features/notes/NoteView.module.css</code> (<code>.text</code>) — Why: the commit-on-blur field and the note text style (9.12) for the answer fields.</li>
+  <li><code>src/features/loop/index.ts</code> and <code>eslint.config.js</code> (lines 121–147, the <code>features/hook</code> and <code>features/loop</code> blocks) — Why: the feature-index and no-canvas-import pattern to mirror for <code>features/questions</code>.</li>
+  <li><code>src/features/canvas/boardActions.ts</code> (lines 61 <code>replaceCard</code>; 248 <code>redrawAll</code>; 324 <code>dealStack</code>; 484–501 <code>setLoopText</code>, <code>resetLoopText</code> same-board no-op pattern) and <code>boardActions.test.ts</code> (lines 515–560 redrawAll tests) — Why: recipe style and where the "Redraw All and Deal Stack keep questions" tests go.</li>
+  <li><code>src/features/notes/noteActions.ts</code> (<code>addNote(board, spot, id)</code>) — Why: a recipe that takes its new id from the caller, so tests are deterministic.</li>
+  <li><code>src/app/board/BoardScreen.tsx</code> (lines 29, 70, 192) — Why: where <code>usePools</code> runs and <code>BoardCanvas</code> gets <code>pools</code>; <code>useQuestionPool</code> goes beside it.</li>
+  <li><code>src/shared/store/newBoard.ts</code> (line 28 <code>ONE_PAGER_LOOP_SPOT</code>) and <code>src/features/canvas/placement.ts</code> (lines 13 <code>HOOK_WIDTH</code>; 32–40 <code>cardSize</code>) — Why: the fallback place (680, 96) and the loop card's 200 px minimum height.</li>
+  <li><code>src/shared/ui/Icon.tsx</code> (lines 8–53 <code>IconName</code>), <code>src/shared/ui/tokens.test.ts</code> (lines 93–137 <code>ICONS</code>; 204–217 icon file tests), <code>public/icons/repeat.svg</code>, <code>src/shared/ui/Button.tsx</code> (<code>variant</code>) — Why: the icon file shape, the 2 lists every icon must be in, and the primary/secondary buttons. <code>trash</code> is already vendored and listed.</li>
+  <li><code>src/test/fixtures/boards.ts</code> (lines 300–365 <code>onePagerBoard</code>, <code>onePagerWithLoop</code>) — Why: the base for a new <code>onePagerWithAnswers</code> fixture. <code>modifier-1</code> sits at (720, 360), inside the panel's area.</li>
+  <li><code>src/test/storyNames.test.ts</code> (lines 10–30) — Why: <code>src/</code> must never contain the 3 banned story words (whole word, any case) or the string literals of the 3 old Setting kinds; question texts in <code>src/</code> test fixtures must avoid them.</li>
+  <li><code>tests/e2e/loop.spec.ts</code>, <code>tests/e2e/board-helpers.ts</code> (lines 16–59 <code>openBoard</code>, <code>createBoard</code>; 144–175 <code>storedBoards</code>, <code>waitForStoredCard</code>), <code>tests/e2e/export-helpers.ts</code> (<code>exportFile</code>), <code>tests/e2e/board.spec.ts</code> (lines 143–165 pool block and Retry), <code>tests/e2e/import.spec.ts</code> — Why: helpers and patterns for the new spec.</li>
+</ul>
+
+<h3>New Files to Create</h3>
+<ul>
+  <li><code>public/pools/question.json</code> — the 60 original questions.</li>
+  <li><code>tests/e2e/fixtures/pools/question.json</code> — 3 fixed questions for the browser tests (all-answered reachable).</li>
+  <li><code>src/shared/pools/parseQuestionPool.ts</code>, <code>loadQuestionPool.ts</code>, <code>useQuestionPool.ts</code>, plus <code>loadQuestionPool.test.ts</code> — the separate question pool load.</li>
+  <li><code>public/icons/message-circle-question-mark.svg</code> — the vendored Lucide icon.</li>
+  <li><code>src/features/questions/index.ts</code> — the only way into the feature.</li>
+  <li><code>src/features/questions/pickQuestion.ts</code> + <code>.test.ts</code> — the pure pick rule.</li>
+  <li><code>src/features/questions/answers.ts</code> + <code>.test.ts</code> — <code>addAnswer</code>, <code>editAnswer</code>, <code>deleteAnswer</code>, <code>answeredQuestions</code>.</li>
+  <li><code>src/features/questions/useQuestionDeck.ts</code> + <code>.test.tsx</code> — the view state: current question, seen list, draft.</li>
+  <li><code>src/features/questions/QuestionsPanel.tsx</code>, <code>QuestionsPanel.module.css</code>, <code>QuestionsPanel.test.tsx</code> — the panel view.</li>
+  <li><code>src/features/canvas/questionsPlace.ts</code> + <code>.test.ts</code> — <code>QUESTIONS_NODE_ID</code>, <code>QUESTIONS_GAP</code>, <code>questionsPlace</code>.</li>
+  <li><code>src/features/canvas/QuestionsNode.tsx</code> — the panel as a React Flow node.</li>
+  <li><code>tests/e2e/questions.spec.ts</code> — the browser tests.</li>
+</ul>
+
+<h3>Relevant Documentation — READ BEFORE IMPLEMENTING</h3>
+<ul>
+  <li><a href="https://lucide.dev/icons/message-circle-question-mark">Lucide: message-circle-question-mark</a> — Why: the source shape; write the paths into the SVG by hand at stroke 2.2. Nothing is fetched at build or run time.</li>
+  <li><a href="https://reactflow.dev/api-reference/hooks/use-store">React Flow: useStore</a> and <a href="https://reactflow.dev/api-reference/types/internal-node">InternalNode (measured)</a> — Why: read the Core Loop node's measured height (<code>s.nodeLookup.get(id)?.measured.height</code>) so the panel moves when the card grows.</li>
+  <li><a href="https://reactflow.dev/learn/customization/custom-nodes#prevent-dragging--selecting">React Flow: nodrag, nowheel</a> — Why: typing in the answer fields must not drag or pan.</li>
+  <li><a href="https://reactflow.dev/api-reference/react-flow#onlyrenderviselements">React Flow: onlyRenderVisibleElements</a> — Why: off-screen nodes unmount, so the panel's view state (current question, seen, draft) must live above the node, in <code>BoardCanvas</code>.</li>
+  <li><a href="https://zod.dev/api#refinements">Zod 4: refinements</a> and <a href="https://zod.dev/api#objects">objects (unknown keys are stripped)</a> — Why: non-blank checks without a trim transform; the field must be declared or it is dropped.</li>
+  <li><a href="https://react.dev/reference/eslint-plugin-react-hooks/lints/set-state-in-effect">eslint-plugin-react-hooks: set-state-in-effect</a> — Why: the deck picks a question in an effect when the pool or answers change outside the panel (see Task 8).</li>
+  <li><code>docs/architecture.html</code> decisions <code>pool-files</code>, <code>pool-load-failure</code>, <code>module-layout</code>, <code>import-rules</code>, <code>architecture-pattern</code>, <code>canvas-library</code>, <code>state-store</code>, <code>undo-history</code>, <code>save-transaction</code>, <code>schema-shape</code>, <code>storage-seam</code>, <code>board-file-format</code>, <code>schema-versions</code>, <code>import-checks</code>, <code>import-policy</code>, <code>tab-sync</code>, <code>nfr-targets</code>, <code>outside-code</code> — Why: the constraints this phase conforms to, and the 1 recorded exception (see Notes).</li>
+</ul>
+
+<h3>Patterns to Follow</h3>
+<p><strong>Feature view that never imports the canvas</strong> (<code>features/loop/index.ts</code>): "It never imports the canvas: the canvas works out the steps from the board and passes the parts and texts in." <code>features/questions</code> does the same: the canvas passes answers, the deck state and callbacks in.</p>
+<p><strong>Same-board no-op</strong> (<code>boardActions.ts</code> 484–501):</p>
+<pre><code>if (text.trim() === '') {
+  return card.loopText === undefined ? board : replaceCard(board, withoutLoopText(card));
+}
+const shown = card.loopText ?? buildLoopText(loopSteps(board)).text;
+return text === shown ? board : replaceCard(board, { ...card, loopText: text });</code></pre>
+<p>A recipe that changes nothing returns the same object, so <code>changeBoard</code> makes no undo step and no save.</p>
+<p><strong>A panel that follows a card during its drag</strong> (<code>BoardCanvas.tsx</code> 362–373):</p>
+<pre><code>if (change.id === hookId) {
+  const panel = base.find((n) =&gt; n.id === CONCEPT_NODE_ID);
+  if (panel) {
+    extra.push({ type: 'position', id: CONCEPT_NODE_ID,
+      position: { x: panel.position.x + dx, y: panel.position.y + dy } });
+  }
+}</code></pre>
+<p><strong>Measured panel rect</strong> (<code>CanvasProvider.tsx</code> 35–44): <code>flow.getInternalNode(CONCEPT_NODE_ID)?.measured</code> with a fallback height.</p>
+<p><strong>Load state hook</strong> (<code>usePools.ts</code>): attempt counter, <code>status: 'loading' | 'ready' | 'failed'</code>, <code>retry</code>.</p>
+<p><strong>Icon file</strong> (<code>public/icons/repeat.svg</code>):</p>
+<pre><code>&lt;svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"&gt;
+  &lt;path d="..."/&gt;
+&lt;/svg&gt;</code></pre>
+<p><strong>Conventions:</strong> a short doc comment at the top of each new module, and updated doc comments on every module whose behavior changes; tests named <code>functionName_condition_expectedResult</code>; pure functions never mutate input; no <code>console.log</code>; Title Case UI text ("Questions", "Next Question", "Save Answer", "Delete Answer", "Retry", "3 Answered"); messages in sentence case exactly as design 9.17 writes them; tokens only, no hard-coded colors in CSS modules; React Flow only in <code>features/canvas/</code>; Zod only in <code>features/export/</code>; no <code>zustand</code> import in features (use <code>useBoardStore</code> from <code>@/shared/store</code>); never the attribute name <code>data-kind</code>.</p>
+
+<h2>Implementation Plan</h2>
+<p><strong>Rendering:</strong> Milestones</p>
+<p><strong>Rationale:</strong> 13 tasks in 4 layers, in the brief's order: the questions and the data layer first (pool file, load, model, import check), then the pure rules (pick, recipes, text file), then the views and the canvas node, then browser tests and docs. Each layer is unit-tested before the next uses it.</p>
+
+<h3 class="milestone" data-milestone="1">Milestone 1: Questions, pool load and model</h3>
+<p>The 60 questions exist and pass their floor; the question pool loads on its own; a board with answers round-trips through the import check.</p>
+<p><strong>Validation checkpoint:</strong> <code>npx vitest run src/shared src/features/export</code> exits 0, including a test that parses the real <code>public/pools/question.json</code> through <code>parseQuestionPool</code> and a test that a One-Pager board with <code>questions</code> survives <code>parseBoardFile(boardFileJson(board))</code> unchanged.</p>
+
+<h4 class="task" data-task="1">Task 1: Write the 60 questions in question.json with the pool floor test and the browser fixture</h4>
+<ul>
+  <li><strong>ADD</strong> to <code>src/shared/model/index.ts</code> (after <code>Pools</code>): <code>export interface QuestionPoolCue { id: string; text: string }</code> and <code>export interface QuestionPool { type: 'question'; cues: QuestionPoolCue[] }</code> with a doc comment ("the Questions panel pool, public/pools/question.json; not a deck").</li>
+  <li><strong>CREATE</strong> <code>src/shared/pools/parseQuestionPool.ts</code>: <code>parseQuestionPool(data: unknown): QuestionPool</code>, hand-written like <code>parsePool</code>: an object, <code>type === 'question'</code>, a non-empty <code>cues</code> array, each cue with a non-blank <code>id</code> and <code>text</code>; any other key on a cue is ignored, not copied; throws an <code>Error</code> with a plain sentence on any broken rule. Export it from <code>src/shared/pools/index.ts</code>.</li>
+  <li><strong>CREATE</strong> <code>public/pools/question.json</code>: <code>{ "type": "question", "cues": [...] }</code> with exactly 60 cues, ids <code>question-0001</code> to <code>question-0060</code>, 2-space JSON like the other pools. Write the questions as original text: 10 each on 6 topics, in this order — the player (who plays and why they come back), the fun (the moment-to-moment feeling), the core loop and choices, the risk (what could make the idea fail), the scope (what a small team or a jam can finish) and the hook (what makes it stand out). Each is 1 sentence, ends with "?", is at most 100 characters, is phrased for a solo or jam developer, and names no published game, deck or person. Do not copy or paraphrase any published question deck (no "Lens of …" titles, no text from The Art of Game Design or any other card deck). Example of the voice: "Why would a player come back tomorrow?", "What can you cut and still have the game?".</li>
+  <li><strong>CREATE</strong> <code>tests/e2e/fixtures/pools/question.json</code>: 3 cues, ids <code>question-test-01</code> to <code>-03</code>, texts "Who is the player?", "What makes it fun?", "What could go wrong?".</li>
+  <li><strong>UPDATE</strong> <code>src/shared/pools/poolFiles.test.ts</code>: <code>poolFiles_everyDeck_hasOneFileThatParses</code> expects the folder to hold <code>[...DECKS, 'question']</code> (sorted); <strong>ADD</strong> <code>questionPool_file_parsesWithAtLeast60Questions</code>, <code>questionPool_ids_areUniqueAndNumbered</code> (<code>/^question-\d{4}$/</code>), <code>questionPool_texts_areDistinctNonBlankQuestions</code> (trimmed lowercase unique, each ends with "?", length ≤ 100). Update the doc comment.</li>
+  <li><strong>ADD</strong> <code>src/shared/pools/parseQuestionPool.test.ts</code>: <code>parseQuestionPool_goodFile_returnsCues</code>, <code>parseQuestionPool_wrongType_throws</code>, <code>parseQuestionPool_noCues_throws</code>, <code>parseQuestionPool_blankText_throws</code>, <code>parseQuestionPool_extraKey_isDropped</code>.</li>
+  <li><strong>GOTCHA:</strong> the e2e fixture route serves every <code>pools/*.json</code> from <code>tests/e2e/fixtures/pools/</code>; once Task 10 makes the app request <code>question.json</code>, a missing fixture fails every browser test. <code>scripts/check-size.mjs</code> already counts every file in <code>public/pools/</code>; no change. Never run <code>scripts/split-decks.mjs</code> (it refuses a non-empty folder anyway).</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/shared/pools &amp;&amp; node -e "const p=require('./public/pools/question.json'); if(p.type!=='question'||p.cues.length&lt;60) process.exit(1)" &amp;&amp; npm run typecheck</code></li>
+</ul>
+
+<h4 class="task" data-task="2">Task 2: Load the question pool on its own with loadQuestionPool and useQuestionPool</h4>
+<ul>
+  <li><strong>CREATE</strong> <code>src/shared/pools/loadQuestionPool.ts</code>: <code>questionPoolUrl()</code> returns <code>`${import.meta.env.BASE_URL}pools/question.json`</code>; <code>loadQuestionPool(fetchFn = fetch): Promise&lt;QuestionPool&gt;</code> rejects on a network error, a non-OK status, bad JSON or a bad shape (mirror <code>loadPool</code>).</li>
+  <li><strong>CREATE</strong> <code>src/shared/pools/useQuestionPool.ts</code>: <code>useQuestionPool(fetchFn?)</code> returns <code>QuestionPoolState { status: 'loading' | 'ready' | 'failed'; questions: readonly string[] | null; retry: () =&gt; void }</code> (<code>questions</code> = the cue texts in file order). Mirror <code>usePools</code> exactly (attempt counter, retry resets to loading).</li>
+  <li><strong>UPDATE</strong> <code>src/shared/pools/index.ts</code>: export <code>loadQuestionPool</code>, <code>questionPoolUrl</code>, <code>useQuestionPool</code>, <code>type QuestionPoolState</code>; update the doc comment (the 11 deck pools and the question pool, each with its own load).</li>
+  <li><strong>ADD</strong> <code>src/shared/pools/loadQuestionPool.test.ts</code> (mirror <code>loadPools.test.ts</code> fetch stubs): <code>loadQuestionPool_okResponse_returnsPool</code>, <code>loadQuestionPool_notOk_rejects</code>, <code>loadQuestionPool_badShape_rejects</code>, <code>questionPoolUrl_endsWithPoolsQuestionJson</code>; and a <code>renderHook</code> test <code>useQuestionPool_failThenRetry_becomesReady</code>.</li>
+  <li><strong>GOTCHA:</strong> do not add the question pool to <code>loadPools</code> or <code>Pools</code>: a failed question load must never turn off the deck buttons (feature brief Scope).</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/shared/pools &amp;&amp; npm run typecheck &amp;&amp; npm run lint</code></li>
+</ul>
+
+<h4 class="task" data-task="3">Task 3: Add Answer and the optional Board.questions to the model and the Zod import check</h4>
+<ul>
+  <li><strong>ADD</strong> to <code>src/shared/model/index.ts</code>: <code>export interface Answer { id: string; /** copied from the pool at save time */ question: string; /** never blank */ answer: string }</code> and on <code>Board</code>: <code>questions?: Answer[]</code> with a doc comment ("One-Pager boards only; newest first; absent means no answers; the last delete removes the field"). Extend the <code>FORMAT_VERSION</code> comment: "Phase 10 added Board.questions inside version 2 with no upgrade step (user decision 2026-11-05)". Do not change <code>FORMAT_VERSION</code>.</li>
+  <li><strong>ADD</strong> tests first in <code>src/features/export/schema.test.ts</code>: <code>schema_onePagerWithQuestions_roundTrips</code>, <code>schema_noQuestionsField_accepted</code> (older files), <code>schema_questionsOnFreeForm_rejected</code>, <code>schema_emptyQuestionsArray_rejected</code>, <code>schema_blankAnswer_rejected</code>, <code>schema_blankQuestion_rejected</code>, <code>schema_answerWithSpaces_notTrimmed</code>, <code>schema_repeatedAnswerId_rejected</code>, <code>schema_sameQuestionTwice_rejected</code>; in <code>importBoard.test.ts</code>: <code>importBoard_onePagerWithAnswers_keepsQuestions</code>.</li>
+  <li><strong>UPDATE</strong> <code>src/features/export/schema.ts</code>: an <code>answerSchema</code> (<code>id: z.string().min(1)</code>, <code>question</code> and <code>answer</code>: <code>z.string().refine((t) =&gt; t.trim() !== '', …)</code>, no trim transform, as <code>loopText</code>); <code>questions: z.array(answerSchema).min(1).optional()</code> on the board object; in <code>superRefine</code>: a Free Form board with <code>questions</code> → issue "Only a One-Pager board has questions."; repeated answer ids → "Two answers have the same id."; a repeated question text → "A question is answered twice.". Update the doc comment (Questions rules; added inside format 2 with no upgrade step).</li>
+  <li><strong>ADD</strong> to <code>src/test/fixtures/boards.ts</code>: <code>onePagerWithAnswers()</code> — <code>onePagerWithLoop()</code> with <code>modifier-1</code> moved to x 960 (out of the panel's area) and <code>questions: [{ id: 'answer-2', question: 'What makes it fun?', answer: 'Chasing the light.' }, { id: 'answer-1', question: 'Who is the player?', answer: 'A night owl.' }]</code> (newest first; texts match the e2e fixture pool). Doc comment says so.</li>
+  <li><strong>GOTCHA:</strong> <code>boardSchema</code> is typed <code>z.ZodType&lt;Board&gt;</code>, so the model field must land in the same task. Do not touch <code>src/shared/storage</code>, <code>upgrade.ts</code> or <code>upgradeV1.ts</code>. Fixture texts in <code>src/</code> must pass <code>storyNames.test.ts</code>.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/export src/shared src/test &amp;&amp; npm run typecheck</code></li>
+</ul>
+
+<h3 class="milestone" data-milestone="2">Milestone 2: Pure rules and the text file</h3>
+<p>The pick rule, the 3 recipes and the Questions section exist as pure, tested code, and no other board action touches answers.</p>
+<p><strong>Validation checkpoint:</strong> on <code>onePagerWithAnswers()</code>, <code>addAnswer</code> then <code>deleteAnswer</code> of the new id returns a board deep-equal to the start; <code>pickQuestion</code> over the e2e fixture texts with those answers returns only "What could go wrong?"; <code>boardText</code> of the board has "Core Loop", "Questions", "Details" in that order — all asserted in <code>src/features/questions/answers.test.ts</code> (<code>questions_fixtureBoard_rulesAndTextAgree</code>), and <code>npx vitest run src/features</code> exits 0.</p>
+
+<h4 class="task" data-task="4">Task 4: Create features/questions with the pure pickQuestion rule and its lint block</h4>
+<ul>
+  <li><strong>CREATE</strong> <code>src/features/questions/pickQuestion.ts</code> (tests first in <code>pickQuestion.test.ts</code>):
+<pre><code>export interface PickInput {
+  pool: readonly string[];          // question texts in file order
+  answered: ReadonlySet&lt;string&gt;;     // question texts on the board
+  seen: readonly string[];          // shown since the cycle began, current included
+  current: string | null;
+}
+export interface Pick { question: string; seen: string[] }
+/** null when every pool question is answered. */
+export function pickQuestion(input: PickInput, random: () =&gt; number = Math.random): Pick | null</code></pre>
+  Rule: <code>candidates</code> = distinct pool texts not answered; none → <code>null</code>. <code>others</code> = candidates ≠ current (or all candidates when that leaves none). <code>unseen</code> = others not in seen; if empty, the cycle ends: seen becomes <code>[]</code> and <code>unseen = others</code>. Pick <code>unseen[Math.min(n - 1, Math.floor(random() * n))]</code>; returned <code>seen</code> = the (kept or cleared) seen list filtered to candidates, plus the pick. Never mutates input.</li>
+  <li><strong>TESTS:</strong> <code>pickQuestion_answeredQuestions_neverPicked</code>, <code>pickQuestion_seenQuestion_notRepeatedBeforeCycleEnds</code> (walk 60 picks with a fixed random sequence: every unanswered text once per cycle), <code>pickQuestion_cycleEnd_clearsSeen</code>, <code>pickQuestion_current_neverReturnedWhenAnotherExists</code>, <code>pickQuestion_oneCandidate_returnsIt</code>, <code>pickQuestion_allAnswered_returnsNull</code>, <code>pickQuestion_randomOne_staysInRange</code>.</li>
+  <li><strong>CREATE</strong> <code>src/features/questions/index.ts</code> exporting <code>pickQuestion</code>, <code>type PickInput</code>, <code>type Pick</code>, with the doc comment: "Questions feature: the pure pick rule, the answer recipes, the deck view state and the panel view. Other features use it only through this file. It never imports the canvas: the canvas passes answers, the deck state and callbacks in."</li>
+  <li><strong>UPDATE</strong> <code>eslint.config.js</code>: add a block for <code>src/features/questions/**</code> mirroring the <code>features/loop</code> block (restrict dexie, React Flow, zustand, zundo, zod; <code>@/features/canvas</code> banned with "features/questions never imports the canvas.").</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/questions &amp;&amp; npm run lint &amp;&amp; npm run typecheck</code></li>
+</ul>
+
+<h4 class="task" data-task="5">Task 5: Add the addAnswer, editAnswer and deleteAnswer recipes</h4>
+<ul>
+  <li><strong>CREATE</strong> <code>src/features/questions/answers.ts</code> (tests first in <code>answers.test.ts</code>):
+    <ul>
+      <li><code>answeredQuestions(board): ReadonlySet&lt;string&gt;</code> — the question texts in <code>board.questions</code>.</li>
+      <li><code>addAnswer(board, id, question, text): Board</code> — throws on a Free Form board (programming error, as <code>setLoopText</code> throws on a wrong card); trims <code>text</code>; blank text or a question already answered returns the same board; else puts <code>{ id, question, answer: trimmed }</code> first.</li>
+      <li><code>editAnswer(board, id, text): Board</code> — trims; an unknown id, blank text or the same trimmed text returns the same board (blank keeps the old answer); else replaces that item's <code>answer</code> in place (order kept).</li>
+      <li><code>deleteAnswer(board, id): Board</code> — an unknown id returns the same board; removes the item; when none are left, removes the <code>questions</code> key (destructure, never <code>questions: undefined</code>).</li>
+    </ul></li>
+  <li><strong>TESTS:</strong> <code>addAnswer_text_putsItemFirst</code>, <code>addAnswer_trimsText</code>, <code>addAnswer_blankText_sameBoard</code>, <code>addAnswer_answeredQuestion_sameBoard</code>, <code>addAnswer_freeForm_throws</code>, <code>editAnswer_newText_replacesInPlace</code>, <code>editAnswer_sameText_sameBoard</code>, <code>editAnswer_blankText_sameBoard</code>, <code>editAnswer_unknownId_sameBoard</code>, <code>deleteAnswer_removesItem</code>, <code>deleteAnswer_last_removesField</code> (<code>'questions' in board</code> is false), <code>deleteAnswer_unknownId_sameBoard</code>.</li>
+  <li><strong>ADD</strong> to <code>src/features/canvas/boardActions.test.ts</code>: <code>redrawAll_onePagerWithAnswers_keepsQuestions</code>, <code>dealStack_onePagerWithAnswers_keepsQuestions</code>, <code>setLoopText_onePagerWithAnswers_keepsQuestions</code> (same <code>questions</code> reference after each).</li>
+  <li><strong>UPDATE</strong> <code>src/features/questions/index.ts</code> to export the 4 functions.</li>
+  <li><strong>IMPORTS:</strong> <code>type Answer, type Board</code> from <code>@/shared/model</code> only.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/questions src/features/canvas/boardActions.test.ts &amp;&amp; npm run typecheck &amp;&amp; npm run lint</code></li>
+</ul>
+
+<h4 class="task" data-task="6">Task 6: Add the Questions section to the text file after Core Loop</h4>
+<ul>
+  <li><strong>ADD</strong> tests first in <code>src/features/export/textFile.test.ts</code>: <code>boardText_answers_questionsSectionAfterCoreLoopBeforeDetails</code>, <code>boardText_answers_newestFirstQuestionThenAnswer</code>, <code>boardText_multiLineAnswer_keepsLinesTrimmedAtEnd</code>, <code>boardText_noAnswers_noQuestionsSection</code>.</li>
+  <li><strong>UPDATE</strong> <code>src/features/export/textFile.ts</code>: <code>questionBlocks(board)</code> returns one block per answer in list order, <code>[question.trim(), ...answer.split(/\r?\n/).map(trimEnd)].join('\n')</code>; in <code>boardText</code>, right after the Core Loop push: <code>if (blocks.length &gt; 0) sections.push(['Questions', '', blocks.join('\n\n')].join('\n'))</code>. Update the doc comment's section list.</li>
+  <li><strong>ADD</strong> the milestone test <code>questions_fixtureBoard_rulesAndTextAgree</code> to <code>src/features/questions/answers.test.ts</code> (imports <code>boardText</code> from <code>@/features/export</code>, which its <code>index.ts</code> already exports, and <code>pickQuestion</code> with the 3 e2e fixture texts).</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/export src/features/questions &amp;&amp; npm run typecheck</code></li>
+</ul>
+
+<h3 class="milestone" data-milestone="3">Milestone 3: Panel view, canvas node and wiring</h3>
+<p>Every One-Pager board shows the panel below its Core Loop card, it follows the card, and every panel action reaches the store as exactly 1 <code>changeBoard</code> (or none for Next Question).</p>
+<p><strong>Validation checkpoint:</strong> <code>npm run build</code> succeeds, <code>dist/pools/question.json</code> and <code>dist/icons/message-circle-question-mark.svg</code> exist, <code>grep -q "Save Answer" dist/assets/*.js</code> matches, and <code>npx playwright test tests/e2e/one-pager.spec.ts tests/e2e/loop.spec.ts --project=chromium</code> still passes with the panel on screen.</p>
+
+<h4 class="task" data-task="7">Task 7: Vendor the Lucide message-circle-question-mark icon</h4>
+<ul>
+  <li><strong>CREATE</strong> <code>public/icons/message-circle-question-mark.svg</code> in the <code>repeat.svg</code> shape (stroke 2.2), with the Lucide paths:
+<pre><code>&lt;path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719"/&gt;
+&lt;path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/&gt;&lt;path d="M12 17h.01"/&gt;</code></pre>
+  (compare with the Lucide page; if Lucide's current paths differ, use Lucide's).</li>
+  <li><strong>UPDATE</strong> <code>src/shared/ui/Icon.tsx</code> (<code>IconName</code> gains <code>'message-circle-question-mark'</code>) and <code>src/shared/ui/tokens.test.ts</code> (<code>ICONS</code> gains it). <code>trash</code> is already vendored and listed; no change.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/shared/ui &amp;&amp; npm run typecheck &amp;&amp; grep -q 'stroke-width="2.2"' public/icons/message-circle-question-mark.svg</code></li>
+</ul>
+
+<h4 class="task" data-task="8">Task 8: Build the useQuestionDeck view state and the QuestionsPanel view</h4>
+<ul>
+  <li><strong>CREATE</strong> <code>src/features/questions/useQuestionDeck.ts</code>: <code>useQuestionDeck(pool: readonly string[] | null, answered: ReadonlySet&lt;string&gt;, boardId: string, random = Math.random): QuestionDeck</code> with
+<pre><code>interface QuestionDeck {
+  current: string | null;   // null while loading, before the first pick, or when all answered
+  allAnswered: boolean;     // pool loaded and every pool question answered
+  draft: string;
+  setDraft(text: string): void;
+  next(): void;             // Next Question: picks with pickQuestion; keeps the draft
+  saved(): void;            // after Save Answer: clears the draft and picks the next question
+}</code></pre>
+  State <code>{ boardId, current, seen, draft }</code> in <code>useState</code>; a board id change resets it (the "adjust state on prop change" pattern: compare a stored boardId during render). <code>next</code> and <code>saved</code> pick in the event handler. A <code>useEffect</code> on <code>[pool, answered, current]</code> picks when <code>current</code> is null or answered or not in the pool and a candidate exists (pool loads, undo or another tab answered it, a delete frees a question in the all-answered state); if the react-hooks lint flags it, add <code>// eslint-disable-next-line react-hooks/set-state-in-effect -- picks a random question when the pool or the answers change outside the panel</code>. <code>allAnswered</code> is derived (no state). <code>saved</code> must treat the just-saved question as answered even before the new <code>answered</code> prop arrives (pass it as an extra exclusion).</li>
+  <li><strong>TESTS</strong> in <code>useQuestionDeck.test.tsx</code> (<code>renderHook</code>, a fixed <code>random</code>): <code>useQuestionDeck_poolReady_picksFirstQuestion</code>, <code>useQuestionDeck_next_neverRepeatsBeforeCycleEnds</code>, <code>useQuestionDeck_saved_clearsDraftAndPicksAnother</code>, <code>useQuestionDeck_currentAnsweredElsewhere_picksAgain</code>, <code>useQuestionDeck_allAnswered_currentNullAndFlagTrue</code>, <code>useQuestionDeck_boardChange_resetsSeenAndDraft</code>, <code>useQuestionDeck_poolNull_currentNull</code>.</li>
+  <li><strong>CREATE</strong> <code>src/features/questions/QuestionsPanel.tsx</code> + <code>QuestionsPanel.module.css</code> (design 9.17):
+<pre><code>interface QuestionsPanelProps {
+  status: 'loading' | 'ready' | 'failed';
+  question: string | null;
+  allAnswered: boolean;
+  draft: string;
+  onDraftChange(text: string): void;
+  onNext(): void;
+  onSave(): void;
+  onRetry(): void;
+  answers: readonly Answer[];
+  onEdit(id: string, text: string): void;    // on blur
+  onDelete(id: string): void;
+  interactiveClassName?: string;             // the canvas passes "nodrag nowheel nopan"
+}</code></pre>
+  Markup: <code>&lt;section role="region" aria-label="Questions" data-testid="questions-panel"&gt;</code>, 240 wide; header (<code>Icon name="message-circle-question-mark" size={13}</code> in <code>--accent-text</code>, <code>&lt;h2&gt;</code> "Questions", the pill <code>data-testid="questions-count"</code> with <code>answeredCountText(n)</code> = "N Answered", shown only when n ≥ 1). Top part by state: <code>failed</code> → <code>QUESTIONS_FAILED_TEXT</code> ("The questions did not load. Your saved answers still work.", 13, <code>--warn-text</code>) and a secondary "Retry" <code>Button</code>, 44 tall; <code>allAnswered</code> → <code>QUESTIONS_DONE_TEXT</code> ("You answered every question. Delete an answer to see its question again.", 13/1.45, <code>--text-muted</code>); <code>loading</code> or no question yet → nothing; else the question <code>&lt;p data-testid="current-question"&gt;</code> (15/600, 1.4), the answer <code>&lt;textarea aria-label="Answer"&gt;</code> (note text style, 14/1.45, min 3 rows, border 1 <code>--border-strong</code>, radius 8, padding 8 10, grows with its text by the <code>LoopCard</code> scrollHeight effect), then a row (gap 8) with a secondary "Next Question" and a primary "Save Answer" (disabled while <code>draft.trim()</code> is empty), each 44 tall. Then, when answers exist, a 1 px <code>--border</code> divider and <code>&lt;ol data-testid="answer-list"&gt;</code>: each <code>&lt;li data-testid="answer-item" data-answer-id&gt;</code> (12 apart) shows the question (13/600 <code>--text-muted</code>), the answer as a borderless-until-focus textarea (<code>aria-label="Answer"</code>, 14/1.45, <code>--text</code>, local draft on focus, commits once on blur, Esc blurs — mirror <code>LoopCard</code> 38–106), and a 44 px icon button (<code>trash</code> 16 in <code>--text-muted</code>, <code>aria-label="Delete Answer"</code>) at the item's top right. Panel shell values copy <code>ConceptNode.module.css</code> <code>.panel</code>, <code>.header</code>, <code>.title</code>, <code>.pill</code> (tokens only; <code>--shadow-card-raised</code>, <code>--radius-panel</code>).</li>
+  <li><strong>TESTS</strong> in <code>QuestionsPanel.test.tsx</code>: <code>questionsPanel_ready_showsQuestionFieldAndButtons</code>, <code>questionsPanel_emptyDraft_saveDisabled</code>, <code>questionsPanel_save_callsOnSave</code>, <code>questionsPanel_answers_listNewestFirstWithCountPill</code> ("1 Answered" and "2 Answered"), <code>questionsPanel_noAnswers_noPillNoDivider</code>, <code>questionsPanel_editBlur_callsOnEditOnce</code>, <code>questionsPanel_escape_blursAndCommits</code>, <code>questionsPanel_delete_callsOnDelete</code>, <code>questionsPanel_allAnswered_showsMessageHidesField</code>, <code>questionsPanel_failed_showsErrorRetryAndList</code>.</li>
+  <li><strong>UPDATE</strong> <code>src/features/questions/index.ts</code>: export <code>useQuestionDeck</code>, <code>type QuestionDeck</code>, <code>QuestionsPanel</code>, <code>QUESTIONS_DONE_TEXT</code>, <code>QUESTIONS_FAILED_TEXT</code>, <code>answeredCountText</code>.</li>
+  <li><strong>GOTCHA:</strong> no React Flow and no <code>zustand</code> import here. Every textarea and button gets <code>interactiveClassName</code>. Do not import <code>ConceptNode.module.css</code> across features; copy its values. The lint check fails a hex or rgba in a CSS module.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/questions &amp;&amp; npm run typecheck &amp;&amp; npm run lint</code></li>
+</ul>
+
+<h4 class="task" data-task="9">Task 9: Add the pure questionsPlace and the questions node in toNodes</h4>
+<ul>
+  <li><strong>CREATE</strong> <code>src/features/canvas/questionsPlace.ts</code> (tests first in <code>questionsPlace.test.ts</code>): <code>QUESTIONS_NODE_ID = 'questions-panel'</code>, <code>QUESTIONS_GAP = 24</code>, <code>QUESTIONS_WIDTH = HOOK_WIDTH</code> (240); <code>questionsPlace(board, loopHeight?: number): Point | null</code> — <code>null</code> unless <code>board.kind === 'onePager'</code>; with a loop card: <code>{ x: loop.x, y: loop.y + (loopHeight ?? cardSize(loop).height) + QUESTIONS_GAP }</code>; with none: <code>ONE_PAGER_LOOP_SPOT</code> (680, 96) from <code>@/shared/store</code>. Tests: <code>questionsPlace_loopCard_belowWith24Gap</code>, <code>questionsPlace_measuredHeight_used</code>, <code>questionsPlace_movedLoopCard_follows</code>, <code>questionsPlace_noLoopCard_defaultSpot</code>, <code>questionsPlace_freeForm_null</code>.</li>
+  <li><strong>UPDATE</strong> <code>src/features/canvas/nodes.ts</code>: <code>QuestionsNodeData = Record&lt;string, never&gt;</code> and <code>QuestionsFlowNode = Node&lt;QuestionsNodeData, 'questions'&gt;</code> in <code>BoardFlowNode</code>; <code>NodeUi</code> gains <code>loopHeight?: number</code>; <code>toNodes</code> adds 1 node when <code>questionsPlace(board, ui.loopHeight)</code> is not null: <code>{ id: QUESTIONS_NODE_ID, type: 'questions', position, width: QUESTIONS_WIDTH, zIndex: 1, draggable: false, selectable: false, focusable: false, data: {} }</code> (no height, so React Flow measures it), placed after the Concept node: <code>[...notes, ...concept, ...questions, ...ranked]</code>. Update the doc comment.</li>
+  <li><strong>ADD</strong> to <code>nodes.test.ts</code>: <code>toNodes_onePager_oneQuestionsNodeBelowLoop</code>, <code>toNodes_loopHeight_movesQuestionsNode</code>, <code>toNodes_freeForm_noQuestionsNode</code>, <code>toNodes_questionsNode_notDraggableZIndex1</code>.</li>
+  <li><strong>GOTCHA:</strong> until Task 10 registers the node type, React Flow renders an unknown type with its default node; that is fine for this task's unit gate, but do not run the browser tests between Tasks 9 and 10.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src/features/canvas &amp;&amp; npm run typecheck &amp;&amp; npm run lint</code></li>
+</ul>
+
+<h4 class="task" data-task="10">Task 10: Wire the QuestionsNode into the canvas and the question pool into BoardScreen</h4>
+<ul>
+  <li><strong>CREATE</strong> <code>src/features/canvas/QuestionsNode.tsx</code>: reads <code>state.board.questions</code> and <code>changeBoard</code> from <code>useBoardStore</code>, and the deck and pool state from a <code>QuestionsUiContext</code> (created in this file or beside <code>ConceptUiContext</code>); renders <code>QuestionsPanel</code> with <code>interactiveClassName="nodrag nowheel nopan"</code>; <code>onSave</code>: <code>changeBoard((b) =&gt; addAnswer(b, newId(), deck.current, deck.draft))</code> then <code>deck.saved()</code> (only when <code>current</code> is set and the draft is not blank); <code>onEdit</code>: <code>changeBoard((b) =&gt; editAnswer(b, id, text))</code>; <code>onDelete</code>: <code>changeBoard((b) =&gt; deleteAnswer(b, id))</code>; <code>onNext</code>: <code>deck.next()</code> (no <code>changeBoard</code>); <code>onRetry</code>: the pool's <code>retry</code>. Memoized like <code>LoopNode</code>. Doc comment cites design 9.17 and the brief.</li>
+  <li><strong>UPDATE</strong> <code>src/features/canvas/BoardCanvas.tsx</code>:
+    <ul>
+      <li>props gain <code>questionPool: QuestionPoolState</code> (from <code>@/shared/pools</code>);</li>
+      <li><code>nodeTypes</code> gains <code>questions: QuestionsNode</code>;</li>
+      <li>the loop card's measured height: <code>const loopId = board.cards.find((c) =&gt; c.type === 'loop')?.id; const loopHeight = useStore((s) =&gt; (loopId ? s.nodeLookup.get(loopId)?.measured.height : undefined));</code> (<code>useStore</code> from <code>@xyflow/react</code>), passed into <code>toNodes</code> ui and the <code>derived</code> memo deps;</li>
+      <li><code>const deck = useQuestionDeck(questionPool.questions, answeredQuestions(board), board.id)</code> — memo <code>answeredQuestions(board)</code> on <code>board.questions</code> so the set is stable — provided through <code>QuestionsUiContext</code> with <code>status</code> and <code>retry</code>, wrapping <code>ReactFlow</code> beside <code>ConceptUiContext</code>;</li>
+      <li><code>onNodesChange</code>: when a position change is for the loop card, push an extra position change for <code>QUESTIONS_NODE_ID</code> by the same dx, dy (mirror the Hook Card / Details panel lines 362–373);</li>
+      <li><code>onNodeDragStart</code>: return early for <code>'questions'</code> as for <code>'concept'</code>.</li>
+    </ul>
+    Update the doc comment.</li>
+  <li><strong>UPDATE</strong> <code>src/features/canvas/CanvasProvider.tsx</code>: <code>questionsRectOf(flow, board)</code> — <code>questionsPlace(board, flow.getInternalNode(loopId)?.measured.height)</code> with the measured size of <code>QUESTIONS_NODE_ID</code>, else <code>QUESTIONS_WIDTH × UNMEASURED_PANEL_HEIGHT</code>; <code>occupiedRects</code> adds it when not null, so rail draws and new notes avoid the panel.</li>
+  <li><strong>UPDATE</strong> <code>src/app/board/BoardScreen.tsx</code>: <code>const questionPool = useQuestionPool();</code> beside <code>usePools()</code>; <code>&lt;BoardCanvas pools={pools} questionPool={questionPool} /&gt;</code>. No banner for a failed question load (the panel shows it). Update every other <code>BoardCanvas</code> render in tests (<code>grep -rn "&lt;BoardCanvas" src</code>) to pass a <code>questionPool</code>.</li>
+  <li><strong>UPDATE</strong> <code>src/features/canvas/index.ts</code> only if something outside the canvas needs <code>questionsPlace</code> (nothing does today; keep it internal).</li>
+  <li><strong>IMPORTS:</strong> <code>addAnswer, answeredQuestions, deleteAnswer, editAnswer, QuestionsPanel, useQuestionDeck, type QuestionDeck</code> from <code>@/features/questions</code>; <code>newId</code> from <code>@/shared/model</code>; <code>useStore, type NodeProps</code> from <code>@xyflow/react</code>.</li>
+  <li><strong>GOTCHA:</strong> keep the deck in <code>BoardCanvas</code>, not in the node: <code>onlyRenderVisibleElements</code> unmounts an off-screen node and would lose the current question, the seen list and the draft. A card dropped over the panel only moves (the panel is not in <code>dropTarget</code> or <code>conceptOverAt</code>); keep it that way. The panel paints at zIndex 1, under every card. Ctrl+Z inside an answer field is the browser's text undo (<code>useUndoKeys</code> skips text entry).</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npx vitest run src &amp;&amp; npm run typecheck &amp;&amp; npm run lint &amp;&amp; npm run build &amp;&amp; test -f dist/pools/question.json &amp;&amp; test -f dist/icons/message-circle-question-mark.svg</code></li>
+</ul>
+
+<h3 class="milestone" data-milestone="4">Milestone 4: Browser tests and docs</h3>
+<p>The done criteria pass in 3 engines with every target, and CLAUDE.md and the README describe the Questions panel.</p>
+<p><strong>Validation checkpoint:</strong> <code>npm run test:e2e</code> exits 0 in Chromium, Firefox and WebKit including <code>tests/e2e/questions.spec.ts</code>, the timing projects, <code>network.spec.ts</code> and <code>pools-real.spec.ts</code>; <code>npm run size</code> passes.</p>
+
+<h4 class="task" data-task="11">Task 11: Add the Questions browser tests and run the full regression with the targets</h4>
+<ul>
+  <li><strong>CREATE</strong> <code>tests/e2e/questions.spec.ts</code> (<code>test</code>, <code>expect</code> from <code>./test</code>; helpers from <code>./board-helpers</code> and <code>./export-helpers</code>; <code>reducedMotion: 'reduce'</code>; locators <code>panel = page.getByTestId('questions-panel')</code>, <code>current = page.getByTestId('current-question')</code>, <code>list = page.getByTestId('answer-list')</code>; the fixture pool has 3 questions):
+    <ul>
+      <li><code>questions_onePager_panelBelowLoopCard</code> — a new One-Pager board (<code>openBoard(page, undefined, 'One-Pager')</code>): 1 panel; its left equals the loop card's left and its top equals the loop card's bottom + 24 × zoom (zoom = loop box width ÷ 240), ±1 px; a new Free Form board has none.</li>
+      <li><code>questions_saveAnswer_movesToListAndNeverShowsAgain</code> — type, Save Answer: 1 list item with that question, stored <code>questions</code> has 1 item, the field is empty; click Next Question 4 times: the answered question never shows; Control+Z on the canvas removes the item and the stored field.</li>
+      <li><code>questions_nextQuestion_noUndoStepNoSave</code> — record the stored <code>updatedAt</code> and the Undo button state; click Next Question: the question text changes, neither changes.</li>
+      <li><code>questions_editAndDelete_eachOneUndoStep</code> — on <code>onePagerWithAnswers()</code>: edit an answer and blur: stored text changes; Control+Z restores it; delete: item gone; Control+Z brings it back.</li>
+      <li><code>questions_reload_answersStayNewQuestionShows</code> — save 1 answer, reload: the list holds it, a question shows, it is not the answered one.</li>
+      <li><code>questions_dragLoopCard_panelFollows</code> — drag the loop card by (120, 48): the panel's left and top move by the same screen delta (±2 px, snap may move it to the grid; compare to the loop card's new box instead).</li>
+      <li><code>questions_allAnswered_messageThenDeleteBringsBack</code> — answer all 3: the all-answered message shows, no "Answer" field in the top part, no Next Question; delete 1: that question shows again.</li>
+      <li><code>questions_poolBlocked_errorRetryListWorksDecksWork</code> — <code>page.route('**/pools/question.json', abort)</code> on <code>onePagerWithAnswers()</code>: the failed message and Retry show; editing a list answer still saves; a rail draw still works (deck buttons on); unroute, Retry: a question shows.</li>
+      <li><code>questions_textFile_sectionAfterCoreLoop</code> — on <code>onePagerWithAnswers()</code>, export the text file: "Questions" follows the Core Loop paragraph and precedes "Details", newest first.</li>
+      <li><code>questions_boardFile_exportImportKeepsAnswers</code> — export the board file of <code>onePagerWithAnswers()</code>, import it: the new board shows 2 list items.</li>
+    </ul></li>
+  <li><strong>RUN</strong> <code>npm run lint &amp;&amp; npm run format:check &amp;&amp; npm run typecheck &amp;&amp; npm test &amp;&amp; npm run build &amp;&amp; npm run size</code>, then <code>(fuser -k 4174/tcp 2&gt;/dev/null || true); npm run test:e2e</code>. Fix regressions in existing specs only where the panel legitimately changes them (record each).</li>
+  <li><strong>CHECK:</strong> <code>grep -rn "@xyflow" src --include=*.ts --include=*.tsx | grep -v "src/features/canvas/"</code> is empty; <code>grep -rn "@/features/canvas" src/features/questions</code> is empty; <code>grep -n "FORMAT_VERSION = 2" src/shared/model/index.ts</code> matches; <code>git diff --name-only main -- src/shared/storage src/features/export/upgrade.ts src/shared/model/upgradeV1.ts</code> is empty.</li>
+  <li><strong>RECORD</strong> in this doc's Notes under "Execution notes": the JS and pool sizes, the e2e totals and any existing test that needed a change.</li>
+  <li><strong>GOTCHA:</strong> on One-Pager boards, rail draws now avoid the panel's rect, so a drawn card may land at another spot than before; tests that find the newest card by selector are unaffected. In <code>onePagerBoard()</code>/<code>onePagerWithLoop()</code> the modifier at (720, 360) lies over the panel (it paints above it) — use <code>onePagerWithAnswers()</code> or a new board for panel clicks. Specs that block <code>**/pools/*.json</code> now also block the question pool; on a One-Pager board that adds a second "Retry" button, so scope any Retry locator. The 2 "Answer" fields (top and list) share a label: scope by test id.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>npm run lint &amp;&amp; npm run format:check &amp;&amp; npm run typecheck &amp;&amp; npm test &amp;&amp; npm run build &amp;&amp; npm run size &amp;&amp; (fuser -k 4174/tcp 2&gt;/dev/null || true) &amp;&amp; npm run test:e2e</code></li>
+</ul>
+
+<h4 class="task" data-task="12">Task 12: Update CLAUDE.md and the README for the Questions panel and features/questions</h4>
+<ul>
+  <li><strong>UPDATE</strong> <code>CLAUDE.md</code>: Project Overview gains the Questions panel in 1 clause; the layout block gains <code>questions/       Questions panel: pickQuestion (pure), answer recipes, deck view state, panel view</code>, the canvas line mentions the Questions node and <code>questionsPlace</code>, the <code>public/pools/</code> line adds <code>question.json</code> and the <code>public/icons/</code> line the question icon; the Pools bullet notes <code>question.json</code> (60 questions, its own load and failure state, floor 60, not a deck); a new "Questions panel" Key Patterns bullet (1 per One-Pager board, place from the Core Loop card + drawn height + 24 or (680, 96), never stored, not draggable, not a drop target; <code>Board.questions</code> newest first with the question text copied in; <code>pickQuestion</code> pure; add / edit / delete are 1 <code>changeBoard</code> each, Next Question is view state; the deck state lives in <code>BoardCanvas</code>; <code>features/questions</code> never imports the canvas); the "Board file format" bullet records the Phase 10 exception (<code>Board.questions</code> added inside format 2 with no upgrade step, user decision 2026-11-05); the text file has a "Questions" section after Core Loop. No AI attribution anywhere.</li>
+  <li><strong>UPDATE</strong> <code>README.md</code>: the status line names Phase 10 (Questions Panel); a usage bullet for the Questions panel (where it sits, Next Question, Save Answer, edit, delete, all-answered, the text file section); the source layout list gains <code>src/features/questions/</code>; the pools list gains <code>question.json</code>.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>grep -q "Questions panel" CLAUDE.md &amp;&amp; grep -q "features/questions\|questions/ " CLAUDE.md &amp;&amp; grep -q "Questions" README.md &amp;&amp; npm run format:check</code></li>
+</ul>
+
+<h3 class="milestone" data-milestone="5">Commit, push, and open PR</h3>
+<h4 class="task" data-task="13">Task 13: Commit, push, and open PR</h4>
+<p>After every prior validation checkpoint has passed:</p>
+<ul>
+  <li><strong>IMPLEMENT:</strong> on branch <code>phase-10-questions</code>, stage and commit uncommitted changes with a descriptive message summarizing the phase, in the repository owner's voice; push with <code>git push -u origin phase-10-questions</code>; open a PR with <code>gh pr create --head phase-10-questions --title "Phase 10: Questions Panel" --body "&lt;body&gt;"</code>.</li>
+  <li><strong>PR title format:</strong> <code>Phase 10: Questions Panel</code>.</li>
+  <li><strong>PR body format:</strong> the Acceptance Criteria as a checklist with each box checked off; then a "Questions For Review" section listing all 60 question texts (numbered, from <code>public/pools/question.json</code>) so the user can review them; then a Notes section listing assumptions and trade-offs decided during execution.</li>
+  <li><strong>GOTCHA:</strong> commits are authored solely by the user: no Co-Authored-By trailer, no Claude-Session line, no "Generated with" line and no AI attribution of any kind in the commit message or PR body (CLAUDE.md "Commit Authorship"; the /ship flow rejects them). <code>gh</code> must be installed and authenticated.</li>
+  <li><span class="validate"><strong>VALIDATE:</strong></span> <code>gh pr view --json number,title,state,headRefName</code> returns the new PR with <code>"state": "OPEN"</code> and <code>"headRefName": "phase-10-questions"</code>.</li>
+</ul>
+
+<h2>Testing Strategy</h2>
+<h3>Unit Tests</h3>
+<ul>
+  <li>Pool: <code>parseQuestionPool</code> rules; the real file has ≥ 60 numbered, distinct, non-blank questions ending in "?"; the folder check includes <code>question.json</code>; <code>loadQuestionPool</code> and <code>useQuestionPool</code> failure and retry.</li>
+  <li>Import check: answers accepted on One-Pager, refused on Free Form, empty array, blank text, repeated id or question; older files with no field accepted; import keeps answers; no trim.</li>
+  <li>Pick rule: answered skipped, no repeat before the cycle ends, cycle reset, current never repeated when another exists, single candidate, null when all answered, random bounds.</li>
+  <li>Recipes: add first / trim / blank / duplicate / Free Form throw; edit in place / same / blank / unknown; delete / last removes field / unknown; Redraw All, Deal Stack and loop edits keep <code>questions</code>.</li>
+  <li>Text file: placement after Core Loop and before Details, order, multi-line answers, absent section.</li>
+  <li>Views: <code>useQuestionDeck</code> state transitions; <code>QuestionsPanel</code> states, pill text, disabled Save, blur commit, Esc, delete.</li>
+  <li>Canvas: <code>questionsPlace</code> (gap, measured height, follow, default spot, Free Form); <code>toNodes</code> questions node.</li>
+</ul>
+<h3>Integration Tests</h3>
+<ul>
+  <li><code>tests/e2e/questions.spec.ts</code> in Chromium, Firefox and WebKit.</li>
+  <li>Regression: every existing spec on both board kinds; <code>canvas-perf.spec.ts</code> (200 cards, Free Form, no panel) and <code>long-stack.spec.ts</code> unchanged; <code>network.spec.ts</code> (no outside request) and <code>pools-real.spec.ts</code> (the real <code>question.json</code> loads).</li>
+</ul>
+<h3>Edge Cases</h3>
+<ul>
+  <li>A One-Pager board from before Phase 9 (no Core Loop card): the panel sits at (680, 96).</li>
+  <li>The Core Loop text grows while the panel is on screen: the panel moves down with the measured height.</li>
+  <li>The loop card scrolled off screen (unmeasured or unmounted): the panel falls back to the 200 px minimum height.</li>
+  <li>Undo of a delete in the all-answered state: the message returns; redo frees the question again and the deck picks it.</li>
+  <li>Another tab answers the current question: the board reloads, the current question is now answered, the deck picks another.</li>
+  <li>A pool edit renames a question: the old answer keeps its copied text and the renamed question can show again (accepted; answers match by text).</li>
+  <li>A half-typed answer is lost on reload (accepted in the brief); it survives panning away because the draft lives in <code>BoardCanvas</code>.</li>
+  <li>A card dropped over the panel only moves and paints above it; it never tucks, combines or enters it.</li>
+  <li>A hand-made file with answers on a Free Form board, an empty list or a blank answer: refused with the existing not-a-board-file notice.</li>
+</ul>
+
+<h2>Validation Commands</h2>
+<h3>Level 1: Syntax &amp; Style</h3>
+<pre><code>npm run lint
+npm run format:check
+npm run typecheck</code></pre>
+<h3>Level 2: Unit Tests</h3>
+<pre><code>npm test</code></pre>
+<h3>Level 3: Integration Tests</h3>
+<pre><code>fuser -k 4174/tcp 2&gt;/dev/null || true
+npm run test:e2e</code></pre>
+<h3>Level 4: Manual Validation</h3>
+<pre><code>set -e
+npm run build
+npm run size
+node -e "const p=require('./public/pools/question.json'); const t=p.cues.map(c=&gt;c.text.trim().toLowerCase()); if(p.type!=='question'||p.cues.length&lt;60||new Set(t).size!==t.length||!p.cues.every(c=&gt;c.text.trim().endsWith('?'))) process.exit(1)"
+test -f dist/pools/question.json
+grep -q 'stroke-width="2.2"' public/icons/message-circle-question-mark.svg
+test -f dist/icons/message-circle-question-mark.svg
+grep -q "Save Answer" dist/assets/*.js
+grep -q "You answered every question" dist/assets/*.js
+grep -q "FORMAT_VERSION = 2" src/shared/model/index.ts
+! (grep -rn "@xyflow" src --include=*.ts --include=*.tsx | grep -v "src/features/canvas/")
+! (grep -rn "from 'zod'" src | grep -v "src/features/export/")
+! (grep -rn "@/features/canvas" src/features/questions)
+test -z "$(git diff --name-only main -- src/shared/storage src/features/export/upgrade.ts src/shared/model/upgradeV1.ts)"
+npx playwright test tests/e2e/questions.spec.ts</code></pre>
+<h3>Level 5: Additional Validation (Optional)</h3>
+<p>None required. First load and network checks are covered by <code>first-load.spec.ts</code> and <code>network.spec.ts</code>.</p>
+
+<h2>Acceptance Criteria</h2>
+<ul class="checklist">
+  <li data-checked="true">Every One-Pager board (old and new) shows exactly 1 Questions panel, 240 wide, left-aligned with the Core Loop card and 24 px below its drawn bottom (or at (680, 96) with no Core Loop card); it follows the card while dragged and when it grows; a Free Form board shows none.</li>
+  <li data-checked="true">The panel is not draggable, not a drop target and paints under every card; its place is never stored.</li>
+  <li data-checked="true">Next Question never shows an answered question, does not repeat a skipped question before every other unanswered question was shown, never repeats the current question when another exists, and makes no undo step and no save.</li>
+  <li data-checked="true">Save Answer (disabled while the field is empty) adds the question and trimmed answer at the top of the list as 1 undo step and 1 save, clears the field and shows another question.</li>
+  <li data-checked="true">An answer edit commits on blur as 1 undo step (blank or unchanged text changes nothing); the trash button deletes with no dialog as 1 undo step; the last delete removes <code>Board.questions</code>; a deleted answer's question can show again.</li>
+  <li data-checked="true">The header shows the question icon, "Questions" and "N Answered" when there are answers; the all-answered message and the load-failed message with Retry match design 9.17; a failed question load keeps the list working and the deck buttons on.</li>
+  <li data-checked="true">Answers survive a reload and a board file export and import; Redraw All, Deal Stack, ring turns and Core Loop edits never change them.</li>
+  <li data-checked="true">The import check accepts answers on a One-Pager board and files with no field, and refuses them on a Free Form board, an empty list, a blank question or answer, a repeated id or a question answered twice.</li>
+  <li data-checked="true">The text file has a "Questions" section after Core Loop and before Details (question line, then answer lines, newest first), left out when there are no answers.</li>
+  <li data-checked="true"><code>public/pools/question.json</code> holds 60 original questions that pass the floor test, and the PR body lists them for the user's review.</li>
+  <li data-checked="true">The board format stays at version 2 (no Dexie <code>version(3)</code>, no <code>UPGRADES[2]</code>); the icon is vendored at stroke 2.2; no new token and no new library; <code>features/questions</code> never imports the canvas.</li>
+  <li data-checked="true">Every existing test passes on both board kinds; speed (100 ms updates, 50 fps with 200 cards), size (≤ 250 KB JS gzip, ≤ 100 KB pools) and privacy (no outside request) targets pass.</li>
+  <li data-checked="true">CLAUDE.md and the README describe the Questions panel, <code>features/questions/</code>, <code>question.json</code> and the format exception.</li>
+</ul>
+
+<h2>Completion Checklist</h2>
+<ul class="checklist">
+  <li data-checked="true">All 13 tasks completed in order, each VALIDATE passing at its completion</li>
+  <li data-checked="true">Each milestone validation checkpoint passed</li>
+  <li data-checked="true">Level 1: lint, format check and type check exit 0</li>
+  <li data-checked="true">Level 2: <code>npm test</code> exits 0</li>
+  <li data-checked="true">Level 3: <code>npm run test:e2e</code> (3 engines and the timing projects) passes</li>
+  <li data-checked="true">Level 4: build, size, question file, icon, grep checks and the questions spec pass</li>
+  <li data-checked="true">Execution notes recorded in this doc's Notes</li>
+  <li data-checked="true">PR open with the checked Acceptance Criteria, the 60 questions for review and Notes</li>
+</ul>
+
+<h2>Notes</h2>
+<h3>Architecture decisions this phase conforms to</h3>
+<p>No decision in <code>docs/architecture.html</code> is <code>data-status="open"</code>. The phase fits with 1 recorded local exception (feature brief "Architecture fit", outcome 2, user decision 2026-11-05), rechecked at planning.</p>
+<ul>
+  <li><code>pool-files</code> (cheap, amended): <code>question.json</code> is loaded by web address from <code>public/pools/</code> like the deck pools; it is not made by the split, which is never rerun.</li>
+  <li><code>pool-load-failure</code> (cheap), <code>outside-code</code> (cheap): a failed question load shows the error with Retry in the panel; boards, saved answers and the deck buttons keep working.</li>
+  <li><code>module-layout</code> (moderate), <code>import-rules</code> (moderate), <code>architecture-pattern</code> (moderate): a new feature folder <code>features/questions/</code>, imported only through its <code>index.ts</code>; it imports <code>shared/</code> only, and a lint block bans the canvas import.</li>
+  <li><code>canvas-library</code> (moderate): React Flow stays in <code>features/canvas/</code> (<code>QuestionsNode</code>, <code>useStore</code> for the measured height).</li>
+  <li><code>state-store</code> (moderate), <code>undo-history</code> (cheap), <code>save-transaction</code> (cheap): add, edit and delete are 1 <code>changeBoard</code> each; Next Question, the seen list and the draft are view state, never in undo or storage.</li>
+  <li><code>schema-shape</code> (moderate), <code>storage-seam</code> (moderate): answers live in the one board record; no storage change.</li>
+  <li><code>import-checks</code> (cheap), <code>import-policy</code> (cheap): the Zod check gets the new field and rules; import still always makes a new board.</li>
+  <li><code>board-file-format</code> (expensive), <code>schema-versions</code> (cheap): recorded exception — <code>Board.questions</code> is added inside format 2 with no upgrade step, no Dexie <code>version(3)</code> and no <code>UPGRADES[2]</code>, because the change only adds and the app is in test (user decision in the feature brief; same as Phase 9).</li>
+  <li><code>tab-sync</code> (cheap): an answer change saves the board, so the other tab reloads as for any change.</li>
+  <li><code>nfr-targets</code> (cheap): 60 questions add about 2 KB gzip to the pool budget; no new library.</li>
+</ul>
+
+<h3>Decisions and assumptions</h3>
+<ul>
+  <li>ASSUMPTION: Slug <code>questions</code>, branch <code>phase-10-questions</code>. Authority: dev-plan-phase slug rules (short form of "Questions Panel"; no collision in <code>docs/phases/</code>).</li>
+  <li>ASSUMPTION: The "user reviews the 60 questions before merge" gate (PRD Phase 10, brief Build plan) cannot be a task step in an unattended run. Task 1 writes them; Task 13 lists all 60 in the PR body under "Questions For Review"; the pool is plain JSON the user can edit after merge with no code change. The Acceptance Criteria say "listed for review", not "reviewed". Authority: dev-plan-phase rule "no ask-the-user steps" + brief Assumption ("the pool can grow later with no code change") + smallest reversible option.</li>
+  <li>ASSUMPTION: The questions are 10 each on 6 topics (player, fun, core loop and choices, risk, scope, hook), 1 sentence, ending in "?", at most 100 characters, original wording. Authority: brief Summary ("the player, the fun, the risk and the scope") + "Never: copied text" + smallest option.</li>
+  <li>ASSUMPTION: <code>architecture.html</code> <code>pool-files</code> says "11 JSON files"; <code>question.json</code> is a 12th file in the same folder. The brief's Architecture fit (outcome 2) says this fits <code>pool-files</code> with no architecture change, so the decision's count is read as the deck cue pools. Authority: feature brief Architecture fit + architecture <code>pool-files</code>.</li>
+  <li>ASSUMPTION: The question pool gets its own types (<code>QuestionPool</code>, <code>QuestionPoolCue</code> in <code>shared/model</code>), parse, load and hook in <code>shared/pools/</code> instead of joining <code>Pools</code>/<code>loadPools</code>, so its failure never turns off the deck buttons and <code>Deck</code> stays the 11 decks. Authority: brief Blast radius ("a separate load … with its own failure state") + pool-load-failure.</li>
+  <li>ASSUMPTION: <code>BoardScreen</code> loads the question pool on every board (Free Form too) and passes it to <code>BoardCanvas</code>; a Free Form board simply shows no panel. Smallest wiring, mirrors <code>pools</code>. Authority: codebase pattern (<code>usePools</code> in BoardScreen) + smallest option.</li>
+  <li>ASSUMPTION: The deck view state (current, seen, draft) lives in a <code>useQuestionDeck</code> hook called by <code>BoardCanvas</code> and handed to the node through a context, not inside the node, because <code>onlyRenderVisibleElements</code> unmounts off-screen nodes. It resets on board change and reload, as the brief says. Authority: brief Pick rule ("seen is view state … cleared on reload and on board change") + canvas codebase pattern (<code>ConceptUiContext</code>).</li>
+  <li>ASSUMPTION: <code>pickQuestion</code> takes an object (<code>pool</code>, <code>answered</code>, <code>seen</code>, <code>current</code>) and a <code>random</code> function and returns <code>{ question, seen }</code> or <code>null</code>; the brief's signature lists the inputs but also requires "never the current question", so <code>current</code> is an input and the updated seen list is an output to keep the function pure. Authority: brief Pick rule + CLAUDE.md pure-function pattern.</li>
+  <li>ASSUMPTION: After Save Answer the field clears and another question shows at once. The deck picks in an effect only for changes from outside the panel (pool load, undo, other tab, a delete in the all-answered state); Next and Save pick in their handlers. Authority: brief ("Save Answer moves the question and its answer into a list") + design 9.17 + smallest option.</li>
+  <li>ASSUMPTION: Answers match questions by text (the brief's <code>answered</code> rule); a pool edit that rewrites a question lets it show again beside the old answer. Authority: brief Data model ("copied from the pool at save time") and Pick rule.</li>
+  <li>ASSUMPTION: <code>addAnswer(board, id, question, text)</code> takes its id from the caller (<code>newId()</code> in the node), like <code>addNote</code>; it throws on a Free Form board; blank text or an already-answered question returns the same board. <code>editAnswer</code> trims too, so an answer is never stored with outer white space. Authority: brief Recipes + noteActions pattern + setLoopText throw pattern.</li>
+  <li>ASSUMPTION: The import check refuses an empty <code>questions</code> array (the last delete removes the field, so the app never writes one), a blank question or answer (no trim transform), a repeated id and a question answered twice ("Never: answering the same question twice"). A bad file is refused, never repaired. Authority: brief Data model and Never list + schema.ts One-Pager and loop pattern.</li>
+  <li>ASSUMPTION: In the text file each answer keeps its line breaks with each line trimmed at the end (the Notes and Core Loop rule), under its question line, items separated by a blank line, as the brief's sample shows. Authority: brief Text file + textFile.ts pattern.</li>
+  <li>ASSUMPTION: The panel's drawn place uses the Core Loop node's measured height from React Flow (<code>useStore</code> on <code>nodeLookup</code>), falling back to 200 (the card's minimum, <code>cardSize</code>) when unmeasured. Authority: brief ("top = Core Loop card top + its drawn height + 24") + placement.ts.</li>
+  <li>ASSUMPTION: The panel node is at zIndex 1 (with the Details panel), under every card; a card dropped over it only moves and paints above it. Rail draws and new notes avoid the panel's rect (<code>occupiedRects</code>), as they avoid the Details panel. Authority: brief ("not draggable and not a drop target") + nodes.ts and CanvasProvider pattern.</li>
+  <li>ASSUMPTION: While the question pool is loading the top part shows nothing (design 9.17 names no loading state). Authority: design 9.17 + smallest option.</li>
+  <li>ASSUMPTION: Both answer fields use the aria-label "Answer" exactly as design 9.17 says; tests tell them apart by test id. The count pill reads "N Answered" for every N ≥ 1 ("1 Answered"), hidden at 0. Authority: design 9.17.</li>
+  <li>ASSUMPTION: The <code>trash</code> icon that design 9.17 and the PRD list for vendoring already exists in <code>public/icons/</code> and the icon lists, so only <code>message-circle-question-mark</code> is new. Its paths are written by hand from Lucide at stroke 2.2. Authority: codebase + CLAUDE.md (icons bundled).</li>
+  <li>ASSUMPTION: The new fixture <code>onePagerWithAnswers()</code> moves <code>modifier-1</code> out of the panel's area so browser clicks reach the panel; <code>onePagerBoard()</code> and <code>onePagerWithLoop()</code> stay as they are for the existing specs. The e2e fixture pool has 3 questions so the all-answered state is reachable. Authority: brief Testing ("a small fixture pool") + codebase fixture pattern.</li>
+  <li>ASSUMPTION: If the react-hooks <code>set-state-in-effect</code> rule flags the deck's pick effect, a one-line disable with a reason is used, as the codebase already does for other react-hooks rules. Authority: codebase pattern (<code>useHoverMenu.ts</code>, <code>ConnectorBadge.tsx</code>).</li>
+  <li>DECISION: No task edits <code>docs/feature-questions-panel.html</code>, <code>docs/design-system.html</code>, <code>docs/prd.html</code>, <code>docs/mvp-plan.html</code>, <code>docs/architecture.html</code> or <code>docs/competitive-scan.html</code>; they are the authorities. The PRD Phase 10 checkboxes are left to dev-execute.</li>
+</ul>
+
+<h3>Execution notes</h3>
+<ul>
+  <li>Sizes: JavaScript 216.4 KB of 250 KB gzip; pool files 50.3 KB of 100 KB gzip (question.json included).</li>
+  <li>Unit: 76 files, 1006 tests pass. Browser: <code>npm run test:e2e</code> 886 passed, 8 skipped (3 engines and the timing projects), including the 10 tests in <code>tests/e2e/questions.spec.ts</code> in each engine.</li>
+  <li>DECISION: The Core Loop card's measured height is not passed into <code>toNodes</code>. React Flow drops the measured size of every new node object, so re-deriving every node when the Core Loop card grows hid all nodes for a frame and blurred the Core Loop edit field (caught by <code>loop_edit_oneUndoStepAndOneSave</code>). <code>toNodes</code> places the panel below the 200 px minimum, and a new pure <code>placeQuestionsNode</code> replaces only the Questions node with the drawn height. BoardCanvas keeps the last measured height per Core Loop card, so a measure reset never moves the panel back. <code>NodeUi.loopHeight</code> was dropped; <code>toNodes_loopHeight_movesQuestionsNode</code> became <code>placeQuestionsNode_loopHeight_movesOnlyQuestionsNode</code> and <code>placeQuestionsNode_samePlaceOrFreeForm_sameArray</code>.</li>
+  <li>Existing test changed: <code>onePager_drawWithViewCenteredOnPanel_cardLandsOffPanel</code> opens the board again after its reload. The hash change before the reload can send the not-yet-saved board to the list first; this flake also shows on main (2 of 45 runs).</li>
+  <li>Known flake, not changed: <code>loop_drag_snapsAndNeverTucks</code> fails sometimes under parallel load, most in WebKit, on main as well (9 of 60 runs on main, 5 of 60 on this branch). It failed once in 1 of 3 full runs here.</li>
+</ul>
+
+</body>
+</html>
